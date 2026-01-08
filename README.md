@@ -11,6 +11,22 @@ Please run ?- license. for legal details.
 For online help and background, visit https://www.swi-prolog.org
 For built-in help, use ?- help(Topic). or ?- apropos(Word).
 
+create -n aba-asp python=3.12
+conda activate aba-asp
+conda install -c conda-forge cmake ninja compilers pkg-config gmp zlib libuuid libedit readline openssl libarchive libxcrypt
+
+### Clone from https://github.com/SWI-Prolog/swipl.git
+
+export PKG_CONFIG_PATH="$CONDA_PREFIX/lib/pkgconfig:$CONDA_PREFIX/share/pkgconfig"
+export CMAKE_PREFIX_PATH="$CONDA_PREFIX"
+rm -rf CMakeCache.txt CMakeFiles
+
+cmake -G Ninja -DCMAKE_INSTALL_PREFIX=$HOME -DCMAKE_BUILD_TYPE=PGO -DCMAKE_PREFIX_PATH="$CONDA_PREFIX" -DINSTALL_DOCUMENTATION=OFF -DEMACS_INCLUDE_DIR="$PWD/../packages/sweep" ..
+
+ninja -j"$(nproc)" && ninja install
+
+swipl
+
 ?- 
 ````
 

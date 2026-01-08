@@ -5,3 +5,5 @@ asp.clingo
 cc.pl
 *.sol*
 *.csv
+*.pyc
+__pycache__/

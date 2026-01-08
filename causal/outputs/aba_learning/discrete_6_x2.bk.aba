@@ -1,0 +1,22 @@
+% Background knowledge with foldable rules
+% Generated from ArgCausalDisco data
+
+% Feature predicates for variable: x0
+x0_val_5(A) :- A=1.
+x0_val_7(A) :- A=2.
+x0_val_7(A) :- A=3.
+x0_val_2(A) :- A=4.
+x0_val_1(A) :- A=5.
+x0_val_4(A) :- A=6.
+
+% Feature predicates for variable: x1
+x1_val_5(A) :- A=1.
+x1_val_11(A) :- A=2.
+x1_val_14(A) :- A=3.
+x1_val_2(A) :- A=4.
+x1_val_3(A) :- A=5.
+x1_val_1(A) :- A=6.
+
+% Skipping excluded variable: x2
+
+% aba_asp('causal/outputs/aba_learning/discrete_6_x2.bk.aba', [x2(2),x2(3),x2(4),x2(5),x2(6)], [x2(1)]).

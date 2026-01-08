@@ -1,0 +1,30 @@
+% Background knowledge with foldable rules
+% Generated from ArgCausalDisco data
+
+% Feature predicates for variable: x0
+% Continuous binning: bins=3, strategy=quantile
+% Bin ranges: [(-2.439105815056023, -0.22198501755544117), (-0.22198501755544117, 1.1760658219100548), (1.1760658219100548, 1.538714967614598)]
+x0_bin2(A) :- A=1.
+x0_bin2(A) :- A=2.
+x0_bin0(A) :- A=3.
+x0_bin1(A) :- A=4.
+x0_bin0(A) :- A=5.
+x0_bin1(A) :- A=6.
+x0_bin0(A) :- A=7.
+x0_bin2(A) :- A=8.
+
+% Feature predicates for variable: x1
+% Continuous binning: bins=3, strategy=quantile
+% Bin ranges: [(-1.1058302652067777, -0.3258628691341232), (-0.3258628691341232, 0.28793782888445074), (0.28793782888445074, 2.220640573206233)]
+x1_bin0(A) :- A=1.
+x1_bin0(A) :- A=2.
+x1_bin2(A) :- A=3.
+x1_bin2(A) :- A=4.
+x1_bin1(A) :- A=5.
+x1_bin1(A) :- A=6.
+x1_bin2(A) :- A=7.
+x1_bin0(A) :- A=8.
+
+% Skipping excluded variable: x2
+
+% aba_asp('causal/outputs/aba_learning/continuous_8_x2_bins3.bk.aba', [x2(3),x2(5),x2(6),x2(7)], [x2(1),x2(2),x2(4),x2(8)]).
