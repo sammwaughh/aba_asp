@@ -19,6 +19,7 @@ Usage (from repo root, recommended env: `aba-env`):
 from __future__ import annotations
 
 import logging
+import re
 import sys
 from dataclasses import dataclass
 from pathlib import Path
@@ -340,6 +341,11 @@ def _extract_learned_rules(predicate_file: Path) -> List[str]:
         predicate_file.parent / f"{base}.sol.aba",
     ]
     
+    # Some ABA-ASP outputs include per-sample indicator rules in the solution
+    # file (e.g., x0_val_2(A) :- A=7.). These are effectively data/BK facts and
+    # are not useful to present as part of the learned hypothesis.
+    _per_sample_indicator_re = re.compile(r"^[A-Za-z0-9_]+\(A\)\s*:-\s*A=\d+\.$")
+
     for solution_file in sol_candidates:
         if solution_file.exists():
             logger.debug("Found solution file: %s", solution_file)
@@ -348,6 +354,10 @@ def _extract_learned_rules(predicate_file: Path) -> List[str]:
 
             bk_set = set(bk_rules)
             learned = [r for r in solution_rules if r not in bk_set]
+
+            # Filter out per-sample indicator rules that can be copied/expanded
+            # into the solution, to avoid misreporting BK/data as learned rules.
+            learned = [r for r in learned if not _per_sample_indicator_re.match(r)]
             return learned
     
     logger.debug("No solution file found for %s in candidates: %s", base, sol_candidates)
