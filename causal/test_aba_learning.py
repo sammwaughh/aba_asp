@@ -10,8 +10,16 @@ This test suite validates the complete integration pipeline:
 
 Test Coverage:
 1. Simple handcrafted data (4 samples, clear patterns)
-2. Minimal discrete data (6-8 samples from ArgCausalDisco)
-3. Minimal continuous data (8 samples with median split)
+2. Handcrafted exception (assumptions/contraries)
+3. Minimal discrete chain data (6-8 samples from ArgCausalDisco)
+4. ArgCausalDisco confounder structure (X0->X1, X0->X2; learn all targets)
+5. ArgCausalDisco collider structure (X0->X2, X1->X2; learn all targets)
+6. Minimal continuous data (8 samples with median split)
+7. Folding-mode comparison
+8. Greedy folding: discrete chain (targets X0/X1/X2)
+9. Greedy folding: confounder (targets X0/X1/X2)
+10. Greedy folding: collider (targets X0/X1/X2)
+11. BK ordering sensitivity (chain, target X2): ND changes, greedy stable
 
 Usage:
     pytest test_aba_learning.py -v
@@ -58,6 +66,20 @@ logging.basicConfig(
 logger = logging.getLogger("test_aba_learning")
 
 
+_OUTPUT_ROOT = THIS_DIR / "outputs" / "aba_learning"
+
+
+def _get_test_output_dir(test_name: str) -> Path:
+    """Return a per-test output directory under `outputs/aba_learning/`.
+
+    We keep artifacts separated to make debugging easier and to avoid the
+    shared `aba_learning/` directory becoming cluttered.
+    """
+
+    safe = re.sub(r"[^a-zA-Z0-9_.-]+", "_", test_name).strip("_")
+    return _OUTPUT_ROOT / safe
+
+
 # Accumulate ABAF coverage stats across the whole test suite.
 _ABAF_COVERAGE = {
     "total_learned_lines": 0,
@@ -97,6 +119,77 @@ def _parse_bk_feature_map(bk_path: Path) -> dict:
         sid = int(m.group(2))
         feature_map.setdefault(sid, set()).add(pred)
     return feature_map
+
+
+def _write_bk_with_reordered_feature_sections(
+    *,
+    src_bk_path: Path,
+    dst_bk_path: Path,
+    feature_order: List[str],
+) -> None:
+    """Rewrite a BK file so `% Feature predicates for variable: xk` sections follow `feature_order`.
+
+    This is useful for checking whether Prolog/ABA-ASP behavior depends on BK line ordering.
+    The transformation preserves all other content, and updates the trailing reproducibility
+    comment (the `aba_asp('...')` line) to point at `dst_bk_path`.
+    """
+
+    lines = src_bk_path.read_text().splitlines(keepends=True)
+    header_pat = re.compile(r"^% Feature predicates for variable: (x\d+)\s*$")
+
+    header_idxs: List[Tuple[int, str]] = []
+    for idx, line in enumerate(lines):
+        m = header_pat.match(line.rstrip("\n"))
+        if m:
+            header_idxs.append((idx, m.group(1)))
+
+    if not header_idxs:
+        dst_bk_path.write_text("".join(lines))
+        return
+
+    blocks: dict[str, List[str]] = {}
+    for i, (start_idx, var) in enumerate(header_idxs):
+        end_idx = header_idxs[i + 1][0] if i + 1 < len(header_idxs) else len(lines)
+        blocks[var] = lines[start_idx:end_idx]
+
+    prefix = lines[: header_idxs[0][0]]
+    suffix = []
+    # Keep any content after the last feature block that is not part of it.
+    # (In practice, this includes the "Skipping excluded variable" and the aba_asp(...) comment.)
+    last_end = header_idxs[-1][0] + len(blocks[header_idxs[-1][1]])
+    suffix = lines[last_end:]
+
+    ordered_vars: List[str] = []
+    seen: set[str] = set()
+    for v in feature_order:
+        if v in blocks and v not in seen:
+            ordered_vars.append(v)
+            seen.add(v)
+    # Append any remaining feature blocks in their original order.
+    for _, v in header_idxs:
+        if v in blocks and v not in seen:
+            ordered_vars.append(v)
+            seen.add(v)
+
+    out_lines: List[str] = []
+    out_lines.extend(prefix)
+    for v in ordered_vars:
+        out_lines.extend(blocks[v])
+    out_lines.extend(suffix)
+
+    # Update the trailing reproducibility comment to use the destination path.
+    # Keep the rest (examples) identical.
+    repro_pat = re.compile(r"^%\s*aba_asp\('\s*[^']+\s*'\s*,")
+    for i, line in enumerate(out_lines):
+        if repro_pat.match(line.rstrip("\n")):
+            out_lines[i] = re.sub(
+                r"^%\s*aba_asp\('\s*[^']+\s*'",
+                f"% aba_asp('{dst_bk_path.as_posix()}'",
+                line,
+                count=1,
+            )
+
+    dst_bk_path.write_text("".join(out_lines))
 
 
 def _rule_holds_for_sample(rule: str, sample_id: int, sample_features: set[str]) -> bool:
@@ -450,6 +543,14 @@ def _parse_run_summaries(messages: list[str]) -> list[_RunSummary]:
             # Normalize variant label to e.g. "bins=3".
             mb = re_bins.search(stripped)
             current_variant = f"bins={mb.group(1)}" if mb else stripped.replace("Continuous bins experiment:", "").strip()
+            current_target = None
+            in_rules_block = False
+            continue
+
+        if stripped.startswith("BK ordering experiment"):
+            # Normalize variant label to whatever follows the colon, e.g.
+            # "nd/orig" or "greedy/swapped".
+            current_variant = stripped.replace("BK ordering experiment:", "").strip()
             current_target = None
             in_rules_block = False
             continue
@@ -936,7 +1037,7 @@ class TestSimpleHandcraftedLearning(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         """Setup test fixtures."""
-        cls.output_dir = THIS_DIR / "outputs" / "aba_learning"
+        cls.output_dir = _get_test_output_dir(cls.__name__)
         cls.output_dir.mkdir(parents=True, exist_ok=True)
         cls.runner = ABASPRunner()
     
@@ -1017,17 +1118,21 @@ class TestSimpleHandcraftedLearning(unittest.TestCase):
 
 
 class TestMinimalDiscreteData(unittest.TestCase):
-    """Test learning with ArgCausalDisco discrete data using production pipeline."""
+    """Discrete-data integration tests (chain/confounder/collider).
+
+    These are grouped together because they share the same ArgCausalDisco
+    discrete-data generation pipeline and are easiest to compare side-by-side.
+    """
     
     @classmethod
     def setUpClass(cls):
         """Setup test fixtures."""
-        cls.output_dir = THIS_DIR / "outputs" / "aba_learning"
+        cls.output_dir = _get_test_output_dir(cls.__name__)
         cls.output_dir.mkdir(parents=True, exist_ok=True)
         cls.runner = ABASPRunner()
     
-    def test_discrete_6_samples(self):
-        """Test learning with 6 discrete samples using production pipeline."""
+    def test_01_discrete_chain_6_samples(self):
+        """Test learning with 6 discrete chain samples using production pipeline."""
         # Generate minimal discrete data: X0 -> X1 -> X2
         edges = {(0, 1), (1, 2)}
         data = simulate_discrete_data(
@@ -1051,7 +1156,7 @@ class TestMinimalDiscreteData(unittest.TestCase):
             self.skipTest("SWI-Prolog not available")
 
         # We want to see whether the learned rules depend on the *target*.
-        # So we learn for x0 and then for x2 from the same chain dataset.
+        # So we learn for x0, x1 and then x2 from the same chain dataset.
 
         # --- Learn x0 -----------------------------------------------------
         bk_x0 = generate_aba_background_knowledge(
@@ -1094,6 +1199,51 @@ class TestMinimalDiscreteData(unittest.TestCase):
             stats_x0["offgraph_var_hit"],
         )
         self.assertTrue(any(r.startswith("x0(A)") for r in learned_x0), "Expected learned x0(A) rule")
+
+        # --- Learn x1 -----------------------------------------------------
+        bk_x1 = generate_aba_background_knowledge(
+            df, var_types, "discrete_6_x1", self.output_dir, exclude_cols=["x1"]
+        )
+        _, pos_x1, neg_x1 = pick_target_variable(df, "x1")
+        if not pos_x1 or not neg_x1:
+            self.skipTest("Need both positive and negative examples for x1")
+
+        _log_aba_asp_call(bk_x1, pos_x1, neg_x1)
+        res_x1 = self.runner.run_prolog_aba_asp(
+            bk_x1,
+            positive_examples=pos_x1,
+            negative_examples=neg_x1,
+            learning_options={"folding_steps": "15"},
+        )
+        self.assertEqual(res_x1.get("status"), "completed")
+        learned_x1 = _extract_learned_rules(bk_x1)
+        _log_learned_rules_block("x1", learned_x1)
+        _log_triviality("x1", learned_x1)
+        _record_abaf_coverage(learned_x1)
+        _example_coverage_report(
+            target="x1",
+            bk_path=bk_x1,
+            learned_rules=learned_x1,
+            pos_examples=pos_x1,
+            neg_examples=neg_x1,
+        )
+        deps_x1 = _summarize_target_rule_dependencies("x1", learned_x1)
+        stats_x1 = _correspondence_stats("x1", learned_x1, edges)
+        logger.info("Dependencies (target rule prefixes): %s", deps_x1)
+        logger.info("GT sets: parents=%s | ancestors=%s", stats_x1["parents"], stats_x1["ancestors"])
+        logger.info(
+            "Corr vs GT: rules=%d triv=%d nontriv=%d parent=%d anc_only=%d offgraph=%d",
+            stats_x1["target_rules"],
+            stats_x1["trivial"],
+            stats_x1["nontrivial"],
+            stats_x1["parent_hit"],
+            stats_x1["ancestor_only_hit"],
+            stats_x1["offgraph_var_hit"],
+        )
+
+        # Note: ABA-ASP can legitimately learn an empty delta for some
+        # target/dataset combinations. We still learn x1 here to surface that
+        # behavior in the run summary without making the whole suite flaky.
 
         # --- Learn x2 -----------------------------------------------------
         bk_x2 = generate_aba_background_knowledge(
@@ -1140,12 +1290,570 @@ class TestMinimalDiscreteData(unittest.TestCase):
         )
 
         # The main check requested: learning different targets yields different learned theories.
-        self.assertNotEqual(
-            set(learned_x0),
-            set(learned_x2),
-            "Expected learned rules for x0 vs x2 to differ on the chain dataset",
-        )
+        self.assertNotEqual(set(learned_x0), set(learned_x1), "Expected learned rules for x0 vs x1 to differ")
+        self.assertNotEqual(set(learned_x1), set(learned_x2), "Expected learned rules for x1 vs x2 to differ")
+        self.assertNotEqual(set(learned_x0), set(learned_x2), "Expected learned rules for x0 vs x2 to differ")
         logger.info("✓ Discrete chain: learned rules differ for x0 vs x2")
+
+    def test_02_confounder_x0_to_x1_x2_all_targets(self):
+        # ArgCausalDisco discrete confounder: x0 -> x1 and x0 -> x2
+        edges = {(0, 1), (0, 2)}
+        data = simulate_discrete_data(
+            num_of_nodes=3,
+            sample_size=6,
+            truth_DAG_directed_edges=edges,
+            random_seed=42,
+        )
+
+        df = pd.DataFrame(data, columns=["x0", "x1", "x2"])
+        var_types = {c: "categorical" for c in df.columns}
+
+        _log_run_header(
+            "ArgCausalDisco confounder (common cause)",
+            n_samples=len(df),
+            dgp="x0→x1 and x0→x2 (discrete); learn all targets",
+            gt_edges=edges,
+        )
+
+        if not self.runner.prolog_available:
+            self.skipTest("SWI-Prolog not available")
+
+        for target in ("x0", "x1", "x2"):
+            bk_path = generate_aba_background_knowledge(
+                df,
+                var_types,
+                f"confounder_6_{target}",
+                self.output_dir,
+                exclude_cols=[target],
+            )
+            _, pos, neg = pick_target_variable(df, target)
+            if not pos or not neg:
+                self.skipTest(f"Need both positive and negative examples for {target}")
+
+            _log_aba_asp_call(bk_path, pos, neg)
+            res = self.runner.run_prolog_aba_asp(
+                bk_path,
+                positive_examples=pos,
+                negative_examples=neg,
+                learning_options={"folding_steps": "15"},
+            )
+            self.assertEqual(res.get("status"), "completed")
+
+            learned = _extract_learned_rules(bk_path)
+            _log_learned_rules_block(target, learned)
+            _log_triviality(target, learned)
+            _record_abaf_coverage(learned)
+            _example_coverage_report(
+                target=target,
+                bk_path=bk_path,
+                learned_rules=learned,
+                pos_examples=pos,
+                neg_examples=neg,
+            )
+
+            deps = _summarize_target_rule_dependencies(target, learned)
+            stats = _correspondence_stats(target, learned, edges)
+            logger.info("Dependencies (target rule prefixes): %s", deps)
+            logger.info("GT sets: parents=%s | ancestors=%s", stats["parents"], stats["ancestors"])
+            logger.info(
+                "Corr vs GT: rules=%d triv=%d nontriv=%d parent=%d anc_only=%d offgraph=%d",
+                stats["target_rules"],
+                stats["trivial"],
+                stats["nontrivial"],
+                stats["parent_hit"],
+                stats["ancestor_only_hit"],
+                stats["offgraph_var_hit"],
+            )
+
+            # Note: ABA-ASP can legitimately return "* No solution found!" for some
+            # configurations. In that case, no .bk.sol.aba is written and the learned
+            # delta is empty; this test is primarily to surface that behavior in the
+            # final run summary while ensuring the pipeline executes.
+
+    def test_03_collider_x0_x1_to_x2_all_targets(self):
+        # ArgCausalDisco discrete collider: x0 -> x2, x1 -> x2
+        edges = {(0, 2), (1, 2)}
+        sample_size = 8
+        data = simulate_discrete_data(
+            num_of_nodes=3,
+            sample_size=sample_size,
+            truth_DAG_directed_edges=edges,
+            random_seed=42,
+        )
+
+        df = pd.DataFrame(data, columns=["x0", "x1", "x2"])
+        var_types = {c: "categorical" for c in df.columns}
+
+        _log_run_header(
+            "ArgCausalDisco collider (common effect)",
+            n_samples=len(df),
+            dgp="x0→x2 and x1→x2 (discrete); learn all targets",
+            gt_edges=edges,
+        )
+
+        if not self.runner.prolog_available:
+            self.skipTest("SWI-Prolog not available")
+
+        for target in ("x0", "x1", "x2"):
+            bk_path = generate_aba_background_knowledge(
+                df,
+                var_types,
+                f"collider_{sample_size}_{target}",
+                self.output_dir,
+                exclude_cols=[target],
+            )
+            _, pos, neg = pick_target_variable(df, target)
+            if not pos or not neg:
+                self.skipTest(f"Need both positive and negative examples for {target}")
+
+            _log_aba_asp_call(bk_path, pos, neg)
+            res = self.runner.run_prolog_aba_asp(
+                bk_path,
+                positive_examples=pos,
+                negative_examples=neg,
+                learning_options={"folding_steps": "15"},
+            )
+            self.assertEqual(res.get("status"), "completed")
+
+            learned = _extract_learned_rules(bk_path)
+            _log_learned_rules_block(target, learned)
+            _log_triviality(target, learned)
+            _record_abaf_coverage(learned)
+            _example_coverage_report(
+                target=target,
+                bk_path=bk_path,
+                learned_rules=learned,
+                pos_examples=pos,
+                neg_examples=neg,
+            )
+
+            deps = _summarize_target_rule_dependencies(target, learned)
+            stats = _correspondence_stats(target, learned, edges)
+            logger.info("Dependencies (target rule prefixes): %s", deps)
+            logger.info("GT sets: parents=%s | ancestors=%s", stats["parents"], stats["ancestors"])
+            logger.info(
+                "Corr vs GT: rules=%d triv=%d nontriv=%d parent=%d anc_only=%d offgraph=%d",
+                stats["target_rules"],
+                stats["trivial"],
+                stats["nontrivial"],
+                stats["parent_hit"],
+                stats["ancestor_only_hit"],
+                stats["offgraph_var_hit"],
+            )
+
+            # Note: ABA-ASP can legitimately return "* No solution found!" for some
+            # configurations. In that case, no .bk.sol.aba is written and the learned
+            # delta is empty; this test is primarily to surface that behavior in the
+            # final run summary while ensuring the pipeline executes.
+
+
+class TestGreedyFoldingDiscreteChain(unittest.TestCase):
+    """Greedy folding variant of the discrete-chain learning test."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.output_dir = _get_test_output_dir(cls.__name__)
+        cls.output_dir.mkdir(parents=True, exist_ok=True)
+        cls.runner = ABASPRunner()
+
+    def test_discrete_chain_greedy_folding_all_targets(self):
+        edges = {(0, 1), (1, 2)}
+        data = simulate_discrete_data(
+            num_of_nodes=3,
+            sample_size=6,
+            truth_DAG_directed_edges=edges,
+            random_seed=42,
+        )
+        df = pd.DataFrame(data, columns=["x0", "x1", "x2"])
+        var_types = {c: "categorical" for c in df.columns}
+
+        _log_run_header(
+            "Greedy folding: discrete chain",
+            n_samples=len(df),
+            dgp="x0→x1→x2 (discrete); folding_mode=greedy; learn all targets",
+            gt_edges=edges,
+        )
+
+        if not self.runner.prolog_available:
+            self.skipTest("SWI-Prolog not available")
+
+        for target in ("x0", "x1", "x2"):
+            bk_path = generate_aba_background_knowledge(
+                df,
+                var_types,
+                f"discrete_6_{target}_greedy",
+                self.output_dir,
+                exclude_cols=[target],
+            )
+            _, pos, neg = pick_target_variable(df, target)
+            if not pos or not neg:
+                self.skipTest(f"Need both positive and negative examples for {target}")
+
+            _log_aba_asp_call(bk_path, pos, neg)
+            res = self.runner.run_prolog_aba_asp(
+                bk_path,
+                positive_examples=pos,
+                negative_examples=neg,
+                learning_options={"folding_steps": "15", "folding_mode": "greedy", "verbosity": "off"},
+            )
+            self.assertEqual(res.get("status"), "completed")
+
+            learned = _extract_learned_rules(bk_path)
+            _log_learned_rules_block(target, learned)
+            _log_triviality(target, learned)
+            _record_abaf_coverage(learned)
+            _example_coverage_report(
+                target=target,
+                bk_path=bk_path,
+                learned_rules=learned,
+                pos_examples=pos,
+                neg_examples=neg,
+            )
+
+            deps = _summarize_target_rule_dependencies(target, learned)
+            stats = _correspondence_stats(target, learned, edges)
+            logger.info("Dependencies (target rule prefixes): %s", deps)
+            logger.info("GT sets: parents=%s | ancestors=%s", stats["parents"], stats["ancestors"])
+            logger.info(
+                "Corr vs GT: rules=%d triv=%d nontriv=%d parent=%d anc_only=%d offgraph=%d",
+                stats["target_rules"],
+                stats["trivial"],
+                stats["nontrivial"],
+                stats["parent_hit"],
+                stats["ancestor_only_hit"],
+                stats["offgraph_var_hit"],
+            )
+
+
+class TestGreedyFoldingConfounder(unittest.TestCase):
+    """Greedy folding variant of the confounder (common-cause) test."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.output_dir = _get_test_output_dir(cls.__name__)
+        cls.output_dir.mkdir(parents=True, exist_ok=True)
+        cls.runner = ABASPRunner()
+
+    def test_confounder_greedy_folding_all_targets(self):
+        edges = {(0, 1), (0, 2)}
+        data = simulate_discrete_data(
+            num_of_nodes=3,
+            sample_size=6,
+            truth_DAG_directed_edges=edges,
+            random_seed=42,
+        )
+        df = pd.DataFrame(data, columns=["x0", "x1", "x2"])
+        var_types = {c: "categorical" for c in df.columns}
+
+        _log_run_header(
+            "Greedy folding: confounder (common cause)",
+            n_samples=len(df),
+            dgp="x0→x1 and x0→x2 (discrete); folding_mode=greedy; learn all targets",
+            gt_edges=edges,
+        )
+
+        if not self.runner.prolog_available:
+            self.skipTest("SWI-Prolog not available")
+
+        for target in ("x0", "x1", "x2"):
+            bk_path = generate_aba_background_knowledge(
+                df,
+                var_types,
+                f"confounder_6_{target}_greedy",
+                self.output_dir,
+                exclude_cols=[target],
+            )
+            _, pos, neg = pick_target_variable(df, target)
+            if not pos or not neg:
+                self.skipTest(f"Need both positive and negative examples for {target}")
+
+            _log_aba_asp_call(bk_path, pos, neg)
+            res = self.runner.run_prolog_aba_asp(
+                bk_path,
+                positive_examples=pos,
+                negative_examples=neg,
+                learning_options={"folding_steps": "15", "folding_mode": "greedy", "verbosity": "off"},
+            )
+            self.assertEqual(res.get("status"), "completed")
+
+            learned = _extract_learned_rules(bk_path)
+            _log_learned_rules_block(target, learned)
+            _log_triviality(target, learned)
+            _record_abaf_coverage(learned)
+            _example_coverage_report(
+                target=target,
+                bk_path=bk_path,
+                learned_rules=learned,
+                pos_examples=pos,
+                neg_examples=neg,
+            )
+
+            deps = _summarize_target_rule_dependencies(target, learned)
+            stats = _correspondence_stats(target, learned, edges)
+            logger.info("Dependencies (target rule prefixes): %s", deps)
+            logger.info("GT sets: parents=%s | ancestors=%s", stats["parents"], stats["ancestors"])
+            logger.info(
+                "Corr vs GT: rules=%d triv=%d nontriv=%d parent=%d anc_only=%d offgraph=%d",
+                stats["target_rules"],
+                stats["trivial"],
+                stats["nontrivial"],
+                stats["parent_hit"],
+                stats["ancestor_only_hit"],
+                stats["offgraph_var_hit"],
+            )
+
+
+class TestGreedyFoldingCollider(unittest.TestCase):
+    """Greedy folding variant of the collider (common-effect) test."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.output_dir = _get_test_output_dir(cls.__name__)
+        cls.output_dir.mkdir(parents=True, exist_ok=True)
+        cls.runner = ABASPRunner()
+
+    def test_collider_greedy_folding_all_targets(self):
+        edges = {(0, 2), (1, 2)}
+        sample_size=8
+        data = simulate_discrete_data(
+            num_of_nodes=3,
+            sample_size=sample_size,
+            truth_DAG_directed_edges=edges,
+            random_seed=42,
+        )
+        df = pd.DataFrame(data, columns=["x0", "x1", "x2"])
+        var_types = {c: "categorical" for c in df.columns}
+
+        _log_run_header(
+            "Greedy folding: collider (common effect)",
+            n_samples=len(df),
+            dgp="x0→x2 and x1→x2 (discrete); folding_mode=greedy; learn all targets",
+            gt_edges=edges,
+        )
+
+        if not self.runner.prolog_available:
+            self.skipTest("SWI-Prolog not available")
+
+        for target in ("x0", "x1", "x2"):
+            bk_path = generate_aba_background_knowledge(
+                df,
+                var_types,
+                f"collider_{sample_size}_{target}_greedy",
+                self.output_dir,
+                exclude_cols=[target],
+            )
+            _, pos, neg = pick_target_variable(df, target)
+            if not pos or not neg:
+                self.skipTest(f"Need both positive and negative examples for {target}")
+
+            _log_aba_asp_call(bk_path, pos, neg)
+            res = self.runner.run_prolog_aba_asp(
+                bk_path,
+                positive_examples=pos,
+                negative_examples=neg,
+                learning_options={"folding_steps": "15", "folding_mode": "greedy", "verbosity": "off"},
+            )
+            self.assertEqual(res.get("status"), "completed")
+
+            learned = _extract_learned_rules(bk_path)
+            _log_learned_rules_block(target, learned)
+            _log_triviality(target, learned)
+            _record_abaf_coverage(learned)
+            _example_coverage_report(
+                target=target,
+                bk_path=bk_path,
+                learned_rules=learned,
+                pos_examples=pos,
+                neg_examples=neg,
+            )
+
+            deps = _summarize_target_rule_dependencies(target, learned)
+            stats = _correspondence_stats(target, learned, edges)
+            logger.info("Dependencies (target rule prefixes): %s", deps)
+            logger.info("GT sets: parents=%s | ancestors=%s", stats["parents"], stats["ancestors"])
+            logger.info(
+                "Corr vs GT: rules=%d triv=%d nontriv=%d parent=%d anc_only=%d offgraph=%d",
+                stats["target_rules"],
+                stats["trivial"],
+                stats["nontrivial"],
+                stats["parent_hit"],
+                stats["ancestor_only_hit"],
+                stats["offgraph_var_hit"],
+            )
+
+
+class TestBKOrderingSensitivity(unittest.TestCase):
+    """Show BK feature ordering affects nd folding but not greedy (chain, target x2)."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.output_dir = _get_test_output_dir(cls.__name__)
+        cls.output_dir.mkdir(parents=True, exist_ok=True)
+        cls.runner = ABASPRunner()
+
+    def test_chain_x2_bk_ordering_changes_nd_not_greedy(self):
+        edges = {(0, 1), (1, 2)}
+        var_types = {"x0": "categorical", "x1": "categorical", "x2": "categorical"}
+
+        _log_run_header(
+            "BK ordering sensitivity (chain, target x2)",
+            n_samples=12,
+            dgp="x0→x1→x2 (discrete); swap BK feature section order (x1 before x0)",
+            gt_edges=edges,
+        )
+
+        if not self.runner.prolog_available:
+            self.skipTest("SWI-Prolog not available")
+
+        # Seed chosen by probing for a deterministic case where:
+        # - nd folding changes under BK feature section ordering
+        # - greedy folding remains invariant
+        seed = 7
+        data = simulate_discrete_data(
+            num_of_nodes=3,
+            sample_size=12,
+            truth_DAG_directed_edges=edges,
+            random_seed=seed,
+        )
+        df = pd.DataFrame(data, columns=["x0", "x1", "x2"])
+
+        bk_orig = generate_aba_background_knowledge(
+            df,
+            var_types,
+            f"discrete_12_x2_bkorder_seed{seed}_orig",
+            self.output_dir,
+            exclude_cols=["x2"],
+        )
+        bk_swapped = self.output_dir / f"discrete_12_x2_bkorder_seed{seed}_x1_before_x0.bk.aba"
+        _write_bk_with_reordered_feature_sections(
+            src_bk_path=bk_orig,
+            dst_bk_path=bk_swapped,
+            feature_order=["x1", "x0"],
+        )
+
+        _, pos, neg = pick_target_variable(df, "x2")
+        if not pos or not neg:
+            self.skipTest("Need both positive and negative examples for x2")
+
+        # ND folding
+        logger.info("BK ordering experiment: nd/orig")
+        _log_aba_asp_call(bk_orig, pos, neg)
+        res1 = self.runner.run_prolog_aba_asp(
+            bk_orig,
+            positive_examples=pos,
+            negative_examples=neg,
+            learning_options={"folding_steps": "15", "folding_mode": "nd", "verbosity": "off"},
+        )
+        self.assertEqual(res1.get("status"), "completed")
+        self.assertNotIn("No solution found!", res1.get("stdout", ""))
+        learned_nd_orig = _extract_learned_rules(bk_orig)
+        _log_learned_rules_block("x2", learned_nd_orig)
+        _log_triviality("x2", learned_nd_orig)
+        _record_abaf_coverage(learned_nd_orig)
+
+        logger.info("BK ordering experiment: nd/swapped")
+        _log_aba_asp_call(bk_swapped, pos, neg)
+        res2 = self.runner.run_prolog_aba_asp(
+            bk_swapped,
+            positive_examples=pos,
+            negative_examples=neg,
+            learning_options={"folding_steps": "15", "folding_mode": "nd", "verbosity": "off"},
+        )
+        self.assertEqual(res2.get("status"), "completed")
+        self.assertNotIn("No solution found!", res2.get("stdout", ""))
+        learned_nd_swapped = _extract_learned_rules(bk_swapped)
+        _log_learned_rules_block("x2", learned_nd_swapped)
+        nd_added = sorted(set(learned_nd_swapped) - set(learned_nd_orig))
+        nd_removed = sorted(set(learned_nd_orig) - set(learned_nd_swapped))
+        if nd_added:
+            logger.info("  Δadded (nd):")
+            for r in nd_added[:12]:
+                logger.info("  %s", r)
+        else:
+            logger.info("  Δadded (nd): (none)")
+        if nd_removed:
+            logger.info("  Δremoved (nd):")
+            for r in nd_removed[:12]:
+                logger.info("  %s", r)
+        else:
+            logger.info("  Δremoved (nd): (none)")
+        _log_triviality("x2", learned_nd_swapped)
+        _record_abaf_coverage(learned_nd_swapped)
+
+        self.assertTrue(learned_nd_orig, "Expected nd folding to learn a non-empty delta (orig BK)")
+        self.assertTrue(learned_nd_swapped, "Expected nd folding to learn a non-empty delta (swapped BK)")
+
+        nd_same = set(learned_nd_orig) == set(learned_nd_swapped)
+        logger.info(
+            "BK order (seed=%d) nd: orig=%d swapped=%d same=%s",
+            seed,
+            len(learned_nd_orig),
+            len(learned_nd_swapped),
+            nd_same,
+        )
+        self.assertFalse(
+            nd_same,
+            "Expected nd folding learned deltas to differ under BK feature section reordering",
+        )
+
+        # Greedy folding should be stable under this BK reorder.
+        logger.info("BK ordering experiment: greedy/orig")
+        res3 = self.runner.run_prolog_aba_asp(
+            bk_orig,
+            positive_examples=pos,
+            negative_examples=neg,
+            learning_options={"folding_steps": "15", "folding_mode": "greedy", "verbosity": "off"},
+        )
+        self.assertEqual(res3.get("status"), "completed")
+        self.assertNotIn("No solution found!", res3.get("stdout", ""))
+        learned_greedy_orig = _extract_learned_rules(bk_orig)
+        _log_learned_rules_block("x2", learned_greedy_orig)
+        _log_triviality("x2", learned_greedy_orig)
+        _record_abaf_coverage(learned_greedy_orig)
+
+        logger.info("BK ordering experiment: greedy/swapped")
+        res4 = self.runner.run_prolog_aba_asp(
+            bk_swapped,
+            positive_examples=pos,
+            negative_examples=neg,
+            learning_options={"folding_steps": "15", "folding_mode": "greedy", "verbosity": "off"},
+        )
+        self.assertEqual(res4.get("status"), "completed")
+        self.assertNotIn("No solution found!", res4.get("stdout", ""))
+        learned_greedy_swapped = _extract_learned_rules(bk_swapped)
+        _log_learned_rules_block("x2", learned_greedy_swapped)
+        greedy_added = sorted(set(learned_greedy_swapped) - set(learned_greedy_orig))
+        greedy_removed = sorted(set(learned_greedy_orig) - set(learned_greedy_swapped))
+        if greedy_added:
+            logger.info("  Δadded (greedy):")
+            for r in greedy_added[:12]:
+                logger.info("  %s", r)
+        else:
+            logger.info("  Δadded (greedy): (none)")
+        if greedy_removed:
+            logger.info("  Δremoved (greedy):")
+            for r in greedy_removed[:12]:
+                logger.info("  %s", r)
+        else:
+            logger.info("  Δremoved (greedy): (none)")
+        _log_triviality("x2", learned_greedy_swapped)
+        _record_abaf_coverage(learned_greedy_swapped)
+
+        self.assertTrue(learned_greedy_orig, "Expected greedy folding to learn a non-empty delta (orig BK)")
+        self.assertTrue(learned_greedy_swapped, "Expected greedy folding to learn a non-empty delta (swapped BK)")
+
+        greedy_same = set(learned_greedy_orig) == set(learned_greedy_swapped)
+        logger.info(
+            "BK order (seed=%d) greedy: orig=%d swapped=%d same=%s",
+            seed,
+            len(learned_greedy_orig),
+            len(learned_greedy_swapped),
+            greedy_same,
+        )
+        self.assertTrue(
+            greedy_same,
+            "Expected greedy folding learned deltas to be invariant to BK feature section ordering",
+        )
 
 
 class TestAssumptionIntroduction(unittest.TestCase):
@@ -1153,7 +1861,7 @@ class TestAssumptionIntroduction(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.output_dir = THIS_DIR / "outputs" / "aba_learning"
+        cls.output_dir = _get_test_output_dir(cls.__name__)
         cls.output_dir.mkdir(parents=True, exist_ok=True)
         cls.runner = ABASPRunner()
 
@@ -1243,7 +1951,7 @@ class TestMinimalContinuousData(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         """Setup test fixtures."""
-        cls.output_dir = THIS_DIR / "outputs" / "aba_learning"
+        cls.output_dir = _get_test_output_dir(cls.__name__)
         cls.output_dir.mkdir(parents=True, exist_ok=True)
         cls.runner = ABASPRunner()
     
@@ -1440,7 +2148,7 @@ class TestFoldingModes(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.output_dir = THIS_DIR / "outputs" / "aba_learning"
+        cls.output_dir = _get_test_output_dir(cls.__name__)
         cls.output_dir.mkdir(parents=True, exist_ok=True)
         cls.runner = ABASPRunner()
 
@@ -1640,10 +2348,18 @@ def run_all_tests():
     suite = unittest.TestSuite()
     
     suite.addTests(loader.loadTestsFromTestCase(TestSimpleHandcraftedLearning))
-    suite.addTests(loader.loadTestsFromTestCase(TestMinimalDiscreteData))
     suite.addTests(loader.loadTestsFromTestCase(TestAssumptionIntroduction))
+    suite.addTests(loader.loadTestsFromTestCase(TestMinimalDiscreteData))
+    # Discrete data: chain/confounder/collider are grouped in one class.
     suite.addTests(loader.loadTestsFromTestCase(TestMinimalContinuousData))
+    # BK ordering sensitivity: keep this before folding-mode comparison as requested.
+    suite.addTests(loader.loadTestsFromTestCase(TestBKOrderingSensitivity))
     suite.addTests(loader.loadTestsFromTestCase(TestFoldingModes))
+
+    # Greedy folding variants (append at the end as requested)
+    suite.addTests(loader.loadTestsFromTestCase(TestGreedyFoldingDiscreteChain))
+    suite.addTests(loader.loadTestsFromTestCase(TestGreedyFoldingConfounder))
+    suite.addTests(loader.loadTestsFromTestCase(TestGreedyFoldingCollider))
     
     # Run tests
     runner = unittest.TextTestRunner(verbosity=2)
