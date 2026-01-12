@@ -7,3 +7,6 @@ cc.pl
 *.csv
 *.pyc
 __pycache__/
+
+# Generated test artifacts
+causal/outputs/aba_learning/
