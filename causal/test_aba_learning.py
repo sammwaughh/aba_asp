@@ -15,11 +15,16 @@ Test Coverage:
 4. ArgCausalDisco confounder structure (X0->X1, X0->X2; learn all targets)
 5. ArgCausalDisco collider structure (X0->X2, X1->X2; learn all targets)
 6. Minimal continuous data (8 samples with median split)
-7. Folding-mode comparison
-8. Greedy folding: discrete chain (targets X0/X1/X2)
-9. Greedy folding: confounder (targets X0/X1/X2)
-10. Greedy folding: collider (targets X0/X1/X2)
-11. BK ordering sensitivity (chain, target X2): ND changes, greedy stable
+7. Continuous confounder (6 samples, median split, 2 bins)
+8. Continuous collider (8 samples, median split, 2 bins)
+9. Folding-mode comparison
+10. Greedy folding: discrete chain (targets X0/X1/X2)
+11. Greedy folding: confounder (targets X0/X1/X2)
+12. Greedy folding: collider (targets X0/X1/X2)
+13. BK ordering sensitivity (chain, target X2): ND changes, greedy stable
+
+Continuous confounder/collider mirror discrete test_02/test_03 but use
+simulate_linear_continuous_data, quantile bins, and median E+/E- splits.
 
 Usage:
     pytest test_aba_learning.py -v
@@ -960,6 +965,14 @@ def _log_aba_asp_call(bk_path: Path, pos_examples: List[str], neg_examples: List
     
     call_str = f"aba_asp('{rel_path}', [{pos_str}], [{neg_str}])."
     logger.info(call_str)
+
+
+def _median_pos_neg_examples(df: pd.DataFrame, target: str) -> Tuple[List[str], List[str]]:
+    """Split samples into E+/E- using median split on a continuous target column."""
+    median_val = df[target].median()
+    pos_examples = [f"{target}({i + 1})" for i in df.index if df[target].iloc[i] >= median_val]
+    neg_examples = [f"{target}({i + 1})" for i in df.index if df[target].iloc[i] < median_val]
+    return pos_examples, neg_examples
     
     # Also write to the .bk.aba file as a comment
     if bk_path.exists():
@@ -2135,6 +2148,109 @@ class TestMinimalContinuousData(unittest.TestCase):
             stats_x2b3["parent_hit"],
             stats_x2b3["ancestor_only_hit"],
             stats_x2b3["offgraph_var_hit"],
+        )
+
+    def _run_continuous_all_targets(
+        self,
+        *,
+        edges: set,
+        sample_size: int,
+        run_prefix: str,
+        dgp: str,
+        run_title: str,
+    ) -> None:
+        """Shared continuous-zoo driver: simulate once, learn x0/x1/x2 with median E+/E-."""
+        data = simulate_linear_continuous_data(
+            num_of_nodes=3,
+            sample_size=sample_size,
+            truth_DAG_directed_edges=edges,
+            noise_type="gaussian",
+            random_seed=42,
+        )
+        df = pd.DataFrame(data, columns=["x0", "x1", "x2"])
+        var_types = {c: "continuous" for c in df.columns}
+
+        _log_run_header(
+            run_title,
+            n_samples=len(df),
+            dgp=dgp,
+            gt_edges=edges,
+        )
+
+        if not self.runner.prolog_available:
+            self.skipTest("SWI-Prolog not available")
+
+        for target in ("x0", "x1", "x2"):
+            bk_path = generate_aba_background_knowledge(
+                df,
+                var_types,
+                f"{run_prefix}_{target}",
+                self.output_dir,
+                exclude_cols=[target],
+                continuous_bins=2,
+                bin_strategy="quantile",
+            )
+            pos_examples, neg_examples = _median_pos_neg_examples(df, target)
+            if not pos_examples or not neg_examples:
+                self.skipTest(f"Need both positive and negative examples for {target}")
+
+            _log_aba_asp_call(bk_path, pos_examples, neg_examples)
+            res = self.runner.run_prolog_aba_asp(
+                bk_path,
+                positive_examples=pos_examples,
+                negative_examples=neg_examples,
+                learning_options={"folding_steps": "15"},
+            )
+            self.assertEqual(res.get("status"), "completed")
+
+            learned = _extract_learned_rules(bk_path)
+            _log_learned_rules_block(target, learned)
+            _log_triviality(target, learned)
+            _record_abaf_coverage(learned)
+            _example_coverage_report(
+                target=target,
+                bk_path=bk_path,
+                learned_rules=learned,
+                pos_examples=pos_examples,
+                neg_examples=neg_examples,
+            )
+
+            deps = _summarize_target_rule_dependencies(target, learned)
+            stats = _correspondence_stats(target, learned, edges)
+            logger.info("Dependencies (target rule prefixes): %s", deps)
+            logger.info("GT sets: parents=%s | ancestors=%s", stats["parents"], stats["ancestors"])
+            logger.info(
+                "Corr vs GT: rules=%d triv=%d nontriv=%d parent=%d anc_only=%d offgraph=%d",
+                stats["target_rules"],
+                stats["trivial"],
+                stats["nontrivial"],
+                stats["parent_hit"],
+                stats["ancestor_only_hit"],
+                stats["offgraph_var_hit"],
+            )
+
+            # ABA-ASP can legitimately return "* No solution found!" for some
+            # configurations. In that case, no .bk.sol.aba is written and the learned
+            # delta is empty; this test surfaces that behavior in the run summary.
+
+    def test_continuous_confounder_x0_to_x1_x2_all_targets(self):
+        """Continuous confounder: x0->x1 and x0->x2; learn all targets (median E+/E-)."""
+        self._run_continuous_all_targets(
+            edges={(0, 1), (0, 2)},
+            sample_size=6,
+            run_prefix="cont_confounder_6",
+            dgp="x0→x1 and x0→x2 (linear Gaussian); median split; learn all targets",
+            run_title="ArgCausalDisco continuous confounder (common cause)",
+        )
+
+    def test_continuous_collider_x0_x1_to_x2_all_targets(self):
+        """Continuous collider: x0->x2 and x1->x2; learn all targets (median E+/E-)."""
+        self._run_continuous_all_targets(
+            edges={(0, 2), (1, 2)},
+            sample_size=8,
+            run_prefix="cont_collider_8",
+            dgp="x0→x2 and x1→x2 (linear Gaussian); median split; learn all targets",
+            run_title="ArgCausalDisco continuous collider (common effect)",
         )
 
 

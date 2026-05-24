@@ -87,5 +87,5 @@ conda run -n aba-env python causal/argcausaldisco_integration.py
 - `test_aba_learning.py` (purpose: end-to-end learning on small datasets)
 	- Handcrafted perfect-correlation case (4 samples)
 	- ArgCausalDisco discrete chain (6 samples)
-	- ArgCausalDisco continuous small (8 samples) and folding mode comparisons
+	- ArgCausalDisco continuous chain (8 samples), confounder (6), collider (8); median E+/E−; folding mode comparisons
 
