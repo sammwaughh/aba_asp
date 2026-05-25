@@ -1,5 +1,7 @@
 # E03 — Sample-size scaling
 
+**Read after:** [`meta-understanding-plan.md`](../meta-understanding-plan.md) — **Phase 5a** (core experiments).
+
 **Status:** spec, runs after E02 is green.
 **Companion docs:** `EXPERIMENTS_PLAN.md`, `METRICS.md`, `INFRA.md`, `REPORT_OUTLINE.md` (F4).
 **Role in the plan:** the n-scaling experiment; produces Figure F4 and the data that E09 reuses to assess implied-skeleton scaling.

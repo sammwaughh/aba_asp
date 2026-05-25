@@ -1,5 +1,7 @@
 # E02 — Seed Robustness
 
+**Read after:** [`meta-understanding-plan.md`](../meta-understanding-plan.md) — **Phase 5a** (core experiments).
+
 **Status:** spec, ready for implementation once E01 is green.
 **Companion docs:** `EXPERIMENTS_PLAN.md`, `METRICS.md`, `INFRA.md`, `REPORT_OUTLINE.md` (F3).
 **Role in the plan:** the single highest-leverage missing experiment; produces Figure F3 and provides the data backbone for E04.

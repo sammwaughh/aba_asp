@@ -1,5 +1,7 @@
 # E10 — Bridge to Causal ABA (RQ3 preliminary)
 
+**Read after:** [`meta-understanding-plan.md`](../meta-understanding-plan.md) — **Phase 5c** (RQ3: bridge prelim; read after E09).
+
 **Status:** spec, runs after E09 is green. The most ambitious experiment in the interim plan; deliberately scoped to **one figure + one table + a written roadmap**.
 **Companion docs:** `EXPERIMENTS_PLAN.md`, `METRICS.md` (§3.8), `INFRA.md`, `REPORT_OUTLINE.md` (F7, T2, §5.3.2, §7).
 **Role in the plan:** the *preliminary* answer to RQ3. We demonstrate that δ-rule hints can be injected into Causal ABA and that this changes the output in interpretable ways. The **full benchmark** is post-interim.

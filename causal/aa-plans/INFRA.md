@@ -1,5 +1,7 @@
 # Infrastructure Specification
 
+**Read after:** [`meta-understanding-plan.md`](meta-understanding-plan.md) — **Phase 4** (runner and artefacts).
+
 **Status:** living document. Last updated: 2026-05-24.
 **Companion docs:** `EXPERIMENTS_PLAN.md`, `METRICS.md`.
 

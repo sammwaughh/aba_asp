@@ -1,5 +1,7 @@
 # Literature Review — Reading and Synthesis Plan
 
+**Read after:** [`meta-understanding-plan.md`](meta-understanding-plan.md) — **Phase 6** (literature track; parallel to experiments).
+
 **Status:** living document. Last updated: 2026-05-24.
 **Companion docs:** `EXPERIMENTS_PLAN.md`, `REPORT_OUTLINE.md` (§2).
 

@@ -1,5 +1,7 @@
 # Metrics Specification
 
+**Read after:** [`meta-understanding-plan.md`](meta-understanding-plan.md) — **Phase 3** (measurement contract).
+
 **Status:** living document. Last updated: 2026-05-24.
 **Companion docs:** `EXPERIMENTS_PLAN.md`, `INFRA.md`.
 

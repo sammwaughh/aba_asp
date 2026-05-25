@@ -1,5 +1,7 @@
 # E08 — BK Content Ablation (appendix)
 
+**Read after:** [`meta-understanding-plan.md`](../meta-understanding-plan.md) — **Phase 5d** (appendix experiments; skim).
+
 **Status:** appendix-bound spec. Runs only if compute budget permits after E02–E07 + E09 complete.
 **Companion docs:** `EXPERIMENTS_PLAN.md`, `METRICS.md`, `INFRA.md`, `REPORT_OUTLINE.md` (App. B).
 **Role in the plan:** stresses the BK content side of the pipeline; informs §6 discussion and is a precursor to RQ3's "what does the learner do under realistic BK noise" question.

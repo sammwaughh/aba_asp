@@ -1,5 +1,7 @@
 # E01 — Sanity (case studies)
 
+**Read after:** [`meta-understanding-plan.md`](../meta-understanding-plan.md) — **Phase 5a** (core experiments; read first in that block).
+
 **Status:** spec, ready for implementation after `metrics.py` and `run_grid.py` are in place.
 **Companion docs:** `EXPERIMENTS_PLAN.md`, `METRICS.md`, `INFRA.md`, `REPORT_OUTLINE.md` (F2).
 **Role in the plan:** P1 exit smoke test **and** the source of Figure F2 in the report.

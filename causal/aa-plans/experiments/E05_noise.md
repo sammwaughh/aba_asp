@@ -1,5 +1,7 @@
 # E05 — Noise / SNR (appendix)
 
+**Read after:** [`meta-understanding-plan.md`](../meta-understanding-plan.md) — **Phase 5d** (appendix experiments; skim).
+
 **Status:** appendix-bound spec. Runs only if compute budget permits after E02–E07 + E09 complete.
 **Companion docs:** `EXPERIMENTS_PLAN.md`, `METRICS.md`, `INFRA.md`, `REPORT_OUTLINE.md` (App. B).
 **Role in the plan:** ablation of noise scale on continuous DGPs. Lives in the appendix; informs §6 discussion of when ABA-ASP recovery breaks down.

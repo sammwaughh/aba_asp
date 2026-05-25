@@ -1,9 +1,11 @@
 # Experiments Plan — Master Document
 
+**Read after:** [`meta-understanding-plan.md`](meta-understanding-plan.md) — **Phase 1** (start here for the spec set).
+
 **Status:** living document. Last updated: 2026-05-24.
 **Owner:** Sam.
 **Audience:** us (executing this plan in agent mode) and the supervisor (for sign-off).
-**Companion docs:** `METRICS.md`, `INFRA.md`, `REPORT_OUTLINE.md`, `LIT_REVIEW_NOTES.md`, and the per-experiment specs in `experiments/E0X_*.md` (written in a later session).
+**Companion docs:** `meta-understanding-plan.md` (reading guide), `METRICS.md`, `INFRA.md`, `REPORT_OUTLINE.md`, `LIT_REVIEW_NOTES.md`, and the per-experiment specs in `experiments/E0X_*.md`.
 
 ---
 
@@ -220,6 +222,8 @@ For the interim period these are explicitly out of scope. They are listed so tha
 ---
 
 ## 12. Where to start (operational)
+
+**Human read-through:** use [`meta-understanding-plan.md`](meta-understanding-plan.md) (Phases 1–7) before implementation.
 
 Order of writing in the next agent-mode sessions:
 

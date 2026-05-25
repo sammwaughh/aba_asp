@@ -1,5 +1,7 @@
 # E04 — Structural Sweep
 
+**Read after:** [`meta-understanding-plan.md`](../meta-understanding-plan.md) — **Phase 5a** (core experiments; analysis-only).
+
 **Status:** analysis-only spec (no new Prolog runs). Executes after E02 (and optionally E03) complete.
 **Companion docs:** `EXPERIMENTS_PLAN.md`, `METRICS.md`, `INFRA.md`, `REPORT_OUTLINE.md` (F5).
 **Role in the plan:** the *structural* read of E02's data; produces Figure F5 and a discrete companion appendix figure.

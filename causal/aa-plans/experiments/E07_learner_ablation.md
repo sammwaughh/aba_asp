@@ -1,5 +1,7 @@
 # E07 — Learner Ablation
 
+**Read after:** [`meta-understanding-plan.md`](../meta-understanding-plan.md) — **Phase 5b** (ablations).
+
 **Status:** spec, runs after E02 is green.
 **Companion docs:** `EXPERIMENTS_PLAN.md`, `METRICS.md`, `INFRA.md`, `REPORT_OUTLINE.md` (T1b).
 **Role in the plan:** justifies the default learner settings; produces Table T1b and informs whether "no solution found" is intrinsic or budget-limited.

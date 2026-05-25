@@ -1,5 +1,7 @@
 # Interim Report — Outline and Claim/Evidence Map
 
+**Read after:** [`meta-understanding-plan.md`](meta-understanding-plan.md) — **Phase 2** (report shape and claim map).
+
 **Status:** living document. Last updated: 2026-05-24.
 **Companion docs:** `EXPERIMENTS_PLAN.md`, `METRICS.md`, `INFRA.md`, `LIT_REVIEW_NOTES.md`.
 

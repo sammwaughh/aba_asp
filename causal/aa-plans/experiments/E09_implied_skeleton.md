@@ -1,5 +1,7 @@
 # E09 — Implied Skeleton (RQ3 step 1)
 
+**Read after:** [`meta-understanding-plan.md`](../meta-understanding-plan.md) — **Phase 5c** (RQ3: skeleton before bridge).
+
 **Status:** spec, runs after E02 + E03 (and ideally E04) are green.
 **Companion docs:** `EXPERIMENTS_PLAN.md`, `METRICS.md` (§3.7), `INFRA.md`, `REPORT_OUTLINE.md` (F6).
 **Role in the plan:** the **first answer to RQ3**. Turns δ-rule outputs into a candidate graph and compares to G\* and to constraint-based baselines. Produces Figure F6.
