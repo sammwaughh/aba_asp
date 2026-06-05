@@ -1,0 +1,32 @@
+experiment_id: E00_discrete_smoke
+description: "Known-good regime smoke test: small discrete 3-node DGPs at low n with a modest folding budget. Establishes that the runner reproduces the original repo's solvable behaviour (fast solves, correct rule bodies) before stressing the harder continuous / 4-node frontier (E02/E02b)."
+owner: sam
+
+defaults:
+  graph_type: discrete
+  bins: 2
+  bin_strategy: quantile
+  example_split: pick_target_variable
+  folding_steps: 10
+  folding_mode: nd
+  prolog_timeout_s: 45
+  query_timeout_s: 5
+
+dgps:
+  - id: G3-chain
+    nodes: 3
+    edges: [[0, 1], [1, 2]]
+  - id: G3-fork
+    nodes: 3
+    edges: [[0, 1], [0, 2]]
+  - id: G3-collider
+    nodes: 3
+    edges: [[0, 2], [1, 2]]
+
+grid:
+  n: [6]
+  seed: { range: [0, 4] }   # seeds 0..3 (4 total)
+  target: all
+
+provenance:
+  code_commit_required: true

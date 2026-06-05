@@ -10,10 +10,34 @@ End-to-end pipeline for small, reproducible experiments:
 - ABA Learning: `run_aba_asp.ABASPRunner` runs SWI-Prolog/Clingo to learn delta rules; `_extract_learned_rules()` parses them.
 
 ## Quick Start
-- Env: `conda run -n aba-env …` with pandas, numpy, ArgCausalDisco; SWI-Prolog at `../swipl/build/src/swipl`.
-- Run data-utils tests: `python causal/test_data_utils_integration.py`
-- Run ABA learning tests: `python causal/test_aba_learning.py`
+- Env: `conda activate aba-env` (from repo root) with pandas, numpy, ArgCausalDisco; SWI-Prolog on PATH or under `/Applications/SWI-Prolog.app/...`.
+- **Experiment grid** (preferred for scaled runs): see `causal/aa-plans/INFRA.md`.
+- Legacy smoke tests: `python causal/test_data_utils_integration.py`, `python causal/test_aba_learning.py`
 - Demo pipeline: `python causal/argcausaldisco_integration.py`
+
+### Experiment grid (run_grid)
+
+```bash
+conda activate aba-env
+cd "/Users/samuelwaugh/Desktop/Causal ABA Learning/aba_asp"
+
+# Dry-run cell count
+python -m causal.experiments.run_grid \
+  --config causal/configs/experiments/E00_discrete_smoke.yaml \
+  --dry-run
+
+# Full grids: discrete baseline, then continuous mirror
+python -m causal.experiments.run_grid \
+  --config causal/configs/experiments/E00_discrete_smoke.yaml
+python -m causal.experiments.run_grid \
+  --config causal/configs/experiments/E00_continuous_smoke.yaml
+
+# Report-ready summary table + heatmap (per experiment)
+python causal/scripts/summarize_experiment.py --experiment E00_discrete_smoke
+python causal/scripts/summarize_experiment.py --experiment E00_continuous_smoke
+```
+
+Outputs: `causal/outputs/aba_learning/grid/<experiment_id>/` (`cells/<run_id>/metrics.json`, `results.parquet`, `run.log`). Summaries are written to `causal/experiments/figures/<experiment_id>_summary.{md,png}`.
 
 ## Environment & Setup
 - Requirements: Python 3.9+, conda env (named `aba-env` here), pandas, numpy, ArgCausalDisco (present in repo), optional Clingo.
@@ -67,7 +91,8 @@ clingo --version
 
 ## Outputs
 - `outputs/argcausaldisco/`: demo pipeline artifacts.
-- `outputs/aba_learning/`: solution files from `test_aba_learning.py`.
+- `outputs/aba_learning/grid/<experiment_id>/`: per-cell metrics and parquet from `run_grid` (do not commit).
+- `outputs/aba_learning/`: legacy solution files from `test_aba_learning.py`.
 
 ## Running Tests
 ```bash

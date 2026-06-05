@@ -14,8 +14,9 @@ import logging
 import subprocess
 import os
 from pathlib import Path
-from typing import List, Tuple, Optional, Dict
+from typing import Dict, List, Optional, Sequence, Tuple
 import json
+import re
 import tempfile
 
 logger = logging.getLogger(__name__)
@@ -94,6 +95,141 @@ def _find_swipl() -> Optional[str]:
 
 
 SWIPL_PATH = _find_swipl()
+
+_EXAMPLE_ATOM_RE = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*\(\d+\)$")
+_QUERY_RESULT_RE = re.compile(
+    r"^ABA_QUERY_RESULT\s+(\S+)\s+(true|false)\s*$", re.IGNORECASE
+)
+_PROLOG_SUBPROCESS_BUFFER_S = 2.0
+
+
+def _prolog_path_literal(path: Path) -> str:
+    """Escape a filesystem path for use inside Prolog single-quoted atoms."""
+    return str(path.resolve()).replace("\\", "/").replace("'", "''")
+
+
+def _validate_example_atoms(examples: Sequence[str]) -> None:
+    for example in examples:
+        if not _EXAMPLE_ATOM_RE.match(example.strip()):
+            raise ValueError(f"Invalid example atom: {example!r}")
+
+
+def _run_prolog_script(
+    script: str,
+    *,
+    cwd: Path,
+    timeout_s: float,
+) -> subprocess.CompletedProcess[str]:
+    if not SWIPL_PATH:
+        raise RuntimeError("SWI-Prolog is not available on this system")
+
+    env = _swipl_env()
+    with tempfile.NamedTemporaryFile(mode="w", suffix=".pl", delete=False) as tmp:
+        tmp.write(script)
+        tmp_path = Path(tmp.name)
+
+    try:
+        return subprocess.run(
+            [SWIPL_PATH, "-q", "-f", "none", "-s", str(tmp_path)],
+            capture_output=True,
+            text=True,
+            env=env,
+            cwd=str(cwd.resolve()),
+            timeout=timeout_s,
+        )
+    finally:
+        try:
+            tmp_path.unlink(missing_ok=True)
+        except OSError:
+            pass
+
+
+def _parse_query_result_lines(stdout: str) -> dict[str, bool]:
+    results: dict[str, bool] = {}
+    for line in stdout.splitlines():
+        match = _QUERY_RESULT_RE.match(line.strip())
+        if match:
+            results[match.group(1)] = match.group(2).lower() == "true"
+    return results
+
+
+def _build_batch_query_script(aba_file: Path, examples: Sequence[str], timeout_s: float) -> str:
+    aba_literal = _prolog_path_literal(aba_file)
+    example_terms = ", ".join(f"'{ex}'" for ex in examples)
+    return f"""
+:- style_check(-discontiguous).
+:- consult('{aba_literal}').
+
+aba_query_entails(Goal, Timeout) :-
+    catch(
+        call_with_time_limit(Timeout, call(Goal)),
+        time_limit_exceeded,
+        fail
+    ).
+
+aba_emit_results([]).
+aba_emit_results([Example|Rest]) :-
+    term_string(Goal, Example),
+    ( aba_query_entails(Goal, {timeout_s}) -> Status = true ; Status = false ),
+    format('ABA_QUERY_RESULT ~w ~w~n', [Example, Status]),
+    aba_emit_results(Rest).
+
+:- aba_emit_results([{example_terms}]).
+:- halt.
+"""
+
+
+def query_examples(
+    aba_file: Path,
+    examples: Sequence[str],
+    timeout_s: float = 5.0,
+) -> dict[str, bool]:
+    """Query entailment of example atoms against a loaded ``.aba`` program.
+
+    Loads ``aba_file`` (background knowledge or solution) in SWI-Prolog and
+    tests each example goal with ``call_with_time_limit/2``. A per-example
+    wall-clock cap is also enforced via the subprocess timeout.
+
+    Returns:
+        Mapping from each example string to whether Prolog succeeded on ``call/1``.
+    """
+    if not examples:
+        return {}
+
+    if not SWIPL_PATH:
+        raise RuntimeError("SWI-Prolog is not available on this system")
+
+    aba_file = Path(aba_file)
+    if not aba_file.is_file():
+        raise FileNotFoundError(f"ABA file not found: {aba_file}")
+
+    examples_tuple = tuple(ex.strip() for ex in examples)
+    _validate_example_atoms(examples_tuple)
+
+    script = _build_batch_query_script(aba_file, examples_tuple, timeout_s)
+    batch_timeout = timeout_s * len(examples_tuple) + _PROLOG_SUBPROCESS_BUFFER_S
+
+    try:
+        completed = _run_prolog_script(
+            script,
+            cwd=aba_file.parent,
+            timeout_s=batch_timeout,
+        )
+    except subprocess.TimeoutExpired:
+        logger.warning("Prolog batch query timed out for %s", aba_file)
+        return {example: False for example in examples_tuple}
+
+    if completed.returncode != 0:
+        logger.warning(
+            "Prolog query failed (rc=%s) for %s: %s",
+            completed.returncode,
+            aba_file,
+            completed.stderr[:500],
+        )
+        return {example: False for example in examples_tuple}
+
+    parsed = _parse_query_result_lines(completed.stdout)
+    return {example: parsed.get(example, False) for example in examples_tuple}
 
 
 class ABASPRunner:
@@ -174,6 +310,7 @@ class ABASPRunner:
         background_knowledge: Optional[Path] = None,
         output_file: Optional[Path] = None,
         learning_options: Optional[Dict[str, str]] = None,
+        timeout_s: float = 120.0,
     ) -> Dict:
         """
         Run ABA-ASP using SWI-Prolog.
@@ -185,6 +322,7 @@ class ABASPRunner:
             background_knowledge: Path to background knowledge file
             output_file: Path to save results
             learning_options: Dict of learning options (e.g., {'folding_mode': 'greedy', 'folding_steps': '20'})
+            timeout_s: Wall-clock cap for the SWI-Prolog subprocess (matches YAML ``prolog_timeout_s``).
             
         Returns:
             Dictionary with results and metadata
@@ -258,10 +396,13 @@ class ABASPRunner:
                 )
 
                 try:
-                    stdout, stderr = process.communicate(timeout=60)
+                    stdout, stderr = process.communicate(timeout=timeout_s)
                 except subprocess.TimeoutExpired:
                     process.kill()
-                    raise
+                    process.communicate()
+                    raise TimeoutError(
+                        f"Prolog subprocess exceeded timeout_s={timeout_s}"
+                    ) from None
             finally:
                 try:
                     tmp_path.unlink(missing_ok=True)
@@ -289,9 +430,8 @@ class ABASPRunner:
             
             return results
             
-        except subprocess.TimeoutExpired:
-            logger.error("Prolog execution timed out")
-            return {'status': 'timeout', 'method': 'prolog'}
+        except TimeoutError:
+            raise
         except Exception as e:
             logger.error(f"Error running Prolog: {e}")
             return {'status': 'error', 'error': str(e), 'method': 'prolog'}
