@@ -1,5 +1,5 @@
 experiment_id: E00_discrete_smoke
-description: "Known-good regime smoke test: small discrete 3-node DGPs at low n with a modest folding budget. Establishes that the runner reproduces the original repo's solvable behaviour (fast solves, correct rule bodies) before stressing the harder continuous / 4-node frontier (E02/E02b)."
+description: "Discrete baseline smoke test: 3-node DGPs, n=8, seeds 0-3, all targets. Matches test_aba_learning.py regime (pick_target_variable split, folding_steps=15, prolog_timeout_s=120)."
 owner: sam
 
 defaults:
@@ -7,9 +7,9 @@ defaults:
   bins: 2
   bin_strategy: quantile
   example_split: pick_target_variable
-  folding_steps: 10
+  folding_steps: 15
   folding_mode: nd
-  prolog_timeout_s: 45
+  prolog_timeout_s: 120
   query_timeout_s: 5
 
 dgps:
@@ -24,7 +24,7 @@ dgps:
     edges: [[0, 2], [1, 2]]
 
 grid:
-  n: [6]
+  n: [8]
   seed: { range: [0, 4] }   # seeds 0..3 (4 total)
   target: all
 
