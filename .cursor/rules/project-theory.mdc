@@ -1,0 +1,31 @@
+---
+description: Causal ABA Learning theory constraints and terminology
+alwaysApply: true
+---
+
+# Causal ABA Learning theory constraints
+
+This repository investigates Causal ABA Learning.
+
+Treat these files as the canonical project theory:
+- `docs/theory/background.tex`
+- `docs/theory/literature_review.tex`
+- `docs/theory/theory_primer.md`
+- `docs/theory/paper_summaries/`
+
+Use PDFs in `docs/papers/core/` as reference material only. Read the summaries and theory files first.
+
+Do not invent new theory. If a design choice is underspecified, ask the user or mark it explicitly as an assumption.
+
+Core distinction:
+- Causal ABA represents causal-discovery evidence inside ABA. Stable extensions correspond to compatible causal graph hypotheses.
+- ABA Learning transforms or extends ABA frameworks from background knowledge and positive/negative examples.
+- The project investigates how these can interact. Do not assume in advance that the system must learn only graphs, only rules, only facts, or only assumptions.
+
+When working on experiments:
+- distinguish qualitative toy-case analysis from quantitative benchmarking;
+- preserve the link between stable extensions and candidate graph hypotheses;
+- preserve the distinction between assumptions, rules, facts, constraints, contraries, attacks, and extensions;
+- do not treat rejection of an independence assumption as automatically equivalent to dependence unless the formal construction supports it.
+
+Your role is to help implement, test, inspect, and refactor code. The user makes the theoretical decisions.

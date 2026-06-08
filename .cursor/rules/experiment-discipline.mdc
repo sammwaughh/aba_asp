@@ -1,0 +1,26 @@
+---
+description: Experimental workflow for Causal ABA Learning
+alwaysApply: true
+---
+
+# Experiment discipline
+
+Before editing code:
+1. Inspect the relevant files.
+2. State what you think the current code does.
+3. State the intended change.
+4. Identify the expected observable output.
+5. Do not modify unrelated files.
+
+For each experiment:
+- use small reproducible cases first;
+- keep inputs, outputs, and random seeds explicit;
+- save results in a structured location;
+- record failures as useful evidence;
+- prefer simple tests over broad rewrites.
+
+When running code:
+- run the smallest relevant test first;
+- report the exact command run;
+- report the exact failing assertion or output;
+- do not claim success unless the test or script actually ran.

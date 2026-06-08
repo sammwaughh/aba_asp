@@ -1,0 +1,93 @@
+---
+description: Python and ASP implementation conventions for AI-readable experimental code
+globs: "**/*.py,**/*.lp"
+alwaysApply: false
+---
+
+# Code conventions
+
+The priority is code that is readable, inspectable, and easy for an AI agent or researcher to modify safely.
+
+Optimise for clarity over cleverness.
+
+## Python
+
+Use clear, minimal Python.
+
+Prefer:
+- small files with clear responsibilities;
+- pure functions for transformations;
+- dataclasses for structured objects;
+- explicit types where useful;
+- descriptive names over short names;
+- simple control flow over clever abstractions;
+- deterministic outputs for toy experiments;
+- small testable modules;
+- plain data structures unless a class is justified;
+- functions that expose intermediate results for debugging.
+
+Avoid:
+- metaprogramming;
+- dynamic imports;
+- hidden global state;
+- large inheritance hierarchies;
+- over-general abstractions before there are multiple real use cases;
+- compressed one-liners for nontrivial logic;
+- silently catching exceptions;
+- modifying unrelated files during a task.
+
+When writing or editing Python:
+1. Keep the smallest useful change.
+2. Preserve existing public interfaces unless explicitly changing them.
+3. Add comments only where they explain non-obvious logic or theory mapping.
+4. Make intermediate symbolic objects easy to print or inspect.
+5. Prefer explicit return values over side effects.
+6. Include or update a small test or runnable example when behaviour changes.
+
+## ASP/clingo
+
+For ASP/clingo:
+- keep generated ASP separate from handwritten ASP;
+- preserve comments explaining the logical role of rules;
+- group rules by purpose;
+- include tiny examples with expected answer sets;
+- avoid changing encodings without adding or updating tests;
+- make predicates descriptive and consistent with the theory files;
+- document whether a rule represents a fact, assumption, contrary, attack, hard constraint, weak constraint, or graph constraint.
+
+Avoid:
+- opaque predicate names;
+- mixing experiment-specific facts with reusable encodings;
+- embedding large generated programs directly in source files;
+- changing stable-extension or graph-compatibility semantics without an experiment note.
+
+## Debuggability
+
+For experimental code, expose enough information to inspect:
+
+- input variables;
+- assumptions;
+- rules;
+- contraries;
+- generated ASP;
+- clingo command;
+- answer sets;
+- stable extensions;
+- induced graphs;
+- accepted and rejected examples;
+- transformation steps.
+
+Do not hide these inside private helper layers unless there is a clear reason.
+
+## Testing
+
+Prefer small tests over broad rewrites.
+
+For toy experiments, tests should check:
+- expected assumptions are generated;
+- expected rules are generated;
+- expected answer sets or stable extensions are obtained;
+- expected examples are accepted or rejected;
+- expected induced graph matches the intended toy case.
+
+Do not claim success unless the relevant test, script, or clingo command actually ran.

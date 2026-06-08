@@ -1,0 +1,59 @@
+---
+description: Research logging requirements for Causal ABA Learning experiments
+alwaysApply: true
+---
+
+# Research logging
+
+This repository is both a codebase and a research record for the Causal ABA Learning project.
+
+For any experiment, implementation attempt, theoretical prototype, debugging session, or result-producing code change, update the relevant documentation under `docs/experiments/` or `docs/research/`.
+
+## Core rule
+
+Do not treat code changes as complete unless the corresponding research record has been updated.
+
+Every experiment must record:
+
+- experiment ID;
+- research question;
+- theoretical motivation;
+- setup;
+- implementation files;
+- exact command run;
+- actual output;
+- interpretation;
+- next decision.
+
+Failed experiments are useful evidence. Record them if they clarify a modelling, implementation, or theoretical issue.
+
+## Before editing experiment code
+
+Before modifying code for an experiment:
+
+1. Identify or create the experiment ID.
+2. Identify whether the experiment is qualitative or quantitative.
+3. Create or update the relevant experiment folder.
+4. Fill in the experiment record before code edits with:
+   - research question;
+   - theoretical motivation;
+   - setup;
+   - expected output.
+5. Inspect relevant source files.
+6. State the intended code change.
+7. Do not modify unrelated files.
+
+Experiment folders should follow this structure where possible:
+
+```text
+docs/experiments/qualitative/QL-001-short-title/
+  experiment.md
+  notes.md
+  outputs/
+  figures/
+
+docs/experiments/quantitative/QT-001-short-title/
+  experiment.md
+  config.yaml
+  results.csv
+  interpretation.md
