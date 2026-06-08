@@ -10,7 +10,7 @@ End-to-end pipeline for small, reproducible experiments:
 - ABA Learning: `run_aba_asp.ABASPRunner` runs SWI-Prolog/Clingo to learn delta rules; `_extract_learned_rules()` parses them.
 
 ## Quick Start
-- Env: `conda activate aba-env` (from repo root) with pandas, numpy, ArgCausalDisco; SWI-Prolog on PATH or under `/Applications/SWI-Prolog.app/...`.
+- **Environment:** see [`docs/research/environment_setup.md`](../docs/research/environment_setup.md) (conda env `aba-asp`, pip deps, SWI-Prolog + **clingo** on PATH, ArgCausalDisco sibling repo).
 - **Experiment grid** (preferred for scaled runs): see `causal/aa-plans/INFRA.md`.
 - Legacy smoke tests: `python causal/test_data_utils_integration.py`, `python causal/test_aba_learning.py`
 - Demo pipeline: `python causal/argcausaldisco_integration.py`
@@ -18,7 +18,7 @@ End-to-end pipeline for small, reproducible experiments:
 ### Experiment grid (run_grid)
 
 ```bash
-conda activate aba-env
+conda activate aba-asp
 cd "/Users/samuelwaugh/Desktop/Causal ABA Learning/aba_asp"
 
 # Dry-run cell count
@@ -40,27 +40,12 @@ python causal/scripts/summarize_experiment.py --experiment E00_continuous_smoke
 Outputs: `causal/outputs/aba_learning/grid/<experiment_id>/` (`cells/<run_id>/metrics.json`, `results.parquet`, `run.log`). Summaries are written to `causal/experiments/figures/<experiment_id>_summary.{md,png}`.
 
 ## Environment & Setup
-- Requirements: Python 3.9+, conda env (named `aba-env` here), pandas, numpy, ArgCausalDisco (present in repo), optional Clingo.
-- SWI-Prolog (for learning): binary at `../swipl/build/src/swipl` or on PATH. The runner auto-configures `SWI_HOME_DIR`/`LD_LIBRARY_PATH` for the Bitbucket build tree.
 
-Create/activate env and install basics:
-```bash
-conda create -n aba-env -y python=3.9
-conda activate aba-env
-pip install pandas numpy
-```
+Full setup (verified locally): [`docs/research/environment_setup.md`](../docs/research/environment_setup.md).
 
-Optional: verify SWI-Prolog and configure environment (Bitbucket tree):
-```bash
-/vol/bitbucket/fr920/swipl/build/src/swipl --version
-export SWI_HOME_DIR=/vol/bitbucket/fr920/swipl/build/home
-export LD_LIBRARY_PATH=/vol/bitbucket/fr920/swipl/build/src:$LD_LIBRARY_PATH
-```
-
-Optional: Clingo
-```bash
-clingo --version
-```
+- Conda env **`aba-asp`**, Python 3.10, pip stack including `pandas`, `numpy`, `pyyaml`, `pyarrow`, `pgmpy`, etc.
+- **SWI-Prolog** and **clingo** on `PATH` — both required for learning (clingo is not optional).
+- ArgCausalDisco is a **sibling repo**; scripts add its root to `sys.path` automatically. Do not install full `ArgCausalDisco/requirements.txt`.
 
 ## What Lives Here
 - `argcausaldisco_integration.py`: generate data → predicates → BK → optional ABA-ASP run.
@@ -96,12 +81,12 @@ clingo --version
 
 ## Running Tests
 ```bash
-# From repo root
-conda run -n aba-env python causal/test_data_utils_integration.py
-conda run -n aba-env python causal/test_aba_learning.py
+# From repo root (aba-asp env active)
+python causal/test_data_utils_integration.py
+python causal/test_aba_learning.py
 
 # Demo pipeline
-conda run -n aba-env python causal/argcausaldisco_integration.py
+python causal/argcausaldisco_integration.py
 ```
 
 ## Tests Overview

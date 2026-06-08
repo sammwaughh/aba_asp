@@ -22,6 +22,14 @@ Core PDFs are stored privately under:
 
 - `docs/papers/core/`
 
+## Environment
+
+Local setup (conda `aba-asp`, pip deps, SWI-Prolog, clingo, ArgCausalDisco sibling repo):
+
+- `docs/research/environment_setup.md`
+
+Run commands and success criteria: `docs/research/execution_guide.md`.
+
 ## Experiments
 
 Experiments are documented under:

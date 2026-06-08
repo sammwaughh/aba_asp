@@ -2,7 +2,12 @@
 
 This repository supports experimentation for the Causal ABA Learning MSc project.
 
-The agent should treat `docs/theory/` as the canonical project context. The main theoretical sources are:
+The agent should treat `docs/theory/` as the canonical project context and
+`docs/research/environment_setup.md` as the canonical **local environment** record (conda env
+`aba-asp`, pip packages, SWI-Prolog, clingo, ArgCausalDisco path rules). Do not invent setup
+steps that contradict that file.
+
+The main theoretical sources are:
 
 - `background.tex`
 - `literature_review.tex`

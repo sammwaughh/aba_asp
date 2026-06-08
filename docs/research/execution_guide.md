@@ -10,87 +10,25 @@ learned rule body for target `xk` match `xk`'s true parents). Russo-style Causal
 
 ## Environment assumptions
 
-Two READMEs are authoritative for two different layers; use both:
+**Canonical setup:** [`environment_setup.md`](environment_setup.md) — verified conda env
+`aba-asp`, pip packages, SWI-Prolog, clingo, ArgCausalDisco paths, and smoke tests.
 
-- **`README.md` (root)** — authoritative for the inherited **upstream ABA Learning engine**:
-  SWI-Prolog setup, loading `aba_asp.pl`, the Prolog examples, and the ABA Learning options
-  (`set_lopt(...)`).
-- **`causal/README.md`** — authoritative for the **Python causal bridge** (the MSc project
-  work): `argcausaldisco_integration.py`, `run_aba_asp.py`, data generation and BK
-  generation, the Python tests, the grid harness, and the causal outputs. It is **essential
-  for the bridge**, but **not** authoritative for the upstream Prolog/SWI-Prolog setup.
+Summary for runs:
 
-Use the inherited root `README.md` for the upstream ABA Learning engine setup and the
-`causal/README.md` for the Python causal bridge. For local work, prefer **one** conda
-environment named **`aba-asp`** containing both the upstream engine requirements and the
-Python bridge dependencies. Older bridge notes may refer to `aba-env`; treat that as an
-environment-name inconsistency, not as a reason to ignore `causal/README.md`.
+- Work from repository root: `aba_asp/`.
+- Conda env: **`aba-asp`** (Python 3.10).
+- **`swipl`** and **`clingo`** must both be on `PATH`; clingo is required for all learning
+  runs (see environment doc — not optional).
+- On macOS Apple Silicon, use system/Homebrew `swipl` if conda-forge `swi-prolog` is
+  unavailable; install clingo via `conda install -c conda-forge clingo` if needed.
+- `causal/run_aba_asp.py` probes cluster paths then falls back to `swipl` on `PATH`; see
+  environment doc if the Python runner misbehaves with a Homebrew swipl.
 
-- macOS/Linux shell, repository root: `aba_asp/`.
-- Preferred environment: a single **`aba-asp`** conda environment. Set up the engine per
-  `README.md` (see "Preferred setup path from inherited README" below), then install the
-  bridge dependencies into the **same** environment per `causal/README.md`, unless there is a
-  local reason to maintain a separate bridge environment.
-- Environment-name conflict (the only real conflict between the two READMEs): root
-  `README.md` uses **`aba-asp`**; `causal/README.md` uses **`aba-env`**. Prefer `aba-asp`
-  for this project. This is a documentation inconsistency to reconcile in the source READMEs
-  later; it is flagged here, and the `causal/README.md` note is not removed.
-- Python deps for the bridge (see `causal/README.md`): `pandas`, `numpy`, ArgCausalDisco;
-  `pyarrow` for grid parquet output (grid tests `importorskip("pyarrow")`).
-- `causal/run_aba_asp.py` first probes hard-coded cluster paths
-  (`/vol/bitbucket/fr920/swipl/...`) and then falls back to `swipl` on `PATH`
-  (`_find_swipl`). On a local machine, having `swipl` on `PATH` is sufficient.
+Other references:
 
-## Preferred setup path from inherited README
-
-Follow `README.md` first for the engine. It uses an `aba-asp` conda environment and builds
-SWI-Prolog from source. The commands below are reproduced from `README.md` (only commands
-present there or verified by code inspection are used). Note: the inherited `README.md`
-appears to omit the `conda` prefix on the env-creation line (it shows
-`create -n aba-asp python=3.12`); the corrected command is `conda create -n aba-asp
-python=3.12`.
-
-```bash
-# 1. Create/activate the aba-asp conda environment (corrected from README.md)
-conda create -n aba-asp python=3.12
-conda activate aba-asp
-
-# 2. Install build dependencies (per README.md)
-conda install -c conda-forge cmake ninja compilers pkg-config gmp zlib \
-  libuuid libedit readline openssl libarchive libxcrypt
-
-# 3. Build/install SWI-Prolog from source if needed
-#    (clone https://github.com/SWI-Prolog/swipl.git, then in its build dir):
-export PKG_CONFIG_PATH="$CONDA_PREFIX/lib/pkgconfig:$CONDA_PREFIX/share/pkgconfig"
-export CMAKE_PREFIX_PATH="$CONDA_PREFIX"
-rm -rf CMakeCache.txt CMakeFiles
-cmake -G Ninja -DCMAKE_INSTALL_PREFIX=$HOME -DCMAKE_BUILD_TYPE=PGO \
-  -DCMAKE_PREFIX_PATH="$CONDA_PREFIX" -DINSTALL_DOCUMENTATION=OFF \
-  -DEMACS_INCLUDE_DIR="$PWD/../packages/sweep" ..
-ninja -j"$(nproc)" && ninja install
-
-# 4. Confirm swipl works
-swipl --version
-```
-
-`README.md` does not list a clingo install command; clingo must be present separately (see
-"Required tools"). System SWI-Prolog packages also work as long as `swipl` is on `PATH` —
-the source build is the README's route, not a hard requirement.
-
-## Required tools
-
-- **SWI-Prolog (`swipl`)** — required to run the ABA Learning engine.
-- **clingo** — **also required for learning runs**, not optional. The engine shells out to
-  clingo during learning (`asp_engine.pl`: `compute_conseq/2`, `entails/5`, `subsumed/6`).
-  A run can start in `swipl` but will fail to produce solutions if `clingo` is missing.
-- The working directory must be **writable** (engine writes scratch files there).
-
-Quick checks:
-
-```bash
-swipl --version
-clingo --version
-```
+- **`README.md` (root)** — inherited upstream engine: Prolog API, `set_lopt(...)`, optional
+  source build of SWI-Prolog.
+- **`causal/README.md`** — Python causal bridge overview (not the canonical env record).
 
 ## Run the canonical Prolog example
 
@@ -228,5 +166,5 @@ Grid run, under `causal/outputs/aba_learning/grid/<experiment_id>/cells/<run_id>
 
 - If/when Russo-style Causal ABA is implemented, keep the new `arr/noe/independence`
   encoding separate from this parent-set-recovery pipeline and document it here.
-- Resolve the conda env name inconsistency (`aba-asp` vs `aba-env`) in the source READMEs
-  (outside the scope of these two docs).
+- Conda env name is documented as **`aba-asp`** in `environment_setup.md`; older `aba-env`
+  references in bridge notes are stale.
