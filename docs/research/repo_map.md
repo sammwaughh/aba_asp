@@ -93,12 +93,37 @@ aba_asp/
 - `docs/theory/` — **canonical**: `theory_primer.md`, `background.tex`,
   `literature_review.tex`, `paper_summaries/*.md`.
 - `docs/papers/core/` — source PDFs (reference only; use summaries first).
-- `docs/experiments/` — `experiment_index.md` + `templates/` (currently empty;
-  deferred setup). No `qualitative/` or `quantitative/` folders exist yet, though
-  `.cursor/rules/research-logging.mdc` expects them.
+- `docs/experiments/` — experiment records and supporting structure:
+  - `TEMPLATE.md` — canonical template for every experiment record.
+  - `experiment_index.md` — at-a-glance index of experiments (status, artefacts,
+    report relevance).
+  - `qualitative/QL-001.md` — first qualitative record (ABA Learning on minimal causal
+    motifs).
+  - `quantitative/QN-001.md` — first quantitative record (ABA Learning strategy
+    comparison).
+  - `templates/` — older copy templates retained for reference.
+- `docs/report/` — report-support docs (evidence-to-prose guardrails, not report prose):
+  - `claims_ledger.md` — evidence-to-claim guardrail.
+  - `interim_section_plan.md` — interim report section/evidence plan.
+  - `figure_table_index.md` — figure/table provenance.
+  - `genai_use_log.md` — factual log of ChatGPT/Cursor assistance.
 - `docs/research/` — research record: `ideas.md`, `decisions.md`, `research_log.md`,
-  `supervisor_updates.md` (currently empty), plus this `repo_map.md` and
+  `supervisor_updates.md` (currently empty), `experiment_register.md` (lightweight
+  register mirroring the experiment index), plus this `repo_map.md` and
   `execution_guide.md`.
+
+## Experiment/report documentation workflow
+
+Experiment records under `docs/experiments/` are **evidence records, not polished report
+prose**. Polished prose is written separately (by Samuel/ChatGPT) from these records.
+
+1. Design the experiment conceptually before implementation.
+2. Use Cursor plan-only inspection where the implementation path is uncertain.
+3. Record detailed evidence in `docs/experiments/<ID>.md` using `docs/experiments/TEMPLATE.md`.
+4. Update `docs/experiments/experiment_index.md` and `docs/research/experiment_register.md`.
+5. Track candidate figures/tables in `docs/report/figure_table_index.md`.
+6. Check claims against `docs/report/claims_ledger.md`.
+7. Record meaningful ChatGPT/Cursor assistance in `docs/report/genai_use_log.md`.
 
 ## Where examples and generated outputs live
 

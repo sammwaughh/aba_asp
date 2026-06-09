@@ -30,10 +30,31 @@ Local setup (conda `aba-asp`, pip deps, SWI-Prolog, clingo, ArgCausalDisco sibli
 
 Run commands and success criteria: `docs/research/execution_guide.md`.
 
+## Implementation note
+
+The current `causal/` bridge should be described as **ABA Learning-based, target-wise
+learned-rule / parent-set recovery** over tabular data. Do not describe it as full
+Russo-style Causal ABA (arrow/no-edge/independence assumptions, d-separation,
+stable-extension-as-DAG) unless direct code evidence supports that.
+
 ## Experiments
 
-Experiments are documented under:
+Experiments are documented under `docs/experiments/`:
 
-- `docs/experiments/`
+- Experiment records should use the canonical template `docs/experiments/TEMPLATE.md`.
+- The at-a-glance index is `docs/experiments/experiment_index.md`.
+- The first planned records are `docs/experiments/qualitative/QL-001.md` and
+  `docs/experiments/quantitative/QN-001.md`.
 
-Each experiment should have an ID, research question, theoretical motivation, setup, command, output, interpretation, and next decision.
+Each experiment record should capture an ID, research question, theoretical motivation,
+setup, exact command, output, interpretation, and next decision. Records are evidence
+records, not polished report prose.
+
+## Report support
+
+Report-supporting docs live under `docs/report/`:
+
+- `docs/report/claims_ledger.md` — evidence-to-claim guardrail.
+- `docs/report/interim_section_plan.md` — interim report section/evidence plan.
+- `docs/report/figure_table_index.md` — figure/table provenance.
+- `docs/report/genai_use_log.md` — factual log of ChatGPT/Cursor assistance.
