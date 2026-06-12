@@ -36,6 +36,7 @@ _INT_COLS: frozenset[str] = frozenset(
         "n_contraries",
         "n_trivial_target_rules",
         "n_nontrivial_target_rules",
+        "clean_recovery",
         "max_body_length",
         "cov_py_tp",
         "cov_py_fp",

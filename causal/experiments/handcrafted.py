@@ -98,3 +98,32 @@ def load_handcrafted(source: str) -> HandcraftedFixture:
     """Load a handcrafted fixture by config ``source`` key."""
     canonical = normalize_source(source)
     return _BUILDERS[canonical]()
+
+
+# Register QI-001 fixtures (imported at end of module so ``HandcraftedFixture``
+# is already defined when ``handcrafted_qi001`` imports it back).
+from causal.experiments.handcrafted_qi001 import (  # noqa: E402
+    QI001_ALIASES,
+    QI001_BUILDERS,
+)
+from causal.experiments.handcrafted_qi002 import (  # noqa: E402
+    QI002_ALIASES,
+    QI002_BUILDERS,
+)
+from causal.experiments.handcrafted_qi003 import (  # noqa: E402
+    QI003_ALIASES,
+    QI003_BUILDERS,
+)
+from causal.experiments.handcrafted_qi004 import (  # noqa: E402
+    QI004_ALIASES,
+    QI004_BUILDERS,
+)
+
+_ALIASES.update(QI001_ALIASES)
+_BUILDERS.update(QI001_BUILDERS)
+_ALIASES.update(QI002_ALIASES)
+_BUILDERS.update(QI002_BUILDERS)
+_ALIASES.update(QI003_ALIASES)
+_BUILDERS.update(QI003_BUILDERS)
+_ALIASES.update(QI004_ALIASES)
+_BUILDERS.update(QI004_BUILDERS)

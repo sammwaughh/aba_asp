@@ -1,0 +1,39 @@
+experiment_id: QI002_minimal_motifs_greedy
+description: "QI-002 greedy rerun: identical design to QI002_minimal_motifs (6 handcrafted cells, 3 motifs x 2 data modes, target x2 only; complete factorial over (x0,x1) repeated x2 so the true parent is the unique zero-error separator) with the single conceptual change folding_mode: nd -> folding_mode: greedy. Purpose: compare parent-set recovery, stability, runtime, and failure modes under greedy folding in the noiseless best case. Parent-set recovery via the current aba_asp/causal implementation, NOT Russo-style Causal ABA. Canonical orientation only (does NOT address the x0 confound; see QI-003/QI-004). Single seed; no target expansion."
+owner: sam
+
+defaults:
+  graph_type: handcrafted_table
+  bins: 3
+  bin_strategy: uniform
+  folding_steps: 15
+  folding_mode: greedy
+  prolog_timeout_s: 120
+  query_timeout_s: 5
+
+dgps:
+  - id: qi002_chain_binary
+    graph_type: handcrafted_table
+    source: qi002_chain_binary
+  - id: qi002_fork_binary
+    graph_type: handcrafted_table
+    source: qi002_fork_binary
+  - id: qi002_collider_binary
+    graph_type: handcrafted_table
+    source: qi002_collider_binary
+  - id: qi002_chain_cat3
+    graph_type: handcrafted_table
+    source: qi002_chain_cat3
+  - id: qi002_fork_cat3
+    graph_type: handcrafted_table
+    source: qi002_fork_cat3
+  - id: qi002_collider_cat3
+    graph_type: handcrafted_table
+    source: qi002_collider_cat3
+
+grid:
+  seed: [0]
+  target: [x2]
+
+provenance:
+  code_commit_required: true

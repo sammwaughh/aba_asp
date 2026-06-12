@@ -1,0 +1,66 @@
+experiment_id: QI003_scaled_motifs
+description: "QI-003 scaled noisy run: 15 handcrafted cells (5 structural configs x 3 data modes), target x2 only, n=100 with mild noise. Parent-position variants (chain/fork in both x0-parent and x1-parent orientations) break the QI-001 x0/first-column confound. Parent-set recovery via ABA Learning, NOT Russo-style Causal ABA. Continuous cells binned into 3 uniform bins. Single seed (tables are deterministic via per-fixture internal RNG); no target expansion; default nd folding."
+owner: sam
+
+defaults:
+  graph_type: handcrafted_table
+  bins: 3
+  bin_strategy: uniform
+  folding_steps: 15
+  folding_mode: nd
+  prolog_timeout_s: 120
+  query_timeout_s: 5
+
+dgps:
+  - id: qi003_chain_x1parent_binary
+    graph_type: handcrafted_table
+    source: qi003_chain_x1parent_binary
+  - id: qi003_chain_x1parent_cat3
+    graph_type: handcrafted_table
+    source: qi003_chain_x1parent_cat3
+  - id: qi003_chain_x1parent_cont3
+    graph_type: handcrafted_table
+    source: qi003_chain_x1parent_cont3
+  - id: qi003_chain_x0parent_binary
+    graph_type: handcrafted_table
+    source: qi003_chain_x0parent_binary
+  - id: qi003_chain_x0parent_cat3
+    graph_type: handcrafted_table
+    source: qi003_chain_x0parent_cat3
+  - id: qi003_chain_x0parent_cont3
+    graph_type: handcrafted_table
+    source: qi003_chain_x0parent_cont3
+  - id: qi003_fork_x0parent_binary
+    graph_type: handcrafted_table
+    source: qi003_fork_x0parent_binary
+  - id: qi003_fork_x0parent_cat3
+    graph_type: handcrafted_table
+    source: qi003_fork_x0parent_cat3
+  - id: qi003_fork_x0parent_cont3
+    graph_type: handcrafted_table
+    source: qi003_fork_x0parent_cont3
+  - id: qi003_fork_x1parent_binary
+    graph_type: handcrafted_table
+    source: qi003_fork_x1parent_binary
+  - id: qi003_fork_x1parent_cat3
+    graph_type: handcrafted_table
+    source: qi003_fork_x1parent_cat3
+  - id: qi003_fork_x1parent_cont3
+    graph_type: handcrafted_table
+    source: qi003_fork_x1parent_cont3
+  - id: qi003_collider_binary
+    graph_type: handcrafted_table
+    source: qi003_collider_binary
+  - id: qi003_collider_cat3
+    graph_type: handcrafted_table
+    source: qi003_collider_cat3
+  - id: qi003_collider_cont3
+    graph_type: handcrafted_table
+    source: qi003_collider_cont3
+
+grid:
+  seed: [0]
+  target: [x2]
+
+provenance:
+  code_commit_required: true

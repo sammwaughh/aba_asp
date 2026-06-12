@@ -28,6 +28,7 @@ from causal.metrics import (
     python_horn_coverage,
     target_rule_filter,
     triviality_counts,
+    variable_level_stats,
 )
 from causal.test_aba_learning import (
     _abaf_component_stats,
@@ -284,6 +285,62 @@ class TestBodyLevelStatsEdgeCases:
         assert stats["degenerate_hit"] == 0
 
 
+class TestVariableLevelStats:
+    """Variable-level set comparison + clean_recovery (METRICS.md §3.4b)."""
+
+    def test_exact_recovery_fork(self) -> None:
+        gt = _gt_fork()  # parents(x2) = {x0}
+        learned = ["x2(A) :- x0_bin0(A)."]
+        stats = variable_level_stats("x2", learned, gt)
+        assert stats["var_parent_precision"] == 1.0
+        assert stats["var_parent_recall"] == 1.0
+        assert stats["var_parent_jaccard"] == 1.0
+        assert stats["clean_recovery"] == 1
+
+    def test_ancestor_proxy_chain_is_not_clean(self) -> None:
+        gt = _gt_chain()  # parents(x2) = {x1}; x0 is a strict ancestor
+        learned = ["x2(A) :- x0_bin0(A)."]
+        stats = variable_level_stats("x2", learned, gt)
+        assert stats["var_parent_precision"] == 0.0
+        assert stats["var_parent_recall"] == 0.0
+        assert stats["var_parent_jaccard"] == 0.0
+        assert stats["clean_recovery"] == 0
+
+    def test_parent_subset_collider(self) -> None:
+        gt = _gt_collider()  # parents(x2) = {x0, x1}
+        learned = ["x2(A) :- x0_bin0(A)."]
+        stats = variable_level_stats("x2", learned, gt)
+        assert stats["var_parent_precision"] == 1.0
+        assert stats["var_parent_recall"] == 0.5
+        assert stats["var_parent_jaccard"] == 0.5
+        assert stats["clean_recovery"] == 0
+
+    def test_parent_superset_chain_contaminated(self) -> None:
+        gt = _gt_chain()  # parents(x2) = {x1}
+        learned = ["x2(A) :- x1_bin0(A).", "x2(A) :- x0_bin0(A)."]
+        stats = variable_level_stats("x2", learned, gt)
+        # recovered = {x0, x1}; only x1 is a parent.
+        assert stats["var_parent_precision"] == 0.5
+        assert stats["var_parent_recall"] == 1.0
+        assert stats["var_parent_jaccard"] == 0.5
+        assert stats["clean_recovery"] == 0
+
+    def test_empty_recovered_set(self) -> None:
+        gt = _gt_fork()
+        stats = variable_level_stats("x2", [], gt)
+        assert math.isnan(stats["var_parent_precision"])
+        assert stats["var_parent_recall"] == 0.0
+        assert stats["var_parent_jaccard"] == 0.0
+        assert stats["clean_recovery"] == 0
+
+    def test_root_target_recall_nan(self) -> None:
+        gt = _gt_chain()  # parents(x0) = {}
+        learned = ["x0(A) :- x1_bin0(A)."]
+        stats = variable_level_stats("x0", learned, gt)
+        assert math.isnan(stats["var_parent_recall"])
+        assert stats["clean_recovery"] == 0
+
+
 @pytest.mark.skipif(not _FIXTURE_SOL.is_file(), reason="collider fixture missing")
 class TestPythonHornCoverage:
     def test_matches_legacy_on_cont_collider_8_x2(self) -> None:
@@ -449,6 +506,10 @@ class TestComputeCellMetrics:
         assert panel["body_parent_recall"] == 0.5
         assert panel["body_parent_f1"] == pytest.approx(2.0 / 3.0)
         assert panel["n_nontrivial_target_rules"] == 1
+        # Variable-level: recovered {x0}, parents {x0, x1} -> subset, not clean.
+        assert panel["var_parent_precision"] == 1.0
+        assert panel["var_parent_recall"] == 0.5
+        assert panel["clean_recovery"] == 0
 
     @pytest.mark.skipif(
         not _CONFOUNDER_SOL.is_file(), reason="confounder fixture missing"

@@ -51,6 +51,10 @@ RESULT_PARQUET_COLUMNS: tuple[str, ...] = (
     "body_parent_f1",
     "offgraph_rate",
     "ancestor_only_rate",
+    "var_parent_precision",
+    "var_parent_recall",
+    "var_parent_jaccard",
+    "clean_recovery",
     "cov_py_accuracy",
     "cov_py_pos",
     "cov_py_neg",
@@ -94,6 +98,9 @@ _FLOAT_METRICS_WITH_NAN_REASONS: tuple[str, ...] = (
     "body_parent_f1",
     "offgraph_rate",
     "ancestor_only_rate",
+    "var_parent_precision",
+    "var_parent_recall",
+    "var_parent_jaccard",
     "cov_py_accuracy",
     "cov_py_pos",
     "cov_py_neg",
@@ -453,6 +460,51 @@ def body_level_stats(
     }
 
 
+def variable_level_stats(
+    target: str,
+    learned: Sequence[str],
+    ground_truth: GroundTruth,
+) -> dict[str, float | int]:
+    """Variable-level set comparison of recovered body vars vs true parents.
+
+    ``recovered`` is the union of graph variables cited across all non-trivial
+    target rules (with the target itself removed). This complements the
+    rule-level ``body_level_stats``: here precision penalises *any*
+    ancestor/off-graph contamination in the recovered set, and
+    ``clean_recovery`` is the strict full-success flag (recovered set equals the
+    true parent set, nothing more, nothing less). See METRICS.md §3.4b.
+    """
+    parents = ground_truth.parents_of(target)
+    universe = frozenset(ground_truth.nodes)
+
+    nontrivial_rules = [
+        r
+        for r in target_rule_filter(target, learned)
+        if _is_nontrivial_target_rule(target, r)
+    ]
+    recovered: set[str] = set()
+    for rule in nontrivial_rules:
+        recovered |= _rule_body_var_set(rule) & universe
+    recovered.discard(target)
+    recovered_fs = frozenset(recovered)
+
+    inter = recovered_fs & parents
+    union = recovered_fs | parents
+
+    var_precision = len(inter) / len(recovered_fs) if recovered_fs else math.nan
+    var_recall = len(inter) / len(parents) if parents else math.nan
+    var_jaccard = len(inter) / len(union) if union else math.nan
+    # Strict success: recovered exactly the parent set (and there is a parent set).
+    clean = 1 if (bool(parents) and recovered_fs == parents) else 0
+
+    return {
+        "var_parent_precision": var_precision,
+        "var_parent_recall": var_recall,
+        "var_parent_jaccard": var_jaccard,
+        "clean_recovery": clean,
+    }
+
+
 def python_horn_coverage(
     bk_path: Path,
     learned: Sequence[str],
@@ -704,6 +756,13 @@ def _nan_reason_for_metric(
     if metric in ("body_parent_precision", "body_parent_f1", "offgraph_rate", "ancestor_only_rate"):
         if panel.get("n_nontrivial_target_rules", 0) == 0:
             return "no_nontrivial_rules"
+    if metric == "var_parent_precision":
+        return "no_recovered_vars"
+    if metric == "var_parent_recall":
+        if not inp.ground_truth.parents_of(inp.target):
+            return "no_parents"
+    if metric == "var_parent_jaccard":
+        return "no_vars_or_parents"
     if metric == "body_parent_f1":
         if math.isnan(float(panel.get("body_parent_precision", 0.0))) or math.isnan(
             float(panel.get("body_parent_recall", 0.0))
@@ -728,6 +787,7 @@ def compute_cell_metrics(inp: CellInputs) -> dict[str, Any]:
     triv = triviality_counts(inp.target, learned)
     abaf = abaf_structure_counts(learned)
     body = body_level_stats(inp.target, learned, inp.ground_truth)
+    var = variable_level_stats(inp.target, learned, inp.ground_truth)
     cov_py = python_horn_coverage(
         inp.bk_path,
         learned,
@@ -786,6 +846,10 @@ def compute_cell_metrics(inp: CellInputs) -> dict[str, Any]:
         "body_parent_f1": body["body_parent_f1"],
         "offgraph_rate": body["offgraph_rate"],
         "ancestor_only_rate": body["ancestor_only_rate"],
+        "var_parent_precision": var["var_parent_precision"],
+        "var_parent_recall": var["var_parent_recall"],
+        "var_parent_jaccard": var["var_parent_jaccard"],
+        "clean_recovery": var["clean_recovery"],
         "parser_unread_lines": _count_parser_unread_lines(inp.sol_path),
         "sol_file_bytes": sol_bytes,
     }

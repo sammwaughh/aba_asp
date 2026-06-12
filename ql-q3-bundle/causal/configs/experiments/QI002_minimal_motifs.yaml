@@ -1,0 +1,39 @@
+experiment_id: QI002_minimal_motifs
+description: "QI-002 minimal truth-table baseline: 6 handcrafted cells (3 motifs x 2 data modes), target x2 only. Complete factorial over (x0,x1) repeated x2 so the true parent is the unique zero-error separator. Parent-set recovery via ABA Learning, NOT Russo-style Causal ABA. Canonical orientation only (does NOT address the x0 confound; see QI-003). Single seed; no target expansion; default nd folding."
+owner: sam
+
+defaults:
+  graph_type: handcrafted_table
+  bins: 3
+  bin_strategy: uniform
+  folding_steps: 15
+  folding_mode: nd
+  prolog_timeout_s: 120
+  query_timeout_s: 5
+
+dgps:
+  - id: qi002_chain_binary
+    graph_type: handcrafted_table
+    source: qi002_chain_binary
+  - id: qi002_fork_binary
+    graph_type: handcrafted_table
+    source: qi002_fork_binary
+  - id: qi002_collider_binary
+    graph_type: handcrafted_table
+    source: qi002_collider_binary
+  - id: qi002_chain_cat3
+    graph_type: handcrafted_table
+    source: qi002_chain_cat3
+  - id: qi002_fork_cat3
+    graph_type: handcrafted_table
+    source: qi002_fork_cat3
+  - id: qi002_collider_cat3
+    graph_type: handcrafted_table
+    source: qi002_collider_cat3
+
+grid:
+  seed: [0]
+  target: [x2]
+
+provenance:
+  code_commit_required: true

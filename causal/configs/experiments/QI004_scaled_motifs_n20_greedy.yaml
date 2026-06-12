@@ -1,0 +1,66 @@
+experiment_id: QI004_scaled_motifs_n20_greedy
+description: "QI-004 greedy rerun: identical design to QI004_scaled_motifs_n20 (15 handcrafted cells, 5 structural configs x 3 data modes, parent-position variants, target x2 only, n=20, prolog_timeout_s=300) with the single conceptual change folding_mode: nd -> folding_mode: greedy. Purpose: compare parent-set recovery, stability, runtime, and failure modes under greedy folding at the feasible scaled/noisy setting. Parent-set recovery via the current aba_asp/causal implementation, NOT Russo-style Causal ABA. Continuous cells binned into 3 uniform bins. Single seed (tables deterministic via per-fixture internal RNG); no target expansion. Note: greedy folding can be more expensive; if cat3/cont3 cells time out at 300s, record and stop."
+owner: sam
+
+defaults:
+  graph_type: handcrafted_table
+  bins: 3
+  bin_strategy: uniform
+  folding_steps: 15
+  folding_mode: greedy
+  prolog_timeout_s: 300
+  query_timeout_s: 5
+
+dgps:
+  - id: qi004_chain_x1parent_binary
+    graph_type: handcrafted_table
+    source: qi004_chain_x1parent_binary
+  - id: qi004_chain_x1parent_cat3
+    graph_type: handcrafted_table
+    source: qi004_chain_x1parent_cat3
+  - id: qi004_chain_x1parent_cont3
+    graph_type: handcrafted_table
+    source: qi004_chain_x1parent_cont3
+  - id: qi004_chain_x0parent_binary
+    graph_type: handcrafted_table
+    source: qi004_chain_x0parent_binary
+  - id: qi004_chain_x0parent_cat3
+    graph_type: handcrafted_table
+    source: qi004_chain_x0parent_cat3
+  - id: qi004_chain_x0parent_cont3
+    graph_type: handcrafted_table
+    source: qi004_chain_x0parent_cont3
+  - id: qi004_fork_x0parent_binary
+    graph_type: handcrafted_table
+    source: qi004_fork_x0parent_binary
+  - id: qi004_fork_x0parent_cat3
+    graph_type: handcrafted_table
+    source: qi004_fork_x0parent_cat3
+  - id: qi004_fork_x0parent_cont3
+    graph_type: handcrafted_table
+    source: qi004_fork_x0parent_cont3
+  - id: qi004_fork_x1parent_binary
+    graph_type: handcrafted_table
+    source: qi004_fork_x1parent_binary
+  - id: qi004_fork_x1parent_cat3
+    graph_type: handcrafted_table
+    source: qi004_fork_x1parent_cat3
+  - id: qi004_fork_x1parent_cont3
+    graph_type: handcrafted_table
+    source: qi004_fork_x1parent_cont3
+  - id: qi004_collider_binary
+    graph_type: handcrafted_table
+    source: qi004_collider_binary
+  - id: qi004_collider_cat3
+    graph_type: handcrafted_table
+    source: qi004_collider_cat3
+  - id: qi004_collider_cont3
+    graph_type: handcrafted_table
+    source: qi004_collider_cont3
+
+grid:
+  seed: [0]
+  target: [x2]
+
+provenance:
+  code_commit_required: true

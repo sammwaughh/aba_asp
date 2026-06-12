@@ -16,6 +16,13 @@ Lightweight index of experiments and a reusable template. Detailed records live 
 | ID | Title | Status |
 |----|-------|--------|
 | QL-001 | Qualitative inspection of ABA Learning on minimal causal motifs | proposed |
+| QI-001 | Qualitative parent-set recovery across 3 motifs x 3 data modes | implemented |
+| QI-002 | Minimal truth-table baseline for x2 parent recovery | implemented |
+| QI-003 | Scaled noisy motifs with parent-position controls (n=100) | run (feasibility attempt; superseded by QI-004) |
+| QI-004 | Scaled noisy motifs with parent-position controls (reduced n=20) | run (interpretation pending) |
+| QI-001 greedy | Greedy-folding rerun of QI-001 (3 motifs x 3 modes) | implemented |
+| QI-002 greedy | Greedy-folding rerun of QI-002 (minimal truth-table baseline) | implemented |
+| QI-004 greedy | Greedy-folding rerun of QI-004 (scaled noisy n=20) | implemented |
 | QN-001 | Comparing ABA Learning strategies on minimal causal motifs | proposed |
 
 ## Template
@@ -81,6 +88,125 @@ Current report-supporting files:
 - Cursor implementation plan / prompt: TBD after plan-only inspection.
 - Commit hash / run artefact path: —
 - Report relevance: supports the interim Experimentation / Progress section as a small qualitative diagnostic experiment.
+
+### QI-001 — Qualitative parent-set recovery across 3 motifs x 3 data modes
+
+- Status: implemented (Stage 1: fixtures/config/tests in place; ABA Learning not yet run).
+- Detailed record: docs/experiments/qualitative/QI-001.md.
+- Research question: whether the current ABA Learning bridge learns target rules whose body variables coincide with the direct parents of x2 across three canonical 3-node motifs (chain, fork, collider) and three data representations (binary, 3-valued categorical, continuous binned into 3 uniform bins).
+- Theoretical motivation: controlled qualitative diagnostic isolating the effect of the data encoding on parent-set recovery while holding the motif fixed. Not full Causal ABA and not graph recovery.
+- Relation to ABA Learning: uses the inherited learner via the causal/ bridge with fixed handcrafted examples targeting x2 only; current defaults (nd folding, folding_steps 15).
+- Relation to Causal ABA: does not exercise arr/noe/indep, d-separation, or stable-extension-as-DAG machinery.
+- Code path: causal/experiments/run_grid.py with graph_type handcrafted_table; fixtures in causal/experiments/handcrafted_qi001.py.
+- Dataset / DGP: 9 deterministic handcrafted fixtures (3 motifs x 3 data modes).
+- Target variable(s): x2 only. Encoded parents: chain {x1}, fork {x0}, collider {x0, x1}.
+- Metrics: body-parent precision/recall/F1, offgraph/ancestor diagnostics, coverage, outcome category, learned-rule inspection (run stage).
+- Baseline / comparator: none (qualitative first pass).
+- Expected result: not asserted; experiment not run.
+- Interpretation rule: success would show the bridge can recover parent-like rule bodies for x2 in these controlled cases. It would not show causal discovery or full Causal ABA.
+- Failure modes: missing parent, extra ancestor, off-graph body, empty delta, no solution, timeout, parser issue.
+- Cursor implementation plan / prompt: see plan "QI-001 fixtures stage 1".
+- Commit hash / run artefact path: —
+- Report relevance: interim Experimentation / Progress.
+
+### QI-002 — Minimal truth-table baseline for x2 parent recovery
+
+- Status: implemented (fixtures/config/metrics/summary/tests in place; ABA Learning not yet run).
+- Detailed record: docs/experiments/qualitative/QI-002.md.
+- Research question: under complete, noiseless truth tables for three 3-node motifs, where the true parent of x2 is the unique zero-error separator, does the current ABA Learning bridge learn an x2 target rule whose body variables equal the true direct parents?
+- Theoretical motivation: principled minimal baseline replacing QI-001's unjustified 4-5 row tables; the complete factorial (binary 8 rows, cat3 18 rows) is the smallest design that makes the parent the unique perfect rule, so a causal rule is learnable in principle.
+- Relation to ABA Learning: target-wise learning of x2 over handcrafted_table fixtures; default nd folding, folding_steps 15; target excluded from BK.
+- Relation to Causal ABA: does not exercise arr/noe/indep, d-separation, or stable-extension-as-DAG.
+- Code path: causal/experiments/run_grid.py (handcrafted_table); fixtures in causal/experiments/handcrafted_qi002.py.
+- Dataset / DGP: 6 deterministic handcrafted fixtures (3 motifs x {binary, cat3}), canonical orientation, noiseless.
+- Target variable(s): x2 only. Parents: chain {x1}, fork {x0}, collider {x0, x1}.
+- Metrics: clean_recovery + var_parent_precision/recall/jaccard (new), ancestor_only_rate, body_parent_recall, coverage, outcome, folding tokens. body_parent_f1 de-emphasised.
+- Baseline / comparator: none (qualitative baseline).
+- Expected result: not asserted; experiment not run.
+- Interpretation rule: success (high clean_recovery) would show the perfect causal rule is learnable in the ideal case; failure would bound the method even under ideal separability. Neither shows causal discovery or full Causal ABA. Known limitation: cannot separate "prefers true parent" from "prefers x0" (canonical orientation only).
+- Failure modes: missing parent, extra ancestor, off-graph body, empty delta, no solution, timeout, parser issue.
+- Cursor implementation plan / prompt: see plan "Minimal and scaled motif runs (QI-002, QI-003) + metric upgrades".
+- Commit hash / run artefact path: —
+- Report relevance: interim Experimentation / Progress.
+
+### QI-003 — Scaled noisy motifs with parent-position controls (n=100)
+
+- Status: run (computational-feasibility attempt; superseded for evidence by QI-004). The n=100 run repeatedly timed out (cat3/cont3 at 120s) or hit the binary all-zero-positive encoding limitation; 0 cells solved before manual abort. Config/fixtures/partial outputs preserved unchanged; NOT canonical qualitative evidence. See docs/experiments/qualitative/QI003_scaled_motifs/run_log.md.
+- Detailed record: docs/experiments/qualitative/QI-003.md.
+- Research question: with n=100 noisy samples and the true direct parent of x2 placed in either column, does the current ABA Learning bridge recover the true parent(s) regardless of column position, across binary/cat3/cont3 modes?
+- Theoretical motivation: scaled, realistic follow-up that also breaks the QI-001 x0/first-column confound via parent-position variants (chain and fork generated in both orientations), making "found the cause" and "prefers x0" distinguishable.
+- Relation to ABA Learning: target-wise learning of x2 over handcrafted_table fixtures; default nd folding, folding_steps 15; target excluded from BK.
+- Relation to Causal ABA: does not exercise arr/noe/indep, d-separation, or stable-extension-as-DAG.
+- Code path: causal/experiments/run_grid.py (handcrafted_table); fixtures in causal/experiments/handcrafted_qi003.py.
+- Dataset / DGP: 15 deterministic handcrafted fixtures (5 structural configs x {binary, cat3, cont3}), n=100, mild noise, fixed per-fixture RNG seed.
+- Target variable(s): x2 only. Parents per fixture: chain_x1parent {x1}, chain_x0parent {x0}, fork_x0parent {x0}, fork_x1parent {x1}, collider {x0, x1}.
+- Metrics: clean_recovery + var_parent_precision/recall/jaccard (new), ancestor_only_rate, body_parent_recall, coverage, outcome, folding tokens. body_parent_f1 de-emphasised.
+- Baseline / comparator: x0parent vs x1parent within each motif (the confound check).
+- Expected result: not asserted; experiment not run.
+- Interpretation rule: recovery tracking the true parent column (both orientations) indicates parent recovery; recovery tracking x0 regardless indicates the positional confound. Neither shows full causal discovery or Causal ABA.
+- Failure modes: positional confound, ancestor proxy, sibling proxy, missing parent, off-graph body, empty delta, no solution, timeout, parser issue.
+- Cursor implementation plan / prompt: see plan "Minimal and scaled motif runs (QI-002, QI-003) + metric upgrades".
+- Commit hash / run artefact path: —
+- Report relevance: interim Experimentation / Progress.
+
+### QI-004 — Scaled noisy motifs with parent-position controls (reduced n=20)
+
+- Status: run (interpretation pending). 15/15 cells completed with NO timeouts (1 solved, 12 completed_no_solution, 2 binary `unknown constant` errors; clean_recovery=0 for all). The feasibility goal (vs QI-003's n=100 timeouts) is met. See docs/experiments/qualitative/QI004_scaled_motifs_n20/run_log.md.
+- Detailed record: docs/experiments/qualitative/QI-004.md.
+- Research question: with n=20 noisy samples and the true direct parent of x2 placed in either column, does the current ABA Learning bridge recover the true parent(s) regardless of column position, across binary/cat3/cont3 modes?
+- Theoretical motivation: computationally feasible follow-up to QI-003. The QI-003 n=100 run was infeasible under the available Prolog timeout budget (cat3/cont3 timed out; binary hit the all-zero-positive encoding limitation). QI-004 keeps the identical conceptual design but reduces n to 20 and raises the Prolog timeout to 300s. Still breaks the QI-001 x0/first-column confound via parent-position variants.
+- Relation to ABA Learning: target-wise learning of x2 over handcrafted_table fixtures; default nd folding, folding_steps 15; target excluded from BK.
+- Relation to Causal ABA: does not exercise arr/noe/indep, d-separation, or stable-extension-as-DAG.
+- Code path: causal/experiments/run_grid.py (handcrafted_table); fixtures in causal/experiments/handcrafted_qi004.py (reuses N-agnostic helpers from handcrafted_qi003.py).
+- Dataset / DGP: 15 deterministic handcrafted fixtures (5 structural configs x {binary, cat3, cont3}), n=20, mild noise (same mechanisms/noise as QI-003), fixed per-fixture RNG seed.
+- Target variable(s): x2 only. Parents per fixture: chain_x1parent {x1}, chain_x0parent {x0}, fork_x0parent {x0}, fork_x1parent {x1}, collider {x0, x1}.
+- Metrics: clean_recovery + var_parent_precision/recall/jaccard, ancestor_only_rate, body_parent_recall, coverage, outcome, folding tokens. body_parent_f1 de-emphasised. Continuous bin-health recorded per cell.
+- Baseline / comparator: x0parent vs x1parent within each motif (the confound check); plus the noiseless QI-002 baseline.
+- Expected result: not asserted.
+- Interpretation rule: recovery tracking the true parent column (both orientations) indicates parent recovery; recovery tracking x0 regardless indicates the positional confound. Known carry-over limitation: the binary all-zero-positive encoding may still trip `unknown constant` on some binary cells; recorded, not fixed.
+- Failure modes: positional confound, ancestor proxy, sibling proxy, missing parent, off-graph body, empty delta, no solution, timeout, binary unknown-constant encoding error, parser issue.
+- Cursor implementation plan / prompt: see plan "QL004 reduced-n scaled run".
+- Commit hash / run artefact path: causal/outputs/aba_learning/grid/QI004_scaled_motifs_n20/.
+- Report relevance: interim Experimentation / Progress.
+
+### QI-001 greedy — Greedy-folding rerun of QI-001
+
+- Status: implemented (config/dossier in place; run + interpretation by the greedy-rerun task).
+- Detailed record: docs/experiments/qualitative/QI001_motifs_modes_greedy/.
+- Research question: relative to non-deterministic folding, does greedy folding change parent-set recovery, stability, runtime, or failure modes on the QI-001 motif-by-data-mode tasks?
+- Only conceptual change: defaults.folding_mode nd -> greedy (folding_steps retained but ignored by greedy). All fixtures, motifs, target x2, data modes, bins, seeds, and the 120s timeout identical to the nd QI-001 config.
+- Relation to Causal ABA: does not exercise arr/noe/indep, d-separation, or stable-extension-as-DAG. Target-wise parent-set recovery only; not causal discovery.
+- Code path: causal/experiments/run_grid.py (handcrafted_table); fixtures qi001_* in causal/experiments/handcrafted.py.
+- Dataset / DGP: 9 cells (3 motifs x 3 data modes), target x2.
+- Metrics: clean_recovery + var_parent_precision/recall/jaccard; runtime/solve-rate/error-rate/interpretability separated in the greedy-vs-nd comparison.
+- Baseline / comparator: the nd QI-001 run.
+- Report relevance: interim Experimentation / Progress (greedy-vs-nd qualitative comparison).
+
+### QI-002 greedy — Greedy-folding rerun of QI-002
+
+- Status: implemented (config/dossier in place; run + interpretation by the greedy-rerun task).
+- Detailed record: docs/experiments/qualitative/QI002_minimal_motifs_greedy/.
+- Research question: in the noiseless best case, does greedy folding change whether the perfect x2 target rule is found, plus runtime/solve-rate/interpretability, relative to nd?
+- Only conceptual change: defaults.folding_mode nd -> greedy. All fixtures, motifs, target x2, data modes, bins, seeds, and the 120s timeout identical to the nd QI-002 config.
+- Relation to Causal ABA: does not exercise arr/noe/indep, d-separation, or stable-extension-as-DAG. Target-wise parent-set recovery only.
+- Code path: causal/experiments/run_grid.py (handcrafted_table); fixtures qi002_* in causal/experiments/handcrafted.py.
+- Dataset / DGP: 6 cells (3 motifs x {binary, cat3}), target x2, canonical orientation (does not address the x0 confound).
+- Metrics: clean_recovery + var_parent_precision/recall/jaccard; greedy-vs-nd axes separated.
+- Baseline / comparator: the nd QI-002 run.
+- Report relevance: interim Experimentation / Progress.
+
+### QI-004 greedy — Greedy-folding rerun of QI-004
+
+- Status: implemented (config/dossier in place; run + interpretation by the greedy-rerun task).
+- Detailed record: docs/experiments/qualitative/QI004_scaled_motifs_n20_greedy/.
+- Research question: at the scaled/noisy n=20 setting, does greedy folding change parent-set recovery, the x0/x1 confound behaviour, runtime, solve rate, error rate, or interpretability relative to nd?
+- Only conceptual change: defaults.folding_mode nd -> greedy. All fixtures, motifs, target x2, data modes, n=20, bins, seeds, and the 300s timeout identical to the nd QI-004 config. Greedy may be costlier; if cat3/cont3 cells repeatedly time out at 300s, record status and stop (no blind reruns).
+- Relation to Causal ABA: does not exercise arr/noe/indep, d-separation, or stable-extension-as-DAG. Target-wise parent-set recovery only.
+- Code path: causal/experiments/run_grid.py (handcrafted_table); fixtures qi004_* in causal/experiments/handcrafted_qi004.py.
+- Dataset / DGP: 15 cells (5 structural configs x {binary, cat3, cont3}), target x2.
+- Metrics: clean_recovery + var_parent_precision/recall/jaccard, bin-health for cont3; greedy-vs-nd axes separated. QL3 excluded.
+- Baseline / comparator: the nd QI-004 run.
+- Report relevance: interim Experimentation / Progress.
 
 ### QN-001 — Comparing ABA Learning strategies on minimal causal motifs
 

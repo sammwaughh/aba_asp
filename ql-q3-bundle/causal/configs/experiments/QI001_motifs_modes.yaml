@@ -1,0 +1,48 @@
+experiment_id: QI001_motifs_modes
+description: "QI-001 Stage 1: 9 handcrafted cells (3 motifs x 3 data modes), target x2 only. Parent-set recovery via ABA Learning, NOT Russo-style Causal ABA. Continuous fixtures binned into 3 uniform bins. Single seed; no target expansion; default nd folding."
+owner: sam
+
+defaults:
+  graph_type: handcrafted_table
+  bins: 3
+  bin_strategy: uniform
+  folding_steps: 15
+  folding_mode: nd
+  prolog_timeout_s: 120
+  query_timeout_s: 5
+
+dgps:
+  - id: qi001_chain_binary
+    graph_type: handcrafted_table
+    source: qi001_chain_binary
+  - id: qi001_fork_binary
+    graph_type: handcrafted_table
+    source: qi001_fork_binary
+  - id: qi001_collider_binary
+    graph_type: handcrafted_table
+    source: qi001_collider_binary
+  - id: qi001_chain_cat3
+    graph_type: handcrafted_table
+    source: qi001_chain_cat3
+  - id: qi001_fork_cat3
+    graph_type: handcrafted_table
+    source: qi001_fork_cat3
+  - id: qi001_collider_cat3
+    graph_type: handcrafted_table
+    source: qi001_collider_cat3
+  - id: qi001_chain_cont3
+    graph_type: handcrafted_table
+    source: qi001_chain_cont3
+  - id: qi001_fork_cont3
+    graph_type: handcrafted_table
+    source: qi001_fork_cont3
+  - id: qi001_collider_cont3
+    graph_type: handcrafted_table
+    source: qi001_collider_cont3
+
+grid:
+  seed: [0]
+  target: [x2]
+
+provenance:
+  code_commit_required: true
