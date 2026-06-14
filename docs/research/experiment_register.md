@@ -123,7 +123,7 @@ Current report-supporting files:
 - Metrics: clean_recovery + var_parent_precision/recall/jaccard (new), ancestor_only_rate, body_parent_recall, coverage, outcome, folding tokens. body_parent_f1 de-emphasised.
 - Baseline / comparator: none (qualitative baseline).
 - Expected result: not asserted; experiment not run.
-- Interpretation rule: success (high clean_recovery) would show the perfect causal rule is learnable in the ideal case; failure would bound the method even under ideal separability. Neither shows causal discovery or full Causal ABA. Known limitation: cannot separate "prefers true parent" from "prefers x0" (canonical orientation only).
+- Interpretation rule: success (high clean_recovery) would show the perfect causal rule is learnable in the ideal case; failure would bound the method even under ideal separability. Neither shows causal discovery or full Causal ABA. Confound treatment: the complete factorial is a principled data-level correction against the QI-001 x0/first-column confound (it decorrelates non-parents from x2, so the true parent is the unique perfect separator, and makes the canonical chain cell — where x0 ⊥ x2 — a positional-bias probe). It does NOT provide the full symmetric break: the fork's parent is x0 (bias and recovery coincide), there is no correlated-ancestor test, and no within-structure parent-position swap — those are QI-003/QI-004's job.
 - Failure modes: missing parent, extra ancestor, off-graph body, empty delta, no solution, timeout, parser issue.
 - Cursor implementation plan / prompt: see plan "Minimal and scaled motif runs (QI-002, QI-003) + metric upgrades".
 - Commit hash / run artefact path: —
@@ -190,7 +190,7 @@ Current report-supporting files:
 - Only conceptual change: defaults.folding_mode nd -> greedy. All fixtures, motifs, target x2, data modes, bins, seeds, and the 120s timeout identical to the nd QI-002 config.
 - Relation to Causal ABA: does not exercise arr/noe/indep, d-separation, or stable-extension-as-DAG. Target-wise parent-set recovery only.
 - Code path: causal/experiments/run_grid.py (handcrafted_table); fixtures qi002_* in causal/experiments/handcrafted.py.
-- Dataset / DGP: 6 cells (3 motifs x {binary, cat3}), target x2, canonical orientation (does not address the x0 confound).
+- Dataset / DGP: 6 cells (3 motifs x {binary, cat3}), target x2, canonical orientation (complete factorial gives a data-level correction against the x0 confound — chain cell is a positional-bias probe; the full symmetric break via parent-position swap is QI-003/QI-004's job).
 - Metrics: clean_recovery + var_parent_precision/recall/jaccard; greedy-vs-nd axes separated.
 - Baseline / comparator: the nd QI-002 run.
 - Report relevance: interim Experimentation / Progress.

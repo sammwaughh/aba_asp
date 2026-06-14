@@ -24,9 +24,11 @@ These criteria decide whether the run is usable as a baseline and whether a reru
 | Baseline learnability | at least some cells reach `clean_recovery = 1` (perfect parent rule learnable in the ideal case) | `clean_recovery = 0` everywhere -> record as a strong negative baseline finding; check encoding before concluding |
 | Determinism | re-running yields identical fixtures (deterministic tables) | divergence -> fixture bug |
 
-## Known limitation (by design)
+## Confound treatment (corrected framing)
 
-QI-002 uses canonical orientation only and therefore does NOT break the x0/first-column confound. A learner that simply prefers `x0` would look correct on fork and wrong on chain. Breaking that confound is the job of QI-003. QI-002 answers only "can the perfect rule be learned at all?".
+QI-002 makes a principled **data-level** correction against the x0/first-column confound (it does not merely defer it). The complete factorial over `(x0, x1)` with a noiseless target makes each non-parent column statistically independent of `x2`, so the true parent is the unique zero-error separator and a non-parent has no legitimate data-level claim to the rule. This removes the QI-001 mechanism where a non-parent (e.g. the chain ancestor `x0`) looked justified only because the tiny/degenerate table left it correlated with `x2`. Consequently the canonical **chain** cell (parent `x1`, `x0 ⊥ x2`) is a genuine probe of any residual positional x0-preference: a pure x0-preferrer predicts fork-pass + chain-fail, genuine recovery predicts both pass.
+
+What QI-002 does **not** do (left to QI-003/QI-004): (i) resolve the **fork** in isolation, whose true parent *is* `x0`; (ii) test against a *correlated* ancestor (the factorial removes that correlation); (iii) provide a symmetric within-structure parent-position swap (`*_x0parent` vs `*_x1parent`). So QI-002 corrects the confound at the data level and yields partial positional-bias evidence, but does not provide the full symmetric/empirical break. It answers "can the perfect rule be learned at all?".
 
 ## Decisions taken
 

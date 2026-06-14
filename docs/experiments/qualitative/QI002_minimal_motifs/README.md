@@ -30,7 +30,7 @@ This is the principled replacement for QI-001's unjustified 4-5 row tables. With
 
 - In scope: per-cell learned `x2` rules, their body variables vs the encoded parents, and the new variable-level metrics + `clean_recovery`.
 - Out of scope: DAG discovery, edge orientation, d-separation, stable-extension-as-DAG.
-- Known limitation: canonical orientation only; QI-002 does NOT address the x0/first-column confound (that is QI-003).
+- Confound treatment: the complete factorial decorrelates non-parents from `x2` (true parent = unique perfect separator), which is a principled **data-level** correction against the QI-001 x0/first-column confound and makes the canonical **chain** cell (where `x0 ⊥ x2`) a genuine probe of any residual positional x0-preference. QI-002 does **not** provide the full *symmetric* break — the fork cell's parent is `x0` (bias and recovery coincide), and there is no within-structure parent-position swap; that symmetric/empirical break is QI-003/QI-004's job. See `QI-002.md` → "Confound treatment (corrected framing)".
 
 ## Matrix
 

@@ -135,11 +135,22 @@ cells. Conda env `aba-asp`; SWI-Prolog 10.0.2; clingo 5.8.0.
     `ancestor_only_rate=1.0`, 3 assumptions introduced.
   - `qi002_fork_cat3`: exact `{x0}`, clean=1.
   - `qi002_collider_cat3`: `parent_subset` `{x0}` only, clean=0, var P/R/J 1.0/0.5/0.5.
-- **Known caveats.** (i) **Canonical orientation only** → does *not* break the x0 confound
-  (a pure `x0`-preferrer looks right on fork, wrong on chain). (ii) Even in the ideal
-  noiseless case, the collider is not cleanly recovered (binary: no solution; cat3: subset),
-  and cat3 chain recovers the ancestor not the parent. (iii) `interpretation.md` still a
-  template.
+- **Confound treatment (corrected framing).** The complete factorial is a principled
+  **data-level** correction against the x0/first-column confound — not a deferral. By
+  decorrelating each non-parent from `x2` (true parent = unique perfect separator), it removes
+  the QI-001 mechanism whereby a non-parent looked justified by spurious correlation, and it
+  makes the canonical **chain** cell (where `x0 ⊥ x2`) a genuine probe of any residual
+  positional x0-preference: a pure `x0`-preferrer predicts fork-pass + **chain-fail**, genuine
+  recovery predicts both pass. Observed: binary recovers `{x1}` on the chain (inconsistent with
+  a pure x0-bias); cat3 cites the uninformative `x0` on the chain (consistent with an
+  x0/ancestor artefact). What QL2 does **not** do (left to QL3/QL4): resolve the **fork** in
+  isolation (its parent *is* `x0`); test against a *correlated* ancestor (the factorial removes
+  that correlation, arguably over-correcting); and provide a symmetric within-structure
+  parent-position swap. So QL2 corrects the confound at the data level and gives partial
+  positional-bias evidence, but does not provide the full symmetric/empirical break.
+- **Known caveats.** (i) Even in the ideal noiseless case, the collider is not cleanly
+  recovered (binary: no solution; cat3: subset), and cat3 chain recovers the ancestor not the
+  parent. (ii) `interpretation.md` still a template.
 
 ### QL3 / QI-003 — scaled noisy run with parent-position controls (feasibility attempt)
 
@@ -196,8 +207,13 @@ cells. Conda env `aba-asp`; SWI-Prolog 10.0.2; clingo 5.8.0.
    learnable **in principle**. This isolates "can the perfect rule be learned at all, in the
    best case?". Result: clean recovery on only **half** the cells (binary 2/3, cat3 1/3),
    with the collider failing even noiselessly (binary: no solution; cat3: subset) and cat3
-   chain recovering the ancestor. QL2 deliberately keeps the **canonical orientation only**,
-   so it does **not** break the x0 confound — that is QL3/QL4's job.
+   chain recovering the ancestor. Crucially, the complete factorial is also a principled
+   **data-level** correction against the x0 confound: it decorrelates non-parents from `x2`
+   and makes the canonical chain cell (`x0 ⊥ x2`) a genuine probe of positional x0-preference
+   (binary's clean `{x1}` recovery is evidence *against* a pure x0-bias; the cat3 chain's `x0`
+   citation is consistent with an artefact). What QL2 does **not** provide is the *full
+   symmetric* break — the fork's parent *is* `x0`, there is no correlated-ancestor test, and no
+   within-structure parent-position swap; that is QL3/QL4's job.
 
 3. **QL3 (QI-003) attempted a larger, noisier, confound-controlled setting** (`n=100`, both
    parent orientations) to test whether recovery tracks the true parent column rather than
@@ -273,7 +289,7 @@ cited as results.
   - Surface the two design limitations: x0/first-column confound; unjustified tiny `n`.
 - **QL2: principled minimal baseline (QI-002)**
   - Complete noiseless truth tables; perfect rule learnable in principle.
-  - Clean recovery 3/6 (binary 2/3, cat3 1/3); collider fails even noiselessly; canonical orientation only (confound still open).
+  - Clean recovery 3/6 (binary 2/3, cat3 1/3); collider fails even noiselessly; the complete factorial is a data-level correction against the x0 confound (decorrelates non-parents; chain cell becomes a positional-bias probe — binary `{x1}` argues against a pure x0-bias), but the *full symmetric* break (fork-in-isolation, correlated-ancestor test, parent-position swap) is still open and is QL3/QL4's job.
 - **QL3/QL4: scaled continuous/discretisation check (QI-003 → QI-004)**
   - QL3: `n=100` feasibility wall — timeouts (cat3/cont3) + binary encoding errors; 0 solved.
   - QL4 (**placeholder**): `n=20`, `prolog_timeout_s=300`; will run the `*_x0parent` vs `*_x1parent` confound check. Mark all QL4 numbers as pending.
@@ -315,8 +331,12 @@ cited as results.
   no d-separation, no stable-extension-as-DAG in the code path).
 - ❌ **Causal discovery / DAG recovery** of the motifs.
 - ❌ Learned rule **direction is causal** (bodies are predictor sets, not oriented edges).
-- ❌ The **x0/first-column confound is broken** by QL1–QL3 (QL1/QL2 are confounded by design;
-  QL3 produced no solved cells). This is the open question for QL4.
+- ❌ The **x0/first-column confound is *fully* broken** by QL1–QL3. (QL2 *does* correct it at
+  the data level — the complete factorial decorrelates non-parents and turns the chain cell
+  into a positional-bias probe, with binary `{x1}` recovery arguing against a pure x0-bias —
+  but the full *symmetric* break, i.e. resolving the fork in isolation, testing against a
+  correlated ancestor, and a within-structure parent-position swap, is not achieved; QL3
+  produced no solved cells.) The full symmetric break is the open question for QL4.
 - ❌ Any conclusion about **larger-sample continuous/discretised** recovery (blocked on QL4).
 - ❌ Anything derived from the **reserved** graph-level metrics (`skel_*`, `dir_*`, `shd`,
   `bridge_*`) — not computed.
@@ -327,8 +347,11 @@ cited as results.
 
 - **Conceptual.** The bridge is target-wise learned-rule / parent-set recovery, best treated
   as predictive-association recovery that *may* align with parents; it is not Causal ABA.
-- **Confound (open).** x0/first-column preference vs genuine parent recovery is not yet
-  distinguished (QL1/QL2 canonical-only; QL3 unsolved).
+- **Confound (partially corrected; full break open).** QL2's complete factorial corrects the
+  x0/first-column confound at the **data level** (non-parents decorrelated from `x2`; the chain
+  cell becomes a positional-bias probe, and binary `{x1}` recovery argues against a pure
+  x0-bias). The *full symmetric* break — fork-in-isolation, a correlated-ancestor test, and a
+  within-structure parent-position swap — is not yet achieved (QL3 unsolved); it is QL4's job.
 - **Scale.** Prolog learning does not complete within 120 s at `n=100` for cat3/cont3 cells.
 - **Encoding.** Binary all-zero-positive rows can trip `check_ep_consts_aux`
   (`unknown constant`); recorded, not fixed.

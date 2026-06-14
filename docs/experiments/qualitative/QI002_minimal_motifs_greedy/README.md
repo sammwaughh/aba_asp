@@ -16,7 +16,7 @@ Pipeline-greedy uses engine-default `folding_selection(any)` / `folding_space(al
 
 ## Cells
 
-3 motifs (chain, fork, collider) x 2 data modes (binary, cat3) = 6 cells, all target `x2`. Single seed `0`. (Canonical orientation only — does NOT address the x0 confound; see QI-004 greedy.)
+3 motifs (chain, fork, collider) x 2 data modes (binary, cat3) = 6 cells, all target `x2`. Single seed `0`. (Same complete-factorial design as the nd QI-002: this is a principled **data-level** correction against the x0 confound — non-parents are decorrelated from `x2`, so the chain cell is a positional-bias probe — but it does NOT provide the full *symmetric* break via a parent-position swap; that is QI-004 greedy's job. See `QI-002.md` → "Confound treatment (corrected framing)".)
 
 ## Key paths
 

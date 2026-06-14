@@ -122,4 +122,5 @@ TBD
 - Recovery by data mode (binary / cat3): `TBD`
 - Recovery by motif (chain / fork / collider): `TBD`
 - Does the perfect-rule-exists baseline succeed? `TBD`
+- Confound treatment (corrected framing): the complete factorial decorrelates non-parents from `x2`, a principled **data-level** correction against the QI-001 x0/first-column confound. Because `x0 ⊥ x2` on the chain, the canonical chain cell is a genuine probe of positional x0-preference (pure x0-bias ⇒ fork-pass + chain-fail; genuine recovery ⇒ both pass). Read the chain cells against this: binary recovering `{x1}` is evidence *against* a pure x0-bias; a chain cell citing the uninformative `x0` (cat3) is consistent with an x0/ancestor artefact. The *full symmetric* break (fork in isolation; correlated-ancestor test; `*_x0parent`/`*_x1parent` swap) is QI-003/QI-004's job, not QI-002's. See `QI-002.md` → "Confound treatment (corrected framing)".
 - Next decision for the project: `TBD`

@@ -17,10 +17,17 @@ rule).
 Scope: parent-set recovery via ABA Learning, NOT Russo-style Causal ABA. The
 motif names describe the data-generating structure encoded in the table.
 
-Orientation note: QI-002 uses the *canonical* orientation only (chain parent
-``x1``, fork parent ``x0``). It does NOT break the x0/first-column confound
-flagged in QI-001; that is the job of QI-003's parent-position variants. QI-002
-documents the confound as a known limitation it does not address.
+Confound note (corrected framing): the complete factorial is a principled
+*data-level* correction against the x0/first-column confound flagged in QI-001.
+By decorrelating each non-parent from ``x2`` (so the true parent is the unique
+zero-error separator), it removes the QI-001 mechanism whereby a non-parent (e.g.
+the chain ancestor ``x0``) looked justified through spurious correlation, and it
+makes the canonical chain cell (where ``x0`` is independent of ``x2``) a genuine
+probe of any residual positional x0-preference. It does NOT provide the *full
+symmetric* break, however: the fork's true parent *is* ``x0`` (bias and recovery
+coincide there), there is no correlated-ancestor test, and there is no
+within-structure parent-position swap. That symmetric break is the job of
+QI-003/QI-004's parent-position variants.
 
 Encoding contract (enforced by ``causal/argcausaldisco_integration.py``):
 - binary mode: ``categorical`` var_type, values exactly ``{0,1}`` -> bare
