@@ -103,6 +103,9 @@ aba_asp/
     comparison).
   - `templates/` — older copy templates retained for reference.
 - `docs/report/` — report-support docs (evidence-to-prose guardrails, not report prose):
+  - `README.md` — index for report layout and manuscript pairing.
+  - `manuscript/` — report chapter `.tex` sources and `.md` ChatGPT mirrors (`introduction`,
+    `literature-review`, `background`, `experimentation`, `project_plan`; `main.tex` driver).
   - `claims_ledger.md` — evidence-to-claim guardrail.
   - `interim_section_plan.md` — interim report section/evidence plan.
   - `figure_table_index.md` — figure/table provenance.

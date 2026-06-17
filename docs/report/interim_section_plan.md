@@ -10,11 +10,11 @@ It is a repo-side planning document. It should help Samuel, Cursor, and ChatGPT 
 
 | Section | Status | Evidence source | Writing source | Notes |
 |---|---|---|---|---|
-| Literature Review | complete | `literature_review_current.md`; canonical report `.tex` source in repo | Samuel-authored report draft | Reusable for final report. |
-| Background | complete | `background_current.md`; canonical report `.tex` source in repo | Samuel-authored report draft | Reusable for final report. |
-| Introduction | not started | Final section plan and experiment framing | To be written last | Not a current blocker. |
-| Experimentation / Progress | pending | Experiment records under `docs/experiments/` | ChatGPT draft from records, Samuel final edit | Main current bottleneck. |
-| Project Plan | pending | Supervisor guidance, experiment interpretations, literature gap | ChatGPT draft from records, Samuel final edit | Should follow experiments. |
+| Literature Review | drafted | `docs/report/manuscript/literature-review.md`; `.tex` in `docs/report/manuscript/` | Samuel-authored report draft | Reusable for final report. Theory canon also in `docs/theory/literature_review.tex`. |
+| Background | drafted | `docs/report/manuscript/background.md`; `.tex` in `docs/report/manuscript/` | Samuel-authored report draft | Reusable for final report. Theory canon also in `docs/theory/background.tex`. |
+| Introduction | drafted | `docs/report/manuscript/introduction.md`; `.tex` in `docs/report/manuscript/` | Samuel-authored report draft | States RQ1/RQ2/RQ3 and the settled "Causal ABA guides ABA Learning" direction. |
+| Experimentation / Progress | drafted | `docs/report/manuscript/experimentation.md`; QI-001/QI-002/QI-004 records under `docs/experiments/` | Samuel-authored draft from experiment records | Covers QL1/QL2/QL3 (= QI-001/QI-002/QI-004). Needs the audit corrections (expected-vs-actual reasoning, conclusions per result). |
+| Project Plan | drafted | `docs/report/manuscript/project_plan.md`; supervisor guidance; experiment interpretations | Samuel-authored draft | Milestones 1–6 and the 14-week schedule. |
 | GenAI / authorship declaration | pending | `docs/report/genai_use_log.md`; Samuel notes | Samuel final declaration | Should remain factual and transparent. |
 
 ## Interim report framing
@@ -31,24 +31,24 @@ It should not claim that the current implementation performs full Russo-style Ca
 
 ### 1. Introduction
 
-Status: `not started`
+Status: `drafted`
+
+Current source:
+
+- `docs/report/manuscript/introduction.md` (ChatGPT mirror)
+- `docs/report/manuscript/introduction.tex` (report chapter)
 
 Purpose:
 
 - introduce the project problem;
 - motivate the interaction between causal discovery and ABA Learning;
-- state the interim-stage focus;
-- preview contributions/progress.
+- state the interim-stage focus (RQ1 groundwork);
+- preview contributions/progress and the settled direction (Causal ABA guides ABA Learning).
 
-Evidence needed:
+Use in interim report:
 
-- completed literature review and background;
-- final experiment/progress summary;
-- project plan.
-
-Drafting rule:
-
-Write this section last.
+- already drafted; states RQ1/RQ2/RQ3;
+- light editing only, kept consistent with the final experiment/plan framing.
 
 ### 2. Literature Review
 
@@ -56,8 +56,9 @@ Status: `complete`
 
 Current source:
 
-- `literature_review_current.md`
-- canonical editable report source remains the corresponding `.tex` file in the repo.
+- `docs/report/manuscript/literature-review.md` (ChatGPT mirror)
+- `docs/report/manuscript/literature-review.tex` (report chapter; copy in / edit here)
+- Theory canon: `docs/theory/literature_review.tex`
 
 Use in interim report:
 
@@ -70,8 +71,9 @@ Status: `complete`
 
 Current source:
 
-- `background_current.md`
-- canonical editable report source remains the corresponding `.tex` file in the repo.
+- `docs/report/manuscript/background.md` (ChatGPT mirror)
+- `docs/report/manuscript/background.tex` (report chapter; copy in / edit here)
+- Theory canon: `docs/theory/background.tex`
 
 Use in interim report:
 
@@ -80,89 +82,82 @@ Use in interim report:
 
 ### 4. Experimentation / Progress
 
-Status: `pending`
+Status: `drafted`
 
-Purpose:
+Current source:
 
-Show concrete technical progress after the literature/background work.
+- `docs/report/manuscript/experimentation.md` (ChatGPT mirror)
+- `docs/report/manuscript/experimentation.tex` (report chapter)
 
-Recommended structure:
+Label mapping: report QL1/QL2/QL3 = repo QI-001/QI-002/QI-004. (The earlier n=100 scaled attempt was cut; only the reduced n=20 study is canonical and is QL3.)
 
-1. **Experimental infrastructure**
-   - YAML-configured grid runner.
-   - Per-cell artefacts.
-   - Result aggregation.
-   - Basic metrics.
-   - Current limitation: parent-set / learned-rule recovery, not full DAG-level Causal ABA.
+Drafted structure:
 
-2. **Motivation for minimal motif experiments**
-   - Supervisor guidance: start with simple three-node structures.
-   - Qualitative inspection is needed before large-scale evaluation.
-   - Aim: understand what ABA Learn recovers.
+1. **Setup and metrics**
+   - target-wise learning of `x2` from handcrafted three-node motif tables (chain/fork/collider);
+   - target column excluded from BK; binary/categorical-3/continuous-binned encodings;
+   - variable-level precision, recall and F1 against the true parent set (clean-recovery de-emphasised in favour of F1, per supervisor guidance).
 
-3. **DGP and encoding audit**
-   - Inspect ArgCausalDisco-generated samples.
-   - Inspect ABA encoding.
-   - Confirm what the learner is actually given.
+2. **QL1 (QI-001): initial motif-by-data-mode probe**
+   - 9 tiny (4–5 row) cells, all solved;
+   - fork exact (but confounded with x0/first-column preference), chain often recovers the ancestor x0, collider exact only in binary;
+   - exposes the x0 confound and weak table design.
 
-4. **QL-001 qualitative investigation**
-   - chain/fork/collider motifs;
-   - target-wise learned rules;
-   - comparison of learned bodies with true parents;
-   - selected narratable examples.
+3. **QL2 (QI-002): complete truth-table baseline**
+   - 6 noiseless cells; binary chain/fork exact, binary collider no-solution, cat3 chain recovers non-parent x0, cat3 collider parent-subset;
+   - mean F1 ~ 0.61; recovery not reliable even under ideal separability.
 
-5. **QN-001 strategy comparison, if available**
-   - greedy versus non-deterministic learning;
-   - solve rate;
-   - parent-body metrics;
-   - efficiency proxies;
-   - failure modes.
+4. **QL3 (QI-004): scaled noisy follow-up (n=20)**
+   - 15 cells, no timeouts; 1 solved (binary chain x1-parent, superset {x0,x1}, F1 0.67), 12 no-solution, 2 binary errors; 0 exact recoveries;
+   - DGP described explicitly (binary flip, categorical noise, Gaussian continuous; positive-class definitions; 3 uniform bins). Noise hyper-parameters were chosen arbitrarily — a systematic sweep is immediate future work.
 
-6. **Limitations**
-   - current implementation does not test full Causal ABA;
-   - learned predictive rules are not automatically causal rules;
-   - small motifs are diagnostic, not conclusive;
-   - metrics are partial and need refinement.
+5. **Greedy vs non-deterministic folding (qualitative)**
+   - greedy faster (~120x at the QL3 scale), solve rate >= nd, net better clean recovery (colliders), one regression (cat3 fork), no recovery change at the noisy n=20 scale;
+   - motivates the controlled quantitative comparison QN-001.
 
-Required evidence before drafting:
+6. **Interim interpretation and limitations**
+   - bounded conclusion: parent recovery works in selected idealised cases but is not robust across motifs/encodings/noise;
+   - does not implement full Russo-style Causal ABA; learned predictive rules are not automatically causal; continuous variables are binned; metrics need refinement beyond parent membership.
 
-- `docs/experiments/QL-001.md`;
-- `docs/experiments/QN-001.md` if run or plan-only status if not run;
+Per supervisor guidance, each presented result should carry an interpretation and a conclusion, and discrepancies between the expected outputs of the handcrafted DGP and the actual learned rules should be reasoned about explicitly.
+
+Required evidence for drafting / revision:
+
+- `docs/experiments/qualitative/QI-001.md`, `QI-002.md`, `QI-004.md`;
+- `docs/experiments/qualitative/greedy_vs_nd_qualitative_handoff.md`;
+- `docs/experiments/QN-001.md` (plan-only status until run);
 - `docs/report/claims_ledger.md`;
 - selected figures/tables from `docs/report/figure_table_index.md`.
 
 ### 5. Project Plan
 
-Status: `pending`
+Status: `drafted`
+
+Current source:
+
+- `docs/report/manuscript/project_plan.md` (ChatGPT mirror)
+- `docs/report/manuscript/project_plan.tex` (report chapter)
 
 Purpose:
 
-Explain what will happen after the interim report.
+Explain what will happen after the interim report, following from the QL1/QL2/QL3 findings, the literature gap, supervisor guidance, and implementation limitations.
 
-Plan should follow from:
+Drafted milestones (Weeks 1–13, with a Week-11 holiday):
 
-- literature gap;
-- supervisor guidance;
-- QL-001 findings;
-- QN-001 findings or design status;
-- implementation limitations.
+1. **Milestone 1 (Weeks 1–2)** — close the parent-set diagnostic: parent-position swap left undone in QL2, collider-failure inspection, compact greedy-vs-nd comparison, small noise/hyperparameter check; set first-principles success metrics beyond parent membership.
+2. **Milestone 2 (Weeks 3–4)** — design the bridge in which Causal ABA-style information guides ABA Learning; specify comparable outputs and metrics.
+3. **Milestone 3 (Weeks 5–6)** — implement causal-guided ABA Learning variants; compare against unguided learning; build bespoke metrics that judge whether causality (not just predictive parents) is learned.
+4. **Milestone 4 (Weeks 7–8)** — scale beyond three-node motifs; set up representative external comparators and a frozen evaluation protocol.
+5. **Milestone 5 (Weeks 9–10)** — evaluation, ablations, and a supervisor-reviewable full draft before the break.
+6. **Milestone 6 (Weeks 12–13)** — supervisor-feedback edits, final polish, and presentation preparation.
 
-Likely future directions:
+The core direction is "Causal ABA guides ABA Learning"; parent-set recovery is groundwork (RQ1), not the main contribution.
 
-1. refine small-motif experiments;
-2. compare ABA Learning strategies more systematically;
-3. add or improve efficiency metrics, e.g. folds if inspectable;
-4. extend beyond three-node motifs;
-5. distinguish predictive association from causal-parent recovery;
-6. explore richer causal encodings;
-7. move closer to Causal ABA machinery if feasible;
-8. explore reverse direction: using causal structure to guide ABA Learning.
-
-Required evidence before drafting:
+Required evidence for drafting / revision:
 
 - analysed experiment records;
 - updated claims ledger;
-- supervisor guidance;
+- supervisor guidance (`docs/research/supervisor_updates.md`);
 - known implementation constraints.
 
 ### 6. GenAI / authorship declaration
@@ -188,12 +183,16 @@ Must include:
 
 | Evidence / document | Used for | Section |
 |---|---|---|
-| `background_current.md` | Background theory | Background |
-| `literature_review_current.md` | Related work and gap | Literature Review |
-| `supervisor_guidance_current.md` | Motivation for initial experimental direction | Experimentation / Project Plan |
+| `docs/report/manuscript/background.md` | Background theory | Background |
+| `docs/report/manuscript/literature-review.md` | Related work and gap | Literature Review |
+| `docs/report/manuscript/introduction.md` | Problem framing and RQs | Introduction |
+| `docs/report/manuscript/experimentation.md` | QL1/QL2/QL3 results and interpretation | Experimentation / Progress |
+| `docs/report/manuscript/project_plan.md` | Milestones and schedule | Project Plan |
+| `docs/research/supervisor_updates.md` | Supervisor guidance | Experimentation / Project Plan |
 | `docs/experiments/TEMPLATE.md` | Structure for experiment records | Not cited directly; supports writing workflow |
-| `docs/experiments/QL-001.md` | Qualitative motif experiment | Experimentation / Progress |
-| `docs/experiments/QN-001.md` | Strategy comparison | Experimentation / Progress / Project Plan |
+| `docs/experiments/qualitative/QI-001.md`, `QI-002.md`, `QI-004.md` | Qualitative motif experiments (QL1/QL2/QL3) | Experimentation / Progress |
+| `docs/experiments/qualitative/greedy_vs_nd_qualitative_handoff.md` | Greedy vs nd folding comparison | Experimentation / Progress / Project Plan |
+| `docs/experiments/QN-001.md` | Strategy comparison (planned) | Experimentation / Progress / Project Plan |
 | `docs/report/claims_ledger.md` | Claim verification | All report sections |
 | `docs/report/figure_table_index.md` | Figures/tables and captions | Experimentation / Progress |
 | `docs/report/genai_use_log.md` | AI-use declaration | Declaration / appendix if required |
@@ -224,10 +223,11 @@ Avoid unsupported claims such as:
 
 ## Current next writing milestone
 
-Before drafting the Experimentation / Progress section, complete:
+The five report chapters are drafted under `docs/report/manuscript/`. The current writing focus is to revise the Experimentation chapter to apply the audit corrections and supervisor guidance:
 
-- QL-001 design;
-- Cursor plan-only inspection;
-- DGP/encoding audit;
-- at least one documented qualitative learned-rule inspection;
-- update claims ledger.
+- give each presented result an explicit interpretation and conclusion;
+- reason about the discrepancy between the handcrafted DGP's expected outputs and the actual learned rules;
+- describe the DGP clearly, including where the QL3 noise comes from;
+- report F1 in place of the clean-recovery score;
+- implement the QL2 parent-position swap so order-dependence can be shown;
+- keep the claims ledger in step with any revised interpretations.

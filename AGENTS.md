@@ -102,6 +102,8 @@ The report-writing workflow is:
 
 Use these files for report-writing support:
 
+- `docs/report/manuscript/` — report chapter sources (`.tex`) and ChatGPT mirrors (`.md`).
+- `docs/report/README.md` — index for report layout and workflow.
 - `docs/report/claims_ledger.md` — evidence-to-claim guardrail.
 - `docs/report/interim_section_plan.md` — interim report section/evidence plan.
 - `docs/report/figure_table_index.md` — figure/table provenance.

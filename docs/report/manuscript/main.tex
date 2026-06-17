@@ -1,0 +1,53 @@
+\documentclass[a4paper, twoside]{report}
+
+%% Language and font encodings
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+
+\usepackage{amsmath,amssymb}
+
+\newcommand{\indep}{\mathrel{\perp\!\!\!\perp}}
+\newcommand{\nindep}{\mathrel{\not\!\perp\!\!\!\perp}}
+
+%% Sets page size and margins
+\usepackage[a4paper,top=3cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=2cm]{geometry}
+
+%% Useful packages
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{siunitx}
+\usepackage{tabularx}
+\usepackage{caption}
+\usepackage{pdflscape}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage{cite}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+\title{Causal ABA Learning}
+\author{Samuel Waugh}
+% Update supervisor and other title stuff in title/title.tex
+
+\begin{document}
+\input{title/title.tex}
+
+\tableofcontents
+\listoffigures
+\listoftables
+
+\input{introduction/introduction.tex}
+\input{literature_review/literature_review.tex}
+\input{background/background.tex}
+\input{experimentation/experimentation.tex}
+\input{project_plan/project_plan.tex}
+
+\bibliographystyle{vancouver}
+\bibliography{bibs/sample}
+
+\clearpage
+\appendix
+\input{appendix/appendix.tex}
+
+\end{document}

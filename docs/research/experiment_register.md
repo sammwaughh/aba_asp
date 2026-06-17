@@ -2,6 +2,16 @@
 
 Lightweight index of experiments and a reusable template. Detailed records live under docs/experiments/ per the research-logging rule; this register is the at-a-glance view for project framing and reporting.
 
+## Report-label mapping
+
+The report (docs/report/manuscript/) refers to the qualitative experiments as QL1/QL2/QL3. These map to repo ids as follows:
+
+- QL1 = QI-001 (motif × data-mode probe);
+- QL2 = QI-002 (complete truth-table baseline);
+- QL3 = QI-004 (scaled noisy follow-up, n=20).
+
+The earlier n=100 scaled attempt was cut and is not part of the canonical experiment set; only the reduced n=20 study is canonical and is QL3.
+
 ## Status categories
 
 - proposed — idea noted; not yet designed in full.
@@ -13,17 +23,16 @@ Lightweight index of experiments and a reusable template. Detailed records live 
 
 ## Register
 
-| ID | Title | Status |
-|----|-------|--------|
-| QL-001 | Qualitative inspection of ABA Learning on minimal causal motifs | proposed |
-| QI-001 | Qualitative parent-set recovery across 3 motifs x 3 data modes | implemented |
-| QI-002 | Minimal truth-table baseline for x2 parent recovery | implemented |
-| QI-003 | Scaled noisy motifs with parent-position controls (n=100) | run (feasibility attempt; superseded by QI-004) |
-| QI-004 | Scaled noisy motifs with parent-position controls (reduced n=20) | run (interpretation pending) |
-| QI-001 greedy | Greedy-folding rerun of QI-001 (3 motifs x 3 modes) | implemented |
-| QI-002 greedy | Greedy-folding rerun of QI-002 (minimal truth-table baseline) | implemented |
-| QI-004 greedy | Greedy-folding rerun of QI-004 (scaled noisy n=20) | implemented |
-| QN-001 | Comparing ABA Learning strategies on minimal causal motifs | proposed |
+| ID | Report label | Title | Status |
+|----|------|-------|--------|
+| QL-001 | — | Qualitative inspection of ABA Learning on minimal causal motifs | realised by the QI-001..QI-004 series |
+| QI-001 | QL1 | Qualitative parent-set recovery across 3 motifs x 3 data modes | analysed |
+| QI-002 | QL2 | Minimal truth-table baseline for x2 parent recovery | analysed |
+| QI-004 | QL3 | Scaled noisy motifs with parent-position controls (n=20) | analysed |
+| QI-001 greedy | — | Greedy-folding rerun of QI-001 (3 motifs x 3 modes) | analysed |
+| QI-002 greedy | — | Greedy-folding rerun of QI-002 (minimal truth-table baseline) | analysed |
+| QI-004 greedy | — | Greedy-folding rerun of QI-004 (scaled noisy n=20) | analysed |
+| QN-001 | — | Comparing ABA Learning strategies on minimal causal motifs | proposed (informed by the greedy-vs-nd qualitative handoff) |
 
 ## Template
 
@@ -60,18 +69,20 @@ Report-writing workflow:
 
 Current report-supporting files:
 
-- docs/experiments/EXPERIMENT_INDEX.md;
+- docs/experiments/experiment_index.md;
 - docs/report/claims_ledger.md;
 - docs/report/interim_section_plan.md;
 - docs/report/figure_table_index.md;
 - docs/report/genai_use_log.md;
-- ChatGPT-facing mirrors: experiments_summary_current.md, claims_ledger_current.md, report_state_current.md, supervisor_guidance_current.md.
+- docs/report/manuscript/ — the five drafted report chapters (`.tex` authoritative + `.md` ChatGPT mirrors): introduction, literature-review, background, experimentation, project_plan.
+
+ChatGPT-facing mirrors (maintained in the sister ChatGPT context directory by copying the repo source files): experiments_summary_current.md (← experiment_index.md), claims_ledger_current.md (← claims_ledger.md), report_state_current.md (← interim_section_plan.md), supervisor_guidance_current.md (← supervisor_updates.md).
 
 ## Entries
 
 ### QL-001 — Qualitative inspection of ABA Learning on minimal causal motifs
 
-- Status: proposed.
+- Status: realised. The original umbrella proposal was carried out by the QI-001..QI-004 series (report labels QL1/QL2/QL3) and their greedy reruns; see those entries for the concrete designs, runs, and conclusions.
 - Detailed record: docs/experiments/QL-001.md.
 - Research question: TBD after focused design — likely: when tabular data is generated from simple three-node causal motifs and the current aba_asp/causal bridge learns target rules target-by-target, what rule bodies are recovered, and when do those bodies correspond to true causal parents rather than non-parent predictive associations?
 - Theoretical motivation: initial qualitative feasibility/diagnostic probe for applying ABA Learning to causal discovery (Direction 1). This follows supervisor guidance to start with small motifs and inspect what ABA Learn actually recovers.
@@ -91,7 +102,8 @@ Current report-supporting files:
 
 ### QI-001 — Qualitative parent-set recovery across 3 motifs x 3 data modes
 
-- Status: implemented (Stage 1: fixtures/config/tests in place; ABA Learning not yet run).
+- Report label: QL1.
+- Status: analysed. 9/9 cells solved. Fork recovered exactly in all three modes (but the true parent is x0, so this is confounded with a first-variable preference); chain often recovered the ancestor x0 instead of the direct parent x1; collider exact only in binary. Exposed the x0/first-column confound and the weak (4–5 row) table-design problem, motivating QI-002.
 - Detailed record: docs/experiments/qualitative/QI-001.md.
 - Research question: whether the current ABA Learning bridge learns target rules whose body variables coincide with the direct parents of x2 across three canonical 3-node motifs (chain, fork, collider) and three data representations (binary, 3-valued categorical, continuous binned into 3 uniform bins).
 - Theoretical motivation: controlled qualitative diagnostic isolating the effect of the data encoding on parent-set recovery while holding the motif fixed. Not full Causal ABA and not graph recovery.
@@ -111,7 +123,8 @@ Current report-supporting files:
 
 ### QI-002 — Minimal truth-table baseline for x2 parent recovery
 
-- Status: implemented (fixtures/config/metrics/summary/tests in place; ABA Learning not yet run).
+- Report label: QL2.
+- Status: analysed. 6 cells (3 motifs x {binary, cat3}), complete noiseless truth tables. Binary chain/fork recovered exactly; binary collider returned NO solution (although the conjunctive parent rule x2 <- x0, x1 exists in the table); cat3 chain recovered the non-parent x0; cat3 collider recovered only one of two parents (parent-subset). Mean variable-level F1 ~ 0.61. Shows the perfect causal rule is learnable in some ideal cases but recovery is not reliable even under ideal separability.
 - Detailed record: docs/experiments/qualitative/QI-002.md.
 - Research question: under complete, noiseless truth tables for three 3-node motifs, where the true parent of x2 is the unique zero-error separator, does the current ABA Learning bridge learn an x2 target rule whose body variables equal the true direct parents?
 - Theoretical motivation: principled minimal baseline replacing QI-001's unjustified 4-5 row tables; the complete factorial (binary 8 rows, cat3 18 rows) is the smallest design that makes the parent the unique perfect rule, so a causal rule is learnable in principle.
@@ -123,42 +136,23 @@ Current report-supporting files:
 - Metrics: clean_recovery + var_parent_precision/recall/jaccard (new), ancestor_only_rate, body_parent_recall, coverage, outcome, folding tokens. body_parent_f1 de-emphasised.
 - Baseline / comparator: none (qualitative baseline).
 - Expected result: not asserted; experiment not run.
-- Interpretation rule: success (high clean_recovery) would show the perfect causal rule is learnable in the ideal case; failure would bound the method even under ideal separability. Neither shows causal discovery or full Causal ABA. Confound treatment: the complete factorial is a principled data-level correction against the QI-001 x0/first-column confound (it decorrelates non-parents from x2, so the true parent is the unique perfect separator, and makes the canonical chain cell — where x0 ⊥ x2 — a positional-bias probe). It does NOT provide the full symmetric break: the fork's parent is x0 (bias and recovery coincide), there is no correlated-ancestor test, and no within-structure parent-position swap — those are QI-003/QI-004's job.
+- Interpretation rule: success (high clean_recovery) would show the perfect causal rule is learnable in the ideal case; failure would bound the method even under ideal separability. Neither shows causal discovery or full Causal ABA. Confound treatment: the complete factorial is a principled data-level correction against the QI-001 x0/first-column confound (it decorrelates non-parents from x2, so the true parent is the unique perfect separator, and makes the canonical chain cell — where x0 ⊥ x2 — a positional-bias probe). It does NOT provide the full symmetric break: the fork's parent is x0 (bias and recovery coincide), there is no correlated-ancestor test, and no within-structure parent-position swap — those are QL3 (QI-004)'s job.
 - Failure modes: missing parent, extra ancestor, off-graph body, empty delta, no solution, timeout, parser issue.
-- Cursor implementation plan / prompt: see plan "Minimal and scaled motif runs (QI-002, QI-003) + metric upgrades".
+- Cursor implementation plan / prompt: see plan "Minimal and scaled motif runs (QI-002, QI-004) + metric upgrades".
 - Commit hash / run artefact path: —
 - Report relevance: interim Experimentation / Progress.
 
-### QI-003 — Scaled noisy motifs with parent-position controls (n=100)
+### QI-004 — Scaled noisy motifs with parent-position controls (n=20)
 
-- Status: run (computational-feasibility attempt; superseded for evidence by QI-004). The n=100 run repeatedly timed out (cat3/cont3 at 120s) or hit the binary all-zero-positive encoding limitation; 0 cells solved before manual abort. Config/fixtures/partial outputs preserved unchanged; NOT canonical qualitative evidence. See docs/experiments/qualitative/QI003_scaled_motifs/run_log.md.
-- Detailed record: docs/experiments/qualitative/QI-003.md.
-- Research question: with n=100 noisy samples and the true direct parent of x2 placed in either column, does the current ABA Learning bridge recover the true parent(s) regardless of column position, across binary/cat3/cont3 modes?
-- Theoretical motivation: scaled, realistic follow-up that also breaks the QI-001 x0/first-column confound via parent-position variants (chain and fork generated in both orientations), making "found the cause" and "prefers x0" distinguishable.
-- Relation to ABA Learning: target-wise learning of x2 over handcrafted_table fixtures; default nd folding, folding_steps 15; target excluded from BK.
-- Relation to Causal ABA: does not exercise arr/noe/indep, d-separation, or stable-extension-as-DAG.
-- Code path: causal/experiments/run_grid.py (handcrafted_table); fixtures in causal/experiments/handcrafted_qi003.py.
-- Dataset / DGP: 15 deterministic handcrafted fixtures (5 structural configs x {binary, cat3, cont3}), n=100, mild noise, fixed per-fixture RNG seed.
-- Target variable(s): x2 only. Parents per fixture: chain_x1parent {x1}, chain_x0parent {x0}, fork_x0parent {x0}, fork_x1parent {x1}, collider {x0, x1}.
-- Metrics: clean_recovery + var_parent_precision/recall/jaccard (new), ancestor_only_rate, body_parent_recall, coverage, outcome, folding tokens. body_parent_f1 de-emphasised.
-- Baseline / comparator: x0parent vs x1parent within each motif (the confound check).
-- Expected result: not asserted; experiment not run.
-- Interpretation rule: recovery tracking the true parent column (both orientations) indicates parent recovery; recovery tracking x0 regardless indicates the positional confound. Neither shows full causal discovery or Causal ABA.
-- Failure modes: positional confound, ancestor proxy, sibling proxy, missing parent, off-graph body, empty delta, no solution, timeout, parser issue.
-- Cursor implementation plan / prompt: see plan "Minimal and scaled motif runs (QI-002, QI-003) + metric upgrades".
-- Commit hash / run artefact path: —
-- Report relevance: interim Experimentation / Progress.
-
-### QI-004 — Scaled noisy motifs with parent-position controls (reduced n=20)
-
-- Status: run (interpretation pending). 15/15 cells completed with NO timeouts (1 solved, 12 completed_no_solution, 2 binary `unknown constant` errors; clean_recovery=0 for all). The feasibility goal (vs QI-003's n=100 timeouts) is met. See docs/experiments/qualitative/QI004_scaled_motifs_n20/run_log.md.
+- Report label: QL3.
+- Status: analysed. 15/15 cells completed with NO timeouts: 1 solved, 12 completed_no_solution, 2 binary `unknown constant` errors; clean_recovery=0 for all. The only solved cell (binary chain, x1-parent) recovered the superset {x0, x1} when the true parent set was {x1} (F1 0.67, recall 1.0, precision 0.5) — partial recovery, not exact. No exact recoveries. The scaled noisy setting is computationally feasible at n=20 but does not yield robust recovery with the arbitrarily chosen noise hyper-parameters; a systematic noise sweep is the immediate follow-up. See docs/experiments/qualitative/QI004_scaled_motifs_n20/interpretation.md.
 - Detailed record: docs/experiments/qualitative/QI-004.md.
 - Research question: with n=20 noisy samples and the true direct parent of x2 placed in either column, does the current ABA Learning bridge recover the true parent(s) regardless of column position, across binary/cat3/cont3 modes?
-- Theoretical motivation: computationally feasible follow-up to QI-003. The QI-003 n=100 run was infeasible under the available Prolog timeout budget (cat3/cont3 timed out; binary hit the all-zero-positive encoding limitation). QI-004 keeps the identical conceptual design but reduces n to 20 and raises the Prolog timeout to 300s. Still breaks the QI-001 x0/first-column confound via parent-position variants.
+- Theoretical motivation: a computationally feasible scaled-and-noisy follow-up to the QL2 noiseless baseline, retaining parent-position variants (chain and fork generated in both orientations) so "found the cause" and "prefers x0" are distinguishable. n=20 with a 300s Prolog timeout.
 - Relation to ABA Learning: target-wise learning of x2 over handcrafted_table fixtures; default nd folding, folding_steps 15; target excluded from BK.
 - Relation to Causal ABA: does not exercise arr/noe/indep, d-separation, or stable-extension-as-DAG.
-- Code path: causal/experiments/run_grid.py (handcrafted_table); fixtures in causal/experiments/handcrafted_qi004.py (reuses N-agnostic helpers from handcrafted_qi003.py).
-- Dataset / DGP: 15 deterministic handcrafted fixtures (5 structural configs x {binary, cat3, cont3}), n=20, mild noise (same mechanisms/noise as QI-003), fixed per-fixture RNG seed.
+- Code path: causal/experiments/run_grid.py (handcrafted_table); fixtures in causal/experiments/handcrafted_qi004.py.
+- Dataset / DGP: 15 deterministic handcrafted fixtures (5 structural configs x {binary, cat3, cont3}), n=20, mild noise, fixed per-fixture RNG seed.
 - Target variable(s): x2 only. Parents per fixture: chain_x1parent {x1}, chain_x0parent {x0}, fork_x0parent {x0}, fork_x1parent {x1}, collider {x0, x1}.
 - Metrics: clean_recovery + var_parent_precision/recall/jaccard, ancestor_only_rate, body_parent_recall, coverage, outcome, folding tokens. body_parent_f1 de-emphasised. Continuous bin-health recorded per cell.
 - Baseline / comparator: x0parent vs x1parent within each motif (the confound check); plus the noiseless QI-002 baseline.
@@ -171,7 +165,7 @@ Current report-supporting files:
 
 ### QI-001 greedy — Greedy-folding rerun of QI-001
 
-- Status: implemented (config/dossier in place; run + interpretation by the greedy-rerun task).
+- Status: analysed. 9/9 solved; greedy is faster than nd and recovers all three colliders cleanly across modes (nd was clean only in binary); chain/fork remain supersets. See docs/experiments/qualitative/greedy_vs_nd_qualitative_handoff.md.
 - Detailed record: docs/experiments/qualitative/QI001_motifs_modes_greedy/.
 - Research question: relative to non-deterministic folding, does greedy folding change parent-set recovery, stability, runtime, or failure modes on the QI-001 motif-by-data-mode tasks?
 - Only conceptual change: defaults.folding_mode nd -> greedy (folding_steps retained but ignored by greedy). All fixtures, motifs, target x2, data modes, bins, seeds, and the 120s timeout identical to the nd QI-001 config.
@@ -184,27 +178,27 @@ Current report-supporting files:
 
 ### QI-002 greedy — Greedy-folding rerun of QI-002
 
-- Status: implemented (config/dossier in place; run + interpretation by the greedy-rerun task).
+- Status: analysed. 6/6 solved (vs nd's 5/6): greedy solves the binary collider that nd could not, and recovers the cat3 collider exactly; clean recovery improves 3/6 (nd) -> 4/6 (greedy), with one regression (cat3 fork exact -> superset). See docs/experiments/qualitative/greedy_vs_nd_qualitative_handoff.md.
 - Detailed record: docs/experiments/qualitative/QI002_minimal_motifs_greedy/.
 - Research question: in the noiseless best case, does greedy folding change whether the perfect x2 target rule is found, plus runtime/solve-rate/interpretability, relative to nd?
 - Only conceptual change: defaults.folding_mode nd -> greedy. All fixtures, motifs, target x2, data modes, bins, seeds, and the 120s timeout identical to the nd QI-002 config.
 - Relation to Causal ABA: does not exercise arr/noe/indep, d-separation, or stable-extension-as-DAG. Target-wise parent-set recovery only.
 - Code path: causal/experiments/run_grid.py (handcrafted_table); fixtures qi002_* in causal/experiments/handcrafted.py.
-- Dataset / DGP: 6 cells (3 motifs x {binary, cat3}), target x2, canonical orientation (complete factorial gives a data-level correction against the x0 confound — chain cell is a positional-bias probe; the full symmetric break via parent-position swap is QI-003/QI-004's job).
+- Dataset / DGP: 6 cells (3 motifs x {binary, cat3}), target x2, canonical orientation (complete factorial gives a data-level correction against the x0 confound — chain cell is a positional-bias probe; the full symmetric break via parent-position swap is QL3 (QI-004)'s job).
 - Metrics: clean_recovery + var_parent_precision/recall/jaccard; greedy-vs-nd axes separated.
 - Baseline / comparator: the nd QI-002 run.
 - Report relevance: interim Experimentation / Progress.
 
 ### QI-004 greedy — Greedy-folding rerun of QI-004
 
-- Status: implemented (config/dossier in place; run + interpretation by the greedy-rerun task).
+- Status: analysed. Same outcomes as nd (1 solved, 12 no-solution, 2 binary errors; 0/15 clean) but ~120x faster (total wall ≈1233 s -> ≈10 s). At the noisy n=20 scale greedy changes only runtime, not recovery; the binary `unknown constant` errors persist (BK-encoding issue, folding-mode-independent). See docs/experiments/qualitative/greedy_vs_nd_qualitative_handoff.md.
 - Detailed record: docs/experiments/qualitative/QI004_scaled_motifs_n20_greedy/.
 - Research question: at the scaled/noisy n=20 setting, does greedy folding change parent-set recovery, the x0/x1 confound behaviour, runtime, solve rate, error rate, or interpretability relative to nd?
 - Only conceptual change: defaults.folding_mode nd -> greedy. All fixtures, motifs, target x2, data modes, n=20, bins, seeds, and the 300s timeout identical to the nd QI-004 config. Greedy may be costlier; if cat3/cont3 cells repeatedly time out at 300s, record status and stop (no blind reruns).
 - Relation to Causal ABA: does not exercise arr/noe/indep, d-separation, or stable-extension-as-DAG. Target-wise parent-set recovery only.
 - Code path: causal/experiments/run_grid.py (handcrafted_table); fixtures qi004_* in causal/experiments/handcrafted_qi004.py.
 - Dataset / DGP: 15 cells (5 structural configs x {binary, cat3, cont3}), target x2.
-- Metrics: clean_recovery + var_parent_precision/recall/jaccard, bin-health for cont3; greedy-vs-nd axes separated. QL3 excluded.
+- Metrics: clean_recovery + var_parent_precision/recall/jaccard, bin-health for cont3; greedy-vs-nd axes separated. The cut n=100 attempt (former QI-003) is excluded from the greedy reruns.
 - Baseline / comparator: the nd QI-004 run.
 - Report relevance: interim Experimentation / Progress.
 

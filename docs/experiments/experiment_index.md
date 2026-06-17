@@ -8,6 +8,10 @@ Each experiment should have a dedicated record under `docs/experiments/`, using 
 
 This index is not a substitute for the detailed experiment records. It is an at-a-glance view of status, artefacts, and report relevance.
 
+## Report-label mapping
+
+The report (`docs/report/manuscript/`) refers to the qualitative experiments as QL1/QL2/QL3, which map to repo ids QI-001/QI-002/QI-004. The earlier n=100 scaled attempt was cut and is not part of the canonical experiment set; only the reduced n=20 study is canonical and is QL3.
+
 ## Status categories
 
 Use the same status categories as `experiment_register.md`.
@@ -23,82 +27,54 @@ Use the same status categories as `experiment_register.md`.
 
 ## Experiment table
 
-| ID | Title | Status | Experiment record | Config(s) | Artefacts | Report relevance | Main current conclusion |
-|---|---|---|---|---|---|---|---|
-| QL-001 | Qualitative inspection of ABA Learning on minimal causal motifs | proposed | `docs/experiments/QL-001.md` | TBD | TBD | Interim Experimentation / Progress | Not run; intended as first qualitative motif investigation. |
-| QI-001 | Qualitative parent-set recovery across 3 motifs x 3 data modes | implemented | `docs/experiments/qualitative/QI-001.md` | `causal/configs/experiments/QI001_motifs_modes.yaml` | TBD | Interim Experimentation / Progress | Stage 1 fixtures/config/tests in place; first ABA Learning run done (9/9 solved); interpretation pending. Two design limitations (x0 confound, tiny-n) motivate QI-002/QI-003. |
-| QI-002 | Minimal truth-table baseline for x2 parent recovery | implemented | `docs/experiments/qualitative/QI-002.md` | `causal/configs/experiments/QI002_minimal_motifs.yaml` | TBD | Interim Experimentation / Progress | 6 cells (3 motifs x binary8/cat3-18), noiseless complete truth tables so the true parent is the unique perfect rule; the complete factorial is a data-level correction against the x0 confound (chain cell is a positional-bias probe), but the full symmetric break (parent-position swap) is QI-003/QI-004's job. |
-| QI-003 | Scaled noisy motifs with parent-position controls (n=100) | run (feasibility attempt; superseded by QI-004) | `docs/experiments/qualitative/QI-003.md` | `causal/configs/experiments/QI003_scaled_motifs.yaml` | `causal/outputs/aba_learning/grid/QI003_scaled_motifs/` (partial) | Interim Experimentation / Progress | 15 cells, n=100. Run repeatedly timed out (cat3/cont3) or hit the binary all-zero-positive encoding limitation; 0 solved before abort. Preserved as a computational-feasibility attempt; NOT canonical evidence. Superseded for evidence by QI-004 (n=20, 300s). |
-| QI-004 | Scaled noisy motifs with parent-position controls (reduced n=20) | run (interpretation pending) | `docs/experiments/qualitative/QI-004.md` | `causal/configs/experiments/QI004_scaled_motifs_n20.yaml` | `causal/outputs/aba_learning/grid/QI004_scaled_motifs_n20/` | Interim Experimentation / Progress | Feasible follow-up to QI-003 (n=20, 300s). 15/15 cells completed, NO timeouts: 1 solved, 12 completed_no_solution, 2 binary `unknown constant` errors; clean_recovery=0 for all. Interpretation deferred. |
-| QI-001 greedy | Greedy-folding rerun of QI-001 (3 motifs x 3 modes) | implemented | `docs/experiments/qualitative/QI001_motifs_modes_greedy/` | `causal/configs/experiments/QI001_motifs_modes_greedy.yaml` | `causal/outputs/aba_learning/grid/QI001_motifs_modes_greedy/` | Interim Experimentation / Progress | Greedy-vs-nd comparison; only conceptual change `folding_mode: greedy`. 9 cells, target x2. Run/interpretation by greedy-rerun task. |
-| QI-002 greedy | Greedy-folding rerun of QI-002 (minimal truth-table baseline) | implemented | `docs/experiments/qualitative/QI002_minimal_motifs_greedy/` | `causal/configs/experiments/QI002_minimal_motifs_greedy.yaml` | `causal/outputs/aba_learning/grid/QI002_minimal_motifs_greedy/` | Interim Experimentation / Progress | Greedy-vs-nd comparison in the noiseless best case; only change `folding_mode: greedy`. 6 cells, target x2. |
-| QI-004 greedy | Greedy-folding rerun of QI-004 (scaled noisy n=20) | implemented | `docs/experiments/qualitative/QI004_scaled_motifs_n20_greedy/` | `causal/configs/experiments/QI004_scaled_motifs_n20_greedy.yaml` | `causal/outputs/aba_learning/grid/QI004_scaled_motifs_n20_greedy/` | Interim Experimentation / Progress | Greedy-vs-nd comparison at scaled/noisy setting; only change `folding_mode: greedy`. 15 cells, target x2, 300s timeout (greedy may be costlier). QL3 excluded. |
-| QN-001 | Comparing ABA Learning strategies on minimal causal motifs | proposed | `docs/experiments/QN-001.md` | TBD | TBD | Interim Experimentation / Progress; Project Plan | Not run; depends on whether strategy comparison is supported cleanly. |
+| ID | Report label | Title | Status | Experiment record | Config(s) | Artefacts | Report relevance | Main current conclusion |
+|---|---|---|---|---|---|---|---|---|
+| QL-001 | — | Qualitative inspection of ABA Learning on minimal causal motifs | realised by QI series | `docs/experiments/QL-001.md` | — | — | Interim Experimentation / Progress | Umbrella proposal carried out by QI-001..QI-004 and their greedy reruns. |
+| QI-001 | QL1 | Qualitative parent-set recovery across 3 motifs x 3 data modes | analysed | `docs/experiments/qualitative/QI-001.md` | `causal/configs/experiments/QI001_motifs_modes.yaml` | `causal/outputs/aba_learning/grid/QI001_motifs_modes/` | Interim Experimentation / Progress | 9/9 solved. Fork exact (but x0-confounded); chain often recovers the ancestor x0; collider exact only in binary. Exposes the x0/first-column confound and weak (4–5 row) table design, motivating QI-002. |
+| QI-002 | QL2 | Minimal truth-table baseline for x2 parent recovery | analysed | `docs/experiments/qualitative/QI-002.md` | `causal/configs/experiments/QI002_minimal_motifs.yaml` | `causal/outputs/aba_learning/grid/QI002_minimal_motifs/` | Interim Experimentation / Progress | 6 noiseless cells. Binary chain/fork exact; binary collider NO solution (though the conjunctive parent rule exists); cat3 chain recovers non-parent x0; cat3 collider parent-subset. Mean F1 ~ 0.61. Ideal data is not sufficient for reliable recovery. |
+| QI-004 | QL3 | Scaled noisy motifs with parent-position controls (n=20) | analysed | `docs/experiments/qualitative/QI-004.md` | `causal/configs/experiments/QI004_scaled_motifs_n20.yaml` | `causal/outputs/aba_learning/grid/QI004_scaled_motifs_n20/` | Interim Experimentation / Progress | 15/15 cells, no timeouts: 1 solved (binary chain x1-parent, superset {x0,x1}, F1 0.67), 12 no-solution, 2 binary `unknown constant` errors; 0 exact recoveries. Feasible at n=20 but no robust recovery with the arbitrarily chosen noise; a systematic noise sweep is the follow-up. |
+| QI-001 greedy | — | Greedy-folding rerun of QI-001 (3 motifs x 3 modes) | analysed | `docs/experiments/qualitative/QI001_motifs_modes_greedy/` | `causal/configs/experiments/QI001_motifs_modes_greedy.yaml` | `causal/outputs/aba_learning/grid/QI001_motifs_modes_greedy/` | Interim Experimentation / Progress | Only change `folding_mode: greedy`. 9/9 solved; greedy faster and recovers all three colliders cleanly across modes (nd clean only in binary); chain/fork remain supersets. |
+| QI-002 greedy | — | Greedy-folding rerun of QI-002 (minimal truth-table baseline) | analysed | `docs/experiments/qualitative/QI002_minimal_motifs_greedy/` | `causal/configs/experiments/QI002_minimal_motifs_greedy.yaml` | `causal/outputs/aba_learning/grid/QI002_minimal_motifs_greedy/` | Interim Experimentation / Progress | Only change `folding_mode: greedy`. 6/6 solved (vs nd 5/6): solves the binary collider nd could not; cat3 collider now exact; clean recovery 3/6 -> 4/6 with one regression (cat3 fork exact -> superset). |
+| QI-004 greedy | — | Greedy-folding rerun of QI-004 (scaled noisy n=20) | analysed | `docs/experiments/qualitative/QI004_scaled_motifs_n20_greedy/` | `causal/configs/experiments/QI004_scaled_motifs_n20_greedy.yaml` | `causal/outputs/aba_learning/grid/QI004_scaled_motifs_n20_greedy/` | Interim Experimentation / Progress | Only change `folding_mode: greedy`. Same outcomes as nd (1 solved, 12 no-solution, 2 errors; 0/15 clean) but ~120x faster (≈1233 s -> ≈10 s). At noisy n=20 greedy changes only runtime; binary errors persist. |
+| QN-001 | — | Comparing ABA Learning strategies on minimal causal motifs | proposed | `docs/experiments/QN-001.md` | TBD | TBD | Interim Experimentation / Progress; Project Plan | Not run; the greedy-vs-nd qualitative handoff motivates a controlled quantitative comparison (repeated seeds, timing methodology). |
 
-## Planned experiment sequence
+## Experiment sequence to date and next
 
-### 0. DGP and encoding audit
+### Done: QL1/QL2/QL3 qualitative parent-set recovery (QI-001/QI-002/QI-004)
 
-Status: `proposed`
+Status: `analysed`
 
-This is a pre-experiment audit rather than necessarily a standalone reportable experiment.
+Inspected what ABA Learning recovers on chain/fork/collider motifs under binary/categorical-3/continuous-binned encodings, target-wise on `x2`, comparing learned body variables against the true parents. Outcome: parent recovery works in selected idealised cases but is not robust across motifs, encodings or modest noisy scaling. The DGP/encoding details are documented in the per-experiment records and the report Experimentation chapter.
 
-Purpose:
+### Done: greedy vs non-deterministic folding (qualitative)
 
-- inspect ArgCausalDisco generated data;
-- inspect target construction;
-- inspect `E+` and `E-`;
-- inspect generated `bk.aba`;
-- confirm what background predicates the learner receives;
-- check target exclusion from BK.
+Status: `analysed`
 
-Potential location:
+Compared `folding_mode: nd` vs `greedy` on identical fixtures (QI-001/QI-002/QI-004 greedy reruns). Greedy is faster (~120x at the QL3 scale), solve rate >= nd, net better clean recovery (colliders), one regression (cat3 fork), no recovery change at the noisy n=20 scale. See `docs/experiments/qualitative/greedy_vs_nd_qualitative_handoff.md`.
 
-- may be recorded inside `docs/experiments/QL-001.md`;
-- may become a separate record later if it produces enough substantive findings.
-
-### 1. QL-001
+### Next: QN-001 controlled strategy comparison
 
 Status: `proposed`
 
 Purpose:
 
-> Inspect what ABA Learning recovers on simple three-node causal structures.
-
-Likely motifs:
-
-- chain;
-- fork;
-- collider.
-
-Primary method:
-
-- qualitative learned-rule inspection;
-- target-wise comparison of learned body variables against true parents;
-- selected narratable examples for interim report.
-
-Primary risk:
-
-- learned rules may reflect predictive association rather than causal-parent recovery.
-
-### 2. QN-001
-
-Status: `proposed`
-
-Purpose:
-
-> Compare greedy and non-deterministic ABA Learning strategies on the same small motifs, if supported by current implementation/configuration.
+> Confirm the qualitative greedy-vs-nd signals quantitatively (repeated seeds, larger grids, proper timing methodology).
 
 Primary method:
 
 - solve-rate comparison;
-- parent-body metric comparison;
-- offgraph-rate comparison;
-- efficiency metric comparison if available.
+- parent-body / variable-level metric comparison;
+- efficiency metric comparison (runtime; fold count if inspectable).
 
 Primary risk:
 
-- strategy comparison may require implementation inspection or instrumentation before it is meaningful.
+- strategy settings may need instrumentation; nondeterminism may require repeated runs to be comparable.
+
+### Next: Milestone 1 diagnostic closure and then the Causal-ABA-guided bridge
+
+Status: `proposed`
+
+Close the parent-set diagnostic (QL2 parent-position swap, collider-failure inspection, small noise sweep, first-principles metrics beyond parent membership), then design and implement the bridge in which Causal ABA-style information guides ABA Learning (Milestones 2–3 in the project plan).
 
 ## Current metric families
 
@@ -156,19 +132,18 @@ Workflow:
 
 ## Current open questions
 
-- Can the current infrastructure already run the exact QL-001 motif/target setup using existing configs?
-- Does the current runner expose enough learned-rule detail for qualitative inspection?
-- How are greedy and non-deterministic modes configured, if at all?
-- Is actual fold count available, or only folding-token/runtime proxies?
-- How exactly does ArgCausalDisco generate the discrete/continuous samples used in current experiments?
-- Should the DGP/encoding audit become its own documented experiment or remain part of QL-001?
+- Why does the configured learner return no solution on the binary collider (QL2) when a conjunctive parent rule exists in the table?
+- Under which noise levels and sample sizes can ABA Learning recover parents in the scaled noisy setting (a systematic sweep beyond QL3's arbitrary hyper-parameters)?
+- What is the root cause of the binary `unknown constant` errors in QL3, and how should the BK encoding be fixed?
+- Is actual fold count available, or only folding-token/runtime proxies (for QN-001 efficiency metrics)?
+- What success metrics beyond parent membership best capture whether causality is being learned (supervisor guidance: construct expected outputs from graph + DGP and compare against actual learned rules)?
 
 ## Next action
 
-Ask Cursor for a plan-only inspection of the current infrastructure to determine:
+Close the parent-set diagnostic (Milestone 1):
 
-1. what can be run without code changes;
-2. what configs already exist;
-3. how to expose learned-rule examples;
-4. whether strategy comparison is already configurable;
-5. whether fold/efficiency metrics can be extracted cleanly.
+1. implement the QL2 parent-position swap to show order-dependence;
+2. inspect and explain the collider no-solution and the binary encoding errors;
+3. run a small noise/hyperparameter check and the compact greedy-vs-nd comparison;
+4. define first-principles success metrics beyond parent membership;
+5. give each presented result an interpretation and conclusion, reasoning about DGP-expected vs actual outputs.
