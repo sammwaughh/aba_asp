@@ -2,7 +2,7 @@
 
 QI-004 is the computationally feasible follow-up to QI-003. The QI-003 ``n=100``
 run was infeasible under the available Prolog timeout budget (cat3/cont3 cells
-timed out at 120s; see ``docs/experiments/qualitative/QI003_scaled_motifs/``).
+timed out at 120s; see ``docs/experiments/qualitative/QI-003.md``).
 QI-004 keeps the **same conceptual design** as QI-003 - the same motifs,
 parent-position controls, mechanisms, and noise levels - but reduces the sample
 size to ``n=20`` (run with ``prolog_timeout_s=300``).

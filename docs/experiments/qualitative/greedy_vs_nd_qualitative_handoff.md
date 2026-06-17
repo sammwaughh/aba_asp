@@ -1,10 +1,10 @@
-# Greedy vs non-deterministic folding — qualitative handoff (QL1/QL2/QL4)
+# Greedy vs non-deterministic folding — qualitative handoff (QI-001 / QI-002 / QI-004)
 
 > **Caution.** This document compares two ABA Learning **folding settings** (non-deterministic vs greedy) on identical controlled fixtures, measuring **target-wise parent-set recovery** under the current `aba_asp/causal` implementation. It does **not** establish that either setting performs causal discovery. It does not exercise full Russo-style Causal ABA, graph recovery, d-separation, arr/noe/indep, or stable-extension-as-DAG machinery. "Recovery" means: do the learned `x2` target-rule bodies cite exactly the known direct parents of `x2`.
 
 ## Scope and label mapping
 
-Report labels QL1/QL2/QL4 map to repo ids QI-001/QI-002/QI-004. The greedy reruns are `QI001_motifs_modes_greedy`, `QI002_minimal_motifs_greedy`, `QI004_scaled_motifs_n20_greedy`. QL3 (QI-003) is **excluded** (non-canonical, superseded by QI-004). The single conceptual change between each nd run and its greedy counterpart is `defaults.folding_mode: nd -> greedy`; all fixtures, motifs, targets, data modes, sample sizes, bins, seeds, and timeouts are identical.
+This document refers to experiments by repo id (QI-001 / QI-002 / QI-004). For cross-reference, the report-side labels map as QL1 = QI-001, QL2 = QI-002, QL3 = QI-004; the cut `n=100` attempt (QI-003) carries no report label. The greedy reruns are `QI001_motifs_modes_greedy`, `QI002_minimal_motifs_greedy`, `QI004_scaled_motifs_n20_greedy`. QI-003 is **excluded** (cut feasibility attempt, superseded by QI-004). The single conceptual change between each nd run and its greedy counterpart is `defaults.folding_mode: nd -> greedy`; all fixtures, motifs, targets, data modes, sample sizes, bins, seeds, and timeouts are identical.
 
 ### Fidelity note
 
@@ -14,14 +14,14 @@ Pipeline-greedy uses the engine-default `folding_selection(any)` / `folding_spac
 
 | Investigation | Mode | Folding | Cells | Solved | No solution | Errors | Timeouts | Clean recoveries | Total wall | Notes |
 |---|---|---|---|---|---|---|---|---|---|---|
-| QL1 (QI-001) | binary/cat3/cont3 | nd | 9 | 9 | 0 | 0 | 0 | n/a* | ≈ 4.0 s | nd predates clean_recovery field |
-| QL1 (QI-001) | binary/cat3/cont3 | greedy | 9 | 9 | 0 | 0 | 0 | 3/9 | ≈ 2.9 s | all 3 colliders clean; chain/fork superset |
-| QL2 (QI-002) | binary/cat3 | nd | 6 | 5 | 1 | 0 | 0 | 3/6 | ≈ 11.9 s | collider_binary no-solution (7.7 s) |
-| QL2 (QI-002) | binary/cat3 | greedy | 6 | 6 | 0 | 0 | 0 | 4/6 | ≈ 2.5 s | collider_binary now solved+clean |
-| QL4 (QI-004) | binary/cat3/cont3, n=20 | nd | 15 | 1 | 12 | 2 | 0 | 0/15 | ≈ 1233 s | cat3/cont3 cells 50–273 s each |
-| QL4 (QI-004) | binary/cat3/cont3, n=20 | greedy | 15 | 1 | 12 | 2 | 0 | 0/15 | ≈ 10.3 s | identical outcomes; ~120x faster |
+| QI-001 | binary/cat3/cont3 | nd | 9 | 9 | 0 | 0 | 0 | n/a* | ≈ 4.0 s | nd predates clean_recovery field |
+| QI-001 | binary/cat3/cont3 | greedy | 9 | 9 | 0 | 0 | 0 | 3/9 | ≈ 2.9 s | all 3 colliders clean; chain/fork superset |
+| QI-002 | binary/cat3 | nd | 6 | 5 | 1 | 0 | 0 | 3/6 | ≈ 11.9 s | collider_binary no-solution (7.7 s) |
+| QI-002 | binary/cat3 | greedy | 6 | 6 | 0 | 0 | 0 | 4/6 | ≈ 2.5 s | collider_binary now solved+clean |
+| QI-004 | binary/cat3/cont3, n=20 | nd | 15 | 1 | 12 | 2 | 0 | 0/15 | ≈ 1233 s | cat3/cont3 cells 50–273 s each |
+| QI-004 | binary/cat3/cont3, n=20 | greedy | 15 | 1 | 12 | 2 | 0 | 0/15 | ≈ 10.3 s | identical outcomes; ~120x faster |
 
-*QL1 nd `metrics.json` has `clean_recovery=None` (older schema); its recovery is described qualitatively below.
+*QI-001 nd `metrics.json` has `clean_recovery=None` (older schema); its recovery is described qualitatively below.
 
 ## Recovery comparison (cell family)
 
@@ -41,14 +41,14 @@ Pipeline-greedy uses the engine-default `folding_selection(any)` / `folding_spac
 
 ## Headline interpretation
 
-Across QL1/QL2/QL4, switching nd -> greedy is **better or equal on every axis, with one local recovery regression**:
+Across QI-001/QI-002/QI-004, switching nd -> greedy is **better or equal on every axis, with one local recovery regression**:
 
-1. **Runtime**: greedy is faster everywhere, and the gap explodes at scale — QL4 total wall 1233 s -> 10 s (~120x), with no timeouts. The documented "greedy is more expensive" caveat did not materialise on these tasks; greedy was consistently cheaper.
-2. **Solve rate**: greedy ≥ nd. The one concrete gain is QI-002 `collider_binary` (nd no-solution -> greedy solved). QL1 and QL4 solve counts are unchanged.
+1. **Runtime**: greedy is faster everywhere, and the gap explodes at scale — QI-004 total wall 1233 s -> 10 s (~120x), with no timeouts. The documented "greedy is more expensive" caveat did not materialise on these tasks; greedy was consistently cheaper.
+2. **Solve rate**: greedy ≥ nd. The one concrete gain is QI-002 `collider_binary` (nd no-solution -> greedy solved). QI-001 and QI-004 solve counts are unchanged.
 3. **Parent-set recovery**: net improvement. QI-002 clean 3/6 -> 4/6; QI-001 colliders become clean in all modes. Greedy's recall is 1.0 on every solved cell (it never drops the true parent), whereas nd sometimes recovered a pure non-parent proxy (QI-002 chain_cat3). The cost is greedy's tendency to add a second literal, which turned QI-002 `fork_cat3` from exact into a superset and keeps QI-001 chain/fork as supersets.
 4. **Interpretability**: greedy bodies are more uniform and consistently contain the true parent; nd was more variable and occasionally proxy-only.
 5. **Collider/AND-type targets**: greedy is clearly stronger — it recovers the collider cleanly where nd failed (QI-002 binary no-solution; QI-001 collider beyond binary).
-6. **At the noisy n=20 scale (QL4)**: greedy changes *only* runtime. It does not rescue recovery (still 0/15) and the binary `unknown constant` encoding errors persist (an engine BK-encoding issue, folding-mode-independent).
+6. **At the noisy n=20 scale (QI-004)**: greedy changes *only* runtime. It does not rescue recovery (still 0/15) and the binary `unknown constant` encoding errors persist (an engine BK-encoding issue, folding-mode-independent).
 
 **Verdict: mixed-leaning-better.** Greedy is strictly better on runtime and solve rate, net better on clean recovery (driven by colliders), with a single cell regression (QI-002 fork_cat3) and no change at the hard noisy scale.
 
@@ -56,7 +56,7 @@ Across QL1/QL2/QL4, switching nd -> greedy is **better or equal on every axis, w
 
 | Claim candidate | Supported? | Evidence | Caveat |
 |---|---|---|---|
-| Greedy folding is substantially faster than nd on these tasks | Yes | QL4 total wall 1233 s -> 10.3 s; QL2 11.9 s -> 2.5 s; QL1 4.0 s -> 2.9 s | Wall-clock on one machine, single run; not a controlled benchmark |
+| Greedy folding is substantially faster than nd on these tasks | Yes | QI-004 total wall 1233 s -> 10.3 s; QI-002 11.9 s -> 2.5 s; QI-001 4.0 s -> 2.9 s | Wall-clock on one machine, single run; not a controlled benchmark |
 | Greedy can find a stable solution where nd reports none | Yes (one case) | QI-002 `collider_binary`: nd no-solution -> greedy solved+exact | Single cell; noiseless complete-truth-table case |
 | Greedy improves clean parent-set recovery overall | Partially | QI-002 clean 3/6 -> 4/6; QI-001 collider clean in all modes | Not graph recovery; QI-001 nd lacks clean_recovery field; one cell regressed |
 | Greedy reliably recovers exact minimal parent sets | No | QI-001/QI-002 cat3 chain/fork are supersets; QI-004 0/15 | Greedy tends to over-include a literal |
@@ -76,13 +76,13 @@ Across QL1/QL2/QL4, switching nd -> greedy is **better or equal on every axis, w
 
 - Target-wise parent-set recovery, not causal discovery; single seed; tiny/small samples (QI-001 4–5 rows, QI-002 complete tables, QI-004 n=20).
 - Continuous variables are binned (3 uniform bins) before ABA Learning.
-- QL1 nd lacks the `clean_recovery`/`var_parent_*` fields, so its recovery comparison is qualitative.
+- QI-001 nd lacks the `clean_recovery`/`var_parent_*` fields, so its recovery comparison is qualitative.
 - Wall-clock figures are from single runs on one machine; treat the runtime story as a strong qualitative signal, to be confirmed quantitatively (QN-001).
 - Fidelity caveat: only `folding_mode` was changed; the paper greedy configs additionally set selection/space/learning-mode options not exposed in the YAML.
 
 ## Implications for the later quantitative greedy-vs-nd assessment (QN-001)
 
-These qualitative results motivate a controlled quantitative comparison: the runtime advantage and the collider solve/recovery gains are the most promising signals to confirm with repeated seeds, larger grids, and proper timing methodology. The QL4 result (greedy = nd in recovery but far cheaper) suggests greedy is the better default for scaling experiments, independent of any recovery claim.
+These qualitative results motivate a controlled quantitative comparison: the runtime advantage and the collider solve/recovery gains are the most promising signals to confirm with repeated seeds, larger grids, and proper timing methodology. The QI-004 result (greedy = nd in recovery but far cheaper) suggests greedy is the better default for scaling experiments, independent of any recovery claim.
 
 ## Artefact paths
 
@@ -92,5 +92,5 @@ These qualitative results motivate a controlled quantitative comparison: the run
 | Greedy outputs | `causal/outputs/aba_learning/grid/QI001_motifs_modes_greedy/`, `.../QI002_minimal_motifs_greedy/`, `.../QI004_scaled_motifs_n20_greedy/` |
 | Greedy summaries | `docs/experiments/qualitative/QI001_motifs_modes_greedy_summary.md`, `QI002_minimal_motifs_greedy_summary.md`, `QI004_scaled_motifs_n20_greedy_summary.md` |
 | Greedy dossiers | `docs/experiments/qualitative/QI001_motifs_modes_greedy/`, `QI002_minimal_motifs_greedy/`, `QI004_scaled_motifs_n20_greedy/` |
-| nd baselines | `docs/experiments/qualitative/QI002_minimal_motifs_summary.md`, `QI004_scaled_motifs_n20_summary.md`, `QL_interim_handoff.md` (QL1 nd qualitative) |
+| nd baselines | `docs/experiments/qualitative/QI002_minimal_motifs_summary.md`, `QI004_scaled_motifs_n20_summary.md`, `QL_interim_handoff.md` (QI-001 nd qualitative) |
 | Metrics reference | `causal/aa-plans/METRICS.md` |

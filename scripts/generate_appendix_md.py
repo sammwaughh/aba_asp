@@ -12,7 +12,7 @@ if str(_REPO) not in sys.path:
 from causal.experiments.handcrafted import load_handcrafted
 from causal.experiments.handcrafted_qi001 import QI001_BUILDERS
 from causal.experiments.handcrafted_qi002 import QI002_BUILDERS
-from causal.experiments.handcrafted_qi003 import QI003_BUILDERS
+from causal.experiments.handcrafted_qi004 import QI004_BUILDERS
 
 OUT = _REPO.parent / "appendix.md"
 
@@ -35,7 +35,7 @@ QL2_ORDER = [
     "qi002_fork_cat3",
     "qi002_collider_cat3",
 ]
-QL3_ORDER = sorted(QI003_BUILDERS.keys())
+QL3_ORDER = sorted(QI004_BUILDERS.keys())
 
 MOTIF_INFO = {
     "chain": ("x0 -> x1 -> x2", "{x1}"),
@@ -44,11 +44,11 @@ MOTIF_INFO = {
 }
 
 QL3_INFO = {
-    "qi003_chain_x1parent": ("chain (parent in x1)", "x0 -> x1 -> x2", "{x1}"),
-    "qi003_chain_x0parent": ("chain (parent in x0)", "x1 -> x0 -> x2", "{x0}"),
-    "qi003_fork_x0parent": ("fork (parent in x0)", "x0 -> x1, x0 -> x2", "{x0}"),
-    "qi003_fork_x1parent": ("fork (parent in x1)", "x1 -> x0, x1 -> x2", "{x1}"),
-    "qi003_collider": ("collider", "x0 -> x2, x1 -> x2", "{x0, x1}"),
+    "qi004_chain_x1parent": ("chain (parent in x1)", "x0 -> x1 -> x2", "{x1}"),
+    "qi004_chain_x0parent": ("chain (parent in x0)", "x1 -> x0 -> x2", "{x0}"),
+    "qi004_fork_x0parent": ("fork (parent in x0)", "x0 -> x1, x0 -> x2", "{x0}"),
+    "qi004_fork_x1parent": ("fork (parent in x1)", "x1 -> x0, x1 -> x2", "{x1}"),
+    "qi004_collider": ("collider", "x0 -> x2, x1 -> x2", "{x0, x1}"),
 }
 
 POS_RULE = {
@@ -91,7 +91,7 @@ def cell_meta_ql3(key: str, fx) -> dict:
     mode = key.rsplit("_", 1)[1]
     label, edges, parents = QL3_INFO[base]
     cfg_idx = list(QL3_INFO.keys()).index(base)
-    seed = 20030000 + cfg_idx * 10 + _MODES.index(mode)
+    seed = 20040002 + cfg_idx * 10 + _MODES.index(mode)
     return {
         "fixture_id": key,
         "structural_config": label,
@@ -133,7 +133,7 @@ def main() -> None:
         "> fixtures (`causal/experiments/handcrafted_qi001.py`, `handcrafted_qi002.py`,"
     )
     lines.append(
-        "> `handcrafted_qi003.py`) via `HandcraftedFixture.df.to_csv(index=False)`, which matches"
+        "> `handcrafted_qi004.py`) via `HandcraftedFixture.df.to_csv(index=False)`, which matches"
     )
     lines.append(
         "> the per-cell `data.csv` files written at run time (cross-checked against on-disk"
@@ -189,11 +189,11 @@ def main() -> None:
 
     lines.append("---")
     lines.append("")
-    lines.append("## QL3 (QI-003): `QI003_scaled_motifs` — 15 cells")
+    lines.append("## QL3 (QI-004): `QI004_scaled_motifs_n20` — 15 cells")
     lines.append("")
-    lines.append("5 structural configs × 3 data modes. `n = 100` per cell; mild stochastic noise;")
+    lines.append("5 structural configs × 3 data modes. `n = 20` per cell; mild stochastic noise;")
     lines.append(
-        "deterministic per-fixture RNG seed (`_BASE_SEED = 20030000` in `handcrafted_qi003.py`)."
+        "deterministic per-fixture RNG seed (`_BASE_SEED = 20040002` in `handcrafted_qi004.py`)."
     )
     lines.append("")
     for i, key in enumerate(QL3_ORDER, 1):
@@ -212,7 +212,7 @@ def main() -> None:
     lines.append("|---|---|---:|---:|")
     lines.append(f"| QL1 | QI001_motifs_modes | 9 | {ql1_rows} |")
     lines.append(f"| QL2 | QI002_minimal_motifs | 6 | {ql2_rows} |")
-    lines.append(f"| QL3 | QI003_scaled_motifs | 15 | {ql3_rows} |")
+    lines.append(f"| QL3 | QI004_scaled_motifs_n20 | 15 | {ql3_rows} |")
 
     OUT.write_text("\n".join(lines) + "\n", encoding="utf-8")
     print(f"Wrote {OUT}")

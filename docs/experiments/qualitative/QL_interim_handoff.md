@@ -1,4 +1,4 @@
-# QL1–QL4 interim-report handoff pack
+# QI-001–QI-004 interim-report handoff pack
 
 > **Scope guard.** The qualitative investigations evaluate **target-wise parent-set
 > recovery** under the **current `aba_asp/causal` implementation** (the **target-wise ABA
@@ -9,21 +9,21 @@
 > target-rule bodies** for `x2` and the known direct parents of `x2`; they do **not** prove
 > causal discovery.
 
-> **Status.** This pack synthesises **QL1 (QI-001)**, **QL2 (QI-002)**, **QL3 (QI-003)**, and
-> **QL4 (QI-004)**. QL4 has now completed; its outputs
-> (`causal/outputs/aba_learning/grid/QI004_scaled_motifs_n20/`) and generated summary
-> (`docs/experiments/qualitative/QI004_scaled_motifs_n20_summary.md`) exist and are
-> incorporated below. This supersedes the earlier QL1–QL3-only pack
-> (`QL1_QL3_interim_handoff.md`), in which all QL4 entries were placeholders.
+> **Status.** This pack synthesises **QI-001**, **QI-002**, **QI-003**, and **QI-004**. QI-004
+> has completed; its outputs (`causal/outputs/aba_learning/grid/QI004_scaled_motifs_n20/`) and
+> generated summary (`docs/experiments/qualitative/QI004_scaled_motifs_n20_summary.md`) exist
+> and are incorporated below.
 
-> **Naming.** Report-side labels QL1/QL2/QL3/QL4 map to repo experiment IDs
-> QI-001 / QI-002 / QI-003 / QI-004.
+> **Naming.** This pack refers to experiments by repo id (QI-001..QI-004). For cross-reference
+> with the report, the report-side labels map as QL1 = QI-001, QL2 = QI-002, QL3 = QI-004; the
+> cut `n=100` attempt (QI-003) carries no report label and is retained only as a
+> feasibility/limitation note.
 
 ---
 
 ## 1. The qualitative investigation sequence (why each run followed the last)
 
-1. **QL1 (QI-001) — initial motif × data-mode probe.** 9 cells (3 motifs × 3 data modes),
+1. **QI-001 — initial motif × data-mode probe.** 9 cells (3 motifs × 3 data modes),
    target `x2`, all solved. Recovery was uneven: fork recovered cleanly in every mode (but
    fork's parent *is* `x0`, so this is confounded with a first-column preference); the
    collider recovered fully only in binary; the chain essentially never recovered its true
@@ -31,7 +31,7 @@
    confound** and an **unjustified tiny sample size** (4–5 rows, so the true parent was not
    guaranteed to be the unique perfect rule).
 
-2. **QL2 (QI-002) — principled minimal baseline.** Introduced to remove QL1's tiny-table
+2. **QI-002 — principled minimal baseline.** Introduced to remove QI-001's tiny-table
    weakness. Complete, noiseless truth tables (8 rows binary, 18 rows cat3) make the true
    parent the *unique* zero-error separator, so the perfect rule is learnable **in
    principle**. Result: clean recovery on only **half** the cells (binary 2/3, cat3 1/3); the
@@ -40,19 +40,19 @@
    against the x0 confound: it decorrelates non-parents from `x2` and makes the canonical chain
    cell (`x0 ⊥ x2`) a genuine probe of positional x0-preference (binary's clean `{x1}` recovery
    argues against a pure x0-bias; the cat3 chain's `x0` citation is consistent with an
-   artefact). What QL2 does **not** provide is the *full symmetric* break — the fork's parent
+   artefact). What QI-002 does **not** provide is the *full symmetric* break — the fork's parent
    *is* `x0`, there is no correlated-ancestor test, and no within-structure parent-position
-   swap; that is QL3/QL4's job.
+   swap; that is QI-003/QI-004's job.
 
-3. **QL3 (QI-003) — scaled, noisy, confound-controlled attempt at `n=100`.** Added realistic
+3. **QI-003 — scaled, noisy, confound-controlled attempt at `n=100`.** Added realistic
    scale + noise and **parent-position variants** (chain/fork in both orientations) so a
    learner that merely prefers `x0` would fail the `*_x1parent` cells. It hit a
    **computational-feasibility wall**: categorical/continuous cells timed out at 120 s and
    binary cells failed instantly on the all-zero-positive encoding limitation; **0 cells
-   solved**. QL3 therefore contributes a documented feasibility/limitation result, not
+   solved**. QI-003 therefore contributes a documented feasibility/limitation result, not
    recovery evidence.
 
-4. **QL4 (QI-004) — feasible re-run of the QL3 design.** Same conceptual design as QL3, with
+4. **QI-004 — feasible re-run of the QI-003 design.** Same conceptual design as QI-003, with
    only `n` reduced to **20** and the Prolog timeout raised to **300 s**. It **completed all
    15 cells with no timeouts**, making the scaled/noisy design interpretable for the first
    time — but it recovered **no clean parent set in any cell** (`clean_recovery = 0` for all
@@ -60,13 +60,13 @@
 
 ---
 
-## 2. Why QL4 followed QL3
+## 2. Why QI-004 followed QI-003
 
-QL3's `n=100` configuration was computationally infeasible under the available learner/timeout
+QI-003's `n=100` configuration was computationally infeasible under the available learner/timeout
 budget: every categorical/continuous cell exceeded the 120 s Prolog timeout, and every binary
 cell tripped the all-zero-positive encoding limitation, leaving 0 solved cells and no recovery
-evidence. To examine the scaled/noisy and continuous/discretisation questions at all, QL4 keeps
-the QL3 design but changes only the two feasibility settings (`n` 100→20, timeout 120→300 s).
+evidence. To examine the scaled/noisy and continuous/discretisation questions at all, QI-004 keeps
+the QI-003 design but changes only the two feasibility settings (`n` 100→20, timeout 120→300 s).
 The reduced sample size requires a new fixtures module (`handcrafted_qi004.py`) because the
 `handcrafted_table` path uses the fixture's own table and ignores the grid `n`.
 
@@ -76,17 +76,17 @@ The reduced sample size requires a new fixtures module (`handcrafted_qi004.py`) 
 
 | Role | Canonical run(s) | Why |
 |---|---|---|
-| Encoding/motif sensitivity of recovery | **QL1 (QI-001)** | 9/9 solved; shows recovery varies by motif and data mode |
-| Best-case (noiseless) learnability of the parent rule | **QL2 (QI-002)** | complete truth tables; clean_recovery 0.5; collider fails even ideally |
-| Scaled/noisy feasibility + scaled-recovery (null) result | **QL4 (QI-004)** | completes 15/15 at `n=20`; recovers nothing clean |
-| `n=100` computational-feasibility wall + binary encoding limitation | **QL3 (QI-003)** — audit/feasibility note only | 0 solved; preserved as a recorded limitation, not recovery evidence |
+| Encoding/motif sensitivity of recovery | **QI-001** | 9/9 solved; shows recovery varies by motif and data mode |
+| Best-case (noiseless) learnability of the parent rule | **QI-002** | complete truth tables; clean_recovery 0.5; collider fails even ideally |
+| Scaled/noisy feasibility + scaled-recovery (null) result | **QI-004** | completes 15/15 at `n=20`; recovers nothing clean |
+| `n=100` computational-feasibility wall + binary encoding limitation | **QI-003** — audit/feasibility note only | 0 solved; preserved as a recorded limitation, not recovery evidence |
 
-QL4 is the canonical *scaled/noisy* run (supersedes QL3 for that role). The canonical
-*parent-recovery* evidence remains QL1 + QL2, because QL4's recovery finding is null.
+QI-004 is the canonical *scaled/noisy* run (supersedes QI-003 for that role). The canonical
+*parent-recovery* evidence remains QI-001 + QI-002, because QI-004's recovery finding is null.
 
 ---
 
-## 4. Run-level summary table (QL1–QL4)
+## 4. Run-level summary table (QI-001–QI-004)
 
 All runs: target `x2` only; target excluded from BK; learner = default non-deterministic
 folding (`folding_mode: nd`, `folding_steps: 15`); `graph_type: handcrafted_table`; grid
@@ -95,23 +95,23 @@ SWI-Prolog 10.0.2; clingo 5.8.0.
 
 | Run | Experiment id | Cells | n | Timeout | Modes | Outcome distribution | Clean-recovery | Role |
 |---|---|---|---|---|---|---|---|---|
-| **QL1** | `QI001_motifs_modes` | 9 | 4–5 | 120 s | bin, cat3, cont3 | 9 solved | (rule-level metrics; no clean_recovery field) — fork clean all modes, collider binary clean, chain never clean | encoding/motif sensitivity |
-| **QL2** | `QI002_minimal_motifs` | 6 | 8 (bin) / 18 (cat3) | 120 s | bin, cat3 | 5 solved, 1 no-solution | **0.500 (3/6)**; bin 2/3, cat3 1/3 | best-case learnability |
-| **QL3** | `QI003_scaled_motifs` | 15 | 100 | 120 s | bin, cat3, cont3 | 0 solved; 8 timeout, 5 error (binary), partial/aborted | n/a (0 solved) | feasibility wall (audit only) |
-| **QL4** | `QI004_scaled_motifs_n20` | 15 | 20 | 300 s | bin, cat3, cont3 | **1 solved, 12 no-solution, 2 error; 0 timeout** | **0.000 (0/15)** | scaled/noisy (null recovery) |
+| **QI-001** | `QI001_motifs_modes` | 9 | 4–5 | 120 s | bin, cat3, cont3 | 9 solved | (rule-level metrics; no clean_recovery field) — fork clean all modes, collider binary clean, chain never clean | encoding/motif sensitivity |
+| **QI-002** | `QI002_minimal_motifs` | 6 | 8 (bin) / 18 (cat3) | 120 s | bin, cat3 | 5 solved, 1 no-solution | **0.500 (3/6)**; bin 2/3, cat3 1/3 | best-case learnability |
+| **QI-003** | `QI003_scaled_motifs` | 15 | 100 | 120 s | bin, cat3, cont3 | 0 solved; 8 timeout, 5 error (binary), partial/aborted | n/a (0 solved) | feasibility wall (audit only) |
+| **QI-004** | `QI004_scaled_motifs_n20` | 15 | 20 | 300 s | bin, cat3, cont3 | **1 solved, 12 no-solution, 2 error; 0 timeout** | **0.000 (0/15)** | scaled/noisy (null recovery) |
 
-QL1/QL2/QL3 numbers are reproduced from `QL1_QL3_interim_handoff.md`; QL4 numbers are from
+QI-001/QI-002/QI-003 numbers are reproduced from their experiment records (`docs/experiments/qualitative/QI-001.md`, `QI-002.md`, `QI-003.md`) and summaries; QI-004 numbers are from
 `QI004_scaled_motifs_n20_summary.md` and per-cell `metrics.json`.
 
 ---
 
-## 5. QL4 result summary
+## 5. QI-004 result summary
 
 - **Design.** 5 structural variants (`chain_x0parent {x0}`, `chain_x1parent {x1}`,
   `fork_x0parent {x0}`, `fork_x1parent {x1}`, `collider {x0,x1}`) × 3 data modes
   (binary, categorical-3, continuous-3-bin) × target `x2` = 15 cells, `n=20`, mild noise.
 - **Feasibility.** 15/15 cells completed within the 300 s budget; **no timeouts** (max
-  wall-clock 272.8 s). Every cell has `metrics.json`. This resolves the QL3 timeout wall.
+  wall-clock 272.8 s). Every cell has `metrics.json`. This resolves the QI-003 timeout wall.
 - **Outcomes.** 1 `solved`, 12 `completed_no_solution`, 2 `error`. The 2 errors are binary
   (`fork_x0parent_binary`, `collider_binary`), each failing with `ERROR: unknown constant`
   (the recorded all-zero-positive binary encoding limitation).
@@ -145,21 +145,21 @@ Full per-cell table: `QI004_scaled_motifs_n20/run_log.md`; per-cell rules/metric
 ### Supported (verify against `docs/report/claims_ledger.md` before use)
 
 - The current `aba_asp/causal` implementation **runs end-to-end** on small controlled motif
-  fixtures and produces inspectable learned `x2` target rules (QL1: 9/9 solved; QL2: 5/6
-  solved; QL4: 1/15 solved + 12 no-solution that still complete).
+  fixtures and produces inspectable learned `x2` target rules (QI-001: 9/9 solved; QI-002: 5/6
+  solved; QI-004: 1/15 solved + 12 no-solution that still complete).
 - Parent-set recovery is **sensitive to data encoding and motif**: under canonical
   orientation, fork (parent `x0`) recovers cleanly across modes while chain (parent `x1`) and
-  collider recover poorly outside binary (QL1, QL2).
+  collider recover poorly outside binary (QI-001, QI-002).
 - **Even in the ideal noiseless complete-truth-table case, clean recovery is not guaranteed**
-  (QL2: clean_recovery 0.5; collider binary no solution; cat3 chain recovers the ancestor).
+  (QI-002: clean_recovery 0.5; collider binary no solution; cat3 chain recovers the ancestor).
 - The `n=100` setting is **computationally infeasible** under the current learner/timeout
-  budget (QL3: 0 solved; 8 timeouts, 5 binary encoding errors).
-- At `n=20` with a 300 s timeout, the scaled/noisy design becomes **tractable** (QL4: 15/15
+  budget (QI-003: 0 solved; 8 timeouts, 5 binary encoding errors).
+- At `n=20` with a 300 s timeout, the scaled/noisy design becomes **tractable** (QI-004: 15/15
   complete, 0 timeouts), but the pipeline **recovers no clean parent set** in any motif/mode
-  (QL4: clean_recovery 0/15); the one learned rule set is an **ancestor-contaminated
+  (QI-004: clean_recovery 0/15); the one learned rule set is an **ancestor-contaminated
   superset**.
 - The **binary all-zero-positive encoding limitation** is real and recurs at `n=20`
-  (QL3: 5 binary errors at `n=100`; QL4: 2 binary errors at `n=20`).
+  (QI-003: 5 binary errors at `n=100`; QI-004: 2 binary errors at `n=20`).
 
 ### Not supported (explicitly excluded)
 
@@ -167,17 +167,17 @@ Full per-cell table: `QI004_scaled_motifs_n20/run_log.md`; per-cell rules/metric
   stable-extension-as-DAG in the code path).
 - ❌ **Causal discovery / DAG recovery / edge orientation** of the motifs (learned bodies are
   predictor sets, not oriented edges).
-- ❌ The **x0/first-column confound is *fully* broken**. (QL2 corrects it at the data level —
+- ❌ The **x0/first-column confound is *fully* broken**. (QI-002 corrects it at the data level —
   the complete factorial decorrelates non-parents and turns the chain cell into a
   positional-bias probe, with binary `{x1}` recovery arguing against a pure x0-bias — but the
   full *symmetric* break, i.e. resolving the fork in isolation, testing against a correlated
-  ancestor, and a within-structure parent-position swap, is not achieved; QL3 unsolved; QL4 had
+  ancestor, and a within-structure parent-position swap, is not achieved; QI-003 unsolved; QI-004 had
   only one solved cell, citing both columns, so the `*_x0parent` vs `*_x1parent` comparison was
   never exercised.)
-- ❌ **Parent recovery improves at scale under noise** (QL4: 0/15 clean).
-- ❌ **Continuous/categorical recovery improved over QL1** (QL4 continuous/categorical cells
+- ❌ **Parent recovery improves at scale under noise** (QI-004: 0/15 clean).
+- ❌ **Continuous/categorical recovery improved over QI-001** (QI-004 continuous/categorical cells
   recover nothing; they merely complete).
-- ❌ The single QL4 solved rule "found the cause" (it over-includes the ancestor and has 0.0
+- ❌ The single QI-004 solved rule "found the cause" (it over-includes the ancestor and has 0.0
   positive coverage).
 - ❌ Anything derived from the **reserved** graph-level metrics (`skel_*`, `dir_*`, `shd`,
   `bridge_*`) — not computed.
@@ -188,11 +188,11 @@ Full per-cell table: `QI004_scaled_motifs_n20/run_log.md`; per-cell rules/metric
 
 - **Conceptual.** Target-wise learned-rule / parent-set recovery, best treated as
   predictive-association recovery that *may* align with parents; not Causal ABA.
-- **Confound (partially corrected; full break open).** QL2's complete factorial corrects the
+- **Confound (partially corrected; full break open).** QI-002's complete factorial corrects the
   x0/first-column confound at the **data level** (non-parents decorrelated from `x2`; the chain
   cell becomes a positional-bias probe, and binary `{x1}` recovery argues against a pure
   x0-bias). The *full symmetric* break — fork-in-isolation, a correlated-ancestor test, and a
-  within-structure parent-position swap — is still not empirically achieved (QL3 unsolved; QL4
+  within-structure parent-position swap — is still not empirically achieved (QI-003 unsolved; QI-004
   too few solved cells).
 - **Scale.** Prolog learning does not complete within 120 s at `n=100`; at `n=20` it
   completes but the categorical/continuous cells still take tens to ~270 s each.
@@ -205,8 +205,8 @@ Full per-cell table: `QI004_scaled_motifs_n20/run_log.md`; per-cell rules/metric
 - **Continuous handling.** Continuous variables are binned (3 uniform bins) before learning;
   recovery is over bin predicates.
 - **Determinism / breadth.** Single seed (`seed: [0]`); deterministic fixtures; no
-  greedy-vs-nd comparison (that is QN-001). Per-cell `interpretation.md` for QL1–QL3 remain
-  templates; QL4's is filled from the summary.
+  greedy-vs-nd comparison (that is QN-001). Per-cell `interpretation.md` for QI-001–QI-003 remain
+  templates; QI-004's is filled from the summary.
 
 ---
 
@@ -226,19 +226,19 @@ Full per-cell table: `QI004_scaled_motifs_n20/run_log.md`; per-cell rules/metric
   (bare predicates), categorical-3 (`_val_v`), continuous-3-bin (`_binK`); learner = inherited
   ABALearn, nd folding, `folding_steps: 15`; SWI-Prolog/clingo; env `aba-asp`.
 - **Metrics and interpretation rule.** Lead with `clean_recovery` + variable-level
-  precision/recall/Jaccard (QL2+); QL1 used rule-level body-parent metrics. State the rule:
+  precision/recall/Jaccard (QI-002+); QI-001 used rule-level body-parent metrics. State the rule:
   alignment with known parents, **not** causal discovery; coverage is behavioural; reserved
   graph metrics are not computed.
-- **QL1 (QI-001).** 9 cells, all solved; fork clean everywhere, collider partial outside
+- **QI-001.** 9 cells, all solved; fork clean everywhere, collider partial outside
   binary, chain cites `x0` not `x1`. Surface the x0 confound and the unjustified tiny `n`.
-- **QL2 (QI-002).** Complete noiseless truth tables; perfect rule learnable in principle.
+- **QI-002.** Complete noiseless truth tables; perfect rule learnable in principle.
   Clean recovery 3/6 (binary 2/3, cat3 1/3); collider fails even noiselessly. The complete
   factorial is a data-level correction against the x0 confound (decorrelates non-parents; chain
   cell becomes a positional-bias probe — binary `{x1}` argues against a pure x0-bias); the full
   symmetric break (fork-in-isolation, correlated-ancestor test, parent-position swap) is still
-  open and is QL3/QL4's job.
-- **QL3 → QL4 (scaled continuous/discretisation check).** QL3: `n=100` feasibility wall
-  (timeouts + binary encoding errors; 0 solved). QL4: `n=20`, 300 s; 15/15 complete, no
+  open and is QI-003/QI-004's job.
+- **QI-003 → QI-004 (scaled continuous/discretisation check).** QI-003: `n=100` feasibility wall
+  (timeouts + binary encoding errors; 0 solved). QI-004: `n=20`, 300 s; 15/15 complete, no
   timeouts, but **0/15 clean recovery**; continuous cells now complete yet recover nothing;
   the one learned rule is an ancestor-contaminated superset; confound still not decided.
 - **Interim interpretation.** Recovery is encoding- and motif-sensitive (binary friendliest);
@@ -253,7 +253,7 @@ Full per-cell table: `QI004_scaled_motifs_n20/run_log.md`; per-cell rules/metric
 
 ---
 
-## 9. Exact QL4 artefact paths
+## 9. Exact QI-004 artefact paths
 
 **Config**
 - `causal/configs/experiments/QI004_scaled_motifs_n20.yaml` (`n=20` via fixtures,
@@ -282,27 +282,27 @@ Full per-cell table: `QI004_scaled_motifs_n20/run_log.md`; per-cell rules/metric
 - `causal/aa-plans/METRICS.md` (variable-level metrics: §3.4b)
 
 **Index / register**
-- `docs/experiments/experiment_index.md`; `docs/research/experiment_register.md`
+- `docs/experiments/experiments_summary.md`; `docs/research/experiment_register.md`
 
 ---
 
 ## 10. Remaining questions for Samuel / ChatGPT before interim-report writing
 
-1. **Label mapping.** Report uses QL1–QL4 or repo QI-001…QI-004 (or both with a mapping
-   note)? This pack assumes QL↔QI.
-2. **QL1 metric basis.** QL1 used rule-level `body_parent_*`; QL2+ use
-   `clean_recovery`/variable-level. Re-describe QL1 against the stricter metric, or report
+1. **Label mapping (settled).** Report-side labels are QL1 = QI-001, QL2 = QI-002, QL3 = QI-004;
+   the cut `n=100` attempt (QI-003) has no report label. This pack uses repo ids throughout.
+2. **QI-001 metric basis.** QI-001 used rule-level `body_parent_*`; QI-002+ use
+   `clean_recovery`/variable-level. Re-describe QI-001 against the stricter metric, or report
    as-is with a footnote?
-3. **QL4 framing.** Confirm QL4 should be framed as "feasibility achieved, recovery null":
+3. **QI-004 framing.** Confirm QI-004 should be framed as "feasibility achieved, recovery null":
    the headline is that the design now runs but recovers nothing clean at `n=20`.
 4. **Confound emphasis.** How prominently to frame the still-unbroken x0/first-column confound,
-   given neither QL3 nor QL4 could decide it?
-5. **Collider failure.** Dedicated paragraph (it under-recovers even noiselessly in QL2 and
-   produces nothing in QL4), or fold into the encoding-sensitivity point?
+   given neither QI-003 nor QI-004 could decide it?
+5. **Collider failure.** Dedicated paragraph (it under-recovers even noiselessly in QI-002 and
+   produces nothing in QI-004), or fold into the encoding-sensitivity point?
 6. **Scope sentence.** Confirm exact wording for "parent-set recovery, not causal discovery"
    to standardise across the report (align with `claims_ledger.md`).
 7. **Binary encoding limitation.** Report as a methods caveat now, or defer until a fix is
-   scoped? (It recurs in both QL3 and QL4.)
-8. **Next-step design.** Does the null QL4 result warrant a redesigned follow-up (intermediate
+   scoped? (It recurs in both QI-003 and QI-004.)
+8. **Next-step design.** Does the null QI-004 result warrant a redesigned follow-up (intermediate
    `n`, more positives, encoding fix) before any quantitative work, or is the qualitative
    investigation concluded for the interim?

@@ -4,7 +4,7 @@
 |---|---|
 | Status | run complete; interpreted |
 | Greedy setting | `folding_mode: greedy` (only conceptual change vs nd) |
-| Canonical evidence? | Yes — canonical greedy-arm evidence for the QL1 greedy-vs-nd comparison |
+| Canonical evidence? | Yes — canonical greedy-arm evidence for the QI-001 greedy-vs-nd comparison |
 | Further rerun needed? | No |
 
 ## Acceptance / reading criteria

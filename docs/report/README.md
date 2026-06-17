@@ -9,7 +9,7 @@ sources** (`docs/report/manuscript/`).
 |---|---|
 | `manuscript/*.tex` | Authoritative report chapters (LaTeX; Samuel-authored) |
 | `manuscript/*.md` | Markdown mirrors of each chapter for ChatGPT Project context |
-| `interim_section_plan.md` | Section status, evidence map, writing workflow |
+| `report_state.md` | Section status, evidence map, writing workflow |
 | `claims_ledger.md` | Evidence-to-claim guardrail |
 | `figure_table_index.md` | Figure/table provenance |
 | `genai_use_log.md` | Factual log of ChatGPT/Cursor assistance |
@@ -21,7 +21,7 @@ Expected LaTeX sources (copy or edit under `manuscript/`):
 | Chapter | `.tex` | `.md` mirror |
 |---|---|---|
 | Introduction | `introduction.tex` | `introduction.md` |
-| Literature review | `literature-review.tex` | `literature-review.md` |
+| Literature review | `literature_review.tex` | `literature_review.md` |
 | Background | `background.tex` | `background.md` |
 | Experimentation | `experimentation.tex` | `experimentation.md` |
 | Project plan | `project_plan.tex` | `project_plan.md` |

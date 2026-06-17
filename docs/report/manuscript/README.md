@@ -8,7 +8,7 @@ mirror** (same basename, `.md` extension) for ChatGPT Project context.
 | `.tex` (authoritative, for compilation) | `.md` (mirror, for ChatGPT) |
 |---|---|
 | `introduction.tex` | `introduction.md` |
-| `literature-review.tex` | `literature-review.md` |
+| `literature_review.tex` | `literature_review.md` |
 | `background.tex` | `background.md` |
 | `experimentation.tex` | `experimentation.md` |
 | `project_plan.tex` | `project_plan.md` |
@@ -20,11 +20,11 @@ changes materially. The `.md` files are not compiled.
 
 | Chapter | `.tex` | `.md` |
 |---|---|---|
-| Introduction | *pending — copy in* | placeholder |
-| Literature review | *pending — copy in* | synced from prior mirror |
-| Background | *pending — copy in* | synced from prior mirror |
-| Experimentation | present (`experimentation.tex`) | *pending sync from .tex* |
-| Project plan | *pending — copy in* | placeholder |
+| Introduction | present (`introduction.tex`) | present (`introduction.md`) |
+| Literature review | present (`literature_review.tex`) | present (`literature_review.md`) |
+| Background | present (`background.tex`) | present (`background.md`) |
+| Experimentation | present (`experimentation.tex`) | present (`experimentation.md`) |
+| Project plan | present (`project_plan.tex`) | present (`project_plan.md`) |
 
 Earlier theory drafts remain in `docs/theory/background.tex` and
 `docs/theory/literature_review.tex` (canonical theory context per `AGENTS.md`). Report
@@ -32,22 +32,27 @@ chapters here may diverge from those files once you copy in your authored versio
 
 ## Building
 
-`main.tex` is a minimal driver that `\input`s all five chapters. Adjust the preamble (document
-class, packages, bibliography) to match your Imperial template before compiling.
+The actual chapter sources in this folder are **flat** — one `.tex` per chapter plus paired
+`.md` mirrors and a `figures/` directory:
 
 ```
 docs/report/manuscript/
-  main.tex
+  main.tex          # external Overleaf driver (see note below)
   introduction.tex
-  literature-review.tex
+  literature_review.tex
   background.tex
   experimentation.tex
   project_plan.tex
   figures/          # report-only figures
 ```
 
-Bibliography: point `\bibliography{...}` at your `.bib` (e.g. `docs/papers/secondary/sample.bib`
-or a manuscript-local `references.bib`).
+**Note on `main.tex`.** `main.tex` is the driver used in Samuel's external Overleaf/Imperial
+project, where the chapters sit in per-chapter subdirectories. It therefore `\input`s paths like
+`introduction/introduction.tex`, `title/title.tex`, `appendix/appendix.tex`, and
+`\bibliography{bibs/sample}` that do **not** exist in this flat folder. It is kept here verbatim
+as a reference copy of the Overleaf driver and is **not** intended to compile against this
+directory; the flat `.tex` files above are the authoritative chapter sources that get copied
+into that Overleaf project. Do not treat `main.tex` as the repo build target.
 
 ## Regenerating Markdown mirrors
 
