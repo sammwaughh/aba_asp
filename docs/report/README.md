@@ -13,6 +13,7 @@ sources** (`docs/report/manuscript/`).
 | `claims_ledger.md` | Evidence-to-claim guardrail |
 | `figure_table_index.md` | Figure/table provenance |
 | `genai_use_log.md` | Factual log of ChatGPT/Cursor assistance |
+| `findings/` | Supervisor-facing milestone findings logs (`.tex`; not manuscript chapters) |
 
 ## Manuscript chapters
 
@@ -34,6 +35,8 @@ See `manuscript/README.md` for the `.tex` / `.md` pairing rule and compilation n
   here; report chapters in `manuscript/` are the submitted-report sources once copied in.
 - **Experiment evidence** (`docs/experiments/`) — facts, commands, artefacts; not polished
   report prose. Check claims against `claims_ledger.md` before citing in the manuscript.
+- **Milestone findings** (`findings/`) — standalone supervisor logs per milestone part; compile
+  with `pdflatex` or share source. Not part of `manuscript/`.
 - **Research state** (`docs/research/`) — project state, supervisor context, experiment
   register; supports the project-plan chapter but is not the manuscript itself.
 

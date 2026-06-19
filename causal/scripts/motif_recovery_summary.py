@@ -66,7 +66,7 @@ _NO_SOLUTION_OUTCOMES = {
     "timeout",
 }
 
-# Human-written experiment records use the form ``QI-002`` / ``QN-001``.
+# Human-written experiment records use the form ``QI-002`` / ``M11``.
 _HUMAN_RECORD_RE = re.compile(r"^[A-Z]{2}-\d+$")
 
 

@@ -46,12 +46,13 @@ Do not describe the current implementation as full Russo-style Causal ABA unless
 
 ## Experimental priority
 
-The current experimental priority is to investigate whether ABA Learning techniques can be applied to causal-discovery-adjacent tasks on small controlled cases.
+The current experimental priority is Milestone 1: close the unguided parent-set diagnostic, then design the Causal-ABA-guided bridge.
 
-The first planned experiment records are:
+Key experiment records:
 
-- `docs/experiments/qualitative/QL-001.md` — qualitative inspection of ABA Learning on minimal causal motifs.
-- `docs/experiments/quantitative/QN-001.md` — greedy vs non-deterministic ABA Learning strategy comparison, if the implementation path is clean.
+- `docs/experiments/qualitative/QL-001.md` — qualitative inspection of ABA Learning on minimal causal motifs (realised by QI series).
+- `docs/experiments/qualitative/M1.1-parent-position.md` — Milestone 1 Part 1 (M11); `analysed`.
+- **Next:** Milestone 1 Part 2 (M1.2) — greedy vs nd on the m1.1 grid; planning doc `docs/research/milestone_plans/milestone1_part2_greedy_vs_nondeterministic.md` (Samuel).
 
 ## Experiment documentation rule
 

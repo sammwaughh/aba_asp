@@ -126,14 +126,19 @@ judgement-heavy moments; use fast/Instant only for trivial formatting.
   explicitly (binary flip, categorical noise, Gaussian continuous; positive-class definitions;
   three uniform bins) and reports variable-level F1 in place of the clean score.
 - Greedy-vs-nd was investigated qualitatively
-  (`docs/experiments/qualitative/greedy_vs_nd_qualitative_handoff.md`); a controlled quantitative
-  comparison (QN-001) remains to confirm it.
+  (`docs/experiments/qualitative/greedy_vs_nd_qualitative_handoff.md`). Milestone 1 Part 2
+  (M1.2) will compare greedy vs nd on the m1.1 eight-cell grid; the QI-* greedy reruns remain
+  supporting precedent only.
+- **M1.1 (M11) parent-position metamorphic control** is complete (`analysed`). It addresses the
+  June meeting action on order/parent-role dependence via σ/π transformations (not the QI-002
+  within-motif swap, which remains QI-004 territory). Findings:
+  `docs/report/findings/milestone1_part1_m11_findings.tex`.
 
 ## Outstanding actions
 
-- Implement the QL2 parent-position swap to demonstrate order dependence.
+- Write and run **M1.2** (greedy vs nd on the m1.1 grid).
 - Give each presented result an interpretation and a conclusion; reason explicitly about
-  DGP-expected vs actual learned rules.
+  DGP-expected vs actual learned rules (M1.1 done; QL series partially done).
 - Define first-principles success metrics beyond parent membership (e.g. fold count for
   efficiency; expected-rule comparison for correctness).
 - Find, clarify and improve Fabrizio's linear-with-noise DGP work.

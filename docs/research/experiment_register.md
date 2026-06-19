@@ -32,7 +32,6 @@ The earlier n=100 scaled attempt was cut and is not part of the canonical experi
 | QI-001 greedy | — | Greedy-folding rerun of QI-001 (3 motifs x 3 modes) | analysed |
 | QI-002 greedy | — | Greedy-folding rerun of QI-002 (minimal truth-table baseline) | analysed |
 | QI-004 greedy | — | Greedy-folding rerun of QI-004 (scaled noisy n=20) | analysed |
-| QN-001 | — | Comparing ABA Learning strategies on minimal causal motifs | proposed (informed by the greedy-vs-nd qualitative handoff) |
 | M11 | — | m1.1 Parent-position and representation-order control | analysed (8/8 solved; binary σ/π hold; cat3 σ fails; Stage 3 trace recorded; findings tex) |
 
 ## Template
@@ -202,26 +201,6 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
 - Metrics: clean_recovery + var_parent_precision/recall/jaccard, bin-health for cont3; greedy-vs-nd axes separated. The cut n=100 attempt (QI-003) is excluded from the greedy reruns.
 - Baseline / comparator: the nd QI-004 run.
 - Report relevance: interim Experimentation / Progress.
-
-### QN-001 — Comparing ABA Learning strategies on minimal causal motifs
-
-- Status: proposed.
-- Detailed record: docs/experiments/QN-001.md.
-- Research question: TBD after Cursor inspection and QL-001 — likely: on the same minimal causal motifs, does greedy ABA Learning recover parent-like learned-rule bodies more reliably or efficiently than non-deterministic learning?
-- Theoretical motivation: supervisor guidance suggests greedy ABA Learning may behave better for learning causality, but this has not yet been demonstrated in this project.
-- Relation to ABA Learning: compares ABA Learning strategy settings while holding DGPs, targets, seeds, sample sizes, and encoding fixed.
-- Relation to Causal ABA: strategy comparison is causally motivated, but still does not test full Russo-style Causal ABA unless the code path implements the relevant Causal ABA assumptions and d-separation machinery.
-- Code path: TBD after Cursor confirms how greedy and non-deterministic modes are configured.
-- Dataset / DGP: likely same motifs as QL-001, subject to QL-001 results.
-- Target variable(s): likely same as QL-001, subject to design.
-- Metrics: likely solve fraction, body-parent F1, offgraph rate, timeout rate, rule complexity, runtime, folding tokens, and actual fold count if inspectable.
-- Baseline / comparator: greedy vs non-deterministic ABA Learning.
-- Expected result: not asserted; experiment not run.
-- Interpretation rule: a difference in metrics would support only a bounded claim about the tested motifs/settings. It would not establish general strategy superiority for causal discovery.
-- Failure modes: strategy settings may not be exposed cleanly; runs may not be comparable; nondeterminism may require repeated runs; fold counts may not be logged; QL-001 may reveal that the motif setup is not interpretable enough for comparison.
-- Cursor implementation plan / prompt: TBD after plan-only inspection.
-- Commit hash / run artefact path: —
-- Report relevance: supports the interim Experimentation / Progress section if run; otherwise supports the Project Plan as the next planned experiment.
 
 ### M11 — m1.1 Parent-position and representation-order control
 

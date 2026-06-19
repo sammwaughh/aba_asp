@@ -75,6 +75,8 @@ Not responsible for:
 
 | Date | Tool | Task | Output / artefact | Used in report? | Samuel verification / edits | Notes |
 |---|---|---|---|---|---|---|
+| 2026-06-18 | Cursor | M1.1 close-out and supervisor findings tex | `M1.1-parent-position.md` (analysed); `milestone1_part1_m11_findings.tex`; registers; claims M11-C-* | findings tex for supervisor; not manuscript yet | Samuel reviewed conclusions before close-out | Stage 2/3 tables and bounded interpretation. |
+| 2026-06-18 | Cursor | M1.1→M1.2 doc tidy; QN-001 removal | `experiments_summary`, `research_state`, `report_state`, registers, logging docs | indirect (navigation) | pending Samuel review | Retired QN-001; synced ChatGPT mirrors. |
 | TBD | ChatGPT | Report-writing workflow design | Documentation plan and file templates | TBD | TBD | Planning support only. |
 | TBD | ChatGPT | Generated documentation scaffold | Batch 1–3 Markdown files | TBD | TBD | To be reviewed before committing. |
 | TBD | Cursor | TBD | TBD | TBD | TBD | TBD |
@@ -106,7 +108,7 @@ Not responsible for:
 - Tool: `ChatGPT`
 - Context: focused experiment chat.
 - Task:
-  - design QL-001 and/or QN-001;
+  - design QL-001 and milestone experiments;
   - define research question, setup, metrics, and interpretation rules.
 - Output:
   - `TBD`
@@ -140,7 +142,7 @@ Not responsible for:
 - Date: `TBD`
 - Tool: `Cursor`
 - Task:
-  - inspect whether QL-001/QN-001 can be run using existing infrastructure.
+  - inspect whether QL-001 can be run using existing infrastructure.
 - Output:
   - `TBD`
 - Commands:

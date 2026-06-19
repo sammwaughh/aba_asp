@@ -99,8 +99,9 @@ aba_asp/
     report relevance).
   - `qualitative/QL-001.md` — first qualitative record (ABA Learning on minimal causal
     motifs).
-  - `quantitative/QN-001.md` — first quantitative record (ABA Learning strategy
-    comparison).
+  - `qualitative/M1.1-parent-position.md` — Milestone 1 Part 1 (M11) metamorphic
+    parent-position control.
+  - `report/findings/` — supervisor-facing milestone findings logs (`.tex`).
   - `templates/` — older copy templates retained for reference.
 - `docs/report/` — report-support docs (evidence-to-prose guardrails, not report prose):
   - `README.md` — index for report layout and manuscript pairing.

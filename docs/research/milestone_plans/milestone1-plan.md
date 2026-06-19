@@ -41,6 +41,8 @@ The investigation should begin with small, clean QL2-style cases whose expected 
 
 The intended outcome is a justified conclusion about whether the existing parent-recovery results can be interpreted independently of an `x0` or ordering artefact.
 
+**Status (June 2026):** complete (`analysed`). Experiment M11; record `docs/experiments/qualitative/M1.1-parent-position.md`; supervisor findings `docs/report/findings/milestone1_part1_m11_findings.tex`. Bounded outcome: binary passes σ/π checks under nd; cat3 fails σ-invariance (representation-order sensitivity). Next: Part 2 (M1.2).
+
 ## Part 2: Greedy Versus Non-Deterministic ABA Learning
 
 Planning document: `milestone1_part2_greedy_vs_nondeterministic.md`

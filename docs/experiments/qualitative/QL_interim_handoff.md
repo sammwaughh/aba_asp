@@ -204,8 +204,7 @@ Full per-cell table: `QI004_scaled_motifs_n20/run_log.md`; per-cell rules/metric
   coverage even in the solved cell; coverage is behavioural, not structural.
 - **Continuous handling.** Continuous variables are binned (3 uniform bins) before learning;
   recovery is over bin predicates.
-- **Determinism / breadth.** Single seed (`seed: [0]`); deterministic fixtures; no
-  greedy-vs-nd comparison (that is QN-001). Per-cell `interpretation.md` for QI-001–QI-003 remain
+- **Determinism / breadth.** Single seed (`seed: [0]`); deterministic fixtures; greedy-vs-nd on QI fixtures covered by QI-* greedy reruns; Milestone 1 Part 2 (M1.2) will compare greedy vs nd on the m1.1 grid. Per-cell `interpretation.md` for QI-001–QI-003 remain
   templates; QI-004's is filled from the summary.
 
 ---
@@ -247,9 +246,9 @@ Full per-cell table: `QI004_scaled_motifs_n20/run_log.md`; per-cell rules/metric
   not empirically broken.
 - **Limitations.** Implementation ≠ Causal ABA; predictor-set not oriented edges; binary
   encoding limitation; Prolog scaling limits; continuous binning; single seed; exploratory.
-- **Decision for next quantitative work.** The unbroken confound and null scaled-recovery gate
-  any quantitative parent-recovery benchmarking (cf. QN-001). Candidate design changes recorded
-  but deferred: binary encoding fix; intermediate `n` / more positive examples; greedy-vs-nd.
+- **Decision for next work.** M1.1 (M11) addresses parent-role / representation-order under nd
+  (`analysed`). Next: M1.2 greedy vs nd on the same grid. Candidate design changes recorded
+  but deferred: binary encoding fix; intermediate `n` / more positive examples.
 
 ---
 

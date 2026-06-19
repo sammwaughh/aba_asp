@@ -36,7 +36,7 @@ Use the same status categories as `experiment_register.md`.
 | QI-001 greedy | — | Greedy-folding rerun of QI-001 (3 motifs x 3 modes) | analysed | `docs/experiments/qualitative/QI001_motifs_modes_greedy/` | `causal/configs/experiments/QI001_motifs_modes_greedy.yaml` | `causal/outputs/aba_learning/grid/QI001_motifs_modes_greedy/` | Interim Experimentation / Progress | Only change `folding_mode: greedy`. 9/9 solved; greedy faster and recovers all three colliders cleanly across modes (nd clean only in binary); chain/fork remain supersets. |
 | QI-002 greedy | — | Greedy-folding rerun of QI-002 (minimal truth-table baseline) | analysed | `docs/experiments/qualitative/QI002_minimal_motifs_greedy/` | `causal/configs/experiments/QI002_minimal_motifs_greedy.yaml` | `causal/outputs/aba_learning/grid/QI002_minimal_motifs_greedy/` | Interim Experimentation / Progress | Only change `folding_mode: greedy`. 6/6 solved (vs nd 5/6): solves the binary collider nd could not; cat3 collider now exact; clean recovery 3/6 -> 4/6 with one regression (cat3 fork exact -> superset). |
 | QI-004 greedy | — | Greedy-folding rerun of QI-004 (scaled noisy n=20) | analysed | `docs/experiments/qualitative/QI004_scaled_motifs_n20_greedy/` | `causal/configs/experiments/QI004_scaled_motifs_n20_greedy.yaml` | `causal/outputs/aba_learning/grid/QI004_scaled_motifs_n20_greedy/` | Interim Experimentation / Progress | Only change `folding_mode: greedy`. Same outcomes as nd (1 solved, 12 no-solution, 2 errors; 0/15 clean) but ~120x faster (≈1233 s -> ≈10 s). At noisy n=20 greedy changes only runtime; binary errors persist. |
-| QN-001 | — | Comparing ABA Learning strategies on minimal causal motifs | proposed | `docs/experiments/QN-001.md` | TBD | TBD | Interim Experimentation / Progress; Project Plan | Not run; the greedy-vs-nd qualitative handoff motivates a controlled quantitative comparison (repeated seeds, timing methodology). |
+| M11 | — | m1.1 Parent-position and representation-order control | analysed | `docs/experiments/qualitative/M1.1-parent-position.md` | `causal/configs/experiments/M11_parent_position.yaml` | `causal/outputs/aba_learning/grid/M11_parent_position/cells/<dgp>/` (learning); `causal/outputs/m11_parent_position/validation/` (Stage-0); `docs/report/findings/milestone1_part1_m11_findings.tex` | Interim Experimentation / Progress (Milestone 1) | 8/8 solved (nd). Binary: 4/4 exact; σ and π hold. Cat3: 2/4 exact (B,C); σ fails (A↔B, D↔C); π holds B↔C only. Stage 3: BK order → first nd-fold literal → entailment fork. Motivates M1.2 greedy comparison. |
 
 ## Experiment sequence to date and next
 
@@ -52,29 +52,29 @@ Status: `analysed`
 
 Compared `folding_mode: nd` vs `greedy` on identical fixtures (QI-001/QI-002/QI-004 greedy reruns). Greedy is faster (~120x at the QL3 scale), solve rate >= nd, net better clean recovery (colliders), one regression (cat3 fork), no recovery change at the noisy n=20 scale. See `docs/experiments/qualitative/greedy_vs_nd_qualitative_handoff.md`.
 
-### Next: QN-001 controlled strategy comparison
+### Done: Milestone 1 Part 1 — parent-position and representation-order control (M11 / m1.1)
 
-Status: `proposed`
+Status: `analysed`
+
+Eight-cell metamorphic grid (binary + cat3; σ and π transformations). Under fixed nd folding: binary passes all parent-role and order-invariance checks; cat3 fails σ-invariance (representation-order sensitivity under nd). Stage 3 trace documents BK order → first nd-fold literal → entailment branch. Findings: `docs/report/findings/milestone1_part1_m11_findings.tex`. Record: `docs/experiments/qualitative/M1.1-parent-position.md`.
+
+### Next: Milestone 1 Part 2 — greedy vs nd on the m1.1 grid (M1.2)
+
+Status: `planned` (planning doc in progress)
 
 Purpose:
 
-> Confirm the qualitative greedy-vs-nd signals quantitatively (repeated seeds, larger grids, proper timing methodology).
+> Rerun the m1.1 eight-cell grid under `folding_mode: greedy` and compare to the nd baseline in M11. Primary motivation: cat3 σ-invariance failure under nd (M11-C-002); tentative hypothesis that greedy may reduce representation-order sensitivity (M11-C-004, not established until M1.2 runs).
 
-Primary method:
+Planning doc (Samuel): `docs/research/milestone_plans/milestone1_part2_greedy_vs_nondeterministic.md` (to be written).
 
-- solve-rate comparison;
-- parent-body / variable-level metric comparison;
-- efficiency metric comparison (runtime; fold count if inspectable).
+Baseline comparator: M11 nd artefacts at `causal/outputs/aba_learning/grid/M11_parent_position/`.
 
-Primary risk:
-
-- strategy settings may need instrumentation; nondeterminism may require repeated runs to be comparable.
-
-### Next: Milestone 1 diagnostic closure and then the Causal-ABA-guided bridge
+### Later: Milestone 1 Parts 3–4 and Milestone 2 (Causal-ABA-guided bridge)
 
 Status: `proposed`
 
-Close the parent-set diagnostic (QL2 parent-position swap, collider-failure inspection, small noise sweep, first-principles metrics beyond parent membership), then design and implement the bridge in which Causal ABA-style information guides ABA Learning (Milestones 2–3 in the project plan).
+Remaining Milestone 1 work (failure analysis, noise/continuous DGP investigation) and then design/implement the bridge in which Causal ABA-style information guides ABA Learning (Milestones 2–3 in the project plan).
 
 ## Current metric families
 
@@ -135,15 +135,15 @@ Workflow:
 - Why does the configured learner return no solution on the binary collider (QL2) when a conjunctive parent rule exists in the table?
 - Under which noise levels and sample sizes can ABA Learning recover parents in the scaled noisy setting (a systematic sweep beyond QL3's arbitrary hyper-parameters)?
 - What is the root cause of the binary `unknown constant` errors in QL3, and how should the BK encoding be fixed?
-- Is actual fold count available, or only folding-token/runtime proxies (for QN-001 efficiency metrics)?
+- Is actual fold count available, or only folding-token/runtime proxies (for M1.2 efficiency comparisons)?
 - What success metrics beyond parent membership best capture whether causality is being learned (supervisor guidance: construct expected outputs from graph + DGP and compare against actual learned rules)?
 
 ## Next action
 
-Close the parent-set diagnostic (Milestone 1):
+**Milestone 1 Part 2 (M1.2)** — write the Part 2 planning doc, then rerun the m1.1 eight-cell grid under greedy folding and compare to the M11 nd baseline. See `docs/research/milestone_plans/milestone1-plan.md` Part 2.
 
-1. implement the QL2 parent-position swap to show order-dependence;
-2. inspect and explain the collider no-solution and the binary encoding errors;
-3. run a small noise/hyperparameter check and the compact greedy-vs-nd comparison;
-4. define first-principles success metrics beyond parent membership;
-5. give each presented result an interpretation and conclusion, reasoning about DGP-expected vs actual outputs.
+Completed since the QL series:
+
+1. **M1.1 (M11)** — parent-position and representation-order metamorphic control (`analysed`; findings tex at `docs/report/findings/milestone1_part1_m11_findings.tex`).
+
+Remaining Milestone 1 parts (after M1.2): failure analysis (Part 3), noise/continuous DGP (Part 4); then Milestone 2 (Causal-ABA-guided bridge).

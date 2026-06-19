@@ -185,64 +185,65 @@ TBD
 The table does not by itself establish causal discovery or full DAG recovery.
 ```
 
-### TAB-002 — QN-001 strategy comparison
+### TAB-002 — M1.1 cell-level results (candidate)
 
 - Type: `table`
 - Status: `candidate`
-- Source experiment: `QN-001`
+- Source experiment: `M11` (m1.1)
 - Source command:
 
 ```bash
-TBD
+python -m causal.experiments.run_grid --config causal/configs/experiments/M11_parent_position.yaml --no-resume
 ```
 
 - Source artefact path:
 
 ```text
-TBD
+docs/experiments/qualitative/M1.1-parent-position.md (cell-level table)
+docs/report/findings/milestone1_part1_m11_findings.tex
+causal/outputs/aba_learning/grid/M11_parent_position/cells/<dgp>/
 ```
 
 - Intended report section:
 
 ```text
-Experimentation / Progress or Project Plan
+Experimentation / Progress (Milestone 1)
 ```
 
 - Intended message:
 
 ```text
-Compare greedy and non-deterministic ABA Learning strategies on minimal causal motifs, if the comparison is implemented and run.
+Eight-cell metamorphic grid: expected vs actual rules; binary σ/π hold; cat3 σ fails under nd.
 ```
 
 - Draft structure:
 
-| Motif / target group | Strategy | Solve fraction | Median body-parent F1 | Offgraph rate | Timeout rate | Efficiency metric |
-|---|---|---:|---:|---:|---:|---:|
-| TBD | greedy | TBD | TBD | TBD | TBD | TBD |
-| TBD | non-deterministic | TBD | TBD | TBD | TBD | TBD |
+| Encoding | Cell | Expected rule | Classification | σ/π note |
+|---|---|---|---|---|
+| (from M1.1 record) | | | | |
 
 - Caption draft:
 
 ```text
-TBD
+M1.1 parent-position control under fixed nd folding (M11). Parent-set / learned-rule proxy, not causal discovery.
 ```
 
 - Caveats:
 
 ```text
-This table should only be used if the strategy settings are confirmed comparable.
+Square verdicts on cat3 A/D use sol files and prolog traces where cov_py and cov_pl disagree on assumption rules.
 ```
 
 - Claims supported:
 
 ```text
-TBD
+M11-C-001, M11-C-002 (bounded)
 ```
 
 - Claims not supported:
 
 ```text
-The table does not establish general superiority of one strategy for causal discovery unless the evidence is broad enough and explicitly caveated.
+Greedy fixes cat3 σ failure (M11-C-004 tentative until M1.2)
 ```
 
 ## Caption rules

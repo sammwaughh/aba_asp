@@ -94,11 +94,18 @@ n=100 scaled attempt was cut; only the reduced n=20 study is canonical and is no
   net better clean recovery (colliders), with one regression (cat3 fork exact → superset) and no
   recovery change at the noisy n=20 scale. See
   `docs/experiments/qualitative/greedy_vs_nd_qualitative_handoff.md`.
+- **M1.1 (M11)** — eight-cell metamorphic parent-position / representation-order control under
+  fixed nd folding. Binary: 4/4 exact expected rules; σ and π hold. Cat3: 2/4 exact; σ fails
+  (A↔B, D↔C); π holds B↔C only. Stage 3 trace: BK order → first nd-fold literal → entailment
+  fork. Status `analysed`. Record: `docs/experiments/qualitative/M1.1-parent-position.md`;
+  findings: `docs/report/findings/milestone1_part1_m11_findings.tex`.
 
 **Bounded conclusion.** The current target-wise pipeline can recover parent sets in selected
 idealised cases (especially simple binary and fork cases) but recovery is not robust across
-motifs, encodings or modest noisy scaling. This characterises what unguided ABA Learning does
-before causal guidance is added; it does not establish causal discovery.
+motifs, encodings or modest noisy scaling. M1.1 adds that binary parent-role tracking holds under
+σ/π controls while cat3 shows encoding-dependent representation-order sensitivity under nd.
+This characterises what unguided ABA Learning does before causal guidance is added; it does not
+establish causal discovery.
 
 ## Open conceptual risks
 
@@ -116,9 +123,9 @@ before causal guidance is added; it does not establish causal discovery.
 
 ## Next milestone
 
-**Milestone 1 — close the parent-set diagnostic (Weeks 1–2)**: implement the parent-position
-swap left undone in QL2, inspect the collider failures, run a compact non-deterministic vs greedy
-folding comparison, and add a small noise/hyperparameter check. Describe the DGP clearly
-(including where QL3 noise comes from) and set first-principles success metrics that go beyond
-parent membership. Then move to **Milestone 2** (designing the Causal-ABA-guided ABA Learning
-bridge). Tracked in `experiment_register.md` and `docs/report/manuscript/project_plan.md`.
+**Milestone 1 Part 2 (M1.2)** — greedy vs non-deterministic folding on the m1.1 eight-cell grid.
+Write `docs/research/milestone_plans/milestone1_part2_greedy_vs_nondeterministic.md`, rerun under
+`folding_mode: greedy`, and compare to the M11 nd baseline (motivated by cat3 σ failure under nd).
+Parts 3–4 of Milestone 1 (failure analysis; noise/continuous DGP) follow M1.2. Then **Milestone 2**
+(Causal-ABA-guided ABA Learning bridge). Tracked in `experiment_register.md`,
+`docs/experiments/experiments_summary.md`, and `docs/report/manuscript/project_plan.md`.

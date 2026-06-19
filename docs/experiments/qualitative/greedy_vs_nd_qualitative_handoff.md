@@ -77,12 +77,12 @@ Across QI-001/QI-002/QI-004, switching nd -> greedy is **better or equal on ever
 - Target-wise parent-set recovery, not causal discovery; single seed; tiny/small samples (QI-001 4–5 rows, QI-002 complete tables, QI-004 n=20).
 - Continuous variables are binned (3 uniform bins) before ABA Learning.
 - QI-001 nd lacks the `clean_recovery`/`var_parent_*` fields, so its recovery comparison is qualitative.
-- Wall-clock figures are from single runs on one machine; treat the runtime story as a strong qualitative signal, to be confirmed quantitatively (QN-001).
+- Wall-clock figures are from single runs on one machine; treat the runtime story as a strong qualitative signal on the QI fixtures.
 - Fidelity caveat: only `folding_mode` was changed; the paper greedy configs additionally set selection/space/learning-mode options not exposed in the YAML.
 
-## Implications for the later quantitative greedy-vs-nd assessment (QN-001)
+## Implications for Milestone 1 Part 2 (M1.2)
 
-These qualitative results motivate a controlled quantitative comparison: the runtime advantage and the collider solve/recovery gains are the most promising signals to confirm with repeated seeds, larger grids, and proper timing methodology. The QI-004 result (greedy = nd in recovery but far cheaper) suggests greedy is the better default for scaling experiments, independent of any recovery claim.
+These qualitative results motivate comparing greedy vs nd on the **m1.1 eight-cell grid** (M11 nd baseline already recorded). The runtime advantage and collider solve/recovery gains on QI fixtures are precedent only; whether greedy changes cat3 σ behaviour on m1.1 is an M1.2 question (claim M11-C-004, tentative). The QI-004 result (greedy = nd in recovery but far cheaper) suggests greedy is worth using for scaling experiments, independent of any recovery claim.
 
 ## Artefact paths
 

@@ -113,9 +113,13 @@ Drafted structure:
 
 5. **Greedy vs non-deterministic folding (qualitative)**
    - greedy faster (~120x at the QL3 scale), solve rate >= nd, net better clean recovery (colliders), one regression (cat3 fork), no recovery change at the noisy n=20 scale;
-   - motivates the controlled quantitative comparison QN-001.
+   - motivates Milestone 1 Part 2 (M1.2): greedy vs nd on the m1.1 grid.
 
-6. **Interim interpretation and limitations**
+6. **M1.1 (M11): parent-position and representation-order control**
+   - eight-cell metamorphic grid under fixed nd folding; binary σ/π hold; cat3 σ fails; Stage 3 mechanism documented;
+   - findings tex: `docs/report/findings/milestone1_part1_m11_findings.tex`.
+
+7. **Interim interpretation and limitations**
    - bounded conclusion: parent recovery works in selected idealised cases but is not robust across motifs/encodings/noise;
    - does not implement full Russo-style Causal ABA; learned predictive rules are not automatically causal; continuous variables are binned; metrics need refinement beyond parent membership.
 
@@ -124,8 +128,9 @@ Per supervisor guidance, each presented result should carry an interpretation an
 Required evidence for drafting / revision:
 
 - `docs/experiments/qualitative/QI-001.md`, `QI-002.md`, `QI-004.md`;
+- `docs/experiments/qualitative/M1.1-parent-position.md`;
 - `docs/experiments/qualitative/greedy_vs_nd_qualitative_handoff.md`;
-- `docs/experiments/QN-001.md` (plan-only status until run);
+- `docs/report/findings/milestone1_part1_m11_findings.tex`;
 - `docs/report/claims_ledger.md`;
 - selected figures/tables from `docs/report/figure_table_index.md`.
 
@@ -144,7 +149,7 @@ Explain what will happen after the interim report, following from the QL1/QL2/QL
 
 Drafted milestones (Weeks 1–13, with a Week-11 holiday):
 
-1. **Milestone 1 (Weeks 1–2)** — close the parent-set diagnostic: parent-position swap left undone in QL2, collider-failure inspection, compact greedy-vs-nd comparison, small noise/hyperparameter check; set first-principles success metrics beyond parent membership.
+1. **Milestone 1 (Weeks 1–2)** — parent-set diagnostic in four parts: **Part 1 done (M1.1/M11)** — metamorphic parent-position / representation-order control; **Part 2 next (M1.2)** — greedy vs nd on the m1.1 grid; Parts 3–4 — failure analysis and noise/continuous DGP investigation; first-principles success metrics beyond parent membership.
 2. **Milestone 2 (Weeks 3–4)** — design the bridge in which Causal ABA-style information guides ABA Learning; specify comparable outputs and metrics.
 3. **Milestone 3 (Weeks 5–6)** — implement causal-guided ABA Learning variants; compare against unguided learning; build bespoke metrics that judge whether causality (not just predictive parents) is learned.
 4. **Milestone 4 (Weeks 7–8)** — scale beyond three-node motifs; set up representative external comparators and a frozen evaluation protocol.
@@ -191,8 +196,9 @@ Must include:
 | `docs/research/supervisor_guidance.md` | Supervisor guidance | Experimentation / Project Plan |
 | `docs/experiments/TEMPLATE.md` | Structure for experiment records | Not cited directly; supports writing workflow |
 | `docs/experiments/qualitative/QI-001.md`, `QI-002.md`, `QI-004.md` | Qualitative motif experiments (QL1/QL2/QL3) | Experimentation / Progress |
+| `docs/experiments/qualitative/M1.1-parent-position.md` | M1.1 metamorphic parent-position experiment | Experimentation / Progress |
+| `docs/report/findings/milestone1_part1_m11_findings.tex` | M1.1 supervisor findings log | Experimentation / Progress |
 | `docs/experiments/qualitative/greedy_vs_nd_qualitative_handoff.md` | Greedy vs nd folding comparison | Experimentation / Progress / Project Plan |
-| `docs/experiments/QN-001.md` | Strategy comparison (planned) | Experimentation / Progress / Project Plan |
 | `docs/report/claims_ledger.md` | Claim verification | All report sections |
 | `docs/report/figure_table_index.md` | Figures/tables and captions | Experimentation / Progress |
 | `docs/report/genai_use_log.md` | AI-use declaration | Declaration / appendix if required |

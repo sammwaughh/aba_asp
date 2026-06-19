@@ -1064,3 +1064,5 @@ The investigation answers its central question positively for an encoding only w
 If either property fails, the result must be reported as the specific failed transformation relation and then interpreted using the staged evidence.
 
 The expected-vs-actual learnt rule comparison remains the primary evidence throughout. Parent-set $F_1$ is supporting information only.
+
+**Filled in (June 2026):** cell-level and transformation-level results, Stage 3 trace, and bounded interpretation are recorded in `docs/experiments/qualitative/M1.1-parent-position.md` and `docs/report/findings/milestone1_part1_m11_findings.tex`.

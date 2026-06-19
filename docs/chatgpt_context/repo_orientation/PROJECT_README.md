@@ -43,8 +43,8 @@ Experiments are documented under `docs/experiments/`:
 
 - Experiment records should use the canonical template `docs/experiments/TEMPLATE.md`.
 - The at-a-glance index is `docs/experiments/experiments_summary.md`.
-- The first planned records are `docs/experiments/qualitative/QL-001.md` and
-  `docs/experiments/quantitative/QN-001.md`.
+- Milestone 1 Part 1 (M11 / m1.1) is `analysed`: `docs/experiments/qualitative/M1.1-parent-position.md`; supervisor findings `docs/report/findings/milestone1_part1_m11_findings.tex`.
+- **Next:** Milestone 1 Part 2 (M1.2) — greedy vs nd on the m1.1 grid.
 
 Each experiment record should capture an ID, research question, theoretical motivation,
 setup, exact command, output, interpretation, and next decision. Records are evidence
