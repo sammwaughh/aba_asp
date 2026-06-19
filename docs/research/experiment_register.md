@@ -33,7 +33,7 @@ The earlier n=100 scaled attempt was cut and is not part of the canonical experi
 | QI-002 greedy | — | Greedy-folding rerun of QI-002 (minimal truth-table baseline) | analysed |
 | QI-004 greedy | — | Greedy-folding rerun of QI-004 (scaled noisy n=20) | analysed |
 | QN-001 | — | Comparing ABA Learning strategies on minimal causal motifs | proposed (informed by the greedy-vs-nd qualitative handoff) |
-| M11 | — | m1.1 Parent-position and representation-order control | run (8/8 solved; 6 exact; cat3 A/D discrepant; Stage 2/3 pending; artefacts in `cells/<dgp>/`) |
+| M11 | — | m1.1 Parent-position and representation-order control | analysed (8/8 solved; binary σ/π hold; cat3 σ fails; Stage 3 trace recorded; findings tex) |
 
 ## Template
 
@@ -225,10 +225,11 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
 
 ### M11 — m1.1 Parent-position and representation-order control
 
-- Status: run (first 8-cell learning grid executed; raw artefacts produced; interpretation pending).
+- Status: analysed (Stages 0–3 complete; bounded conclusions recorded).
 - Detailed record: docs/experiments/qualitative/M1.1-parent-position.md.
+- Supervisor findings: docs/report/findings/milestone1_part1_m11_findings.tex.
 - Design source: docs/research/milestone_plans/milestone1_part1_parent_position.md.
-- First run (facts): 8/8 solved (nd folding, target x2). Exact expected one-literal parent rule in all 4 binary cells and cat3 B/C; cat3 A and cat3 D returned a 3-rule assumption/contrary structure citing the non-parent (clean_recovery=0), with a flagged cov_py(1,0)-vs-cov_pl(0,1) coverage disagreement. Learning artefacts: `causal/outputs/aba_learning/grid/M11_parent_position/cells/<dgp>/` (e.g. `cells/m11_binary_A/`; `grid.cell_dir: dgp`).
+- First run (facts): 8/8 solved (nd folding, target x2). Binary 4/4 exact expected one-literal parent rule; σ and π hold at rule level. Cat3 B/C exact; cat3 A and D returned 3-rule assumption/contrary structures citing the non-parent (clean_recovery=0). Cat3 σ fails (A↔B, D↔C); π holds on B↔C only. Stage 3 trace: first nd-fold literal follows BK predicate-block order; ancestor-first order → no entailment → assumptions; parent-first → entailment → singleton. cov_py vs cov_pl disagree on cat3 A/D assumption rules; square verdicts use sol + prolog trace. Learning artefacts: `causal/outputs/aba_learning/grid/M11_parent_position/cells/<dgp>/` (`grid.cell_dir: dgp`).
 - Research question: under complete, noiseless QL2-style target tables, when the direct-parent and ancestor roles are exchanged between x0 and x1 and the learner-visible predictor order is independently reversed, does the learnt x2 rule follow the variable in the direct-parent role (vs a fixed x0 identity or a fixed representation position)?
 - Theoretical motivation: metamorphic validity control on the QL2 (QI-002) parent-recovery proxy, targeting the unresolved categorical-chain discrepancy (expected x1, returned x0).
 - Relation to ABA Learning: target-wise learning of x2 with target excluded from BK; fixed QI-002-style nd folding (folding_steps 15, timeout 120 s).
@@ -243,4 +244,4 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
 - Failure modes: silent column canonicalisation voiding sigma (not observed); no-solution; parser/normalisation discrepancy; implementation/artefact error; cov_py/cov_pl disagreement on assumption-based rules (cat3 A/D flagged).
 - Cursor implementation plan / prompt: grid cell_dir naming implemented (`grid.cell_dir: dgp` on M11 config).
 - Commit hash / run artefact path: Stage-0 validation at `causal/outputs/m11_parent_position/validation/`; learning grid at `causal/outputs/aba_learning/grid/M11_parent_position/cells/<dgp>/`.
-- Report relevance: interim Experimentation / Progress (Milestone 1 diagnostic closure).
+- Report relevance: interim Experimentation / Progress (Milestone 1 Part 1 closure). Next: M1.2 greedy vs nd on same grid.

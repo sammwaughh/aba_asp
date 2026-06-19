@@ -95,6 +95,15 @@ Add claims after each experiment is analysed. Report labels: QL1 = QI-001, QL2 =
 | GVN-C-002 | Greedy can solve a cell where nd reports no solution (QI-002 binary collider: nd no-solution -> greedy solved+exact). | bounded | greedy-vs-nd handoff | Single cell; noiseless complete-truth-table case. | Experimentation / Progress | active |
 | GVN-C-003 | Greedy improves clean parent-set recovery overall but with one regression. | bounded | greedy-vs-nd handoff (QI-002 clean 3/6 -> 4/6; QI-001 colliders clean in all modes; QI-002 cat3 fork regressed exact -> superset) | Not graph recovery; QI-004 unchanged (0/15) at noisy n=20. | Experimentation / Progress | active |
 
+### M11 (m1.1)
+
+| Claim ID | Claim | Strength | Evidence | Caveats | Report location | Status |
+|---|---|---|---|---|---|---|
+| M11-C-001 | Under the m1.1 binary fixtures and fixed nd folding, all four cells return the pre-specified one-literal parent rule; σ-invariance (A↔B, D↔C) and π-equivariance (A↔D, B↔C) hold at rule level with agreeing cov_py and cov_pl. | bounded | M1.1 record; `cells/m11_binary_*/bk.sol.aba`; metrics.json | Binary encoding only; parent-set / learned-rule proxy, not causal discovery; fixed nd config. | Experimentation / Progress; findings tex | active |
+| M11-C-002 | Under the m1.1 cat3 fixtures and fixed nd folding, σ-invariance fails: reversing predictor order while fixing parent identity (A↔B, D↔C) changes exact singleton vs assumption-based non-parent rule. | bounded | M1.1 record §18.2; cat3 A/D vs B/C sol files | Cat3 encoding only; not a claim that parent identity is ignored globally. | Experimentation / Progress; findings tex | active |
+| M11-C-003 | On cat3 A vs B (and analogously D vs C), nd folding’s first literal tried follows BK predicate-block order; ancestor-first order yields a fold that does not entail E+/E− and triggers assumptions, parent-first yields entailment and a clean singleton. | bounded | `cells/m11_cat3_A/prolog.stdout`; `cells/m11_cat3_B/prolog.stdout`; bk.aba order | Mechanistic reading from trace; does not prove all cat3 failures share this path without further cells. | Experimentation / Progress; findings tex | active |
+| M11-C-004 | Greedy folding may reduce cat3 representation-order sensitivity on the m1.1 grid. | tentative | QI-002 greedy precedent (GVN-C-002/C-003); M1.1 cat3 σ failure motivates M1.2 | **Not established by m1.1**; hypothesis for Milestone 1 Part 2 only. | Project Plan / M1.2 | pending |
+
 ### QN-001 (planned)
 
 | Claim ID | Claim | Strength | Evidence | Caveats | Report location | Status |
