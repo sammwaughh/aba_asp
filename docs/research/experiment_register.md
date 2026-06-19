@@ -33,6 +33,7 @@ The earlier n=100 scaled attempt was cut and is not part of the canonical experi
 | QI-002 greedy | — | Greedy-folding rerun of QI-002 (minimal truth-table baseline) | analysed |
 | QI-004 greedy | — | Greedy-folding rerun of QI-004 (scaled noisy n=20) | analysed |
 | QN-001 | — | Comparing ABA Learning strategies on minimal causal motifs | proposed (informed by the greedy-vs-nd qualitative handoff) |
+| M11 | — | m1.1 Parent-position and representation-order control | run (8/8 solved; 6 exact; cat3 A/D discrepant; Stage 2/3 pending; artefacts in `cells/<dgp>/`) |
 
 ## Template
 
@@ -221,3 +222,25 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
 - Cursor implementation plan / prompt: TBD after plan-only inspection.
 - Commit hash / run artefact path: —
 - Report relevance: supports the interim Experimentation / Progress section if run; otherwise supports the Project Plan as the next planned experiment.
+
+### M11 — m1.1 Parent-position and representation-order control
+
+- Status: run (first 8-cell learning grid executed; raw artefacts produced; interpretation pending).
+- Detailed record: docs/experiments/qualitative/M1.1-parent-position.md.
+- Design source: docs/research/milestone_plans/milestone1_part1_parent_position.md.
+- First run (facts): 8/8 solved (nd folding, target x2). Exact expected one-literal parent rule in all 4 binary cells and cat3 B/C; cat3 A and cat3 D returned a 3-rule assumption/contrary structure citing the non-parent (clean_recovery=0), with a flagged cov_py(1,0)-vs-cov_pl(0,1) coverage disagreement. Learning artefacts: `causal/outputs/aba_learning/grid/M11_parent_position/cells/<dgp>/` (e.g. `cells/m11_binary_A/`; `grid.cell_dir: dgp`).
+- Research question: under complete, noiseless QL2-style target tables, when the direct-parent and ancestor roles are exchanged between x0 and x1 and the learner-visible predictor order is independently reversed, does the learnt x2 rule follow the variable in the direct-parent role (vs a fixed x0 identity or a fixed representation position)?
+- Theoretical motivation: metamorphic validity control on the QL2 (QI-002) parent-recovery proxy, targeting the unresolved categorical-chain discrepancy (expected x1, returned x0).
+- Relation to ABA Learning: target-wise learning of x2 with target excluded from BK; fixed QI-002-style nd folding (folding_steps 15, timeout 120 s).
+- Relation to Causal ABA: does not exercise arr/noe/indep, d-separation, or stable-extension-as-DAG. Parent-set / learned-rule recovery proxy only.
+- Code path: causal/experiments/run_grid.py (handcrafted_table); fixtures in causal/experiments/handcrafted_m11.py; config causal/configs/experiments/M11_parent_position.yaml.
+- Dataset / DGP: 8 deterministic fixtures (2 encodings {binary, cat3} x cells A/B/C/D), derived from one canonical A per encoding via sigma (predictor-order reversal) and pi (x0<->x1 identity swap). Minimal complete factorial, one row per (x0,x1) assignment: binary 4 rows; cat3 9 rows; noiseless. (Corrected from the inherited QI-002 x2 per-assignment repeat, which had no separator/pi/sigma/engine justification.)
+- Target variable(s): x2 only. Parents: A/B {x1}, C/D {x0}.
+- Metrics: Stage-0 fixture/validation assertions + learner metrics (expected-rule match, coverage, clean_recovery, var_parent_*) from the eight-cell grid run.
+- Baseline / comparator: QL2 (QI-002) parent recovery; within-experiment sigma/pi square.
+- Expected result: not asserted pre-run; run complete (see detailed record).
+- Interpretation rule: pi-equivariance + sigma-invariance with correct coverage indicates direct-parent-role tracking; persistence of a fixed name across a valid pi-comparison indicates identity preference; a valid sigma-pair difference indicates representation-order sensitivity (interpreted only after verifying the order reaches the learner).
+- Failure modes: silent column canonicalisation voiding sigma (not observed); no-solution; parser/normalisation discrepancy; implementation/artefact error; cov_py/cov_pl disagreement on assumption-based rules (cat3 A/D flagged).
+- Cursor implementation plan / prompt: grid cell_dir naming implemented (`grid.cell_dir: dgp` on M11 config).
+- Commit hash / run artefact path: Stage-0 validation at `causal/outputs/m11_parent_position/validation/`; learning grid at `causal/outputs/aba_learning/grid/M11_parent_position/cells/<dgp>/`.
+- Report relevance: interim Experimentation / Progress (Milestone 1 diagnostic closure).

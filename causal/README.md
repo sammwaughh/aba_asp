@@ -37,7 +37,7 @@ python causal/scripts/summarize_experiment.py --experiment E00_discrete_smoke
 python causal/scripts/summarize_experiment.py --experiment E00_continuous_smoke
 ```
 
-Outputs: `causal/outputs/aba_learning/grid/<experiment_id>/` (`cells/<run_id>/metrics.json`, `results.parquet`, `run.log`). Summaries are written to `causal/experiments/figures/<experiment_id>_summary.{md,png}`.
+Outputs: `causal/outputs/aba_learning/grid/<experiment_id>/` (`cells/<cell_dir_name>/metrics.json` — defaults to hash `run_id`; configurable via `grid.cell_dir`), `results.parquet`, `run.log`). Summaries are written to `causal/experiments/figures/<experiment_id>_summary.{md,png}`.
 
 ## Environment & Setup
 

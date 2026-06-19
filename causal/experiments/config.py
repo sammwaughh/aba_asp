@@ -25,11 +25,15 @@ class DGPSpec:
     targets: tuple[str, ...] | None = None
 
 
+_CELL_DIR_MODES = frozenset({"hash", "dgp", "slug"})
+
+
 @dataclass(frozen=True)
 class GridSpec:
     seeds: tuple[int, ...]
     target: str | tuple[str, ...]  # "all" or explicit targets
     n: tuple[int, ...] | None = None  # used when DGP entries omit per-dgp ``n``
+    cell_dir: str = "hash"  # hash | dgp | slug — filesystem name under cells/
 
 
 @dataclass(frozen=True)
@@ -53,6 +57,7 @@ class CellSpec:
     target: str
     config_hash: str
     run_id: str
+    cell_dir_name: str
     graph_type: str
     example_split: str
     handcrafted_source: str | None = None
@@ -173,6 +178,51 @@ def config_hash_from_path(path: Path) -> str:
 
 def _short_run_id(payload: str) -> str:
     return hashlib.sha1(payload.encode("utf-8")).hexdigest()[:12]
+
+
+def _parse_cell_dir(obj: Any, *, where: str) -> str:
+    """Parse ``grid.cell_dir``; default ``hash`` when absent."""
+    if obj is None:
+        return "hash"
+    mode = _require_str(obj, where=where)
+    if mode not in _CELL_DIR_MODES:
+        allowed = ", ".join(sorted(_CELL_DIR_MODES))
+        raise ConfigError(f"{where} must be one of: {allowed}")
+    return mode
+
+
+def _cell_dir_name(
+    mode: str,
+    *,
+    dgp: str,
+    target: str,
+    seed: int,
+    run_id: str,
+) -> str:
+    """Return the filesystem directory name for a grid cell."""
+    if mode == "hash":
+        return run_id
+    if mode == "dgp":
+        return dgp
+    if mode == "slug":
+        return f"{dgp}__target-{target}__seed-{seed}"
+    raise ConfigError(f"unsupported grid.cell_dir mode: {mode!r}")
+
+
+def _assert_unique_cell_dir_names(cells: list[CellSpec], *, mode: str) -> None:
+    """Raise when ``grid.cell_dir`` would map two cells to the same directory."""
+    seen: dict[str, CellSpec] = {}
+    for cell in cells:
+        prev = seen.get(cell.cell_dir_name)
+        if prev is not None:
+            raise ConfigError(
+                f"grid.cell_dir={mode!r} produced duplicate directory name "
+                f"{cell.cell_dir_name!r} for cells "
+                f"({prev.dgp}, target={prev.target}, seed={prev.seed}, n={prev.n}) and "
+                f"({cell.dgp}, target={cell.target}, seed={cell.seed}, n={cell.n}); "
+                f"use cell_dir: slug or hash"
+            )
+        seen[cell.cell_dir_name] = cell
 
 
 def _resolve_handcrafted_dgp(dgp: Mapping[str, Any], *, where: str) -> DGPSpec:
@@ -335,6 +385,8 @@ def load_config(path: Path) -> ExperimentConfig:
             raise ConfigError("grid.target must be 'all' or a non-empty list")
         target = tuple(t_vals)
 
+    cell_dir = _parse_cell_dir(grid_obj.get("cell_dir"), where="grid.cell_dir")
+
     provenance = cfg.get("provenance")
     if provenance is not None:
         provenance = _require_dict(provenance, where="provenance")
@@ -344,7 +396,7 @@ def load_config(path: Path) -> ExperimentConfig:
         description=description,
         defaults=defaults,
         dgps=tuple(dgps),
-        grid=GridSpec(seeds=seeds, target=target, n=n_vals),
+        grid=GridSpec(seeds=seeds, target=target, n=n_vals, cell_dir=cell_dir),
         provenance=provenance,
     )
 
@@ -370,6 +422,7 @@ def expand_cells(cfg: ExperimentConfig, *, config_path: Path) -> list[CellSpec]:
     config_path = Path(config_path)
     config_hash = config_hash_from_path(config_path)
     grid_n = cfg.grid.n if cfg.grid.n is not None else ()
+    cell_dir_mode = cfg.grid.cell_dir
 
     cells: list[CellSpec] = []
     for dgp in cfg.dgps:
@@ -409,6 +462,13 @@ def expand_cells(cfg: ExperimentConfig, *, config_path: Path) -> list[CellSpec]:
                         f"{n}|{seed}|{target}|{graph_type}|{config_hash}"
                     )
                     run_id = _short_run_id(payload)
+                    dir_name = _cell_dir_name(
+                        cell_dir_mode,
+                        dgp=dgp.id,
+                        target=target,
+                        seed=seed,
+                        run_id=run_id,
+                    )
                     cells.append(
                         CellSpec(
                             experiment_id=cfg.experiment_id,
@@ -420,9 +480,11 @@ def expand_cells(cfg: ExperimentConfig, *, config_path: Path) -> list[CellSpec]:
                             target=target,
                             config_hash=config_hash,
                             run_id=run_id,
+                            cell_dir_name=dir_name,
                             graph_type=graph_type,
                             example_split=example_split,
                             handcrafted_source=dgp.source,
                         )
                     )
+    _assert_unique_cell_dir_names(cells, mode=cell_dir_mode)
     return cells

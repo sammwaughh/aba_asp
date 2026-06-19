@@ -65,6 +65,7 @@ def test_stage3_smoke_solved_cont_collider_8_x2(tmp_path: Path) -> None:
         target="x2",
         config_hash="sha256:fixture",
         run_id="fixture",
+        cell_dir_name="fixture",
         graph_type="continuous",
         example_split="median",
     )

@@ -25,6 +25,7 @@ def _cell(*, n: int, seed: int, target: str = "x2") -> CellSpec:
         target=target,
         config_hash="sha256:test",
         run_id=f"run_{seed}_{n}_{target}",
+        cell_dir_name=f"run_{seed}_{n}_{target}",
         graph_type="continuous",
         example_split="median",
     )

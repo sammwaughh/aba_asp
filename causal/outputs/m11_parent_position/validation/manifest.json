@@ -1,0 +1,259 @@
+{
+  "experiment_id": "M11_parent_position",
+  "generated_utc": "2026-06-18T22:35:40.137199+00:00",
+  "scope": "Stage-0 fixture validation (pre-learning); parent-set recovery proxy, not Russo-style Causal ABA.",
+  "cells": [
+    {
+      "encoding": "binary",
+      "cell": "A",
+      "parent": "x1",
+      "requested_order": [
+        "x0",
+        "x1"
+      ],
+      "table_order": [
+        "x0",
+        "x1"
+      ],
+      "bk_order": [
+        "x0",
+        "x1"
+      ],
+      "target_excluded": true,
+      "checks": {
+        "row_count": true,
+        "every_assignment_present": true,
+        "x2_equals_parent": true,
+        "requested_equals_table_order": true,
+        "examples_partition_rows": true,
+        "parent_is_zero_error_separator": true,
+        "non_parent_has_no_separator": true,
+        "bk_order_matches_requested": true,
+        "target_excluded_from_bk": true
+      },
+      "all_checks_pass": true
+    },
+    {
+      "encoding": "binary",
+      "cell": "B",
+      "parent": "x1",
+      "requested_order": [
+        "x1",
+        "x0"
+      ],
+      "table_order": [
+        "x1",
+        "x0"
+      ],
+      "bk_order": [
+        "x1",
+        "x0"
+      ],
+      "target_excluded": true,
+      "checks": {
+        "row_count": true,
+        "every_assignment_present": true,
+        "x2_equals_parent": true,
+        "requested_equals_table_order": true,
+        "examples_partition_rows": true,
+        "parent_is_zero_error_separator": true,
+        "non_parent_has_no_separator": true,
+        "bk_order_matches_requested": true,
+        "target_excluded_from_bk": true
+      },
+      "all_checks_pass": true
+    },
+    {
+      "encoding": "binary",
+      "cell": "C",
+      "parent": "x0",
+      "requested_order": [
+        "x0",
+        "x1"
+      ],
+      "table_order": [
+        "x0",
+        "x1"
+      ],
+      "bk_order": [
+        "x0",
+        "x1"
+      ],
+      "target_excluded": true,
+      "checks": {
+        "row_count": true,
+        "every_assignment_present": true,
+        "x2_equals_parent": true,
+        "requested_equals_table_order": true,
+        "examples_partition_rows": true,
+        "parent_is_zero_error_separator": true,
+        "non_parent_has_no_separator": true,
+        "bk_order_matches_requested": true,
+        "target_excluded_from_bk": true
+      },
+      "all_checks_pass": true
+    },
+    {
+      "encoding": "binary",
+      "cell": "D",
+      "parent": "x0",
+      "requested_order": [
+        "x1",
+        "x0"
+      ],
+      "table_order": [
+        "x1",
+        "x0"
+      ],
+      "bk_order": [
+        "x1",
+        "x0"
+      ],
+      "target_excluded": true,
+      "checks": {
+        "row_count": true,
+        "every_assignment_present": true,
+        "x2_equals_parent": true,
+        "requested_equals_table_order": true,
+        "examples_partition_rows": true,
+        "parent_is_zero_error_separator": true,
+        "non_parent_has_no_separator": true,
+        "bk_order_matches_requested": true,
+        "target_excluded_from_bk": true
+      },
+      "all_checks_pass": true
+    },
+    {
+      "encoding": "cat3",
+      "cell": "A",
+      "parent": "x1",
+      "requested_order": [
+        "x0",
+        "x1"
+      ],
+      "table_order": [
+        "x0",
+        "x1"
+      ],
+      "bk_order": [
+        "x0",
+        "x1"
+      ],
+      "target_excluded": true,
+      "checks": {
+        "row_count": true,
+        "every_assignment_present": true,
+        "x2_equals_parent": true,
+        "requested_equals_table_order": true,
+        "examples_partition_rows": true,
+        "parent_is_zero_error_separator": true,
+        "non_parent_has_no_separator": true,
+        "bk_order_matches_requested": true,
+        "target_excluded_from_bk": true
+      },
+      "all_checks_pass": true
+    },
+    {
+      "encoding": "cat3",
+      "cell": "B",
+      "parent": "x1",
+      "requested_order": [
+        "x1",
+        "x0"
+      ],
+      "table_order": [
+        "x1",
+        "x0"
+      ],
+      "bk_order": [
+        "x1",
+        "x0"
+      ],
+      "target_excluded": true,
+      "checks": {
+        "row_count": true,
+        "every_assignment_present": true,
+        "x2_equals_parent": true,
+        "requested_equals_table_order": true,
+        "examples_partition_rows": true,
+        "parent_is_zero_error_separator": true,
+        "non_parent_has_no_separator": true,
+        "bk_order_matches_requested": true,
+        "target_excluded_from_bk": true
+      },
+      "all_checks_pass": true
+    },
+    {
+      "encoding": "cat3",
+      "cell": "C",
+      "parent": "x0",
+      "requested_order": [
+        "x0",
+        "x1"
+      ],
+      "table_order": [
+        "x0",
+        "x1"
+      ],
+      "bk_order": [
+        "x0",
+        "x1"
+      ],
+      "target_excluded": true,
+      "checks": {
+        "row_count": true,
+        "every_assignment_present": true,
+        "x2_equals_parent": true,
+        "requested_equals_table_order": true,
+        "examples_partition_rows": true,
+        "parent_is_zero_error_separator": true,
+        "non_parent_has_no_separator": true,
+        "bk_order_matches_requested": true,
+        "target_excluded_from_bk": true
+      },
+      "all_checks_pass": true
+    },
+    {
+      "encoding": "cat3",
+      "cell": "D",
+      "parent": "x0",
+      "requested_order": [
+        "x1",
+        "x0"
+      ],
+      "table_order": [
+        "x1",
+        "x0"
+      ],
+      "bk_order": [
+        "x1",
+        "x0"
+      ],
+      "target_excluded": true,
+      "checks": {
+        "row_count": true,
+        "every_assignment_present": true,
+        "x2_equals_parent": true,
+        "requested_equals_table_order": true,
+        "examples_partition_rows": true,
+        "parent_is_zero_error_separator": true,
+        "non_parent_has_no_separator": true,
+        "bk_order_matches_requested": true,
+        "target_excluded_from_bk": true
+      },
+      "all_checks_pass": true
+    }
+  ],
+  "orbit_relations": {
+    "binary:sigma(A->B)": true,
+    "binary:sigma(D->C)": true,
+    "binary:pi(A->D)": true,
+    "binary:pi(B->C)": true,
+    "cat3:sigma(A->B)": true,
+    "cat3:sigma(D->C)": true,
+    "cat3:pi(A->D)": true,
+    "cat3:pi(B->C)": true
+  },
+  "all_cells_pass": true,
+  "all_relations_pass": true
+}

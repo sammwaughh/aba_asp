@@ -10,7 +10,12 @@ _REPO_ROOT = Path(__file__).resolve().parents[2]
 if str(_REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(_REPO_ROOT))
 
-from causal.experiments.config import config_hash_from_path, expand_cells, load_config
+from causal.experiments.config import (
+    ConfigError,
+    config_hash_from_path,
+    expand_cells,
+    load_config,
+)
 from causal.experiments.manifest import close_manifest, open_manifest
 
 
@@ -106,6 +111,7 @@ def test_expand_cells_multi_count_and_stability(tmp_path: Path) -> None:
     assert len(cells1) == 510  # (3+3+3+4+4) targets * 30 seeds * 1 n
     assert [c.run_id for c in cells1[:20]] == [c.run_id for c in cells2[:20]]
     assert cells1[0].config_hash == cells2[0].config_hash
+    assert all(c.cell_dir_name == c.run_id for c in cells1)
 
 
 def test_expand_cells_budget_count(tmp_path: Path) -> None:
@@ -150,4 +156,71 @@ def test_manifest_schema_minimum(tmp_path: Path) -> None:
     parsed2 = json.loads(manifest_path.read_text(encoding="utf-8"))
     assert parsed2["finished_at"] is not None
     assert parsed2["outcome_counts"]["solved"] == 1
+
+
+def _write_cell_dir_stub(tmp_path: Path, *, cell_dir: str, seeds: str) -> Path:
+    p = tmp_path / f"cell_dir_{cell_dir}.yaml"
+    p.write_text(
+        "\n".join(
+            [
+                f"experiment_id: cell_dir_{cell_dir}",
+                "description: stub",
+                "defaults:",
+                "  graph_type: continuous",
+                "  bins: 2",
+                "  folding_steps: 15",
+                "  prolog_timeout_s: 120",
+                "  query_timeout_s: 5",
+                "dgps:",
+                "  - id: G3-chain",
+                "    nodes: 3",
+                "    edges: [[0,1],[1,2]]",
+                "  - id: G3-fork",
+                "    nodes: 3",
+                "    edges: [[0,1],[0,2]]",
+                "grid:",
+                "  n: [25]",
+                f"  seed: {seeds}",
+                "  target: [x2]",
+                f"  cell_dir: {cell_dir}",
+                "",
+            ]
+        ),
+        encoding="utf-8",
+    )
+    return p
+
+
+def test_expand_cells_cell_dir_dgp(tmp_path: Path) -> None:
+    cfg_path = _write_cell_dir_stub(tmp_path, cell_dir="dgp", seeds="[0]")
+    cells = expand_cells(load_config(cfg_path), config_path=cfg_path)
+    assert len(cells) == 2
+    assert {c.cell_dir_name for c in cells} == {"G3-chain", "G3-fork"}
+    assert all(c.cell_dir_name != c.run_id for c in cells)
+
+
+def test_expand_cells_cell_dir_slug(tmp_path: Path) -> None:
+    cfg_path = _write_cell_dir_stub(tmp_path, cell_dir="slug", seeds="[0, 1]")
+    cells = expand_cells(load_config(cfg_path), config_path=cfg_path)
+    assert len(cells) == 4
+    names = {c.cell_dir_name for c in cells}
+    assert names == {
+        "G3-chain__target-x2__seed-0",
+        "G3-chain__target-x2__seed-1",
+        "G3-fork__target-x2__seed-0",
+        "G3-fork__target-x2__seed-1",
+    }
+
+
+def test_expand_cells_cell_dir_dgp_collision(tmp_path: Path) -> None:
+    cfg_path = _write_cell_dir_stub(tmp_path, cell_dir="dgp", seeds="[0, 1]")
+    with pytest.raises(ConfigError, match="duplicate directory name"):
+        expand_cells(load_config(cfg_path), config_path=cfg_path)
+
+
+def test_expand_cells_m11_cell_dir_dgp() -> None:
+    cfg_path = _REPO_ROOT / "causal/configs/experiments/M11_parent_position.yaml"
+    cells = expand_cells(load_config(cfg_path), config_path=cfg_path)
+    assert len(cells) == 8
+    assert {c.cell_dir_name for c in cells} == {c.dgp for c in cells}
 

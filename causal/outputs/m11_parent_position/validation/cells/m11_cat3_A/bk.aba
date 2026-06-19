@@ -1,0 +1,26 @@
+% Background knowledge with foldable rules
+% Generated from ArgCausalDisco data
+
+% Feature predicates for variable: x0
+x0_val_0(A) :- A=1.
+x0_val_0(A) :- A=2.
+x0_val_0(A) :- A=3.
+x0_val_1(A) :- A=4.
+x0_val_1(A) :- A=5.
+x0_val_1(A) :- A=6.
+x0_val_2(A) :- A=7.
+x0_val_2(A) :- A=8.
+x0_val_2(A) :- A=9.
+
+% Feature predicates for variable: x1
+x1_val_0(A) :- A=1.
+x1_val_1(A) :- A=2.
+x1_val_2(A) :- A=3.
+x1_val_0(A) :- A=4.
+x1_val_1(A) :- A=5.
+x1_val_2(A) :- A=6.
+x1_val_0(A) :- A=7.
+x1_val_1(A) :- A=8.
+x1_val_2(A) :- A=9.
+
+% Skipping excluded variable: x2

@@ -1,0 +1,46 @@
+experiment_id: M11_parent_position
+description: "Milestone 1 Part 1 (m1.1): parent-position and representation-order control. Eight metamorphic chain cells (2 encodings {binary, cat3} x cells A/B/C/D) for target x2, derived from one canonical cell A via sigma (predictor-order reversal) and pi (x0<->x1 identity swap). Tests whether QL2-style parent recovery follows the direct-parent role independently of variable identity and learner-visible predictor order. Parent-set / learned-rule recovery proxy via ABA Learning, NOT Russo-style Causal ABA. Fixed nd ABA Learning strategy inherited from QI-002; strategy comparison is m1.2. Grid uses grid.cell_dir: dgp (cells/m11_binary_A/, etc.)."
+owner: sam
+
+defaults:
+  graph_type: handcrafted_table
+  bins: 3
+  bin_strategy: uniform
+  folding_steps: 15
+  folding_mode: nd
+  prolog_timeout_s: 120
+  query_timeout_s: 5
+
+dgps:
+  - id: m11_binary_A
+    graph_type: handcrafted_table
+    source: m11_binary_A
+  - id: m11_binary_B
+    graph_type: handcrafted_table
+    source: m11_binary_B
+  - id: m11_binary_C
+    graph_type: handcrafted_table
+    source: m11_binary_C
+  - id: m11_binary_D
+    graph_type: handcrafted_table
+    source: m11_binary_D
+  - id: m11_cat3_A
+    graph_type: handcrafted_table
+    source: m11_cat3_A
+  - id: m11_cat3_B
+    graph_type: handcrafted_table
+    source: m11_cat3_B
+  - id: m11_cat3_C
+    graph_type: handcrafted_table
+    source: m11_cat3_C
+  - id: m11_cat3_D
+    graph_type: handcrafted_table
+    source: m11_cat3_D
+
+grid:
+  seed: [0]
+  target: [x2]
+  cell_dir: dgp
+
+provenance:
+  code_commit_required: true

@@ -63,6 +63,7 @@ def test_stage4_writes_metrics_json_and_parquet(tmp_path: Path) -> None:
         target="x2",
         config_hash="sha256:fixture",
         run_id="fixture_stage4",
+        cell_dir_name="fixture_stage4",
         graph_type="continuous",
         example_split="median",
     )

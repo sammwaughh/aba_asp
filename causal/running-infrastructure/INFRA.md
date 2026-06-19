@@ -79,7 +79,7 @@ causal/
 │               ├── manifest.json           ← config + code hash + start/end times
 │               ├── run.log                 ← per-invocation log
 │               └── cells/
-│                   └── <run_id>/
+│                   └── <cell_dir_name>/   # hash run_id by default; dgp/slug if configured
 │                       ├── data.csv
 │                       ├── data.binned.csv        (continuous only)
 │                       ├── bk.aba
@@ -161,7 +161,16 @@ provenance:
   fixture in `handcrafted.py`, and `example_split` is forced to `handcrafted`.
 - Each cell gets a `run_id` = first 12 hex chars of the SHA-1 of
   `experiment_id|dgp|nodes|edges|n|seed|target|graph_type|config_hash`. This is
-  stable across reruns, which is what makes resume work.
+  stored in `metrics.json` / `results.parquet` and is stable across reruns.
+- Optional `grid.cell_dir` controls the filesystem directory name under
+  `cells/` (default `hash`):
+  - `hash` — `cell_dir_name == run_id` (legacy behaviour; safe for large grids).
+  - `dgp` — `cell_dir_name == dgp.id` (e.g. `m11_binary_A`; one cell per DGP).
+  - `slug` — `{dgp}__target-{target}__seed-{seed}` (multiple seeds/targets per DGP).
+- `expand_cells` rejects configs where two cells share the same `cell_dir_name`.
+- Resume (`cell_is_done`): a cell is skipped only when `metrics.json` parses and
+  its stored `config_hash` matches the current config. This keeps `dgp`/`slug`
+  directory names valid when the YAML changes.
 
 ### 3.3 Validation
 
@@ -203,8 +212,8 @@ if dry_run: print(f"{len(cells)} cells planned"); return
 
 open_manifest(out_root, cfg=cfg, …)         # writes manifest.json
 for cell in cells[:limit]:
-    run_dir = out_root / "cells" / cell.run_id
-    if cell_is_done(run_dir) and not no_resume:   # metrics.json exists & parses
+    run_dir = out_root / "cells" / cell.cell_dir_name
+    if cell_is_done(run_dir, config_hash=cell.config_hash) and not no_resume:
         skip
     else:
         _run_single_cell(cell, run_dir, …)        # serial, or via ProcessPoolExecutor when workers>1
@@ -243,7 +252,7 @@ attempted cell ends with a written `metrics.json`.
 - `bk.aba` ordering is deterministic given the same dataframe and var-types.
 - Prolog is single-threaded; the runner does **not** parallelise within a cell.
 - Cross-cell parallelism (`--workers N>1`) uses a `spawn` `ProcessPoolExecutor`.
-  Each cell writes only under `cells/<run_id>/`; solution files that ABA-ASP may
+  Each cell writes only under `cells/<cell_dir_name>/`; solution files that ABA-ASP may
   emit under the shared repo root are relocated into the cell directory after
   learning to avoid worker races. Per-cell wall-clock order and log interleaving
   are not deterministic when `N>1`.

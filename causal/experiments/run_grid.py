@@ -620,16 +620,20 @@ def filter_cells(
     return out
 
 
-def cell_is_done(run_dir: Path) -> bool:
-    """True when ``metrics.json`` exists and parses (INFRA.md §4.5)."""
+def cell_is_done(run_dir: Path, *, config_hash: str | None = None) -> bool:
+    """True when ``metrics.json`` exists, parses, and matches ``config_hash`` if given."""
     path = Path(run_dir) / "metrics.json"
     if not path.is_file():
         return False
     try:
-        json.loads(path.read_text(encoding="utf-8"))
-        return True
+        data = json.loads(path.read_text(encoding="utf-8"))
     except json.JSONDecodeError:
         return False
+    if config_hash is not None:
+        stored = data.get("config_hash")
+        if stored != config_hash:
+            return False
+    return True
 
 
 def _execute_kwargs(cfg: ExperimentConfig) -> dict[str, Any]:
@@ -796,6 +800,7 @@ def _cell_spec_from_dict(data: dict[str, Any]) -> CellSpec:
         target=str(data["target"]),
         config_hash=str(data["config_hash"]),
         run_id=str(data["run_id"]),
+        cell_dir_name=str(data["cell_dir_name"]),
         graph_type=str(data["graph_type"]),
         example_split=str(data["example_split"]),
         handcrafted_source=data.get("handcrafted_source"),
@@ -817,13 +822,23 @@ def _log_cell_result(result: CellJobResult) -> None:
     """Log a finished cell: WARN for any non-solved outcome, INFO otherwise."""
     if result.outcome != "solved":
         _RUN_LOGGER.warning(
-            "finish %s outcome=%s reason=%s",
+            "finish %s %s target=%s seed=%s outcome=%s reason=%s",
+            result.dgp,
             result.run_id,
+            result.target,
+            result.seed,
             result.outcome,
             result.failure_reason,
         )
     else:
-        _RUN_LOGGER.info("finish %s outcome=%s", result.run_id, result.outcome)
+        _RUN_LOGGER.info(
+            "finish %s %s target=%s seed=%s outcome=%s",
+            result.dgp,
+            result.run_id,
+            result.target,
+            result.seed,
+            result.outcome,
+        )
 
 
 def setup_run_logging(out_root: Path, *, log_level: str) -> None:
@@ -896,13 +911,13 @@ def run_experiment(opts: RunOptions) -> int:
     to_run = cells if opts.limit is None else cells[: opts.limit]
     pending: list[tuple[CellSpec, Path]] = []
     for cell in to_run:
-        run_dir = out_root / "cells" / cell.run_id
-        if cell_is_done(run_dir) and not opts.no_resume:
+        run_dir = out_root / "cells" / cell.cell_dir_name
+        if cell_is_done(run_dir, config_hash=cell.config_hash) and not opts.no_resume:
             n_skipped += 1
             _RUN_LOGGER.info(
-                "skip %s %s target=%s seed=%s (resume)",
+                "skip %s dir=%s target=%s seed=%s (resume)",
                 cell.dgp,
-                cell.run_id,
+                cell.cell_dir_name,
                 cell.target,
                 cell.seed,
             )
@@ -921,8 +936,9 @@ def run_experiment(opts: RunOptions) -> int:
 
     for cell, run_dir in pending:
         _RUN_LOGGER.info(
-            "start %s %s target=%s seed=%s n=%s",
+            "start %s dir=%s run_id=%s target=%s seed=%s n=%s",
             cell.dgp,
+            cell.cell_dir_name,
             cell.run_id,
             cell.target,
             cell.seed,

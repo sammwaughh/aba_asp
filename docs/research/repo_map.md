@@ -136,7 +136,8 @@ prose**. Polished prose is written separately (by Samuel/ChatGPT) from these rec
   `examples-wip/`.
 - Generated BK + solutions from the bridge: `causal/outputs/aba_learning/<TestClass>/`
   (`*.bk.aba`, `*.bk.sol.aba`, `*.bk.sol.asp`, `*.csv`) and grid output under
-  `causal/outputs/aba_learning/grid/<experiment_id>/cells/<run_id>/`
+  `causal/outputs/aba_learning/grid/<experiment_id>/cells/<cell_dir_name>/`
+  (defaults to hash `run_id`; M11 uses `grid.cell_dir: dgp` → `cells/m11_binary_A/`, etc.)
   (`metrics.json`, `*.parquet`, logs). Outputs are generated; do not hand-edit.
 - Engine working files (`asp.clingo`, `cc.clingo`, `cc.pl`, clingo stderr logs,
   `aba_asp.csv`) are written in the **current working directory** of the run (see

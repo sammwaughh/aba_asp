@@ -128,7 +128,9 @@ Engine learning run (per BK), written next to the BK / in the run cwd:
 Engine scratch files (current working directory; see troubleshooting): `asp.clingo`,
 `cc.clingo`, `cc.pl`, `clingo.stderr.log` (and/or `clingo.stderr.txt`).
 
-Grid run, under `causal/outputs/aba_learning/grid/<experiment_id>/cells/<run_id>/`:
+Grid run, under `causal/outputs/aba_learning/grid/<experiment_id>/cells/<cell_dir_name>/`
+(where `<cell_dir_name>` defaults to the hash `run_id`; M11 uses `grid.cell_dir: dgp`
+so dirs are named after the DGP, e.g. `cells/m11_binary_A/`):
 `metrics.json`, `*.parquet`, run logs, per-cell BK/solution artefacts. Summaries:
 `causal/experiments/figures/<experiment_id>_summary.{md,png}`.
 

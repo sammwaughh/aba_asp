@@ -1,0 +1,14 @@
+% Background knowledge with foldable rules
+% Generated from ArgCausalDisco data
+
+% Feature predicates for variable: x1
+% Binary variable (0/1): encoding only positive cases
+x1(A) :- A=2.
+x1(A) :- A=4.
+
+% Feature predicates for variable: x0
+% Binary variable (0/1): encoding only positive cases
+x0(A) :- A=3.
+x0(A) :- A=4.
+
+% Skipping excluded variable: x2

@@ -70,6 +70,7 @@ def _cell_for(source: str) -> CellSpec:
         target="x2",
         config_hash="sha256:test",
         run_id=f"run_{source}",
+        cell_dir_name=f"run_{source}",
         graph_type="handcrafted_table",
         example_split="handcrafted",
         handcrafted_source=source,

@@ -280,13 +280,22 @@ $$
 (x_0,x_1)\in\mathcal{V}_{\mathrm{bin}}^2.
 $$
 
-Each assignment is represented twice, using a replicate index $k\in\{0,1\}$. The resulting table has:
+Each assignment is represented once (minimal complete factorial). The resulting table has:
 
 $$
-2^2\times2=8
+2^2=4
 $$
 
 rows.
+
+The complete factorial once per assignment is the principled minimum: the true
+parent is the unique zero-error one-literal separator and the $\pi$/$\sigma$ orbit
+relations are independent of row multiplicity, so no per-row repeat is required.
+The learner imposes no $|E^+|\ge 2$ requirement (no example-count guard in the
+engine; QI-001 ran a 4-row factorial), and even at one row per assignment the
+`x1`-parent binary cell has $|E^+|=2$. A replicate index $k$ may optionally be
+reintroduced (`_REPEATS` in `handcrafted_m11.py`) but is not the default and does
+not change the design.
 
 For `x1`-parent cells:
 
@@ -322,13 +331,14 @@ $$
 (x_0,x_1)\in\mathcal{V}_{\mathrm{cat3}}^2.
 $$
 
-Each assignment is represented twice. The resulting table has:
+Each assignment is represented once (minimal complete factorial). The resulting table has:
 
 $$
-3^2\times2=18
+3^2=9
 $$
 
-rows.
+rows. As in the binary case, no per-assignment repeat is used; the `x1`-parent
+cat3 cell has $|E^+|=3$.
 
 For `x1`-parent cells:
 
@@ -357,7 +367,7 @@ For each encoding, the four fixtures should be derived from one canonical base t
 Let a base row in cell A be indexed by:
 
 $$
-r_{a,b,k},
+r_{a,b},
 $$
 
 with:
@@ -380,7 +390,7 @@ Constructing the fixtures through explicit transformations makes the intended re
 
 ### 7.5 Sample identity and row order
 
-Sample identifiers must remain stable across the four related fixtures. The same base identifier $r_{a,b,k}$ should denote corresponding transformed rows.
+Sample identifiers must remain stable across the four related fixtures. The same base identifier $r_{a,b}$ should denote corresponding transformed rows.
 
 Row order must also be held fixed. Row-order sensitivity is not a factor in m1.1.
 
@@ -636,9 +646,9 @@ Inspection should proceed from the smallest universal evidence core to discrepan
 
 Before learning, perform automated assertions for each encoding:
 
-- binary row count is 8;
-- categorical-3 row count is 18;
-- every predictor assignment occurs exactly twice;
+- binary row count is 4;
+- categorical-3 row count is 9;
+- every predictor assignment occurs exactly once;
 - `x2` equals the designated parent in every row;
 - A and B are exact $\sigma$-pairs;
 - D and C are exact $\sigma$-pairs;

@@ -239,6 +239,18 @@ def test_cell_is_done_requires_valid_json(tmp_path: Path) -> None:
     assert cell_is_done(run_dir)
 
 
+def test_cell_is_done_rejects_stale_config_hash(tmp_path: Path) -> None:
+    run_dir = tmp_path / "cell"
+    run_dir.mkdir()
+    (run_dir / "metrics.json").write_text(
+        '{"outcome": "solved", "config_hash": "sha256:old"}',
+        encoding="utf-8",
+    )
+    assert cell_is_done(run_dir)
+    assert not cell_is_done(run_dir, config_hash="sha256:new")
+    assert cell_is_done(run_dir, config_hash="sha256:old")
+
+
 def test_run_log_created(tmp_path: Path, monkeypatch) -> None:
     cfg_path = _write_multi_stub(tmp_path)
     monkeypatch.setattr(
