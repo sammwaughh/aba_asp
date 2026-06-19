@@ -1,0 +1,46 @@
+experiment_id: milestone1-1-Greedy
+description: "Milestone 1 Part 1 greedy rerun (m1.1-G): identical to M11_parent_position (eight metamorphic chain cells, target x2, grid.cell_dir dgp) with the single change folding_mode nd -> greedy. Parent-set / learned-rule recovery proxy via ABA Learning, NOT Russo-style Causal ABA."
+owner: sam
+
+defaults:
+  graph_type: handcrafted_table
+  bins: 3
+  bin_strategy: uniform
+  folding_steps: 15
+  folding_mode: greedy
+  prolog_timeout_s: 120
+  query_timeout_s: 5
+
+dgps:
+  - id: m11_binary_A
+    graph_type: handcrafted_table
+    source: m11_binary_A
+  - id: m11_binary_B
+    graph_type: handcrafted_table
+    source: m11_binary_B
+  - id: m11_binary_C
+    graph_type: handcrafted_table
+    source: m11_binary_C
+  - id: m11_binary_D
+    graph_type: handcrafted_table
+    source: m11_binary_D
+  - id: m11_cat3_A
+    graph_type: handcrafted_table
+    source: m11_cat3_A
+  - id: m11_cat3_B
+    graph_type: handcrafted_table
+    source: m11_cat3_B
+  - id: m11_cat3_C
+    graph_type: handcrafted_table
+    source: m11_cat3_C
+  - id: m11_cat3_D
+    graph_type: handcrafted_table
+    source: m11_cat3_D
+
+grid:
+  seed: [0]
+  target: [x2]
+  cell_dir: dgp
+
+provenance:
+  code_commit_required: true
