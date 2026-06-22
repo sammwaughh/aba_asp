@@ -14,7 +14,13 @@ Context: Samuel presented the initial m1.1 eight-cell nd grid results and interi
 findings (`docs/report/findings/milestone1_part1_m11_findings.tex`). Status
 changed from `analysed` to **`more work needed`**.
 
-### Core points
+### Resolution (22 June 2026)
+
+Requirements **addressed**: Stage 4 granular trace (cat3 A vs B); Stage 6 ablations
+ABL-100–107; findings tex integrated conclusion. m1.1 status restored to **`analysed`**.
+See `docs/research/decisions.md` and `milestone1_part1_m11_findings.tex`.
+
+### Core points (original guidance)
 
 - Need a **more thorough investigation** of differences across tests under **π**
   and **σ** (not only the metamorphic pass/fail table).
@@ -164,12 +170,13 @@ judgement-heavy moments; use fast/Instant only for trivial formatting.
   (`docs/experiments/qualitative/greedy_vs_nd_qualitative_handoff.md`). Milestone 1 Part 2
   (M1.2) will compare greedy vs nd on the m1.1 eight-cell grid; the QI-* greedy reruns remain
   supporting precedent only.
-- **M1.1 (M11) parent-position metamorphic control** — initial nd grid run complete; status **`more work needed`** (June 2026 supervisor review). Granular trace/runner investigation outstanding before closure. Interim findings: `docs/report/findings/milestone1_part1_m11_findings.tex`.
+- **M1.1 (M11) parent-position metamorphic control** — **`analysed`** (Stages 0–6; ablations
+  ABL-100–107). Findings: `docs/report/findings/milestone1_part1_m11_findings.tex`.
 
 ## Outstanding actions
 
-- **M1.1 Stage 4:** granular `prolog.stdout` audit (cat3 A vs B); runner/bridge clarity; π/σ mechanism account before ablations.
-- **M1.2 deferred** until m1.1 mechanistic investigation progresses (greedy smoke test ≠ nd A or B).
+- **M1.2:** greedy vs nd on m1.1 grid (comparator).
+- **M1.1 optional:** Stage 5 runner call-chain doc.
 - Give each presented result an interpretation and a conclusion; reason explicitly about
   DGP-expected vs actual learned rules (M1.1 done; QL series partially done).
 - Define first-principles success metrics beyond parent membership (e.g. fold count for

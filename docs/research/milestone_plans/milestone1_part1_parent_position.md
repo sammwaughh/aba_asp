@@ -2,7 +2,7 @@
 
 **Short name:** m1.1  
 **Planned path:** `docs/research/milestone_plans/milestone1_part1_parent_position.md`  
-**Status:** Initial eight-cell run complete; **more work needed** (supervisor review, June 2026 — granular trace and runner investigation before closure)  
+**Status:** **analysed** (Stages 0–6 complete; ablations ABL-100–107 executed June 2026)  
 **Research stage:** RQ1 — unguided causal-role diagnostic  
 **Primary baseline:** QL2 / QI-002  
 **Target:** `x2`  
@@ -21,17 +21,17 @@ folding; (B) mechanistic explanation of any π/σ failure before closure or abla
 | A | 2 Transformation square | **Done** | Binary: all σ and π hold. Cat3: σ fails (A↔B, D↔C); π holds B↔C only |
 | A | 3 Triggered inspection | **Done** | cat3 A vs B first-fold fork |
 | B — Mechanistic account | 4 Granular trace audit | **Done (cat3 A vs B)** | Full account in experiment record Stage 4 |
-| B | 5 Runner / bridge clarity | **Partial** | Data-flow summary in Stage 4 |
-| B | 6 Hypothesis + ablations | **Not started** | Testable hypothesis in Stage 4 |
-| — | Findings `.tex` | **Interim** | Initial run recorded; reopened after Fabrizio review |
+| B | 5 Runner / bridge clarity | **Partial** | Data-flow summary in Stage 4; full call-chain doc optional |
+| B | 6 Hypothesis + ablations | **Done** | ABL-100–107; see `milestone1_part1_ablations.md` §14 |
+| — | Findings `.tex` | **Analysed** | Integrated conclusion; ablation-supported mechanism |
 | — | DGP documentation | **Done** | Tabular DGP clarified: isolated non-parent + `x2 := parent` (not chain sampling) |
 
-**First-run answer (conditional, not closed):** on target-mechanism tables, binary parent-role
-tracking with σ-invariance holds under nd; cat3 does not. **Stage 4 (June 2026)** documents
-why/when/how cat3 A vs B diverge; D vs C audit and ablations remain.
+**Answer (analysed, June 2026):** binary — full parent-role tracking with σ/π invariance;
+cat3 — parent-role tracking when parent feature wins first fold; σ-invariance fails under
+default pipeline but is **accounted for** by BK serialisation order + entailment + assumption
+commitment (ablation-supported). See findings tex §Integrated conclusion.
 
-**Deferred:** full M1.2 greedy grid until Phase B progresses. Greedy smoke test on m1.1 ≠ nd
-cat3 A or B (not yet formalised in experiment record).
+**Deferred:** M1.2 greedy grid as comparator (not blocker for Part 1 closure).
 
 **Supervisor guidance:** `docs/research/supervisor_guidance.md` (M1.1 review section).
 **Decision log:** `docs/research/decisions.md` (2026-06-22 reopen supersedes 2026-06-18 close-out).
@@ -872,10 +872,11 @@ Perform **before** ablation runs or M1.2 full grid:
 
 Record outputs in `docs/experiments/qualitative/M1.1-parent-position.md` (Stage 4 section).
 
-### Stage 5: Hypothesis and ablations *(not started — after Stage 4)*
+### Stage 5: Hypothesis and ablations *(planned)*
 
-Formulate a testable hypothesis from Stage 4 evidence. Design the smallest ablation set
-(table size, encoding, fold-literal order, formal greedy baseline). Testable hypothesis recorded in experiment record Stage 4. New runs only to test the hypothesis; specify before execution.
+**Canonical ablation plan:** `docs/research/milestone_plans/milestone1_part1_ablations.md`
+
+Execute in falsification-first order (ABL-100 audit → ABL-101 BK flip → …). Record in `M1.1-parent-position.md` §Stage 6; update `milestone1_part1_m11_findings.tex` §Ablations when complete. Closure criteria: ablation plan §8.
 
 ## 13. Diagnostic comparisons and interpretation guardrails
 
@@ -1156,10 +1157,7 @@ The expected-vs-actual learnt rule comparison remains the primary evidence throu
 
 **Filled in (June 2026):**
 
-- **Phase A complete:** Stages 0–3; cell-level and transformation-level results in
-  `docs/experiments/qualitative/M1.1-parent-position.md` and interim
-  `docs/report/findings/milestone1_part1_m11_findings.tex`.
-- **Phase B not started:** Stages 4–5 outstanding. Status **`more work needed`** per
-  Fabrizio review (June 2026). M1.2 full greedy grid deferred.
+- **Phase B complete:** Stages 4–6; ablation plan executed; status **`analysed`** per
+  `milestone1_part1_ablations.md` §8. M1.2 greedy grid is next comparator experiment.
 - **DGP clarified:** target-mechanism tables (isolated non-parent + `x2 := parent`);
   not chain SCM sampling.

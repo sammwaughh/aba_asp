@@ -1,0 +1,134 @@
+# M1.1 ablation specifications — see docs/research/milestone_plans/milestone1_part1_ablations.md
+experiment_id: M11_ablations
+description: "Targeted ablations validating Stage 4 mechanistic claims for m1.1 cat3 sigma failure."
+
+defaults:
+  folding_mode: nd
+  folding_steps: 15
+  prolog_timeout_s: 120
+  grid_root: causal/outputs/aba_learning/grid/M11_parent_position/cells
+  ablation_root: causal/outputs/aba_learning/grid/M11_ablations
+
+ablations:
+  ABL-100:
+    tier: 0
+    type: audit
+    tests: [H_pi]
+    audit:
+      left_dgp: m11_cat3_C
+      right_dgp: m11_cat3_D
+    expected_left:
+      first_fold_pred: x0_val_2
+      entailment: pass
+      max_trace_lines: 80
+    expected_right:
+      first_fold_pred: x1_val_0
+      entailment: fail
+      min_trace_lines: 100
+
+  ABL-101:
+    tier: 1
+    type: intervention
+    tests: [H_sigma_BK, H1, H2]
+    baseline_dgp: m11_cat3_A
+    bk_mode: block_order_from
+    bk_source_dgp: m11_cat3_B
+    expected:
+      first_fold_pred: x1_val_2
+      entailment: pass
+      target_rule: "x2(A) <- x1_val_2(A)"
+      max_trace_lines: 80
+      max_aba_rules: 22
+      n_assumptions_max: 0
+      singleton: true
+
+  ABL-102:
+    tier: 2
+    type: intervention
+    tests: [H1]
+    baseline_dgp: m11_cat3_A
+    bk_mode: prepend_rules
+    prepend_rules:
+      - "x1_val_2(A) :- A=3."
+    expected:
+      first_fold_pred: x1_val_2
+      entailment: pass
+      target_rule: "x2(A) <- x1_val_2(A)"
+      max_trace_lines: 80
+      max_aba_rules: 23
+      n_assumptions_max: 0
+      singleton: true
+
+  ABL-103:
+    tier: 3
+    type: intervention
+    tests: [H_pi, H_sigma_BK]
+    baseline_dgp: m11_cat3_C
+    bk_mode: block_order_from
+    bk_source_dgp: m11_cat3_D
+    expected:
+      first_fold_pred: x1_val_0
+      entailment: fail
+      min_trace_lines: 100
+      min_aba_rules: 25
+      n_assumptions_max: 10
+
+  ABL-104:
+    tier: 2
+    type: audit
+    tests: [H2]
+    audit:
+      note: "Entailment semantics inferred from baseline grid traces (cat3 A vs B)."
+      left_dgp: m11_cat3_A
+      right_dgp: m11_cat3_B
+    expected_left:
+      first_fold_pred: x0_val_0
+      entailment: fail
+    expected_right:
+      first_fold_pred: x1_val_2
+      entailment: pass
+
+  ABL-105:
+    tier: 4
+    type: intervention
+    tests: [H3]
+    baseline_dgp: m11_cat3_A
+    bk_mode: copy_baseline
+    learning_options:
+      folding_mode: all
+    expected:
+      first_fold_pred: x0_val_0
+      entailment: fail
+      min_trace_lines: 100
+      n_assumptions_max: 10
+
+  ABL-106:
+    tier: 4
+    type: intervention
+    tests: [H3]
+    baseline_dgp: m11_cat3_A
+    bk_mode: copy_baseline
+    learning_options:
+      asm_intro: sechk
+    expected:
+      first_fold_pred: x0_val_0
+      entailment: fail
+      min_trace_lines: 100
+      n_assumptions_max: 10
+    optional: true
+
+  ABL-107:
+    tier: 5
+    type: audit
+    tests: [H_bin]
+    audit:
+      left_dgp: m11_binary_A
+      right_dgp: m11_binary_B
+    expected_left:
+      first_fold_pred: x1
+      entailment: pass
+      max_trace_lines: 80
+    expected_right:
+      first_fold_pred: x1
+      entailment: pass
+      max_trace_lines: 80

@@ -75,7 +75,9 @@ Not responsible for:
 
 | Date | Tool | Task | Output / artefact | Used in report? | Samuel verification / edits | Notes |
 |---|---|---|---|---|---|---|
-| 2026-06-22 | Cursor | M1.1 status reopen; supervisor guidance sync | `M1.1-parent-position.md`; findings tex; planning doc §15.1; registers; claims M11-C-003/004/005; `supervisor_guidance.md` | interim findings; not closed | pending Samuel review | Fabrizio M1.1 review: more work needed; granular traces before ablations; M1.2 deferred. |
+| 2026-06-22 | Cursor | M1.1 ablation doc sync; findings rewrite | `milestone1_part1_m11_findings.tex`; `M1.1-parent-position.md`; milestone plans; `decisions.md`; registers; claims M11-C-007 | findings tex §Integrated conclusion | pending Samuel review | Post-ABL-100–107; status analysed; integrated ablation-supported conclusion. |
+| 2026-06-22 | Cursor | M1.1 ablation pipeline + execution | `m11_ablation_*.py`; `M11_ablations/`; Stage 6 record | evidence for findings | pending Samuel review | ABL-101 pass; closure criteria met. |
+| 2026-06-22 | Cursor | M1.1 status reopen; supervisor guidance sync | `M1.1-parent-position.md`; findings tex; planning doc §15.1; registers; claims M11-C-003/004/005; `supervisor_guidance.md` | superseded by ablation closure | pending Samuel review | Fabrizio M1.1 review: granular traces before ablations. |
 | 2026-06-18 | Cursor | M1.1 initial run record and interim findings tex | `M1.1-parent-position.md`; `milestone1_part1_m11_findings.tex`; registers; claims M11-C-* | findings tex for supervisor; not manuscript yet | superseded by 2026-06-22 reopen | Stage 2/3 tables; later deemed insufficient for closure. |
 | 2026-06-18 | Cursor | M1.1→M1.2 doc tidy; QN-001 removal | `experiments_summary`, `research_state`, `report_state`, registers, logging docs | indirect (navigation) | pending Samuel review | Retired QN-001; synced ChatGPT mirrors. |
 | TBD | ChatGPT | Report-writing workflow design | Documentation plan and file templates | TBD | TBD | Planning support only. |

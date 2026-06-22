@@ -34,6 +34,7 @@ The process should remain rigorous but lightweight. Documentation and additional
 ## Part 1: Parent-Position and Representation-Order Control
 
 Planning document: `milestone1_part1_parent_position.md`  
+**Ablation plan:** `milestone1_part1_ablations.md`  
 Experiment record: `docs/experiments/qualitative/M1.1-parent-position.md`  
 Interim findings: `docs/report/findings/milestone1_part1_m11_findings.tex`
 
@@ -50,7 +51,7 @@ Small, clean **target-mechanism tables**: one predictor is a deterministic direc
 | Phase | Content | Status (June 2026) |
 |-------|---------|-------------------|
 | **A — Metamorphic grid** | Stages 0–3: fixtures, eight-cell nd run, σ/π square, triggered cat3 A vs B trace | **Done** (Stage 3 provisional) |
-| **B — Mechanistic account** | Stages 4–5: granular `prolog.stdout` audit, runner clarity, hypothesis + ablations | **Not started** |
+| **B — Mechanistic account** | Stages 4–6: trace mechanism + ablations | **Done** |
 
 ### Phase A — what was done
 
@@ -61,21 +62,20 @@ Small, clean **target-mechanism tables**: one predictor is a deterministic direc
 - Stage 3: first-fold trace correlation on cat3 A vs B recorded — **insufficient for closure**.
 - Interim findings `.tex` written for supervisor review.
 
-### Phase B — what remains
+### Phase B — what was done
 
-- Line-by-line trace audit (cat3 A vs B minimum).
-- Runner / bridge documentation (`run_grid` → Prolog).
-- Precise why/when/how divergence account.
-- Hypothesis formulation; then smallest ablation set (not open-ended grid sweep).
-- Formalise greedy smoke test if used as evidence (ad hoc run ≠ nd A or B).
+- Stage 4: granular trace audit cat3 A vs B (BK order → `select_rule` → entailment → assumptions).
+- Stage 6: ablations ABL-100–107 (ABL-106 skipped); artefacts `M11_ablations/`.
+- Findings `.tex` rewritten with integrated ablation-supported conclusion.
+- Optional: Stage 5 runner call-chain doc.
 
 ### Status
 
-**`more work needed`** — Phase A complete; Phase B outstanding. Fabrizio review (June 2026) reopened m1.1 after interim presentation.
+**`analysed`** — Part 1 complete (Stages 0–6). Fabrizio review requirements addressed.
 
 ### Part 2 dependency
 
-**M1.2 full greedy grid deferred** until Phase B clarifies cat3 σ failure. ND vs greedy alone is not treated as a sufficient explanation.
+**M1.2 full greedy grid** is the **next comparator experiment**; not required to explain cat3 σ failure.
 
 ## Part 2: Greedy Versus Non-Deterministic ABA Learning
 
@@ -136,4 +136,4 @@ After all four investigations, consolidate their `.tex` findings into a concise 
 4. how the current system behaves on noisy continuous-derived data; and
 5. which findings motivate Causal ABA-style guidance in Milestone 2.
 
-**Current progress:** Part 1 Phase A complete; Part 1 Phase B in progress (`more work needed`). Parts 2–4 not started (Part 2 blocked on Part 1 Phase B).
+**Current progress:** Part 1 **analysed**; Part 2 (M1.2) next comparator. Parts 3–4 not started.

@@ -213,7 +213,7 @@ Experimentation / Progress (Milestone 1)
 - Intended message:
 
 ```text
-Eight-cell metamorphic grid: expected vs actual rules; binary σ/π hold; cat3 σ fails under nd.
+Eight-cell metamorphic grid: binary σ/π hold; cat3 σ fails under default pipeline; mechanism ablation-supported (ABL-101/105).
 ```
 
 - Draft structure:
@@ -237,14 +237,50 @@ Square verdicts on cat3 A/D use sol files and prolog traces where cov_py and cov
 - Claims supported:
 
 ```text
-M11-C-001, M11-C-002 (bounded)
+M11-C-001, M11-C-002, M11-C-005, M11-C-007 (bounded / ablation-supported)
 ```
 
 - Claims not supported:
 
 ```text
-Greedy fixes or explains cat3 σ failure (M11-C-004 weakened; smoke test ≠ nd A/B; M1.2 deferred)
-Complete mechanistic account of cat3 A vs B (Stage 4 recorded June 2026)
+Greedy fixes or explains cat3 σ failure (M11-C-004 weakened; ABL-105; M1.2 comparator pending)
+Unconditional cat3 σ-invariance under default pipeline
+```
+
+### TAB-003 — M1.1 ablation results (candidate)
+
+- Type: `table`
+- Status: `candidate`
+- Source experiment: `M11` (m1.1 Stage 6)
+- Source command:
+
+```bash
+python -m causal.scripts.m11_ablation_run --all-required
+```
+
+- Source artefact path:
+
+```text
+causal/outputs/aba_learning/grid/M11_ablations/summary/abl_results.md
+docs/report/findings/milestone1_part1_m11_findings.tex
+```
+
+- Intended message:
+
+```text
+ABL-100–107: BK-order interventions confirm cat3 σ mechanism; binary moderator (ABL-107).
+```
+
+- Claims supported:
+
+```text
+M11-C-003, M11-C-006, M11-C-007
+```
+
+- Claims not supported:
+
+```text
+folding_mode(all) alone recovers singleton (ABL-105); greedy as primary σ explanation (M11-C-004)
 ```
 
 ## Caption rules

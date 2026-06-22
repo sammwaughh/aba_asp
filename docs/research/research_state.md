@@ -94,19 +94,17 @@ n=100 scaled attempt was cut; only the reduced n=20 study is canonical and is no
   net better clean recovery (colliders), with one regression (cat3 fork exact → superset) and no
   recovery change at the noisy n=20 scale. See
   `docs/experiments/qualitative/greedy_vs_nd_qualitative_handoff.md`.
-- **M1.1 (M11)** — eight-cell metamorphic parent-position / representation-order control under
-  fixed nd folding. Binary: 4/4 exact expected rules; σ and π hold. Cat3: 2/4 exact; σ fails
-  (A↔B, D↔C); π holds B↔C only. Stage 3: **provisional** first-fold trace correlation only.
-  Status **`more work needed`** (Fabrizio review, June 2026): granular trace/runner investigation
-  before ablations; M1.2 deferred. Record: `docs/experiments/qualitative/M1.1-parent-position.md`;
-  interim findings: `docs/report/findings/milestone1_part1_m11_findings.tex`.
+- **M1.1 (M11)** — eight-cell metamorphic control; binary σ/π pass; cat3 σ fails under default
+  pipeline. Stages 4–6: trace mechanism + ablations ABL-100–107. Status **`analysed`**.
+  Record: `M1.1-parent-position.md`; findings: `milestone1_part1_m11_findings.tex`.
 
 **Bounded conclusion.** The current target-wise pipeline can recover parent sets in selected
 idealised cases (especially simple binary and fork cases) but recovery is not robust across
-motifs, encodings or modest noisy scaling. M1.1 first run: binary parent-role tracking holds under
-σ/π controls; cat3 shows σ-invariance failure under nd. **Mechanistic account of cat3 divergence
-is not closed.** This characterises what unguided ABA Learning does before causal guidance is added; it does not
-establish causal discovery.
+motifs, encodings or modest noisy scaling. M1.1: binary parent-role tracking with full σ/π
+invariance; cat3 parent-role tracking when parent feature wins first fold; cat3 σ-invariance
+fails under default pipeline but is **accounted for** by BK serialisation + entailment +
+assumption commitment (ablation-supported). This characterises what unguided ABA Learning does
+before causal guidance is added; it does not establish causal discovery.
 
 ## Open conceptual risks
 
@@ -124,12 +122,7 @@ establish causal discovery.
 
 ## Next milestone
 
-**Milestone 1 Part 1 extended (M11 Stage 4+)** — granular trace and runner investigation of cat3
-A vs B (minimum) and systematic π/σ pair analysis; qualitative inspection **before** ablation
-runs. Status: `more work needed`.
-
-**Milestone 1 Part 2 (M1.2)** — greedy vs nd on the m1.1 grid: **deferred** until m1.1
-mechanistic account is clearer (greedy smoke test ≠ nd cat3 A or B). Parts 3–4 of Milestone 1
-(failure analysis; noise/continuous DGP) follow closure of Part 1 and M1.2. Then **Milestone 2**
-(Causal-ABA-guided ABA Learning bridge). Tracked in `experiment_register.md`,
+**Milestone 1 Part 2 (M1.2)** — greedy vs nd on the m1.1 grid: **next comparator** (Part 1
+**analysed**). Parts 3–4 of Milestone 1 (failure analysis; noise/continuous DGP) follow M1.2.
+Then **Milestone 2** (Causal-ABA-guided ABA Learning bridge). Tracked in `experiment_register.md`,
 `docs/experiments/experiments_summary.md`, and `docs/report/manuscript/project_plan.md`.
