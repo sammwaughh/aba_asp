@@ -14,7 +14,7 @@
 \maketitle
 
 \begin{abstract}
-This document records the design, implementation, commands, artefacts, and \textbf{interim} conclusions for experiment~M11 (m1.1). It is a standalone audit log for supervisor review, not a manuscript chapter. The experiment tests whether target-wise ABA Learning on complete noiseless \emph{target-mechanism} tables---one isolated predictor plus a deterministic parent$\rightarrow$\texttt{x2} copy---recovers rules that track the \emph{direct-parent role} under variable-identity ($\pi$) and predictor-order ($\sigma$) transformations. This is \textbf{not} chain SCM sampling or chain discovery. The initial eight-cell nd grid is complete; cat3 fails $\sigma$-invariance. Supervisor review (June 2026) reopened the investigation: granular trace and runner-level qualitative inspection is required before closure or ablation tests. Greedy vs nd alone is \textbf{not} treated as a sufficient explanation (smoke test differs materially from both nd cat3 A and B).
+This document records the design, implementation, commands, artefacts, and \textbf{interim} conclusions for experiment~M11 (m1.1). It is a standalone audit log for supervisor review, not a manuscript chapter. The experiment tests whether target-wise ABA Learning on complete noiseless \emph{target-mechanism} tables---one isolated predictor plus a deterministic parent$\rightarrow$\texttt{x2} copy---recovers rules that track the \emph{direct-parent role} under variable-identity ($\pi$) and predictor-order ($\sigma$) transformations. This is \textbf{not} chain SCM sampling or chain discovery. The initial eight-cell nd grid is complete; cat3 fails $\sigma$-invariance. Stage~4 (June 2026) documents a mechanistic account of cat3 A vs B: BK rule-ID order $\rightarrow$ \texttt{select\_rule} $\rightarrow$ entailment gate $\rightarrow$ assumption commitment vs singleton. D vs C audit and ablation tests remain before closure. Greedy vs nd alone is \textbf{not} treated as a sufficient explanation (smoke test differs materially from both nd cat3 A and B).
 \end{abstract}
 
 \section{Position in Milestone~1}
@@ -22,7 +22,7 @@ This document records the design, implementation, commands, artefacts, and \text
 Milestone~1 (see \texttt{docs/research/milestone\_plans/milestone1-plan.md}) investigates whether ABA Learning techniques support causal-discovery-adjacent parent-set recovery on controlled fixtures.
 
 \begin{itemize}
-  \item \textbf{Part~1 (m1.1, this document):} metamorphic validity control on the QL2 (QI-002) parent-recovery proxy --- parent identity crossed with learner-visible predictor order. \textbf{Status: more work needed} after supervisor review (granular $\pi$/$\sigma$ mechanism investigation outstanding).
+  \item \textbf{Part~1 (m1.1, this document):} metamorphic validity control on the QL2 (QI-002) parent-recovery proxy --- parent identity crossed with learner-visible predictor order. \textbf{Status: more work needed} --- Stage~4 mechanistic account for cat3 A vs B recorded; D vs C audit and ablations outstanding.
   \item \textbf{Part~2 (m1.2, planned):} greedy vs nd comparison on the m1.1 grid --- \textbf{deferred} until m1.1 mechanistic account is clearer; not sufficient as the primary explanation of cat3 $\sigma$ failure.
 \end{itemize}
 
@@ -175,22 +175,45 @@ cat3 D & 0 & 3 & 3 & 1.55 & (1,0);(0,1) \\
 
 For cat3 A/D, \texttt{cov\_py} and \texttt{cov\_pl} disagree on assumption-based rules. Square verdicts and classifications use \texttt{bk.sol.aba} and \texttt{prolog.stdout}, not \texttt{cov\_py} alone.
 
-\subsection{Stage~3 mechanism (cat3 A vs B)}
+\subsection{Stage~3 trigger (cat3 A vs B)}
 
-From \texttt{cells/m11\_cat3\_A/prolog.stdout} vs \texttt{cells/m11\_cat3\_B/prolog.stdout}:
+Identical prefix through rote learning and selection of \texttt{x2(A) <- [A=3]}. Divergence at first nd fold (trace line~35). Full account: Stage~4 below.
+
+\subsection{Stage~4 mechanism (cat3 A vs B) --- recorded June 2026}
+
+\textbf{Inputs:} same E+, E-, and BK rule set; $\sigma$ differs only in BK block serialisation order (\texttt{x0\_val\_*} then \texttt{x1\_val\_*} vs reversed).
+
+\textbf{Engine path:} \texttt{read\_bk} assigns rule IDs 1--18 in file order; \texttt{rules\_aba\_utl} builds folding table \texttt{fwt} with all equalities \texttt{A=n} under key \texttt{=/2}; \texttt{select\_rule} (\texttt{folding.pl}) walks IDs in list order and picks the first body literal subsuming \texttt{A=3} (always ID~3 = third BK line).
 
 \begin{center}
 \begin{tabular}{@{}llll@{}}
 \toprule
-Cell & BK order & First nd-fold literal & Entailment \\
+Cell & ID~3 rule & Folded target rule & Entailment \\
 \midrule
-cat3 A & x0 then x1 & \texttt{x0\_val\_0} & does \textbf{not} entail $\langle E+,E-\rangle$ \\
-cat3 B & x1 then x0 & \texttt{x1\_val\_2} & \textbf{entails} $\langle E+,E-\rangle$ \\
+cat3 A & \texttt{x0\_val\_0(A):-A=3} & \texttt{x2(A) <- [x0\_val\_0(A)]} & \textbf{fails} (also covers E$-$ rows 1,2) \\
+cat3 B & \texttt{x1\_val\_2(A):-A=3} & \texttt{x2(A) <- [x1\_val\_2(A)]} & \textbf{passes} (E$+$ only: rows 3,6,9) \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-Cat3~A (lines 35--40 of trace): \texttt{folding [A=3] with x0\_val\_0(...)} $\Rightarrow$ \texttt{x2(A) <- [x0\_val\_0(A)]}; then \texttt{extended ABA does not entail <E+,E->} $\Rightarrow$ assumption \texttt{alpha\_1}. Cat3~B (lines 35--38): \texttt{folding [A=3] with x1\_val\_2(...)} $\Rightarrow$ entailment; other rote rules subsumed. Cat3 D vs C is analogous under the other $\sigma$-pair (non-parent-first BK $\Rightarrow$ isolated-variable literal tried first).
+At row~3 both \texttt{x0\_val\_0} and \texttt{x1\_val\_2} are true; both have \texttt{:- A=3} rules. $\sigma$ places the winning block's matching rule at ID~3; the other block's match is at ID~12 and is not tried on the first successful \texttt{select\_rule} choice.
+
+\textbf{Why A cannot recover B's singleton \texttt{x2(A):-x1\_val\_2(A)}:}
+\begin{enumerate}
+  \item Failed \texttt{gen2} entailment on the first target fold does \textbf{not} backtrack \texttt{select\_rule} to ID~12 (\texttt{x1\_val\_2}); with no existing assumption, \texttt{relto} does not apply and the engine commits to \textbf{new assumption} \texttt{alpha\_1}.
+  \item The rote rule \texttt{x2(A)<-[A=3]} is removed before folding and replaced by \texttt{x2(A):-alpha\_1(A),x0\_val\_0(A)}.
+  \item The same pattern repeats for positives 6 and 9 ($\Rightarrow$ three \texttt{alpha\_i} + \texttt{x0\_val\_*} rules).
+  \item \texttt{gen1} only folds \textbf{non-intensional} rules (ground equalities); assumption-augmented \texttt{x2} rules are never re-folded.
+  \item Later \texttt{x1\_val\_*} folds apply to \texttt{c\_alpha\_*} contrary heads only (lines 78--161 of A trace), repairing exceptions --- not unifying \texttt{x2}.
+\end{enumerate}
+
+\textbf{Trace length:} A: 173 lines, 27 ABA rules (defeasible patchwork). B: 54 lines, 19 rules (one intensional parent rule; other rote rules subsumed). Both satisfy E+/E$-$ at termination.
+
+\textbf{Testable hypothesis (ablations):} first successful \texttt{select\_rule} match for a shared equality is determined solely by BK rule-ID order; failed target entailment commits to assumptions without trying later BK candidates for that rote rule. Placing parent block first should recover B-like behaviour without changing examples or BK content.
+
+Cat3 D vs C expected analogous; line-by-line audit not yet written. Code: \texttt{asp\_utils.pl} (\texttt{read\_bk}, \texttt{update\_fwt}); \texttt{folding.pl} (\texttt{select\_rule}); \texttt{gen.pl} (\texttt{gen1}, \texttt{gen2}, \texttt{gen6}).
+
+Full record: \texttt{docs/experiments/qualitative/M1.1-parent-position.md} Stage~4.
 
 \section{Artefact locations (inspectable)}
 
@@ -223,7 +246,7 @@ Canonical experiment record: \texttt{docs/experiments/qualitative/M1.1-parent-po
   \item All eight learning cells \texttt{solved} under nd folding.
   \item Binary: 4/4 exact expected singleton; all four $\sigma$ and $\pi$ edges hold; \texttt{cov\_py} and \texttt{cov\_pl} agree.
   \item Cat3: 2/4 exact (B, C); A and D return three-rule assumption/contrary structures citing the non-parent; $\sigma$ fails on both tested pairs; $\pi$ holds on B$\leftrightarrow$C only.
-  \item Triggered inspection records a \textbf{provisional} first-fold correlation on cat3 A vs B (BK order $\rightarrow$ first nd-fold literal $\rightarrow$ entailment branch); supervisor guidance requires a deeper why/when/how account before closure.
+  \item Triggered inspection and Stage~4 mechanistic account for cat3 A vs B: $\sigma$ permutes BK rule-ID order $\rightarrow$ \texttt{select\_rule} first match $\rightarrow$ entailment fail (isolated predictor covers E$-$) vs pass (parent separator) $\rightarrow$ assumption path vs singleton; A cannot recover B's rule within the same run path.
 \end{enumerate}
 
 \section{Supervisor guidance and reopened scope (June 2026)}
@@ -248,7 +271,7 @@ Positive control: under these fixtures and fixed nd configuration, returned rule
 
 \subsection{Categorical-3}
 
-$\sigma$-invariance \textbf{fails}: reversing predictor order while fixing parent identity changes exact singleton vs assumption-based non-parent rule. The split is encoding-dependent (binary passes; cat3 does not). Stage~3 inspection documents a \textbf{provisional} correlation: non-parent-first BK order $\rightarrow$ first nd-fold literal on the isolated predictor $\rightarrow$ failed entailment $\rightarrow$ assumptions. This is an observation from trace comparison, not a closed mechanistic theory.
+$\sigma$-invariance \textbf{fails}: reversing predictor order while fixing parent identity changes exact singleton vs assumption-based non-parent rule. The split is encoding-dependent (binary passes; cat3 does not). Stage~4 documents the mechanism: non-parent-first BK $\rightarrow$ isolated-predictor fold at lowest matching ID $\rightarrow$ failed entailment $\rightarrow$ assumption commitment without backtracking to parent fold; parent-first BK $\rightarrow$ clean singleton. This is an ABA Learning search-control / representation-order effect under fixed nd + cautious + relto, not causal discovery.
 
 \subsection{Overall bounded answer}
 
@@ -269,14 +292,13 @@ m1.1 answers its central question \textbf{conditionally}: direct-parent tracking
   \item Single seed; no noise; target-mechanism tables (isolated non-parent + parent$\rightarrow$\texttt{x2}); target-wise learning on \texttt{x2} only.
   \item Assumption-based solutions are \texttt{solved} but discrepant vs the pre-specified singleton criterion.
   \item Coverage metrics disagree on cat3 A/D assumption rules; classifications rely on sol files and traces.
-  \item Stage~3 first-fold correlation documented; full why/when/how account \textbf{outstanding} (supervisor guidance).
-  \item Whether a different nd fold-literal order would recover cat3 A/D without assumptions was not tested (ablation deferred).
+  \item Stage~4 mechanistic account recorded for cat3 A vs B; cat3 D vs C line audit and ablation tests \textbf{outstanding}.
   \item Greedy smoke test on m1.1 grid not yet formalised in experiment record; outcome differs from both nd cat3 A and B.
 \end{itemize}
 
 \section{Next steps (not M1.2-first)}
 
-Priority: Stage~4 granular trace audit (cat3 A vs B minimum), runner/bridge inspection, systematic $\pi$/$\sigma$ pair documentation, then hypothesis formulation and ablation runs. Full M1.2 greedy grid is a \textbf{deferred comparator}, not the primary next step to explain cat3 $\sigma$ failure.
+Priority: ablation tests for Stage~4 hypothesis; cat3 D vs C line audit; Stage~5 runner/bridge call-chain doc. Full M1.2 greedy grid remains a \textbf{deferred comparator}.
 
 \section{Project references}
 

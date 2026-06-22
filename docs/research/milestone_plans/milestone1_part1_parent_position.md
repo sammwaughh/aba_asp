@@ -19,16 +19,16 @@ folding; (B) mechanistic explanation of any π/σ failure before closure or abla
 | A — Metamorphic grid | 0 Fixture validation | **Done** | 8/8 fixtures PASS; σ/π orbits verified; BK order matches table order |
 | A | 1 Eight-cell nd learning | **Done** | 8/8 solved; artefacts under `causal/outputs/aba_learning/grid/M11_parent_position/cells/<dgp>/` |
 | A | 2 Transformation square | **Done** | Binary: all σ and π hold. Cat3: σ fails (A↔B, D↔C); π holds B↔C only |
-| A | 3 Triggered inspection | **Done (provisional)** | cat3 A vs B first-fold trace correlation recorded; **insufficient for closure** |
-| B — Mechanistic account | 4 Granular trace audit | **Not started** | Minimum: line-level `prolog.stdout` cat3 A vs B |
-| B | 5 Runner / bridge clarity | **Not started** | `run_grid` → BK → Prolog call chain for one cell |
-| B | 6 Hypothesis + ablations | **Not started** | Only after Stages 4–5; may extend m1.1 or use sub-IDs |
+| A | 3 Triggered inspection | **Done** | cat3 A vs B first-fold fork |
+| B — Mechanistic account | 4 Granular trace audit | **Done (cat3 A vs B)** | Full account in experiment record Stage 4 |
+| B | 5 Runner / bridge clarity | **Partial** | Data-flow summary in Stage 4 |
+| B | 6 Hypothesis + ablations | **Not started** | Testable hypothesis in Stage 4 |
 | — | Findings `.tex` | **Interim** | Initial run recorded; reopened after Fabrizio review |
 | — | DGP documentation | **Done** | Tabular DGP clarified: isolated non-parent + `x2 := parent` (not chain sampling) |
 
 **First-run answer (conditional, not closed):** on target-mechanism tables, binary parent-role
-tracking with σ-invariance holds under nd; cat3 does not. **Why/when/how** cat3 A vs B
-diverge remains open.
+tracking with σ-invariance holds under nd; cat3 does not. **Stage 4 (June 2026)** documents
+why/when/how cat3 A vs B diverge; D vs C audit and ablations remain.
 
 **Deferred:** full M1.2 greedy grid until Phase B progresses. Greedy smoke test on m1.1 ≠ nd
 cat3 A or B (not yet formalised in experiment record).
@@ -852,7 +852,7 @@ Examples include:
 
 Repair and rerun the cell when the correction is local and necessary to instantiate the planned experiment. Do not reinterpret an implementation error as search failure or parent-recovery failure.
 
-### Stage 4: Granular trace and runner audit *(not started — required for closure)*
+### Stage 4: Granular trace and runner audit *(cat3 A vs B done — June 2026)*
 
 **Trigger:** any failed π or σ edge (m1.1: cat3 A↔B and D↔C minimum).
 
@@ -875,8 +875,7 @@ Record outputs in `docs/experiments/qualitative/M1.1-parent-position.md` (Stage 
 ### Stage 5: Hypothesis and ablations *(not started — after Stage 4)*
 
 Formulate a testable hypothesis from Stage 4 evidence. Design the smallest ablation set
-(table size, encoding, fold-literal order, formal greedy baseline). New runs only to test
-the hypothesis; specify before execution.
+(table size, encoding, fold-literal order, formal greedy baseline). Testable hypothesis recorded in experiment record Stage 4. New runs only to test the hypothesis; specify before execution.
 
 ## 13. Diagnostic comparisons and interpretation guardrails
 
