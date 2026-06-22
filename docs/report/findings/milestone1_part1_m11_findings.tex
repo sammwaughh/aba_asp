@@ -1,9 +1,16 @@
 \documentclass[11pt,a4paper]{article}
 
 \usepackage[margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{array}
 \usepackage{booktabs}
-\usepackage{hyperref}
+\usepackage{microtype}
+\usepackage{tabularx}
 \usepackage{url}
+\usepackage{hyperref}
+\hypersetup{hidelinks}
+
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
 
 \title{Milestone~1 Part~1 (M11): Parent-Position and Representation-Order Control\\[0.5em]
 \large Supervisor-facing findings log}
@@ -193,17 +200,21 @@ The narrative moves from establishing that the metamorphic transforms are real i
 to observing grid-level pass/fail, to explaining cat3 failure at trace level, to confirming the
 explanation by intervention.
 
-\subsection{Stage~0: validate that $\sigma$ and $\pi$ reach the learner}
+\subsection[Stage 0: validate that sigma and pi reach the learner]{Stage~0: validate that $\sigma$ and $\pi$ reach the learner}
 \label{sec:stage0}
 
 If the Python bridge canonicalised or sorted predictor columns before writing BK, then $\sigma$
 would not change the learner's input and the metamorphic test would be void. Stage~0 therefore
 had to precede any Prolog runs.
 
-We ran Prolog-free checks (\texttt{causal/tests/test\_m11\_fixtures.py} and
-\texttt{causal/scripts/m11\_validate\_fixtures.py}). These verify the $\sigma$ and $\pi$ orbit
-relations on fixtures, confirm that requested predictor order matches table column order and BK
-block order, and check minimal complete factorial tables (four rows for binary, nine for cat3).
+We ran two Prolog-free checks:
+\begin{itemize}
+  \item \path{causal/tests/test_m11_fixtures.py}
+  \item \path{causal/scripts/m11_validate_fixtures.py}
+\end{itemize}
+Together these verify the $\sigma$ and $\pi$ orbit relations on fixtures, confirm that requested
+predictor order matches table column order and BK block order, and check minimal complete
+factorial tables (four rows for binary, nine for cat3).
 
 All eight fixtures passed. Requested order equals table order equals BK group order. Stage~0
 establishes that later $\sigma$ effects, if any, are not artefacts of silent reordering in the
@@ -216,11 +227,14 @@ The pre-specified success criterion for m1.1 is that learnt rules track the pare
 and are invariant to $\sigma$ and equivariant to $\pi$ at rule level (with correct coverage).
 Stage~1 runs learning; Stage~2 compares outcomes on linked pairs.
 
-We executed the grid with \texttt{causal/experiments/run\_grid.py} and configuration
-\texttt{causal/configs/experiments/M11\_parent\_position.yaml}. Learner settings were held
-fixed: target \texttt{x2} only; \texttt{folding\_mode: nd}; \texttt{folding\_steps: 15};
-\texttt{prolog\_timeout\_s: 120}; cautious semantics with \texttt{asm\_intro(relto)} inherited
-from the QI-002-style defaults.
+We executed the grid with:
+\begin{itemize}
+  \item runner: \path{causal/experiments/run_grid.py}
+  \item config: \path{causal/configs/experiments/M11_parent_position.yaml}
+\end{itemize}
+Learner settings were held fixed: target \texttt{x2} only; \texttt{folding\_mode: nd};
+\texttt{folding\_steps: 15}; \texttt{prolog\_timeout\_s: 120}; cautious semantics with
+\texttt{asm\_intro(relto)} inherited from the QI-002-style defaults.
 
 \paragraph{Grid outcome.} All eight cells returned \texttt{solved}. For binary, all four cells
 returned the expected singleton and every $\sigma$ and $\pi$ edge in the transformation square
@@ -253,14 +267,16 @@ Because $\sigma$ permutes block order, the rule that receives identifier~3 (the 
 BK after the header comments) differs between A and B:
 
 \begin{center}
-\begin{tabular}{@{}llll@{}}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{@{}lYYY@{}}
 \toprule
 Cell & Rule at ID~3 & Folded target rule & Cautious entailment of $E+/E-$ \\
 \midrule
 cat3 A & \texttt{x0\_val\_0(A):-A=3} & \texttt{x2(A) <- [x0\_val\_0(A)]} & \textbf{Fails} \\
 cat3 B & \texttt{x1\_val\_2(A):-A=3} & \texttt{x2(A) <- [x1\_val\_2(A)]} & \textbf{Passes} \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \end{center}
 
 The isolated predictor fold in A covers negative examples as well as positives (the value
@@ -283,15 +299,18 @@ separate line-by-line write-up in the experiment record.
 
 Stage~4 establishes a correlational mechanism: BK order co-varies with first-fold choice and
 outcome. Stage~6 \emph{intervenes} on individual links in that chain, following the plan in
-\texttt{docs/research/milestone\_plans/milestone1\_part1\_ablations.md}.
+\path{docs/research/milestone_plans/milestone1_part1_ablations.md}.
 
-We implemented a dedicated pipeline (\texttt{m11\_ablation\_bk.py},
-\texttt{m11\_ablation\_inspect.py}, \texttt{m11\_ablation\_run.py},
-\texttt{m11\_ablation\_audit.py}) with declarative specs in
-\texttt{causal/configs/experiments/M11\_ablations.yaml}. Each ablation writes artefacts under
-\texttt{causal/outputs/aba\_learning/grid/M11\_ablations/<ABL-id>/}, including
-\texttt{prolog.stdout}, \texttt{bk.sol.aba}, and \texttt{abl\_summary.json} with parsed
-observables (first fold predicate, entailment pass/fail, trace length, rule count, verdict).
+We implemented a dedicated pipeline with these components:
+\begin{itemize}
+  \item scripts: \path{m11_ablation_bk.py}, \path{m11_ablation_inspect.py},
+  \path{m11_ablation_run.py}, and \path{m11_ablation_audit.py}
+  \item specs: \path{causal/configs/experiments/M11_ablations.yaml}
+  \item outputs: \path{causal/outputs/aba_learning/grid/M11_ablations/<ABL-id>/}
+\end{itemize}
+Each ablation output includes \texttt{prolog.stdout}, \texttt{bk.sol.aba}, and
+\texttt{abl\_summary.json} with parsed observables (first fold predicate, entailment pass/fail,
+trace length, rule count, verdict).
 
 Gating was falsification-first: audit ABL-100 (C vs D) before Tier~1; run ABL-101 (BK block
 reorder on cat3~A); stop Tier~2+ if ABL-101 failed; otherwise continue with ABL-102, 103, 105,
@@ -299,18 +318,34 @@ and 107. ABL-106 (\texttt{asm\_intro(sechk)}) was skipped because ABL-105 was co
 
 \begin{center}
 \small
-\begin{tabular}{@{}llllrrl@{}}
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{@{}lYYl@{}}
 \toprule
-ID & Intervention & first\_fold & entail. & trace & rules & Outcome & Verdict \\
+ID & Intervention & first fold & Entailment \\
 \midrule
-100 & audit C vs D & \texttt{x0\_val\_2}/\texttt{x1\_val\_0} & pass/fail & 53/172 & 19/27 & singleton / asm. & audit\_pass \\
-101 & BK order A$\leftarrow$B & \texttt{x1\_val\_2} & pass & 53 & 19 & singleton & pass \\
-102 & prepend parent rule & \texttt{x1\_val\_2} & pass & 53 & 20 & singleton & pass \\
-103 & BK order C$\leftarrow$D & \texttt{x1\_val\_0} & fail & 172 & 27 & asm.\ triple & pass \\
-105 & \texttt{folding\_mode(all)} on A & \texttt{x0\_val\_0} & fail & 157 & 27 & asm.\ triple & pass \\
-107 & audit binary A vs B & \texttt{x1}/\texttt{x1} & pass/pass & 50/50 & 5/5 & $\sigma$-invariant & audit\_pass \\
+100 & audit C vs D & \texttt{x0\_val\_2}/\texttt{x1\_val\_0} & pass/fail \\
+101 & BK order A$\leftarrow$B & \texttt{x1\_val\_2} & pass \\
+102 & prepend parent rule & \texttt{x1\_val\_2} & pass \\
+103 & BK order C$\leftarrow$D & \texttt{x1\_val\_0} & fail \\
+105 & \texttt{folding\_mode(all)} on A & \texttt{x0\_val\_0} & fail \\
+107 & audit binary A vs B & \texttt{x1}/\texttt{x1} & pass/pass \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
+
+\vspace{0.5em}
+
+\begin{tabularx}{\linewidth}{@{}lrrYl@{}}
+\toprule
+ID & Trace & Rules & Outcome & Verdict \\
+\midrule
+100 & 53/172 & 19/27 & singleton / asm. & \texttt{audit\_pass} \\
+101 & 53 & 19 & singleton & pass \\
+102 & 53 & 20 & singleton & pass \\
+103 & 172 & 27 & asm.\ triple & pass \\
+105 & 157 & 27 & asm.\ triple & pass \\
+107 & 50/50 & 5/5 & $\sigma$-invariant & \texttt{audit\_pass} \\
+\bottomrule
+\end{tabularx}
 \end{center}
 
 \paragraph{ABL-101 (primary causal test).} On cat3~A's data and examples, we replaced BK block
@@ -341,8 +376,8 @@ All ablation runs referenced above used commit \texttt{93d51bf} of the repositor
 
 ABL-105 tested \texttt{folding\_mode(all)} under the nd framework. Stage~7 reran the
 \emph{same} eight cells with \texttt{folding\_mode: greedy} only
-(config \texttt{M11\_parent\_position\_greedy.yaml}; artefacts
-\texttt{M11\_parent\_position\_greedy/cells/}).
+(config \path{M11_parent_position_greedy.yaml}; artefacts
+\path{M11_parent_position_greedy/cells/}).
 
 \paragraph{Command.}
 \begin{verbatim}
@@ -355,17 +390,18 @@ python -m causal.experiments.run_grid \
 
 \begin{center}
 \small
-\begin{tabular}{@{}llllp{3.2cm}l@{}}
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{@{}llYYYY@{}}
 \toprule
 Enc. & Cell & nd (reference) & greedy outcome & $\sigma$/$\pi$ vs nd & Notes \\
 \midrule
 binary & A--D & exact singleton & exact singleton & matches nd & positive control \\
 cat3 & A & assumption triple & parent superset (3 rules) & differs & H-G-third \\
-cat3 & B & exact singleton & parent superset (3 rules) & differs; regression & \\
-cat3 & C & exact singleton & parent superset (3 rules) & differs; regression & \\
-cat3 & D & assumption triple & parent superset (3 rules) & differs & \\
+cat3 & B & exact singleton & parent superset (3 rules) & differs; regression & -- \\
+cat3 & C & exact singleton & parent superset (3 rules) & differs; regression & -- \\
+cat3 & D & assumption triple & parent superset (3 rules) & differs & -- \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \end{center}
 
 Under greedy, every cat3 cell returns three rote-specific \texttt{x2} rules whose bodies
@@ -410,8 +446,9 @@ information already narrated above.
 \subsection{Cell-level outcomes under nd}
 
 \begin{center}
-\small
-\begin{tabular}{@{}llllp{3.2cm}p{3.5cm}l@{}}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\linewidth}{@{}lllYYYY@{}}
 \toprule
 Enc. & Cell & Parent & Predictor order & Expected rule & Actual (nd) & Classification \\
 \midrule
@@ -424,7 +461,7 @@ cat3 & B & \texttt{x1} & [\texttt{x1}, \texttt{x0}] & \texttt{x2<-x1\_val\_2} & 
 cat3 & C & \texttt{x0} & [\texttt{x0}, \texttt{x1}] & \texttt{x2<-x0\_val\_2} & \texttt{x2 :- x0\_val\_2.} & exact \\
 cat3 & D & \texttt{x0} & [\texttt{x1}, \texttt{x0}] & \texttt{x2<-x0\_val\_2} & 3-rule assumption & discrepant$^\dagger$ \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \end{center}
 
 {\footnotesize $^\dagger$Prolog status is \texttt{solved}; discrepant means the rule structure
@@ -433,7 +470,9 @@ does not match the pre-specified singleton criterion.}
 \subsection{Transformation square under nd}
 
 \begin{center}
-\begin{tabular}{@{}lllll@{}}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{@{}llYll@{}}
 \toprule
 Encoding & Property & Cell pair & Rule-level & Role-level \\
 \midrule
@@ -443,7 +482,7 @@ cat3 & $\sigma$ & A$\leftrightarrow$B, D$\leftrightarrow$C & \textbf{fails} & \t
 cat3 & $\pi$ & B$\leftrightarrow$C & holds & holds \\
 cat3 & $\pi$ & A$\leftrightarrow$D & \textbf{fails} & \textbf{fails} \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \end{center}
 
 Role-level agreement requires that the body of the target rule cite the parent variable's value
@@ -456,14 +495,16 @@ predicates rather than the non-parent's.
 \subsection{Answer by encoding}
 
 \begin{center}
-\begin{tabular}{@{}llll@{}}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{@{}lYYY@{}}
 \toprule
 Encoding & Parent-role tracking & $\sigma$-invariance (nd, default pipeline) & Explanation \\
 \midrule
 binary & Yes, all four cells & Yes & Parent wins first fold under both BK orders (ABL-107) \\
 cat3 & Yes when parent wins first fold & \textbf{No} & BK ID order $\rightarrow$ entailment $\rightarrow$ assumptions \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \end{center}
 
 The research question therefore receives a \emph{conditional} but precise answer. The learner
@@ -476,10 +517,13 @@ which feature wins that first match.
 
 We summarise the logical structure of the nd evidence as follows:
 
-\[
-\sigma \;\Rightarrow\; \text{BK block order} \;\Rightarrow\; \text{first \texttt{select\_rule} match}
-\;\Rightarrow\; \text{entailment pass or fail} \;\Rightarrow\; \text{singleton or assumptions.}
-\]
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{@{}Y@{}}
+$\sigma \Rightarrow$ BK block order $\Rightarrow$ first \texttt{select\_rule} match
+$\Rightarrow$ entailment pass or fail $\Rightarrow$ singleton or assumptions.
+\end{tabularx}
+\end{center}
 
 \begin{enumerate}
   \item \textbf{Observation (Stages~1--2):} cat3 fails $\sigma$ at rule level while binary passes.
@@ -532,7 +576,7 @@ Optional: Stage~5 runner call-chain doc. Milestone~2 addresses Causal-ABA-guided
 \paragraph{Non-deterministic grid (Stage~1).}
 \begin{verbatim}
 conda activate aba-asp
-cd "/Users/samuelwaugh/Desktop/Causal ABA Learning/aba_asp"
+# from the repository root
 python -m causal.experiments.run_grid \
   --config causal/configs/experiments/M11_parent_position.yaml --no-resume
 \end{verbatim}
@@ -544,10 +588,10 @@ python -m causal.scripts.m11_ablation_run --all-required
 
 \paragraph{Primary records and artefacts.}
 \begin{itemize}
-  \item Experiment record: \texttt{docs/experiments/qualitative/M1.1-parent-position.md}
-  \item Ablation plan: \texttt{docs/research/milestone\_plans/milestone1\_part1\_ablations.md}
-  \item Grid outputs: \texttt{causal/outputs/aba\_learning/grid/M11\_parent\_position/cells/}
-  \item Ablation outputs: \texttt{causal/outputs/aba\_learning/grid/M11\_ablations/}
+  \item Experiment record: \path{docs/experiments/qualitative/M1.1-parent-position.md}
+  \item Ablation plan: \path{docs/research/milestone_plans/milestone1_part1_ablations.md}
+  \item Grid outputs: \path{causal/outputs/aba_learning/grid/M11_parent_position/cells/}
+  \item Ablation outputs: \path{causal/outputs/aba_learning/grid/M11_ablations/}
   \item Engine sources: \texttt{asp\_utils.pl}, \texttt{folding.pl}, \texttt{gen.pl}
 \end{itemize}
 
