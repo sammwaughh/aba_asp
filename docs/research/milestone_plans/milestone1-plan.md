@@ -23,33 +23,68 @@ For each investigation:
 
 2. Use Cursor to implement and run the agreed experiment.
 
-3. Compare the actual learned rules and behaviour with the pre-specified expectations. Inspect raw artefacts where needed and expand the experiment only when the initial evidence is genuinely ambiguous.
+3. Compare the actual learned rules and behaviour with the pre-specified expectations. Inspect raw artefacts where needed. **Qualitative inspection before further tests** when discrepancies remain (supervisor guidance, June 2026). Expand only when initial evidence is genuinely ambiguous or when a stated hypothesis requires ablation.
 
-4. Draw a bounded, evidence-supported conclusion. Distinguish learning behaviour from implementation errors and avoid causal-discovery claims.
+4. Draw a bounded, evidence-supported conclusion. Distinguish learning behaviour from implementation errors and avoid causal-discovery claims. For failures, document **why, when, and how** at trace/runner level where required — not only that a metamorphic check failed.
 
-5. Write a concise `.tex` findings document covering the design, results, interpretation, conclusion and limitations.
+5. Write a concise `.tex` findings document covering the design, results, interpretation, conclusion and limitations (update when extended investigation phases complete).
 
 The process should remain rigorous but lightweight. Documentation and additional runs should serve a specific research decision rather than becoming ends in themselves.
 
 ## Part 1: Parent-Position and Representation-Order Control
 
-Planning document: `milestone1_part1_parent_position.md`
+Planning document: `milestone1_part1_parent_position.md`  
+Experiment record: `docs/experiments/qualitative/M1.1-parent-position.md`  
+Interim findings: `docs/report/findings/milestone1_part1_m11_findings.tex`
 
-Address the unresolved weakness in QL2 by testing whether learned rules follow the true parent when parent and non-parent positions are exchanged, or whether recovery is affected by variable identity or representation order.
+### Goal
 
-The investigation uses small, clean QL2-style **target-mechanism tables**: one predictor is a deterministic direct cause of `x2`, the other is statistically isolated in a complete factorial. This is **not** chain SCM sampling; chain-style labels in fixtures annotate parent vs non-parent roles for the π swap only. The exact motifs, encodings and controls are specified in the Part 1 planning document.
+Address the unresolved weakness in QL2 by testing whether learned rules follow the true parent when parent and non-parent positions are exchanged, or whether recovery is affected by variable identity or representation order — and, where π/σ fail, **explain why/when/how** at granular trace and runner level.
 
-The intended outcome is a justified conclusion about whether the existing parent-recovery results can be interpreted independently of an `x0` or ordering artefact.
+### DGP (clarified)
 
-**Status (June 2026):** initial eight-cell nd grid **run**; status **`more work needed`**. Experiment M11; record `docs/experiments/qualitative/M1.1-parent-position.md`; interim findings `docs/report/findings/milestone1_part1_m11_findings.tex`. First-run facts: on isolated-parent tables (not chain samples), binary passes σ/π under nd; cat3 fails σ-invariance. Supervisor review reopened granular trace/runner investigation before closure. M1.2 full greedy grid **deferred** (not sufficient explanation; smoke test ≠ nd A or B).
+Small, clean **target-mechanism tables**: one predictor is a deterministic direct cause of `x2` (`x2 := parent`), the other is statistically isolated in a complete factorial. **Not** chain SCM sampling; chain-style labels in fixtures annotate parent vs non-parent roles for the π swap only.
+
+### Two phases
+
+| Phase | Content | Status (June 2026) |
+|-------|---------|-------------------|
+| **A — Metamorphic grid** | Stages 0–3: fixtures, eight-cell nd run, σ/π square, triggered cat3 A vs B trace | **Done** (Stage 3 provisional) |
+| **B — Mechanistic account** | Stages 4–5: granular `prolog.stdout` audit, runner clarity, hypothesis + ablations | **Not started** |
+
+### Phase A — what was done
+
+- Implemented eight fixtures (binary + cat3; cells A/B/C/D via σ and π).
+- Stage 0: all fixtures PASS; BK order verified.
+- Stage 1: 8/8 cells `solved` under nd (`M11_parent_position.yaml`).
+- Stage 2: binary passes all σ and π checks; cat3 fails σ-invariance (A↔B, D↔C); π holds B↔C only.
+- Stage 3: first-fold trace correlation on cat3 A vs B recorded — **insufficient for closure**.
+- Interim findings `.tex` written for supervisor review.
+
+### Phase B — what remains
+
+- Line-by-line trace audit (cat3 A vs B minimum).
+- Runner / bridge documentation (`run_grid` → Prolog).
+- Precise why/when/how divergence account.
+- Hypothesis formulation; then smallest ablation set (not open-ended grid sweep).
+- Formalise greedy smoke test if used as evidence (ad hoc run ≠ nd A or B).
+
+### Status
+
+**`more work needed`** — Phase A complete; Phase B outstanding. Fabrizio review (June 2026) reopened m1.1 after interim presentation.
+
+### Part 2 dependency
+
+**M1.2 full greedy grid deferred** until Phase B clarifies cat3 σ failure. ND vs greedy alone is not treated as a sufficient explanation.
 
 ## Part 2: Greedy Versus Non-Deterministic ABA Learning
 
-Planning document: `milestone1_part2_greedy_vs_nondeterministic.md`
+Planning document: `milestone1_part2_greedy_vs_nondeterministic.md`  
+**Status:** `planned` — **blocked** on m1.1 Phase B progress
 
 Determine which currently implemented folding strategy should be the operational default for the remaining Milestone 1 work.
 
-**Dependency:** Part 2 assumes a clearer mechanistic account of m1.1 cat3 σ failure (Part 1 extended investigation). A quick greedy smoke test on the m1.1 grid produced an outcome materially different from both nd cat3 A and B — strategy comparison alone does not explain the divergence.
+**Dependency:** Part 2 assumes a clearer mechanistic account of m1.1 cat3 σ failure (Part 1 Phase B). A quick greedy smoke test on the m1.1 grid produced an outcome materially different from both nd cat3 A and B — strategy comparison alone does not explain the divergence.
 
 The investigation should compare greedy and non-deterministic learning on controlled fixtures, assessing both computational behaviour and agreement with expected learned rules. It should test whether greedy is faster, more reliable or more causally aligned, while allowing for the possibility that its advantages are conditional rather than universal.
 
@@ -69,6 +104,8 @@ Priority should be given to:
 The investigation should compare the graph- and DGP-derived expected rules with the actual learned rules and relevant execution artefacts. Possible explanations may involve data construction, representation, transformation search, hypothesis-space restrictions, entailment or solver behaviour, but conclusions must follow from inspected evidence.
 
 The intended outcome is an evidence-backed account of representative failure mechanisms. It is not necessary to inspect every cell or repair every failure.
+
+**Note:** m1.1 cat3 σ failure may overlap Part 3 thematically; Part 1 Phase B owns the primary mechanistic account for that specific grid.
 
 ## Part 4: Noise and Continuous-DGP Investigation
 
@@ -98,3 +135,5 @@ After all four investigations, consolidate their `.tex` findings into a concise 
 3. what greedy learning improves and does not improve;
 4. how the current system behaves on noisy continuous-derived data; and
 5. which findings motivate Causal ABA-style guidance in Milestone 2.
+
+**Current progress:** Part 1 Phase A complete; Part 1 Phase B in progress (`more work needed`). Parts 2–4 not started (Part 2 blocked on Part 1 Phase B).

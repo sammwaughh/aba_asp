@@ -5,7 +5,36 @@
 **Status:** Initial eight-cell run complete; **more work needed** (supervisor review, June 2026 — granular trace and runner investigation before closure)  
 **Research stage:** RQ1 — unguided causal-role diagnostic  
 **Primary baseline:** QL2 / QI-002  
-**Target:** `x2`
+**Target:** `x2`  
+**Experiment record:** `docs/experiments/qualitative/M1.1-parent-position.md`  
+**Interim findings:** `docs/report/findings/milestone1_part1_m11_findings.tex`
+
+## 0. Progress summary (June 2026)
+
+m1.1 is a **two-phase** investigation: (A) metamorphic eight-cell grid under fixed nd
+folding; (B) mechanistic explanation of any π/σ failure before closure or ablation runs.
+
+| Phase | Stage | Status | Outcome (facts) |
+|-------|-------|--------|-----------------|
+| A — Metamorphic grid | 0 Fixture validation | **Done** | 8/8 fixtures PASS; σ/π orbits verified; BK order matches table order |
+| A | 1 Eight-cell nd learning | **Done** | 8/8 solved; artefacts under `causal/outputs/aba_learning/grid/M11_parent_position/cells/<dgp>/` |
+| A | 2 Transformation square | **Done** | Binary: all σ and π hold. Cat3: σ fails (A↔B, D↔C); π holds B↔C only |
+| A | 3 Triggered inspection | **Done (provisional)** | cat3 A vs B first-fold trace correlation recorded; **insufficient for closure** |
+| B — Mechanistic account | 4 Granular trace audit | **Not started** | Minimum: line-level `prolog.stdout` cat3 A vs B |
+| B | 5 Runner / bridge clarity | **Not started** | `run_grid` → BK → Prolog call chain for one cell |
+| B | 6 Hypothesis + ablations | **Not started** | Only after Stages 4–5; may extend m1.1 or use sub-IDs |
+| — | Findings `.tex` | **Interim** | Initial run recorded; reopened after Fabrizio review |
+| — | DGP documentation | **Done** | Tabular DGP clarified: isolated non-parent + `x2 := parent` (not chain sampling) |
+
+**First-run answer (conditional, not closed):** on target-mechanism tables, binary parent-role
+tracking with σ-invariance holds under nd; cat3 does not. **Why/when/how** cat3 A vs B
+diverge remains open.
+
+**Deferred:** full M1.2 greedy grid until Phase B progresses. Greedy smoke test on m1.1 ≠ nd
+cat3 A or B (not yet formalised in experiment record).
+
+**Supervisor guidance:** `docs/research/supervisor_guidance.md` (M1.1 review section).
+**Decision log:** `docs/research/decisions.md` (2026-06-22 reopen supersedes 2026-06-18 close-out).
 
 ## 1. Purpose
 
@@ -33,23 +62,33 @@ Accordingly, this investigation tests the validity of a local parent-rule recove
 
 The investigation will:
 
-- use clean, deterministic QL2-style fixtures;
+- use clean, deterministic QL2-style **target-mechanism** fixtures (one isolated
+  predictor + deterministic `x2 := parent`; not chain SCM sampling);
 - learn rules for target `x2`;
 - compare returned rules with pre-specified expected rules;
-- test parent-role equivariance;
-- test representation-order invariance;
-- distinguish learner outcomes from preprocessing, execution, and parsing errors.
+- test parent-role equivariance ($\pi$);
+- test representation-order invariance ($\sigma$);
+- distinguish learner outcomes from preprocessing, execution, and parsing errors;
+- **Phase B (added June 2026):** where π/σ fail, document a granular why/when/how
+  account from traces and runner behaviour before ablation runs.
 
-The investigation will not:
+The initial eight-cell grid will not:
 
-- compare greedy and non-deterministic folding;
+- compare greedy and non-deterministic folding (**Milestone 1 Part 2**; deferred until
+  Phase B clarifies cat3 σ failure);
 - introduce noise, finite-sample variation, or continuous data;
 - test collider recovery;
 - recover a complete graph;
-- vary learning semantics, folding budgets, timeouts, or other hyperparameters;
-- attribute a result to a search strategy by comparison with another strategy.
+- vary learning semantics, folding budgets, timeouts, or other hyperparameters in
+  the primary grid.
 
-The ABA Learning strategy is held fixed because strategy comparison is the subject of Milestone 1, Part 2.
+**Phase B exception:** after Stages 4–5, targeted ablations (encoding, table size,
+fold-literal order, formal greedy baseline) may run under m1.1 sub-stages or new
+experiment IDs to test a stated hypothesis — not as an open-ended grid sweep.
+
+The ABA Learning strategy is held fixed at **nd** for the primary eight-cell grid.
+Strategy comparison remains the subject of Milestone 1, Part 2, once m1.1 Phase B
+has a clearer mechanistic account.
 
 ## 3. Precise research question
 
@@ -705,11 +744,20 @@ Record both:
 - strict rule-level verdict;
 - secondary observable-role verdict.
 
-If all four cells return the strict expected rules with valid coverage and all four square edges satisfy their expected relation, the primary question has been answered for that encoding. No full dossier or complete trace inspection is required.
+If all four cells return the strict expected rules with valid coverage and all four square edges satisfy their expected relation, the primary metamorphic question has been answered for that encoding — **but closure still requires Phase B when any edge fails** (supervisor guidance, June 2026). Stage 3 alone does not satisfy the mechanistic standard for failed edges.
 
-### Stage 3: Triggered inspection
+### Stage 3: Triggered inspection *(complete for cat3 σ-pair; provisional)*
 
-Deeper inspection is performed only for the cells involved in a failed or undefined comparison.
+**Done (June 2026):** compared `cells/m11_cat3_A/prolog.stdout` vs
+`cells/m11_cat3_B/prolog.stdout` (D vs C analogous). Recorded first-fold divergence
+(non-parent-first BK → `x0_val_0` fold → no entailment vs parent-first → `x1_val_2`
+→ entailment). Documented in the experiment record and interim findings `.tex`.
+
+**Not done:** line-level audit of full traces; runner call chain; precise why/when/how
+account. Supervisor: this correlation is **insufficient for closure**.
+
+Deeper inspection is performed for cells involved in a failed or undefined comparison,
+and **must continue in Stage 4** until the failure is explained at the required granularity.
 
 #### Case A: Parent-aligned but structurally non-exact output
 
@@ -803,6 +851,32 @@ Examples include:
 - inconsistent metadata.
 
 Repair and rerun the cell when the correction is local and necessary to instantiate the planned experiment. Do not reinterpret an implementation error as search failure or parent-recovery failure.
+
+### Stage 4: Granular trace and runner audit *(not started — required for closure)*
+
+**Trigger:** any failed π or σ edge (m1.1: cat3 A↔B and D↔C minimum).
+
+Perform **before** ablation runs or M1.2 full grid:
+
+1. **Line-by-line `prolog.stdout` comparison** for the triggered σ-pair (cat3 A vs B first).
+   Map each log phase to engine concepts: rote learning, fold selection, nd fold steps,
+   entailment checks (`extended ABA entails <E+,E->`), assumption/contrary introduction,
+   subsumption.
+2. **Runner / bridge trace** for one cell: `run_grid` → `execute_cell_stage*` →
+   `generate_aba_background_knowledge` → Prolog invocation; document options passed
+   (`folding_mode`, `folding_steps`, etc.).
+3. **Precise divergence write-up:** why the first fold fails or succeeds entailment;
+   when each branch fires; how the run path diverges — not merely “column order differs”.
+4. **Systematic π/σ documentation** for both encodings: which pairs hold/fail and what
+   trace evidence exists per pair.
+
+Record outputs in `docs/experiments/qualitative/M1.1-parent-position.md` (Stage 4 section).
+
+### Stage 5: Hypothesis and ablations *(not started — after Stage 4)*
+
+Formulate a testable hypothesis from Stage 4 evidence. Design the smallest ablation set
+(table size, encoding, fold-literal order, formal greedy baseline). New runs only to test
+the hypothesis; specify before execution.
 
 ## 13. Diagnostic comparisons and interpretation guardrails
 
@@ -919,13 +993,14 @@ m1.1 is complete when all of the following hold:
 5. All eight primary cells have complete raw artefacts or a precisely classified invalid outcome.
 6. Every valid cell has a raw-rule quotation, normalised rule, coverage result, and expected-rule classification.
 7. Every required edge of the transformation square has a rule-level and role-level verdict.
-8. Failed or undefined comparisons have received only the triggered inspection required to interpret them.
+8. Failed or undefined comparisons have a **granular mechanistic account** (Stages 4–5),
+   not only a triggered first-fold observation (Stage 3).
 9. Implementation errors are separated from learner outcomes.
 10. Binary and categorical conclusions are stated separately before any overall synthesis.
-11. A bounded conclusion answers whether the returned rules track the direct-parent role independently of the tested variable identities and representation orders.
+11. A bounded conclusion answers whether the returned rules track the direct-parent role independently of the tested variable identities and representation orders — **and**, where they fail, **why/when/how** at trace/runner level.
 12. No claim of causal discovery or complete graph recovery is made.
-13. Additional motifs or grids have not been run unless the stopping rule justified them.
-14. The findings are written into a concise `.tex` document covering design, results, interpretation, limitations, and conclusion.
+13. Additional motifs or grids have not been run unless the stopping rule or a stated Stage 5 hypothesis justified them.
+14. The findings are written into a concise `.tex` document covering design, results, interpretation, limitations, and conclusion (updated when Phase B completes).
 
 Completion does not require a positive result. A valid finding of name sensitivity, order sensitivity, verified no-solution behaviour, or encoding dependence completes the investigation if the evidence is sufficient.
 
@@ -1080,4 +1155,12 @@ If either property fails, the result must be reported as the specific failed tra
 
 The expected-vs-actual learnt rule comparison remains the primary evidence throughout. Parent-set $F_1$ is supporting information only.
 
-**Filled in (June 2026):** cell-level and transformation-level results, Stage 3 trace, and bounded interpretation are recorded in `docs/experiments/qualitative/M1.1-parent-position.md` and `docs/report/findings/milestone1_part1_m11_findings.tex`.
+**Filled in (June 2026):**
+
+- **Phase A complete:** Stages 0–3; cell-level and transformation-level results in
+  `docs/experiments/qualitative/M1.1-parent-position.md` and interim
+  `docs/report/findings/milestone1_part1_m11_findings.tex`.
+- **Phase B not started:** Stages 4–5 outstanding. Status **`more work needed`** per
+  Fabrizio review (June 2026). M1.2 full greedy grid deferred.
+- **DGP clarified:** target-mechanism tables (isolated non-parent + `x2 := parent`);
+  not chain SCM sampling.
