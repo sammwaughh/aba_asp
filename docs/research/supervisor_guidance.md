@@ -14,11 +14,10 @@ Context: Samuel presented the initial m1.1 eight-cell nd grid results and interi
 findings (`docs/report/findings/milestone1_part1_m11_findings.tex`). Status
 changed from `analysed` to **`more work needed`**.
 
-### Resolution (22 June 2026)
+### Resolution (22 June 2026 — final closure)
 
 Requirements **addressed**: Stage 4 granular trace (cat3 A vs B); Stage 6 ablations
-ABL-100–107; findings tex integrated conclusion. m1.1 status restored to **`analysed`**.
-See `docs/research/decisions.md` and `milestone1_part1_m11_findings.tex`.
+ABL-100–107; Stage 7 greedy comparator; findings tex integrated conclusion. m1.1 status **`analysed` / closed**. See `docs/research/decisions.md` (2026-06-22 Stages 0–7 entry) and `milestone1_part1_m11_findings.tex`.
 
 ### Core points (original guidance)
 
@@ -159,24 +158,25 @@ judgement-heavy moments; use fast/Instant only for trivial formatting.
 
 ---
 
-## Implications already actioned / in progress
+## Implications already actioned
 
 - Report labels fixed as **QL1 = QI-001, QL2 = QI-002, QL3 = QI-004**; the earlier n=100 scaled
   attempt was cut and is not part of the canonical set.
 - The Experimentation chapter (`docs/report/manuscript/experimentation.md`) describes the QL3 DGP
   explicitly (binary flip, categorical noise, Gaussian continuous; positive-class definitions;
   three uniform bins) and reports variable-level F1 in place of the clean score.
-- Greedy-vs-nd was investigated qualitatively
-  (`docs/experiments/qualitative/greedy_vs_nd_qualitative_handoff.md`). Milestone 1 Part 2
-  (M1.2) will compare greedy vs nd on the m1.1 eight-cell grid; the QI-* greedy reruns remain
-  supporting precedent only.
-- **M1.1 (M11) parent-position metamorphic control** — **`analysed`** (Stages 0–6; ablations
-  ABL-100–107). Findings: `docs/report/findings/milestone1_part1_m11_findings.tex`.
+- Greedy-vs-nd was investigated qualitatively on QI fixtures
+  (`docs/experiments/qualitative/greedy_vs_nd_qualitative_handoff.md`). m1.1 Stage 7 recorded
+  formal nd vs greedy on the eight-cell control grid (`M11_parent_position_greedy/`). Milestone 1
+  Part 2 (M1.2) will extend strategy comparison across QI motifs and decide operational default.
+- **M1.1 (M11) parent-position metamorphic control** — **`closed`** (Stages 0–7). nd mechanism
+  ablation-supported; Stage 7 greedy comparator complete. Findings:
+  `docs/report/findings/milestone1_part1_m11_findings.tex`.
 
 ## Outstanding actions
 
-- **M1.2:** greedy vs nd on m1.1 grid (comparator).
-- **M1.1 optional:** Stage 5 runner call-chain doc.
+- **M1.2:** broader nd vs greedy strategy review on QI fixtures (planning doc to expand).
+- **M1.1 optional:** Stage 5 runner call-chain doc (non-blocking).
 - Give each presented result an interpretation and a conclusion; reason explicitly about
   DGP-expected vs actual learned rules (M1.1 done; QL series partially done).
 - Define first-principles success metrics beyond parent membership (e.g. fold count for

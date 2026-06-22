@@ -59,6 +59,11 @@ argumentative form. The interim experiments (RQ1) are **groundwork**: target-wis
 recovery characterising what unguided ABA Learning does before causal guidance is added. See
 `docs/report/manuscript/introduction.md` and `docs/report/manuscript/project_plan.md`.
 
+**Milestone status (June 2026):** Milestone 1 Part 1 (M11 / m1.1) is **closed** (Stages 0–7).
+Evidence: `docs/experiments/qualitative/M1.1-parent-position.md`;
+supervisor findings `docs/report/findings/milestone1_part1_m11_findings.tex`.
+**Next:** Milestone 1 Part 2 (M1.2) — broader nd vs greedy strategy review on QI fixtures.
+
 ## Source priority
 
 1. Project docs in this repo (especially `docs/theory/`, `docs/report/manuscript/`,

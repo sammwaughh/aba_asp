@@ -237,13 +237,13 @@ Square verdicts on cat3 A/D use sol files and prolog traces where cov_py and cov
 - Claims supported:
 
 ```text
-M11-C-001, M11-C-002, M11-C-005, M11-C-007 (bounded / ablation-supported)
+M11-C-001, M11-C-002, M11-C-004, M11-C-005, M11-C-007 (bounded / ablation-supported / Stage 7)
 ```
 
 - Claims not supported:
 
 ```text
-Greedy fixes or explains cat3 σ failure (M11-C-004 weakened; ABL-105; M1.2 comparator pending)
+Greedy fixes cat3 singleton recovery (M11-C-004 rejected for that); greedy restores rule-level σ with supersets (Stage 7)
 Unconditional cat3 σ-invariance under default pipeline
 ```
 
@@ -280,7 +280,7 @@ M11-C-003, M11-C-006, M11-C-007
 - Claims not supported:
 
 ```text
-folding_mode(all) alone recovers singleton (ABL-105); greedy as primary σ explanation (M11-C-004)
+folding_mode(all) alone recovers singleton (ABL-105); greedy as primary singleton σ fix (M11-C-004 rejected; Stage 7 supersets)
 ```
 
 ## Caption rules

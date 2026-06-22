@@ -32,7 +32,7 @@ The earlier n=100 scaled attempt was cut and is not part of the canonical experi
 | QI-001 greedy | — | Greedy-folding rerun of QI-001 (3 motifs x 3 modes) | analysed |
 | QI-002 greedy | — | Greedy-folding rerun of QI-002 (minimal truth-table baseline) | analysed |
 | QI-004 greedy | — | Greedy-folding rerun of QI-004 (scaled noisy n=20) | analysed |
-| M11 | — | m1.1 Parent-position and representation-order control | analysed (Stages 0–6; ablations ABL-100–107) |
+| M11 | — | m1.1 Parent-position and representation-order control | analysed (Stages 0–7; ablations + greedy comparator) |
 
 ## Template
 
@@ -204,13 +204,16 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
 
 ### M11 — m1.1 Parent-position and representation-order control
 
-- Status: **analysed** (Stages 0–6 complete; ablations ABL-100–107 executed June 2026).
+- Status: **analysed** (Stages 0–7 complete; ablations ABL-100–107; greedy comparator June 2026).
 - Detailed record: docs/experiments/qualitative/M1.1-parent-position.md.
 - Interim supervisor findings: docs/report/findings/milestone1_part1_m11_findings.tex.
-- Design source: docs/research/milestone_plans/milestone1_part1_parent_position.md; ablation plan `milestone1_part1_ablations.md`.
+- Design source: docs/research/milestone_plans/milestone1_part1/milestone1_part1_parent_position.md; ablation plan `milestone1_part1/milestone1_part1_ablations.md`; greedy comparator `milestone1_part1/milestone1_part1_greedy_comparator.md`.
 - Ablation artefacts: `causal/outputs/aba_learning/grid/M11_ablations/`; summary `M11_ablations/summary/abl_results.md`.
+- Greedy comparator: config `M11_parent_position_greedy.yaml`; artefacts `M11_parent_position_greedy/cells/`; summary `M11_parent_position_greedy/summary/compare_nd_greedy.md`.
 - Ablation command: `python -m causal.scripts.m11_ablation_run --all-required` (commit 93d51bf).
+- Greedy command: `python -m causal.experiments.run_grid --config causal/configs/experiments/M11_parent_position_greedy.yaml --no-resume`.
 - Stage 6 outcome: ABL-101 pass (BK flip on cat3 A → singleton); ABL-103 pass (π symmetry); ABL-105 pass (folding_mode all does not recover); ABL-100/107 audits pass. Mechanism ablation-supported.
+- Stage 7 outcome: binary greedy matches nd; cat3 greedy all parent supersets; cat3 rule-level σ restored under greedy; B/C regress from nd singleton.
 - Research question: under complete, noiseless QL2-style target tables, when the direct-parent and non-parent roles are exchanged between x0 and x1 and the learner-visible predictor order is independently reversed, does the learnt x2 rule follow the variable in the direct-parent role (vs a fixed x0 identity or a fixed representation position)?
 - Theoretical motivation: metamorphic validity control on the QL2 (QI-002) parent-recovery proxy, targeting the unresolved categorical-chain discrepancy (expected x1, returned x0).
 - Relation to ABA Learning: target-wise learning of x2 with target excluded from BK; fixed QI-002-style nd folding (folding_steps 15, timeout 120 s).
@@ -225,4 +228,4 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
 - Failure modes: silent column canonicalisation voiding sigma (not observed); no-solution; parser/normalisation discrepancy; implementation/artefact error; cov_py/cov_pl disagreement on assumption-based rules (cat3 A/D flagged).
 - Cursor implementation plan / prompt: grid cell_dir naming implemented (`grid.cell_dir: dgp` on M11 config).
 - Commit hash / run artefact path: Stage-0 validation at `causal/outputs/m11_parent_position/validation/`; learning grid at `causal/outputs/aba_learning/grid/M11_parent_position/cells/<dgp>/`; ablations at `M11_ablations/`.
-- Report relevance: interim Experimentation / Progress (Milestone 1 Part 1 — analysed). M1.2 deferred.
+- Report relevance: interim Experimentation / Progress (Milestone 1 Part 1 — analysed, Stages 0–7). M1.2 broader strategy review next.

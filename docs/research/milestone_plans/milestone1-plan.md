@@ -33,10 +33,14 @@ The process should remain rigorous but lightweight. Documentation and additional
 
 ## Part 1: Parent-Position and Representation-Order Control
 
-Planning document: `milestone1_part1_parent_position.md`  
-**Ablation plan:** `milestone1_part1_ablations.md`  
+Planning documents (folder [`milestone1_part1/`](milestone1_part1/README.md)):
+
+- Main design: [`milestone1_part1_parent_position.md`](milestone1_part1/milestone1_part1_parent_position.md)
+- Ablation plan: [`milestone1_part1_ablations.md`](milestone1_part1/milestone1_part1_ablations.md)
+- Greedy comparator (Stage 7): [`milestone1_part1_greedy_comparator.md`](milestone1_part1/milestone1_part1_greedy_comparator.md)
+
 Experiment record: `docs/experiments/qualitative/M1.1-parent-position.md`  
-Interim findings: `docs/report/findings/milestone1_part1_m11_findings.tex`
+Findings: `docs/report/findings/milestone1_part1_m11_findings.tex`
 
 ### Goal
 
@@ -52,6 +56,7 @@ Small, clean **target-mechanism tables**: one predictor is a deterministic direc
 |-------|---------|-------------------|
 | **A — Metamorphic grid** | Stages 0–3: fixtures, eight-cell nd run, σ/π square, triggered cat3 A vs B trace | **Done** (Stage 3 provisional) |
 | **B — Mechanistic account** | Stages 4–6: trace mechanism + ablations | **Done** |
+| **C — Greedy comparator** | Stage 7: same eight cells, `folding_mode: greedy` vs nd | **Done** |
 
 ### Phase A — what was done
 
@@ -71,20 +76,20 @@ Small, clean **target-mechanism tables**: one predictor is a deterministic direc
 
 ### Status
 
-**`analysed`** — Part 1 complete (Stages 0–6). Fabrizio review requirements addressed.
+**Closed** (Stages 0–7, June 2026). Fabrizio review requirements addressed; Stage 7 greedy comparator recorded. Optional: Stage 5 runner doc.
 
 ### Part 2 dependency
 
-**M1.2 full greedy grid** is the **next comparator experiment**; not required to explain cat3 σ failure.
+Stage 7 (m1.1 greedy comparator) completes the control-grid anchor for Part 2. **M1.2 full greedy grid** remains the broader strategy review; it is not required to explain nd cat3 σ failure.
 
 ## Part 2: Greedy Versus Non-Deterministic ABA Learning
 
-Planning document: `milestone1_part2_greedy_vs_nondeterministic.md`  
-**Status:** `planned` — **blocked** on m1.1 Phase B progress
+Planning document: [`milestone1_part2/milestone1_part2_greedy_vs_nondeterministic.md`](milestone1_part2/milestone1_part2_greedy_vs_nondeterministic.md)  
+**Status:** `planned` — unblocked after m1.1 Stage 7
 
 Determine which currently implemented folding strategy should be the operational default for the remaining Milestone 1 work.
 
-**Dependency:** Part 2 assumes a clearer mechanistic account of m1.1 cat3 σ failure (Part 1 Phase B). A quick greedy smoke test on the m1.1 grid produced an outcome materially different from both nd cat3 A and B — strategy comparison alone does not explain the divergence.
+**Dependency:** Part 1 **closed** (Stages 0–7). Stage 7 provides the eight-cell nd vs greedy anchor (`M11_parent_position_greedy/`). Part 2 extends strategy comparison to QI fixtures and operational default — it does not reopen the nd cat3 σ mechanism account.
 
 The investigation should compare greedy and non-deterministic learning on controlled fixtures, assessing both computational behaviour and agreement with expected learned rules. It should test whether greedy is faster, more reliable or more causally aligned, while allowing for the possibility that its advantages are conditional rather than universal.
 
@@ -92,7 +97,8 @@ The intended outcome is a supported strategy decision, including any limitations
 
 ## Part 3: Qualitative Failure Analysis
 
-Planning document: `milestone1_part3_failure_analysis.md`
+Planning document: [`milestone1_part3/milestone1_part3_failure_analysis.md`](milestone1_part3/milestone1_part3_failure_analysis.md)  
+**Status:** `not started`
 
 Investigate a small number of informative discrepancies from the improved QL2 experiments and the strategy comparison.
 
@@ -109,7 +115,8 @@ The intended outcome is an evidence-backed account of representative failure mec
 
 ## Part 4: Noise and Continuous-DGP Investigation
 
-Planning document: `milestone1_part4_noise_and_continuous.md`
+Planning document: [`milestone1_part4/milestone1_part4_noise_and_continuous.md`](milestone1_part4/milestone1_part4_noise_and_continuous.md)  
+**Status:** `not started`
 
 Conduct a principled investigation of how the current pipeline behaves when data are sampled from noisy continuous DGPs and then encoded for ABA Learning.
 
@@ -136,4 +143,4 @@ After all four investigations, consolidate their `.tex` findings into a concise 
 4. how the current system behaves on noisy continuous-derived data; and
 5. which findings motivate Causal ABA-style guidance in Milestone 2.
 
-**Current progress:** Part 1 **analysed**; Part 2 (M1.2) next comparator. Parts 3–4 not started.
+**Current progress:** Part 1 **closed** (Stages 0–7). Part 2 (M1.2) next. Parts 3–4 not started.

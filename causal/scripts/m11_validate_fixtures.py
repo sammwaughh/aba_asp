@@ -2,7 +2,7 @@
 
 Runs the Stage-0 (pre-learning) validation for the eight metamorphic chain
 fixtures of Milestone 1, Part 1
-(``docs/research/milestone_plans/milestone1_part1_parent_position.md``):
+(``docs/research/milestone_plans/milestone1_part1/milestone1_part1_parent_position.md``):
 
 - structural (table-only) checks per cell;
 - generated background knowledge (BK) via ``execute_cell_stage2`` (no Prolog);

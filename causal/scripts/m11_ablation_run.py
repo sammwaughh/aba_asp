@@ -1,6 +1,6 @@
 """Run m1.1 ablation interventions (Stage 3 only).
 
-See ``docs/research/milestone_plans/milestone1_part1_ablations.md`` and
+See ``docs/research/milestone_plans/milestone1_part1/milestone1_part1_ablations.md`` and
 ``causal/configs/experiments/M11_ablations.yaml``.
 
 Usage (from repo root):

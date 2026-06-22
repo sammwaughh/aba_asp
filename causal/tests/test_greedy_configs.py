@@ -27,6 +27,7 @@ _CASES = [
     ("QI001_motifs_modes", "QI001_motifs_modes_greedy", 9),
     ("QI002_minimal_motifs", "QI002_minimal_motifs_greedy", 6),
     ("QI004_scaled_motifs_n20", "QI004_scaled_motifs_n20_greedy", 15),
+    ("M11_parent_position", "M11_parent_position_greedy", 8),
 ]
 
 

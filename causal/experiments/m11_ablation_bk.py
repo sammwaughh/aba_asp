@@ -2,7 +2,7 @@
 
 Pure Prolog-free helpers: parse cat3 feature-predicate blocks, reorder,
 prepend rules, and verify rule multisets. See
-``docs/research/milestone_plans/milestone1_part1_ablations.md``.
+``docs/research/milestone_plans/milestone1_part1/milestone1_part1_ablations.md``.
 """
 
 from __future__ import annotations

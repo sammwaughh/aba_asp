@@ -2,7 +2,7 @@
 
 Eight metamorphic fixtures (2 encodings x cells A/B/C/D) supporting the
 m1.1 control described in
-``docs/research/milestone_plans/milestone1_part1_parent_position.md``.
+``docs/research/milestone_plans/milestone1_part1/milestone1_part1_parent_position.md``.
 
 **Tabular DGP (all cells):** exhaustive factorial over (x0, x1); x2 := parent
 deterministically; the non-parent is marginally independent of x2. At the data

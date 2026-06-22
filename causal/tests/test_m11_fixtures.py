@@ -1,7 +1,7 @@
 """Prolog-free Stage-0 validation for the m1.1 parent-position fixtures.
 
 Validates the eight metamorphic chain fixtures (2 encodings x cells A/B/C/D)
-described in ``docs/research/milestone_plans/milestone1_part1_parent_position.md``
+described in ``docs/research/milestone_plans/milestone1_part1/milestone1_part1_parent_position.md``
 before any ABA Learning run. No swipl/clingo: ``execute_cell_stage2`` stops
 before Prolog, so BK-dependent checks use the actually generated ``bk.aba``.
 """

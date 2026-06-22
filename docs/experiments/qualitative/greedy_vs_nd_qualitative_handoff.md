@@ -82,7 +82,11 @@ Across QI-001/QI-002/QI-004, switching nd -> greedy is **better or equal on ever
 
 ## Implications for Milestone 1 Part 2 (M1.2)
 
-These qualitative results motivate comparing greedy vs nd on the **m1.1 eight-cell grid** (M11 nd baseline already recorded). The runtime advantage and collider solve/recovery gains on QI fixtures are precedent only; whether greedy changes cat3 σ behaviour on m1.1 is an M1.2 question (claim M11-C-004, tentative). The QI-004 result (greedy = nd in recovery but far cheaper) suggests greedy is worth using for scaling experiments, independent of any recovery claim.
+QI greedy reruns remain supporting precedent for runtime and collider gains. **m1.1 Stage 7**
+(formal nd vs greedy on the eight-cell control grid) is **complete** — see
+`M11_parent_position_greedy/summary/compare_nd_greedy.md` and M11-C-004. M1.2 should extend
+strategy comparison across QI motifs and support an operational default decision; it does not
+repeat the m1.1 grid work.
 
 ## Artefact paths
 

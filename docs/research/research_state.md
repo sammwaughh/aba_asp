@@ -94,17 +94,16 @@ n=100 scaled attempt was cut; only the reduced n=20 study is canonical and is no
   net better clean recovery (colliders), with one regression (cat3 fork exact → superset) and no
   recovery change at the noisy n=20 scale. See
   `docs/experiments/qualitative/greedy_vs_nd_qualitative_handoff.md`.
-- **M1.1 (M11)** — eight-cell metamorphic control; binary σ/π pass; cat3 σ fails under default
-  pipeline. Stages 4–6: trace mechanism + ablations ABL-100–107. Status **`analysed`**.
-  Record: `M1.1-parent-position.md`; findings: `milestone1_part1_m11_findings.tex`.
+- **M1.1 (M11)** — eight-cell metamorphic control; Stages 0–7 **closed**. nd: binary σ/π pass; cat3 σ fails (ablation-supported mechanism). Stage 7 greedy: binary matches nd; cat3 all supersets, rule-level σ restored. Record: `M1.1-parent-position.md`; findings: `milestone1_part1_m11_findings.tex`.
 
 **Bounded conclusion.** The current target-wise pipeline can recover parent sets in selected
 idealised cases (especially simple binary and fork cases) but recovery is not robust across
-motifs, encodings or modest noisy scaling. M1.1: binary parent-role tracking with full σ/π
-invariance; cat3 parent-role tracking when parent feature wins first fold; cat3 σ-invariance
-fails under default pipeline but is **accounted for** by BK serialisation + entailment +
-assumption commitment (ablation-supported). This characterises what unguided ABA Learning does
-before causal guidance is added; it does not establish causal discovery.
+motifs, encodings or modest noisy scaling. **m1.1 (closed):** binary parent-role tracking with
+full σ/π invariance under nd; cat3 parent-role tracking when parent feature wins first fold;
+cat3 σ-invariance fails under default nd pipeline but is **accounted for** by BK serialisation
++ entailment + assumption commitment; greedy produces a distinct cat3 superset profile. This
+characterises what unguided ABA Learning does before causal guidance is added; it does not
+establish causal discovery.
 
 ## Open conceptual risks
 
@@ -122,7 +121,6 @@ before causal guidance is added; it does not establish causal discovery.
 
 ## Next milestone
 
-**Milestone 1 Part 2 (M1.2)** — greedy vs nd on the m1.1 grid: **next comparator** (Part 1
-**analysed**). Parts 3–4 of Milestone 1 (failure analysis; noise/continuous DGP) follow M1.2.
-Then **Milestone 2** (Causal-ABA-guided ABA Learning bridge). Tracked in `experiment_register.md`,
-`docs/experiments/experiments_summary.md`, and `docs/report/manuscript/project_plan.md`.
+**Milestone 1 Part 2 (M1.2)** — broader nd vs greedy strategy review on QI fixtures and strategy
+default decision (m1.1 Stage 7 anchor at `M11_parent_position_greedy/summary/compare_nd_greedy.md`).
+Parts 3–4 of Milestone 1 follow M1.2. Then **Milestone 2** (Causal-ABA-guided ABA Learning bridge).

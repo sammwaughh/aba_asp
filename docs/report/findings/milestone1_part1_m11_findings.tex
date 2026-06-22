@@ -8,7 +8,7 @@
 \title{Milestone~1 Part~1 (M11): Parent-Position and Representation-Order Control\\[0.5em]
 \large Supervisor-facing findings log}
 \author{Causal ABA Learning project --- Samuel Waugh}
-\date{18 June 2026 \quad (initial grid); 22 June 2026 \quad (nd + ablations); greedy comparator \textbf{pending}}
+\date{18 June 2026 \quad (initial grid); 22 June 2026 \quad (nd + ablations + greedy comparator)}
 
 \begin{document}
 \maketitle
@@ -22,8 +22,9 @@ statistically isolated from \texttt{x2} and the other is a deterministic copy of
 (\emph{target-mechanism} tables). Under non-deterministic folding (\texttt{folding\_mode: nd})
 with cautious semantics and \texttt{relto} assumption introduction, we find an encoding-dependent
 split: the binary encoding passes all checks, whereas categorical-3 fails
-representation-order invariance for a reason that is now ablation-supported. A targeted greedy
-comparator on the same eight cells is planned but not yet recorded here.
+representation-order invariance for a reason that is now ablation-supported under nd.
+Stage~7 (greedy comparator) shows greedy restores cat3 rule-level $\sigma$ but produces
+parent supersets on all cat3 cells rather than singletons.
 \end{abstract}
 
 % ---------------------------------------------------------------------------
@@ -335,57 +336,69 @@ engine bug.
 
 All ablation runs referenced above used commit \texttt{93d51bf} of the repository.
 
-\subsection{Greedy comparator on the same target-mechanism fixtures (planned)}
+\subsection{Greedy comparator on the same target-mechanism fixtures (Stage 7)}
 \label{sec:greedy}
 
-ABL-105 tested one alternative folding configuration (\texttt{all}) under the nd search
-framework. It did not answer whether \textbf{greedy} folding, a distinct strategy used elsewhere
-in the project, would behave like nd, repair cat3 $\sigma$, or produce outcomes different from
-\emph{both} nd cat3~A and nd cat3~B. An informal smoke test suggested a third outcome; that test
-has not been formalised in the experiment record and is not cited as evidence here.
+ABL-105 tested \texttt{folding\_mode(all)} under the nd framework. Stage~7 reran the
+\emph{same} eight cells with \texttt{folding\_mode: greedy} only
+(config \texttt{M11\_parent\_position\_greedy.yaml}; artefacts
+\texttt{M11\_parent\_position\_greedy/cells/}).
 
-\paragraph{Proposed scope.} As an m1.1 addendum (distinct from full M1.2), we plan to re-run the
-\emph{same} eight cells with \texttt{folding\_mode: greedy} and identical fixtures, expected-rule
-criterion, and transformation square. This isolates folding-strategy effects on the target-mechanism
-motif (isolated predictor plus one deterministic causal link). M1.2 will later compare nd and
-greedy across broader motifs, noise, and scale.
-
-\paragraph{Planned command.}
+\paragraph{Command.}
 \begin{verbatim}
 python -m causal.experiments.run_grid \
   --config causal/configs/experiments/M11_parent_position_greedy.yaml \
   --no-resume
 \end{verbatim}
 
-\paragraph{Results table (to be completed after the run).}
+\paragraph{Results (June 2026).} All eight cells \texttt{solved}.
 
 \begin{center}
 \small
-\begin{tabular}{@{}llllp{3.5cm}l@{}}
+\begin{tabular}{@{}llllp{3.2cm}l@{}}
 \toprule
-Enc. & Cell & nd outcome (reference) & greedy outcome & $\sigma$/$\pi$ vs nd & Notes \\
+Enc. & Cell & nd (reference) & greedy outcome & $\sigma$/$\pi$ vs nd & Notes \\
 \midrule
-binary & A--D & exact singleton & \textit{TBD} & \textit{TBD} & positive control \\
-cat3 & A & assumption triple & \textit{TBD} & \textit{TBD} & key $\sigma$-sensitive cell \\
-cat3 & B & exact singleton & \textit{TBD} & \textit{TBD} & \\
-cat3 & C, D & exact / assumption & \textit{TBD} & \textit{TBD} & \\
+binary & A--D & exact singleton & exact singleton & matches nd & positive control \\
+cat3 & A & assumption triple & parent superset (3 rules) & differs & H-G-third \\
+cat3 & B & exact singleton & parent superset (3 rules) & differs; regression & \\
+cat3 & C & exact singleton & parent superset (3 rules) & differs; regression & \\
+cat3 & D & assumption triple & parent superset (3 rules) & differs & \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-\paragraph{Questions the greedy run should answer.}
+Under greedy, every cat3 cell returns three rote-specific \texttt{x2} rules whose bodies
+contain two value predicates: the parent positive class plus one non-parent literal
+(e.g.\ on cat3~A: \texttt{x2(A):-x0\_val\_i(A),x1\_val\_2(A)} for $i\in\{0,1,2\}$).
+This is a \textbf{third outcome class}: neither the nd assumption triple nor the nd
+parent singleton.
+
+\paragraph{Metamorphic verdicts under greedy.} Binary: unchanged (all $\sigma$ and $\pi$
+hold). Cat3: rule-level $\sigma$-invariance \textbf{holds} on both pairs (A$\leftrightarrow$B
+and D$\leftrightarrow$C return identical target rules), unlike nd. $\pi$-equivariance holds
+on the tested pairs. \textbf{No} cat3 cell meets the pre-specified singleton criterion under
+greedy; cells B and C \textbf{regress} from nd singleton to superset.
+
+\paragraph{Mechanism (cat3 A).} Greedy trace (${\sim}$79 lines vs nd A ${\sim}$172): on the
+first rote equality \texttt{x2(A)<-[A=3]}, \texttt{fold\_greedy} folds \texttt{x1\_val\_2}
+then \texttt{x0\_val\_0}, producing a two-literal rule with passing entailment---no
+assumption commitment. BK order still influences which predicates enter the fold sequence,
+but the nd first-fold entailment failure path is avoided.
+
+\paragraph{Answers to pre-specified questions.}
 \begin{enumerate}
-  \item Does greedy folding recover the cat3~A singleton without any BK reorder intervention?
-  \item Is cat3 $\sigma$-invariant under greedy, even where nd failed?
-  \item Does greedy match nd on binary cells (sanity check on the encoding moderator)?
-  \item If greedy differs from nd, can the difference still be explained by BK order, first-fold
-  choice, and entailment, or does it require a distinct search-path account?
+  \item Greedy does \textbf{not} recover the cat3~A singleton without BK reorder.
+  \item Cat3 $\sigma$-invariance \textbf{holds at rule level} under greedy, but all cells
+  are discrepant supersets, not singletons.
+  \item Greedy matches nd on binary (sanity check passed).
+  \item Greedy differs from nd on cat3 via a distinct search path (\texttt{fold\_greedy/2}),
+  not via the nd assumption-commitment chain alone.
 \end{enumerate}
 
-\paragraph{Claim impact after the run.} We expect to update M11-C-004 in the claims ledger
-(greedy vs representation-order sensitivity). M11-C-007 may be refined if greedy shares the same
-BK-order mechanism; M11-C-003 and M11-C-006 should remain unchanged unless greedy falsifies the
-nd-specific commitment path established by ABL-105.
+\paragraph{Claim impact.} M11-C-004 resolved: greedy does \textbf{not} fix singleton
+recovery; it restores cat3 rule-level $\sigma$ while uniformly producing parent supersets.
+M11-C-003, C-006, C-007 (nd mechanism) unchanged.
 
 % ---------------------------------------------------------------------------
 \section{Evidence tables (reference)}
@@ -488,15 +501,15 @@ and on pipeline serialisation, not on absence of parent information in the table
 
 We do not claim chain structural discovery, Russo-style Causal ABA, or a production-ready fix
 to BK generation in the bridge. Ablation BK edits are diagnostic interventions only. We do not
-claim that greedy folding fixes cat3 $\sigma$ until the comparator in Section~\ref{sec:greedy}
-is executed and recorded.
+claim that greedy folding fixes cat3 $\sigma$ in the singleton-recovery sense (Stage~7 shows
+rule-level $\sigma$ restoration with uniform parent supersets instead).
 
 \subsection{Claims ledger cross-reference}
 
 Active entries in \texttt{docs/report/claims\_ledger.md}: M11-C-001 (binary control), M11-C-002
 (cat3 $\sigma$ failure), M11-C-003 and M11-C-006 (mechanism; ablation-supported), M11-C-005 (grid
-summary), M11-C-007 (integrated cat3 account). M11-C-004 (greedy vs $\sigma$) remains pending
-the greedy comparator run.
+summary), M11-C-007 (integrated cat3 account). M11-C-004 (greedy comparator): greedy restores
+cat3 rule-level $\sigma$ but not singleton recovery; all cat3 cells are parent supersets.
 
 % ---------------------------------------------------------------------------
 \section{Limitations and next steps}
@@ -509,11 +522,8 @@ singleton criterion. Coverage metrics \texttt{cov\_py} and \texttt{cov\_pl} disa
 assumption-based rules; classifications in this document use \texttt{bk.sol.aba} and traces.
 Ablation BK changes are post-hoc and do not alter the default bridge behaviour.
 
-\paragraph{Next steps.} First, execute and record the m1.1 greedy comparator
-(Section~\ref{sec:greedy}). Second, optionally document the full Python-to-Prolog call chain
-(Stage~5). Third, proceed to Milestone~1 Part~2 for a broader nd vs greedy comparison. Fourth,
-Milestone~2 addresses Causal-ABA-guided learning, which is outside the scope of this findings
-log.
+\paragraph{Next steps.} Proceed to Milestone~1 Part~2 (broader nd vs greedy on QI fixtures).
+Optional: Stage~5 runner call-chain doc. Milestone~2 addresses Causal-ABA-guided learning.
 
 % ---------------------------------------------------------------------------
 \section*{Appendix: commands and artefact paths}

@@ -1,5 +1,5 @@
-experiment_id: milestone1-1-Greedy
-description: "Milestone 1 Part 1 greedy rerun (m1.1-G): identical to M11_parent_position (eight metamorphic chain cells, target x2, grid.cell_dir dgp) with the single change folding_mode nd -> greedy. Parent-set / learned-rule recovery proxy via ABA Learning, NOT Russo-style Causal ABA."
+experiment_id: M11_parent_position_greedy
+description: "Milestone 1 Part 1 greedy comparator (m1.1 Stage 7): identical to M11_parent_position (eight metamorphic chain cells, target x2, grid.cell_dir dgp) with the single change folding_mode nd -> greedy. Parent-set / learned-rule recovery proxy via ABA Learning, NOT Russo-style Causal ABA."
 owner: sam
 
 defaults:

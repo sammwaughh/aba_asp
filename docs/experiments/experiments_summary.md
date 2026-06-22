@@ -36,7 +36,7 @@ Use the same status categories as `experiment_register.md`.
 | QI-001 greedy | — | Greedy-folding rerun of QI-001 (3 motifs x 3 modes) | analysed | `docs/experiments/qualitative/QI001_motifs_modes_greedy/` | `causal/configs/experiments/QI001_motifs_modes_greedy.yaml` | `causal/outputs/aba_learning/grid/QI001_motifs_modes_greedy/` | Interim Experimentation / Progress | Only change `folding_mode: greedy`. 9/9 solved; greedy faster and recovers all three colliders cleanly across modes (nd clean only in binary); chain/fork remain supersets. |
 | QI-002 greedy | — | Greedy-folding rerun of QI-002 (minimal truth-table baseline) | analysed | `docs/experiments/qualitative/QI002_minimal_motifs_greedy/` | `causal/configs/experiments/QI002_minimal_motifs_greedy.yaml` | `causal/outputs/aba_learning/grid/QI002_minimal_motifs_greedy/` | Interim Experimentation / Progress | Only change `folding_mode: greedy`. 6/6 solved (vs nd 5/6): solves the binary collider nd could not; cat3 collider now exact; clean recovery 3/6 -> 4/6 with one regression (cat3 fork exact -> superset). |
 | QI-004 greedy | — | Greedy-folding rerun of QI-004 (scaled noisy n=20) | analysed | `docs/experiments/qualitative/QI004_scaled_motifs_n20_greedy/` | `causal/configs/experiments/QI004_scaled_motifs_n20_greedy.yaml` | `causal/outputs/aba_learning/grid/QI004_scaled_motifs_n20_greedy/` | Interim Experimentation / Progress | Only change `folding_mode: greedy`. Same outcomes as nd (1 solved, 12 no-solution, 2 errors; 0/15 clean) but ~120x faster (≈1233 s -> ≈10 s). At noisy n=20 greedy changes only runtime; binary errors persist. |
-| M11 | — | m1.1 Parent-position and representation-order control | analysed | `docs/experiments/qualitative/M1.1-parent-position.md` | `causal/configs/experiments/M11_parent_position.yaml` | `causal/outputs/aba_learning/grid/M11_parent_position/cells/<dgp>/`; `M11_ablations/` | Interim Experimentation / Progress (Milestone 1) | 8/8 nd solved. Binary σ/π pass. Cat3 σ fails; mechanism ablation-supported (ABL-100–107). Status analysed. M1.2 deferred. |
+| M11 | — | m1.1 Parent-position and representation-order control | analysed | `docs/experiments/qualitative/M1.1-parent-position.md` | `causal/configs/experiments/M11_parent_position.yaml`; `M11_parent_position_greedy.yaml` | `M11_parent_position/cells/`; `M11_parent_position_greedy/`; `M11_ablations/` | Interim Experimentation / Progress (Milestone 1) | nd: 8/8 solved; binary σ/π pass; cat3 σ fails (ablation-supported). Stage 7 greedy: binary matches nd; cat3 all supersets; rule-level σ restored under greedy. |
 
 ## Experiment sequence to date and next
 
@@ -56,19 +56,15 @@ Compared `folding_mode: nd` vs `greedy` on identical fixtures (QI-001/QI-002/QI-
 
 Status: **`analysed`**
 
-Initial eight-cell metamorphic grid complete (binary + cat3; σ and π under nd). Binary passes all checks; cat3 fails σ-invariance under default pipeline. **Stages 4–6:** mechanistic account + ablations (ABL-100–107) support BK-order → entailment → assumption mechanism. Findings: `docs/report/findings/milestone1_part1_m11_findings.tex`. Record: `docs/experiments/qualitative/M1.1-parent-position.md`.
+Initial eight-cell metamorphic grid complete (nd + Stage 7 greedy). nd: binary passes all checks; cat3 fails σ-invariance (ablation-supported). Stage 7 greedy: binary matches nd; cat3 rule-level σ restored; all cat3 cells are parent supersets (B/C regress from nd singleton). Findings: `docs/report/findings/milestone1_part1_m11_findings.tex`. Record: `docs/experiments/qualitative/M1.1-parent-position.md`.
 
-### Next: Milestone 1 Part 2 — greedy vs nd on the m1.1 grid (M1.2)
+### Next: Milestone 1 Part 2 — broader greedy vs nd (M1.2)
 
-Status: `planned` (comparator; Part 1 analysed)
+Status: `planned`
 
-Purpose:
+Purpose: compare greedy and nd across QI fixtures and decide strategy default. m1.1 anchor: `M11_parent_position_greedy/summary/compare_nd_greedy.md`.
 
-> Rerun the m1.1 eight-cell grid under `folding_mode: greedy` and compare to the nd baseline in M11. **Deferred** until m1.1 Stage 4 trace/runner investigation is documented. Greedy smoke test on m1.1 returned an outcome materially different from both nd cat3 A and B — not treated as sufficient explanation of σ failure.
-
-Planning doc (Samuel): `docs/research/milestone_plans/milestone1_part2_greedy_vs_nondeterministic.md` (to be written).
-
-Baseline comparator: M11 nd artefacts at `causal/outputs/aba_learning/grid/M11_parent_position/`.
+Planning doc: `docs/research/milestone_plans/milestone1_part2/milestone1_part2_greedy_vs_nondeterministic.md`.
 
 ### Later: Milestone 1 Parts 3–4 and Milestone 2 (Causal-ABA-guided bridge)
 
@@ -140,10 +136,10 @@ Workflow:
 
 ## Next action
 
-**Milestone 1 Part 2 (M1.2)** — write the Part 2 planning doc, then rerun the m1.1 eight-cell grid under greedy folding and compare to the M11 nd baseline. See `docs/research/milestone_plans/milestone1-plan.md` Part 2.
+**Milestone 1 Part 2 (M1.2)** — expand Part 2 planning doc; broader nd vs greedy on QI fixtures using m1.1 anchor. See `docs/research/milestone_plans/milestone1-plan.md` Part 2.
 
 Completed since the QL series:
 
-1. **M1.1 (M11)** — parent-position and representation-order metamorphic control (`analysed`; ablations complete).
+1. **M1.1 (M11)** — parent-position metamorphic control (`analysed`; nd ablations + Stage 7 greedy comparator).
 
 Remaining Milestone 1 parts (after M1.2): failure analysis (Part 3), noise/continuous DGP (Part 4); then Milestone 2 (Causal-ABA-guided bridge).

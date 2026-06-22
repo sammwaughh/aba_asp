@@ -1,4 +1,4 @@
-# M1.1 ablation specifications — see docs/research/milestone_plans/milestone1_part1_ablations.md
+# M1.1 ablation specifications — see docs/research/milestone_plans/milestone1_part1/milestone1_part1_ablations.md
 experiment_id: M11_ablations
 description: "Targeted ablations validating Stage 4 mechanistic claims for m1.1 cat3 sigma failure."
 
