@@ -1,8 +1,17 @@
 """m1.1 parent-position / representation-order fixtures (Milestone 1, Part 1).
 
-Eight metamorphic chain fixtures (2 encodings x cells A/B/C/D) supporting the
+Eight metamorphic fixtures (2 encodings x cells A/B/C/D) supporting the
 m1.1 control described in
 ``docs/research/milestone_plans/milestone1_part1_parent_position.md``.
+
+**Tabular DGP (all cells):** exhaustive factorial over (x0, x1); x2 := parent
+deterministically; the non-parent is marginally independent of x2. At the data
+level each cell is one *isolated* predictor plus a connected parent-target
+pair (``isolated ; parent -> x2``), NOT observational data from a chain SCM.
+
+Chain-style ``edges`` in the fixture metadata label which variable is parent vs
+non-parent for the ``pi`` swap; they do not generate ancestor-parent association
+in the table. Faithful correlated-ancestor chains remain QI-003/QI-004.
 
 The design crosses two factors at a fixed target ``x2``:
 
@@ -35,9 +44,9 @@ writer in ``causal/argcausaldisco_integration.py`` serialises by iterating
 implemented as a column reorder and ``x2`` is always kept last.
 
 Scope: parent-set / learned-rule recovery proxy via ABA Learning, NOT
-Russo-style Causal ABA. The chain edges only annotate the structural role
-(direct parent vs upstream ancestor); the exhaustive factorial table
-deliberately decorrelates the ancestor from the parent. This is NOT a faithful
+Russo-style Causal ABA. Fixture ``edges`` annotate structural roles (direct
+parent vs isolated non-parent) for ``pi``; the exhaustive factorial table
+deliberately keeps the non-parent independent of ``x2``. This is NOT a faithful
 chain SCM sample: a correlated-ancestor test remains the job of QI-003/QI-004.
 
 Data construction (minimal complete factorial, once per assignment):

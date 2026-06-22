@@ -55,7 +55,7 @@ The ABA Learning strategy is held fixed because strategy comparison is the subje
 
 The primary research question is:
 
-> Under complete, noiseless QL2-style target-mechanism tables, when the direct-parent and ancestor roles are exchanged between `x0` and `x1`, and learner-visible predictor order is independently reversed, does the learnt `x2` rule follow the variable occupying the direct-parent role?
+> Under complete, noiseless QL2-style target-mechanism tables, when the direct-parent and non-parent roles are exchanged between `x0` and `x1`, and learner-visible predictor order is independently reversed, does the learnt `x2` rule follow the variable occupying the direct-parent role?
 
 This question decomposes into two required properties.
 
@@ -123,42 +123,34 @@ Rule-level comparisons are primary. Base-variable signatures are retained as a s
 
 ## 4. Motif selection
 
-### 4.1 Primary motif: reversed chain pair
+### 4.1 Primary motif: parent-position pair (chain role labels only)
 
-The initial and intended complete experiment uses two chain orientations.
+The experiment uses two **parent-position configurations** derived from the QI-002 chain motif naming. The **tabular DGP is not a chain sample**: in every cell one predictor is isolated and the other is the deterministic direct cause of `x2` (`x2 := parent`). Chain-style arrows below label **which variable occupies the parent vs non-parent role** for the $\pi$ transformation; they do **not** mean the table was sampled from a chain SCM or that the isolated variable causes the parent.
 
-The first is:
-
-$$
-G_{x_1\text{-parent}}:
-\qquad
-x_0 \rightarrow x_1 \rightarrow x_2,
-$$
-
-where:
-
-- the direct parent of `x2` is `x1`;
-- `x0` has the structural role of an upstream ancestor and non-parent.
-
-The reversed chain is:
+**Configuration 1** (cells A, B; parent `x1`):
 
 $$
-G_{x_0\text{-parent}}:
-\qquad
-x_1 \rightarrow x_0 \rightarrow x_2,
+\text{data graph:}\quad x_0 \;\;\text{(isolated)}\;;\qquad x_1 \rightarrow x_2
+\qquad\text{with}\qquad x_2 := x_1.
 $$
 
-where:
+Role label (fixture metadata): $x_0 \rightarrow x_1 \rightarrow x_2$ with `x0` as upstream non-parent and `x1` as direct parent of `x2`.
 
-- the direct parent of `x2` is `x0`;
-- `x1` has the structural role of an upstream ancestor and non-parent.
+**Configuration 2** (cells C, D; parent `x0`):
 
-This motif is selected because it:
+$$
+\text{data graph:}\quad x_1 \;\;\text{(isolated)}\;;\qquad x_0 \rightarrow x_2
+\qquad\text{with}\qquad x_2 := x_0.
+$$
+
+Role label (fixture metadata): $x_1 \rightarrow x_0 \rightarrow x_2$ with `x1` as upstream non-parent and `x0` as direct parent of `x2`.
+
+This motif pair is selected because it:
 
 - directly targets the unresolved categorical-chain discrepancy from QL2;
 - gives `x2` exactly one direct parent;
 - gives an unambiguous one-literal expected target rule;
-- exchanges parent and ancestor roles between the two named variables;
+- exchanges parent and isolated non-parent roles between the two named variables;
 - allows fixed-name, fixed-position, and parent-role behaviour to be separated.
 
 ### 4.2 Motifs excluded from the initial experiment
@@ -183,12 +175,14 @@ The experiment crosses two factors:
 
 This gives four cells per encoding.
 
-| Cell | Structural graph | Direct parent | Ancestor non-parent | Learner-visible predictor order | Expected selected variable |
+| Cell | Data-level graph | Direct parent | Isolated non-parent | Learner-visible predictor order | Expected selected variable |
 |---|---|---|---|---|---|
-| A | $x_0\rightarrow x_1\rightarrow x_2$ | `x1` | `x0` | `[x0, x1]` | `x1` |
-| B | $x_0\rightarrow x_1\rightarrow x_2$ | `x1` | `x0` | `[x1, x0]` | `x1` |
-| C | $x_1\rightarrow x_0\rightarrow x_2$ | `x0` | `x1` | `[x0, x1]` | `x0` |
-| D | $x_1\rightarrow x_0\rightarrow x_2$ | `x0` | `x1` | `[x1, x0]` | `x0` |
+| A | $x_0\;;\; x_1\rightarrow x_2$ | `x1` | `x0` | `[x0, x1]` | `x1` |
+| B | $x_0\;;\; x_1\rightarrow x_2$ | `x1` | `x0` | `[x1, x0]` | `x1` |
+| C | $x_1\;;\; x_0\rightarrow x_2$ | `x0` | `x1` | `[x0, x1]` | `x0` |
+| D | $x_1\;;\; x_0\rightarrow x_2$ | `x0` | `x1` | `[x1, x0]` | `x0` |
+
+(Role-label graphs in fixture metadata: A/B $x_0\rightarrow x_1\rightarrow x_2$; C/D $x_1\rightarrow x_0\rightarrow x_2$. These annotate parent vs non-parent for $\pi$; they are not the tabular DGP.)
 
 The transformation square is:
 
@@ -254,17 +248,19 @@ A single run per deterministic cell is sufficient initially. Repeated identical 
 
 ## 7. Graph, local mechanism, and data construction
 
-### 7.1 Structural-role graph versus table construction
+### 7.1 Data-level DGP versus role labels
 
-The two chain graphs define the causal roles being tested: direct parent and upstream ancestor.
+**Tabular DGP (primary).** In every cell the table is built by:
 
-The learning tables are deliberately not passive observational samples from the full chain distribution. Instead, they are exhaustive local target-mechanism controls in which both candidate predictors are varied factorially and `x2` is generated deterministically from its designated direct parent.
+1. enumerating every assignment $(x_0,x_1)$ in the value set once (minimal complete factorial);
+2. setting $x_2 := \text{parent}$ deterministically (noiseless copy);
+3. leaving the non-parent to vary independently, so it is **marginally independent** of $x_2$.
 
-This distinction is essential.
+At the data level each cell is therefore **one isolated predictor plus a connected parent–target pair**, not observational data from a chain SCM. There is no edge from the isolated variable to the parent or to $x_2$ in the generated table.
 
-The upstream chain edge supplies the structural role annotation. The exhaustive table deliberately removes the ancestor–parent association that would occur in a passive chain sample. This ensures that the non-parent cannot succeed merely by being correlated with the direct parent.
+**Role labels (secondary).** Fixture metadata still uses chain-style parent vs non-parent annotations inherited from QI-002. These labels define which variable is the designated direct cause under $\pi$; they do **not** generate ancestor–parent association in the table. A faithful chain sample with a correlated ancestor remains outside m1.1 (QI-003/QI-004).
 
-The experiment therefore tests whether the learner returns the known local parent rule under identity and representation transformations. It does not test whether a chain can be identified from observational conditional-independence information.
+The experiment tests whether the learner returns the known **local parent rule** under identity and representation transformations. It does **not** test whether a chain can be identified from observational conditional-independence information.
 
 ### 7.2 Binary construction
 

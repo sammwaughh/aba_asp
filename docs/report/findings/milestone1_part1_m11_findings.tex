@@ -14,7 +14,7 @@
 \maketitle
 
 \begin{abstract}
-This document records the design, implementation, commands, artefacts, and bounded conclusions for experiment~M11 (m1.1). It is a standalone audit log for supervisor review, not a manuscript chapter. The experiment tests whether target-wise ABA Learning on complete noiseless chain fixtures recovers rules that track the \emph{direct-parent role} under variable-identity ($\pi$) and predictor-order ($\sigma$) transformations. Under fixed non-deterministic folding, binary encoding passes all checks; categorical-3 encoding fails $\sigma$-invariance on both tested edges. Greedy folding as a remedy is deferred to Milestone~1 Part~2 (M1.2).
+This document records the design, implementation, commands, artefacts, and bounded conclusions for experiment~M11 (m1.1). It is a standalone audit log for supervisor review, not a manuscript chapter. The experiment tests whether target-wise ABA Learning on complete noiseless \emph{target-mechanism} tables---one isolated predictor plus a deterministic parent$\rightarrow$\texttt{x2} copy---recovers rules that track the \emph{direct-parent role} under variable-identity ($\pi$) and predictor-order ($\sigma$) transformations. This is \textbf{not} chain SCM sampling or chain discovery; chain-style edge labels in the fixtures annotate parent vs non-parent roles for $\pi$ only. Under fixed non-deterministic folding, binary encoding passes all checks; categorical-3 encoding fails $\sigma$-invariance on both tested edges. Greedy folding as a remedy is deferred to Milestone~1 Part~2 (M1.2).
 \end{abstract}
 
 \section{Position in Milestone~1}
@@ -32,7 +32,7 @@ Motivation: QI-002's categorical chain returned a rule citing \texttt{x0} where 
 
 \subsection{Question}
 
-Under complete, noiseless QL2-style target-mechanism tables, when the direct-parent and ancestor roles are exchanged between \texttt{x0} and \texttt{x1}, and the learner-visible predictor order is independently reversed, does the learnt \texttt{x2} rule follow the variable occupying the direct-parent role?
+Under complete, noiseless QL2-style target-mechanism tables, when the direct-parent and non-parent roles are exchanged between \texttt{x0} and \texttt{x1}, and the learner-visible predictor order is independently reversed, does the learnt \texttt{x2} rule follow the variable occupying the direct-parent role?
 
 \subsection{Factorial structure}
 
@@ -42,11 +42,21 @@ Eight deterministic cells: two encodings (\{binary, cat3\}) $\times$ four cells 
   \item $\pi$: exchange \texttt{x0}$\leftrightarrow$\texttt{x1} (names, values, edges relabelled; \texttt{x2} fixed).
 \end{itemize}
 
-Graph structure:
-\begin{verbatim}
-A/B: x0 -> x1 -> x2   (direct parent of x2 = x1)
-C/D: x1 -> x0 -> x2   (direct parent of x2 = x0)
-\end{verbatim}
+Tabular DGP (all cells): exhaustive factorial over \((x0,x1)\); \texttt{x2 := parent} deterministically; the non-parent is marginally independent of \texttt{x2}. At the data level each cell is one \emph{isolated} predictor plus a \emph{connected} parent--target pair, not a faithful chain sample.
+
+\begin{center}
+\small
+\begin{tabular}{@{}llll@{}}
+\toprule
+Cells & Parent & Isolated & Data-level graph \\
+\midrule
+A, B & \texttt{x1} & \texttt{x0} & \texttt{x0} ; \texttt{x1}$\rightarrow$\texttt{x2} \\
+C, D & \texttt{x0} & \texttt{x1} & \texttt{x1} ; \texttt{x0}$\rightarrow$\texttt{x2} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Role labels (for $\pi$ only; not edges in the table): A/B use parent \texttt{x1}; C/D use parent \texttt{x0}. Chain-style annotations in the fixture code label parent vs non-parent; they do not generate ancestor--parent association in the table.
 
 Minimal complete factorial: binary 4 rows; cat3 9 rows; one row per \((x0,x1)\) assignment; no noise; seed~0.
 
@@ -180,7 +190,7 @@ cat3 B & x1 then x0 & \texttt{x1\_val\_2} & \textbf{entails} $\langle E+,E-\rang
 \end{tabular}
 \end{center}
 
-Cat3~A (lines 35--40 of trace): \texttt{folding [A=3] with x0\_val\_0(...)} $\Rightarrow$ \texttt{x2(A) <- [x0\_val\_0(A)]}; then \texttt{extended ABA does not entail <E+,E->} $\Rightarrow$ assumption \texttt{alpha\_1}. Cat3~B (lines 35--38): \texttt{folding [A=3] with x1\_val\_2(...)} $\Rightarrow$ entailment; other rote rules subsumed. Cat3 D vs C is analogous under the other $\sigma$-pair (ancestor-first BK $\Rightarrow$ non-parent literal tried first).
+Cat3~A (lines 35--40 of trace): \texttt{folding [A=3] with x0\_val\_0(...)} $\Rightarrow$ \texttt{x2(A) <- [x0\_val\_0(A)]}; then \texttt{extended ABA does not entail <E+,E->} $\Rightarrow$ assumption \texttt{alpha\_1}. Cat3~B (lines 35--38): \texttt{folding [A=3] with x1\_val\_2(...)} $\Rightarrow$ entailment; other rote rules subsumed. Cat3 D vs C is analogous under the other $\sigma$-pair (non-parent-first BK $\Rightarrow$ isolated-variable literal tried first).
 
 \section{Artefact locations (inspectable)}
 
@@ -233,7 +243,7 @@ m1.1 answers its central question \textbf{conditionally}: direct-parent tracking
 \subsection{Explicit non-claims}
 
 \begin{itemize}
-  \item Not causal discovery or whole-graph recovery.
+  \item Not chain SCM sampling, chain discovery, or whole-graph recovery.
   \item Not Russo-style Causal ABA.
   \item Not a claim that greedy folding fixes cat3 $\sigma$ failure (M1.2 hypothesis only).
   \item Not a test of correlated-ancestor / faithful chain SCM behaviour (QI-003/QI-004 territory).
@@ -250,7 +260,7 @@ m1.1 answers its central question \textbf{conditionally}: direct-parent tracking
 
 \section{Why this justifies M1.2 now}
 
-m1.1 isolates an encoding-dependent representation-order sensitivity under nd on cat3: ancestor-first BK order leads nd to try a non-parent literal first, miss entailment, and introduce assumptions. Milestone~1 Part~2 will rerun the same grid (or cat3 $\sigma$-cells) under \texttt{folding\_mode: greedy}.
+m1.1 isolates an encoding-dependent representation-order sensitivity under nd on cat3: non-parent-first BK order leads nd to try the isolated predictor’s literal first, miss entailment, and introduce assumptions. Milestone~1 Part~2 will rerun the same grid (or cat3 $\sigma$-cells) under \texttt{folding\_mode: greedy}.
 
 Prior qualitative evidence (QI-002 greedy rerun) shows greedy can change cat3 behaviour on other motifs (e.g.\ binary collider no-solution $\rightarrow$ solved; cat3 fork regression). That precedent motivates but does \textbf{not} establish greedy as a fix for m1.1 cat3 $\sigma$ failure --- claim M11-C-004 remains \textbf{tentative} until M1.2 runs.
 
