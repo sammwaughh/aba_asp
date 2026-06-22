@@ -13,149 +13,288 @@
 \begin{document}
 \maketitle
 
+\begin{abstract}
+This document reports the findings of experiment~M11 (m1.1), a metamorphic validity control
+that asks whether target-wise ABA Learning recovers a rule for the target \texttt{x2} that
+follows the \emph{direct-parent role}, rather than a fixed variable name or a fixed position in
+the learner's input. The investigation uses complete, noiseless tables in which one predictor is
+statistically isolated from \texttt{x2} and the other is a deterministic copy of the parent
+(\emph{target-mechanism} tables). Under non-deterministic folding (\texttt{folding\_mode: nd})
+with cautious semantics and \texttt{relto} assumption introduction, we find an encoding-dependent
+split: the binary encoding passes all checks, whereas categorical-3 fails
+representation-order invariance for a reason that is now ablation-supported. A targeted greedy
+comparator on the same eight cells is planned but not yet recorded here.
+\end{abstract}
+
 % ---------------------------------------------------------------------------
 \section*{Central claim}
 % ---------------------------------------------------------------------------
 
-Under complete, noiseless \emph{target-mechanism} tables (one isolated predictor plus a
-deterministic parent$\rightarrow$\texttt{x2} copy), target-wise ABA Learning with fixed
-\texttt{folding\_mode: nd}, cautious semantics, and \texttt{relto} assumption introduction:
+We claim the following, for target-wise ABA Learning on the m1.1 fixtures under the fixed
+learner configuration stated above.
 
-\begin{enumerate}
-  \item \textbf{Binary encoding:} the learnt \texttt{x2} rule tracks the direct-parent
-  \emph{role} and is invariant to learner-visible predictor order ($\sigma$) and variable-identity
-  swap ($\pi$).
-  \item \textbf{Categorical-3 encoding:} the learner \textbf{can} track the direct-parent role
-  when the parent feature wins the first \texttt{select\_rule} match; $\sigma$-invariance
-  \textbf{fails} under the default pipeline because BK block serialisation order fixes that
-  first match, the entailment gate accepts or rejects it, and failed target entailment commits
-  to assumptions without backtracking to the parent separator.
-\end{enumerate}
+\paragraph{Fixtures.} Each cell provides a complete factorial table over \((x0,x1)\) with
+\texttt{x2 := parent} deterministically. One predictor is marginally independent of \texttt{x2}
+(the \emph{isolated} non-parent); the other is the connected parent of \texttt{x2}. This is
+\emph{not} observational data from a chain structural causal model.
 
-This account is \textbf{ablation-supported} (ABL-100--107). It describes an ABA Learning
-input-serialisation / search-control effect---not causal discovery and not Russo-style Causal ABA.
+\paragraph{Claim 1 (binary encoding).} The learnt rule for \texttt{x2} cites the variable that
+occupies the direct-parent role. Moreover, that rule is unchanged when we apply either of the two
+metamorphic transformations defined below: predictor-order reversal ($\sigma$) or
+variable-identity swap ($\pi$).
+
+\paragraph{Claim 2 (categorical-3 encoding).} The learner \emph{can} recover the expected
+one-literal parent rule when the parent feature wins the first successful match in the engine's
+\texttt{select\_rule} procedure on the first target fold. Under the \emph{default} pipeline,
+however, $\sigma$-invariance fails: reversing the learner-visible order of predictors (while
+holding parent identity fixed) can change the returned rule from the expected singleton to a
+three-rule assumption structure that cites the non-parent. We account for this failure by a
+specific chain of engine steps---background-knowledge (BK) block serialisation order fixes the
+first matching rule identifier; the cautious entailment test on that fold either passes or
+fails; and a failed test on the first target fold commits the run to new assumptions without
+backtracking to a later BK candidate for the same rote equality.
+
+\paragraph{Status of evidence.} Claim~2 is supported not only by trace inspection (cat3 A vs B)
+but by targeted ablations ABL-100--107 (June 2026, commit \texttt{93d51bf}). These ablations
+show that reordering BK blocks alone is sufficient to flip the cat3~A outcome, whereas changing
+the engine folding mode to \texttt{all} without reordering BK is not.
+
+\paragraph{Scope boundary.} The claim concerns an ABA Learning input-serialisation and
+search-control effect under stated controls. It is \textbf{not} a causal-discovery result and
+\textbf{not} an evaluation of Russo-style Causal ABA (no \texttt{arr}/\texttt{noe}/\texttt{indep}
+machinery, d-separation, or stable extensions interpreted as DAG hypotheses).
 
 % ---------------------------------------------------------------------------
-\section{Introduction: why this claim and what would falsify it}
+\section{Introduction: why this claim, and what would falsify it}
 % ---------------------------------------------------------------------------
 
-\subsection{Motivation}
+\subsection{Motivation and research question}
 
-QI-002 returned a categorical rule citing \texttt{x0} where the expected direct parent was
-\texttt{x1}. m1.1 asks whether that reflects failure to track the \emph{parent role}, confusion
-with a fixed variable name, or sensitivity to the order in which predictors reach the learner.
+In experiment QI-002 (QL2), a categorical chain fixture returned a rule for \texttt{x2} that cited
+\texttt{x0}, while the pre-specified direct parent was \texttt{x1}. That discrepancy could mean
+several different things: the learner might fail to track which variable \emph{plays the parent
+role}; it might prefer a fixed name (for example always \texttt{x0}); or it might be sensitive to
+the order in which predictors are presented in the background knowledge file, even when the
+underlying table and examples are otherwise unchanged.
 
-We use a metamorphic design: eight deterministic cells (binary and cat3 $\times$ A/B/C/D)
-derived from one canonical cell~A per encoding via $\sigma$ (predictor-order reversal) and
-$\pi$ (exchange \texttt{x0}$\leftrightarrow$\texttt{x1}). At the data level each cell is one
-\emph{isolated} non-parent plus a \emph{connected} parent$\rightarrow$\texttt{x2} pair---not
-chain SCM sampling.
+Experiment m1.1 separates these explanations using a small metamorphic design. The research
+question is:
+
+\begin{quote}
+Under complete, noiseless target-mechanism tables, when the direct-parent and non-parent roles
+are exchanged between \texttt{x0} and \texttt{x1}, and when the learner-visible predictor order
+is independently reversed, does the learnt \texttt{x2} rule follow the variable occupying the
+direct-parent role?
+\end{quote}
+
+\subsection{Notation: cells, encodings, and transformations}
+
+We use two \emph{encodings} of the same abstract design: \textbf{binary} (values in \(\{0,1\}\))
+and \textbf{categorical-3} (values in \(\{0,1,2\}\)). Within each encoding there are four
+\emph{cells} labelled A, B, C, and D.
+
+Each cell specifies (i)~which variable is the deterministic parent of \texttt{x2}, and (ii)~the
+order in which the two predictors appear in the table and in the generated BK file. Cells A and
+B use parent \texttt{x1}; cells C and D use parent \texttt{x0}. The non-parent is isolated at the
+data level (no association with \texttt{x2} in the table).
+
+Two transformations link the cells. We write them as $\sigma$ and $\pi$:
+
+\begin{itemize}
+  \item \textbf{$\sigma$ (representation-order / sigma):} reverse the learner-visible order of
+  the two predictors in the table columns and in BK block serialisation, without changing
+  variable names, values, example atoms, or which variable is parent.
+  \item \textbf{$\pi$ (variable-identity / pi):} exchange the identities of \texttt{x0} and
+  \texttt{x1} (names and values together), relabel graph roles accordingly, and fix \texttt{x2}.
+  Predictor order is transformed consistently with the orbit definition in
+  \texttt{handcrafted\_m11.py}.
+\end{itemize}
+
+Per encoding, the orbit is $A \xrightarrow{\sigma} B$, $A \xrightarrow{\pi} D$, and
+$C \xrightarrow{\sigma} D$ with $C = \pi(B)$. A \emph{transformation square} checks whether
+ learnt rules transform as expected when we compare pairs linked by $\sigma$ or $\pi$.
+
+\subsection{Notation: learner outputs and success criteria}
+
+For each cell we pre-specify an \emph{expected singleton rule}: a single learned clause for
+\texttt{x2} whose body cites the parent variable (binary) or the parent's value predicate at the
+positive class (cat3). For example, in cat3 cells with parent \texttt{x1}, the expected rule is
+\texttt{x2(A) <- x1\_val\_2(A)}.
+
+We classify outcomes as follows:
+
+\begin{itemize}
+  \item \textbf{Exact:} the returned solution matches the expected singleton (modulo syntactic
+  normalisation).
+  \item \textbf{Discrepant but solved:} Prolog reports a solution, but the target-headed rules
+  form an assumption-based structure (typically three \texttt{x2} rules whose bodies cite the
+  non-parent value predicates, plus contrary rules). This is the same structural class seen in
+  QI-002 \texttt{chain\_cat3}.
+  \item \textbf{$\sigma$-invariance holds} on a pair when the learnt rules agree across the two
+  cells related by $\sigma$ (and similarly for $\pi$-equivariance).
+\end{itemize}
+
+Positive and negative examples are written $E+$ and $E-$. They are fixed per cell by the fixture
+and are not altered in ablation runs that only change BK serialisation.
 
 \subsection{Theoretical and implementation boundary}
 
-The current bridge performs target-wise ABA Learning over tabular features. It does \textbf{not}
-implement \texttt{arr}/\texttt{noe}/\texttt{indep}, d-separation, or stable extensions as DAG
-hypotheses. Claims here concern parent-\emph{rule} recovery under stated controls only.
+The repository's \texttt{causal/} bridge performs \textbf{target-wise} ABA Learning: for m1.1 we
+learn rules for \texttt{x2} only, with \texttt{x2} excluded from the BK feature groups. The
+recovered rules are compared to a known parent role for diagnostic purposes. This is a
+parent-\emph{rule} recovery proxy, not whole-graph causal discovery.
 
-BK feature groups are serialised in \texttt{DataFrame} column order
-(\texttt{argcausaldisco\_integration.py}); $\sigma$ permutes that order verbatim into
-\texttt{bk.aba}. Rule IDs follow \texttt{read\_bk} file order and feed the \texttt{fwt} table
-used by \texttt{select\_rule} (\texttt{folding.pl}).
+Implementation details matter for $\sigma$. The BK writer
+(\texttt{argcausaldisco\_integration.py}) serialises feature predicates by iterating
+\texttt{DataFrame} column order without sorting. Therefore $\sigma$ in the fixture propagates
+verbatim into \texttt{bk.aba} block order. When Prolog loads the file, \texttt{read\_bk}
+(\texttt{asp\_utils.pl}) assigns consecutive rule identifiers in file order. The folding table
+\texttt{fwt} indexes literals under the key \texttt{=/2}; \texttt{select\_rule}
+(\texttt{folding.pl}) walks candidate rule IDs and returns the first body that subsumes the
+current rote equality. Later steps in \texttt{gen.pl} test cautious entailment of $E+$ and $E-$
+(\texttt{gen2}) and may introduce assumptions (\texttt{relto} path when no prior assumption
+exists).
 
-\subsection{What would falsify the claim}
+\subsection{What would falsify the central claim}
+
+We stated falsifiable predictions before running ablations (see
+\texttt{milestone1\_part1\_ablations.md}). In brief:
 
 \begin{itemize}
-  \item Reordering BK blocks on cat3~A (same data, E+/E$-$) does \textbf{not} recover the
-  parent singleton (would falsify BK-order sufficiency; ABL-101).
-  \item \texttt{folding\_mode(all)} on unchanged cat3~A BK \textbf{does} recover the singleton
-  (would falsify the commitment-path story; ABL-105).
-  \item cat3 C vs D under $\pi$ does \textbf{not} mirror A vs B (would falsify symmetry; ABL-100/103).
-  \item Binary A vs B differs under $\sigma$ (would falsify the encoding moderator; ABL-107).
+  \item If reordering BK blocks on cat3~A while holding data and $E+/E-$ fixed did \textbf{not}
+  recover the parent singleton, BK order would not be sufficient to explain the A vs B split
+  (ABL-101).
+  \item If \texttt{folding\_mode(all)} on unchanged cat3~A BK \textbf{did} recover the singleton,
+  the story that only BK order and first-fold commitment matter would be incomplete (ABL-105).
+  \item If cat3 C vs D did not mirror A vs B under $\pi$, the symmetry account would fail
+  (ABL-100 audit, ABL-103 intervention).
+  \item If binary A vs B differed under $\sigma$, the encoding-moderator explanation would fail
+  (ABL-107).
 \end{itemize}
 
-None of these occurred under the executed nd ablations.
+Under the executed nd ablations, none of these falsifiers occurred.
 
 \subsection{Status of this document}
 
-Stages 0--6 (nd grid, trace mechanism, ablations) are complete and support the central claim.
-A \textbf{targeted greedy comparator} on the same eight cells is planned as an m1.1 addendum
-(\S\ref{sec:greedy}); full Milestone~1 Part~2 (M1.2) remains a broader nd vs greedy review.
+Stages 0--6 under \texttt{folding\_mode: nd} are complete: fixture validation, eight-cell grid,
+transformation square, trace mechanism for cat3 A vs B, and falsification-first ablations. The
+sections below narrate that work in order. Section~\ref{sec:greedy} reserves space for a
+\emph{targeted greedy comparator} on the same eight cells (an m1.1 addendum). Milestone~1
+Part~2 (M1.2) will later treat non-deterministic vs greedy folding more broadly; it is not
+required to establish the nd mechanism reported here.
 
 % ---------------------------------------------------------------------------
 \section{Investigation narrative}
 % ---------------------------------------------------------------------------
 
-This section records \emph{what we did, in what order, and why}---not merely what the outputs were.
+The following subsections describe what we did, in what order, and why each step was necessary.
+The narrative moves from establishing that the metamorphic transforms are real in the pipeline,
+to observing grid-level pass/fail, to explaining cat3 failure at trace level, to confirming the
+explanation by intervention.
 
 \subsection{Stage~0: validate that $\sigma$ and $\pi$ reach the learner}
 \label{sec:stage0}
 
-\textbf{Why first.} If predictor order were canonicalised before BK generation, $\sigma$ would be
-void and the metamorphic test would be meaningless.
+If the Python bridge canonicalised or sorted predictor columns before writing BK, then $\sigma$
+would not change the learner's input and the metamorphic test would be void. Stage~0 therefore
+had to precede any Prolog runs.
 
-\textbf{What we did.} Prolog-free fixture checks (\texttt{test\_m11\_fixtures.py},
-\texttt{m11\_validate\_fixtures.py}): orbit relations, table/BK order alignment, minimal factorial
-tables (binary 4 rows; cat3 9 rows).
+We ran Prolog-free checks (\texttt{causal/tests/test\_m11\_fixtures.py} and
+\texttt{causal/scripts/m11\_validate\_fixtures.py}). These verify the $\sigma$ and $\pi$ orbit
+relations on fixtures, confirm that requested predictor order matches table column order and BK
+block order, and check minimal complete factorial tables (four rows for binary, nine for cat3).
 
-\textbf{Outcome.} 8/8 PASS; requested column order equals BK block order.
+All eight fixtures passed. Requested order equals table order equals BK group order. Stage~0
+establishes that later $\sigma$ effects, if any, are not artefacts of silent reordering in the
+bridge.
 
-\subsection{Stage~1--2: eight-cell nd grid and transformation square}
+\subsection{Stages~1--2: eight-cell nd grid and transformation square}
 \label{sec:grid}
 
-\textbf{Why.} Establish whether returned \texttt{x2} rules track parent \emph{role} across $\pi$
-and are invariant to $\sigma$---the pre-specified success criterion.
+The pre-specified success criterion for m1.1 is that learnt rules track the parent \emph{role}
+and are invariant to $\sigma$ and equivariant to $\pi$ at rule level (with correct coverage).
+Stage~1 runs learning; Stage~2 compares outcomes on linked pairs.
 
-\textbf{What we did.} \texttt{run\_grid} with \texttt{M11\_parent\_position.yaml}
-(\texttt{folding\_mode: nd}, \texttt{folding\_steps: 15}, timeout 120\,s). Compared learnt rules
-to expected one-literal parent separators; evaluated $\sigma$ and $\pi$ edges at rule level.
+We executed the grid with \texttt{causal/experiments/run\_grid.py} and configuration
+\texttt{causal/configs/experiments/M11\_parent\_position.yaml}. Learner settings were held
+fixed: target \texttt{x2} only; \texttt{folding\_mode: nd}; \texttt{folding\_steps: 15};
+\texttt{prolog\_timeout\_s: 120}; cautious semantics with \texttt{asm\_intro(relto)} inherited
+from the QI-002-style defaults.
 
-\textbf{Outcome (observation).} 8/8 \texttt{solved}. Binary: 4/4 exact singleton; all $\sigma$ and
-$\pi$ hold. Cat3: 2/4 exact (B, C); A and D return three-rule assumption structures citing the
-non-parent; $\sigma$ fails on both pairs; $\pi$ holds on B$\leftrightarrow$C only.
+\paragraph{Grid outcome.} All eight cells returned \texttt{solved}. For binary, all four cells
+returned the expected singleton and every $\sigma$ and $\pi$ edge in the transformation square
+held. For cat3, cells B and C returned the expected singleton; cells A and D returned
+discrepant assumption-based structures whose bodies cite the non-parent value predicates. On
+cat3, $\sigma$ failed on both pairs (A$\leftrightarrow$B and D$\leftrightarrow$C). $\pi$ held on
+B$\leftrightarrow$C but failed on A$\leftrightarrow$D because both ends of that edge are
+discrepant in the same failure class rather than matching the pre-specified singleton.
 
-This $\sigma$ failure on cat3 triggered mechanistic investigation---we could not stop at a
-verdict table.
+\paragraph{Why we did not stop here.} A pass/fail table shows \emph{that} cat3 is
+representation-order sensitive under nd; it does not show \emph{why}. Supervisor guidance
+(June 2026) required granular trace and runner-level clarity before further tests. Stages~3--4
+and the ablation programme followed from that requirement.
 
-\subsection{Stage~3--4: trace mechanism for cat3 A vs B}
+\subsection{Stages~3--4: trace mechanism for cat3 A vs B}
 \label{sec:mechanism}
 
-\textbf{Why.} Supervisor guidance: ``order differs'' is insufficient; we need \textbf{why, when,
-and how} on \texttt{prolog.stdout}.
+Cells cat3~A and cat3~B share the same parent (\texttt{x1}), the same $E+$ and $E-$, and the
+same multiset of BK rules. They differ only in $\sigma$: the order of \texttt{x0\_val\_*} and
+\texttt{x1\_val\_*} blocks in \texttt{bk.aba}. Stage~3 identified \emph{where} the Prolog traces
+diverge; Stage~4 recorded \emph{why} that divergence changes the final rule.
 
-\textbf{What we did.} Line-by-line comparison of cat3 A vs B on the first target fold of rote
-positive \texttt{x2(A)<-[A=3]} (trace line~35). Traced \texttt{read\_bk} $\rightarrow$ \texttt{fwt}
-$\rightarrow$ \texttt{select\_rule} $\rightarrow$ \texttt{gen2} entailment vs assumption path.
+We compared \texttt{prolog.stdout} from
+\texttt{cells/m11\_cat3\_A/} and \texttt{cells/m11\_cat3\_B/}. Both runs proceed identically
+until the first non-deterministic fold on the first rote positive literal for the target,
+\texttt{x2(A)<-[A=3]} (approximately line~35 in the A trace). At that point \texttt{select\_rule}
+must choose among BK rules whose bodies subsume the equality \texttt{A=3}.
 
-\textbf{Finding.} Same E+, E$-$, and BK rule multiset; $\sigma$ differs only in block
-serialisation. ID~3 (third BK line) is the first subsuming match for \texttt{[A=3]}:
+Because $\sigma$ permutes block order, the rule that receives identifier~3 (the third line of
+BK after the header comments) differs between A and B:
 
 \begin{center}
 \begin{tabular}{@{}llll@{}}
 \toprule
-Cell & ID~3 rule & Folded target rule & Entailment \\
+Cell & Rule at ID~3 & Folded target rule & Cautious entailment of $E+/E-$ \\
 \midrule
-cat3 A & \texttt{x0\_val\_0(A):-A=3} & \texttt{x2(A) <- [x0\_val\_0(A)]} & \textbf{fails} (covers E$-$) \\
-cat3 B & \texttt{x1\_val\_2(A):-A=3} & \texttt{x2(A) <- [x1\_val\_2(A)]} & \textbf{passes} (E$+$ only) \\
+cat3 A & \texttt{x0\_val\_0(A):-A=3} & \texttt{x2(A) <- [x0\_val\_0(A)]} & \textbf{Fails} \\
+cat3 B & \texttt{x1\_val\_2(A):-A=3} & \texttt{x2(A) <- [x1\_val\_2(A)]} & \textbf{Passes} \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-Failed entailment on the first target fold commits to \texttt{alpha\_1} without backtracking to
-the parent rule at ID~12; rote rules are consumed; assumption-augmented \texttt{x2} rules are not
-re-folded. Trace shape: A 173 lines / 27 rules vs B 54 lines / 19 rules. D vs C mirrors A vs B
-under $\pi$ (later confirmed by ablation audit).
+The isolated predictor fold in A covers negative examples as well as positives (the value
+predicate is true on rows where \texttt{x2} is negative). Cautious entailment therefore fails,
+and \texttt{gen2} commits to a new assumption \texttt{alpha\_1} rather than backtracking to the
+parent separator rule that appears later in BK (for example at ID~12). The rote equality is
+consumed; assumption-augmented \texttt{x2} rules are not eligible for later re-folding under
+\texttt{nonintensional/1}. Subsequent folds on \texttt{x1\_val\_*} literals apply to contrary
+heads \texttt{c\_alpha\_*}, repairing exceptions rather than producing a unified parent rule for
+\texttt{x2}.
+
+Quantitatively, cat3~A produces a long trace (173 lines, 27 ABA rules) with three assumption
+branches; cat3~B produces a short trace (54 lines, 19 rules) ending in the expected singleton.
+The pair cat3~D vs C is analogous under $\pi$ (non-parent-first BK leads to assumptions;
+parent-first leads to singleton); this was later confirmed by ablation audit rather than by a
+separate line-by-line write-up in the experiment record.
 
 \subsection{Stage~6: falsification-first ablations}
 \label{sec:ablations}
 
-\textbf{Why.} Stage~4 correlates BK order with outcome; ablations must \textbf{intervene} on one
-link at a time per \texttt{milestone1\_part1\_ablations.md}.
+Stage~4 establishes a correlational mechanism: BK order co-varies with first-fold choice and
+outcome. Stage~6 \emph{intervenes} on individual links in that chain, following the plan in
+\texttt{docs/research/milestone\_plans/milestone1\_part1\_ablations.md}.
 
-\textbf{What we did.} Pipeline \texttt{m11\_ablation\_run.py} / \texttt{m11\_ablation\_audit.py};
-config \texttt{M11\_ablations.yaml}. Gating: ABL-100 $\rightarrow$ ABL-101 (decision point) $\rightarrow$
-102, 103, 105, 107; ABL-106 skipped (ABL-105 conclusive).
+We implemented a dedicated pipeline (\texttt{m11\_ablation\_bk.py},
+\texttt{m11\_ablation\_inspect.py}, \texttt{m11\_ablation\_run.py},
+\texttt{m11\_ablation\_audit.py}) with declarative specs in
+\texttt{causal/configs/experiments/M11\_ablations.yaml}. Each ablation writes artefacts under
+\texttt{causal/outputs/aba\_learning/grid/M11\_ablations/<ABL-id>/}, including
+\texttt{prolog.stdout}, \texttt{bk.sol.aba}, and \texttt{abl\_summary.json} with parsed
+observables (first fold predicate, entailment pass/fail, trace length, rule count, verdict).
 
-\textbf{Outcome.} All executed ablations matched predictions:
+Gating was falsification-first: audit ABL-100 (C vs D) before Tier~1; run ABL-101 (BK block
+reorder on cat3~A); stop Tier~2+ if ABL-101 failed; otherwise continue with ABL-102, 103, 105,
+and 107. ABL-106 (\texttt{asm\_intro(sechk)}) was skipped because ABL-105 was conclusive on H3.
 
 \begin{center}
 \small
@@ -173,95 +312,117 @@ ID & Intervention & first\_fold & entail. & trace & rules & Outcome & Verdict \\
 \end{tabular}
 \end{center}
 
-\textbf{Interpretation.} ABL-101/102: BK order is \textbf{sufficient} to flip cat3~A from
-assumptions to singleton. ABL-105: engine folding mode alone is \textbf{not sufficient}.
-ABL-107: binary $\sigma$-invariance holds because the parent predicate wins the first fold under
-both BK orders---an encoding moderator, not a separate mechanism.
+\paragraph{ABL-101 (primary causal test).} On cat3~A's data and examples, we replaced BK block
+order with that of cat3~B while preserving the rule multiset. The run then matched B's trace
+shape: first fold \texttt{x1\_val\_2}, entailment pass, singleton
+\texttt{x2(A):-x1\_val\_2(A)}, 53 trace lines, 19 rules, zero new assumptions. This shows BK
+serialisation order is \textbf{sufficient} to flip outcome on a fixed cell configuration.
 
-Artefacts: \texttt{causal/outputs/aba\_learning/grid/M11\_ablations/}; commit \texttt{93d51bf}.
+\paragraph{ABL-102.} Inserting a single parent rule \texttt{x1\_val\_2(A):-A=3} at the top of BK
+(raising rule count by one) also recovered the singleton. The lowest matching rule identifier,
+not merely block-level narrative, determines the first fold.
+
+\paragraph{ABL-105.} With BK unchanged from default cat3~A, we set \texttt{folding\_mode(all)}.
+The run still produced the assumption triple (157 lines, 27 rules). Thus an engine folding-mode
+change alone is \textbf{not sufficient} to recover the parent singleton; BK order remains the
+decisive lever in the nd commitment story.
+
+\paragraph{ABL-107 (encoding moderator).} Binary cells A and B both fold the parent predicate
+\texttt{x1} first with passing entailment, even though $\sigma$ permutes BK order. Cat3 fails
+$\sigma$ because multiple value predicates compete to subsume the same equalities and BK ID
+order disambiguates them---a property of the categorical feature encoding, not a separate
+engine bug.
+
+All ablation runs referenced above used commit \texttt{93d51bf} of the repository.
 
 \subsection{Greedy comparator on the same target-mechanism fixtures (planned)}
 \label{sec:greedy}
 
-\textbf{Why (next step).} ABL-105 tested \texttt{folding\_mode(all)} under nd configuration; it did
-not substitute for parent-first BK. A separate question remains: does \textbf{greedy} folding on
-the \textbf{same} eight cells behave like nd, fix cat3 $\sigma$, or differ materially from \emph{both}
-nd A and nd B? An informal smoke test previously suggested a third outcome; that test is not yet
-formalised in the experiment record.
+ABL-105 tested one alternative folding configuration (\texttt{all}) under the nd search
+framework. It did not answer whether \textbf{greedy} folding, a distinct strategy used elsewhere
+in the project, would behave like nd, repair cat3 $\sigma$, or produce outcomes different from
+\emph{both} nd cat3~A and nd cat3~B. An informal smoke test suggested a third outcome; that test
+has not been formalised in the experiment record and is not cited as evidence here.
 
-\textbf{Scope (m1.1 addendum, not full M1.2).} Re-run the m1.1 eight-cell grid with
-\texttt{folding\_mode: greedy} only; same fixtures, same expected-rule criterion, same $\sigma$/$\pi$
-square. This isolates folding-strategy effects on the \emph{isolated predictor + single causal link}
-structure. Milestone~1 Part~2 will treat nd vs greedy more broadly across motifs and scales.
+\paragraph{Proposed scope.} As an m1.1 addendum (distinct from full M1.2), we plan to re-run the
+\emph{same} eight cells with \texttt{folding\_mode: greedy} and identical fixtures, expected-rule
+criterion, and transformation square. This isolates folding-strategy effects on the target-mechanism
+motif (isolated predictor plus one deterministic causal link). M1.2 will later compare nd and
+greedy across broader motifs, noise, and scale.
 
-\textbf{Planned command (placeholder):}
+\paragraph{Planned command.}
 \begin{verbatim}
 python -m causal.experiments.run_grid \
   --config causal/configs/experiments/M11_parent_position_greedy.yaml \
   --no-resume
 \end{verbatim}
 
-\textbf{Results to fill in after run:}
+\paragraph{Results table (to be completed after the run).}
 
 \begin{center}
 \small
 \begin{tabular}{@{}llllp{3.5cm}l@{}}
 \toprule
-Enc. & Cell & nd outcome (ref.) & greedy outcome & $\sigma$/$\pi$ vs nd & Notes \\
+Enc. & Cell & nd outcome (reference) & greedy outcome & $\sigma$/$\pi$ vs nd & Notes \\
 \midrule
-binary & A--D & exact singleton & \textit{TBD} & \textit{TBD} & \\
-cat3 & A & assumption triple & \textit{TBD} & \textit{TBD} & key $\sigma$ cell \\
+binary & A--D & exact singleton & \textit{TBD} & \textit{TBD} & positive control \\
+cat3 & A & assumption triple & \textit{TBD} & \textit{TBD} & key $\sigma$-sensitive cell \\
 cat3 & B & exact singleton & \textit{TBD} & \textit{TBD} & \\
 cat3 & C, D & exact / assumption & \textit{TBD} & \textit{TBD} & \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-\textbf{Questions the greedy run should answer:}
-\begin{itemize}
-  \item Does greedy recover cat3~A singleton without BK reorder?
-  \item Is cat3 $\sigma$-invariant under greedy?
-  \item Does greedy match nd on binary (positive control)?
-  \item If greedy differs from nd, is the difference explained by the same BK-order / first-fold /
-  entailment chain, or a distinct search path?
-\end{itemize}
+\paragraph{Questions the greedy run should answer.}
+\begin{enumerate}
+  \item Does greedy folding recover the cat3~A singleton without any BK reorder intervention?
+  \item Is cat3 $\sigma$-invariant under greedy, even where nd failed?
+  \item Does greedy match nd on binary cells (sanity check on the encoding moderator)?
+  \item If greedy differs from nd, can the difference still be explained by BK order, first-fold
+  choice, and entailment, or does it require a distinct search-path account?
+\end{enumerate}
 
-\textbf{Claim impact (to update after run):} M11-C-004 (greedy vs $\sigma$ sensitivity); possible
-refinement of M11-C-007 if greedy shares the BK-order mechanism; no change to M11-C-003/006 unless
-greedy falsifies the nd-specific commitment story.
+\paragraph{Claim impact after the run.} We expect to update M11-C-004 in the claims ledger
+(greedy vs representation-order sensitivity). M11-C-007 may be refined if greedy shares the same
+BK-order mechanism; M11-C-003 and M11-C-006 should remain unchanged unless greedy falsifies the
+nd-specific commitment path established by ABL-105.
 
 % ---------------------------------------------------------------------------
 \section{Evidence tables (reference)}
 % ---------------------------------------------------------------------------
 
-\subsection{Cell-level nd grid}
+The following tables collect the Stage~1--2 grid outcomes for quick reference. They duplicate
+information already narrated above.
+
+\subsection{Cell-level outcomes under nd}
 
 \begin{center}
 \small
 \begin{tabular}{@{}llllp{3.2cm}p{3.5cm}l@{}}
 \toprule
-Enc. & Cell & Parent & Order & Expected & Actual (nd) & Class. \\
+Enc. & Cell & Parent & Predictor order & Expected rule & Actual (nd) & Classification \\
 \midrule
-binary & A & x1 & [x0,x1] & \texttt{x2<-x1} & \texttt{x2 :- x1.} & exact \\
-binary & B & x1 & [x1,x0] & \texttt{x2<-x1} & \texttt{x2 :- x1.} & exact \\
-binary & C & x0 & [x0,x1] & \texttt{x2<-x0} & \texttt{x2 :- x0.} & exact \\
-binary & D & x0 & [x1,x0] & \texttt{x2<-x0} & \texttt{x2 :- x0.} & exact \\
-cat3 & A & x1 & [x0,x1] & \texttt{x2<-x1\_val\_2} & 3-rule assumption & discrepant$^\dagger$ \\
-cat3 & B & x1 & [x1,x0] & \texttt{x2<-x1\_val\_2} & \texttt{x2 :- x1\_val\_2.} & exact \\
-cat3 & C & x0 & [x0,x1] & \texttt{x2<-x0\_val\_2} & \texttt{x2 :- x0\_val\_2.} & exact \\
-cat3 & D & x0 & [x1,x0] & \texttt{x2<-x0\_val\_2} & 3-rule assumption & discrepant$^\dagger$ \\
+binary & A & \texttt{x1} & [\texttt{x0}, \texttt{x1}] & \texttt{x2<-x1} & \texttt{x2 :- x1.} & exact \\
+binary & B & \texttt{x1} & [\texttt{x1}, \texttt{x0}] & \texttt{x2<-x1} & \texttt{x2 :- x1.} & exact \\
+binary & C & \texttt{x0} & [\texttt{x0}, \texttt{x1}] & \texttt{x2<-x0} & \texttt{x2 :- x0.} & exact \\
+binary & D & \texttt{x0} & [\texttt{x1}, \texttt{x0}] & \texttt{x2<-x0} & \texttt{x2 :- x0.} & exact \\
+cat3 & A & \texttt{x1} & [\texttt{x0}, \texttt{x1}] & \texttt{x2<-x1\_val\_2} & 3-rule assumption & discrepant$^\dagger$ \\
+cat3 & B & \texttt{x1} & [\texttt{x1}, \texttt{x0}] & \texttt{x2<-x1\_val\_2} & \texttt{x2 :- x1\_val\_2.} & exact \\
+cat3 & C & \texttt{x0} & [\texttt{x0}, \texttt{x1}] & \texttt{x2<-x0\_val\_2} & \texttt{x2 :- x0\_val\_2.} & exact \\
+cat3 & D & \texttt{x0} & [\texttt{x1}, \texttt{x0}] & \texttt{x2<-x0\_val\_2} & 3-rule assumption & discrepant$^\dagger$ \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-{\footnotesize $^\dagger$\texttt{solved} but not the pre-specified singleton.}
+{\footnotesize $^\dagger$Prolog status is \texttt{solved}; discrepant means the rule structure
+does not match the pre-specified singleton criterion.}
 
-\subsection{Transformation square (nd)}
+\subsection{Transformation square under nd}
 
 \begin{center}
 \begin{tabular}{@{}lllll@{}}
 \toprule
-Enc. & Property & Pair & Rule-level & Role-level \\
+Encoding & Property & Cell pair & Rule-level & Role-level \\
 \midrule
 binary & $\sigma$ & A$\leftrightarrow$B, D$\leftrightarrow$C & holds & holds \\
 binary & $\pi$ & A$\leftrightarrow$D, B$\leftrightarrow$C & holds & holds \\
@@ -272,6 +433,9 @@ cat3 & $\pi$ & A$\leftrightarrow$D & \textbf{fails} & \textbf{fails} \\
 \end{tabular}
 \end{center}
 
+Role-level agreement requires that the body of the target rule cite the parent variable's value
+predicates rather than the non-parent's.
+
 % ---------------------------------------------------------------------------
 \section{Conclusion: why the central claim is supported}
 % ---------------------------------------------------------------------------
@@ -281,69 +445,100 @@ cat3 & $\pi$ & A$\leftrightarrow$D & \textbf{fails} & \textbf{fails} \\
 \begin{center}
 \begin{tabular}{@{}llll@{}}
 \toprule
-Encoding & Parent-role tracking & $\sigma$-invariance (default nd) & Mechanism \\
+Encoding & Parent-role tracking & $\sigma$-invariance (nd, default pipeline) & Explanation \\
 \midrule
-binary & Yes (all cells) & Yes & Parent wins first fold (ABL-107) \\
+binary & Yes, all four cells & Yes & Parent wins first fold under both BK orders (ABL-107) \\
 cat3 & Yes when parent wins first fold & \textbf{No} & BK ID order $\rightarrow$ entailment $\rightarrow$ assumptions \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-\subsection{Evidence chain (nd, ablation-supported)}
+The research question therefore receives a \emph{conditional} but precise answer. The learner
+tracks the direct-parent role in both encodings when the search path reaches the parent feature
+first on the decisive fold. Under default nd processing, cat3 additionally exhibits
+representation-order sensitivity because $\sigma$ permutes BK serialisation and thereby permutes
+which feature wins that first match.
+
+\subsection{Evidence chain}
+
+We summarise the logical structure of the nd evidence as follows:
 
 \[
 \sigma \;\Rightarrow\; \text{BK block order} \;\Rightarrow\; \text{first \texttt{select\_rule} match}
-\;\Rightarrow\; \text{entailment pass/fail} \;\Rightarrow\; \text{singleton vs assumptions.}
+\;\Rightarrow\; \text{entailment pass or fail} \;\Rightarrow\; \text{singleton or assumptions.}
 \]
 
-\begin{itemize}
-  \item \textbf{Observation:} cat3 $\sigma$ fails at rule level (grid Stages 1--2).
-  \item \textbf{Mechanism:} trace audit cat3 A vs B (Stage~4).
-  \item \textbf{Intervention:} ABL-101 BK reorder restores singleton on A config; ABL-105 shows
-  \texttt{folding\_mode(all)} does not.
-  \item \textbf{Symmetry:} ABL-100/103 under $\pi$; binary moderator ABL-107.
-\end{itemize}
+\begin{enumerate}
+  \item \textbf{Observation (Stages~1--2):} cat3 fails $\sigma$ at rule level while binary passes.
+  \item \textbf{Mechanism (Stages~3--4):} cat3 A vs B traces identify the first-fold fork and
+  failed entailment on the isolated predictor.
+  \item \textbf{Intervention (Stage~6):} ABL-101 shows BK reorder is sufficient to restore the
+  singleton on cat3~A; ABL-105 shows \texttt{folding\_mode(all)} is not sufficient without BK
+  reorder.
+  \item \textbf{Symmetry and moderator:} ABL-100 and ABL-103 support the $\pi$-mirror account;
+  ABL-107 shows binary is not subject to the same competing-predicate ambiguity.
+\end{enumerate}
 
-The learner is not globally ``name biased'': the same parent rule appears when BK order favours it
-(ABL-101). The failure is conditional on encoding (competing value predicates + fixed search path),
-not on missing parent information in data or examples.
+The learner should not be described as globally biased toward a fixed variable name. The same
+parent rule \texttt{x2(A):-x1\_val\_2(A)} appears on cat3~A when BK order is intervened
+(ABL-101) even though default A returns assumptions. The failure mode is conditional on encoding
+and on pipeline serialisation, not on absence of parent information in the table or in $E+/E-$.
 
 \subsection{Explicit non-claims}
 
-Not chain discovery; not Russo-style Causal ABA; not a production fix to BK serialisation;
-ablation BK edits are diagnostic only. Greedy-as-fix for cat3 $\sigma$ is \textbf{not} claimed
-until the comparator run (\S\ref{sec:greedy}) is recorded.
+We do not claim chain structural discovery, Russo-style Causal ABA, or a production-ready fix
+to BK generation in the bridge. Ablation BK edits are diagnostic interventions only. We do not
+claim that greedy folding fixes cat3 $\sigma$ until the comparator in Section~\ref{sec:greedy}
+is executed and recorded.
 
-\subsection{Claims ledger}
+\subsection{Claims ledger cross-reference}
 
-M11-C-001, C-002, C-003, C-005, C-006, C-007 active; M11-C-004 pending greedy comparator.
+Active entries in \texttt{docs/report/claims\_ledger.md}: M11-C-001 (binary control), M11-C-002
+(cat3 $\sigma$ failure), M11-C-003 and M11-C-006 (mechanism; ablation-supported), M11-C-005 (grid
+summary), M11-C-007 (integrated cat3 account). M11-C-004 (greedy vs $\sigma$) remains pending
+the greedy comparator run.
 
 % ---------------------------------------------------------------------------
 \section{Limitations and next steps}
 % ---------------------------------------------------------------------------
 
-\textbf{Limitations:} single seed; no noise; target-mechanism tables; cat3 A/D \texttt{solved} but
-discrepant vs singleton criterion; post-hoc ablation BK edits; greedy comparator not yet run.
+\paragraph{Limitations.} The m1.1 fixtures use a single seed, no noise, and minimal complete
+factorial tables. Results apply to target-wise learning on \texttt{x2} under one fixed nd
+configuration. Cells cat3~A and cat3~D are \texttt{solved} but discrepant relative to the
+singleton criterion. Coverage metrics \texttt{cov\_py} and \texttt{cov\_pl} disagree on
+assumption-based rules; classifications in this document use \texttt{bk.sol.aba} and traces.
+Ablation BK changes are post-hoc and do not alter the default bridge behaviour.
 
-\textbf{Next:} (1)~Execute m1.1 greedy comparator (\S\ref{sec:greedy}); (2)~optional Stage~5
-runner call-chain doc; (3)~M1.2 broad nd vs greedy review; (4)~Milestone~2 Causal-ABA-guided bridge.
+\paragraph{Next steps.} First, execute and record the m1.1 greedy comparator
+(Section~\ref{sec:greedy}). Second, optionally document the full Python-to-Prolog call chain
+(Stage~5). Third, proceed to Milestone~1 Part~2 for a broader nd vs greedy comparison. Fourth,
+Milestone~2 addresses Causal-ABA-guided learning, which is outside the scope of this findings
+log.
 
 % ---------------------------------------------------------------------------
-\section*{Appendix: commands and references}
-\addcontentsline{toc}{section}{Appendix: commands and references}
+\section*{Appendix: commands and artefact paths}
+\addcontentsline{toc}{section}{Appendix: commands and artefact paths}
 
-\textbf{nd grid:}
+\paragraph{Non-deterministic grid (Stage~1).}
 \begin{verbatim}
+conda activate aba-asp
+cd "/Users/samuelwaugh/Desktop/Causal ABA Learning/aba_asp"
 python -m causal.experiments.run_grid \
   --config causal/configs/experiments/M11_parent_position.yaml --no-resume
+\end{verbatim}
+
+\paragraph{Ablation pipeline (Stage~6).}
+\begin{verbatim}
 python -m causal.scripts.m11_ablation_run --all-required
 \end{verbatim}
 
-\textbf{Records:} \texttt{docs/experiments/qualitative/M1.1-parent-position.md};
-\texttt{docs/research/milestone\_plans/milestone1\_part1\_ablations.md}.
-
-\textbf{Artefacts:} \texttt{M11\_parent\_position/cells/}; \texttt{M11\_ablations/}.
-
-\textbf{Engine:} \texttt{asp\_utils.pl}, \texttt{folding.pl}, \texttt{gen.pl}.
+\paragraph{Primary records and artefacts.}
+\begin{itemize}
+  \item Experiment record: \texttt{docs/experiments/qualitative/M1.1-parent-position.md}
+  \item Ablation plan: \texttt{docs/research/milestone\_plans/milestone1\_part1\_ablations.md}
+  \item Grid outputs: \texttt{causal/outputs/aba\_learning/grid/M11\_parent\_position/cells/}
+  \item Ablation outputs: \texttt{causal/outputs/aba\_learning/grid/M11\_ablations/}
+  \item Engine sources: \texttt{asp\_utils.pl}, \texttt{folding.pl}, \texttt{gen.pl}
+\end{itemize}
 
 \end{document}
