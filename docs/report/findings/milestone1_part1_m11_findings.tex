@@ -8,13 +8,13 @@
 \title{Milestone~1 Part~1 (M11): Parent-Position and Representation-Order Control\\[0.5em]
 \large Supervisor-facing findings log}
 \author{Causal ABA Learning project --- Samuel Waugh}
-\date{18 June 2026 \quad (status: analysed)}
+\date{18 June 2026 \quad (initial run recorded); 22 June 2026 \quad (status: more work needed)}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-This document records the design, implementation, commands, artefacts, and bounded conclusions for experiment~M11 (m1.1). It is a standalone audit log for supervisor review, not a manuscript chapter. The experiment tests whether target-wise ABA Learning on complete noiseless \emph{target-mechanism} tables---one isolated predictor plus a deterministic parent$\rightarrow$\texttt{x2} copy---recovers rules that track the \emph{direct-parent role} under variable-identity ($\pi$) and predictor-order ($\sigma$) transformations. This is \textbf{not} chain SCM sampling or chain discovery; chain-style edge labels in the fixtures annotate parent vs non-parent roles for $\pi$ only. Under fixed non-deterministic folding, binary encoding passes all checks; categorical-3 encoding fails $\sigma$-invariance on both tested edges. Greedy folding as a remedy is deferred to Milestone~1 Part~2 (M1.2).
+This document records the design, implementation, commands, artefacts, and \textbf{interim} conclusions for experiment~M11 (m1.1). It is a standalone audit log for supervisor review, not a manuscript chapter. The experiment tests whether target-wise ABA Learning on complete noiseless \emph{target-mechanism} tables---one isolated predictor plus a deterministic parent$\rightarrow$\texttt{x2} copy---recovers rules that track the \emph{direct-parent role} under variable-identity ($\pi$) and predictor-order ($\sigma$) transformations. This is \textbf{not} chain SCM sampling or chain discovery. The initial eight-cell nd grid is complete; cat3 fails $\sigma$-invariance. Supervisor review (June 2026) reopened the investigation: granular trace and runner-level qualitative inspection is required before closure or ablation tests. Greedy vs nd alone is \textbf{not} treated as a sufficient explanation (smoke test differs materially from both nd cat3 A and B).
 \end{abstract}
 
 \section{Position in Milestone~1}
@@ -22,8 +22,8 @@ This document records the design, implementation, commands, artefacts, and bound
 Milestone~1 (see \texttt{docs/research/milestone\_plans/milestone1-plan.md}) investigates whether ABA Learning techniques support causal-discovery-adjacent parent-set recovery on controlled fixtures.
 
 \begin{itemize}
-  \item \textbf{Part~1 (m1.1, this document):} metamorphic validity control on the QL2 (QI-002) parent-recovery proxy --- parent identity crossed with learner-visible predictor order.
-  \item \textbf{Part~2 (m1.2, planned):} rerun the same eight-cell grid under \texttt{folding\_mode: greedy} and compare to this nd baseline.
+  \item \textbf{Part~1 (m1.1, this document):} metamorphic validity control on the QL2 (QI-002) parent-recovery proxy --- parent identity crossed with learner-visible predictor order. \textbf{Status: more work needed} after supervisor review (granular $\pi$/$\sigma$ mechanism investigation outstanding).
+  \item \textbf{Part~2 (m1.2, planned):} greedy vs nd comparison on the m1.1 grid --- \textbf{deferred} until m1.1 mechanistic account is clearer; not sufficient as the primary explanation of cat3 $\sigma$ failure.
 \end{itemize}
 
 Motivation: QI-002's categorical chain returned a rule citing \texttt{x0} where the expected direct parent was \texttt{x1}. m1.1 separates direct-parent-role tracking from fixed variable identity and from fixed representation position.
@@ -223,8 +223,22 @@ Canonical experiment record: \texttt{docs/experiments/qualitative/M1.1-parent-po
   \item All eight learning cells \texttt{solved} under nd folding.
   \item Binary: 4/4 exact expected singleton; all four $\sigma$ and $\pi$ edges hold; \texttt{cov\_py} and \texttt{cov\_pl} agree.
   \item Cat3: 2/4 exact (B, C); A and D return three-rule assumption/contrary structures citing the non-parent; $\sigma$ fails on both tested pairs; $\pi$ holds on B$\leftrightarrow$C only.
-  \item Triggered inspection documents that nd folding's first literal tried follows BK predicate-block order, which determines the entailment branch on cat3 A vs B.
+  \item Triggered inspection records a \textbf{provisional} first-fold correlation on cat3 A vs B (BK order $\rightarrow$ first nd-fold literal $\rightarrow$ entailment branch); supervisor guidance requires a deeper why/when/how account before closure.
 \end{enumerate}
+
+\section{Supervisor guidance and reopened scope (June 2026)}
+
+Following review with Fabrizio, m1.1 is \textbf{not closed}. Recorded guidance (\texttt{docs/research/supervisor\_guidance.md}):
+
+\begin{itemize}
+  \item More thorough investigation of differences under $\pi$ and $\sigma$ across the grid.
+  \item Granular qualitative inspection of \texttt{prolog.stdout} for cat3 A vs B (and analogous pairs) \textbf{before} further tests.
+  \item Crystal clarity on runner and engine behaviour at lower levels of abstraction (bridge $\rightarrow$ Prolog $\rightarrow$ folding, entailment, assumptions).
+  \item Insufficient to attribute cat3 divergence to ``order differs'' alone; must state \textbf{why, when, and how precisely}; ablations follow only to test a formed hypothesis.
+  \item ND vs greedy is not a sufficient explanation; a quick greedy smoke test on the m1.1 grid returned an outcome materially different from both nd A and nd B.
+\end{itemize}
+
+\textbf{Extended m1.1 scope:} investigate \textbf{why and when} $\pi$/$\sigma$ equivariance and invariance hold or fail (encoding, representation, runner orchestration), not only whether the initial eight-cell verdict table passes.
 
 \section{Interpretation}
 
@@ -234,7 +248,7 @@ Positive control: under these fixtures and fixed nd configuration, returned rule
 
 \subsection{Categorical-3}
 
-$\sigma$-invariance \textbf{fails}: reversing predictor order while fixing parent identity changes exact singleton vs assumption-based non-parent rule. The split is encoding-dependent (binary passes; cat3 does not). Stage~3 points to BK serialisation order $\rightarrow$ first nd-fold literal $\rightarrow$ entailment vs assumption introduction as the observable mechanism. Same structural class as QI-002 \texttt{chain\_cat3}.
+$\sigma$-invariance \textbf{fails}: reversing predictor order while fixing parent identity changes exact singleton vs assumption-based non-parent rule. The split is encoding-dependent (binary passes; cat3 does not). Stage~3 inspection documents a \textbf{provisional} correlation: non-parent-first BK order $\rightarrow$ first nd-fold literal on the isolated predictor $\rightarrow$ failed entailment $\rightarrow$ assumptions. This is an observation from trace comparison, not a closed mechanistic theory.
 
 \subsection{Overall bounded answer}
 
@@ -252,17 +266,17 @@ m1.1 answers its central question \textbf{conditionally}: direct-parent tracking
 \section{Limitations}
 
 \begin{itemize}
-  \item Single seed; no noise; chain motif only; target-wise learning on \texttt{x2} only.
+  \item Single seed; no noise; target-mechanism tables (isolated non-parent + parent$\rightarrow$\texttt{x2}); target-wise learning on \texttt{x2} only.
   \item Assumption-based solutions are \texttt{solved} but discrepant vs the pre-specified singleton criterion.
   \item Coverage metrics disagree on cat3 A/D assumption rules; classifications rely on sol files and traces.
-  \item Whether a different nd fold-literal order would recover cat3 A/D without assumptions was not tested.
+  \item Stage~3 first-fold correlation documented; full why/when/how account \textbf{outstanding} (supervisor guidance).
+  \item Whether a different nd fold-literal order would recover cat3 A/D without assumptions was not tested (ablation deferred).
+  \item Greedy smoke test on m1.1 grid not yet formalised in experiment record; outcome differs from both nd cat3 A and B.
 \end{itemize}
 
-\section{Why this justifies M1.2 now}
+\section{Next steps (not M1.2-first)}
 
-m1.1 isolates an encoding-dependent representation-order sensitivity under nd on cat3: non-parent-first BK order leads nd to try the isolated predictor’s literal first, miss entailment, and introduce assumptions. Milestone~1 Part~2 will rerun the same grid (or cat3 $\sigma$-cells) under \texttt{folding\_mode: greedy}.
-
-Prior qualitative evidence (QI-002 greedy rerun) shows greedy can change cat3 behaviour on other motifs (e.g.\ binary collider no-solution $\rightarrow$ solved; cat3 fork regression). That precedent motivates but does \textbf{not} establish greedy as a fix for m1.1 cat3 $\sigma$ failure --- claim M11-C-004 remains \textbf{tentative} until M1.2 runs.
+Priority: Stage~4 granular trace audit (cat3 A vs B minimum), runner/bridge inspection, systematic $\pi$/$\sigma$ pair documentation, then hypothesis formulation and ablation runs. Full M1.2 greedy grid is a \textbf{deferred comparator}, not the primary next step to explain cat3 $\sigma$ failure.
 
 \section{Project references}
 

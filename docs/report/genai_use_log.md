@@ -75,7 +75,8 @@ Not responsible for:
 
 | Date | Tool | Task | Output / artefact | Used in report? | Samuel verification / edits | Notes |
 |---|---|---|---|---|---|---|
-| 2026-06-18 | Cursor | M1.1 close-out and supervisor findings tex | `M1.1-parent-position.md` (analysed); `milestone1_part1_m11_findings.tex`; registers; claims M11-C-* | findings tex for supervisor; not manuscript yet | Samuel reviewed conclusions before close-out | Stage 2/3 tables and bounded interpretation. |
+| 2026-06-22 | Cursor | M1.1 status reopen; supervisor guidance sync | `M1.1-parent-position.md`; findings tex; planning doc §15.1; registers; claims M11-C-003/004/005; `supervisor_guidance.md` | interim findings; not closed | pending Samuel review | Fabrizio M1.1 review: more work needed; granular traces before ablations; M1.2 deferred. |
+| 2026-06-18 | Cursor | M1.1 initial run record and interim findings tex | `M1.1-parent-position.md`; `milestone1_part1_m11_findings.tex`; registers; claims M11-C-* | findings tex for supervisor; not manuscript yet | superseded by 2026-06-22 reopen | Stage 2/3 tables; later deemed insufficient for closure. |
 | 2026-06-18 | Cursor | M1.1→M1.2 doc tidy; QN-001 removal | `experiments_summary`, `research_state`, `report_state`, registers, logging docs | indirect (navigation) | pending Samuel review | Retired QN-001; synced ChatGPT mirrors. |
 | TBD | ChatGPT | Report-writing workflow design | Documentation plan and file templates | TBD | TBD | Planning support only. |
 | TBD | ChatGPT | Generated documentation scaffold | Batch 1–3 Markdown files | TBD | TBD | To be reviewed before committing. |

@@ -8,6 +8,41 @@ Supervisors: **Fabrizio** (primary) and **Francesco**.
 
 ---
 
+## Meeting with Fabrizio (June 2026, M1.1 review)
+
+Context: Samuel presented the initial m1.1 eight-cell nd grid results and interim
+findings (`docs/report/findings/milestone1_part1_m11_findings.tex`). Status
+changed from `analysed` to **`more work needed`**.
+
+### Core points
+
+- Need a **more thorough investigation** of differences across tests under **π**
+  and **σ** (not only the metamorphic pass/fail table).
+- **Dig deeper** on `prolog.stdout` for cat3 **A vs B** (and analogous pairs):
+  clarity on traces and what happens during the run at a **very granular** level.
+- **Qualitative inspection before more tests** — understand existing traces and
+  runner behaviour before ablation grids.
+- Be **crystal clear on what happens in the runner**; go down one or several
+  levels of abstraction (Python bridge → Prolog → folding, entailment, assumptions).
+- It is **insufficient** to say cat3 diverges “because order differs”; must state
+  **why, when, and how precisely**. Further tests are needed eventually to support
+  any hypothesis that explains the cat3 A vs B divergence.
+- **ND vs greedy is not sufficient** to explain what is happening. Samuel’s quick
+  greedy smoke test on the m1.1 grid produced an outcome **materially different
+  from both** nd cat3 A and nd B.
+
+### Actions from the meeting
+
+- Expand m1.1 scope: investigate **why and when** π/σ equivariance/invariance
+  hold or fail (not only whether the initial grid passes).
+- Stage 4: granular trace audit and runner inspection (minimum: cat3 A vs B).
+- Defer full M1.2 greedy grid until mechanistic account is clearer; formalise
+  greedy smoke test if used as evidence.
+- Update experiment record, findings log, registers, and claims ledger to reflect
+  reopened status.
+
+---
+
 ## Meeting with Francesco
 
 - **Do not use AI for idea generation.** Using AI for validation is also very risky because it
@@ -129,14 +164,12 @@ judgement-heavy moments; use fast/Instant only for trivial formatting.
   (`docs/experiments/qualitative/greedy_vs_nd_qualitative_handoff.md`). Milestone 1 Part 2
   (M1.2) will compare greedy vs nd on the m1.1 eight-cell grid; the QI-* greedy reruns remain
   supporting precedent only.
-- **M1.1 (M11) parent-position metamorphic control** is complete (`analysed`). It addresses the
-  June meeting action on order/parent-role dependence via σ/π transformations (not the QI-002
-  within-motif swap, which remains QI-004 territory). Findings:
-  `docs/report/findings/milestone1_part1_m11_findings.tex`.
+- **M1.1 (M11) parent-position metamorphic control** — initial nd grid run complete; status **`more work needed`** (June 2026 supervisor review). Granular trace/runner investigation outstanding before closure. Interim findings: `docs/report/findings/milestone1_part1_m11_findings.tex`.
 
 ## Outstanding actions
 
-- Write and run **M1.2** (greedy vs nd on the m1.1 grid).
+- **M1.1 Stage 4:** granular `prolog.stdout` audit (cat3 A vs B); runner/bridge clarity; π/σ mechanism account before ablations.
+- **M1.2 deferred** until m1.1 mechanistic investigation progresses (greedy smoke test ≠ nd A or B).
 - Give each presented result an interpretation and a conclusion; reason explicitly about
   DGP-expected vs actual learned rules (M1.1 done; QL series partially done).
 - Define first-principles success metrics beyond parent membership (e.g. fold count for

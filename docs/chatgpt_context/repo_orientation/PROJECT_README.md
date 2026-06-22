@@ -43,8 +43,8 @@ Experiments are documented under `docs/experiments/`:
 
 - Experiment records should use the canonical template `docs/experiments/TEMPLATE.md`.
 - The at-a-glance index is `docs/experiments/experiments_summary.md`.
-- Milestone 1 Part 1 (M11 / m1.1) is `analysed`: `docs/experiments/qualitative/M1.1-parent-position.md`; supervisor findings `docs/report/findings/milestone1_part1_m11_findings.tex`.
-- **Next:** Milestone 1 Part 2 (M1.2) — greedy vs nd on the m1.1 grid.
+- Milestone 1 Part 1 (M11 / m1.1) is **`more work needed`**: initial nd grid run complete; granular trace investigation outstanding. `docs/experiments/qualitative/M1.1-parent-position.md`; interim findings `docs/report/findings/milestone1_part1_m11_findings.tex`.
+- **Next:** M1.1 Stage 4 trace/runner audit; M1.2 deferred.
 
 Each experiment record should capture an ID, research question, theoretical motivation,
 setup, exact command, output, interpretation, and next decision. Records are evidence

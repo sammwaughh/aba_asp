@@ -36,7 +36,7 @@ Use the same status categories as `experiment_register.md`.
 | QI-001 greedy | — | Greedy-folding rerun of QI-001 (3 motifs x 3 modes) | analysed | `docs/experiments/qualitative/QI001_motifs_modes_greedy/` | `causal/configs/experiments/QI001_motifs_modes_greedy.yaml` | `causal/outputs/aba_learning/grid/QI001_motifs_modes_greedy/` | Interim Experimentation / Progress | Only change `folding_mode: greedy`. 9/9 solved; greedy faster and recovers all three colliders cleanly across modes (nd clean only in binary); chain/fork remain supersets. |
 | QI-002 greedy | — | Greedy-folding rerun of QI-002 (minimal truth-table baseline) | analysed | `docs/experiments/qualitative/QI002_minimal_motifs_greedy/` | `causal/configs/experiments/QI002_minimal_motifs_greedy.yaml` | `causal/outputs/aba_learning/grid/QI002_minimal_motifs_greedy/` | Interim Experimentation / Progress | Only change `folding_mode: greedy`. 6/6 solved (vs nd 5/6): solves the binary collider nd could not; cat3 collider now exact; clean recovery 3/6 -> 4/6 with one regression (cat3 fork exact -> superset). |
 | QI-004 greedy | — | Greedy-folding rerun of QI-004 (scaled noisy n=20) | analysed | `docs/experiments/qualitative/QI004_scaled_motifs_n20_greedy/` | `causal/configs/experiments/QI004_scaled_motifs_n20_greedy.yaml` | `causal/outputs/aba_learning/grid/QI004_scaled_motifs_n20_greedy/` | Interim Experimentation / Progress | Only change `folding_mode: greedy`. Same outcomes as nd (1 solved, 12 no-solution, 2 errors; 0/15 clean) but ~120x faster (≈1233 s -> ≈10 s). At noisy n=20 greedy changes only runtime; binary errors persist. |
-| M11 | — | m1.1 Parent-position and representation-order control | analysed | `docs/experiments/qualitative/M1.1-parent-position.md` | `causal/configs/experiments/M11_parent_position.yaml` | `causal/outputs/aba_learning/grid/M11_parent_position/cells/<dgp>/` (learning); `causal/outputs/m11_parent_position/validation/` (Stage-0); `docs/report/findings/milestone1_part1_m11_findings.tex` | Interim Experimentation / Progress (Milestone 1) | 8/8 solved (nd). Tabular DGP: isolated non-parent + deterministic parent→x2 copy (not chain sampling). Binary: 4/4 exact; σ and π hold. Cat3: 2/4 exact (B,C); σ fails (A↔B, D↔C); π holds B↔C only. Stage 3: BK order → first nd-fold literal → entailment fork. Motivates M1.2 greedy comparison. |
+| M11 | — | m1.1 Parent-position and representation-order control | more work needed | `docs/experiments/qualitative/M1.1-parent-position.md` | `causal/configs/experiments/M11_parent_position.yaml` | `causal/outputs/aba_learning/grid/M11_parent_position/cells/<dgp>/` (learning); `causal/outputs/m11_parent_position/validation/` (Stage-0); `docs/report/findings/milestone1_part1_m11_findings.tex` | Interim Experimentation / Progress (Milestone 1) | Initial 8/8 nd solved. Tabular DGP: isolated non-parent + parent→x2. Binary σ/π pass. Cat3 σ fails (A/D vs B/C). Stage 3 first-fold trace **provisional**; supervisor reopened granular inspection before ablations. Greedy smoke ≠ nd A/B. M1.2 deferred. |
 
 ## Experiment sequence to date and next
 
@@ -52,19 +52,19 @@ Status: `analysed`
 
 Compared `folding_mode: nd` vs `greedy` on identical fixtures (QI-001/QI-002/QI-004 greedy reruns). Greedy is faster (~120x at the QL3 scale), solve rate >= nd, net better clean recovery (colliders), one regression (cat3 fork), no recovery change at the noisy n=20 scale. See `docs/experiments/qualitative/greedy_vs_nd_qualitative_handoff.md`.
 
-### Done: Milestone 1 Part 1 — parent-position and representation-order control (M11 / m1.1)
+### In progress: Milestone 1 Part 1 — parent-position and representation-order control (M11 / m1.1)
 
-Status: `analysed`
+Status: **`more work needed`**
 
-Eight-cell metamorphic grid (binary + cat3; σ and π transformations) on **target-mechanism tables** (one isolated predictor + deterministic parent→`x2` copy; not chain SCM sampling). Under fixed nd folding: binary passes all parent-role and order-invariance checks; cat3 fails σ-invariance (representation-order sensitivity under nd). Stage 3 trace documents BK order → first nd-fold literal → entailment branch. Findings: `docs/report/findings/milestone1_part1_m11_findings.tex`. Record: `docs/experiments/qualitative/M1.1-parent-position.md`.
+Initial eight-cell metamorphic grid complete (binary + cat3; σ and π under nd). Binary passes all checks; cat3 fails σ-invariance. Stage 3 recorded a **provisional** first-fold trace correlation; supervisor review (June 2026) requires granular `prolog.stdout` and runner-level qualitative inspection **before** ablation runs. Extended scope: explain **why/when/how** π/σ behaviour holds or fails. Greedy smoke test on m1.1 differed from both nd cat3 A and B — M1.2 full grid deferred. Interim findings: `docs/report/findings/milestone1_part1_m11_findings.tex`. Record: `docs/experiments/qualitative/M1.1-parent-position.md`.
 
-### Next: Milestone 1 Part 2 — greedy vs nd on the m1.1 grid (M1.2)
+### Deferred: Milestone 1 Part 2 — greedy vs nd on the m1.1 grid (M1.2)
 
-Status: `planned` (planning doc in progress)
+Status: `planned` (blocked on m1.1 mechanistic investigation)
 
 Purpose:
 
-> Rerun the m1.1 eight-cell grid under `folding_mode: greedy` and compare to the nd baseline in M11. Primary motivation: cat3 σ-invariance failure under nd (M11-C-002); tentative hypothesis that greedy may reduce representation-order sensitivity (M11-C-004, not established until M1.2 runs).
+> Rerun the m1.1 eight-cell grid under `folding_mode: greedy` and compare to the nd baseline in M11. **Deferred** until m1.1 Stage 4 trace/runner investigation is documented. Greedy smoke test on m1.1 returned an outcome materially different from both nd cat3 A and B — not treated as sufficient explanation of σ failure.
 
 Planning doc (Samuel): `docs/research/milestone_plans/milestone1_part2_greedy_vs_nondeterministic.md` (to be written).
 
@@ -144,6 +144,6 @@ Workflow:
 
 Completed since the QL series:
 
-1. **M1.1 (M11)** — parent-position and representation-order metamorphic control (`analysed`; findings tex at `docs/report/findings/milestone1_part1_m11_findings.tex`).
+1. **M1.1 (M11)** — parent-position and representation-order metamorphic control (`more work needed`; initial nd grid run complete; granular trace investigation outstanding).
 
 Remaining Milestone 1 parts (after M1.2): failure analysis (Part 3), noise/continuous DGP (Part 4); then Milestone 2 (Causal-ABA-guided bridge).

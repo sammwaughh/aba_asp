@@ -243,7 +243,8 @@ M11-C-001, M11-C-002 (bounded)
 - Claims not supported:
 
 ```text
-Greedy fixes cat3 σ failure (M11-C-004 tentative until M1.2)
+Greedy fixes or explains cat3 σ failure (M11-C-004 weakened; smoke test ≠ nd A/B; M1.2 deferred)
+Complete mechanistic account of cat3 A vs B (M11-C-003 provisional only)
 ```
 
 ## Caption rules

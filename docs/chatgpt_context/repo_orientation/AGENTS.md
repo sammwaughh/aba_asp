@@ -51,8 +51,8 @@ The current experimental priority is Milestone 1: close the unguided parent-set 
 Key experiment records:
 
 - `docs/experiments/qualitative/QL-001.md` — qualitative inspection of ABA Learning on minimal causal motifs (realised by QI series).
-- `docs/experiments/qualitative/M1.1-parent-position.md` — Milestone 1 Part 1 (M11); `analysed`.
-- **Next:** Milestone 1 Part 2 (M1.2) — greedy vs nd on the m1.1 grid; planning doc `docs/research/milestone_plans/milestone1_part2_greedy_vs_nondeterministic.md` (Samuel).
+- `docs/experiments/qualitative/M1.1-parent-position.md` — Milestone 1 Part 1 (M11); **`more work needed`** (initial nd grid run complete; granular trace investigation outstanding).
+- **Next:** Milestone 1 Part 1 extended investigation (M11 Stage 4 trace/runner audit); **M1.2 deferred** until mechanistic account clearer — planning doc `docs/research/milestone_plans/milestone1_part2_greedy_vs_nondeterministic.md` (Samuel).
 
 ## Experiment documentation rule
 

@@ -41,13 +41,15 @@ The investigation uses small, clean QL2-style **target-mechanism tables**: one p
 
 The intended outcome is a justified conclusion about whether the existing parent-recovery results can be interpreted independently of an `x0` or ordering artefact.
 
-**Status (June 2026):** complete (`analysed`). Experiment M11; record `docs/experiments/qualitative/M1.1-parent-position.md`; supervisor findings `docs/report/findings/milestone1_part1_m11_findings.tex`. Bounded outcome: on isolated-parent tables (not chain samples), binary passes σ/π checks under nd; cat3 fails σ-invariance (representation-order sensitivity). Next: Part 2 (M1.2).
+**Status (June 2026):** initial eight-cell nd grid **run**; status **`more work needed`**. Experiment M11; record `docs/experiments/qualitative/M1.1-parent-position.md`; interim findings `docs/report/findings/milestone1_part1_m11_findings.tex`. First-run facts: on isolated-parent tables (not chain samples), binary passes σ/π under nd; cat3 fails σ-invariance. Supervisor review reopened granular trace/runner investigation before closure. M1.2 full greedy grid **deferred** (not sufficient explanation; smoke test ≠ nd A or B).
 
 ## Part 2: Greedy Versus Non-Deterministic ABA Learning
 
 Planning document: `milestone1_part2_greedy_vs_nondeterministic.md`
 
 Determine which currently implemented folding strategy should be the operational default for the remaining Milestone 1 work.
+
+**Dependency:** Part 2 assumes a clearer mechanistic account of m1.1 cat3 σ failure (Part 1 extended investigation). A quick greedy smoke test on the m1.1 grid produced an outcome materially different from both nd cat3 A and B — strategy comparison alone does not explain the divergence.
 
 The investigation should compare greedy and non-deterministic learning on controlled fixtures, assessing both computational behaviour and agreement with expected learned rules. It should test whether greedy is faster, more reliable or more causally aligned, while allowing for the possibility that its advantages are conditional rather than universal.
 

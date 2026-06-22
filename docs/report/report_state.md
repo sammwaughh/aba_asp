@@ -116,8 +116,9 @@ Drafted structure:
    - motivates Milestone 1 Part 2 (M1.2): greedy vs nd on the m1.1 grid.
 
 6. **M1.1 (M11): parent-position and representation-order control**
-   - eight-cell metamorphic grid under fixed nd folding; binary σ/π hold; cat3 σ fails; Stage 3 mechanism documented;
-   - findings tex: `docs/report/findings/milestone1_part1_m11_findings.tex`.
+   - initial eight-cell nd grid complete; binary σ/π hold; cat3 σ fails;
+   - status **`more work needed`**: supervisor review (June 2026) requires granular trace/runner investigation before closure;
+   - interim findings: `docs/report/findings/milestone1_part1_m11_findings.tex`.
 
 7. **Interim interpretation and limitations**
    - bounded conclusion: parent recovery works in selected idealised cases but is not robust across motifs/encodings/noise;
@@ -149,7 +150,7 @@ Explain what will happen after the interim report, following from the QL1/QL2/QL
 
 Drafted milestones (Weeks 1–13, with a Week-11 holiday):
 
-1. **Milestone 1 (Weeks 1–2)** — parent-set diagnostic in four parts: **Part 1 done (M1.1/M11)** — metamorphic parent-position / representation-order control; **Part 2 next (M1.2)** — greedy vs nd on the m1.1 grid; Parts 3–4 — failure analysis and noise/continuous DGP investigation; first-principles success metrics beyond parent membership.
+1. **Milestone 1 (Weeks 1–2)** — parent-set diagnostic in four parts: **Part 1 in progress (M1.1/M11)** — metamorphic control run complete; granular π/σ mechanism investigation outstanding; **Part 2 (M1.2)** — greedy vs nd deferred until m1.1 mechanistic account clearer; Parts 3–4 — failure analysis and noise/continuous DGP investigation; first-principles success metrics beyond parent membership.
 2. **Milestone 2 (Weeks 3–4)** — design the bridge in which Causal ABA-style information guides ABA Learning; specify comparable outputs and metrics.
 3. **Milestone 3 (Weeks 5–6)** — implement causal-guided ABA Learning variants; compare against unguided learning; build bespoke metrics that judge whether causality (not just predictive parents) is learned.
 4. **Milestone 4 (Weeks 7–8)** — scale beyond three-node motifs; set up representative external comparators and a frozen evaluation protocol.

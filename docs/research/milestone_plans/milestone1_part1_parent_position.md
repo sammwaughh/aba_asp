@@ -2,7 +2,7 @@
 
 **Short name:** m1.1  
 **Planned path:** `docs/research/milestone_plans/milestone1_part1_parent_position.md`  
-**Status:** Design agreed; ready for implementation  
+**Status:** Initial eight-cell run complete; **more work needed** (supervisor review, June 2026 — granular trace and runner investigation before closure)  
 **Research stage:** RQ1 — unguided causal-role diagnostic  
 **Primary baseline:** QL2 / QI-002  
 **Target:** `x2`
@@ -897,7 +897,7 @@ The initial experiment must not add:
 - hyperparameter sweeps;
 - alternative semantics.
 
-The investigation stops after the eight cells when the result supports a clear bounded classification, including an encoding-dependent classification.
+The initial eight-cell grid run stops when metamorphic verdicts and artefacts are complete. **Closure** additionally requires a granular mechanistic account of any π/σ failure (supervisor guidance, June 2026) — for m1.1, cat3 A vs B minimum before ablation tests or Milestone 1 Part 2.
 
 A reversed-fork control may be considered only when:
 
@@ -928,6 +928,25 @@ m1.1 is complete when all of the following hold:
 14. The findings are written into a concise `.tex` document covering design, results, interpretation, limitations, and conclusion.
 
 Completion does not require a positive result. A valid finding of name sensitivity, order sensitivity, verified no-solution behaviour, or encoding dependence completes the investigation if the evidence is sufficient.
+
+**Update (June 2026, supervisor review):** criteria 1–7 and the initial findings `.tex` are met for the first nd grid run, but criterion 8 and the overall mechanistic standard are **not** met for cat3 σ failure. Fabrizio’s guidance reopens m1.1 until a granular why/when/how account (trace + runner levels) is documented **before** ablation runs. ND vs greedy alone is not treated as sufficient; M1.2 full grid is deferred.
+
+## 15.1 Extended investigation phase (supervisor guidance, June 2026)
+
+The investigation scope now explicitly includes **mechanistic explanation** of π/σ divergence, not only metamorphic pass/fail verdicts.
+
+### Required before closure or ablation grid
+
+1. **Granular trace audit** — line-level comparison of `prolog.stdout` for cat3 A vs B (minimum; then D vs C and other π/σ pairs as needed).
+2. **Runner clarity** — document what the Python bridge and Prolog entry point do step-by-step for one cell (options, rote rules, fold selection, entailment checks, assumption introduction).
+3. **Precise divergence account** — for cat3 A vs B: not merely “BK order differs”, but **why** the first fold fails/succeeds entailment, **when** each engine step fires, **how** the run path diverges.
+4. **Qualitative inspection before tests** — no new ablation runs until (1)–(3) are recorded.
+5. **Hypothesis then ablations** — further tests (table size, encoding, fold order, strategy including formal greedy baseline) support a stated hypothesis only.
+
+### Explicitly not sufficient
+
+- Attributing cat3 σ failure to column order alone without deeper trace evidence.
+- Treating Milestone 1 Part 2 (full greedy vs nd grid) as the primary next step or as a complete explanation (greedy smoke test on m1.1 differed materially from both nd A and B).
 
 ## 16. Success criteria
 
