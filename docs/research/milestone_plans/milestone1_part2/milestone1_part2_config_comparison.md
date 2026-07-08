@@ -1,6 +1,6 @@
 # Milestone 1, Part 2 (M1.2) — Published-configuration comparison on divergence-designed fixtures
 
-**Status:** `run` — Stages 0–2 complete (2026-07-08): fixtures + validation checks + locked expected outputs (Stage 0); config-consulting runner + default-assumption BK + arm YAMLs + summary side-car + smoke test (Stage 1); 15-cell grid run, all `solved`, outcome matrix built (Stage 2). Stages 3–4 not started
+**Status:** `run` — Stages 0–2 complete (2026-07-08): fixtures + validation checks + locked expected outputs (Stage 0); config-consulting runner + feature-BK construction + arm YAMLs + summary side-car + smoke test (Stage 1); 15-cell grid run, outcome matrix built (Stage 2). Stages 3–4 not started
 **Experiment ID:** `M12_config_comparison` (arms `M12_ecai2024`, `M12_ruleml2025`, `M12_aamas2025`)
 **Parent index:** [milestone1-plan.md](../milestone1-plan.md) (Part 2 section)
 
@@ -46,11 +46,10 @@ Design decisions fixed at planning time:
 - **No repeat-stability measurement.** The algorithms have no probabilistic component and
   clingo is deterministic for fixed input, flags, and version; identical reruns give
   identical output.
-- **`asm_intro(relto)` in all arms** (as the config files specify). The repo's AA-CBR
-  example (`examples/aacbr2.bk.aba:19`) suggests `sechk` for that example; the config
-  files are treated as canonical. Recorded caveat: if M1.3 implicates
-  assumption-introduction behaviour in a failure mode, a single `sechk` ablation on the
-  implicated cell is the designated follow-up.
+- **`asm_intro(relto)` in all arms** (as the config files specify); the config files are
+  treated as canonical. Recorded caveat: if M1.3 implicates assumption-introduction
+  behaviour in a failure mode, a single `sechk` ablation on the implicated cell is the
+  designated follow-up.
 - **`ecai2024ALL_config.pl` (fold-all variant) is excluded** from M1.2; flagged for later
   consideration.
 - **Honesty note for the write-up:** the RuleML and AAMAS configurations differ *only* in
@@ -62,33 +61,33 @@ Design decisions fixed at planning time:
   the main predicted RuleML-vs-AAMAS divergence from the original plan; any gate-related
   observations in M1.2 are incidental only.
 
-## 3. Encoding and the default-assumption construction
+## 3. Encoding
 
-Shared encoding for all arms (inputs identical across arms, per fixture):
+Feature encoding (identical across arms, per fixture), matching how the published tabular
+benchmarks construct BK (`ecai2024/ASP-ABAlearn_B/*.csv.bk.aba`, `ruleml2025/*.scratch.aba`):
 
 - rows are cases with numeric sample ids 1..N;
 - each categorical predictor (\(k = 3\) values) is encoded as one-hot value predicates
   `xi_val_v(A) :- A=id.`;
 - the target is excluded from the feature BK; \(E^+\) = target atoms of the designated
-  positive class, \(E^-\) = the rest.
+  positive class, \(E^-\) = the rest;
+- learning is driven by `E^+`/`E^-` only: the engine rote-learns the target atoms and
+  folds them into intensional target rules (`t(A) :- xi_val_v(A)`), the same path the
+  shipped ECAI/RuleML tabular benchmarks use.
 
-**Default assumption and contrary (AAMAS framing).** Following the Greedy ABA Learning
-paper's casebase construction, the shared fixture BK additionally declares the default
-rule and bogus assumption/contrary for the target, in the idiom of
-`examples/aacbr2.bk.aba`:
+**RuleML `domain/1` element.** The RuleML arm additionally emits the `domain/1` predicate
+that ships with `ruleml2025/*.scratch.aba`, for construction fidelity to that system:
 
 ```prolog
-t(X) :- domain(X), alpha(X).
+domain(default).
 domain(1). ... domain(N).
-assumption(alpha(X)).
-contrary(alpha(X), c_alpha(X)) :- assumption(alpha(X)).
 ```
 
-(with `t` the fixture's target predicate). This makes the learning problem well-posed in
-the AAMAS casebase sense for the greedy arms. It is added to **all** arms so that every
-configuration sees identical input; how the ECAI arm interacts with a pre-declared
-assumption is itself an observation M1.2 records. The exact syntactic form is finalised at
-implementation against the AAMAS paper's construction and validated in Stage 0.
+No default rule and no assumption/contrary are declared (that `domain(default)` element
+supports RASP-ABAlearn's incremental redress workflow, which M1.2 does **not** run — one
+shot only). The ECAI and AAMAS arms use feature-BK with no `domain/1`. The feature
+encoding is otherwise shared across all three arms so the comparison isolates the folding
+configuration (plus RuleML's `domain/1`). Validated in Stage 0/1.
 
 ## 4. Fixture families
 
@@ -134,7 +133,7 @@ Rationale per family:
   associated with `x2` via shared cause `x0` but is **not** a zero-error separator.
   Distinct from `m12_sep` (isolated noise variable) and `m12_chain` (ancestor vs parent
   on a chain). Extends the QI-002 fork baseline (`qi002_fork_cat3`) to the three published
-  configurations under the shared M1.2 encoding (default assumption, config-file arms),
+  configurations under the shared M1.2 encoding (feature-BK, config-file arms),
   with a **different table**: QI-002's factorial fork decorrelated the sibling; here both
   children are deterministic functions of `x0` (Samuel's design, 2026-07-08), so the edge
   `x0 -> x1` leaves a data-level trace. Two design notes: `x1` takes exactly two values
@@ -234,8 +233,8 @@ implementation work for this part.
    (`check_ic` is kept). `folding_steps` is **not** harmonised across arms: the ECAI
    config fixes `folding_steps(10)` and fidelity wins over harmonisation (recorded
    caveat).
-2. **BK writer extension** for the default rule / bogus assumption+contrary construction
-   (Section 3), shared across arms.
+2. **BK writer extension** for the RuleML `domain/1` element (Section 3), on the RuleML
+   arm only; ECAI/AAMAS use plain feature-BK.
 3. **Metrics/outcome-classifier adaptation** (Section 5).
 4. **Timeout:** `prolog_timeout_s: 60` for all cells. Small tabular data should not
    exceed this; any timeout is traced (what was the engine doing), not silently retried
@@ -248,7 +247,7 @@ implementation work for this part.
 | Stage | Content | Gate |
 |-------|---------|------|
 | 0 | **DONE (2026-07-08).** Fixtures (`causal/experiments/handcrafted_m12.py`) + Prolog-free validation checks (`causal/tests/test_m12_fixtures.py`, 59 tests, all PASS); expected outputs locked in `docs/experiments/qualitative/M1.2-config-comparison.md` before any learning run | all checks PASS ✓ |
-| 1 | **DONE (2026-07-08).** Config-consulting runner (`prolog_config`), shared default-assumption BK, three arm YAMLs, and M12 summary side-car (`causal/experiments/m12_summary.py`) built + unit-tested (103 Prolog-free tests PASS); smoke test `M12_ecai2024`/`m12_sep` -> effective `listing(lopt/1)` matches `configs/ecai2024_config.pl` | options match config file ✓ |
+| 1 | **DONE (2026-07-08).** Config-consulting runner (`prolog_config`), feature-BK construction (+ RuleML `domain/1`), three arm YAMLs, and M12 summary side-car (`causal/experiments/m12_summary.py`) built + unit-tested (Prolog-free tests PASS); smoke test `M12_ecai2024`/`m12_sep` -> effective `listing(lopt/1)` matches `configs/ecai2024_config.pl` | options match config file ✓ |
 | 2 | **DONE (2026-07-08).** Full grid 3 arms × 5 fixtures (15 cells), serial, timeout 60 s; all 15 cells `solved` (0 timeout/error); each config applied verbatim + distinct per arm; outcome matrix `M12_summary.md` built | all cells produce classified outcomes ✓ |
 | 3 | Outcome matrix + per-cell expected-vs-learned comparison; qualitative inspection of every divergent cell | record complete |
 | 4 | Findings write-up (`.tex`); registers and claims ledger synced | Samuel review |

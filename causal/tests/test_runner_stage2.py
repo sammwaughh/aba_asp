@@ -94,7 +94,7 @@ def _handcrafted_cell(source: str, target: str) -> CellSpec:
 
 
 @pytest.mark.parametrize("source,target,n", [("m12_sep", "x2", 9), ("m12_conj", "x3", 27)])
-def test_stage2_default_assumption_block_present(
+def test_stage2_domain_predicate_block_present(
     source: str, target: str, n: int, tmp_path: Path
 ) -> None:
     cell = _handcrafted_cell(source, target)
@@ -105,25 +105,27 @@ def test_stage2_default_assumption_block_present(
         bins=3,
         bin_strategy="uniform",
         example_split="handcrafted",
-        default_assumption=True,
+        domain_predicate=True,
     )
     assert out.outcome == "ok"
     assert out.bk_path is not None
     text = out.bk_path.read_text(encoding="utf-8")
-    # aacbr2 idiom for the fixture target over sample ids 1..N.
-    assert f"{target}(X) :- domain(X), alpha(X)." in text
-    assert "assumption(alpha(X))." in text
-    assert "contrary(alpha(X),c_alpha(X)) :- assumption(alpha(X))." in text
+    # RuleML domain/1 element over sample ids 1..N, plus domain(default).
+    assert "domain(default)." in text
     assert "domain(1)." in text
     assert f"domain({n})." in text
     assert f"domain({n + 1})." not in text
-    # Features are still value predicates; the target head appears ONLY in the
-    # default rule (not as a feature predicate).
+    # No default rule, assumption, or contrary is emitted.
+    assert "alpha(" not in text
+    assert "contrary(" not in text
+    assert f"{target}(X) :-" not in text
+    # Target still excluded from the feature BK.
     assert f"{target}_val_" not in text
+    assert f"Skipping excluded variable: {target}" in text
 
 
 @pytest.mark.parametrize("source,target", [("m12_sep", "x2"), ("m12_conj", "x3")])
-def test_stage2_default_assumption_off_is_unchanged(
+def test_stage2_feature_bk_no_domain_by_default(
     source: str, target: str, tmp_path: Path
 ) -> None:
     cell = _handcrafted_cell(source, target)

@@ -1,8 +1,8 @@
 """Prolog-free tests for the three M1.2 published-arm configs.
 
 Each arm YAML consults one shipped ``.pl`` config verbatim (via ``prolog_config``)
-and turns on the shared default-assumption BK construction. These tests assert the
-configs load, expand to the five M1.2 fixtures (targets x2/x3), and reference
+over feature-BK; the RuleML arm additionally sets ``domain_predicate``. These tests
+assert the configs load, expand to the five M1.2 fixtures (targets x2/x3), and reference
 existing config files. No ABA Learning (no swipl/clingo).
 """
 
@@ -53,11 +53,17 @@ def test_arm_config_loads_and_expands(arm: str) -> None:
 
 
 @pytest.mark.parametrize("arm", sorted(_ARMS))
-def test_arm_defaults_prolog_config_and_default_assumption(arm: str) -> None:
+def test_arm_defaults_prolog_config_and_bk_construction(arm: str) -> None:
     cfg = load_config(_EXP_DIR / f"{arm}.yaml")
     assert cfg.defaults.get("prolog_config") == _ARMS[arm]
-    assert cfg.defaults.get("default_assumption") is True
     assert float(cfg.defaults.get("prolog_timeout_s")) == 60.0
+    # Feature-BK construction: only the RuleML arm emits the domain/1 element.
+    if arm == "M12_ruleml2025":
+        assert cfg.defaults.get("domain_predicate") is True
+    else:
+        assert cfg.defaults.get("domain_predicate", False) is False
+    # The removed default_assumption key must not appear on any arm.
+    assert "default_assumption" not in cfg.defaults
     # The arms consult a config verbatim, so folding options are NOT set here.
     assert "folding_mode" not in cfg.defaults
     assert "folding_steps" not in cfg.defaults

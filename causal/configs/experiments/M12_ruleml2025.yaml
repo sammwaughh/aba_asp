@@ -1,5 +1,5 @@
 experiment_id: M12_ruleml2025
-description: "M1.2 arm RuleML (RASP-ABAlearn): the shipped ruleml2025/ruleml2025_config.pl consulted verbatim (brave, greedy folding, selection mgr, space bk, asm_intro relto, check_ic, post_folding_test_entailment false), run ONE-SHOT on the five divergence-designed categorical fixtures. The incremental redress workflow is NOT exercised (deferred; plan Section 4.1). Shared default-assumption BK construction on. Timeout 60 s. Recovery of mechanism-aligned rules via unguided ABA Learning, NOT Russo-style Causal ABA."
+description: "M1.2 arm RuleML (RASP-ABAlearn): the shipped ruleml2025/ruleml2025_config.pl consulted verbatim (brave, greedy folding, selection mgr, space bk, asm_intro relto, check_ic, post_folding_test_entailment false), run ONE-SHOT on the five divergence-designed categorical fixtures. The incremental redress workflow is NOT exercised (deferred; plan Section 4.1). Feature-BK + E+/E- construction, plus the domain/1 element (domain(default) + domain(1..N)) that ships with ruleml2025/*.scratch.aba for construction fidelity. Timeout 60 s. Recovery of mechanism-aligned rules via unguided ABA Learning, NOT Russo-style Causal ABA."
 owner: sam
 
 defaults:
@@ -9,7 +9,7 @@ defaults:
   prolog_timeout_s: 60
   query_timeout_s: 5
   prolog_config: ruleml2025/ruleml2025_config.pl
-  default_assumption: true
+  domain_predicate: true
 
 dgps:
   - id: m12_sep

@@ -2,6 +2,38 @@
 
 Recorded decisions that affect experiment direction. Evidence and interpretation remain in experiment records.
 
+## 2026-07-08 — M1.2 BK construction backtracked: casebase default-assumption → feature-BK
+
+**Decision:** M1.2 Stages 0–2 are re-based from the AAMAS casebase default-assumption BK to
+the construction the shipped benchmarks actually use. All three arms now use feature-BK
+(`xi_val_v(A) :- A=id.`) with learning driven by `E+`/`E-`, matching
+`ecai2024/ASP-ABAlearn_B/*.csv.bk.aba`. The RuleML arm additionally emits the `domain/1`
+element (`domain(default).` + `domain(1..N).`) that ships with `ruleml2025/*.scratch.aba`
+for construction fidelity; that `domain(default)` element supports RASP-ABAlearn's
+incremental redress workflow, which M1.2 does **not** run (one-shot only). No default rule
+and no assumption/contrary are declared on any arm.
+
+**Why (superseded approach):** Stage 1 had grafted the AA-CBR casebase idiom
+(`t(X) :- domain(X), alpha(X)` + `assumption(alpha(X))` + `contrary(alpha(X), c_alpha(X))`)
+onto every arm. That pre-derived the target for every sample via the default `alpha`, so
+the only learnable content was the contrary — producing contrary-only solutions in all 15
+Stage-2 cells, with no positive `t(A) :- xi_val_v(A)` rule. Survey of the example trees
+showed the casebase idiom appears only in AA-CBR examples (`examples/aacbr2.bk.aba`,
+`aacbr3`, `dislike`, `loan`), never in the ECAI or RuleML tabular benchmarks, which learn
+positive rules from `E+`/`E-` over plain feature-BK. The same engine on the same fixture
+style without the casebase graft yields positive rules under both nd and greedy folding
+(`causal/outputs/aba_learning/grid/M11_parent_position{,_greedy}/`).
+
+**Impact:** `causal/argcausaldisco_integration.py` (`default_assumption_target` →
+`domain_predicate`), `causal/experiments/run_grid.py` threading, the three arm YAMLs, the
+M12 summary side-car, and the M1.2 plan/record/registers were rewritten to the feature-BK
+approach; the Stage-2 grid was re-run. Locked expected outputs (positive rules) are
+unchanged. Method-describing docs describe only the feature-BK approach; this entry is the
+sole record of the superseded casebase construction.
+
+**Records:** `docs/experiments/qualitative/M1.2-config-comparison.md`;
+`docs/research/milestone_plans/milestone1_part2/milestone1_part2_config_comparison.md`.
+
 ## 2026-07-08 — Milestone 1 re-scoped: M1.2 published-configuration comparison; M1.3 failure-mode taxonomy; no M1.4
 
 **Decision:** Milestone 1's goal is a report-ready account of **when and how unguided ABA

@@ -173,8 +173,8 @@ def _canonicalize(rule: str) -> str:
     """Canonicalize a rule: strip spaces and rename variables by appearance order.
 
     Makes BK subtraction robust to the engine echoing BK clauses into the
-    solution with renamed variables (observed: the default rule ``t(X) :- ...``
-    is written back as ``t(A) :- ...``). Distinct variables stay distinct.
+    solution with renamed variables (e.g. a feature rule ``xi_val_v(X) :- X=id``
+    written back as ``xi_val_v(A) :- A=id``). Distinct variables stay distinct.
     """
     r = "".join(rule.strip().rstrip(".").split())
     mapping: dict[str, str] = {}
@@ -338,10 +338,10 @@ def build_markdown(rows_by_arm: dict[str, list[CellSummary]]) -> str:
         lines.append(
             "| fixture | target | outcome | exact | covers_all_pos | rejects_all_neg "
             "| body-scope vars | framework-scope vars | Δrules | asm | contr | "
-            "max|mean body | trace lines |"
+            "max &#124; mean body | trace lines |"
         )
         lines.append(
-            "|---|---|---|:-:|:-:|:-:|---|---|--:|--:|--:|---|--:|"
+            "|---|---|---|:-:|:-:|:-:|---|---|--:|--:|--:|---|---|--:|"
         )
         for r in rows:
             mean_bl = "-" if r.mean_body_length is None else f"{r.mean_body_length:.2f}"
@@ -352,7 +352,7 @@ def build_markdown(rows_by_arm: dict[str, list[CellSummary]]) -> str:
                 f"{{{', '.join(r.body_scope_vars)}}} | "
                 f"{{{', '.join(r.framework_scope_vars)}}} | "
                 f"{r.n_delta_rules} | {r.n_assumptions} | {r.n_contraries} | "
-                f"{r.max_body_length}|{mean_bl} | {r.trace_line_count} |"
+                f"{r.max_body_length} &#124; {mean_bl} | {r.trace_line_count} |"
             )
         lines.append("")
         # Effective-options provenance (one line per distinct option set).

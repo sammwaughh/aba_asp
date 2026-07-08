@@ -145,32 +145,26 @@ def test_summarize_arm_missing_dir_is_empty(tmp_path: Path) -> None:
 
 
 def test_canonicalize_ignores_variable_names() -> None:
-    # The engine echoes the default rule with renamed variables (X -> A).
-    assert _canonicalize("x2(X) :- domain(X), alpha(X).") == _canonicalize(
-        "x2(A) :- domain(A), alpha(A)."
-    )
+    # The engine echoes BK feature rules with renamed variables (X -> A).
+    assert _canonicalize("x1_val_2(X) :- X=3.") == _canonicalize("x1_val_2(A) :- A=3.")
     # Distinct variables stay distinct.
     assert _canonicalize("f(X,Y).") != _canonicalize("f(X,X).")
 
 
-def test_m12_delta_excludes_echoed_default_rule(tmp_path: Path) -> None:
-    """The reformatted BK default rule must NOT count as a learned delta rule."""
+def test_m12_delta_excludes_echoed_bk_rules(tmp_path: Path) -> None:
+    """Echoed feature/domain BK clauses must NOT count as learned delta rules."""
     cell = tmp_path / "cell"
     cell.mkdir()
     bk = [
         "x1_val_2(A) :- A=3.",
-        "x2(X) :- domain(X), alpha(X).",
+        "domain(default).",
         "domain(1).",
-        "assumption(alpha(X)).",
-        "contrary(alpha(X),c_alpha(X)) :- assumption(alpha(X)).",
     ]
     sol = [
-        "x1_val_2(A) :- A=3.",
-        # default rule echoed with X -> A (must be subtracted):
-        "x2(A) :- domain(A), alpha(A).",
+        # feature rule echoed with A -> B (must be subtracted):
+        "x1_val_2(B) :- B=3.",
+        "domain(default).",
         "domain(1).",
-        "assumption(alpha(A)).",
-        "contrary(alpha(A),c_alpha(A)) :- assumption(alpha(A)).",
         # a genuinely learned rule:
         "x2(A) :- x1_val_2(A).",
     ]
@@ -179,5 +173,5 @@ def test_m12_delta_excludes_echoed_default_rule(tmp_path: Path) -> None:
 
     delta = m12_delta_rules(cell / "bk.sol.aba")
     assert "x2(A) :- x1_val_2(A)." in delta
-    assert "x2(A) :- domain(A), alpha(A)." not in delta
     assert not any("domain" in r for r in delta)
+    assert not any(r.startswith("x1_val_2") for r in delta)
