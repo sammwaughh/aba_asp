@@ -12,10 +12,12 @@ parts:
   ASP-ABAlearnB (`configs/ecai2024_config.pl`), RASP-ABAlearn
   (`ruleml2025/ruleml2025_config.pl`; incremental-redress workflow **not** exercised,
   flagged as near-term follow-up), Greedy ABA Learning (`configs/aamas2025_config.pl`).
-  Six divergence-designed categorical fixture families (k=3; p fixture-dependent), each
-  with a declared graph G and pre-specified expected output: separator anchor, conjunctive,
-  disjunctive, minimally incoherent (positive/negative collision), correlated-ancestor
-  chain. Primary instrument: expected vs learned output per cell; metrics (table-relative
+  Five divergence-designed categorical fixture families (k=3; p fixture-dependent), each
+  with a declared graph G and pre-specified expected output: separator anchor,
+  conjunctive/disjunctive mechanisms on a collider, fork (correlated-sibling confound),
+  correlated-ancestor chain (3 arms × 5 = 15 cells). Minimally incoherent tables
+  (`m12_incoh_pos` / `m12_incoh_neg`; entailment-gate probe) deferred to a follow-up
+  experiment. Primary instrument: expected vs learned output per cell; metrics (table-relative
   outcome class, body-/framework-scope parent recovery, `covers_all_pos`/`rejects_all_neg`
   flags, framework complexity, trace line count) are at-a-glance divergence detectors only
   — no metric is sufficient to explain a failure.
@@ -41,6 +43,25 @@ Part 3 "qualitative failure analysis" framing, and Part 4 entirely.
 
 **Note:** ChatGPT context mirrors (`docs/chatgpt_context/`) need re-sync via
 `scripts/sync_chatgpt_context.sh` before next upload.
+
+---
+
+## 2026-07-08 — M1.2 fixture scope refined (incoherent deferred; fork added)
+
+**Decision:** Narrow the M1.2 grid from six to **five** fixture families (15 cells):
+
+- **Remove** `m12_incoh_pos` and `m12_incoh_neg` from the M1.2 grid; defer as a
+  follow-up experiment probing RuleML vs AAMAS on brave defeasible structure /
+  post-folding entailment gate.
+- **Add** `m12_fork` (fork topology `x0 -> x1`, `x0 -> x2`; mechanism `x2 := x0`;
+  correlated-sibling confound; extends QI-002 fork baseline to three published configs).
+- **Clarify naming:** `m12_conj` / `m12_disj` are conjunctive/disjunctive **mechanisms on
+  a collider**, not fork vs collider topology labels.
+
+M1.2 no longer exercises the main predicted RuleML-vs-AAMAS divergence from the original
+plan. RASP redress workflow remains deferred (Section 4.1 of the M1.2 plan).
+
+**Plan:** `milestone1_part2/milestone1_part2_config_comparison.md` Section 4 and 4.1.
 
 ---
 

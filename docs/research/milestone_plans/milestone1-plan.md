@@ -115,9 +115,11 @@ expose their divergence:
 | AAMAS | `configs/aamas2025_config.pl` | Greedy ABA Learning (De Angelis, Proietti & Toni, AAMAS 2025) |
 
 Fixture families are minimal categorical tables, each with a declared graph \(G\),
-mechanism, and pre-specified expected learned output: a separator anchor, a conjunctive
-mechanism, a disjunctive mechanism, two minimally incoherent tables, and a
-correlated-ancestor chain.
+mechanism, and pre-specified expected learned output: a separator anchor, conjunctive and
+disjunctive **mechanisms on a collider**, a **fork** (correlated-sibling confound), and a
+correlated-ancestor chain. Five families × three arms = **15 cells**. Minimally
+incoherent tables (originally planned to probe the RuleML vs AAMAS entailment gate) and
+the RASP redress workflow are **deferred** follow-ups (see Part 2 plan Section 4.1).
 
 The intended outcome is a write-up clearly reporting, per configuration and per fixture
 family, whether the expected mechanism-aligned output is learned, what is learned

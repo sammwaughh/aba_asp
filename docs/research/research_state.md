@@ -129,7 +129,8 @@ recover mechanism-aligned rules from categorical tabular data** (categorical-onl
   (`configs/ecai2024_config.pl`), RASP-ABAlearn (`ruleml2025/ruleml2025_config.pl`, one-shot,
   redress workflow not exercised), and Greedy ABA Learning (`configs/aamas2025_config.pl`)
   run on shared handcrafted categorical fixtures designed to expose divergence (separator
-  anchor, conjunctive, disjunctive, minimally incoherent ×2, correlated ancestor). Primary
+  anchor, conjunctive/disjunctive collider mechanisms, fork, correlated ancestor; 5
+  families, 15 cells). Primary
   instrument: pre-specified expected output vs learned output per cell; metrics are
   at-a-glance divergence detectors only. Plan:
   `docs/research/milestone_plans/milestone1_part2/milestone1_part2_config_comparison.md`.

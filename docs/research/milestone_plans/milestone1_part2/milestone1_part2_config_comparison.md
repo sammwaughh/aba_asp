@@ -39,7 +39,7 @@ Design decisions fixed at planning time:
   and the `.goal` files) is **not exercised**; the RuleML arm tests that system's
   configuration on a single learning problem. This must be stated explicitly in the
   write-up. Exercising redress (e.g. learning targets sequentially) is flagged as a
-  near-term follow-up after M1.2.
+  near-term follow-up after M1.2 (Section 4.1).
 - **All arms are brave**, as published. No cautious arm; the published methods use brave
   for a reason. Comparisons against the cautious-default M1.1/QI results are therefore
   cross-configuration observations, not controlled comparisons.
@@ -56,7 +56,11 @@ Design decisions fixed at planning time:
 - **Honesty note for the write-up:** the RuleML and AAMAS configurations differ *only* in
   the post-folding entailment gate. The three-system comparison therefore factorises as
   {nd/any/all vs greedy/mgr/bk} × {gate on vs off}, and the report must not overstate the
-  independence of the two greedy arms.
+  independence of the two greedy arms. **Scope note (July 2026):** the incoherent-table
+  families that were originally planned to expose this gate difference (`m12_incoh_pos`,
+  `m12_incoh_neg`) are **deferred** (Section 4.1). M1.2 therefore does **not** exercise
+  the main predicted RuleML-vs-AAMAS divergence from the original plan; any gate-related
+  observations in M1.2 are incidental only.
 
 ## 3. Encoding and the default-assumption construction
 
@@ -94,38 +98,70 @@ its intended graph \(G\) (nodes, directed edges) and mechanism in three places: 
 fixture code (docstring + machine-readable `edges` metadata), the run config/record, and
 any findings `.tex`.**
 
-Expected outputs are pre-specified per cell before any run, and are **table-relative**:
-for coherent tables the expected output is an intensional rule (or rules); for incoherent
-tables no perfect separator exists, so the *correct* output is a defeasible structure
-(general rule + assumption + contrary aligned with the colliding rows), and an
-assumption-free rule would be wrong.
+Expected outputs are pre-specified per cell before any run. All M1.2 fixtures are
+**coherent** tables with intensional expected rules (or a small rule set). Incoherent
+tables and defeasible expected outputs are **deferred** (Section 4.1).
 
-| Family | Key | \(G\) (declared) | \(p\) | Table sketch | Expected learned output |
-|--------|-----|------------------|------|--------------|--------------------------|
-| Separator anchor | `m12_sep` | `x1 -> x2`; `x0` isolated | 2 | complete factorial over (x0,x1), 9 rows; `x2 := x1`; positive class `x2=2` | `x2(A) :- x1_val_2(A).` (M1.1-style anchor, retained as one family among several) |
-| Conjunctive mechanism | `m12_conj` | `x0 -> x3`, `x1 -> x3`; `x2` isolated | 3 | complete factorial over (x0,x1,x2), 27 rows; `x3` positive iff `x0=2 ∧ x1=2` | `x3(A) :- x0_val_2(A), x1_val_2(A).` — no single literal separates |
-| Disjunctive mechanism | `m12_disj` | `x0 -> x2`, `x1 -> x2` | 2 | complete factorial over (x0,x1), 9 rows; `x2` positive iff `x0=2 ∨ x1=2` | two rules: `x2(A) :- x0_val_2(A).` and `x2(A) :- x1_val_2(A).` |
-| Incoherent, positive collision | `m12_incoh_pos` | as `m12_sep` | 2 | `m12_sep` table + one duplicated (x0,x1) row of a **positive** row with flipped (negative) class | general parent rule + assumption whose contrary fires exactly on the colliding negative sample |
-| Incoherent, negative collision | `m12_incoh_neg` | as `m12_sep` | 2 | `m12_sep` table + one duplicated (x0,x1) row of a **negative** row with flipped (positive) class | parent rule + defeasible exception structure covering exactly the colliding positive sample |
-| Correlated ancestor | `m12_chain` | `x0 -> x1 -> x2` | 2 | non-factorial table: `x1` correlated with `x0`; `x2 := x1`; constructed so the parent value predicate is the **unique** zero-error separator while the ancestor is strictly associated but imperfect | `x2(A) :- x1_val_2(A).` — failure mode of interest: ancestor (`x0`) citation |
+| Family | Key | \(G\) (declared topology) | \(p\) | Table sketch | Expected learned output |
+|--------|-----|---------------------------|------|--------------|--------------------------|
+| Separator anchor | `m12_sep` | `x1 -> x2`; `x0` isolated (non-parent) | 2 | complete factorial over (x0,x1), 9 rows; `x2 := x1`; positive class `x2=2` | `x2(A) :- x1_val_2(A).` (M1.1-style anchor) |
+| Conjunctive collider | `m12_conj` | **Collider:** `x0 -> x3`, `x1 -> x3`; `x2` isolated | 3 | complete factorial over (x0,x1,x2), 27 rows; **conjunctive mechanism:** `x3` positive iff `x0=2 ∧ x1=2` | `x3(A) :- x0_val_2(A), x1_val_2(A).` — no single literal separates |
+| Disjunctive collider | `m12_disj` | **Collider:** `x0 -> x2`, `x1 -> x2` (two parents → one target) | 2 | complete factorial over (x0,x1), 9 rows; **disjunctive mechanism:** `x2` positive iff `x0=2 ∨ x1=2` | two rules: `x2(A) :- x0_val_2(A).` and `x2(A) :- x1_val_2(A).` |
+| Fork (correlated sibling) | `m12_fork` | **Fork:** `x0 -> x1`, `x0 -> x2` | 2 | complete factorial over (x0,x1), 9 rows; **mechanism:** `x2 := x0`; positive class `x2=2` (i.e. positive iff `x0=2`) | `x2(A) :- x0_val_2(A).` |
+| Correlated ancestor | `m12_chain` | **Chain:** `x0 -> x1 -> x2` | 2 | non-factorial table: `x1` correlated with `x0`; `x2 := x1`; parent value predicate is the **unique** zero-error separator; ancestor strictly associated but imperfect | `x2(A) :- x1_val_2(A).` — failure mode of interest: ancestor (`x0`) citation |
 
-Rationale per family: `m12_sep` anchors against M1.1; `m12_conj` probes exhaustive vs
-token-bounded folding and `mgr` generalisation; `m12_disj` probes multi-rule learning and
-subsumption; the `m12_incoh_*` pair probes assumption/attack machinery under brave
-semantics and is where the entailment-gate difference (RuleML vs AAMAS) is predicted to
-show; `m12_chain` is the genuinely causal discrimination test (parent vs correlated
-ancestor) that the M1.1 isolated-non-parent tables could not provide.
+**Naming note:** `m12_conj` and `m12_disj` are named for their **mechanism** (conjunctive
+vs disjunctive positive class) on a **collider** topology (two directed edges into the
+target). They are not fork topologies. `m12_fork` is the fork-topology family (shared
+cause `x0`, two effects `x1` and `x2`).
+
+Rationale per family:
+
+- **`m12_sep`** — anchors against M1.1; isolated non-parent vs direct parent (unique
+  separator).
+- **`m12_conj`** — collider with conjunctive mechanism; probes exhaustive vs
+  token-bounded folding and `mgr` generalisation when no single literal separates.
+- **`m12_disj`** — collider with disjunctive mechanism; probes multi-rule learning and
+  subsumption.
+- **`m12_fork`** — fork topology; probes **correlated-sibling confound**: `x1` is
+  associated with `x2` via shared cause `x0` but is **not** a zero-error separator.
+  Distinct from `m12_sep` (isolated noise variable) and `m12_chain` (ancestor vs parent
+  on a chain). Extends the QI-002 fork baseline (`qi002_fork_cat3`) to the three published
+  configurations under the shared M1.2 encoding (default assumption, config-file arms).
+- **`m12_chain`** — chain topology; parent vs correlated-ancestor discrimination (parent
+  is unique separator; ancestor associated but imperfect).
+
+**Grid size:** 3 arms × 5 fixtures = **15 cells**.
 
 Deliberately **out of scope** for M1.2 (decided at planning): σ/π order grids (M1.1
 established ordering as a failure mode; revisit in M1.3 only if implicated), positive-class
-sensitivity, support-vs-frequency designs, graded incoherence severity (deferred to M1.3
-if incoherence handling emerges as a divergence point), binary encodings, continuous data.
+sensitivity, support-vs-frequency designs, binary encodings, continuous data, incoherent
+tables (Section 4.1).
 
 Exact tables are finalised at implementation and locked by Stage-0 validation checks
 (per family: row counts; declared \(G\) consistency; expected separator
 existence/uniqueness; for `m12_conj`/`m12_disj`, non-existence of a smaller separating
-rule; for `m12_incoh_*`, exactly one colliding pair at the intended row; for `m12_chain`,
-parent unique zero-error separator + ancestor associated-but-imperfect).
+rule; for `m12_fork`, see fork checks below; for `m12_chain`, parent unique zero-error
+separator + ancestor associated-but-imperfect).
+
+**Stage-0 validation — `m12_fork` (Prolog-free):**
+
+- complete factorial, 9 rows (\(p=2\), \(k=3\));
+- `x0` is the unique zero-error separator for the positive class;
+- `x1` is associated with `x2` but is **not** a zero-error separator;
+- declared edges match fork topology (`x0 -> x1`, `x0 -> x2`).
+
+### 4.1 Deferred follow-up experiments (not in M1.2 grid)
+
+The following are explicitly **out of the M1.2 grid** but recorded here so they are not
+lost. Each should get its own experiment ID and plan when scheduled.
+
+| Deferred item | Planned keys / scope | Rationale | When |
+|---------------|---------------------|-----------|------|
+| Incoherent tables (entailment-gate probe) | `m12_incoh_pos`, `m12_incoh_neg` | Minimal single-collision tables derived from `m12_sep`; positive vs negative collision sub-variants. Expected output is a **defeasible structure** (general rule + assumption + contrary aligned with colliding rows). This is where the **RuleML vs AAMAS post-folding entailment gate** difference (`post_folding_test_entailment(false)` vs default `true`) was originally predicted to diverge under brave semantics. | After M1.2, or as a dedicated follow-up experiment (e.g. `M12b_incoherent` or similar) |
+| RASP-ABAlearn redress workflow | incremental `aba_asp/5` sequence per `ruleml2025/*.goal` | Tests RASP-ABAlearn's distinctive incremental-redress protocol, not just its config file on a one-shot problem. Natural causal reading: learn targets sequentially, feeding each solution forward. | Near-term follow-up after M1.2 one-shot grid |
+| `ecai2024ALL_config.pl` | fold-all variant | Excluded from M1.2; flagged for later consideration. | TBD |
+| Graded incoherence severity | ladder of 1/2/3 colliding pairs | Dose-response on assumption count / termination; only if incoherent follow-up warrants it. | M1.3 or post-M1.2, if implicated |
 
 ## 5. Metrics and their role
 
@@ -138,9 +174,11 @@ the pre-specified expected output, per (arm, fixture) cell.
 Per cell, record:
 
 1. **Outcome class** (categorical, table-relative): `exact expected match` /
-   `correct defeasible structure` (incoherent families only) / `parent superset` /
-   `misaligned assumption structure` / `non-parent rule` / `no solution` / `timeout` /
-   `error`.
+   `parent superset` / `misaligned assumption structure` / `non-parent rule` /
+   `ancestor citation` (chain family) / `no solution` / `timeout` / `error`.
+   (`correct defeasible structure` is retained in the classifier for **deferred**
+   incoherent follow-up only; it is not an expected primary outcome class in the M1.2
+   grid.)
 2. **Parent-recovery F1** on the **body-scope** variable set (base variables in
    target-rule bodies; continuity with M1.1), plus the **framework-scope** variable set
    (base variables anywhere in the learned delta, contraries included) recorded as a
@@ -191,7 +229,7 @@ implementation work for this part.
 |-------|---------|------|
 | 0 | Implement fixtures (`causal/experiments/handcrafted_m12.py`) + Prolog-free validation checks (Section 4); write expected outputs into this plan's companion record before any learning run | all checks PASS |
 | 1 | Runner/BK/metrics infrastructure (Section 6); smoke-test one arm on `m12_sep`; verify effective options from `listing(lopt/1)` | options match config file |
-| 2 | Full grid: 3 arms × 6 fixtures (18 cells), serial | all cells produce classified outcomes |
+| 2 | Full grid: 3 arms × 5 fixtures (15 cells), serial | all cells produce classified outcomes |
 | 3 | Outcome matrix + per-cell expected-vs-learned comparison; qualitative inspection of every divergent cell | record complete |
 | 4 | Findings write-up (`.tex`); registers and claims ledger synced | Samuel review |
 
@@ -220,12 +258,20 @@ python -m causal.experiments.run_grid --config causal/configs/experiments/M12_aa
 
 - Success in a cell = the learned framework matches the pre-specified expected output up
   to harmless syntactic variation (variable naming, literal order, rule order).
-- A `correct defeasible structure` verdict in the incoherent families requires the
-  exception to align with the actual colliding row(s), verified by inspection — not
-  merely the presence of assumptions.
+- All M1.2 fixtures are coherent; success is an intensional rule (or small rule set)
+  matching the declared mechanism. Do not treat assumption-bearing solutions as success
+  unless they match the pre-specified expected output for that fixture.
+- **Entailment-gate divergence (RuleML vs AAMAS)** was the main predicted difference
+  between the two greedy arms on minimally incoherent tables; those families are
+  **deferred** (Section 4.1). M1.2 must not claim to have tested that divergence unless
+  a follow-up experiment is run.
 - Divergence between arms on a fixture is the unit of finding: report *which* data
   property exposed it and *which* configuration difference plausibly drives it
   (mechanistic confirmation is M1.3's job, not M1.2's).
+- **`m12_fork`:** a failure citing `x1` instead of `x0` is a correlated-sibling confound
+  (associated non-separator), distinct from `m12_sep` (isolated noise) and `m12_chain`
+  (ancestor vs parent).
 - What M1.2 does **not** show: causal discovery; Russo-style Causal ABA behaviour;
-  performance of the redress workflow; behaviour under cautious semantics; robustness to
+  assumption/entailment-gate behaviour on incoherent tables (deferred); performance of
+  the redress workflow (deferred); behaviour under cautious semantics; robustness to
   representation order (established separately by M1.1).
