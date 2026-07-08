@@ -195,6 +195,7 @@ def generate_aba_background_knowledge(
     exclude_cols: Optional[List[str]] = None,
     continuous_bins: int = 2,
     bin_strategy: str = "quantile",
+    default_assumption_target: Optional[str] = None,
 ) -> Path:
     """Build foldable ABA-ASP background knowledge and companion CSVs.
 
@@ -203,6 +204,12 @@ def generate_aba_background_knowledge(
     - Non-binary discrete variables emit value-specific predicates (x0_val_7(A)).
     - Continuous variables are binned (quantile/uniform) into x0_binK(A).
     - Columns in ``exclude_cols`` are skipped (e.g., the learning target).
+    - When ``default_assumption_target`` is given, append the AAMAS casebase
+      default-assumption idiom for that target predicate over sample ids 1..N
+      (default rule + domain facts + assumption + contrary), mirroring
+      ``examples/aacbr2.bk.aba``. This makes the learning problem well-posed in
+      the greedy/casebase sense and is added to all M1.2 arms; it is the only
+      place the target head appears (features remain excluded).
     - Outputs: ``{name}.bk.aba`` plus ``{name}.csv`` and ``{name}.binned.csv`` (if any continuous vars).
     """
     lines = []
@@ -259,7 +266,20 @@ def generate_aba_background_knowledge(
                 pred_name = f"{col}_bin{bin_idx}"
                 lines.append(f"{pred_name}(A) :- A={sample_id}.")
         lines.append("")
-    
+
+    # Optional default-assumption construction (AAMAS casebase idiom); see
+    # examples/aacbr2.bk.aba. Uses sample ids 1..N as the domain.
+    if default_assumption_target is not None:
+        t = default_assumption_target
+        n_samples = len(df.index)
+        lines.append(f"% Default-assumption construction (AAMAS casebase idiom) for target {t}")
+        lines.append(f"{t}(X) :- domain(X), alpha(X).")
+        for sample_id in range(1, n_samples + 1):
+            lines.append(f"domain({sample_id}).")
+        lines.append("assumption(alpha(X)).")
+        lines.append("contrary(alpha(X),c_alpha(X)) :- assumption(alpha(X)).")
+        lines.append("")
+
     # Write .bk.aba file and use basename with .bk suffix (matches examples)
     bk_path = output_dir / f"{name}.bk.aba"
     bk_path.write_text("\n".join(lines))

@@ -1,0 +1,38 @@
+experiment_id: M12_aamas2025
+description: "M1.2 arm AAMAS (Greedy ABA Learning): the shipped configs/aamas2025_config.pl consulted verbatim (brave, greedy folding, selection mgr, space bk, asm_intro relto, check_ic; post-folding entailment gate at engine default true), run one-shot on the five divergence-designed categorical fixtures. Differs from the RuleML arm ONLY in the post-folding entailment gate. Shared default-assumption BK construction on. Timeout 60 s. Recovery of mechanism-aligned rules via unguided ABA Learning, NOT Russo-style Causal ABA."
+owner: sam
+
+defaults:
+  graph_type: handcrafted_table
+  bins: 3
+  bin_strategy: uniform
+  prolog_timeout_s: 60
+  query_timeout_s: 5
+  prolog_config: configs/aamas2025_config.pl
+  default_assumption: true
+
+dgps:
+  - id: m12_sep
+    graph_type: handcrafted_table
+    source: m12_sep
+  - id: m12_conj
+    graph_type: handcrafted_table
+    source: m12_conj
+  - id: m12_disj
+    graph_type: handcrafted_table
+    source: m12_disj
+  - id: m12_fork
+    graph_type: handcrafted_table
+    source: m12_fork
+  - id: m12_chain
+    graph_type: handcrafted_table
+    source: m12_chain
+
+grid:
+  seed: [0]
+  # Ignored for handcrafted DGPs (per-fixture default_target wins: x2 for
+  # sep/fork/chain, x3 for conj/disj). Present because grid.target is required.
+  target: [x2]
+
+provenance:
+  code_commit_required: true

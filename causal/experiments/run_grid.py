@@ -205,6 +205,7 @@ def execute_cell_stage2(
     bin_strategy: str = "quantile",
     example_split: str = "median",
     noise_type: str = "gaussian",
+    default_assumption: bool = False,
 ) -> Stage2Artefacts:
     """Stage 2 of execute_cell: BK generation + E+/E- builders (INFRA.md §4.3)."""
     stage1 = execute_cell_stage1(cell, run_dir, graph_type=graph_type, noise_type=noise_type)
@@ -244,6 +245,7 @@ def execute_cell_stage2(
         exclude_cols=[cell.target],
         continuous_bins=bins,
         bin_strategy=bin_strategy,
+        default_assumption_target=cell.target if default_assumption else None,
     )
 
     # Normalise filenames to the runner's artefact layout.
@@ -339,6 +341,18 @@ def _relocate_sol_artefacts(bk_path: Path) -> None:
         shutil.copy2(primary, canonical)
 
 
+def _resolve_prolog_config(prolog_config: str | None) -> Path | None:
+    """Resolve a YAML ``prolog_config`` string to an absolute, existing ``.pl`` path."""
+    if prolog_config is None:
+        return None
+    candidate = Path(prolog_config)
+    if not candidate.is_absolute():
+        candidate = _REPO_ROOT / candidate
+    if not candidate.is_file():
+        raise FileNotFoundError(f"prolog_config file not found: {candidate}")
+    return candidate
+
+
 def execute_cell_stage3(
     cell: CellSpec,
     stage2: Stage2Artefacts,
@@ -347,6 +361,7 @@ def execute_cell_stage3(
     folding_steps: int = 15,
     folding_mode: str = "nd",
     prolog_timeout_s: float = 120.0,
+    prolog_config: str | None = None,
 ) -> Stage3Artefacts:
     """Stage 3 of execute_cell: run Prolog learning + outcome classification."""
     run_dir = Path(run_dir)
@@ -379,11 +394,17 @@ def execute_cell_stage3(
     if not runner.prolog_available:
         raise RuntimeError("SWI-Prolog not available; cannot run stage 3")
 
-    # Invoke ABA-ASP via Prolog.
-    learning_options = {
-        "folding_steps": str(folding_steps),
-        "folding_mode": folding_mode,
-    }
+    # Invoke ABA-ASP via Prolog. When a published config file is consulted
+    # verbatim it governs all options, so we do NOT also emit folding set_lopt
+    # directives (they would be redundant / conflicting).
+    resolved_config = _resolve_prolog_config(prolog_config)
+    if resolved_config is not None:
+        learning_options: dict[str, str] | None = None
+    else:
+        learning_options = {
+            "folding_steps": str(folding_steps),
+            "folding_mode": folding_mode,
+        }
 
     import time
 
@@ -395,6 +416,7 @@ def execute_cell_stage3(
             negative_examples=list(stage2.neg_examples),
             learning_options=learning_options,
             timeout_s=prolog_timeout_s,
+            prolog_config=resolved_config,
         )
     except TimeoutError as e:
         t1 = time.monotonic()
@@ -551,6 +573,8 @@ def execute_cell(
     noise_type: str = "gaussian",
     query_timeout_s: float = 5.0,
     skip_prolog_coverage: bool = False,
+    prolog_config: str | None = None,
+    default_assumption: bool = False,
 ) -> CellRunArtefacts:
     """Convenience: stages 1→2→3→4 for a single learning cell."""
     resolved_graph_type: GraphType = graph_type or cell.graph_type  # type: ignore[assignment]
@@ -565,6 +589,7 @@ def execute_cell(
         bin_strategy=bin_strategy,
         example_split=resolved_example_split,
         noise_type=noise_type,
+        default_assumption=default_assumption,
     )
     stage3 = execute_cell_stage3(
         cell,
@@ -573,6 +598,7 @@ def execute_cell(
         folding_steps=folding_steps,
         folding_mode=folding_mode,
         prolog_timeout_s=prolog_timeout_s,
+        prolog_config=prolog_config,
     )
     return execute_cell_stage4(
         cell,
@@ -639,6 +665,7 @@ def cell_is_done(run_dir: Path, *, config_hash: str | None = None) -> bool:
 def _execute_kwargs(cfg: ExperimentConfig) -> dict[str, Any]:
     """Extract the ``execute_cell`` keyword arguments from a config's defaults."""
     d = cfg.defaults
+    prolog_config = d.get("prolog_config")
     return {
         "bins": int(d.get("bins", 2)),
         "bin_strategy": str(d.get("bin_strategy", "quantile")),
@@ -648,6 +675,8 @@ def _execute_kwargs(cfg: ExperimentConfig) -> dict[str, Any]:
         "prolog_timeout_s": float(d.get("prolog_timeout_s", 120.0)),
         "query_timeout_s": float(d.get("query_timeout_s", 5.0)),
         "noise_type": str(d.get("noise_type", "gaussian")),
+        "prolog_config": str(prolog_config) if prolog_config is not None else None,
+        "default_assumption": bool(d.get("default_assumption", False)),
     }
 
 

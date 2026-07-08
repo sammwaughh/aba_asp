@@ -72,6 +72,77 @@ def test_stage2_discrete_writes_bk_no_binned(tmp_path: Path) -> None:
     assert out.data_binned_path is None
 
 
+def _handcrafted_cell(source: str, target: str) -> CellSpec:
+    from causal.experiments.handcrafted import load_handcrafted
+
+    fx = load_handcrafted(source)
+    return CellSpec(
+        experiment_id="test_m12",
+        dgp=source,
+        nodes=fx.nodes,
+        edges=fx.edges,
+        n=len(fx.df),
+        seed=0,
+        target=target,
+        config_hash="sha256:test",
+        run_id=f"run_{source}",
+        cell_dir_name=f"run_{source}",
+        graph_type="handcrafted_table",
+        example_split="handcrafted",
+        handcrafted_source=source,
+    )
+
+
+@pytest.mark.parametrize("source,target,n", [("m12_sep", "x2", 9), ("m12_conj", "x3", 27)])
+def test_stage2_default_assumption_block_present(
+    source: str, target: str, n: int, tmp_path: Path
+) -> None:
+    cell = _handcrafted_cell(source, target)
+    out = execute_cell_stage2(
+        cell,
+        tmp_path / source,
+        graph_type="handcrafted_table",
+        bins=3,
+        bin_strategy="uniform",
+        example_split="handcrafted",
+        default_assumption=True,
+    )
+    assert out.outcome == "ok"
+    assert out.bk_path is not None
+    text = out.bk_path.read_text(encoding="utf-8")
+    # aacbr2 idiom for the fixture target over sample ids 1..N.
+    assert f"{target}(X) :- domain(X), alpha(X)." in text
+    assert "assumption(alpha(X))." in text
+    assert "contrary(alpha(X),c_alpha(X)) :- assumption(alpha(X))." in text
+    assert "domain(1)." in text
+    assert f"domain({n})." in text
+    assert f"domain({n + 1})." not in text
+    # Features are still value predicates; the target head appears ONLY in the
+    # default rule (not as a feature predicate).
+    assert f"{target}_val_" not in text
+
+
+@pytest.mark.parametrize("source,target", [("m12_sep", "x2"), ("m12_conj", "x3")])
+def test_stage2_default_assumption_off_is_unchanged(
+    source: str, target: str, tmp_path: Path
+) -> None:
+    cell = _handcrafted_cell(source, target)
+    out = execute_cell_stage2(
+        cell,
+        tmp_path / source,
+        graph_type="handcrafted_table",
+        bins=3,
+        bin_strategy="uniform",
+        example_split="handcrafted",
+    )
+    assert out.bk_path is not None
+    text = out.bk_path.read_text(encoding="utf-8")
+    assert "domain(" not in text
+    assert "alpha(" not in text
+    assert f"{target}(X) :-" not in text
+    assert f"Skipping excluded variable: {target}" in text
+
+
 def test_stage2_empty_split_skips_without_bk(tmp_path: Path) -> None:
     # Force empty split by making target constant and monkeypatching stage1.
     from causal.experiments import run_grid as rg

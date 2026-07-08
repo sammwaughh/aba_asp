@@ -144,6 +144,68 @@ def _run_prolog_script(
             pass
 
 
+def _build_learning_program(
+    aba_asp_path: Path,
+    predicate_file: Path,
+    positive_examples: Sequence[str],
+    negative_examples: Sequence[str],
+    *,
+    learning_options: Optional[Dict[str, str]] = None,
+    prolog_config: Optional[Path] = None,
+) -> str:
+    """Build the SWI-Prolog program that runs one ABA-ASP learning problem.
+
+    Pure (no I/O); returns the program text so it can be unit-tested.
+
+    Ordering is load-critical. ``aba_asp.pl`` registers its default options via
+    ``:- initialization(set_lopt(...))``; those goals fire when ``aba_asp.pl``
+    finishes consulting (before the next directive here), so anything we consult
+    *after* it overrides the defaults. When ``prolog_config`` is given we consult
+    that config file verbatim (the only way to express the 0-ary ``check_ic``
+    flag) and skip the ``learning_options`` ``set_lopt`` lines; the config
+    governs. When it is ``None`` we emit the individual ``set_lopt`` directives
+    (legacy behaviour, byte-for-byte unchanged).
+    """
+    pos_ex_str = ", ".join(str(ex) for ex in positive_examples)
+    neg_ex_str = ", ".join(str(ex) for ex in (negative_examples or []))
+
+    if prolog_config is not None:
+        config_literal = _prolog_path_literal(Path(prolog_config))
+        options_block = (
+            f"\n        % Consult published configuration verbatim\n"
+            f"        :- consult('{config_literal}')."
+        )
+    else:
+        options_str = ""
+        if learning_options:
+            for key, value in learning_options.items():
+                options_str += f"\n        :- set_lopt({key}({value}))."
+        options_block = f"\n        % Set learning options{options_str}"
+
+    return f"""
+        % Load ABA-ASP library
+        :- consult('{aba_asp_path / 'aba_asp.pl'}').
+
+        % Keep output readable: BK generation can interleave clauses, which
+        % triggers SWI-Prolog "discontiguous" warnings on consult.
+        :- style_check(-discontiguous).
+        {options_block}
+
+        % Load predicates
+        :- consult('{predicate_file.resolve()}').
+
+        % Run ABA-ASP
+        :- aba_asp(
+            '{predicate_file.stem}',
+            [{pos_ex_str}],
+            [{neg_ex_str}]
+        ).
+
+        % Halt after execution
+        :- halt.
+        """
+
+
 def _parse_query_result_lines(stdout: str) -> dict[str, bool]:
     results: dict[str, bool] = {}
     for line in stdout.splitlines():
@@ -311,6 +373,7 @@ class ABASPRunner:
         output_file: Optional[Path] = None,
         learning_options: Optional[Dict[str, str]] = None,
         timeout_s: float = 120.0,
+        prolog_config: Optional[Path] = None,
     ) -> Dict:
         """
         Run ABA-ASP using SWI-Prolog.
@@ -323,6 +386,8 @@ class ABASPRunner:
             output_file: Path to save results
             learning_options: Dict of learning options (e.g., {'folding_mode': 'greedy', 'folding_steps': '20'})
             timeout_s: Wall-clock cap for the SWI-Prolog subprocess (matches YAML ``prolog_timeout_s``).
+            prolog_config: Optional path to a published ``.pl`` config file consulted verbatim
+                (overrides engine defaults); when given, ``learning_options`` is ignored.
             
         Returns:
             Dictionary with results and metadata
@@ -332,44 +397,18 @@ class ABASPRunner:
         
         logger.info(f"Running ABA-ASP with Prolog on {predicate_file.name}")
         
-        # Build Prolog query
-        pos_ex_str = ', '.join([f'{ex}' for ex in positive_examples])
-        neg_ex_str = ', '.join([f'{ex}' for ex in (negative_examples or [])])
-        
         predicate_file = Path(predicate_file)
         if not predicate_file.exists():
             raise FileNotFoundError(f"Predicate file not found: {predicate_file}")
         
-        # Build learning options
-        options_str = ""
-        if learning_options:
-            for key, value in learning_options.items():
-                options_str += f"\n        :- set_lopt({key}({value}))."
-        
-        # Create Prolog command
-        prolog_code = f"""
-        % Load ABA-ASP library
-        :- consult('{self.aba_asp_path / 'aba_asp.pl'}').
-
-        % Keep output readable: BK generation can interleave clauses, which
-        % triggers SWI-Prolog "discontiguous" warnings on consult.
-        :- style_check(-discontiguous).
-        
-        % Set learning options{options_str}
-        
-        % Load predicates
-        :- consult('{predicate_file.resolve()}').
-        
-        % Run ABA-ASP
-        :- aba_asp(
-            '{predicate_file.stem}',
-            [{pos_ex_str}],
-            [{neg_ex_str}]
-        ).
-        
-        % Halt after execution
-        :- halt.
-        """
+        prolog_code = _build_learning_program(
+            self.aba_asp_path,
+            predicate_file,
+            positive_examples,
+            negative_examples or [],
+            learning_options=learning_options,
+            prolog_config=prolog_config,
+        )
         
         logger.info(f"Prolog code (first 500 chars):\n{prolog_code[:500]}...")
         

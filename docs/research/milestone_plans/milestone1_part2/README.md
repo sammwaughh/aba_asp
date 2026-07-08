@@ -1,6 +1,6 @@
 # Milestone 1, Part 2 — Published-configuration comparison (M1.2)
 
-**Status:** `planned` — Stage 0 complete (fixtures `causal/experiments/handcrafted_m12.py`, checks `causal/tests/test_m12_fixtures.py`, record `docs/experiments/qualitative/M1.2-config-comparison.md`)
+**Status:** `planned` — Stages 0–1 complete. Stage 0: fixtures `causal/experiments/handcrafted_m12.py`, checks `causal/tests/test_m12_fixtures.py`. Stage 1: config-consulting runner (`prolog_config`), default-assumption BK, arm YAMLs `causal/configs/experiments/M12_{ecai2024,ruleml2025,aamas2025}.yaml`, summary side-car `causal/experiments/m12_summary.py`; smoke test verified. Record: `docs/experiments/qualitative/M1.2-config-comparison.md`.
 
 | Document | Purpose |
 |----------|---------|

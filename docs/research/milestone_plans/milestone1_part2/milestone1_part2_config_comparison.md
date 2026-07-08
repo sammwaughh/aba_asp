@@ -1,6 +1,6 @@
 # Milestone 1, Part 2 (M1.2) — Published-configuration comparison on divergence-designed fixtures
 
-**Status:** `planned` — Stage 0 complete (fixtures + validation checks + locked expected outputs, 2026-07-08); Stages 1–4 not started
+**Status:** `planned` — Stages 0–1 complete (2026-07-08): fixtures + validation checks + locked expected outputs (Stage 0); config-consulting runner + default-assumption BK + arm YAMLs + summary side-car + smoke test (Stage 1). Stages 2–4 not started
 **Experiment ID:** `M12_config_comparison` (arms `M12_ecai2024`, `M12_ruleml2025`, `M12_aamas2025`)
 **Parent index:** [milestone1-plan.md](../milestone1-plan.md) (Part 2 section)
 
@@ -248,7 +248,7 @@ implementation work for this part.
 | Stage | Content | Gate |
 |-------|---------|------|
 | 0 | **DONE (2026-07-08).** Fixtures (`causal/experiments/handcrafted_m12.py`) + Prolog-free validation checks (`causal/tests/test_m12_fixtures.py`, 59 tests, all PASS); expected outputs locked in `docs/experiments/qualitative/M1.2-config-comparison.md` before any learning run | all checks PASS ✓ |
-| 1 | Runner/BK/metrics infrastructure (Section 6); smoke-test one arm on `m12_sep`; verify effective options from `listing(lopt/1)` | options match config file |
+| 1 | **DONE (2026-07-08).** Config-consulting runner (`prolog_config`), shared default-assumption BK, three arm YAMLs, and M12 summary side-car (`causal/experiments/m12_summary.py`) built + unit-tested (103 Prolog-free tests PASS); smoke test `M12_ecai2024`/`m12_sep` -> effective `listing(lopt/1)` matches `configs/ecai2024_config.pl` | options match config file ✓ |
 | 2 | Full grid: 3 arms × 5 fixtures (15 cells), serial | all cells produce classified outcomes |
 | 3 | Outcome matrix + per-cell expected-vs-learned comparison; qualitative inspection of every divergent cell | record complete |
 | 4 | Findings write-up (`.tex`); registers and claims ledger synced | Samuel review |
