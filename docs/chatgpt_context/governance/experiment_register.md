@@ -33,6 +33,8 @@ The earlier n=100 scaled attempt was cut and is not part of the canonical experi
 | QI-002 greedy | — | Greedy-folding rerun of QI-002 (minimal truth-table baseline) | analysed |
 | QI-004 greedy | — | Greedy-folding rerun of QI-004 (scaled noisy n=20) | analysed |
 | M11 | — | m1.1 Parent-position and representation-order control | analysed (Stages 0–7; ablations + greedy comparator) |
+| M12 | — | m1.2 Published-configuration comparison (ASP-ABAlearnB / RASP-ABAlearn / Greedy ABA Learning) | planned |
+| M13 | — | m1.3 Failure-mode investigation (trace mechanism + L1/L2/L3 attribution) | not started |
 
 ## Template
 
@@ -228,4 +230,33 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
 - Failure modes: silent column canonicalisation voiding sigma (not observed); no-solution; parser/normalisation discrepancy; implementation/artefact error; cov_py/cov_pl disagreement on assumption-based rules (cat3 A/D flagged).
 - Cursor implementation plan / prompt: grid cell_dir naming implemented (`grid.cell_dir: dgp` on M11 config).
 - Commit hash / run artefact path: Stage-0 validation at `causal/outputs/m11_parent_position/validation/`; learning grid at `causal/outputs/aba_learning/grid/M11_parent_position/cells/<dgp>/`; ablations at `M11_ablations/`.
-- Report relevance: interim Experimentation / Progress (Milestone 1 Part 1 — analysed, Stages 0–7). M1.2 broader strategy review next.
+- Report relevance: interim Experimentation / Progress (Milestone 1 Part 1 — analysed, Stages 0–7). M1.2 published-configuration comparison next.
+
+### M12 — m1.2 Published-configuration comparison
+
+- Status: planned.
+- Planning doc: docs/research/milestone_plans/milestone1_part2/milestone1_part2_config_comparison.md.
+- Planned record: docs/experiments/qualitative/M1.2-config-comparison.md.
+- Research question: for a fixed encoding of small categorical tables (each with a declared graph G, mechanism, and pre-specified expected learned output), how do ASP-ABAlearnB (`configs/ecai2024_config.pl`), RASP-ABAlearn (`ruleml2025/ruleml2025_config.pl`, one-shot; redress workflow not exercised), and Greedy ABA Learning (`configs/aamas2025_config.pl`) differ in whether the expected output is learned, the structural class of what is learned instead, and which data properties expose divergence?
+- Theoretical motivation: Milestone 1's goal is a report-ready account of when and how unguided ABA Learning recovers mechanism-aligned rules; comparing the published configurations (rather than ad-hoc option hybrids) anchors every observed divergence to the backing literature (ECAI 2024, RuleML 2025, AAMAS 2025).
+- Relation to ABA Learning: the inherited engine run under its shipped configuration files, consulted verbatim (brave mode, `check_ic` kept, `asm_intro(relto)` in all arms); shared BK includes the AAMAS-style default rule + bogus assumption/contrary so the problem is well-posed for the greedy arms.
+- Relation to Causal ABA: does not exercise arr/noe/indep, d-separation, or stable-extension-as-DAG. Mechanism-aligned rule recovery only; not causal discovery.
+- Code path (planned): causal/experiments/handcrafted_m12.py (fixtures); runner extended to consult a `prolog_config` .pl file; adapted metrics/outcome classifier; timeout 60 s.
+- Dataset / DGP: six handcrafted categorical fixture families (k=3; p fixture-dependent), each declaring its graph G in code, config, and reporting: separator anchor, conjunctive mechanism (p=3), disjunctive mechanism, minimally incoherent (positive collision), minimally incoherent (negative collision), correlated-ancestor chain.
+- Target variable(s): fixture-designated target, excluded from feature BK; one-vs-rest positive class.
+- Metrics (at-a-glance divergence detectors only; qualitative expected-vs-learned comparison is the instrument): table-relative outcome class; body-scope parent F1 + framework-scope variable set; binary flags covers_all_pos / rejects_all_neg from the existing coverage infrastructure (approximate on assumption-bearing solutions — documented validity boundary); framework complexity (rules/assumptions/contraries/body length); prolog.stdout line count as runtime proxy.
+- Baseline / comparator: the three arms against each other, per fixture.
+- Expected result: not asserted; per-cell expected outputs pre-specified in the plan/record before any run.
+- Interpretation rule: success per cell = learned framework matches the pre-specified expected output up to harmless syntactic variation; for incoherent families the correct output is a defeasible structure aligned with the colliding rows. Divergence between arms is the unit of finding; mechanistic confirmation is M1.3's job.
+- Failure modes: parent superset, misaligned assumption structure, non-parent rule, ancestor citation (chain family), no solution, timeout, error; config-consult or default-assumption encoding issues.
+- Report relevance: interim Experimentation / Progress (Milestone 1 Part 2).
+
+### M13 — m1.3 Failure-mode investigation
+
+- Status: not started (depends on the M1.2 outcome matrix).
+- Planning doc: docs/research/milestone_plans/milestone1_part3/milestone1_part3_failure_modes.md.
+- Planned record: docs/experiments/qualitative/M1.3-failure-modes.md.
+- Research question: for each failure or divergence class observed in M1.2, what is the exact trace-level mechanism, at which level does the cause live (L1 paradigm / L2 published variant / L3 implementation or encoding), and what does the backing literature say about it?
+- Method: mandatory trace-level mechanistic account per failure mode (M1.1 Stage-4 discipline); L1/L2/L3 attribution with matching evidence standards; literature mapping for L1/L2. Targeted falsification ablations permitted (e.g. `asm_intro(sechk)` on an implicated cell; graded incoherence severity), not promised.
+- Relation to Causal ABA: none exercised; the deliverable (when and how mechanism-aligned rules cannot be learned) is the requirements input for the Milestone 2 Causal-ABA-guided bridge.
+- Report relevance: interim Experimentation / Progress (Milestone 1 Part 3).

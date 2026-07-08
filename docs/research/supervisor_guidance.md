@@ -168,14 +168,17 @@ judgement-heavy moments; use fast/Instant only for trivial formatting.
 - Greedy-vs-nd was investigated qualitatively on QI fixtures
   (`docs/experiments/qualitative/greedy_vs_nd_qualitative_handoff.md`). m1.1 Stage 7 recorded
   formal nd vs greedy on the eight-cell control grid (`M11_parent_position_greedy/`). Milestone 1
-  Part 2 (M1.2) will extend strategy comparison across QI motifs and decide operational default.
+  Part 2 (M1.2, re-scoped July 2026) compares the three published configurations
+  (ASP-ABAlearnB, RASP-ABAlearn, Greedy ABA Learning) on divergence-designed categorical
+  fixtures with pre-specified expected outputs.
 - **M1.1 (M11) parent-position metamorphic control** — **`closed`** (Stages 0–7). nd mechanism
   ablation-supported; Stage 7 greedy comparator complete. Findings:
   `docs/report/findings/milestone1_part1_m11_findings.tex`.
 
 ## Outstanding actions
 
-- **M1.2:** broader nd vs greedy strategy review on QI fixtures (planning doc to expand).
+- **M1.2:** published-configuration comparison on divergence-designed categorical fixtures
+  (plan: `docs/research/milestone_plans/milestone1_part2/milestone1_part2_config_comparison.md`).
 - **M1.1 optional:** Stage 5 runner call-chain doc (non-blocking).
 - Give each presented result an interpretation and a conclusion; reason explicitly about
   DGP-expected vs actual learned rules (M1.1 done; QL series partially done).

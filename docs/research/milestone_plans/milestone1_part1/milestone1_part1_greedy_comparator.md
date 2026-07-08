@@ -50,8 +50,9 @@ Answer in order (efficient decision tree):
 ### Out of scope
 
 - Greedy ablations (no BK reorder under greedy unless post-run trace is genuinely ambiguous)
-- QI-001/002/004 reruns (Part 2)
-- Noise, continuous DGP, new motifs (Parts 3–4)
+- QI-001/002/004 reruns (later milestone work)
+- Noise, continuous DGP, new motifs (outside m1.1; Milestone 1 has since been re-scoped —
+  see `../milestone1-plan.md`)
 - Russo-style Causal ABA claims
 - Treating greedy as the **primary explanation** of nd cat3 σ failure
 

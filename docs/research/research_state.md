@@ -121,6 +121,23 @@ establish causal discovery.
 
 ## Next milestone
 
-**Milestone 1 Part 2 (M1.2)** — broader nd vs greedy strategy review on QI fixtures and strategy
-default decision (m1.1 Stage 7 anchor at `M11_parent_position_greedy/summary/compare_nd_greedy.md`).
-Parts 3–4 of Milestone 1 follow M1.2. Then **Milestone 2** (Causal-ABA-guided ABA Learning bridge).
+Milestone 1's goal is a **report-ready account of when and how unguided ABA Learning can
+recover mechanism-aligned rules from categorical tabular data** (categorical-only scope,
+\(k = 3\); no binary-only or continuous work in this milestone). Two parts remain:
+
+- **M1.2 — published-configuration comparison** (`planned`): ASP-ABAlearnB
+  (`configs/ecai2024_config.pl`), RASP-ABAlearn (`ruleml2025/ruleml2025_config.pl`, one-shot,
+  redress workflow not exercised), and Greedy ABA Learning (`configs/aamas2025_config.pl`)
+  run on shared handcrafted categorical fixtures designed to expose divergence (separator
+  anchor, conjunctive, disjunctive, minimally incoherent ×2, correlated ancestor). Primary
+  instrument: pre-specified expected output vs learned output per cell; metrics are
+  at-a-glance divergence detectors only. Plan:
+  `docs/research/milestone_plans/milestone1_part2/milestone1_part2_config_comparison.md`.
+- **M1.3 — failure-mode investigation** (`not started`): trace-level mechanism +
+  L1 (paradigm) / L2 (published variant) / L3 (implementation/encoding) attribution +
+  literature mapping for every divergence exposed by M1.2; M1.1's BK-ordering mechanism is
+  the first taxonomy entry. Plan:
+  `docs/research/milestone_plans/milestone1_part3/milestone1_part3_failure_modes.md`.
+
+Then **Milestone 2** (Causal-ABA-guided ABA Learning bridge), informed by the M1.3
+taxonomy (L1/L2 entries are candidate guidance intervention points).

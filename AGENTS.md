@@ -46,13 +46,13 @@ Do not describe the current implementation as full Russo-style Causal ABA unless
 
 ## Experimental priority
 
-The current experimental priority is Milestone 1: close the unguided parent-set diagnostic, then design the Causal-ABA-guided bridge.
+The current experimental priority is Milestone 1: a report-ready account of when and how unguided ABA Learning recovers mechanism-aligned rules from categorical tabular data, then design the Causal-ABA-guided bridge (Milestone 2).
 
 Key experiment records:
 
 - `docs/experiments/qualitative/QL-001.md` — qualitative inspection of ABA Learning on minimal causal motifs (realised by QI series).
 - `docs/experiments/qualitative/M1.1-parent-position.md` — Milestone 1 Part 1 (M11); **`analysed` / closed** (Stages 0–7: nd mechanism, ablations, greedy comparator).
-- **Next:** Milestone 1 Part 2 (M1.2) — broader nd vs greedy strategy review on QI fixtures; planning doc `docs/research/milestone_plans/milestone1_part2/milestone1_part2_greedy_vs_nondeterministic.md`.
+- **Next:** Milestone 1 Part 2 (M1.2) — comparison of the three published ABA Learning configurations (ASP-ABAlearnB, RASP-ABAlearn, Greedy ABA Learning) on divergence-designed categorical fixtures; planning doc `docs/research/milestone_plans/milestone1_part2/milestone1_part2_config_comparison.md`. Then M1.3 — failure-mode taxonomy (`docs/research/milestone_plans/milestone1_part3/milestone1_part3_failure_modes.md`). Milestone 1 is categorical-data only (no binary-only or continuous work).
 
 ## Experiment documentation rule
 

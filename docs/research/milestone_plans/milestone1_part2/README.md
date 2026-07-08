@@ -1,10 +1,9 @@
-# Milestone 1, Part 2 — Greedy versus non-deterministic ABA Learning (M1.2)
+# Milestone 1, Part 2 — Published-configuration comparison (M1.2)
 
-**Status:** `planned` — m1.1 Stage 7 anchor available (`M11_parent_position_greedy/`).
+**Status:** `planned`
 
 | Document | Purpose |
 |----------|---------|
-| [milestone1_part2_greedy_vs_nondeterministic.md](milestone1_part2_greedy_vs_nondeterministic.md) | Full strategy comparison across QI fixtures and beyond |
+| [milestone1_part2_config_comparison.md](milestone1_part2_config_comparison.md) | Full bespoke plan: three published configurations (ASP-ABAlearnB, RASP-ABAlearn, Greedy ABA Learning) compared one-shot on divergence-designed categorical fixtures |
 
-**Input from Part 1:** paired m1.1 grid results (`M11_parent_position` nd vs `M11_parent_position_greedy`).  
-**Parent index:** [milestone1-plan.md](../milestone1-plan.md)
+**Parent index:** [milestone1-plan.md](../milestone1-plan.md) (Part 2 section)

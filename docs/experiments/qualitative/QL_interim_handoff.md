@@ -246,7 +246,7 @@ Full per-cell table: `QI004_scaled_motifs_n20/run_log.md`; per-cell rules/metric
   not empirically broken.
 - **Limitations.** Implementation ≠ Causal ABA; predictor-set not oriented edges; binary
   encoding limitation; Prolog scaling limits; continuous binning; single seed; exploratory.
-- **Decision for next work.** M1.1 (M11) **closed** (`analysed`, Stages 0–7): parent-role / representation-order under nd with ablation-supported cat3 σ account; Stage 7 greedy comparator recorded. **Next: M1.2** — broader nd vs greedy strategy review on QI fixtures. Candidate design changes recorded
+- **Decision for next work.** M1.1 (M11) **closed** (`analysed`, Stages 0–7): parent-role / representation-order under nd with ablation-supported cat3 σ account; Stage 7 greedy comparator recorded. **Next: M1.2** (re-scoped July 2026) — published-configuration comparison (ASP-ABAlearnB / RASP-ABAlearn / Greedy ABA Learning) on divergence-designed categorical fixtures; plan `docs/research/milestone_plans/milestone1_part2/milestone1_part2_config_comparison.md`. Candidate design changes recorded
   but deferred: binary encoding fix; intermediate `n` / more positive examples.
 
 ---

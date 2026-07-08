@@ -300,6 +300,8 @@ m1.1 moved to **`analysed`** when **all** of (June 2026 — **all met**):
 9. `experiments_summary.md` + `experiment_register.md` synced. — **met**
 
 **M1.2:** unblocked; m1.1 Stage 7 greedy comparator complete (June 2026). m1.1 **closed**.
+*(July 2026: M1.2 has since been re-scoped from a greedy grid to the published-configuration
+comparison — see `../milestone1_part2/milestone1_part2_config_comparison.md`.)*
 
 ---
 

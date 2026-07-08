@@ -2,6 +2,48 @@
 
 Recorded decisions that affect experiment direction. Evidence and interpretation remain in experiment records.
 
+## 2026-07-08 — Milestone 1 re-scoped: M1.2 published-configuration comparison; M1.3 failure-mode taxonomy; no M1.4
+
+**Decision:** Milestone 1's goal is a report-ready account of **when and how unguided ABA
+Learning recovers mechanism-aligned rules from categorical tabular data**. Two remaining
+parts:
+
+- **M1.2** — one-shot comparison of the three published configurations, consulted verbatim:
+  ASP-ABAlearnB (`configs/ecai2024_config.pl`), RASP-ABAlearn
+  (`ruleml2025/ruleml2025_config.pl`; incremental-redress workflow **not** exercised,
+  flagged as near-term follow-up), Greedy ABA Learning (`configs/aamas2025_config.pl`).
+  Six divergence-designed categorical fixture families (k=3; p fixture-dependent), each
+  with a declared graph G and pre-specified expected output: separator anchor, conjunctive,
+  disjunctive, minimally incoherent (positive/negative collision), correlated-ancestor
+  chain. Primary instrument: expected vs learned output per cell; metrics (table-relative
+  outcome class, body-/framework-scope parent recovery, `covers_all_pos`/`rejects_all_neg`
+  flags, framework complexity, trace line count) are at-a-glance divergence detectors only
+  — no metric is sufficient to explain a failure.
+- **M1.3** — for every M1.2 divergence: mandatory trace-level mechanism (why exactly) +
+  L1 (paradigm) / L2 (published variant) / L3 (implementation/encoding) attribution +
+  literature mapping. M1.1's BK-ordering mechanism is the first taxonomy entry. Targeted
+  falsification ablations permitted, not promised.
+
+**Scope restrictions:** categorical data only (k=3); no binary-only fixtures; no
+continuous/noise investigation in Milestone 1 (**former Part 4 dropped** — continuous data
+reduces to categorical after binning; revisit after a Causal ABA integration exists). No
+σ/π grids in M1.2 (M1.1 owns that account). All arms brave, `asm_intro(relto)`, `check_ic`
+kept, timeout 60 s; `ecai2024ALL` config excluded (flagged for later). No
+repeat-stability measurement (deterministic for fixed inputs).
+
+**Supersedes:** the "broader nd vs greedy strategy review on QI fixtures" framing of M1.2
+(next-step lines in the 2026-06-22 closure entry below and in M1.1-era docs), the old
+Part 3 "qualitative failure analysis" framing, and Part 4 entirely.
+
+**Plans:** `milestone_plans/milestone1-plan.md`;
+`milestone_plans/milestone1_part2/milestone1_part2_config_comparison.md`;
+`milestone_plans/milestone1_part3/milestone1_part3_failure_modes.md`.
+
+**Note:** ChatGPT context mirrors (`docs/chatgpt_context/`) need re-sync via
+`scripts/sync_chatgpt_context.sh` before next upload.
+
+---
+
 ## 2026-06-22 — M1.1 closed (Stages 0–7)
 
 **Decision:** Milestone 1 Part 1 (m1.1 / M11) is **closed** for report purposes. Status **`analysed`**. All planned stages complete: metamorphic nd grid (0–2), trace mechanism (4), ablations (6), greedy comparator (7). Optional Stage 5 runner doc remains non-blocking.
@@ -10,7 +52,7 @@ Recorded decisions that affect experiment direction. Evidence and interpretation
 
 **Bounded conclusion:** QI-002 disambiguation achieved. Binary parent-role + σ/π under nd. Cat3 nd: conditional parent-role; σ failure ablation-supported. Greedy: distinct cat3 outcome (supersets); rule-level σ restored; not a singleton fix.
 
-**Next step:** M1.2 — broader nd vs greedy strategy review on QI fixtures (not further m1.1 grid work). Optional: Stage 5 runner call-chain doc.
+**Next step (historical; superseded by the 2026-07-08 re-scope above):** M1.2 — broader nd vs greedy strategy review on QI fixtures (not further m1.1 grid work). Optional: Stage 5 runner call-chain doc.
 
 **Claims:** M11-C-001–007 active; M11-C-004 resolved (Stage 7).
 

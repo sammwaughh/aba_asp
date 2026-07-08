@@ -113,7 +113,9 @@ Drafted structure:
 
 5. **Greedy vs non-deterministic folding (qualitative)**
    - greedy faster (~120x at the QL3 scale), solve rate >= nd, net better clean recovery (colliders), one regression (cat3 fork), no recovery change at the noisy n=20 scale;
-   - motivates Milestone 1 Part 2 (M1.2): broader strategy review; m1.1 Stage 7 anchor complete.
+   - motivates Milestone 1 Part 2 (M1.2, re-scoped July 2026): published-configuration
+     comparison (ASP-ABAlearnB / RASP-ABAlearn / Greedy ABA Learning) on divergence-designed
+     categorical fixtures; m1.1 Stage 7 anchor complete.
 
 6. **M1.1 (M11): parent-position and representation-order control**
    - Stages 0–6 (nd): binary σ/π pass; cat3 σ fails; mechanism ablation-supported (ABL-100–107).
@@ -150,7 +152,7 @@ Explain what will happen after the interim report, following from the QL1/QL2/QL
 
 Drafted milestones (Weeks 1–13, with a Week-11 holiday):
 
-1. **Milestone 1 (Weeks 1–2)** — parent-set diagnostic in four parts: **Part 1 analysed (M1.1/M11, Stages 0–7)** — nd mechanism, ablations, greedy comparator; **Part 2 (M1.2)** — broader greedy vs nd; Parts 3–4 — failure analysis and noise/continuous DGP investigation.
+1. **Milestone 1 (Weeks 1–2)** — report-ready account of when/how unguided ABA Learning recovers mechanism-aligned rules from categorical data, in three parts (re-scoped July 2026): **Part 1 analysed (M1.1/M11, Stages 0–7)** — nd mechanism, ablations, greedy comparator; **Part 2 (M1.2)** — published-configuration comparison (ASP-ABAlearnB / RASP-ABAlearn / Greedy ABA Learning) on divergence-designed categorical fixtures; **Part 3 (M1.3)** — failure-mode taxonomy (trace mechanism + L1/L2/L3 attribution). Former Part 4 (noise/continuous) dropped from Milestone 1.
 2. **Milestone 2 (Weeks 3–4)** — design the bridge in which Causal ABA-style information guides ABA Learning; specify comparable outputs and metrics.
 3. **Milestone 3 (Weeks 5–6)** — implement causal-guided ABA Learning variants; compare against unguided learning; build bespoke metrics that judge whether causality (not just predictive parents) is learned.
 4. **Milestone 4 (Weeks 7–8)** — scale beyond three-node motifs; set up representative external comparators and a frozen evaluation protocol.

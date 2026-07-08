@@ -33,7 +33,8 @@ default pipeline but is **accounted for** by BK serialisation order + entailment
 commitment (ablation-supported). Stage 7 (greedy): cat3 rule-level σ restored; all cat3 cells
 are parent supersets (does not fix singleton recovery). See findings tex §Integrated conclusion.
 
-**Next (outside m1.1):** M1.2 broader nd vs greedy strategy review on QI fixtures.
+**Next (outside m1.1):** M1.2 — published-configuration comparison (re-scoped July 2026);
+see `../milestone1_part2/milestone1_part2_config_comparison.md`.
 
 **Supervisor guidance:** `docs/research/supervisor_guidance.md` (M1.1 review section).
 **Decision log:** `docs/research/decisions.md` (2026-06-22 reopen → ablation + Stage 7 closure).
