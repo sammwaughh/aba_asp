@@ -1,6 +1,6 @@
 # Milestone 1, Part 2 — Published-configuration comparison (M1.2)
 
-**Status:** `planned`
+**Status:** `planned` — Stage 0 complete (fixtures `causal/experiments/handcrafted_m12.py`, checks `causal/tests/test_m12_fixtures.py`, record `docs/experiments/qualitative/M1.2-config-comparison.md`)
 
 | Document | Purpose |
 |----------|---------|

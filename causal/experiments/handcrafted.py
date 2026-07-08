@@ -122,6 +122,10 @@ from causal.experiments.handcrafted_m11 import (  # noqa: E402
     M11_ALIASES,
     M11_BUILDERS,
 )
+from causal.experiments.handcrafted_m12 import (  # noqa: E402
+    M12_ALIASES,
+    M12_BUILDERS,
+)
 
 _ALIASES.update(QI001_ALIASES)
 _BUILDERS.update(QI001_BUILDERS)
@@ -133,3 +137,5 @@ _ALIASES.update(QI004_ALIASES)
 _BUILDERS.update(QI004_BUILDERS)
 _ALIASES.update(M11_ALIASES)
 _BUILDERS.update(M11_BUILDERS)
+_ALIASES.update(M12_ALIASES)
+_BUILDERS.update(M12_BUILDERS)

@@ -37,7 +37,7 @@ Use the same status categories as `experiment_register.md`.
 | QI-002 greedy | — | Greedy-folding rerun of QI-002 (minimal truth-table baseline) | analysed | `docs/experiments/qualitative/QI002_minimal_motifs_greedy/` | `causal/configs/experiments/QI002_minimal_motifs_greedy.yaml` | `causal/outputs/aba_learning/grid/QI002_minimal_motifs_greedy/` | Interim Experimentation / Progress | Only change `folding_mode: greedy`. 6/6 solved (vs nd 5/6): solves the binary collider nd could not; cat3 collider now exact; clean recovery 3/6 -> 4/6 with one regression (cat3 fork exact -> superset). |
 | QI-004 greedy | — | Greedy-folding rerun of QI-004 (scaled noisy n=20) | analysed | `docs/experiments/qualitative/QI004_scaled_motifs_n20_greedy/` | `causal/configs/experiments/QI004_scaled_motifs_n20_greedy.yaml` | `causal/outputs/aba_learning/grid/QI004_scaled_motifs_n20_greedy/` | Interim Experimentation / Progress | Only change `folding_mode: greedy`. Same outcomes as nd (1 solved, 12 no-solution, 2 errors; 0/15 clean) but ~120x faster (≈1233 s -> ≈10 s). At noisy n=20 greedy changes only runtime; binary errors persist. |
 | M11 | — | m1.1 Parent-position and representation-order control | analysed | `docs/experiments/qualitative/M1.1-parent-position.md` | `causal/configs/experiments/M11_parent_position.yaml`; `M11_parent_position_greedy.yaml` | `M11_parent_position/cells/`; `M11_parent_position_greedy/`; `M11_ablations/` | Interim Experimentation / Progress (Milestone 1) | nd: 8/8 solved; binary σ/π pass; cat3 σ fails (ablation-supported). Stage 7 greedy: binary matches nd; cat3 all supersets; rule-level σ restored under greedy. |
-| M12 | — | m1.2 Published-configuration comparison (ASP-ABAlearnB / RASP-ABAlearn / Greedy ABA Learning) | planned | `docs/experiments/qualitative/M1.2-config-comparison.md` (planned) | `causal/configs/experiments/M12_ecai2024.yaml`; `M12_ruleml2025.yaml`; `M12_aamas2025.yaml` (planned) | `causal/outputs/aba_learning/grid/M12_<arm>/` (planned) | Interim Experimentation / Progress (Milestone 1) | Not run. Plan: 3 published configs × 5 divergence-designed categorical fixtures (15 cells); expected-vs-learned comparison primary. Incoherent-table gate probe deferred. |
+| M12 | — | m1.2 Published-configuration comparison (ASP-ABAlearnB / RASP-ABAlearn / Greedy ABA Learning) | planned (Stage 0 complete) | `docs/experiments/qualitative/M1.2-config-comparison.md` | `causal/configs/experiments/M12_ecai2024.yaml`; `M12_ruleml2025.yaml`; `M12_aamas2025.yaml` (planned) | `causal/outputs/aba_learning/grid/M12_<arm>/` (planned) | Interim Experimentation / Progress (Milestone 1) | Not run. Stage 0 done (2026-07-08): fixtures `causal/experiments/handcrafted_m12.py` (sep/conj/disj/fork/chain), 59 Prolog-free validation checks PASS (`causal/tests/test_m12_fixtures.py`), expected outputs locked in record. Plan: 3 published configs × 5 fixtures (15 cells); expected-vs-learned comparison primary. Incoherent-table gate probe deferred. |
 | M13 | — | m1.3 Failure-mode investigation (trace mechanism + L1/L2/L3 attribution + literature mapping) | not started | `docs/experiments/qualitative/M1.3-failure-modes.md` (planned) | — (analysis over M1.2 artefacts; targeted ablations optional) | `causal/outputs/aba_learning/grid/M13_<ablation-id>/` (only if ablations run) | Interim Experimentation / Progress (Milestone 1) | Not started. Depends on the M1.2 outcome matrix. |
 
 ## Experiment sequence to date and next
@@ -158,8 +158,10 @@ Workflow:
 
 ## Next action
 
-**Milestone 1 Part 2 (M1.2)** — implement and run the published-configuration comparison
-(fixtures, config-file-consulting runner, adapted metrics, 3 arms × 5 fixtures = 15 cells). See
+**Milestone 1 Part 2 (M1.2)** — Stage 0 complete (fixtures + validation checks + locked
+expected outputs). Next: Stage 1 infrastructure (config-file-consulting runner,
+default-assumption BK construction, adapted metrics), then the 3 arms × 5 fixtures =
+15-cell grid. See
 `docs/research/milestone_plans/milestone1_part2/milestone1_part2_config_comparison.md`.
 
 Completed since the QL series:

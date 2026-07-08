@@ -65,6 +65,21 @@ plan. RASP redress workflow remains deferred (Section 4.1 of the M1.2 plan).
 
 ---
 
+## 2026-07-08 — M1.2 `m12_disj` harmonized with `m12_conj` (isolated x2; target x3)
+
+**Decision:** Revise `m12_disj` to be a **symmetric twin** of `m12_conj`: same declared G
+(`x0 -> x3`, `x1 -> x3`; `x2` isolated), same 27-row complete factorial over
+`(x0,x1,x2)`, same three predictors in BK; differs only in mechanism (`x3 := max(x0,x1)`
+vs `min`) and expected two-rule output. Fork and chain are **not** given isolated
+variables — they probe correlated sibling and ancestor confounds respectively;
+isolation remains `m12_sep`'s dedicated family.
+
+**Evidence:** Stage-0 checks updated and re-run (`causal/tests/test_m12_fixtures.py`).
+
+**Plan/record:** `milestone1_part2_config_comparison.md` Section 4; `M1.2-config-comparison.md`.
+
+---
+
 ## 2026-06-22 — M1.1 closed (Stages 0–7)
 
 **Decision:** Milestone 1 Part 1 (m1.1 / M11) is **closed** for report purposes. Status **`analysed`**. All planned stages complete: metamorphic nd grid (0–2), trace mechanism (4), ablations (6), greedy comparator (7). Optional Stage 5 runner doc remains non-blocking.
