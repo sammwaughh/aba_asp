@@ -48,6 +48,8 @@ def test_arm_config_loads_and_expands(arm: str) -> None:
     for c in cells:
         assert c.target == _EXPECTED_TARGET[c.dgp], (c.dgp, c.target)
         assert c.graph_type == "handcrafted_table"
+        assert c.cell_dir_name == c.dgp
+        assert c.cell_dir_name != c.run_id
 
 
 @pytest.mark.parametrize("arm", sorted(_ARMS))

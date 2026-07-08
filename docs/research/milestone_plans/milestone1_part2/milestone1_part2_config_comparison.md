@@ -1,6 +1,6 @@
 # Milestone 1, Part 2 (M1.2) — Published-configuration comparison on divergence-designed fixtures
 
-**Status:** `planned` — Stages 0–1 complete (2026-07-08): fixtures + validation checks + locked expected outputs (Stage 0); config-consulting runner + default-assumption BK + arm YAMLs + summary side-car + smoke test (Stage 1). Stages 2–4 not started
+**Status:** `run` — Stages 0–2 complete (2026-07-08): fixtures + validation checks + locked expected outputs (Stage 0); config-consulting runner + default-assumption BK + arm YAMLs + summary side-car + smoke test (Stage 1); 15-cell grid run, all `solved`, outcome matrix built (Stage 2). Stages 3–4 not started
 **Experiment ID:** `M12_config_comparison` (arms `M12_ecai2024`, `M12_ruleml2025`, `M12_aamas2025`)
 **Parent index:** [milestone1-plan.md](../milestone1-plan.md) (Part 2 section)
 
@@ -249,7 +249,7 @@ implementation work for this part.
 |-------|---------|------|
 | 0 | **DONE (2026-07-08).** Fixtures (`causal/experiments/handcrafted_m12.py`) + Prolog-free validation checks (`causal/tests/test_m12_fixtures.py`, 59 tests, all PASS); expected outputs locked in `docs/experiments/qualitative/M1.2-config-comparison.md` before any learning run | all checks PASS ✓ |
 | 1 | **DONE (2026-07-08).** Config-consulting runner (`prolog_config`), shared default-assumption BK, three arm YAMLs, and M12 summary side-car (`causal/experiments/m12_summary.py`) built + unit-tested (103 Prolog-free tests PASS); smoke test `M12_ecai2024`/`m12_sep` -> effective `listing(lopt/1)` matches `configs/ecai2024_config.pl` | options match config file ✓ |
-| 2 | Full grid: 3 arms × 5 fixtures (15 cells), serial | all cells produce classified outcomes |
+| 2 | **DONE (2026-07-08).** Full grid 3 arms × 5 fixtures (15 cells), serial, timeout 60 s; all 15 cells `solved` (0 timeout/error); each config applied verbatim + distinct per arm; outcome matrix `M12_summary.md` built | all cells produce classified outcomes ✓ |
 | 3 | Outcome matrix + per-cell expected-vs-learned comparison; qualitative inspection of every divergent cell | record complete |
 | 4 | Findings write-up (`.tex`); registers and claims ledger synced | Samuel review |
 
@@ -268,7 +268,7 @@ python -m causal.experiments.run_grid --config causal/configs/experiments/M12_aa
 | Artefact | Path |
 |----------|------|
 | Fixtures | `causal/experiments/handcrafted_m12.py` |
-| Arm configs | `causal/configs/experiments/M12_ecai2024.yaml`, `M12_ruleml2025.yaml`, `M12_aamas2025.yaml` |
+| Arm configs | `causal/configs/experiments/M12_ecai2024.yaml`, `M12_ruleml2025.yaml`, `M12_aamas2025.yaml` (`grid.cell_dir: dgp`) |
 | Grid outputs | `causal/outputs/aba_learning/grid/M12_<arm>/cells/<fixture>/` |
 | Experiment record | `docs/experiments/qualitative/M1.2-config-comparison.md` (from `docs/experiments/TEMPLATE.md`) |
 | Findings | `docs/report/findings/milestone1_part2_m12_findings.tex` |

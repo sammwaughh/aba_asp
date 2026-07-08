@@ -129,8 +129,8 @@ Engine scratch files (current working directory; see troubleshooting): `asp.clin
 `cc.clingo`, `cc.pl`, `clingo.stderr.log` (and/or `clingo.stderr.txt`).
 
 Grid run, under `causal/outputs/aba_learning/grid/<experiment_id>/cells/<cell_dir_name>/`
-(where `<cell_dir_name>` defaults to the hash `run_id`; M11 uses `grid.cell_dir: dgp`
-so dirs are named after the DGP, e.g. `cells/m11_binary_A/`):
+(where `<cell_dir_name>` defaults to the hash `run_id`; M11 and M12 use `grid.cell_dir: dgp`
+so dirs are named after the DGP, e.g. `cells/m11_binary_A/`, `cells/m12_sep/`):
 `metrics.json`, `*.parquet`, run logs, per-cell BK/solution artefacts. Summaries:
 `causal/experiments/figures/<experiment_id>_summary.{md,png}`.
 
