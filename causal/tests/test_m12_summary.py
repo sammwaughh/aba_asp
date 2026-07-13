@@ -129,15 +129,15 @@ def test_summarize_cell_detects_non_match(tmp_path: Path) -> None:
 
 def test_exact_match_normalizes_literal_order() -> None:
     # Conjunctive rule with body literals in reversed order still matches.
-    delta = ["x3(A) :- x1_val_2(A), x0_val_2(A)."]
-    assert exact_match("m12_conj", "x3", delta) is True
+    delta = ["x2(A) :- x1_val_2(A), x0_val_2(A)."]
+    assert exact_match("m12_conj", "x2", delta) is True
 
 
 def test_exact_match_disj_requires_both_rules() -> None:
     one = ["x2(A) :- x0_val_2(A)."]
-    both = ["x3(A) :- x0_val_2(A).", "x3(A) :- x1_val_2(A)."]
-    assert exact_match("m12_disj", "x3", one) is False
-    assert exact_match("m12_disj", "x3", both) is True
+    both = ["x2(A) :- x0_val_2(A).", "x2(A) :- x1_val_2(A)."]
+    assert exact_match("m12_disj", "x2", one) is False
+    assert exact_match("m12_disj", "x2", both) is True
 
 
 def test_summarize_arm_missing_dir_is_empty(tmp_path: Path) -> None:

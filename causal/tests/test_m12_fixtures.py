@@ -2,17 +2,21 @@
 
 Locks the fixture tables against the designs agreed in
 ``docs/research/milestone_plans/milestone1_part2/milestone1_part2_config_comparison.md``
-(Section 4) and recorded in ``docs/experiments/qualitative/M1.2-config-comparison.md``:
+(Section 4) and recorded in ``docs/experiments/qualitative/M1.2-config-comparison.md``.
+All five fixtures are minimal 3-variable tables (``x0, x1, x2``), target ``x2``,
+positive class ``x2 == 2``:
 
 - registration, node counts, targets, and declared-G consistency;
-- row counts and construction (factorial for sep/conj/disj; three distinct
-  deterministic assignments x3 for fork; correlated block structure for chain);
+- row counts (sep=9, conj=9, disj=9, fork=3, chain=6) and construction
+  (factorial over (x0,x1) for sep/conj/disj; three distinct deterministic rows
+  for fork; correlated block structure for chain);
 - separator logic: unique zero-error separator per family; distractors not
   zero-error; association PRESENT for fork x1 and chain x0, ABSENT for the
-  isolated columns (sep x0, conj x2, disj x2);
+  isolated column (sep x0);
 - conj/disj minimality: no single one-literal value predicate is
   complete+consistent; the expected rule (set) exactly covers E+ with no E-;
-- E+/E- atoms match the positive mask with 1-based sample ids;
+- E+/E- atoms match the positive mask with 1-based sample ids; both non-empty
+  (conj and fork intentionally have a single positive);
 - no column has value set exactly {0, 1} (bare-binary BK encoding guard);
 - BK encoding via ``execute_cell_stage2`` (stops before Prolog): value
   predicates for all predictors, target excluded.
@@ -42,15 +46,15 @@ _ALL_IDS = ("m12_sep", "m12_conj", "m12_disj", "m12_fork", "m12_chain")
 # Per-fixture design facts (kept in one place so each check reads off the plan).
 _TARGET = {
     "m12_sep": "x2",
-    "m12_conj": "x3",
-    "m12_disj": "x3",
+    "m12_conj": "x2",
+    "m12_disj": "x2",
     "m12_fork": "x2",
     "m12_chain": "x2",
 }
 _NODES = {
     "m12_sep": 3,
-    "m12_conj": 4,
-    "m12_disj": 4,
+    "m12_conj": 3,
+    "m12_disj": 3,
     "m12_fork": 3,
     "m12_chain": 3,
 }
@@ -63,17 +67,17 @@ _EXPECTED_PARENTS = {
 }
 _EDGES = {
     "m12_sep": ((1, 2),),
-    "m12_conj": ((0, 3), (1, 3)),
-    "m12_disj": ((0, 3), (1, 3)),
+    "m12_conj": ((0, 2), (1, 2)),
+    "m12_disj": ((0, 2), (1, 2)),
     "m12_fork": ((0, 1), (0, 2)),
     "m12_chain": ((0, 1), (1, 2)),
 }
 _ROW_COUNT = {
     "m12_sep": 9,
-    "m12_conj": 27,
-    "m12_disj": 27,
-    "m12_fork": 9,
-    "m12_chain": 9,
+    "m12_conj": 9,
+    "m12_disj": 9,
+    "m12_fork": 3,
+    "m12_chain": 6,
 }
 _POSITIVE_VALUE = 2
 
@@ -188,8 +192,9 @@ def test_examples_match_positive_mask(source: str) -> None:
     expected_neg = tuple(f"{target}({i + 1})" for i, p in enumerate(pos_mask) if not p)
     assert fx.pos_examples == expected_pos
     assert fx.neg_examples == expected_neg
-    assert len(fx.pos_examples) >= 2  # avoid single-example flukes
-    assert len(fx.neg_examples) >= 2
+    # Both non-empty; conj and fork intentionally have a single positive.
+    assert len(fx.pos_examples) >= 1
+    assert len(fx.neg_examples) >= 1
 
 
 # --- Construction checks ------------------------------------------------------
@@ -205,36 +210,36 @@ def test_sep_is_complete_factorial_and_copies_parent() -> None:
 
 def test_conj_is_complete_factorial_with_min_mechanism() -> None:
     fx = _fx("m12_conj")
-    combos = list(zip(fx.df["x0"], fx.df["x1"], fx.df["x2"]))
-    for combo in itertools.product((0, 1, 2), repeat=3):
+    combos = list(zip(fx.df["x0"], fx.df["x1"]))
+    for combo in itertools.product((0, 1, 2), (0, 1, 2)):
         assert combos.count(combo) == 1
-    assert list(fx.df["x3"]) == [min(a, b) for a, b in zip(fx.df["x0"], fx.df["x1"])]
-    # positive iff x0 == 2 and x1 == 2 (3 rows: x2 free)
+    assert list(fx.df["x2"]) == [min(a, b) for a, b in zip(fx.df["x0"], fx.df["x1"])]
+    # positive iff x0 == 2 and x1 == 2 (a single positive row)
     pos = _positive_mask("m12_conj")
-    assert sum(pos) == 3
+    assert sum(pos) == 1
     for i, p in enumerate(pos):
         assert p == (int(fx.df["x0"].iloc[i]) == 2 and int(fx.df["x1"].iloc[i]) == 2)
 
 
 def test_disj_is_complete_factorial_with_max_mechanism() -> None:
     fx = _fx("m12_disj")
-    combos = list(zip(fx.df["x0"], fx.df["x1"], fx.df["x2"]))
-    for combo in itertools.product((0, 1, 2), repeat=3):
+    combos = list(zip(fx.df["x0"], fx.df["x1"]))
+    for combo in itertools.product((0, 1, 2), (0, 1, 2)):
         assert combos.count(combo) == 1
-    assert list(fx.df["x3"]) == [max(a, b) for a, b in zip(fx.df["x0"], fx.df["x1"])]
-    # positive iff x0 == 2 or x1 == 2 (5 pos per x2 block -> 15 total / 12 neg)
+    assert list(fx.df["x2"]) == [max(a, b) for a, b in zip(fx.df["x0"], fx.df["x1"])]
+    # positive iff x0 == 2 or x1 == 2 (5 pos / 4 neg)
     pos = _positive_mask("m12_disj")
-    assert sum(pos) == 15
+    assert sum(pos) == 5
     for i, p in enumerate(pos):
         assert p == (int(fx.df["x0"].iloc[i]) == 2 or int(fx.df["x1"].iloc[i]) == 2)
 
 
-def test_fork_three_assignments_repeated_in_blocks() -> None:
-    """Fork = (0,0,0), (1,2,0), (2,0,2), each x3 in block order; both children
-    deterministic functions of x0."""
+def test_fork_three_distinct_rows() -> None:
+    """Fork = (0,0,0), (1,2,0), (2,0,2), one each; both children deterministic
+    functions of x0."""
     fx = _fx("m12_fork")
     rows = [tuple(int(v) for v in row) for row in fx.df.itertuples(index=False)]
-    expected = [(0, 0, 0)] * 3 + [(1, 2, 0)] * 3 + [(2, 0, 2)] * 3
+    expected = [(0, 0, 0), (1, 2, 0), (2, 0, 2)]
     assert rows == expected
     for a, b, c in rows:
         assert b == (2 if a == 1 else 0)  # x1 := 2 if x0 == 1 else 0
@@ -246,14 +251,14 @@ def test_fork_three_assignments_repeated_in_blocks() -> None:
 
 
 def test_chain_block_structure_and_copy_mechanism() -> None:
-    """Chain: per x0 block of 3, x1 := x0 twice + one cyclic deviation; x2 == x1."""
+    """Chain: for each x0, x1 := x0 and x1 := (x0 + 1) % 3; x2 == x1 (6 rows)."""
     fx = _fx("m12_chain")
     assert list(fx.df["x2"]) == list(fx.df["x1"])
     rows = list(zip((int(v) for v in fx.df["x0"]), (int(v) for v in fx.df["x1"])))
     expected = [
-        (0, 0), (0, 0), (0, 1),
-        (1, 1), (1, 1), (1, 2),
-        (2, 2), (2, 2), (2, 0),
+        (0, 0), (0, 1),
+        (1, 1), (1, 2),
+        (2, 2), (2, 0),
     ]
     assert rows == expected
     for a, b in rows:
@@ -296,24 +301,16 @@ def test_fork_sibling_is_associated_but_imperfect() -> None:
 def test_chain_ancestor_is_associated_but_imperfect() -> None:
     assert _column_is_associated("m12_chain", "x0")
     assert not _column_is_zero_error_separator("m12_chain", "x0")
-    # The plan's dose: P(pos | x0 = v) = 0, 1/3, 2/3 for v = 0, 1, 2.
+    # Dose on the 6-row table: P(pos | x0 = v) = 0, 1/2, 1/2 for v = 0, 1, 2.
     fx = _fx("m12_chain")
     pos = _positive_mask("m12_chain")
-    for value, expected_rate in ((0, 0.0), (1, 1 / 3), (2, 2 / 3)):
+    for value, expected_rate in ((0, 0.0), (1, 1 / 2), (2, 1 / 2)):
         rows = [p for v, p in zip(fx.df["x0"], pos) if int(v) == value]
         assert sum(rows) / len(rows) == pytest.approx(expected_rate)
 
 
 def test_sep_isolated_column_is_unassociated() -> None:
     assert not _column_is_associated("m12_sep", "x0")
-
-
-def test_conj_isolated_column_is_unassociated() -> None:
-    assert not _column_is_associated("m12_conj", "x2")
-
-
-def test_disj_isolated_column_is_unassociated() -> None:
-    assert not _column_is_associated("m12_disj", "x2")
 
 
 # --- Minimality of the expected rules (conj/disj) ------------------------------

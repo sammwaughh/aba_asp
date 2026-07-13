@@ -1,6 +1,6 @@
 # Milestone 1, Part 2 (M1.2) — Published-configuration comparison on divergence-designed fixtures
 
-**Status:** `run` — Stages 0–2 complete (2026-07-08): fixtures + validation checks + locked expected outputs (Stage 0); config-consulting runner + feature-BK construction + arm YAMLs + summary side-car + smoke test (Stage 1); 15-cell grid run, outcome matrix built (Stage 2). Stages 3–4 not started
+**Status:** `run` — Stages 0–2 complete on the revised minimal 3-variable fixture design (2026-07-09, commit `9123af7`). Stage 0: fixtures + validation checks + locked expected outputs; Stage 1: config-consulting runner + feature-BK construction + arm YAMLs + summary side-car + smoke test; Stage 2: 15/15 cells `solved`, matrix `causal/outputs/aba_learning/grid/M12_summary.md`. Stages 3–4 not started
 **Experiment ID:** `M12_config_comparison` (arms `M12_ecai2024`, `M12_ruleml2025`, `M12_aamas2025`)
 **Parent index:** [milestone1-plan.md](../milestone1-plan.md) (Part 2 section)
 
@@ -101,41 +101,37 @@ Expected outputs are pre-specified per cell before any run. All M1.2 fixtures ar
 **coherent** tables with intensional expected rules (or a small rule set). Incoherent
 tables and defeasible expected outputs are **deferred** (Section 4.1).
 
-| Family | Key | \(G\) (declared topology) | \(p\) | Table sketch | Expected learned output |
-|--------|-----|---------------------------|------|--------------|--------------------------|
-| Separator anchor | `m12_sep` | `x1 -> x2`; `x0` isolated (non-parent) | 2 | complete factorial over (x0,x1), 9 rows; `x2 := x1`; positive class `x2=2` | `x2(A) :- x1_val_2(A).` (M1.1-style anchor) |
-| Conjunctive collider | `m12_conj` | **Collider:** `x0 -> x3`, `x1 -> x3`; `x2` isolated | 3 | complete factorial over (x0,x1,x2), 27 rows; **conjunctive mechanism:** `x3 := min(x0,x1)`, positive `x3=2` iff `x0=2 ∧ x1=2` | `x3(A) :- x0_val_2(A), x1_val_2(A).` — no single literal separates |
-| Disjunctive collider | `m12_disj` | **Collider:** `x0 -> x3`, `x1 -> x3`; `x2` isolated (symmetric twin of `m12_conj`) | 3 | complete factorial over (x0,x1,x2), 27 rows; **disjunctive mechanism:** `x3 := max(x0,x1)`, positive `x3=2` iff `x0=2 ∨ x1=2` | two rules: `x3(A) :- x0_val_2(A).` and `x3(A) :- x1_val_2(A).` |
-| Fork (correlated sibling) | `m12_fork` | **Fork:** `x0 -> x1`, `x0 -> x2` | 2 | **deterministic two-child fork**, 9 rows: three assignments (x0,x1,x2) = (0,0,0), (1,2,0), (2,0,2), each ×3; mechanisms `x1 := 2 if x0=1 else 0`, `x2 := 2 if x0=2 else 0`; positive class `x2=2` (iff `x0=2`) | `x2(A) :- x0_val_2(A).` |
-| Correlated ancestor | `m12_chain` | **Chain:** `x0 -> x1 -> x2` | 2 | non-factorial, 9 rows: per `x0` block of 3, `x1 := x0` twice + one cyclic deviation `x1 := (x0+1) mod 3`; `x2 := x1`; parent value predicate is the **unique** zero-error separator; ancestor strictly associated (P(pos\|x0)=0, 1/3, 2/3) but imperfect | `x2(A) :- x1_val_2(A).` — failure mode of interest: ancestor (`x0`) citation |
+All five fixtures are minimal **3-variable** categorical tables (`x0, x1, x2`), target
+`x2`, positive class `x2 = 2`, with no duplicate rows.
+
+| Family | Key | \(G\) (declared topology) | Table sketch | Expected learned output |
+|--------|-----|---------------------------|--------------|--------------------------|
+| Separator anchor | `m12_sep` | `x1 -> x2`; `x0` isolated (non-parent) | complete factorial over (x0,x1), 9 rows; `x2 := x1` | `x2(A) :- x1_val_2(A).` (M1.1-style anchor) |
+| Conjunctive collider | `m12_conj` | **Collider:** `x0 -> x2`, `x1 -> x2` | complete factorial over (x0,x1), 9 rows; **conjunctive mechanism:** `x2 := min(x0,x1)`, positive iff `x0=2 ∧ x1=2` (single positive row) | `x2(A) :- x0_val_2(A), x1_val_2(A).` — no single literal separates |
+| Disjunctive collider | `m12_disj` | **Collider:** `x0 -> x2`, `x1 -> x2` (same topology as `m12_conj`) | complete factorial over (x0,x1), 9 rows; **disjunctive mechanism:** `x2 := max(x0,x1)`, positive iff `x0=2 ∨ x1=2` (5 pos / 4 neg) | two rules: `x2(A) :- x0_val_2(A).` and `x2(A) :- x1_val_2(A).` |
+| Fork (correlated sibling) | `m12_fork` | **Fork:** `x0 -> x1`, `x0 -> x2` | **deterministic two-child fork**, 3 rows (one each): (x0,x1,x2) = (0,0,0), (1,2,0), (2,0,2); mechanisms `x1 := 2 if x0=1 else 0`, `x2 := 2 if x0=2 else 0`; positive iff `x0=2` (single positive row) | `x2(A) :- x0_val_2(A).` |
+| Correlated ancestor | `m12_chain` | **Chain:** `x0 -> x1 -> x2` | non-factorial, 6 rows: for each `x0`, `x1 := x0` and `x1 := (x0+1) mod 3`; `x2 := x1`; parent value predicate is the **unique** zero-error separator; ancestor associated (P(pos\|x0)=0, 1/2, 1/2) but imperfect | `x2(A) :- x1_val_2(A).` — failure mode of interest: ancestor (`x0`) citation |
 
 **Naming note:** `m12_conj` and `m12_disj` are named for their **mechanism** (conjunctive
 vs disjunctive positive class) on a **collider** topology (two directed edges into the
-target). They are symmetric twins: same declared G (`x0 -> x3`, `x1 -> x3`; `x2`
-isolated), same 27-row factorial, same three predictors in BK; they differ only in
-mechanism (`min` vs `max`) and expected rule shape. They are not fork topologies.
-`m12_fork` is the fork-topology family (shared cause `x0`, two effects `x1` and `x2`).
-**Isolated-variable policy:** only `m12_sep`, `m12_conj`, and `m12_disj` include an
-explicit isolated non-parent column; `m12_fork` and `m12_chain` use correlated sibling
-and ancestor confounds instead (see rationale below).
+target `x2`). They are twins: same declared G (`x0 -> x2`, `x1 -> x2`), same 9-row
+factorial over (x0,x1); they differ only in mechanism (`min` vs `max`) and expected rule
+shape. They are not fork topologies. `m12_fork` is the fork-topology family (shared cause
+`x0`, two effects `x1` and `x2`).
 
 Rationale per family:
 
 - **`m12_sep`** — anchors against M1.1; isolated non-parent vs direct parent (unique
   separator).
-- **`m12_conj`** — collider with conjunctive mechanism; probes exhaustive vs
-  token-bounded folding and `mgr` generalisation when no single literal separates.
-- **`m12_disj`** — collider with disjunctive mechanism; **symmetric twin of
-  `m12_conj`** (same declared G shape, isolated `x2`, target `x3`, 27-row factorial,
-  three predictors in BK); differs only in mechanism (`max` vs `min`) and expected
-  two-rule output. Probes multi-rule learning and subsumption.
+- **`m12_conj`** — collider with conjunctive mechanism; probes `mgr` generalisation when
+  no single literal separates (a single positive row).
+- **`m12_disj`** — collider with disjunctive mechanism (twin of `m12_conj`); differs only
+  in mechanism (`max` vs `min`) and expected two-rule output. Probes multi-rule learning
+  and subsumption.
 - **`m12_fork`** — fork topology; probes **correlated-sibling confound**: `x1` is
   associated with `x2` via shared cause `x0` but is **not** a zero-error separator.
   Distinct from `m12_sep` (isolated noise variable) and `m12_chain` (ancestor vs parent
-  on a chain). Extends the QI-002 fork baseline (`qi002_fork_cat3`) to the three published
-  configurations under the shared M1.2 encoding (feature-BK, config-file arms),
-  with a **different table**: QI-002's factorial fork decorrelated the sibling; here both
-  children are deterministic functions of `x0` (Samuel's design, 2026-07-08), so the edge
+  on a chain). Both children are deterministic functions of `x0`, so the edge
   `x0 -> x1` leaves a data-level trace. Two design notes: `x1` takes exactly two values
   (a deterministic imperfect separator of a 3-valued cause cannot be injective), and its
   alphabet is {0,2} rather than {0,1} so it stays on the `x1_val_v` value-predicate
@@ -160,10 +156,8 @@ outputs: `docs/experiments/qualitative/M1.2-config-comparison.md`; fixtures in
 
 **Stage-0 validation — `m12_fork` (Prolog-free):**
 
-- 9 rows (\(p=2\)): three distinct deterministic assignments, each repeated 3× in block
-  order (*amended from the original "complete factorial" draft, which was unsatisfiable
-  together with the association check below: a factorial forces `x1` independent of
-  `x2` in-sample*);
+- 3 rows: three distinct deterministic rows (0,0,0), (1,2,0), (2,0,2), one each (no
+  repetition);
 - `x0` is the unique zero-error separator for the positive class (`x0` takes all 3
   values);
 - `x1` is associated with `x2` but is **not** a zero-error separator;
@@ -248,7 +242,7 @@ implementation work for this part.
 |-------|---------|------|
 | 0 | **DONE (2026-07-08).** Fixtures (`causal/experiments/handcrafted_m12.py`) + Prolog-free validation checks (`causal/tests/test_m12_fixtures.py`, 59 tests, all PASS); expected outputs locked in `docs/experiments/qualitative/M1.2-config-comparison.md` before any learning run | all checks PASS ✓ |
 | 1 | **DONE (2026-07-08).** Config-consulting runner (`prolog_config`), feature-BK construction (+ RuleML `domain/1`), three arm YAMLs, and M12 summary side-car (`causal/experiments/m12_summary.py`) built + unit-tested (Prolog-free tests PASS); smoke test `M12_ecai2024`/`m12_sep` -> effective `listing(lopt/1)` matches `configs/ecai2024_config.pl` | options match config file ✓ |
-| 2 | **DONE (2026-07-08).** Full grid 3 arms × 5 fixtures (15 cells), serial, timeout 60 s; all 15 cells `solved` (0 timeout/error); each config applied verbatim + distinct per arm; outcome matrix `M12_summary.md` built | all cells produce classified outcomes ✓ |
+| 2 | **DONE (2026-07-09, commit `9123af7`).** Full grid on revised minimal fixtures (3 arms × 5 fixtures, `--no-resume`); 15/15 `solved`; `M12_summary.md` rebuilt. Exact-match detector: 2/15 (ECAI/fork, AAMAS/conj) | all cells produce classified outcomes ✓ |
 | 3 | Outcome matrix + per-cell expected-vs-learned comparison; qualitative inspection of every divergent cell | record complete |
 | 4 | Findings write-up (`.tex`); registers and claims ledger synced | Samuel review |
 

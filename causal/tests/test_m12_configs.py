@@ -2,7 +2,7 @@
 
 Each arm YAML consults one shipped ``.pl`` config verbatim (via ``prolog_config``)
 over feature-BK; the RuleML arm additionally sets ``domain_predicate``. These tests
-assert the configs load, expand to the five M1.2 fixtures (targets x2/x3), and reference
+assert the configs load, expand to the five M1.2 fixtures (target x2), and reference
 existing config files. No ABA Learning (no swipl/clingo).
 """
 
@@ -30,8 +30,8 @@ _ARMS = {
 _FIXTURES = ("m12_sep", "m12_conj", "m12_disj", "m12_fork", "m12_chain")
 _EXPECTED_TARGET = {
     "m12_sep": "x2",
-    "m12_conj": "x3",
-    "m12_disj": "x3",
+    "m12_conj": "x2",
+    "m12_disj": "x2",
     "m12_fork": "x2",
     "m12_chain": "x2",
 }

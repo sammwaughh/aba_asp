@@ -37,7 +37,7 @@ Use the same status categories as `experiment_register.md`.
 | QI-002 greedy | — | Greedy-folding rerun of QI-002 (minimal truth-table baseline) | analysed | `docs/experiments/qualitative/QI002_minimal_motifs_greedy/` | `causal/configs/experiments/QI002_minimal_motifs_greedy.yaml` | `causal/outputs/aba_learning/grid/QI002_minimal_motifs_greedy/` | Interim Experimentation / Progress | Only change `folding_mode: greedy`. 6/6 solved (vs nd 5/6): solves the binary collider nd could not; cat3 collider now exact; clean recovery 3/6 -> 4/6 with one regression (cat3 fork exact -> superset). |
 | QI-004 greedy | — | Greedy-folding rerun of QI-004 (scaled noisy n=20) | analysed | `docs/experiments/qualitative/QI004_scaled_motifs_n20_greedy/` | `causal/configs/experiments/QI004_scaled_motifs_n20_greedy.yaml` | `causal/outputs/aba_learning/grid/QI004_scaled_motifs_n20_greedy/` | Interim Experimentation / Progress | Only change `folding_mode: greedy`. Same outcomes as nd (1 solved, 12 no-solution, 2 errors; 0/15 clean) but ~120x faster (≈1233 s -> ≈10 s). At noisy n=20 greedy changes only runtime; binary errors persist. |
 | M11 | — | m1.1 Parent-position and representation-order control | analysed | `docs/experiments/qualitative/M1.1-parent-position.md` | `causal/configs/experiments/M11_parent_position.yaml`; `M11_parent_position_greedy.yaml` | `M11_parent_position/cells/`; `M11_parent_position_greedy/`; `M11_ablations/` | Interim Experimentation / Progress (Milestone 1) | nd: 8/8 solved; binary σ/π pass; cat3 σ fails (ablation-supported). Stage 7 greedy: binary matches nd; cat3 all supersets; rule-level σ restored under greedy. |
-| M12 | — | m1.2 Published-configuration comparison (ASP-ABAlearnB / RASP-ABAlearn / Greedy ABA Learning) | run (Stages 0–2 complete; Stage 3 next) | `docs/experiments/qualitative/M1.2-config-comparison.md` | `causal/configs/experiments/M12_ecai2024.yaml`; `M12_ruleml2025.yaml`; `M12_aamas2025.yaml` (`grid.cell_dir: dgp`) | `causal/outputs/aba_learning/grid/M12_{ecai2024,ruleml2025,aamas2025}/cells/<fixture>/`; `M12_summary.md` | Interim Experimentation / Progress (Milestone 1) | Stages 0–1 (2026-07-08): fixtures + checks + locked expected outputs; config-consulting runner, feature-BK construction (+ RuleML `domain/1`), arm YAMLs, summary side-car (Prolog-free tests PASS). Stage 2 (2026-07-08): 15-cell grid run — **15/15 solved**, each shipped config applied verbatim + distinct per arm (ECAI nd/any/all; RuleML greedy/mgr/bk + entailment false + domain/1; AAMAS greedy/mgr/bk + entailment true); cell dirs named by fixture id (`m12_sep`, …); outcome matrix `M12_summary.md`. Every cell learns positive target rules; 1 exact match (ECAI m12_fork); AAMAS assumption-free, ECAI/RuleML assumption-guarded (RuleML full-conjunction incl. isolated x2); raw evidence, interpretation is Stage 3. Incoherent-table gate probe deferred. |
+| M12 | — | m1.2 Published-configuration comparison (ASP-ABAlearnB / RASP-ABAlearn / Greedy ABA Learning) | run (Stage 2 complete) | `docs/experiments/qualitative/M1.2-config-comparison.md` | `causal/configs/experiments/M12_ecai2024.yaml`; `M12_ruleml2025.yaml`; `M12_aamas2025.yaml` (`grid.cell_dir: dgp`) | `causal/outputs/aba_learning/grid/M12_{ecai2024,ruleml2025,aamas2025}/cells/<fixture>/`; `M12_summary.md` | Interim Experimentation / Progress (Milestone 1) | Stage 2 complete (2026-07-09, commit `9123af7`): revised minimal 3-var fixtures (sep/conj/disj=9, fork=3, chain=6 rows); 15/15 `solved`; exact-match 2/15 (ECAI/fork, AAMAS/conj). ECAI/RuleML assumption-heavy; AAMAS assumption-free but often parent-superset. Next: Stage 3 qualitative analysis. |
 | M13 | — | m1.3 Failure-mode investigation (trace mechanism + L1/L2/L3 attribution + literature mapping) | not started | `docs/experiments/qualitative/M1.3-failure-modes.md` (planned) | — (analysis over M1.2 artefacts; targeted ablations optional) | `causal/outputs/aba_learning/grid/M13_<ablation-id>/` (only if ablations run) | Interim Experimentation / Progress (Milestone 1) | Not started. Depends on the M1.2 outcome matrix. |
 
 ## Experiment sequence to date and next
@@ -62,7 +62,7 @@ Initial eight-cell metamorphic grid complete (nd + Stage 7 greedy). nd: binary p
 
 ### Next: Milestone 1 Part 2 — published-configuration comparison (M1.2)
 
-Status: `planned`
+Status: `run` (Stage 2 complete; Stage 3 next)
 
 Purpose: compare the three published ABA Learning configurations — ASP-ABAlearnB
 (`configs/ecai2024_config.pl`), RASP-ABAlearn (`ruleml2025/ruleml2025_config.pl`, one-shot;
@@ -158,10 +158,9 @@ Workflow:
 
 ## Next action
 
-**Milestone 1 Part 2 (M1.2)** — Stages 0–2 complete (fixtures + validation checks + locked
-expected outputs; config-consulting runner, feature-BK construction (+ RuleML `domain/1`),
-three arm YAMLs, summary side-car; 15-cell grid run, all solved, outcome matrix built). Next:
-Stage 3 — per-cell expected-vs-learned comparison and categorical outcome-class labelling. See
+**Milestone 1 Part 2 (M1.2)** — Stage 2 complete (2026-07-09, commit `9123af7`): 15/15
+`solved` on revised minimal fixtures; exact-match 2/15. Next: **Stage 3** per-cell
+expected-vs-learned analysis. See
 `docs/research/milestone_plans/milestone1_part2/milestone1_part2_config_comparison.md`.
 
 Completed since the QL series:

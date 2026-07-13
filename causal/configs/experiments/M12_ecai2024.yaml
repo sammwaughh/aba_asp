@@ -29,8 +29,8 @@ dgps:
 
 grid:
   seed: [0]
-  # Ignored for handcrafted DGPs (per-fixture default_target wins: x2 for
-  # sep/fork/chain, x3 for conj/disj). Present because grid.target is required.
+  # Ignored for handcrafted DGPs (per-fixture default_target wins: x2 for all
+  # five fixtures). Present because grid.target is required.
   target: [x2]
   cell_dir: dgp
 

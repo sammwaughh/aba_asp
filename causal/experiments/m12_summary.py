@@ -60,8 +60,8 @@ ARMS: tuple[str, ...] = ("M12_ecai2024", "M12_ruleml2025", "M12_aamas2025")
 # entry is a set of normalized "head:-body" strings (see ``_normalize_rule``).
 EXPECTED: dict[str, frozenset[str]] = {
     "m12_sep": frozenset({"x2(A):-x1_val_2(A)"}),
-    "m12_conj": frozenset({"x3(A):-x0_val_2(A),x1_val_2(A)"}),
-    "m12_disj": frozenset({"x3(A):-x0_val_2(A)", "x3(A):-x1_val_2(A)"}),
+    "m12_conj": frozenset({"x2(A):-x0_val_2(A),x1_val_2(A)"}),
+    "m12_disj": frozenset({"x2(A):-x0_val_2(A)", "x2(A):-x1_val_2(A)"}),
     "m12_fork": frozenset({"x2(A):-x0_val_2(A)"}),
     "m12_chain": frozenset({"x2(A):-x1_val_2(A)"}),
 }

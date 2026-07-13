@@ -93,7 +93,7 @@ def _handcrafted_cell(source: str, target: str) -> CellSpec:
     )
 
 
-@pytest.mark.parametrize("source,target,n", [("m12_sep", "x2", 9), ("m12_conj", "x3", 27)])
+@pytest.mark.parametrize("source,target,n", [("m12_sep", "x2", 9), ("m12_conj", "x2", 9)])
 def test_stage2_domain_predicate_block_present(
     source: str, target: str, n: int, tmp_path: Path
 ) -> None:
@@ -124,7 +124,7 @@ def test_stage2_domain_predicate_block_present(
     assert f"Skipping excluded variable: {target}" in text
 
 
-@pytest.mark.parametrize("source,target", [("m12_sep", "x2"), ("m12_conj", "x3")])
+@pytest.mark.parametrize("source,target", [("m12_sep", "x2"), ("m12_conj", "x2")])
 def test_stage2_feature_bk_no_domain_by_default(
     source: str, target: str, tmp_path: Path
 ) -> None:
