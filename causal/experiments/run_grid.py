@@ -205,7 +205,6 @@ def execute_cell_stage2(
     bin_strategy: str = "quantile",
     example_split: str = "median",
     noise_type: str = "gaussian",
-    domain_predicate: bool = False,
 ) -> Stage2Artefacts:
     """Stage 2 of execute_cell: BK generation + E+/E- builders (INFRA.md §4.3)."""
     stage1 = execute_cell_stage1(cell, run_dir, graph_type=graph_type, noise_type=noise_type)
@@ -245,7 +244,6 @@ def execute_cell_stage2(
         exclude_cols=[cell.target],
         continuous_bins=bins,
         bin_strategy=bin_strategy,
-        domain_predicate=domain_predicate,
     )
 
     # Normalise filenames to the runner's artefact layout.
@@ -574,7 +572,6 @@ def execute_cell(
     query_timeout_s: float = 5.0,
     skip_prolog_coverage: bool = False,
     prolog_config: str | None = None,
-    domain_predicate: bool = False,
 ) -> CellRunArtefacts:
     """Convenience: stages 1→2→3→4 for a single learning cell."""
     resolved_graph_type: GraphType = graph_type or cell.graph_type  # type: ignore[assignment]
@@ -589,7 +586,6 @@ def execute_cell(
         bin_strategy=bin_strategy,
         example_split=resolved_example_split,
         noise_type=noise_type,
-        domain_predicate=domain_predicate,
     )
     stage3 = execute_cell_stage3(
         cell,
@@ -676,7 +672,6 @@ def _execute_kwargs(cfg: ExperimentConfig) -> dict[str, Any]:
         "query_timeout_s": float(d.get("query_timeout_s", 5.0)),
         "noise_type": str(d.get("noise_type", "gaussian")),
         "prolog_config": str(prolog_config) if prolog_config is not None else None,
-        "domain_predicate": bool(d.get("domain_predicate", False)),
     }
 
 

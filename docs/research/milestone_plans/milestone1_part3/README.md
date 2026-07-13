@@ -1,6 +1,6 @@
 # Milestone 1, Part 3 — Failure-mode investigation (M1.3)
 
-**Status:** `not started` (begins when the M1.2 outcome matrix exists)
+**Status:** `not started` (M1.2 outcome matrix and cell inspection are available)
 
 | Document | Purpose |
 |----------|---------|

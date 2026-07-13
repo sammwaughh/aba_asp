@@ -84,9 +84,10 @@ Across QI-001/QI-002/QI-004, switching nd -> greedy is **better or equal on ever
 
 QI greedy reruns remain supporting precedent for runtime and collider gains. **m1.1 Stage 7**
 (formal nd vs greedy on the eight-cell control grid) is **complete** — see
-`M11_parent_position_greedy/summary/compare_nd_greedy.md` and M11-C-004. M1.2 should extend
-strategy comparison across QI motifs and support an operational default decision; it does not
-repeat the m1.1 grid work.
+`M11_parent_position_greedy/summary/compare_nd_greedy.md` and M11-C-004. M1.2 subsequently
+compared the shipped ECAI and AAMAS configurations over five divergence-designed
+categorical fixtures (10 cells); it did not select an operational default or repeat the
+m1.1 grid.
 
 ## Artefact paths
 

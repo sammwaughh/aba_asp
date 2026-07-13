@@ -52,7 +52,8 @@ Key experiment records:
 
 - `docs/experiments/qualitative/QL-001.md` — qualitative inspection of ABA Learning on minimal causal motifs (realised by QI series).
 - `docs/experiments/qualitative/M1.1-parent-position.md` — Milestone 1 Part 1 (M11); **`analysed` / closed** (Stages 0–7: nd mechanism, ablations, greedy comparator).
-- **Next:** Milestone 1 Part 2 (M1.2) — comparison of the three published ABA Learning configurations (ASP-ABAlearnB, RASP-ABAlearn, Greedy ABA Learning) on divergence-designed categorical fixtures; planning doc `docs/research/milestone_plans/milestone1_part2/milestone1_part2_config_comparison.md`. Then M1.3 — failure-mode taxonomy (`docs/research/milestone_plans/milestone1_part3/milestone1_part3_failure_modes.md`). Milestone 1 is categorical-data only (no binary-only or continuous work).
+- `docs/experiments/qualitative/M1.2-config-comparison.md` — Milestone 1 Part 2 (M12); **`analysed`** (Stages 0–3): two-config comparison of ASP-ABAlearnB and Greedy ABA Learning over five divergence-designed categorical fixtures (10 cells).
+- **Next:** M1.3 — failure-mode taxonomy (`docs/research/milestone_plans/milestone1_part3/milestone1_part3_failure_modes.md`). Milestone 1 is categorical-data only (no binary-only or continuous work).
 
 ## Experiment documentation rule
 

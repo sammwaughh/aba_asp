@@ -72,6 +72,15 @@ RESULT_PARQUET_COLUMNS: tuple[str, ...] = (
     "cov_gap_accuracy",
     "cov_gap_pos",
     "cov_gap_neg",
+    "cov_asp_accuracy",
+    "cov_asp_pos",
+    "cov_asp_neg",
+    "cov_asp_tp",
+    "cov_asp_fp",
+    "cov_asp_tn",
+    "cov_asp_fn",
+    "cov_asp_n_pos",
+    "cov_asp_n_neg",
     "skel_precision",
     "skel_recall",
     "skel_f1",
@@ -110,6 +119,9 @@ _FLOAT_METRICS_WITH_NAN_REASONS: tuple[str, ...] = (
     "cov_gap_accuracy",
     "cov_gap_pos",
     "cov_gap_neg",
+    "cov_asp_accuracy",
+    "cov_asp_pos",
+    "cov_asp_neg",
     "skel_precision",
     "skel_recall",
     "skel_f1",
@@ -744,6 +756,13 @@ def _nan_reason_for_metric(
         if not inp.pos_examples and not inp.neg_examples:
             return "no_examples"
         return "prolog_unavailable_or_failed"
+    if metric.startswith("cov_asp_"):
+        if not inp.pos_examples and not inp.neg_examples:
+            return "no_examples"
+        reason = panel.get("_cov_asp_nan_reason")
+        if isinstance(reason, str) and reason:
+            return reason
+        return "asp_unavailable_or_failed"
     if metric.startswith(("skel_", "dir_d1_", "dir_d2_")):
         return "implied_skeleton_not_aggregated"
     if metric.startswith("dir_edge_") or metric == "runtime_s_bridge":
@@ -816,6 +835,32 @@ def compute_cell_metrics(inp: CellInputs) -> dict[str, Any]:
         cov_pl["cov_gap_pos"] = float(cov_pl["cov_pl_pos"]) - float(cov_py["cov_py_pos"])
         cov_pl["cov_gap_neg"] = float(cov_pl["cov_pl_neg"]) - float(cov_py["cov_py_neg"])
 
+    from causal.asp_coverage import (  # noqa: WPS433
+        asp_answer_set_coverage,
+        resolve_sol_asp_path,
+    )
+
+    sol_asp = resolve_sol_asp_path(inp.bk_path, inp.sol_path)
+    if inp.outcome == "solved" and sol_asp is not None:
+        cov_asp = asp_answer_set_coverage(
+            sol_asp,
+            inp.pos_examples,
+            inp.neg_examples,
+            timeout_s=inp.query_timeout_s,
+        )
+    else:
+        cov_asp = asp_answer_set_coverage(
+            None,
+            inp.pos_examples,
+            inp.neg_examples,
+            timeout_s=inp.query_timeout_s,
+        )
+        if inp.outcome != "solved":
+            cov_asp["_cov_asp_nan_reason"] = "not_solved"
+        elif sol_asp is None:
+            cov_asp["_cov_asp_nan_reason"] = "sol_asp_missing"
+    asp_nan_reason = cov_asp.pop("_cov_asp_nan_reason", None)
+
     sol_bytes = 0
     if inp.sol_path is not None and Path(inp.sol_path).is_file():
         sol_bytes = Path(inp.sol_path).stat().st_size
@@ -855,6 +900,10 @@ def compute_cell_metrics(inp: CellInputs) -> dict[str, Any]:
     }
     panel.update(cov_py)
     panel.update(cov_pl)
+    panel.update(cov_asp)
+    if asp_nan_reason is not None:
+        panel["_cov_asp_nan_reason"] = asp_nan_reason
     panel.update(_placeholder_skeleton_and_bridge())
     _attach_nan_reasons(panel, inp)
+    panel.pop("_cov_asp_nan_reason", None)
     return panel

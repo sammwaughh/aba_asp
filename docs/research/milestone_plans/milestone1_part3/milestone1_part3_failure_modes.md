@@ -1,13 +1,13 @@
 # Milestone 1, Part 3 (M1.3) — Failure-mode investigation
 
-**Status:** `not started` — begins when the M1.2 outcome matrix exists.
+**Status:** `not started` — M1.2 outcome matrix and cell inspection are available.
 **Parent index:** [milestone1-plan.md](../milestone1-plan.md) (Part 3 section)
 
 ## 1. Goal and research question
 
 Produce an evidence-backed account of **when and how mechanism-aligned rules cannot be
 learned** by unguided ABA Learning, grounded in the M1.2 results and the academic
-literature backing each of the three configurations. The output informs the start of
+literature backing the two scoped configurations. The output informs the start of
 Milestone 2 (Causal ABA integration).
 
 > **RQ (M1.3).** For each failure or divergence class observed in M1.2, what is the exact
@@ -22,8 +22,8 @@ Milestone 2 (Causal ABA integration).
 - The M1.1 record: BK/representation ordering is the first confirmed failure mode, with a
   complete trace-level mechanism (BK serialisation order → rule IDs → first-fold
   selection → entailment gate → assumption commitment). It enters the taxonomy directly.
-- The backing papers: De Angelis, Proietti & Toni ECAI 2024 (ASP-ABAlearnB), RuleML 2025
-  (RASP-ABAlearn), AAMAS 2025 (Greedy ABA Learning); plus Proietti & Toni 2024 for the
+- The backing papers: De Angelis, Proietti & Toni ECAI 2024 (ASP-ABAlearnB) and AAMAS
+  2025 (Greedy ABA Learning); plus Proietti & Toni 2024 for the
   transformation-rule foundations. Summaries: `docs/theory/paper_summaries/`.
 
 ## 3. Method
@@ -43,7 +43,7 @@ learned output), produce all three of:
 
    | Level | Cause lives in | Evidence standard |
    |-------|----------------|-------------------|
-   | **L1** | Unguided ABA Learning as a paradigm: any faithful implementation of any of the three systems fails the same way, because the objective (cover \(E^+\), exclude \(E^-\)) carries no causal information | Argument from the papers' problem definitions; cross-arm uniformity in the M1.2 matrix |
+   | **L1** | Unguided ABA Learning as a paradigm: both scoped systems fail the same way because the objective (cover \(E^+\), exclude \(E^-\)) carries no causal information | Argument from the papers' problem definitions; cross-arm uniformity in the M1.2 matrix |
    | **L2** | A specific published variant's algorithmic choices; a different published variant demonstrably avoids it | Cross-arm divergence in the M1.2 matrix + the paper's description of the differing mechanism |
    | **L3** | This repository's implementation or our encoding; implied by no paper | Trace-level account and/or targeted ablation |
 
@@ -55,10 +55,9 @@ learned output), produce all three of:
 **Ablations.** Targeted falsification ablations (M1.1 Stage-6 style: state hypothesis →
 minimal intervention → predicted observable) are permitted where a stated hypothesis
 requires evidence, but are not promised up front. Designated candidates, triggered only
-if implicated: `asm_intro(sechk)` on an assumption-introduction-implicated cell (carried
-decision from M1.2 planning); graded incoherence severity if incoherence handling is a
-divergence point; representation-order interventions if ordering resurfaces beyond the
-M1.1 account.
+if implicated: `asm_intro(sechk)` on an assumption-introduction-implicated ECAI cell;
+folding-mode/selection probes for disjunctive compression; representation-order
+interventions if ordering resurfaces beyond the M1.1 account.
 
 ## 4. Deliverable
 

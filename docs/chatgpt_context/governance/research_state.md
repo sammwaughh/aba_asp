@@ -123,14 +123,15 @@ establish causal discovery.
 
 Milestone 1's goal is a **report-ready account of when and how unguided ABA Learning can
 recover mechanism-aligned rules from categorical tabular data** (categorical-only scope,
-\(k = 3\); no binary-only or continuous work in this milestone). Two parts remain:
+\(k = 3\); no binary-only or continuous work in this milestone). M1.2 is analysed; one
+part remains:
 
-- **M1.2 — published-configuration comparison** (`planned`): ASP-ABAlearnB
-  (`configs/ecai2024_config.pl`), RASP-ABAlearn (`ruleml2025/ruleml2025_config.pl`, one-shot,
-  redress workflow not exercised), and Greedy ABA Learning (`configs/aamas2025_config.pl`)
+- **M1.2 — published-configuration comparison** (`analysed`, Stages 0–3):
+  ASP-ABAlearnB (`configs/ecai2024_config.pl`) and Greedy ABA Learning
+  (`configs/aamas2025_config.pl`)
   run on shared handcrafted categorical fixtures designed to expose divergence (separator
   anchor, conjunctive/disjunctive collider mechanisms, fork, correlated ancestor; 5
-  families, 15 cells). Primary
+  families, 10 cells). Exact match 2/10; ASP sample coverage 10/10. Primary
   instrument: pre-specified expected output vs learned output per cell; metrics are
   at-a-glance divergence detectors only. Plan:
   `docs/research/milestone_plans/milestone1_part2/milestone1_part2_config_comparison.md`.

@@ -35,7 +35,7 @@ aba_asp/
   configs/                  # Prolog option presets (.pl)
   examples/                 # hand-written .bk.aba frameworks
   examples-wip/             # work-in-progress example frameworks
-  ecai2024/, ruleml2025/    # paper artefact trees (ILASP, benchmarks)
+  ecai2024/, ruleml2025/    # inherited paper artefacts; retained, not M1.2 arm inputs
   utils/                    # table -> predicate helpers (data_utils.py, examples.py)
   causal/                   # PROJECT causal bridge (Python)
   docs/                     # theory, papers, experiments, research record
@@ -170,7 +170,8 @@ Keep the distinction explicit: **implemented = parent-set recovery via ABA Learn
 - Theory files in `docs/theory/` (canonical; do not invent theory).
 - `.cursor/rules/*.mdc`, `AGENTS.md`, `README.md`, `PROJECT_README.md`.
 - `examples/`, `examples-wip/`, `ecai2024/`, `ruleml2025/`, and existing experiment
-  configs/tests.
+  configs/tests. The inherited paper artefact trees remain on disk but are not M1.2 arm
+  inputs.
 - Generated outputs under `causal/outputs/` and engine working files.
 
 ## Known unknowns (verify before relying on)

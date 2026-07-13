@@ -1,15 +1,17 @@
 """M1.2 side-car summary: expected-vs-learned matrix + extra divergence detectors.
 
 Localized to M1.2 so the shared results schema (``causal/metrics.py``
-``RESULT_PARQUET_COLUMNS``) stays untouched. Reads each cell's already-written
-``metrics.json``, ``prolog.stdout``, and solution file for the three published
+``RESULT_PARQUET_COLUMNS``) stays the primary store. Reads each cell's
+``metrics.json``, ``prolog.stdout``, and solution files for the two published
 arms and emits, per (arm, fixture) cell, the objective signals the plan lists in
-Section 5 that are not in the shared parquet:
+Section 5 that are not in the shared parquet narrative alone:
 
 - body-scope parent variable set (base vars in learned target-rule bodies) and
   framework-scope variable set (base vars anywhere in the learned delta,
   contraries included);
-- ``covers_all_pos`` / ``rejects_all_neg`` flags (from the coverage panel);
+- ``pos_covered`` / ``neg_rejected`` as ``k/n`` fractions from **ASP answer-set
+  coverage** (brave entailment on ``bk.sol.asp`` via clingo; ``cov_asp_*`` in
+  ``metrics.json``, recomputed from the cell ASP file when those keys are absent);
 - framework complexity (delta rules / assumptions / contraries / body length);
 - trace-line count of ``prolog.stdout`` (reproducible runtime proxy);
 - effective-configuration provenance (the ``Current learning options:`` /
@@ -31,6 +33,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import sys
 from dataclasses import asdict, dataclass
 from pathlib import Path
@@ -41,6 +44,7 @@ _REPO_ROOT = _THIS_DIR.parents[1]
 if str(_REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(_REPO_ROOT))
 
+from causal.asp_coverage import asp_answer_set_coverage, resolve_sol_asp_path
 from causal.experiments.paths import grid_root
 from causal.metrics import (
     _PER_SAMPLE_INDICATOR_RE,
@@ -54,7 +58,7 @@ import re as _re
 # Prolog variable token: leading uppercase letter or underscore.
 _VAR_RE = _re.compile(r"\b[A-Z_][A-Za-z0-9_]*\b")
 
-ARMS: tuple[str, ...] = ("M12_ecai2024", "M12_ruleml2025", "M12_aamas2025")
+ARMS: tuple[str, ...] = ("M12_ecai2024", "M12_aamas2025")
 
 # Locked expected target-rule sets per fixture (mirrors the M1.2 record). Each
 # entry is a set of normalized "head:-body" strings (see ``_normalize_rule``).
@@ -224,8 +228,8 @@ class CellSummary:
     target: str
     outcome: str
     exact_match: bool
-    covers_all_pos: bool | None
-    rejects_all_neg: bool | None
+    pos_covered: str  # "k/n" or "?"
+    neg_rejected: str  # "k/n" or "?"
     body_scope_vars: tuple[str, ...]
     framework_scope_vars: tuple[str, ...]
     n_delta_rules: int
@@ -249,6 +253,73 @@ def _as_bool_flag(value: Any) -> bool | None:
         return None
 
 
+def _format_fraction(k: Any, n: Any) -> str:
+    """Format coverage as ``k/n``, or ``?`` if unavailable."""
+    try:
+        ki = int(k)
+        ni = int(n)
+    except (TypeError, ValueError):
+        return "?"
+    if ni < 0 or ki < 0:
+        return "?"
+    return f"{ki}/{ni}"
+
+
+def _examples_from_data_csv(cell_dir: Path, target: str) -> tuple[list[str], list[str]]:
+    """Rebuild E+/E− from ``data.csv`` (positive class ``target == 2``)."""
+    data_path = cell_dir / "data.csv"
+    if not data_path.is_file():
+        return [], []
+    try:
+        import pandas as pd
+    except ImportError:
+        return [], []
+    df = pd.read_csv(data_path)
+    if target not in df.columns:
+        return [], []
+    pos = [
+        f"{target}({i + 1})"
+        for i, v in enumerate(df[target].tolist())
+        if int(v) == 2
+    ]
+    neg = [
+        f"{target}({i + 1})"
+        for i, v in enumerate(df[target].tolist())
+        if int(v) != 2
+    ]
+    return pos, neg
+
+
+def _asp_fractions_for_cell(
+    cell_dir: Path, metrics: dict[str, Any], target: str
+) -> tuple[str, str]:
+    """Return ``(pos_covered, neg_rejected)`` as ``k/n`` strings from ASP coverage."""
+    # Prefer counts written by compute_cell_metrics.
+    if "cov_asp_tp" in metrics and "cov_asp_n_pos" in metrics:
+        pos_rate = metrics.get("cov_asp_pos")
+        if isinstance(pos_rate, float) and math.isnan(pos_rate):
+            pass
+        else:
+            return (
+                _format_fraction(metrics.get("cov_asp_tp"), metrics.get("cov_asp_n_pos")),
+                _format_fraction(metrics.get("cov_asp_tn"), metrics.get("cov_asp_n_neg")),
+            )
+
+    sol_asp = resolve_sol_asp_path(cell_dir / "bk.aba", cell_dir / "bk.sol.aba")
+    if sol_asp is None:
+        return "?", "?"
+    pos, neg = _examples_from_data_csv(cell_dir, target)
+    if not pos and not neg:
+        return "?", "?"
+    cov = asp_answer_set_coverage(sol_asp, pos, neg)
+    if isinstance(cov.get("cov_asp_pos"), float) and math.isnan(float(cov["cov_asp_pos"])):
+        return "?", "?"
+    return (
+        _format_fraction(cov.get("cov_asp_tp"), cov.get("cov_asp_n_pos")),
+        _format_fraction(cov.get("cov_asp_tn"), cov.get("cov_asp_n_neg")),
+    )
+
+
 def summarize_cell(cell_dir: Path, arm: str) -> CellSummary | None:
     """Build a ``CellSummary`` from one cell directory, or ``None`` if unreadable."""
     metrics_path = cell_dir / "metrics.json"
@@ -269,6 +340,8 @@ def summarize_cell(cell_dir: Path, arm: str) -> CellSummary | None:
     delta = m12_delta_rules(sol_path) if sol_path is not None else []
     target_rules = target_rule_filter(target, delta)
 
+    pos_covered, neg_rejected = _asp_fractions_for_cell(cell_dir, metrics, target)
+
     mean_bl = metrics.get("mean_body_length")
     return CellSummary(
         arm=arm,
@@ -276,8 +349,8 @@ def summarize_cell(cell_dir: Path, arm: str) -> CellSummary | None:
         target=target,
         outcome=outcome,
         exact_match=exact_match(fixture, target, delta),
-        covers_all_pos=_as_bool_flag(metrics.get("cov_py_pos")),
-        rejects_all_neg=_as_bool_flag(metrics.get("cov_py_neg")),
+        pos_covered=pos_covered,
+        neg_rejected=neg_rejected,
         body_scope_vars=tuple(sorted(body_scope_vars(target, delta))),
         framework_scope_vars=tuple(sorted(framework_scope_vars(target, delta))),
         n_delta_rules=int(metrics.get("n_delta_rules", 0) or 0),
@@ -293,17 +366,20 @@ def summarize_cell(cell_dir: Path, arm: str) -> CellSummary | None:
 
 
 def summarize_arm(arm: str, *, root: Path | None = None) -> list[CellSummary]:
-    """Summarize every cell of one arm's grid output directory."""
+    """Summarize the locked five-fixture cells of one arm's grid output directory."""
     root = root or grid_root()
     cells_dir = root / arm / "cells"
     if not cells_dir.is_dir():
         return []
     out: list[CellSummary] = []
-    for cell_dir in sorted(p for p in cells_dir.iterdir() if p.is_dir()):
+    for fixture in sorted(EXPECTED):
+        cell_dir = cells_dir / fixture
+        if not cell_dir.is_dir():
+            continue
         summary = summarize_cell(cell_dir, arm)
         if summary is not None:
             out.append(summary)
-    return sorted(out, key=lambda s: s.fixture)
+    return out
 
 
 def _fmt_opts(opts: dict[str, str]) -> str:
@@ -323,8 +399,9 @@ def build_markdown(rows_by_arm: dict[str, list[CellSummary]]) -> str:
     lines.append("")
     lines.append(
         "Objective divergence detectors only; the categorical outcome class is a "
-        "Stage-3 qualitative judgement. Generated by "
-        "`python -m causal.experiments.m12_summary`."
+        "Stage-3 qualitative judgement. ``pos_covered`` / ``neg_rejected`` are "
+        "ASP answer-set coverage fractions (brave entailment on ``bk.sol.asp``). "
+        "Generated by `python -m causal.experiments.m12_summary`."
     )
     lines.append("")
     for arm in ARMS:
@@ -336,7 +413,7 @@ def build_markdown(rows_by_arm: dict[str, list[CellSummary]]) -> str:
             lines.append("")
             continue
         lines.append(
-            "| fixture | target | outcome | exact | covers_all_pos | rejects_all_neg "
+            "| fixture | target | outcome | exact | pos_covered | neg_rejected "
             "| body-scope vars | framework-scope vars | Δrules | asm | contr | "
             "max &#124; mean body | trace lines |"
         )
@@ -348,7 +425,7 @@ def build_markdown(rows_by_arm: dict[str, list[CellSummary]]) -> str:
             lines.append(
                 f"| {r.fixture} | {r.target} | {r.outcome} | "
                 f"{'Y' if r.exact_match else 'N'} | "
-                f"{_flag(r.covers_all_pos)} | {_flag(r.rejects_all_neg)} | "
+                f"{r.pos_covered} | {r.neg_rejected} | "
                 f"{{{', '.join(r.body_scope_vars)}}} | "
                 f"{{{', '.join(r.framework_scope_vars)}}} | "
                 f"{r.n_delta_rules} | {r.n_assumptions} | {r.n_contraries} | "
@@ -362,12 +439,6 @@ def build_markdown(rows_by_arm: dict[str, list[CellSummary]]) -> str:
             lines.append(f"- `{r.fixture}`: {_fmt_opts(r.effective_options)}")
         lines.append("")
     return "\n".join(lines) + "\n"
-
-
-def _flag(value: bool | None) -> str:
-    if value is None:
-        return "?"
-    return "Y" if value else "N"
 
 
 def write_summary(rows_by_arm: dict[str, list[CellSummary]], *, root: Path | None = None) -> tuple[Path, Path]:
@@ -389,7 +460,7 @@ def build_parser() -> argparse.ArgumentParser:
         type=str,
         default=None,
         metavar="ARM",
-        help="Summarize a single arm (e.g. M12_ecai2024) instead of all three",
+        help="Summarize a single arm (e.g. M12_ecai2024) instead of both arms",
     )
     return p
 

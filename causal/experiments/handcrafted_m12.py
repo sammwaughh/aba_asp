@@ -1,8 +1,8 @@
 """M1.2 divergence-designed categorical fixtures (Milestone 1, Part 2).
 
 Five minimal handcrafted categorical fixture families supporting the M1.2
-published-configuration comparison (ASP-ABAlearnB / RASP-ABAlearn / Greedy ABA
-Learning), planned in
+published-configuration comparison (ASP-ABAlearnB / Greedy ABA Learning),
+planned in
 ``docs/research/milestone_plans/milestone1_part2/milestone1_part2_config_comparison.md``
 and recorded in ``docs/experiments/qualitative/M1.2-config-comparison.md``.
 

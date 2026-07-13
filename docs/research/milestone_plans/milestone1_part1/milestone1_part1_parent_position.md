@@ -33,8 +33,9 @@ default pipeline but is **accounted for** by BK serialisation order + entailment
 commitment (ablation-supported). Stage 7 (greedy): cat3 rule-level σ restored; all cat3 cells
 are parent supersets (does not fix singleton recovery). See findings tex §Integrated conclusion.
 
-**Next (outside m1.1):** M1.2 — published-configuration comparison (re-scoped July 2026);
-see `../milestone1_part2/milestone1_part2_config_comparison.md`.
+**Subsequent work (outside m1.1):** M1.2 two-config comparison is analysed (Stages
+0–3); M1.3 failure-mode attribution is next. See
+`../milestone1_part2/milestone1_part2_config_comparison.md`.
 
 **Supervisor guidance:** `docs/research/supervisor_guidance.md` (M1.1 review section).
 **Decision log:** `docs/research/decisions.md` (2026-06-22 reopen → ablation + Stage 7 closure).
@@ -1160,6 +1161,7 @@ The expected-vs-actual learnt rule comparison remains the primary evidence throu
 **Filled in (June 2026):**
 
 - **Phase B complete:** Stages 4–6; ablation plan executed; status **`analysed`** per
-  `milestone1_part1/milestone1_part1_ablations.md` §8. M1.2 greedy grid is next comparator experiment.
+  `milestone1_part1/milestone1_part1_ablations.md` §8. The subsequent M1.2 two-config
+  comparator is also analysed.
 - **DGP clarified:** target-mechanism tables (isolated non-parent + `x2 := parent`);
   not chain SCM sampling.

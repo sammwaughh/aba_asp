@@ -1,21 +1,26 @@
 # Milestone 1, Part 2 (M1.2) — Published-configuration comparison on divergence-designed fixtures
 
-**Status:** `run` — Stages 0–2 complete on the revised minimal 3-variable fixture design (2026-07-09, commit `9123af7`). Stage 0: fixtures + validation checks + locked expected outputs; Stage 1: config-consulting runner + feature-BK construction + arm YAMLs + summary side-car + smoke test; Stage 2: 15/15 cells `solved`, matrix `causal/outputs/aba_learning/grid/M12_summary.md`. Stages 3–4 not started
-**Experiment ID:** `M12_config_comparison` (arms `M12_ecai2024`, `M12_ruleml2025`, `M12_aamas2025`)
+**Status:** `analysed` — Stages 0–3 complete on the revised minimal 3-variable fixture
+design. Stage 0: fixtures + validation checks + locked expected outputs; Stage 1:
+config-consulting runner + shared feature-BK construction + two arm YAMLs + summary
+side-car + smoke test; Stage 2: 10/10 scoped cells `solved` (2026-07-09, commit
+`9123af7`), matrix `causal/outputs/aba_learning/grid/M12_summary.md`; Stage 3:
+cell-by-cell inspection complete (2026-07-13). Stage 4 not started.
+**Experiment ID:** `M12_config_comparison` (arms `M12_ecai2024`, `M12_aamas2025`)
 **Parent index:** [milestone1-plan.md](../milestone1-plan.md) (Part 2 section)
 
 ## 1. Goal and research question
 
-Compare the three published ABA Learning configurations shipped with the inherited
+Compare the two published ABA Learning configurations in M1.2 scope, shipped with the inherited
 engine, run one-shot on shared handcrafted categorical fixtures, and report clearly when
 and how each recovers the **mechanism-aligned rules** warranted by the fixture's declared
 graph and mechanism.
 
 > **RQ (M1.2).** For a fixed encoding of small categorical tables (each generated from a
 > declared graph \(G\) and mechanism, with a pre-specified expected learned output), how do
-> ASP-ABAlearnB, RASP-ABAlearn, and Greedy ABA Learning differ in (a) whether the expected
+> ASP-ABAlearnB and Greedy ABA Learning differ in (a) whether the expected
 > output is learned, (b) the structural class of what is learned instead, and (c) which
-> data properties expose divergence between the three systems?
+> data properties expose divergence between the two systems?
 
 This is unguided ABA Learning only: no Causal ABA machinery (`arr`/`noe`/`indep`,
 d-separation, stable-extension-as-DAG) is exercised. Results characterise recovery of
@@ -23,48 +28,38 @@ mechanism-aligned rules, not causal discovery.
 
 ## 2. Systems under comparison
 
-The three arms are the engine's shipped configuration files, consulted **verbatim** for
+The two arms are the engine's shipped configuration files, consulted **verbatim** for
 provenance:
 
 | Arm | Config file | Published system | Verified option content |
 |-----|-------------|------------------|--------------------------|
 | ECAI | `configs/ecai2024_config.pl` | ASP-ABAlearnB (ECAI 2024, "Learning Brave ABA Frameworks via ASP") | brave; `nd` folding, `folding_steps(10)`; selection `any`; space `all`; `asm_intro(relto)`; `check_ic` |
-| RuleML | `ruleml2025/ruleml2025_config.pl` | RASP-ABAlearn (RuleML 2025, "Learning to Contest Argumentative Claims") | brave; `greedy` folding; selection `mgr`; space `bk`; `asm_intro(relto)`; `check_ic`; `post_folding_test_entailment(false)` |
 | AAMAS | `configs/aamas2025_config.pl` | Greedy ABA Learning for CBR (AAMAS 2025) | brave; `greedy` folding; selection `mgr`; space `bk`; `asm_intro(relto)`; `check_ic`; post-folding entailment gate at engine default (`true`) |
 
 Design decisions fixed at planning time:
 
-- **One-shot runs only.** RASP-ABAlearn's distinctive *incremental redress* workflow
-  (sequential `aba_asp/5` calls feeding each solution forward, cf. `ruleml2025/README.txt`
-  and the `.goal` files) is **not exercised**; the RuleML arm tests that system's
-  configuration on a single learning problem. This must be stated explicitly in the
-  write-up. Exercising redress (e.g. learning targets sequentially) is flagged as a
-  near-term follow-up after M1.2 (Section 4.1).
-- **All arms are brave**, as published. No cautious arm; the published methods use brave
+- **Scope correction (2026-07-13):** the RuleML/RASP arm was removed from M1.2. Its
+  redress workflow is outside this investigation rather than a deferred M1.2 follow-up.
+- **Both arms are brave**, as published. No cautious arm; the published methods use brave
   for a reason. Comparisons against the cautious-default M1.1/QI results are therefore
   cross-configuration observations, not controlled comparisons.
 - **No repeat-stability measurement.** The algorithms have no probabilistic component and
   clingo is deterministic for fixed input, flags, and version; identical reruns give
   identical output.
-- **`asm_intro(relto)` in all arms** (as the config files specify); the config files are
+- **`asm_intro(relto)` in both arms** (as the config files specify); the config files are
   treated as canonical. Recorded caveat: if M1.3 implicates assumption-introduction
   behaviour in a failure mode, a single `sechk` ablation on the implicated cell is the
   designated follow-up.
 - **`ecai2024ALL_config.pl` (fold-all variant) is excluded** from M1.2; flagged for later
   consideration.
-- **Honesty note for the write-up:** the RuleML and AAMAS configurations differ *only* in
-  the post-folding entailment gate. The three-system comparison therefore factorises as
-  {nd/any/all vs greedy/mgr/bk} × {gate on vs off}, and the report must not overstate the
-  independence of the two greedy arms. **Scope note (July 2026):** the incoherent-table
-  families that were originally planned to expose this gate difference (`m12_incoh_pos`,
-  `m12_incoh_neg`) are **deferred** (Section 4.1). M1.2 therefore does **not** exercise
-  the main predicted RuleML-vs-AAMAS divergence from the original plan; any gate-related
-  observations in M1.2 are incidental only.
+- **Comparison boundary:** the scoped arms differ in folding mode, selection, and search
+  space (`nd`/`any`/`all` vs `greedy`/`mgr`/`bk`). Both use the post-folding entailment
+  gate, so M1.2 does not treat that gate as an arm-level explanatory variable.
 
 ## 3. Encoding
 
-Feature encoding (identical across arms, per fixture), matching how the published tabular
-benchmarks construct BK (`ecai2024/ASP-ABAlearn_B/*.csv.bk.aba`, `ruleml2025/*.scratch.aba`):
+Feature encoding (identical across both arms, per fixture), matching the feature-BK
+construction used by the published ECAI tabular benchmarks:
 
 - rows are cases with numeric sample ids 1..N;
 - each categorical predictor (\(k = 3\) values) is encoded as one-hot value predicates
@@ -73,33 +68,23 @@ benchmarks construct BK (`ecai2024/ASP-ABAlearn_B/*.csv.bk.aba`, `ruleml2025/*.s
   positive class, \(E^-\) = the rest;
 - learning is driven by `E^+`/`E^-` only: the engine rote-learns the target atoms and
   folds them into intensional target rules (`t(A) :- xi_val_v(A)`), the same path the
-  shipped ECAI/RuleML tabular benchmarks use.
+  shipped ECAI tabular benchmarks use.
 
-**RuleML `domain/1` element.** The RuleML arm additionally emits the `domain/1` predicate
-that ships with `ruleml2025/*.scratch.aba`, for construction fidelity to that system:
-
-```prolog
-domain(default).
-domain(1). ... domain(N).
-```
-
-No default rule and no assumption/contrary are declared (that `domain(default)` element
-supports RASP-ABAlearn's incremental redress workflow, which M1.2 does **not** run — one
-shot only). The ECAI and AAMAS arms use feature-BK with no `domain/1`. The feature
-encoding is otherwise shared across all three arms so the comparison isolates the folding
-configuration (plus RuleML's `domain/1`). Validated in Stage 0/1.
+No default rule and no assumption/contrary are declared in the input. ECAI and AAMAS use
+the same feature encoding, so the comparison isolates their scoped configuration
+differences. Validated in Stage 0/1.
 
 ## 4. Fixture families
 
 All fixtures are minimal handcrafted categorical tables with \(k = 3\) values per
-predictor; \(p\) (number of predictors) is fixture-dependent. **Every fixture must declare
+predictor and two predictors (`x0`, `x1`). **Every fixture must declare
 its intended graph \(G\) (nodes, directed edges) and mechanism in three places: the
 fixture code (docstring + machine-readable `edges` metadata), the run config/record, and
 any findings `.tex`.**
 
 Expected outputs are pre-specified per cell before any run. All M1.2 fixtures are
 **coherent** tables with intensional expected rules (or a small rule set). Incoherent
-tables and defeasible expected outputs are **deferred** (Section 4.1).
+tables and defeasible expected outputs are outside this investigation.
 
 All five fixtures are minimal **3-variable** categorical tables (`x0, x1, x2`), target
 `x2`, positive class `x2 = 2`, with no duplicate rows.
@@ -139,12 +124,12 @@ Rationale per family:
 - **`m12_chain`** — chain topology; parent vs correlated-ancestor discrimination (parent
   is unique separator; ancestor associated but imperfect).
 
-**Grid size:** 3 arms × 5 fixtures = **15 cells**.
+**Grid size:** 2 arms × 5 fixtures = **10 cells**.
 
 Deliberately **out of scope** for M1.2 (decided at planning): σ/π order grids (M1.1
 established ordering as a failure mode; revisit in M1.3 only if implicated), positive-class
 sensitivity, support-vs-frequency designs, binary encodings, continuous data, incoherent
-tables (Section 4.1).
+tables.
 
 Exact tables are finalised at implementation and locked by Stage-0 validation checks
 (per family: row counts; declared \(G\) consistency; expected separator
@@ -164,17 +149,14 @@ outputs: `docs/experiments/qualitative/M1.2-config-comparison.md`; fixtures in
 - declared edges match fork topology (`x0 -> x1`, `x0 -> x2`);
 - no column has value set exactly {0,1} (bare-binary encoding guard).
 
-### 4.1 Deferred follow-up experiments (not in M1.2 grid)
+### 4.1 Items outside the M1.2 grid
 
-The following are explicitly **out of the M1.2 grid** but recorded here so they are not
-lost. Each should get its own experiment ID and plan when scheduled.
+The following is explicitly **out of the M1.2 grid** and would require its own experiment
+ID and plan if scheduled.
 
-| Deferred item | Planned keys / scope | Rationale | When |
+| Item | Scope | Rationale | When |
 |---------------|---------------------|-----------|------|
-| Incoherent tables (entailment-gate probe) | `m12_incoh_pos`, `m12_incoh_neg` | Minimal single-collision tables derived from `m12_sep`; positive vs negative collision sub-variants. Expected output is a **defeasible structure** (general rule + assumption + contrary aligned with colliding rows). This is where the **RuleML vs AAMAS post-folding entailment gate** difference (`post_folding_test_entailment(false)` vs default `true`) was originally predicted to diverge under brave semantics. | After M1.2, or as a dedicated follow-up experiment (e.g. `M12b_incoherent` or similar) |
-| RASP-ABAlearn redress workflow | incremental `aba_asp/5` sequence per `ruleml2025/*.goal` | Tests RASP-ABAlearn's distinctive incremental-redress protocol, not just its config file on a one-shot problem. Natural causal reading: learn targets sequentially, feeding each solution forward. | Near-term follow-up after M1.2 one-shot grid |
 | `ecai2024ALL_config.pl` | fold-all variant | Excluded from M1.2; flagged for later consideration. | TBD |
-| Graded incoherence severity | ladder of 1/2/3 colliding pairs | Dose-response on assumption count / termination; only if incoherent follow-up warrants it. | M1.3 or post-M1.2, if implicated |
 
 ## 5. Metrics and their role
 
@@ -189,23 +171,17 @@ Per cell, record:
 1. **Outcome class** (categorical, table-relative): `exact expected match` /
    `parent superset` / `misaligned assumption structure` / `non-parent rule` /
    `ancestor citation` (chain family) / `no solution` / `timeout` / `error`.
-   (`correct defeasible structure` is retained in the classifier for **deferred**
-   incoherent follow-up only; it is not an expected primary outcome class in the M1.2
-   grid.)
+   (`correct defeasible structure` is outside the M1.2 grid; it is not an expected
+   primary outcome class here.)
 2. **Parent-recovery F1** on the **body-scope** variable set (base variables in
    target-rule bodies; continuity with M1.1), plus the **framework-scope** variable set
    (base variables anywhere in the learned delta, contraries included) recorded as a
    second column. Divergence between the two sets is itself a qualitative flag (M1.1 cat3
    A/D put the parent in contraries only).
-3. **Two binary coverage flags**, derived from the existing coverage infrastructure:
-   `covers_all_pos` (every \(E^+\) atom covered) and `rejects_all_neg` (no \(E^-\) atom
-   covered). **Validity boundary (documented):** the existing coverage checks (`cov_py`
-   replay, `cov_pl` Prolog re-query) are exact and agree on assumption-free solutions; on
-   assumption-bearing solutions they bracket the truth (replay over-approximates by
-   ignoring assumption guards; re-query under-approximates because assumptions have no
-   defining clause in the solution file). The flags are computed from the coverage pass
-   with both sources recorded; on assumption-bearing solutions the qualitative
-   expected-structure comparison is authoritative.
+3. **ASP sample-coverage fractions:** `pos_covered` and `neg_rejected`, computed by brave
+   clingo checks against each learned `bk.sol.asp`. These replace the earlier Horn replay
+   flags; the qualitative expected-structure comparison remains authoritative for
+   intensional match.
 4. **Framework complexity:** number of learned rules, assumptions, contraries; max/mean
    body length. Minimality matters: more minimal solutions are preferred.
 5. **Trace line count** of `prolog.stdout`, as the reproducible runtime proxy (wall-clock
@@ -227,8 +203,7 @@ implementation work for this part.
    (`check_ic` is kept). `folding_steps` is **not** harmonised across arms: the ECAI
    config fixes `folding_steps(10)` and fidelity wins over harmonisation (recorded
    caveat).
-2. **BK writer extension** for the RuleML `domain/1` element (Section 3), on the RuleML
-   arm only; ECAI/AAMAS use plain feature-BK.
+2. **Shared feature-BK construction** for both scoped arms (Section 3).
 3. **Metrics/outcome-classifier adaptation** (Section 5).
 4. **Timeout:** `prolog_timeout_s: 60` for all cells. Small tabular data should not
    exceed this; any timeout is traced (what was the engine doing), not silently retried
@@ -241,9 +216,9 @@ implementation work for this part.
 | Stage | Content | Gate |
 |-------|---------|------|
 | 0 | **DONE (2026-07-08).** Fixtures (`causal/experiments/handcrafted_m12.py`) + Prolog-free validation checks (`causal/tests/test_m12_fixtures.py`, 59 tests, all PASS); expected outputs locked in `docs/experiments/qualitative/M1.2-config-comparison.md` before any learning run | all checks PASS ✓ |
-| 1 | **DONE (2026-07-08).** Config-consulting runner (`prolog_config`), feature-BK construction (+ RuleML `domain/1`), three arm YAMLs, and M12 summary side-car (`causal/experiments/m12_summary.py`) built + unit-tested (Prolog-free tests PASS); smoke test `M12_ecai2024`/`m12_sep` -> effective `listing(lopt/1)` matches `configs/ecai2024_config.pl` | options match config file ✓ |
-| 2 | **DONE (2026-07-09, commit `9123af7`).** Full grid on revised minimal fixtures (3 arms × 5 fixtures, `--no-resume`); 15/15 `solved`; `M12_summary.md` rebuilt. Exact-match detector: 2/15 (ECAI/fork, AAMAS/conj) | all cells produce classified outcomes ✓ |
-| 3 | Outcome matrix + per-cell expected-vs-learned comparison; qualitative inspection of every divergent cell | record complete |
+| 1 | **DONE (2026-07-08).** Config-consulting runner (`prolog_config`), shared feature-BK construction, two arm YAMLs, and M12 summary side-car (`causal/experiments/m12_summary.py`) built + unit-tested (Prolog-free tests PASS); smoke test `M12_ecai2024`/`m12_sep` -> effective `listing(lopt/1)` matches `configs/ecai2024_config.pl` | options match config file ✓ |
+| 2 | **DONE (2026-07-09, commit `9123af7`).** Scoped grid on revised minimal fixtures (2 arms × 5 fixtures, `--no-resume`); 10/10 `solved`; `M12_summary.md` rebuilt. Exact-match detector: 2/10 (ECAI/fork, AAMAS/conj) | all cells produce classified outcomes ✓ |
+| 3 | **DONE (2026-07-13).** Outcome matrix + per-cell expected-vs-learned comparison; qualitative inspection of every divergent cell | record complete ✓ |
 | 4 | Findings write-up (`.tex`); registers and claims ledger synced | Samuel review |
 
 Commands (Stage 2 form):
@@ -252,7 +227,6 @@ Commands (Stage 2 form):
 conda activate aba-asp
 cd "/Users/samuelwaugh/Desktop/Causal ABA Learning/aba_asp"
 python -m causal.experiments.run_grid --config causal/configs/experiments/M12_ecai2024.yaml --no-resume
-python -m causal.experiments.run_grid --config causal/configs/experiments/M12_ruleml2025.yaml --no-resume
 python -m causal.experiments.run_grid --config causal/configs/experiments/M12_aamas2025.yaml --no-resume
 ```
 
@@ -261,7 +235,7 @@ python -m causal.experiments.run_grid --config causal/configs/experiments/M12_aa
 | Artefact | Path |
 |----------|------|
 | Fixtures | `causal/experiments/handcrafted_m12.py` |
-| Arm configs | `causal/configs/experiments/M12_ecai2024.yaml`, `M12_ruleml2025.yaml`, `M12_aamas2025.yaml` (`grid.cell_dir: dgp`) |
+| Arm configs | `causal/configs/experiments/M12_ecai2024.yaml`, `M12_aamas2025.yaml` (`grid.cell_dir: dgp`) |
 | Grid outputs | `causal/outputs/aba_learning/grid/M12_<arm>/cells/<fixture>/` |
 | Experiment record | `docs/experiments/qualitative/M1.2-config-comparison.md` (from `docs/experiments/TEMPLATE.md`) |
 | Findings | `docs/report/findings/milestone1_part2_m12_findings.tex` |
@@ -274,10 +248,6 @@ python -m causal.experiments.run_grid --config causal/configs/experiments/M12_aa
 - All M1.2 fixtures are coherent; success is an intensional rule (or small rule set)
   matching the declared mechanism. Do not treat assumption-bearing solutions as success
   unless they match the pre-specified expected output for that fixture.
-- **Entailment-gate divergence (RuleML vs AAMAS)** was the main predicted difference
-  between the two greedy arms on minimally incoherent tables; those families are
-  **deferred** (Section 4.1). M1.2 must not claim to have tested that divergence unless
-  a follow-up experiment is run.
 - Divergence between arms on a fixture is the unit of finding: report *which* data
   property exposed it and *which* configuration difference plausibly drives it
   (mechanistic confirmation is M1.3's job, not M1.2's).
@@ -285,6 +255,5 @@ python -m causal.experiments.run_grid --config causal/configs/experiments/M12_aa
   (associated non-separator), distinct from `m12_sep` (isolated noise) and `m12_chain`
   (ancestor vs parent).
 - What M1.2 does **not** show: causal discovery; Russo-style Causal ABA behaviour;
-  assumption/entailment-gate behaviour on incoherent tables (deferred); performance of
-  the redress workflow (deferred); behaviour under cautious semantics; robustness to
-  representation order (established separately by M1.1).
+  behaviour under cautious semantics; robustness to representation order (established
+  separately by M1.1).

@@ -324,6 +324,10 @@ cov_pl_accuracy, cov_pl_pos, cov_pl_neg, cov_pl_tp, cov_pl_fp, cov_pl_tn, cov_pl
 # coverage gap (Prolog-aware − Python-Horn)
 cov_gap_accuracy, cov_gap_pos, cov_gap_neg
 
+# ASP answer-set coverage (brave entailment on bk.sol.asp)
+cov_asp_accuracy, cov_asp_pos, cov_asp_neg, cov_asp_tp, cov_asp_fp, cov_asp_tn, cov_asp_fn,
+cov_asp_n_pos, cov_asp_n_neg
+
 # parser sanity
 parser_unread_lines, sol_file_bytes
 

@@ -62,10 +62,10 @@ recovery characterising what unguided ABA Learning does before causal guidance i
 **Milestone status (June 2026):** Milestone 1 Part 1 (M11 / m1.1) is **closed** (Stages 0–7).
 Evidence: `docs/experiments/qualitative/M1.1-parent-position.md`;
 supervisor findings `docs/report/findings/milestone1_part1_m11_findings.tex`.
-**Next:** Milestone 1 Part 2 (M1.2) — comparison of the three published ABA Learning
-configurations (ASP-ABAlearnB, RASP-ABAlearn, Greedy ABA Learning) on divergence-designed
-categorical fixtures; then M1.3 — failure-mode taxonomy (trace mechanism + L1/L2/L3
-attribution). Milestone 1 is categorical-only; no binary-only or continuous work.
+**Milestone 1 Part 2 (M1.2):** analysed — ASP-ABAlearnB and Greedy ABA Learning compared
+on five divergence-designed categorical fixtures (10 cells). **Next:** M1.3 failure-mode
+taxonomy (trace mechanism + L1/L2/L3 attribution). Milestone 1 is categorical-only; no
+binary-only or continuous work.
 
 ## Source priority
 

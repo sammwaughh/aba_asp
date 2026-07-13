@@ -33,7 +33,7 @@ The earlier n=100 scaled attempt was cut and is not part of the canonical experi
 | QI-002 greedy | — | Greedy-folding rerun of QI-002 (minimal truth-table baseline) | analysed |
 | QI-004 greedy | — | Greedy-folding rerun of QI-004 (scaled noisy n=20) | analysed |
 | M11 | — | m1.1 Parent-position and representation-order control | analysed (Stages 0–7; ablations + greedy comparator) |
-| M12 | — | m1.2 Published-configuration comparison (ASP-ABAlearnB / RASP-ABAlearn / Greedy ABA Learning) | run (Stages 0–2 complete: fixtures + checks + locked expected outputs; runner/BK/arm-configs/summary; 15-cell grid all solved) |
+| M12 | — | m1.2 Published-configuration comparison (ASP-ABAlearnB / Greedy ABA Learning) | analysed (Stages 0–3: 10-cell grid + full cell inspection / failure-mode taxonomy) |
 | M13 | — | m1.3 Failure-mode investigation (trace mechanism + L1/L2/L3 attribution) | not started |
 
 ## Template
@@ -230,37 +230,37 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
 - Failure modes: silent column canonicalisation voiding sigma (not observed); no-solution; parser/normalisation discrepancy; implementation/artefact error; cov_py/cov_pl disagreement on assumption-based rules (cat3 A/D flagged).
 - Cursor implementation plan / prompt: grid cell_dir naming implemented (`grid.cell_dir: dgp` on M11 config).
 - Commit hash / run artefact path: Stage-0 validation at `causal/outputs/m11_parent_position/validation/`; learning grid at `causal/outputs/aba_learning/grid/M11_parent_position/cells/<dgp>/`; ablations at `M11_ablations/`.
-- Report relevance: interim Experimentation / Progress (Milestone 1 Part 1 — analysed, Stages 0–7). M1.2 published-configuration comparison next.
+- Report relevance: interim Experimentation / Progress (Milestone 1 Part 1 — analysed, Stages 0–7). The subsequent M1.2 two-config comparison is also analysed.
 
 ### M12 — m1.2 Published-configuration comparison
 
-- Status: run — Stage 2 complete (2026-07-09, commit `9123af7`). Stage 0: fixtures validated (Prolog-free checks PASS; revised row counts sep=9, conj=9, disj=9, fork=3, chain=6), expected outputs locked. Stage 1: config-consulting runner + feature-BK construction (+ RuleML `domain/1`) + three arm YAMLs + summary side-car (Prolog-free tests PASS), smoke-tested. Stage 2: 15/15 cells `solved`; side-car matrix `M12_summary.{md,json}`; exact-match detector 2/15 (ECAI/fork, AAMAS/conj). Stages 3–4 not started.
+- Status: analysed — Stage 2 complete (2026-07-09, commit `9123af7`); Stage 3 cell inspection complete (2026-07-13). Scoped grid: 10/10 `solved`; exact-match 2/10; ASP sample coverage 10/10. Stage 3: FM1 and FM3–FM7 failure-mode taxonomy (FM2 N/A) + next-step ablations for M1.3. Stage 4 findings tex not started.
 - Planning doc: docs/research/milestone_plans/milestone1_part2/milestone1_part2_config_comparison.md.
-- Record: docs/experiments/qualitative/M1.2-config-comparison.md (Stage-0 + Stage-1 sections filled: exact tables, E+/E-, locked expected outputs, validation + smoke commands/results, effective-options block).
+- Record: docs/experiments/qualitative/M1.2-config-comparison.md; Stage-3 inspection: docs/experiments/qualitative/M1.2-config-comparison-cell-inspection.md.
 - Stage-0 artefacts: causal/experiments/handcrafted_m12.py (fixtures m12_sep / m12_conj / m12_disj / m12_fork / m12_chain); causal/tests/test_m12_fixtures.py (validation checks); registration in causal/experiments/handcrafted.py.
-- Stage-1 artefacts: causal/run_aba_asp.py (`prolog_config` + `_build_learning_program`); causal/experiments/run_grid.py (thread `prolog_config`/`domain_predicate`); causal/argcausaldisco_integration.py (`domain_predicate` BK block: RuleML `domain/1`); causal/configs/experiments/M12_{ecai2024,ruleml2025,aamas2025}.yaml; causal/experiments/m12_summary.py (side-car); tests test_m12_configs.py / test_m12_summary.py / test_runner_program.py + extended test_runner_stage2.py.
-- Stage-2 artefacts: causal/outputs/aba_learning/grid/M12_{ecai2024,ruleml2025,aamas2025}/ (cells/<fixture>/ via `grid.cell_dir: dgp`) + M12_summary.{md,json} — 2026-07-09 rerun on revised minimal fixtures (commit `9123af7`).
+- Stage-1 artefacts: causal/run_aba_asp.py (`prolog_config` + `_build_learning_program`); causal/experiments/run_grid.py (thread `prolog_config`); causal/argcausaldisco_integration.py (shared feature-BK generation); causal/configs/experiments/M12_{ecai2024,aamas2025}.yaml; causal/experiments/m12_summary.py (side-car); tests test_m12_configs.py / test_m12_summary.py / test_runner_program.py + extended test_runner_stage2.py.
+- Stage-2 artefacts: causal/outputs/aba_learning/grid/M12_{ecai2024,aamas2025}/ (cells/<fixture>/ via `grid.cell_dir: dgp`) + M12_summary.{md,json} — 2026-07-09 rerun on revised minimal fixtures (commit `9123af7`).
 - Fork design note: m12_fork uses the deterministic two-child fork (x1 := 2 if x0=1 else 0; x2 := 2 if x0=2 else 0; three distinct rows, one each = 3 rows); x1's alphabet is {0,2} to stay on the value-predicate encoding path.
-- Research question: for a fixed encoding of small categorical tables (each with a declared graph G, mechanism, and pre-specified expected learned output), how do ASP-ABAlearnB (`configs/ecai2024_config.pl`), RASP-ABAlearn (`ruleml2025/ruleml2025_config.pl`, one-shot; redress workflow not exercised), and Greedy ABA Learning (`configs/aamas2025_config.pl`) differ in whether the expected output is learned, the structural class of what is learned instead, and which data properties expose divergence?
-- Theoretical motivation: Milestone 1's goal is a report-ready account of when and how unguided ABA Learning recovers mechanism-aligned rules; comparing the published configurations (rather than ad-hoc option hybrids) anchors every observed divergence to the backing literature (ECAI 2024, RuleML 2025, AAMAS 2025).
-- Relation to ABA Learning: the inherited engine run under its shipped configuration files, consulted verbatim (brave mode, `check_ic` kept, `asm_intro(relto)` in all arms); feature-BK + E+/E- construction (matches the shipped ECAI/RuleML tabular benchmarks), with the RuleML arm additionally emitting the `domain/1` element from `ruleml2025/*.scratch.aba`.
+- Research question: for a fixed encoding of small categorical tables (each with a declared graph G, mechanism, and pre-specified expected learned output), how do ASP-ABAlearnB (`configs/ecai2024_config.pl`) and Greedy ABA Learning (`configs/aamas2025_config.pl`) differ in whether the expected output is learned, the structural class of what is learned instead, and which data properties expose divergence?
+- Theoretical motivation: Milestone 1's goal is a report-ready account of when and how unguided ABA Learning recovers mechanism-aligned rules; comparing the two scoped published configurations (rather than ad-hoc option hybrids) anchors the observed divergence to the ECAI 2024 and AAMAS 2025 systems.
+- Relation to ABA Learning: the inherited engine runs under the two shipped configuration files, consulted verbatim (brave mode, `check_ic` kept, `asm_intro(relto)` in both arms); both use the shared feature-BK + E+/E- construction.
 - Relation to Causal ABA: does not exercise arr/noe/indep, d-separation, or stable-extension-as-DAG. Mechanism-aligned rule recovery only; not causal discovery.
-- Code path: causal/experiments/handcrafted_m12.py (fixtures); runner consults a `prolog_config` .pl file verbatim (done, Stage 1); feature-BK construction incl. RuleML `domain/1` (done); M12 metric side-car causal/experiments/m12_summary.py (done); timeout 60 s.
+- Code path: causal/experiments/handcrafted_m12.py (fixtures); runner consults a `prolog_config` .pl file verbatim (done, Stage 1); shared feature-BK construction (done); M12 metric side-car causal/experiments/m12_summary.py (done); timeout 60 s.
 - Dataset / DGP: five minimal 3-variable (x0,x1,x2) categorical fixtures, target x2, positive x2=2, no duplicate rows: separator anchor (9 rows, x2:=x1, x0 isolated), conjunctive collider (9-row factorial over (x0,x1), x2:=min(x0,x1), single positive), disjunctive collider (twin of conj, x2:=max(x0,x1), 5 pos/4 neg), fork (correlated-sibling confound, 3 deterministic rows, single positive), correlated-ancestor chain (6 rows; P(pos|x0)=0, 1/2, 1/2).
 - Target variable(s): fixture-designated target, excluded from feature BK; one-vs-rest positive class.
-- Metrics (at-a-glance divergence detectors only; qualitative expected-vs-learned comparison is the instrument): table-relative outcome class; body-scope parent F1 + framework-scope variable set; binary flags covers_all_pos / rejects_all_neg from the existing coverage infrastructure (approximate on assumption-bearing solutions — documented validity boundary); framework complexity (rules/assumptions/contraries/body length); prolog.stdout line count as runtime proxy.
-- Baseline / comparator: the three arms against each other, per fixture.
+- Metrics (at-a-glance divergence detectors only; qualitative expected-vs-learned comparison is the instrument): table-relative outcome class; body-scope parent F1 + framework-scope variable set; ASP `pos_covered` / `neg_rejected` fractions; framework complexity (rules/assumptions/contraries/body length); prolog.stdout line count as runtime proxy.
+- Baseline / comparator: the two arms against each other, per fixture.
 - Expected result: not asserted; per-cell expected outputs pre-specified in the plan/record before any run.
-- Interpretation rule: success per cell = learned framework matches the pre-specified expected output up to harmless syntactic variation (all M1.2 fixtures are coherent intensional targets). Divergence between arms is the unit of finding; mechanistic confirmation is M1.3's job. Incoherent-table entailment-gate probe (`m12_incoh_pos` / `m12_incoh_neg`) and RASP redress workflow are deferred (M1.2 plan Section 4.1).
+- Interpretation rule: success per cell = learned framework matches the pre-specified expected output up to harmless syntactic variation (all M1.2 fixtures are coherent intensional targets). Divergence between the scoped arms is the unit of finding; mechanistic confirmation is M1.3's job.
 - Failure modes: parent superset, misaligned assumption structure, non-parent rule, ancestor citation (chain family), no solution, timeout, error; config-consult or BK-encoding issues.
 - Report relevance: interim Experimentation / Progress (Milestone 1 Part 2).
 
 ### M13 — m1.3 Failure-mode investigation
 
-- Status: not started (depends on the M1.2 outcome matrix).
+- Status: not started; M1.2 outcome matrix and cell inspection are available.
 - Planning doc: docs/research/milestone_plans/milestone1_part3/milestone1_part3_failure_modes.md.
 - Planned record: docs/experiments/qualitative/M1.3-failure-modes.md.
 - Research question: for each failure or divergence class observed in M1.2, what is the exact trace-level mechanism, at which level does the cause live (L1 paradigm / L2 published variant / L3 implementation or encoding), and what does the backing literature say about it?
-- Method: mandatory trace-level mechanistic account per failure mode (M1.1 Stage-4 discipline); L1/L2/L3 attribution with matching evidence standards; literature mapping for L1/L2. Targeted falsification ablations permitted (e.g. `asm_intro(sechk)` on an implicated cell; graded incoherence severity), not promised.
+- Method: mandatory trace-level mechanistic account per failure mode (M1.1 Stage-4 discipline); L1/L2/L3 attribution with matching evidence standards; literature mapping for L1/L2. Targeted falsification ablations permitted (e.g. `asm_intro(sechk)` on an implicated ECAI cell or folding-mode/selection probes for disjunctive compression), not promised.
 - Relation to Causal ABA: none exercised; the deliverable (when and how mechanism-aligned rules cannot be learned) is the requirements input for the Milestone 2 Causal-ABA-guided bridge.
 - Report relevance: interim Experimentation / Progress (Milestone 1 Part 3).

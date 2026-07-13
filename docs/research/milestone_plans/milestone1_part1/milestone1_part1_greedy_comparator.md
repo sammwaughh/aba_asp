@@ -13,7 +13,9 @@ Milestone 1 Part 1 (m1.1) is **`analysed`** for non-deterministic folding (`fold
 
 Stage 7 asks a **narrow, separate question**: on the **same** eight target-mechanism cells, with **identical** data and examples, does switching only `folding_mode` to **greedy** change learnt rules or metamorphic verdicts?
 
-This is an **m1.1 addendum**, not Milestone 1 Part 2 (M1.2). Part 2 will compare greedy and nd more broadly (QI fixtures, runtime, strategy default). Stage 7 provides the **control-grid anchor** for Part 2 without reopening the nd mechanism closure.
+This is an **m1.1 addendum**, not Milestone 1 Part 2 (M1.2). Part 2 subsequently compared
+the scoped ECAI and AAMAS configurations over five different fixtures. Stage 7 provides
+control-grid context without reopening the nd mechanism closure.
 
 Supervisor guidance (June 2026): nd vs greedy is **not sufficient** to explain cat3 σ failure. An informal greedy smoke test on m1.1 returned an outcome **materially different from both** nd cat3 A (assumption triple) and nd cat3 B (parent singleton). That smoke test is **not formally recorded** and must not be cited until reproduced under the standard grid pipeline.
 
@@ -217,10 +219,10 @@ After execution, update in order:
 
 ## Relationship to M1.2 (Part 2)
 
-| Stage 7 (this plan) | Full M1.2 |
-|---------------------|-----------|
-| Same 8 cells, one lever | QI grids + broader motifs |
-| Closes M11-C-004 on control grid | Strategy default (C-006 scope) |
-| May show greedy ≠ nd on cat3 A | When greedy helps/hurts across tasks |
+| Stage 7 (this plan) | M1.2 |
+|---------------------|------|
+| Same 8 cells, one lever | Two shipped configs × five divergence fixtures |
+| Closes M11-C-004 on control grid | Compares pre-specified expected vs learned rules |
+| Shows greedy ≠ nd on cat3 A | Records ECAI/AAMAS divergence without selecting a default |
 
 Stage 7 **feeds** Part 2; it does **not** substitute for it.

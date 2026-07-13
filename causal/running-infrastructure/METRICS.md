@@ -151,31 +151,51 @@ Unlike rule-level `body_parent_precision`, `var_parent_precision` penalises
 is the strict full-success flag and aggregates naturally into a clean-recovery
 rate across cells.
 
-### 3.5 Coverage (Python-Horn and Prolog-aware)
+### 3.5 Coverage (Python-Horn, Prolog-aware, and ASP answer-set)
 
-Both definitions are reported, plus the gap between them (the gap reflects ABAF
-assumption machinery that the plain Horn check ignores). Given `E+` and `E-`:
+Three definitions are reported. Given `E+` and `E-`:
 
 - **Python-Horn coverage** (`python_horn_coverage`): treats δ-rules as plain Horn
   clauses over the BK feature map and computes `TP/FP/TN/FN`, `accuracy`,
   `pos_coverage`, `neg_coverage`. Keys: `cov_py_accuracy`, `cov_py_pos`,
-  `cov_py_neg`, `cov_py_tp/fp/tn/fn`.
+  `cov_py_neg`, `cov_py_tp/fp/tn/fn`. Body literals whose functor starts with
+  `alpha` / `c_alpha` are **skipped**, so this layer is approximate and
+  **invalid as an ABA coverage readout** whenever the learned theory uses
+  assumptions (it systematically over-accepts negatives on assumption-bearing
+  solutions such as ECAI `m12_sep`).
 - **Prolog-aware coverage** (`prolog_aware_coverage`): queries each example
-  against `bk.sol.aba` (or `bk.aba` when there is no solution) through SWI-Prolog,
-  respecting assumptions and contraries, time-boxed per query by `query_timeout_s`
-  (default 5 s). Keys: `cov_pl_accuracy`, `cov_pl_pos`, `cov_pl_neg`,
-  `cov_pl_tp/fp/tn/fn`.
-- **Gap**: `cov_gap_accuracy/pos/neg = cov_pl_* − cov_py_*`.
+  against `bk.sol.aba` (or `bk.aba` when there is no solution) through SWI-Prolog
+  `call/1`, time-boxed per query by `query_timeout_s` (default 5 s). Keys:
+  `cov_pl_accuracy`, `cov_pl_pos`, `cov_pl_neg`, `cov_pl_tp/fp/tn/fn`. This is
+  **not** ABA/ASP entailment: assumption atoms are not ordinary Prolog facts, so
+  bare `call(x2(id))` under-reports positives on assumption-bearing solutions.
+- **ASP answer-set coverage** (`asp_answer_set_coverage` in
+  `causal/asp_coverage.py`): authoritative post-hoc coverage for M1.2. Runs
+  clingo on the cell’s `bk.sol.asp` (assumptions already compiled as
+  `alpha :- not c_alpha, …`). An example atom `T(id)` is **bravely entailed**
+  iff `clingo(P ∪ {:- not T(id).})` is SAT. Then
+  `cov_asp_pos = TP/|E+|` and `cov_asp_neg = TN/|E−|` (TN = negatives *not*
+  bravely entailed). Also stores integer counts `cov_asp_n_pos` /
+  `cov_asp_n_neg` for `k/n` display. Does **not** use leftover `asp.clingo`
+  scratch files (those include baked E+/E− ICs from the last learning check).
+- **Gap**: `cov_gap_accuracy/pos/neg = cov_pl_* − cov_py_*` (diagnostic only;
+  does not involve `cov_asp_*`).
 
 When `outcome ≠ solved`, Python-Horn coverage is computed against an empty δ-set
-(so `cov_py_pos = 0`, `cov_py_neg = 1` typically), and Prolog-aware coverage
-queries `bk.aba`. Both remain meaningful and are recorded.
+(so `cov_py_pos = 0`, `cov_py_neg = 1` typically), Prolog-aware coverage
+queries `bk.aba`, and ASP coverage is NaN with reason `not_solved` /
+`sol_asp_missing`.
 
 **Runner integration.** `query_timeout_s` (YAML `defaults`) flows through
-`CellInputs` into `prolog_aware_coverage`. `prolog_timeout_s` caps the *learning*
-subprocess only (`INFRA.md §4.4`). With `--skip-prolog-coverage`, the
-Prolog-aware pass is skipped and all `cov_pl_*` / `cov_gap_*` are NaN with reason
-`grid_skip_prolog_coverage`.
+`CellInputs` into both Prolog-aware and ASP coverage. `prolog_timeout_s` caps
+the *learning* subprocess only (`INFRA.md §4.4`). With `--skip-prolog-coverage`,
+the Prolog-aware pass is skipped and all `cov_pl_*` / `cov_gap_*` are NaN with
+reason `grid_skip_prolog_coverage`; ASP coverage is still computed when
+`bk.sol.asp` exists.
+
+**M1.2 summary.** `python -m causal.experiments.m12_summary` reports
+`pos_covered` / `neg_rejected` as `k/n` fractions from `cov_asp_*` (not from
+Horn Y/N flags).
 
 ### 3.6 Parser sanity
 
@@ -241,7 +261,7 @@ class CellInputs:
     outcome: str
     failure_reason: str | None
     folding_tokens_used: int
-    query_timeout_s: float = 5.0           # per-example cap for prolog_aware_coverage
+    query_timeout_s: float = 5.0           # per-example cap for prolog_aware + ASP coverage
     skip_prolog_coverage: bool = False      # when True, cov_pl_* are placeholder NaN
 
 def compute_cell_metrics(inp: CellInputs) -> dict: ...   # full panel (Section 3)
@@ -256,6 +276,8 @@ def parse_bk_feature_map(bk_path: Path) -> dict[int, frozenset[str]]: ...
 def body_level_stats(target, learned, ground_truth) -> dict: ...
 def python_horn_coverage(bk_path, learned, pos, neg, *, target) -> dict: ...
 def prolog_aware_coverage(sol_path, bk_path, pos, neg, *, timeout_s=5.0) -> dict: ...
+# causal/asp_coverage.py
+def asp_answer_set_coverage(sol_asp_path, pos, neg, *, timeout_s=5.0) -> dict: ...
 def outcome_classifier(stdout, sol_path, learned_rules, wall_clock_s, timeout_s, examples_ok) -> tuple[str, str|None]: ...
 def parse_folding_tokens_used(stdout: str) -> int: ...
 ```
@@ -304,7 +326,8 @@ Enforced by `test_metrics.py` and the implementation:
 
 1. **Range**: every ratio metric is in [0,1] ∪ {NaN}.
 2. **Coverage balance**: `cov_py_tp + cov_py_fn = |E+|` and
-   `cov_py_tn + cov_py_fp = |E−|` (same for the Prolog-aware totals).
+   `cov_py_tn + cov_py_fp = |E−|` (same for the Prolog-aware and ASP totals).
 3. **No silent NaNs**: every NaN float in `metrics.json` has a matching
    `<metric>_nan_reason` (e.g. `no_nontrivial_rules`, `no_parents`,
-   `grid_skip_prolog_coverage`, `implied_skeleton_not_aggregated`).
+   `grid_skip_prolog_coverage`, `sol_asp_missing`, `clingo_unavailable`,
+   `implied_skeleton_not_aggregated`).

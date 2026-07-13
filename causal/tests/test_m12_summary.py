@@ -2,8 +2,9 @@
 
 Fabricates a cell directory (metrics.json + prolog.stdout with a listing(lopt/1)
 block + bk.aba/bk.sol.aba) and asserts the summary computes framework-scope vars,
-the covers/rejects flags, trace-line count, effective-option provenance, and the
-exact-match check. No swipl/clingo.
+ASP coverage fractions, trace-line count, effective-option provenance, and the
+exact-match check. No swipl/clingo required when ``cov_asp_*`` counts are present
+in ``metrics.json``.
 """
 
 from __future__ import annotations
@@ -77,6 +78,14 @@ def _write_cell(cell_dir: Path, *, target: str, learned_rule: str) -> None:
         "mean_body_length": 1.0,
         "cov_py_pos": 1.0,
         "cov_py_neg": 1.0,
+        "cov_asp_tp": 3,
+        "cov_asp_tn": 6,
+        "cov_asp_fp": 0,
+        "cov_asp_fn": 0,
+        "cov_asp_n_pos": 3,
+        "cov_asp_n_neg": 6,
+        "cov_asp_pos": 1.0,
+        "cov_asp_neg": 1.0,
     }
     (cell_dir / "metrics.json").write_text(json.dumps(metrics), encoding="utf-8")
 
@@ -106,8 +115,8 @@ def test_summarize_cell_computes_detectors(tmp_path: Path) -> None:
     assert summary.target == "x2"
     assert summary.outcome == "solved"
     assert summary.exact_match is True
-    assert summary.covers_all_pos is True
-    assert summary.rejects_all_neg is True
+    assert summary.pos_covered == "3/3"
+    assert summary.neg_rejected == "6/6"
     assert summary.body_scope_vars == ("x1",)
     assert summary.framework_scope_vars == ("x1",)
     assert summary.n_delta_rules == 1
@@ -152,19 +161,15 @@ def test_canonicalize_ignores_variable_names() -> None:
 
 
 def test_m12_delta_excludes_echoed_bk_rules(tmp_path: Path) -> None:
-    """Echoed feature/domain BK clauses must NOT count as learned delta rules."""
+    """Echoed feature BK clauses must NOT count as learned delta rules."""
     cell = tmp_path / "cell"
     cell.mkdir()
     bk = [
         "x1_val_2(A) :- A=3.",
-        "domain(default).",
-        "domain(1).",
     ]
     sol = [
         # feature rule echoed with A -> B (must be subtracted):
         "x1_val_2(B) :- B=3.",
-        "domain(default).",
-        "domain(1).",
         # a genuinely learned rule:
         "x2(A) :- x1_val_2(A).",
     ]
@@ -173,5 +178,4 @@ def test_m12_delta_excludes_echoed_bk_rules(tmp_path: Path) -> None:
 
     delta = m12_delta_rules(cell / "bk.sol.aba")
     assert "x2(A) :- x1_val_2(A)." in delta
-    assert not any("domain" in r for r in delta)
     assert not any(r.startswith("x1_val_2") for r in delta)

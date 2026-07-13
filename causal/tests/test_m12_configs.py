@@ -1,9 +1,9 @@
-"""Prolog-free tests for the three M1.2 published-arm configs.
+"""Prolog-free tests for the two M1.2 published-arm configs.
 
 Each arm YAML consults one shipped ``.pl`` config verbatim (via ``prolog_config``)
-over feature-BK; the RuleML arm additionally sets ``domain_predicate``. These tests
-assert the configs load, expand to the five M1.2 fixtures (target x2), and reference
-existing config files. No ABA Learning (no swipl/clingo).
+over feature-BK. These tests assert the configs load, expand to the five M1.2
+fixtures (target x2), and reference existing config files. No ABA Learning
+(no swipl/clingo).
 """
 
 from __future__ import annotations
@@ -23,7 +23,6 @@ _EXP_DIR = _REPO_ROOT / "causal/configs/experiments"
 
 _ARMS = {
     "M12_ecai2024": "configs/ecai2024_config.pl",
-    "M12_ruleml2025": "ruleml2025/ruleml2025_config.pl",
     "M12_aamas2025": "configs/aamas2025_config.pl",
 }
 
@@ -57,12 +56,6 @@ def test_arm_defaults_prolog_config_and_bk_construction(arm: str) -> None:
     cfg = load_config(_EXP_DIR / f"{arm}.yaml")
     assert cfg.defaults.get("prolog_config") == _ARMS[arm]
     assert float(cfg.defaults.get("prolog_timeout_s")) == 60.0
-    # Feature-BK construction: only the RuleML arm emits the domain/1 element.
-    if arm == "M12_ruleml2025":
-        assert cfg.defaults.get("domain_predicate") is True
-    else:
-        assert cfg.defaults.get("domain_predicate", False) is False
-    # The removed default_assumption key must not appear on any arm.
     assert "default_assumption" not in cfg.defaults
     # The arms consult a config verbatim, so folding options are NOT set here.
     assert "folding_mode" not in cfg.defaults

@@ -6,7 +6,7 @@
 **Findings output:** `docs/report/findings/milestone1_part1_m11_findings.tex` (§Ablations + updated closure)  
 **Status:** executed — 2026-06-22 (ABL-100–107; ABL-106 skipped)  
 **Purpose:** Close m1.1 by **targeted, falsification-first** tests of the Stage 4 mechanistic claims.  
-**Out of scope:** Full M1.2 greedy grid (deferred comparator); Russo-style Causal ABA; new DGPs beyond controlled interventions on m1.1 cat3 cells.
+**Out of scope:** the subsequent M1.2 configuration comparison; Russo-style Causal ABA; new DGPs beyond controlled interventions on m1.1 cat3 cells.
 
 ---
 
@@ -299,9 +299,9 @@ m1.1 moved to **`analysed`** when **all** of (June 2026 — **all met**):
 8. `claims_ledger.md` — M11-C-003/006 updated; M11-C-007 added. — **met**
 9. `experiments_summary.md` + `experiment_register.md` synced. — **met**
 
-**M1.2:** unblocked; m1.1 Stage 7 greedy comparator complete (June 2026). m1.1 **closed**.
-*(July 2026: M1.2 has since been re-scoped from a greedy grid to the published-configuration
-comparison — see `../milestone1_part2/milestone1_part2_config_comparison.md`.)*
+**M1.2:** two-config comparison subsequently completed through Stage 3. m1.1 Stage 7
+greedy comparator complete (June 2026); m1.1 **closed**. See
+`../milestone1_part2/milestone1_part2_config_comparison.md`.
 
 ---
 

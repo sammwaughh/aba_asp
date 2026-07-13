@@ -204,7 +204,7 @@ Full per-cell table: `QI004_scaled_motifs_n20/run_log.md`; per-cell rules/metric
   coverage even in the solved cell; coverage is behavioural, not structural.
 - **Continuous handling.** Continuous variables are binned (3 uniform bins) before learning;
   recovery is over bin predicates.
-- **Determinism / breadth.** Single seed (`seed: [0]`); deterministic fixtures; greedy-vs-nd on QI fixtures covered by QI-* greedy reruns. **M1.1 (M11) closed** (Stages 0–7): nd mechanism + Stage 7 greedy anchor on the eight-cell control grid. **M1.2** extends nd vs greedy across QI fixtures and strategy default. Per-cell `interpretation.md` for QI-001–QI-003 remain
+- **Determinism / breadth.** Single seed (`seed: [0]`); deterministic fixtures; greedy-vs-nd on QI fixtures covered by QI-* greedy reruns. **M1.1 (M11) closed** (Stages 0–7): nd mechanism + Stage 7 greedy anchor on the eight-cell control grid. **M1.2** compares the shipped ECAI and AAMAS configurations over five divergence-designed categorical fixtures (10 cells; Stages 0–3 analysed). Per-cell `interpretation.md` for QI-001–QI-003 remain
   templates; QI-004's is filled from the summary.
 
 ---
@@ -246,7 +246,7 @@ Full per-cell table: `QI004_scaled_motifs_n20/run_log.md`; per-cell rules/metric
   not empirically broken.
 - **Limitations.** Implementation ≠ Causal ABA; predictor-set not oriented edges; binary
   encoding limitation; Prolog scaling limits; continuous binning; single seed; exploratory.
-- **Decision for next work.** M1.1 (M11) **closed** (`analysed`, Stages 0–7): parent-role / representation-order under nd with ablation-supported cat3 σ account; Stage 7 greedy comparator recorded. **Next: M1.2** (re-scoped July 2026) — published-configuration comparison (ASP-ABAlearnB / RASP-ABAlearn / Greedy ABA Learning) on divergence-designed categorical fixtures; plan `docs/research/milestone_plans/milestone1_part2/milestone1_part2_config_comparison.md`. Candidate design changes recorded
+- **Decision for next work.** M1.1 (M11) **closed** (`analysed`, Stages 0–7): parent-role / representation-order under nd with ablation-supported cat3 σ account; Stage 7 greedy comparator recorded. **M1.2 analysed** (Stages 0–3): ASP-ABAlearnB and Greedy ABA Learning on five divergence-designed categorical fixtures (10 cells). **Next: M1.3** trace-level failure-mode attribution. Candidate design changes recorded
   but deferred: binary encoding fix; intermediate `n` / more positive examples.
 
 ---

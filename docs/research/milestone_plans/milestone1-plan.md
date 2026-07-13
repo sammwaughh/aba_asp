@@ -34,8 +34,7 @@ Framing rules for the whole milestone:
 - **No binary-only fixtures.** The binary positive-only encoding gives each row a single
   candidate fold partner per variable and hides the interesting phenomena; categorical-3
   contains the mechanism classes of interest.
-- The number of predictor variables \(p\) is fixture-dependent (most fixtures use
-  \(p = 2\); the conjunctive family needs \(p = 3\)).
+- The M1.2 fixtures use two predictors (`x0`, `x1`) and target `x2`.
 
 ## Working Method
 
@@ -102,28 +101,25 @@ implicated in new failures.
 ## Part 2: Published-Configuration Comparison (M1.2)
 
 Planning document: [`milestone1_part2/milestone1_part2_config_comparison.md`](milestone1_part2/milestone1_part2_config_comparison.md)
-**Status:** `planned`
+**Status:** `analysed` (Stages 0–3; 10-cell scoped grid and inspection complete)
 
-Direct comparison of the three published ABA Learning configurations shipped with the
+Direct comparison of the two scoped published ABA Learning configurations shipped with the
 inherited engine, run one-shot on shared handcrafted categorical fixtures designed to
 expose their divergence:
 
 | Arm | Config file | Published system |
 |-----|-------------|------------------|
 | ECAI | `configs/ecai2024_config.pl` | ASP-ABAlearnB (De Angelis, Proietti & Toni, ECAI 2024) |
-| RuleML | `ruleml2025/ruleml2025_config.pl` | RASP-ABAlearn (De Angelis, Proietti & Toni, RuleML 2025) |
 | AAMAS | `configs/aamas2025_config.pl` | Greedy ABA Learning (De Angelis, Proietti & Toni, AAMAS 2025) |
 
 Fixture families are minimal categorical tables, each with a declared graph \(G\),
 mechanism, and pre-specified expected learned output: a separator anchor, conjunctive and
 disjunctive **mechanisms on a collider**, a **fork** (correlated-sibling confound), and a
-correlated-ancestor chain. Five families × three arms = **15 cells**. Minimally
-incoherent tables (originally planned to probe the RuleML vs AAMAS entailment gate) and
-the RASP redress workflow are **deferred** follow-ups (see Part 2 plan Section 4.1).
+correlated-ancestor chain. Five families × two arms = **10 cells**.
 
 The intended outcome is a write-up clearly reporting, per configuration and per fixture
 family, whether the expected mechanism-aligned output is learned, what is learned
-instead, and which divergences between the three systems the data exposes.
+instead, and which divergences between the two systems the data exposes.
 
 ## Part 3: Failure-Mode Investigation (M1.3)
 
@@ -155,10 +151,10 @@ After Parts 2–3, consolidate the `.tex` findings into a concise Milestone 1 co
 addressing:
 
 1. when unguided ABA Learning recovers mechanism-aligned rules on categorical tables;
-2. how the three published configurations differ, and on which data properties;
+2. how the two scoped published configurations differ, and on which data properties;
 3. the failure-mode taxonomy, with each mode's trace-level mechanism and attribution;
 4. which findings motivate Causal ABA-style guidance in Milestone 2, and which are
    pipeline fixes.
 
-**Current progress:** Part 1 **closed** (Stages 0–7). Part 2 `planned`. Part 3 not
-started.
+**Current progress:** Part 1 **closed** (Stages 0–7). Part 2 **analysed** (Stages 0–3).
+Part 3 not started.

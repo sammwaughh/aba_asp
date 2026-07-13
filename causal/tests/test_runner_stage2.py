@@ -93,39 +93,8 @@ def _handcrafted_cell(source: str, target: str) -> CellSpec:
     )
 
 
-@pytest.mark.parametrize("source,target,n", [("m12_sep", "x2", 9), ("m12_conj", "x2", 9)])
-def test_stage2_domain_predicate_block_present(
-    source: str, target: str, n: int, tmp_path: Path
-) -> None:
-    cell = _handcrafted_cell(source, target)
-    out = execute_cell_stage2(
-        cell,
-        tmp_path / source,
-        graph_type="handcrafted_table",
-        bins=3,
-        bin_strategy="uniform",
-        example_split="handcrafted",
-        domain_predicate=True,
-    )
-    assert out.outcome == "ok"
-    assert out.bk_path is not None
-    text = out.bk_path.read_text(encoding="utf-8")
-    # RuleML domain/1 element over sample ids 1..N, plus domain(default).
-    assert "domain(default)." in text
-    assert "domain(1)." in text
-    assert f"domain({n})." in text
-    assert f"domain({n + 1})." not in text
-    # No default rule, assumption, or contrary is emitted.
-    assert "alpha(" not in text
-    assert "contrary(" not in text
-    assert f"{target}(X) :-" not in text
-    # Target still excluded from the feature BK.
-    assert f"{target}_val_" not in text
-    assert f"Skipping excluded variable: {target}" in text
-
-
 @pytest.mark.parametrize("source,target", [("m12_sep", "x2"), ("m12_conj", "x2")])
-def test_stage2_feature_bk_no_domain_by_default(
+def test_stage2_feature_bk_excludes_target(
     source: str, target: str, tmp_path: Path
 ) -> None:
     cell = _handcrafted_cell(source, target)

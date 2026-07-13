@@ -195,7 +195,6 @@ def generate_aba_background_knowledge(
     exclude_cols: Optional[List[str]] = None,
     continuous_bins: int = 2,
     bin_strategy: str = "quantile",
-    domain_predicate: bool = False,
 ) -> Path:
     """Build foldable ABA-ASP background knowledge and companion CSVs.
 
@@ -204,11 +203,6 @@ def generate_aba_background_knowledge(
     - Non-binary discrete variables emit value-specific predicates (x0_val_7(A)).
     - Continuous variables are binned (quantile/uniform) into x0_binK(A).
     - Columns in ``exclude_cols`` are skipped (e.g., the learning target).
-    - When ``domain_predicate`` is true, append the ``domain/1`` element that
-      ships with ``ruleml2025/*.scratch.aba`` (``domain(default).`` plus
-      ``domain(1..N).``) for construction fidelity to that benchmark. No target
-      head, default rule, or assumption/contrary is emitted; learning is driven
-      by E+/E- and the target remains excluded from the feature BK.
     - Outputs: ``{name}.bk.aba`` plus ``{name}.csv`` and ``{name}.binned.csv`` (if any continuous vars).
     """
     lines = []
@@ -264,17 +258,6 @@ def generate_aba_background_knowledge(
                 bin_idx = int(binned[idx])
                 pred_name = f"{col}_bin{bin_idx}"
                 lines.append(f"{pred_name}(A) :- A={sample_id}.")
-        lines.append("")
-
-    # Optional RuleML domain/1 element; see ruleml2025/*.scratch.aba. Emits
-    # domain(default) plus domain(1..N) over sample ids; no target head,
-    # default rule, or assumption/contrary.
-    if domain_predicate:
-        n_samples = len(df.index)
-        lines.append("% Domain predicate (RuleML construction); see ruleml2025/*.scratch.aba")
-        lines.append("domain(default).")
-        for sample_id in range(1, n_samples + 1):
-            lines.append(f"domain({sample_id}).")
         lines.append("")
 
     # Write .bk.aba file and use basename with .bk suffix (matches examples)
