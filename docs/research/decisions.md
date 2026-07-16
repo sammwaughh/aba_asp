@@ -2,6 +2,34 @@
 
 Recorded decisions that affect experiment direction. Evidence and interpretation remain in experiment records.
 
+## 2026-07-16 — Milestone 1 path restated: expand M1.2, then M1.3; no M1.4
+
+**Decision:** Finish Milestone 1 by (1) expanding M1.2 beyond the pilot 10-cell grid,
+then (2) running M1.3 on that expanded evidence. There is **no M1.4**. Large-graph /
+bnlearn comparisons are deferred to a later evaluation phase against any Causal-ABA-
+informed solution.
+
+**Expanded M1.2 scope:**
+
+- Graphs: Fabrizio’s usable small DAGs already in the repo; **exclude** random graphs,
+  bnlearn networks, and cycles.
+- DGPs: decide which generative regimes (and how many) before implementation; compare
+  within-DGP first.
+- Intended learned rules: locked per (graph, DGP, target) cell before any run.
+- Arms: ECAI and AAMAS only (RuleML remains out).
+- Criteria: intended-rule match and ASP coverage kept separate; primary instrument is
+  qualitative trace inspection across graphs.
+
+**M1.3 scope:** draft plain-English candidate claims from the expanded matrix; design
+smallest probes; keep surviving claims; write evidence-backed subsections on recovery
+patterns and limits. No forced taxonomy codes required.
+
+**Primary path document:**
+`docs/research/milestone_plans/milestone1_high_level_path.md` (other M1 plans point to it).
+
+**Supersedes:** the “pilot M1.2 done → go straight to M1.3 taxonomy” next-step framing;
+any implication that large-graph / bnlearn work is part of Milestone 1.
+
 ## 2026-07-13 — M1.2 reduced to ECAI and AAMAS only
 
 **Decision:** Remove the RuleML/RASP arm from M1.2. The investigation now compares only

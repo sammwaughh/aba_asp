@@ -2,6 +2,19 @@
 
 Chronological notes on experiment progress, decisions, and milestones. Detailed evidence remains in experiment records and artefact paths cited below.
 
+## 2026-07-16 — Milestone 1 high-level path: expand M1.2, then M1.3; no M1.4
+
+- **Decision:** see `decisions.md` (2026-07-16). Primary working reference:
+  `docs/research/milestone_plans/milestone1_high_level_path.md`.
+- **Done:** M1.1 closed; M1.2 pilot (10 cells) analysed.
+- **Next:** lock expanded M1.2 design (Fabrizio small DAGs; DGP choice; intended rules;
+  ECAI+AAMAS), then evidence collection; then M1.3 claims + probes.
+- **Out of Milestone 1:** large-graph / bnlearn evaluation (later evaluation milestone).
+  No M1.4.
+- **Docs updated:** milestone1-plan.md, part2/part3 READMEs and detail plans,
+  AGENTS.md, experiments_summary.md, experiment_register.md, report_state,
+  chatgpt_project_brief, PROJECT_README.
+
 ## 2026-07-13 — M1.2 scope corrected to two arms
 
 - **Decision:** M1.2 now contains only ECAI (`M12_ecai2024`) and AAMAS

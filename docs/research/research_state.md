@@ -122,24 +122,16 @@ establish causal discovery.
 ## Next milestone
 
 Milestone 1's goal is a **report-ready account of when and how unguided ABA Learning can
-recover mechanism-aligned rules from categorical tabular data** (categorical-only scope,
-\(k = 3\); no binary-only or continuous work in this milestone). M1.2 is analysed; one
-part remains:
+recover mechanism-aligned rules from categorical tabular data — and what is recovered
+instead**. Primary working path:
+`docs/research/milestone_plans/milestone1_high_level_path.md`.
 
-- **M1.2 — published-configuration comparison** (`analysed`, Stages 0–3):
-  ASP-ABAlearnB (`configs/ecai2024_config.pl`) and Greedy ABA Learning
-  (`configs/aamas2025_config.pl`)
-  run on shared handcrafted categorical fixtures designed to expose divergence (separator
-  anchor, conjunctive/disjunctive collider mechanisms, fork, correlated ancestor; 5
-  families, 10 cells). Exact match 2/10; ASP sample coverage 10/10. Primary
-  instrument: pre-specified expected output vs learned output per cell; metrics are
-  at-a-glance divergence detectors only. Plan:
-  `docs/research/milestone_plans/milestone1_part2/milestone1_part2_config_comparison.md`.
-- **M1.3 — failure-mode investigation** (`not started`): trace-level mechanism +
-  L1 (paradigm) / L2 (published variant) / L3 (implementation/encoding) attribution +
-  literature mapping for every divergence exposed by M1.2; M1.1's BK-ordering mechanism is
-  the first taxonomy entry. Plan:
-  `docs/research/milestone_plans/milestone1_part3/milestone1_part3_failure_modes.md`.
+- **M1.1** — closed.
+- **M1.2 pilot** — analysed (10 cells, ECAI+AAMAS). **M1.2 expansion next:** Fabrizio
+  usable small DAGs × chosen DGP(s); exclude random graphs, bnlearn, cycles; lock
+  intended rules before runs; qualitative trace inspection primary.
+- **M1.3** — after expanded M1.2: evidence-backed recovery patterns and limits
+  (plain English; targeted probes as needed).
+- **No M1.4** — large-graph / bnlearn evaluation deferred to a later evaluation milestone.
 
-Then **Milestone 2** (Causal-ABA-guided ABA Learning bridge), informed by the M1.3
-taxonomy (L1/L2 entries are candidate guidance intervention points).
+Then **Milestone 2** (Causal-ABA-guided ABA Learning bridge), informed by M1.3.

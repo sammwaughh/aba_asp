@@ -59,13 +59,11 @@ argumentative form. The interim experiments (RQ1) are **groundwork**: target-wis
 recovery characterising what unguided ABA Learning does before causal guidance is added. See
 `docs/report/manuscript/introduction.md` and `docs/report/manuscript/project_plan.md`.
 
-**Milestone status (June 2026):** Milestone 1 Part 1 (M11 / m1.1) is **closed** (Stages 0–7).
-Evidence: `docs/experiments/qualitative/M1.1-parent-position.md`;
-supervisor findings `docs/report/findings/milestone1_part1_m11_findings.tex`.
-**Milestone 1 Part 2 (M1.2):** analysed — ASP-ABAlearnB and Greedy ABA Learning compared
-on five divergence-designed categorical fixtures (10 cells). **Next:** M1.3 failure-mode
-taxonomy (trace mechanism + L1/L2/L3 attribution). Milestone 1 is categorical-only; no
-binary-only or continuous work.
+**Milestone status (July 2026):** Milestone 1 Part 1 (M11 / m1.1) is **closed**.
+M1.2 **pilot** (10 cells, ECAI+AAMAS) is analysed. **Next:** expand M1.2 to Fabrizio’s
+usable small DAGs × chosen DGP(s), then M1.3 (evidence-backed recovery patterns and
+limits). There is no M1.4; large-graph / bnlearn evaluation is deferred. Primary path:
+`docs/research/milestone_plans/milestone1_high_level_path.md`.
 
 ## Source priority
 

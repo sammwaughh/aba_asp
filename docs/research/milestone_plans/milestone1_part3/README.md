@@ -1,9 +1,16 @@
-# Milestone 1, Part 3 — Failure-mode investigation (M1.3)
+# Milestone 1, Part 3 — Recovery patterns and limits (M1.3)
 
-**Status:** `not started` (M1.2 outcome matrix and cell inspection are available)
+**Primary path:** [`../milestone1_high_level_path.md`](../milestone1_high_level_path.md)
+
+**Status:** `not started` — waits on **expanded M1.2** (the pilot 10-cell grid is an input, not the full evidence base)
+
+M1.3 answers, with evidence: when and how mechanism-aligned rules are recovered by
+unguided ABA Learning, what is recovered instead, and why. Write-up subsections use
+plain English; no forced taxonomy codes.
 
 | Document | Purpose |
 |----------|---------|
-| [milestone1_part3_failure_modes.md](milestone1_part3_failure_modes.md) | Plan for the failure-mode taxonomy: trace-level mechanism + L1/L2/L3 attribution + literature mapping for every divergence exposed by M1.2 |
+| [milestone1_part3_failure_modes.md](milestone1_part3_failure_modes.md) | Detail plan for claims, probes, and evidence-backed write-up |
+| [../milestone1_high_level_path.md](../milestone1_high_level_path.md) | High-level path for finishing M1.2 then M1.3 |
 
-**Parent index:** [milestone1-plan.md](../milestone1-plan.md) (Part 3 section)
+**Parent index:** [milestone1-plan.md](../milestone1-plan.md)

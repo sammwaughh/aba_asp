@@ -1,13 +1,18 @@
 # Milestone 1, Part 2 (M1.2) — Published-configuration comparison on divergence-designed fixtures
 
-**Status:** `analysed` — Stages 0–3 complete on the revised minimal 3-variable fixture
-design. Stage 0: fixtures + validation checks + locked expected outputs; Stage 1:
-config-consulting runner + shared feature-BK construction + two arm YAMLs + summary
-side-car + smoke test; Stage 2: 10/10 scoped cells `solved` (2026-07-09, commit
-`9123af7`), matrix `causal/outputs/aba_learning/grid/M12_summary.md`; Stage 3:
-cell-by-cell inspection complete (2026-07-13). Stage 4 not started.
+**Primary path:** [`../milestone1_high_level_path.md`](../milestone1_high_level_path.md)
+
+**Status:** pilot `analysed` (Stages 0–3); **expansion next** (Fabrizio small DAGs ×
+chosen DGP(s) — design not yet locked). Pilot: 10/10 scoped cells `solved` (2026-07-09,
+commit `9123af7`); cell inspection 2026-07-13. Stage 4 findings tex deferred until the
+expanded grid is done (or written as a pilot appendix if useful).
 **Experiment ID:** `M12_config_comparison` (arms `M12_ecai2024`, `M12_aamas2025`)
 **Parent index:** [milestone1-plan.md](../milestone1-plan.md) (Part 2 section)
+
+**Expansion scope (see high-level path):** usable small DAGs from Fabrizio’s code;
+exclude random graphs, bnlearn, cycles; decide DGP(s) before runs; lock intended learned
+rules per cell; ECAI + AAMAS only; keep intended-rule match and ASP coverage separate;
+primary instrument remains qualitative trace inspection.
 
 ## 1. Goal and research question
 
@@ -218,8 +223,9 @@ implementation work for this part.
 | 0 | **DONE (2026-07-08).** Fixtures (`causal/experiments/handcrafted_m12.py`) + Prolog-free validation checks (`causal/tests/test_m12_fixtures.py`, 59 tests, all PASS); expected outputs locked in `docs/experiments/qualitative/M1.2-config-comparison.md` before any learning run | all checks PASS ✓ |
 | 1 | **DONE (2026-07-08).** Config-consulting runner (`prolog_config`), shared feature-BK construction, two arm YAMLs, and M12 summary side-car (`causal/experiments/m12_summary.py`) built + unit-tested (Prolog-free tests PASS); smoke test `M12_ecai2024`/`m12_sep` -> effective `listing(lopt/1)` matches `configs/ecai2024_config.pl` | options match config file ✓ |
 | 2 | **DONE (2026-07-09, commit `9123af7`).** Scoped grid on revised minimal fixtures (2 arms × 5 fixtures, `--no-resume`); 10/10 `solved`; `M12_summary.md` rebuilt. Exact-match detector: 2/10 (ECAI/fork, AAMAS/conj) | all cells produce classified outcomes ✓ |
-| 3 | **DONE (2026-07-13).** Outcome matrix + per-cell expected-vs-learned comparison; qualitative inspection of every divergent cell | record complete ✓ |
-| 4 | Findings write-up (`.tex`); registers and claims ledger synced | Samuel review |
+| 3 | **DONE (2026-07-13).** Pilot outcome matrix + per-cell expected-vs-learned comparison | pilot record complete ✓ |
+| E | **NEXT.** Expand M1.2 per [`../milestone1_high_level_path.md`](../milestone1_high_level_path.md): lock Fabrizio small-DAG set + DGP(s) + intended rules; implement; run ECAI+AAMAS; inspect | every new cell has intended output + inspection |
+| 4 | Findings write-up (`.tex`) after expansion (pilot may be an appendix); registers synced | Samuel review |
 
 Commands (Stage 2 form):
 

@@ -234,8 +234,8 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
 
 ### M12 — m1.2 Published-configuration comparison
 
-- Status: analysed — Stage 2 complete (2026-07-09, commit `9123af7`); Stage 3 cell inspection complete (2026-07-13). Scoped grid: 10/10 `solved`; exact-match 2/10; ASP sample coverage 10/10. Stage 3: FM1 and FM3–FM7 failure-mode taxonomy (FM2 N/A) + next-step ablations for M1.3. Stage 4 findings tex not started.
-- Planning doc: docs/research/milestone_plans/milestone1_part2/milestone1_part2_config_comparison.md.
+- Status: pilot analysed (Stages 0–3); **expansion next**. Pilot grid: 10/10 `solved`; exact-match 2/10; ASP sample coverage 10/10; cell inspection 2026-07-13. Next: expand to Fabrizio small DAGs × chosen DGP(s) per `docs/research/milestone_plans/milestone1_high_level_path.md` (exclude random/bnlearn/cycles; ECAI+AAMAS only; intended rules locked before runs). No M1.4.
+- Planning docs: `docs/research/milestone_plans/milestone1_high_level_path.md`; `docs/research/milestone_plans/milestone1_part2/`.
 - Record: docs/experiments/qualitative/M1.2-config-comparison.md; Stage-3 inspection: docs/experiments/qualitative/M1.2-config-comparison-cell-inspection.md.
 - Stage-0 artefacts: causal/experiments/handcrafted_m12.py (fixtures m12_sep / m12_conj / m12_disj / m12_fork / m12_chain); causal/tests/test_m12_fixtures.py (validation checks); registration in causal/experiments/handcrafted.py.
 - Stage-1 artefacts: causal/run_aba_asp.py (`prolog_config` + `_build_learning_program`); causal/experiments/run_grid.py (thread `prolog_config`); causal/argcausaldisco_integration.py (shared feature-BK generation); causal/configs/experiments/M12_{ecai2024,aamas2025}.yaml; causal/experiments/m12_summary.py (side-car); tests test_m12_configs.py / test_m12_summary.py / test_runner_program.py + extended test_runner_stage2.py.
@@ -255,12 +255,12 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
 - Failure modes: parent superset, misaligned assumption structure, non-parent rule, ancestor citation (chain family), no solution, timeout, error; config-consult or BK-encoding issues.
 - Report relevance: interim Experimentation / Progress (Milestone 1 Part 2).
 
-### M13 — m1.3 Failure-mode investigation
+### M13 — m1.3 Recovery patterns and limits
 
-- Status: not started; M1.2 outcome matrix and cell inspection are available.
-- Planning doc: docs/research/milestone_plans/milestone1_part3/milestone1_part3_failure_modes.md.
-- Planned record: docs/experiments/qualitative/M1.3-failure-modes.md.
-- Research question: for each failure or divergence class observed in M1.2, what is the exact trace-level mechanism, at which level does the cause live (L1 paradigm / L2 published variant / L3 implementation or encoding), and what does the backing literature say about it?
-- Method: mandatory trace-level mechanistic account per failure mode (M1.1 Stage-4 discipline); L1/L2/L3 attribution with matching evidence standards; literature mapping for L1/L2. Targeted falsification ablations permitted (e.g. `asm_intro(sechk)` on an implicated ECAI cell or folding-mode/selection probes for disjunctive compression), not promised.
-- Relation to Causal ABA: none exercised; the deliverable (when and how mechanism-aligned rules cannot be learned) is the requirements input for the Milestone 2 Causal-ABA-guided bridge.
+- Status: not started; waits on **expanded M1.2** (pilot inspection is a partial input only).
+- Planning docs: `docs/research/milestone_plans/milestone1_high_level_path.md`; `docs/research/milestone_plans/milestone1_part3/`.
+- Planned record: docs/experiments/qualitative/M1.3-failure-modes.md (plain-English recovery patterns and limits; filename retained).
+- Research question: across the expanded M1.2 graphs and DGP(s), when does unguided ABA Learning recover the intended mechanism-aligned rules, what is recovered instead when it does not, and what evidence explains those patterns?
+- Method: draft candidate claims → smallest supporting/killing probes → keep surviving claims → write evidence-backed subsections. No forced taxonomy codes. Large-graph / bnlearn evaluation is not in M1.3 (deferred to a later evaluation milestone).
+- Relation to Causal ABA: none exercised; deliverable is requirements input for Milestone 2.
 - Report relevance: interim Experimentation / Progress (Milestone 1 Part 3).

@@ -46,14 +46,15 @@ Do not describe the current implementation as full Russo-style Causal ABA unless
 
 ## Experimental priority
 
-The current experimental priority is Milestone 1: a report-ready account of when and how unguided ABA Learning recovers mechanism-aligned rules from categorical tabular data, then design the Causal-ABA-guided bridge (Milestone 2).
+The current experimental priority is Milestone 1: a report-ready account of when and how unguided ABA Learning recovers mechanism-aligned rules from categorical tabular data (and what is recovered instead), then design the Causal-ABA-guided bridge (Milestone 2).
+
+**Primary working path:** `docs/research/milestone_plans/milestone1_high_level_path.md`
 
 Key experiment records:
 
 - `docs/experiments/qualitative/QL-001.md` — qualitative inspection of ABA Learning on minimal causal motifs (realised by QI series).
 - `docs/experiments/qualitative/M1.1-parent-position.md` — Milestone 1 Part 1 (M11); **`analysed` / closed** (Stages 0–7: nd mechanism, ablations, greedy comparator).
-- `docs/experiments/qualitative/M1.2-config-comparison.md` — Milestone 1 Part 2 (M12); **`analysed`** (Stages 0–3): two-config comparison of ASP-ABAlearnB and Greedy ABA Learning over five divergence-designed categorical fixtures (10 cells).
-- **Next:** M1.3 — failure-mode taxonomy (`docs/research/milestone_plans/milestone1_part3/milestone1_part3_failure_modes.md`). Milestone 1 is categorical-data only (no binary-only or continuous work).
+- `docs/experiments/qualitative/M1.2-config-comparison.md` — Milestone 1 Part 2 (M12) **pilot** analysed (Stages 0–3, 10 cells). **Next:** expand M1.2 (Fabrizio small DAGs × chosen DGP(s); ECAI+AAMAS only), then M1.3 (evidence-backed recovery patterns and limits). There is no M1.4; large-graph / bnlearn evaluation is deferred to a later milestone.
 
 ## Experiment documentation rule
 

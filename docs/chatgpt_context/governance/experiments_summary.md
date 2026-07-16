@@ -37,8 +37,8 @@ Use the same status categories as `experiment_register.md`.
 | QI-002 greedy | — | Greedy-folding rerun of QI-002 (minimal truth-table baseline) | analysed | `docs/experiments/qualitative/QI002_minimal_motifs_greedy/` | `causal/configs/experiments/QI002_minimal_motifs_greedy.yaml` | `causal/outputs/aba_learning/grid/QI002_minimal_motifs_greedy/` | Interim Experimentation / Progress | Only change `folding_mode: greedy`. 6/6 solved (vs nd 5/6): solves the binary collider nd could not; cat3 collider now exact; clean recovery 3/6 -> 4/6 with one regression (cat3 fork exact -> superset). |
 | QI-004 greedy | — | Greedy-folding rerun of QI-004 (scaled noisy n=20) | analysed | `docs/experiments/qualitative/QI004_scaled_motifs_n20_greedy/` | `causal/configs/experiments/QI004_scaled_motifs_n20_greedy.yaml` | `causal/outputs/aba_learning/grid/QI004_scaled_motifs_n20_greedy/` | Interim Experimentation / Progress | Only change `folding_mode: greedy`. Same outcomes as nd (1 solved, 12 no-solution, 2 errors; 0/15 clean) but ~120x faster (≈1233 s -> ≈10 s). At noisy n=20 greedy changes only runtime; binary errors persist. |
 | M11 | — | m1.1 Parent-position and representation-order control | analysed | `docs/experiments/qualitative/M1.1-parent-position.md` | `causal/configs/experiments/M11_parent_position.yaml`; `M11_parent_position_greedy.yaml` | `M11_parent_position/cells/`; `M11_parent_position_greedy/`; `M11_ablations/` | Interim Experimentation / Progress (Milestone 1) | nd: 8/8 solved; binary σ/π pass; cat3 σ fails (ablation-supported). Stage 7 greedy: binary matches nd; cat3 all supersets; rule-level σ restored under greedy. |
-| M12 | — | m1.2 Published-configuration comparison (ASP-ABAlearnB / Greedy ABA Learning) | analysed (Stages 0–3) | `docs/experiments/qualitative/M1.2-config-comparison.md`; cell inspection `M1.2-config-comparison-cell-inspection.md` | `causal/configs/experiments/M12_ecai2024.yaml`; `M12_aamas2025.yaml` (`grid.cell_dir: dgp`) | `causal/outputs/aba_learning/grid/M12_{ecai2024,aamas2025}/cells/<fixture>/`; `M12_summary.md` | Interim Experimentation / Progress (Milestone 1) | Stage 3 inspection (2026-07-13): 10/10 scoped cells solved; exact 2/10; ASP coverage 10/10. Failure modes FM1 and FM3–FM7 (FM2 N/A). Next: M1.3 attribution. |
-| M13 | — | m1.3 Failure-mode investigation (trace mechanism + L1/L2/L3 attribution + literature mapping) | not started | `docs/experiments/qualitative/M1.3-failure-modes.md` (planned) | — (analysis over M1.2 artefacts; targeted ablations optional) | `causal/outputs/aba_learning/grid/M13_<ablation-id>/` (only if ablations run) | Interim Experimentation / Progress (Milestone 1) | Not started; M1.2 outcome matrix and cell inspection are available. |
+| M12 | — | m1.2 Published-configuration comparison (ASP-ABAlearnB / Greedy ABA Learning) | pilot analysed; expansion next | `docs/experiments/qualitative/M1.2-config-comparison.md`; cell inspection `M1.2-config-comparison-cell-inspection.md` | `causal/configs/experiments/M12_ecai2024.yaml`; `M12_aamas2025.yaml` (`grid.cell_dir: dgp`) | `causal/outputs/aba_learning/grid/M12_{ecai2024,aamas2025}/cells/<fixture>/`; `M12_summary.md` | Interim Experimentation / Progress (Milestone 1) | Pilot Stages 0–3 done (10 cells). Next: expand M1.2 to Fabrizio small DAGs × chosen DGP(s) per `milestone1_high_level_path.md`. No RuleML; no M1.4. |
+| M13 | — | m1.3 Recovery patterns and limits (claims + targeted probes after expanded M1.2) | not started | `docs/experiments/qualitative/M1.3-failure-modes.md` (planned) | — (analysis over expanded M1.2; targeted probes as needed) | `causal/outputs/aba_learning/grid/M13_<ablation-id>/` (only if probes run) | Interim Experimentation / Progress (Milestone 1) | Waits on expanded M1.2. Plain-English evidence-backed subsections; see `milestone1_high_level_path.md`. |
 
 ## Experiment sequence to date and next
 
@@ -60,40 +60,30 @@ Status: **`analysed`**
 
 Initial eight-cell metamorphic grid complete (nd + Stage 7 greedy). nd: binary passes all checks; cat3 fails σ-invariance (ablation-supported). Stage 7 greedy: binary matches nd; cat3 rule-level σ restored; all cat3 cells are parent supersets (B/C regress from nd singleton). Findings: `docs/report/findings/milestone1_part1_m11_findings.tex`. Record: `docs/experiments/qualitative/M1.1-parent-position.md`.
 
-### Analysed: Milestone 1 Part 2 — published-configuration comparison (M1.2)
+### In progress: Milestone 1 Part 2 — published-configuration comparison (M1.2)
 
-Status: `analysed` (Stages 0–3; Stage 4 findings tex optional)
+Status: **pilot analysed**; **expansion next**
 
-Purpose: compare the two scoped published ABA Learning configurations — ASP-ABAlearnB
-(`configs/ecai2024_config.pl`) and Greedy ABA Learning
-(`configs/aamas2025_config.pl`) — on
-shared handcrafted categorical fixtures (k=3) designed to expose divergence: separator
-anchor, conjunctive and disjunctive mechanisms on a collider, fork (correlated-sibling
-confound), and correlated-ancestor chain (5 families, 10 cells). Primary instrument:
-pre-specified expected output vs learned
-output per (arm, fixture) cell; metrics (outcome class, body-/framework-scope parent
-recovery, ASP coverage fractions, framework complexity, trace line count) are at-a-glance
-divergence detectors only.
+Pilot (Stages 0–3): two arms (ECAI / AAMAS) × five minimal handcrafted fixtures (10 cells).
+Expansion: Fabrizio’s usable small DAGs × chosen DGP(s); intended rules locked before
+runs; exclude random graphs, bnlearn, cycles; no RuleML. Primary instrument remains
+qualitative intended-vs-learned / trace inspection; ASP coverage kept separate.
 
-Planning doc: `docs/research/milestone_plans/milestone1_part2/milestone1_part2_config_comparison.md`.
-Record: `docs/experiments/qualitative/M1.2-config-comparison.md`.
-Stage-3 inspection: `docs/experiments/qualitative/M1.2-config-comparison-cell-inspection.md`.
+**Primary path:** `docs/research/milestone_plans/milestone1_high_level_path.md`  
+Detail: `docs/research/milestone_plans/milestone1_part2/`  
+Pilot record: `docs/experiments/qualitative/M1.2-config-comparison.md`  
+Pilot inspection: `docs/experiments/qualitative/M1.2-config-comparison-cell-inspection.md`
 
-### Later: Milestone 1 Part 3 — failure-mode investigation (M1.3), then Milestone 2
+### Later: Milestone 1 Part 3 — recovery patterns and limits (M1.3), then Milestone 2
 
-Status: `not started`
+Status: `not started` (after expanded M1.2)
 
-For every divergence exposed by M1.2: a mandatory trace-level mechanistic account (why
-exactly), an L1 (paradigm) / L2 (published variant) / L3 (implementation/encoding)
-attribution, and a literature mapping. M1.1's BK-ordering mechanism is the first taxonomy
-entry. Deliverable: when and how mechanism-aligned rules cannot be learned by unguided ABA
-Learning — the requirements input for Milestone 2 (Causal-ABA-guided bridge).
+Draft candidate claims in plain English from the expanded matrix; design smallest probes;
+keep surviving claims; write evidence-backed subsections. No M1.4 — large-graph / bnlearn
+evaluation is deferred to a later milestone’s evaluation phase.
 
-Planning doc: `docs/research/milestone_plans/milestone1_part3/milestone1_part3_failure_modes.md`.
-Planned record: `docs/experiments/qualitative/M1.3-failure-modes.md`.
-
-Milestone 1 scope note: categorical data only (k=3); binary-only and continuous
-investigations are out of scope for this milestone.
+**Primary path:** `docs/research/milestone_plans/milestone1_high_level_path.md`  
+Detail: `docs/research/milestone_plans/milestone1_part3/`
 
 ## Current metric families
 
@@ -159,15 +149,13 @@ Workflow:
 
 ## Next action
 
-**Milestone 1 Part 2 (M1.2)** — Stage 3 cell inspection complete (2026-07-13):
-`docs/experiments/qualitative/M1.2-config-comparison-cell-inspection.md`
-(FM1 and FM3–FM7; FM2 N/A).
-Next: **M1.3** trace-level attribution + L1/L2/L3 mapping.
+**Expand M1.2** per `docs/research/milestone_plans/milestone1_high_level_path.md`:
+lock graph set (Fabrizio small DAGs; no random/bnlearn/cycles), decide DGP(s), lock
+intended learned rules, then implement/run/inspect (ECAI + AAMAS only). After that, **M1.3**.
 
-Completed since the QL series:
+Completed so far in Milestone 1:
 
-1. **M1.1 (M11)** — parent-position metamorphic control (`analysed`; nd ablations + Stage 7 greedy comparator).
-2. **M1.2 (M12)** — published-configuration comparison (`analysed`; Stages 0–3).
+1. **M1.1 (M11)** — closed.
+2. **M1.2 pilot (M12)** — Stages 0–3 analysed (10 cells).
 
-Remaining Milestone 1 parts: failure-mode investigation (M1.3); then
-Milestone 2 (Causal-ABA-guided bridge).
+Remaining: expanded M1.2 → M1.3 → Milestone 1 write-up. No M1.4.
