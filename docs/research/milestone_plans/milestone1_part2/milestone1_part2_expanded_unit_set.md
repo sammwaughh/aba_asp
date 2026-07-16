@@ -156,5 +156,6 @@ per-target ancestors / other distractors / **descendant distractors (included in
 | Approach | Locked |
 | Unit set (this file) | **Accepted** |
 | Mechanism cards U1–U7 | **Written** — [`mechanism_cards/`](mechanism_cards/) |
-| Fixtures + grid (M12x) | **Constructed** — ready to run |
-| Learning runs / inspection | Next |
+| Fixtures + grid (M12x) | Constructed |
+| Learning runs | Done — 22/22 solved |
+| Inspection vs \(\mathcal{H}^\star\) | **Done** — `M1.2-expanded-cell-inspection.md` |

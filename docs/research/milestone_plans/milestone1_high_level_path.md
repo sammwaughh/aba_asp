@@ -1,8 +1,8 @@
 # Milestone 1 — High-level path to completion
 
-**Role:** primary working reference for finishing Milestone 1 (M1.2 then M1.3).  
+**Role:** primary working reference for finishing Milestone 1 (**M1.3** next; M1.2 done).  
 **Parent index:** [`milestone1-plan.md`](milestone1-plan.md)  
-**Status:** active (2026-07-16)
+**Status:** active (2026-07-16) — M1.2 closed; begin M1.3
 
 Organising question for all of Milestone 1:
 
@@ -17,9 +17,9 @@ No Causal ABA integration in this milestone. Large-graph / bnlearn comparisons a
 | Part | Status | What exists |
 |------|--------|-------------|
 | **M1.1** | Closed | Parent-position / representation-order control; ordering mechanism established |
-| **M1.2 pilot** | Analysed (Stages 0–3) | Historical 10-cell grid; to be redesigned under the expanded Approach |
-| **M1.2 expanded** | Grid constructed; run next | M12x 22-cell grid ready (`M12x_{ecai2024,aamas2025}`) |
-| **M1.3** | After expanded M1.2 | Evidence-backed claims about recovery patterns and limits |
+| **M1.2 pilot** | Analysed (historical) | 10-cell pilot; superseded as primary evidence by M12x |
+| **M1.2 expanded (M12x)** | **Done / analysed** | 22/22 solved; matrix + [`M1.2-expanded-cell-inspection.md`](../../experiments/qualitative/M1.2-expanded-cell-inspection.md); 0 exact compact-`nz` H* |
+| **M1.3** | **Planned / starting** | Record opened; claims + probes from M12x Stage-3 |
 | **M1.4** | Does not exist | Large-graph tests deferred to a future evaluation milestone |
 
 **Expanded M1.2 Approach:**  
@@ -35,40 +35,28 @@ Pilot artefacts (keep for provenance; not the expanded design):
 
 ---
 
-## Path to finish M1.2 and M1.3
+## Path (M1.2 done; finish M1.3)
 
-### 1. Lock the expanded M1.2 design (before more runs) — **in progress**
+### 1–2. Expanded M1.2 — **done**
 
-**Approach locked:**  
-[`milestone1_part2/milestone1_part2_expanded_approach.md`](milestone1_part2/milestone1_part2_expanded_approach.md)
+Approach + U1–U7 cards + M12x grid + Stage-3 inspection complete.  
+Evidence package: [`milestone1_part2/`](milestone1_part2/README.md);
+[`M1.2-expanded.md`](../../experiments/qualitative/M1.2-expanded.md);
+[`M1.2-expanded-cell-inspection.md`](../../experiments/qualitative/M1.2-expanded-cell-inspection.md);
+`causal/outputs/aba_learning/grid/M12x_summary.md`.
 
-**Unit set accepted (U1–U7, 22 cells):**  
-[`milestone1_part2/milestone1_part2_expanded_unit_set.md`](milestone1_part2/milestone1_part2_expanded_unit_set.md)
+### 3. Do M1.3 (claims + probes) — **current**
 
-Still to lock:
-
-- **Mechanism cards** for U1–U7 (full per-target ancestors, \(\mathcal{H}_t^\star\), etc.).
-
-Do not implement or run the expanded grid until every selected cell has its card written down.
-
-### 2. Finish expanded M1.2 (evidence collection)
-
-- Implement fixtures / BK under the Approach.
-- Run all cells: (fixture, non-source target, ECAI|AAMAS).
-- Produce per-cell artefacts and a summary matrix.
-- Inspect in plain English: what was wanted, what was learned, whether it matches, what was recovered instead (including descendant citation as an explicit failure mode).
-- Only then treat M1.2 as **done**.
-
-Detail: [`milestone1_part2/`](milestone1_part2/README.md).
-
-### 3. Do M1.3 (claims + attribution)
-
-Using the expanded M1.2 matrix:
+Primary inputs: M12x Stage-3 inspection + summary matrix (pilot M1.2 optional provenance).
 
 - Draft **candidate claims** in plain English about when/how correct general rules are recovered and what appears instead.
 - For each claim that matters, design the **smallest follow-up probes** needed.
 - Run those probes; keep only claims that survive.
 - Write M1.3 as evidence-backed subsections in ordinary language (not a forced category system).
+
+Seed patterns from Stage-3 (not yet M1.3 claims): 0/22 exact compact-`nz` \(\mathcal{H}^\star\);
+ECAI assumption / early-BK / inferior `val`-expansions; AAMAS descendant citation
+(U5-\(x_1\), U6-\(x_2\), U7-\(x_2\)) and sibling residue (U4).
 
 Detail: [`milestone1_part3/`](milestone1_part3/README.md).
 
@@ -80,4 +68,4 @@ Consolidate findings into a Milestone 1 write-up answering the organising questi
 
 ## One-line discipline
 
-Lock Approach + graph/mechanism cards → expand M1.2 evidence → M1.3 claims and probes → Milestone 1 write-up → only later large-graph evaluation against a Causal-ABA-informed solution.
+M1.2 evidence locked → **M1.3 claims and probes** → Milestone 1 write-up → only later large-graph evaluation against a Causal-ABA-informed solution.

@@ -1,8 +1,10 @@
 # Milestone 1, Part 3 (M1.3) — Recovery patterns and limits
 
-**Status:** `not started` — starts after expanded M1.2 is complete.  
+**Status:** `planned / starting` — M12x complete; experiment record opened; begin claims + probes.  
 **Primary path:** [`../milestone1_high_level_path.md`](../milestone1_high_level_path.md)  
-**Parent index:** [`../milestone1-plan.md`](../milestone1-plan.md)
+**Parent index:** [`../milestone1-plan.md`](../milestone1-plan.md)  
+**Primary evidence:** `docs/experiments/qualitative/M1.2-expanded-cell-inspection.md`;
+`causal/outputs/aba_learning/grid/M12x_summary.md`
 
 Filename retained for continuity; the work is **not** required to use a fixed “failure
 mode” taxonomy. Prefer plain-English descriptions of recovery patterns and limits.
@@ -20,8 +22,11 @@ output informs Milestone 2 (Causal ABA integration).
 
 ## 2. Inputs
 
-- Expanded M1.2 outcome matrix and per-cell artefacts (`bk.sol.aba`, `prolog.stdout`,
-  metrics), plus the pilot M1.2 inspection.
+- **M12x (required):** Stage-3 inspection
+  (`docs/experiments/qualitative/M1.2-expanded-cell-inspection.md`);
+  summary matrix (`M12x_summary.md`); cell reports; runner cells under
+  `causal/outputs/aba_learning/grid/M12x_{ecai2024,aamas2025}/`.
+- Pilot M1.2 inspection (optional provenance).
 - M1.1 record: BK/representation ordering as one established limit under nd.
 - Backing papers: ECAI 2024 (ASP-ABAlearnB), AAMAS 2025 (Greedy ABA Learning), and
   Proietti & Toni 2024. Summaries: `docs/theory/paper_summaries/`.

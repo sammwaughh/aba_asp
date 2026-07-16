@@ -34,8 +34,8 @@ The earlier n=100 scaled attempt was cut and is not part of the canonical experi
 | QI-004 greedy | — | Greedy-folding rerun of QI-004 (scaled noisy n=20) | analysed |
 | M11 | — | m1.1 Parent-position and representation-order control | analysed (Stages 0–7; ablations + greedy comparator) |
 | M12 | — | m1.2 Published-configuration comparison (ASP-ABAlearnB / Greedy ABA Learning) | analysed (Stages 0–3: 10-cell grid + full cell inspection / failure-mode taxonomy) |
-| M12x | — | m1.2 expanded U1–U7 (ECAI/AAMAS; nz BK; 22 cells) | implemented (grid constructed; not yet run) |
-| M13 | — | m1.3 Failure-mode investigation (trace mechanism + L1/L2/L3 attribution) | not started |
+| M12x | — | m1.2 expanded U1–U7 (ECAI/AAMAS; nz BK; 22 cells) | analysed (22/22 solved; Stage-3 inspection) |
+| M13 | — | m1.3 Recovery patterns and limits (claims + probes from M12x) | planned / starting |
 
 ## Template
 
@@ -235,7 +235,7 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
 
 ### M12 — m1.2 Published-configuration comparison
 
-- Status: pilot analysed (Stages 0–3). Expanded M12x grid **constructed** (ready to run); see M12x entry. Pilot grid: 10/10 `solved`; exact-match 2/10; ASP coverage 10/10; cell inspection 2026-07-13. No M1.4.
+- Status: pilot analysed (Stages 0–3). Expanded work continues as **M12x** (analysed). Pilot grid: 10/10 `solved`; exact-match 2/10; ASP coverage 10/10; cell inspection 2026-07-13. No M1.4.
 - Planning docs: `docs/research/milestone_plans/milestone1_high_level_path.md`; **Approach** `docs/research/milestone_plans/milestone1_part2/milestone1_part2_expanded_approach.md`; `docs/research/milestone_plans/milestone1_part2/`.
 - Record: docs/experiments/qualitative/M1.2-config-comparison.md; Stage-3 inspection: docs/experiments/qualitative/M1.2-config-comparison-cell-inspection.md.
 - Stage-0 artefacts: causal/experiments/handcrafted_m12.py (fixtures m12_sep / m12_conj / m12_disj / m12_fork / m12_chain); causal/tests/test_m12_fixtures.py (validation checks); registration in causal/experiments/handcrafted.py.
@@ -258,23 +258,25 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
 
 ### M12x — m1.2 expanded U1–U7 grid
 
-- Status: **implemented** (grid constructed 2026-07-16; learning runs not yet executed).
+- Status: **analysed** (2026-07-16): 22/22 `solved`; matrix; Stage-3 inspection complete.
 - Record: `docs/experiments/qualitative/M1.2-expanded.md`.
+- Inspection: `docs/experiments/qualitative/M1.2-expanded-cell-inspection.md`.
 - Design: Approach + unit set + `mechanism_cards/` U1–U7.
 - Fixtures: `causal/experiments/handcrafted_m12x.py` (nonzero-positive; multi-target E±).
 - BK: `defaults.definitional_nz: true` → `xi_nz` facts; target excluded; descendants kept.
 - Configs: `causal/configs/experiments/M12x_{ecai2024,aamas2025}.yaml` (`cell_dir: slug`; `grid.seed` omitted).
-- Cells: 11 per arm × 2 = 22; dirs `{dgp}__target-{t}`; dry-run confirmed.
-- Tests: `causal/tests/test_m12x_fixtures.py`, `test_m12x_configs.py`.
-- Output (pending): `causal/outputs/aba_learning/grid/M12x_{ecai2024,aamas2025}/`.
+- Cells: 11 per config × 2 = 22; dirs `{dgp}__target-{t}`.
+- Output: `M12x_{ecai2024,aamas2025}/`; `M12x_summary.md`; `M12x_cell_reports/`.
+- Generator: `causal/experiments/m12x_summary.py`.
 - Relation to Causal ABA: none exercised.
-- Next: run both arms → inspect.
+- Next: M1.3.
 
 ### M13 — m1.3 Recovery patterns and limits
 
-- Status: not started; waits on **expanded M1.2 runs** (M12x).
+- Status: **planned / starting** — M12x Stage-3 evidence package available; record opened.
 - Planning docs: `docs/research/milestone_plans/milestone1_high_level_path.md`; `docs/research/milestone_plans/milestone1_part3/`.
-- Planned record: docs/experiments/qualitative/M1.3-failure-modes.md (plain-English recovery patterns and limits; filename retained).
+- Record: `docs/experiments/qualitative/M1.3-failure-modes.md` (plain-English recovery patterns and limits; filename retained).
+- Primary inputs: `docs/experiments/qualitative/M1.2-expanded-cell-inspection.md`; `causal/outputs/aba_learning/grid/M12x_summary.md`; Approach vocabulary.
 - Research question: across the expanded M1.2 graphs and DGP(s), when does unguided ABA Learning recover the intended mechanism-aligned rules, what is recovered instead when it does not, and what evidence explains those patterns?
 - Method: draft candidate claims → smallest supporting/killing probes → keep surviving claims → write evidence-backed subsections. No forced taxonomy codes. Large-graph / bnlearn evaluation is not in M1.3 (deferred to a later evaluation milestone).
 - Relation to Causal ABA: none exercised; deliverable is requirements input for Milestone 2.

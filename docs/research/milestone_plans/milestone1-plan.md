@@ -64,38 +64,31 @@ Findings: `docs/report/findings/milestone1_part1_m11_findings.tex`
 recovery under nd, with a complete trace-level account. It remains available as an M1.3
 claim with evidence; σ/π grids are not repeated in M1.2.
 
-## Part 2: Published-Configuration Comparison (M1.2) — **design lock in progress**
+## Part 2: Published-Configuration Comparison (M1.2) — **done / analysed**
 
 Planning folder: [`milestone1_part2/`](milestone1_part2/README.md)  
-**Approach (locked design reference):** [`milestone1_part2/milestone1_part2_expanded_approach.md`](milestone1_part2/milestone1_part2_expanded_approach.md)  
-Pilot detail plan: [`milestone1_part2/milestone1_part2_config_comparison.md`](milestone1_part2/milestone1_part2_config_comparison.md)
+**Approach:** [`milestone1_part2/milestone1_part2_expanded_approach.md`](milestone1_part2/milestone1_part2_expanded_approach.md)  
+**Expanded record:** `docs/experiments/qualitative/M1.2-expanded.md`  
+**Stage-3 inspection:** `docs/experiments/qualitative/M1.2-expanded-cell-inspection.md`  
+Pilot (historical): [`milestone1_part2/milestone1_part2_config_comparison.md`](milestone1_part2/milestone1_part2_config_comparison.md)
 
 | Phase | Status | Content |
 |-------|--------|---------|
-| Pilot grid | Analysed (Stages 0–3) | Historical 10-cell grid; to be redesigned under the Approach |
-| Expanded design | Approach locked; mechanism cards next | Deterministic copy/min/max; \(k=3\); nonzero-positive; `val`+`nz` BK; ECAI+AAMAS; all non-source targets |
-| Expanded runs | After cards | Implement → batch run → inspect |
+| Pilot grid | Analysed (historical) | 10 cells; not the primary expanded evidence |
+| Expanded design | Locked | U1–U7; copy/min/max; \(k=3\); nonzero-positive; `val`+`nz` BK; ECAI+AAMAS |
+| Expanded runs + inspection | **Done** | M12x 22/22 `solved`; matrix; Stage-3 inspection (0 exact compact-`nz` \(\mathcal{H}^\star\)) |
 
-Arms:
+Configs: ECAI (`configs/ecai2024_config.pl`), AAMAS (`configs/aamas2025_config.pl`).
 
-| Arm | Config file | Published system |
-|-----|-------------|------------------|
-| ECAI | `configs/ecai2024_config.pl` | ASP-ABAlearnB (ECAI 2024) |
-| AAMAS | `configs/aamas2025_config.pl` | Greedy ABA Learning (AAMAS 2025) |
-
-Expanded M1.2 finishes when fixtures/simulators exist, the grid is run, artefacts and a
-summary matrix exist, and every cell has a plain-English intended-vs-learned inspection.
-See [`milestone1_high_level_path.md`](milestone1_high_level_path.md) §1–2.
-
-## Part 3: Recovery patterns and limits (M1.3) — **after expanded M1.2**
+## Part 3: Recovery patterns and limits (M1.3) — **current**
 
 Planning folder: [`milestone1_part3/`](milestone1_part3/README.md)  
 Detail plan: [`milestone1_part3/milestone1_part3_failure_modes.md`](milestone1_part3/milestone1_part3_failure_modes.md)
 
-M1.3 turns the expanded M1.2 matrix into evidence-backed claims: draft candidate claims in
-plain English; design the smallest probes that would support or kill each claim; run those
-probes; write subsections describing each recovery pattern / limit with experimental
-evidence. No forced category scheme required.
+M1.3 turns the **M12x** Stage-3 matrix/inspection into evidence-backed claims: draft
+candidate claims in plain English; design the smallest probes that would support or kill
+each claim; run those probes; write subsections describing each recovery pattern / limit
+with experimental evidence. No forced category scheme required.
 
 M1.3 finishes when we can state succinctly what unguided ABA Learning does on these
 graphs/DGPs, why, and what remains open for Milestone 2.
@@ -111,5 +104,5 @@ After expanded M1.2 and M1.3, consolidate findings into a Milestone 1 conclusion
 4. which findings motivate Causal ABA-style guidance in Milestone 2, and which are
    pipeline or encoding issues.
 
-**Current progress:** Part 1 closed. Part 2 pilot analysed; Part 2 expansion next.
-Part 3 waits on expanded Part 2. No Part 4 / M1.4.
+**Current progress:** Part 1 closed. Part 2 (M12x) **done / analysed**. Part 3 (M1.3)
+**next**. No Part 4 / M1.4.

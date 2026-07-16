@@ -2,6 +2,18 @@
 
 Recorded decisions that affect experiment direction. Evidence and interpretation remain in experiment records.
 
+## 2026-07-16 — M1.2 closed; begin M1.3
+
+**Decision:** Expanded M1.2 (M12x) is **closed** as an evidence package (22/22
+`solved`; Stage-3 inspection; summary matrix). Experimental priority moves to
+**M1.3**: draft candidate claims from Stage-3 patterns; design/run smallest probes;
+keep survivors; write evidence-backed subsections.
+
+**Primary inputs:** `M1.2-expanded-cell-inspection.md`; `M12x_summary.md`;
+Approach vocabulary; `milestone1_part3/`.
+
+**Not claimed yet:** any M1.3 recovery-pattern claim — drafting starts next.
+
 ## 2026-07-16 — Optional grid.seed (no dummy seed for deterministic grids)
 
 **Decision:** `grid.seed` is optional. Omit it for deterministic experiments
@@ -58,7 +70,7 @@ any new runs. Canonical doc:
 Mechanism cards U1–U7 written under
 `docs/research/milestone_plans/milestone1_part2/mechanism_cards/`.
 
-**Points to:** `milestone1_high_level_path.md` §1 (design lock in progress).
+**Points to:** `milestone1_high_level_path.md` (M1.2 closed; M1.3 current).
 
 ## 2026-07-16 — Milestone 1 path restated: expand M1.2, then M1.3; no M1.4
 

@@ -1,13 +1,14 @@
 # Approach — Expanded M1.2
 
-**Role:** locked design reference for selecting graphs, assigning mechanisms, and defining
-cells before any expanded M1.2 implementation or run.  
-**Status:** active (2026-07-16) — still within “Lock the expanded M1.2 design”.  
+**Role:** locked design reference for the expanded M1.2 (M12x) grid — graphs, mechanisms,
+BK/labelling regime, and \(\mathcal{H}^\star\) acceptance.  
+**Status:** complete as design for M12x (2026-07-16) — runs + Stage-3 inspection done;
+vocabulary still used by M1.3.  
 **Primary path:** [`../milestone1_high_level_path.md`](../milestone1_high_level_path.md)  
 **Parent index:** [`../milestone1-plan.md`](../milestone1-plan.md)
 
-Use this document together when designing each graph × mechanism card. Do not implement
-or run the expanded grid until every selected cell has the inputs listed below.
+Evidence package: `docs/experiments/qualitative/M1.2-expanded.md`;
+`M1.2-expanded-cell-inspection.md`; `causal/outputs/aba_learning/grid/M12x_summary.md`.
 
 ---
 
@@ -177,8 +178,10 @@ Cells: `(max_collider, x2, ECAI)`, `(max_collider, x2, AAMAS)`.
 | Inspection-first acceptance (no precise pre-enumerated \(\mathcal{A}_t\)) | Locked |
 | Graph × mechanism unit set | **Accepted** — [`milestone1_part2_expanded_unit_set.md`](milestone1_part2_expanded_unit_set.md) (U1–U7, 22 cells) |
 | Mechanism cards U1–U7 | **Written** — [`mechanism_cards/`](mechanism_cards/) |
-| Fixtures + 22-cell grid (M12x) | **Constructed** — `handcrafted_m12x.py`, `M12x_{ecai2024,aamas2025}.yaml` |
+| Fixtures + 22-cell grid (M12x) | **Done** — run + Stage-3 inspection |
+| Summary matrix + cell reports | **Done** — `M12x_summary.md`; `M12x_cell_reports/` |
 
 ## Next step
 
-Run both M12x arms (`run_grid`), then inspect against mechanism-card \(\mathcal{H}^\star\).
+M1.2 design/evidence is closed. Use this Approach as vocabulary for **M1.3**
+(claims + probes): [`../milestone1_part3/`](../milestone1_part3/README.md).

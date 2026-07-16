@@ -2,14 +2,16 @@
 
 **Primary path:** [`../milestone1_high_level_path.md`](../milestone1_high_level_path.md)
 
-**Status:** pilot analysed (Stages 0–3); **expanded grid constructed** (ready to run)
+**Status:** **done / closed** — pilot analysed; M12x analysed (Stage-3 done); M1.3 next
 
 | Phase | Status | Notes |
 |-------|--------|-------|
 | Pilot (5 minimal fixtures × ECAI/AAMAS) | Analysed | Historical artefacts below (unchanged) |
 | Expanded design | Approach + unit set + cards locked | Approach + unit set + [`mechanism_cards/`](mechanism_cards/) |
-| Expanded implementation | **Constructed** | Fixtures `handcrafted_m12x.py`; YAMLs `M12x_{ecai2024,aamas2025}`; dry-run 11+11 cells |
-| Expanded learning runs | Not started | Next: `run_grid` both arms |
+| Expanded implementation | Constructed | Fixtures `handcrafted_m12x.py`; YAMLs `M12x_{ecai2024,aamas2025}` |
+| Expanded learning runs | Done | 22/22 `solved` (2026-07-16) |
+| Summary matrix / cell reports | Done | `M12x_summary.md` + `M12x_cell_reports/` |
+| Stage-3 qualitative write-up | **Done** | [`M1.2-expanded-cell-inspection.md`](../../../experiments/qualitative/M1.2-expanded-cell-inspection.md) |
 
 **Expanded M1.2 Approach:**  
 [`milestone1_part2_expanded_approach.md`](milestone1_part2_expanded_approach.md)  
@@ -26,7 +28,8 @@
 - Configs: `causal/configs/experiments/M12x_{ecai2024,aamas2025}.yaml` (no `grid.seed`; slug `{dgp}__target-{t}`)
 - Checks: `causal/tests/test_m12x_fixtures.py`, `test_m12x_configs.py`
 - Record: `docs/experiments/qualitative/M1.2-expanded.md`
-- Output (after run): `causal/outputs/aba_learning/grid/M12x_{ecai2024,aamas2025}/`
+- Stage-3 inspection: `docs/experiments/qualitative/M1.2-expanded-cell-inspection.md`
+- Output: `causal/outputs/aba_learning/grid/M12x_{ecai2024,aamas2025}/`; `M12x_summary.md`
 
 **Pilot artefacts** (historical; unchanged)
 
@@ -55,4 +58,4 @@
 
 **Parent index:** [milestone1-plan.md](../milestone1-plan.md)
 
-**Next:** run both M12x arms → inspect against mechanism-card \(\mathcal{H}^\star\).
+**Next:** M1.3 (claims + probes from Stage-3 patterns).

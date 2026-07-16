@@ -2,6 +2,45 @@
 
 Chronological notes on experiment progress, decisions, and milestones. Detailed evidence remains in experiment records and artefact paths cited below.
 
+## 2026-07-16 — M1.2 closed; documentation updated for M1.3
+
+- **Decision:** M12x evidence package complete; Part 2 closed; **M1.3 starts**.
+- **Updated:** `milestone1_high_level_path.md`; `milestone1-plan.md`;
+  `milestone1_part2_expanded_approach.md` (design complete); `milestone1_part3/`;
+  `experiments_summary.md`; `experiment_register.md` (M13 in progress);
+  `research_state.md`; `report_state.md`; `AGENTS.md`; `PROJECT_README.md`;
+  chatgpt_context governance / orientation mirrors.
+- **Record opened:** `docs/experiments/qualitative/M1.3-failure-modes.md`
+  (seed patterns listed; claims/probes still TBD).
+- **Next work:** draft candidate M1.3 claims from Stage-3 seed patterns.
+
+## 2026-07-16 — M12x Stage-3 cell inspection (22 cells)
+
+- **Doc:** `docs/experiments/qualitative/M1.2-expanded-cell-inspection.md`
+- **Vocabulary:** Approach (`config`, \(\mathcal{H}_t^\star\), `nz`/`val`, ancestors /
+  distractors / descendant failure mode).
+- **Headline:** 0/22 exact compact-`nz` \(\mathcal{H}^\star\); AAMAS cites descendants
+  on U5-x1, U6-x2, U7-x2; ECAI often assumption-mediated or inferior `val`-expansions.
+- **Status:** expanded M1.2 `analysed`. Next: M1.3 claims + probes.
+
+## 2026-07-16 — M12x summary matrix + 22 cell reports
+
+- **Command:** `python -m causal.experiments.m12x_summary`
+- **Outputs:** `M12x_summary.md` / `.json`; `M12x_cell_reports/` (22 cells).
+- **Detectors:** 0/22 exact compact-nz H*; ECAI 3 val-expansions; AAMAS 3 descendant
+  citations (U5-x1, U6-x2, U7-x2).
+- **Next:** Stage-3 plain-English inspection write-up → M1.3.
+
+## 2026-07-16 — M12x learning run: 22/22 solved
+
+- **Commands:** `run_grid` on `M12x_ecai2024.yaml` and `M12x_aamas2025.yaml` (`--no-resume`).
+- **Result:** ECAI 11/11 solved; AAMAS 11/11 solved; no timeouts/errors.
+- **Artefacts:** `causal/outputs/aba_learning/grid/M12x_{ecai2024,aamas2025}/`;
+  `M12x_learned_rules.md`.
+- **Record:** `docs/experiments/qualitative/M1.2-expanded.md` status `run`.
+- **Note:** `solved` ≠ \(\mathcal{H}^\star\) match. AAMAS deltas often cite
+  descendants/siblings (failure modes to inspect). Next: cell inspection → M1.3.
+
 ## 2026-07-16 — Optional grid.seed; M12x slugs without __seed-
 
 - **Change:** `grid.seed` optional; omit for M12x; slug = `{dgp}__target-{t}`.

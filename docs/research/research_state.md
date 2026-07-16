@@ -129,10 +129,11 @@ Expanded Approach:
 `docs/research/milestone_plans/milestone1_part2/milestone1_part2_expanded_approach.md`.
 
 - **M1.1** — closed.
-- **M1.2 pilot** — analysed (10 cells, ECAI+AAMAS). **Expanded Approach locked**
-  (deterministic copy/min/max; \(k=3\); nonzero-positive; `val`+`nz` BK; ECAI+AAMAS).
-  Next: graph/mechanism cards, then implement/run/inspect.
-- **M1.3** — after expanded M1.2: evidence-backed recovery patterns and limits.
+- **M1.2** — closed: pilot analysed; **M12x** analysed (22/22 solved; Stage-3
+  inspection; 0 exact compact-`nz` \(\mathcal{H}^\star\)).
+- **M1.3** — **current (planned / starting):** evidence-backed recovery patterns and
+  limits from M12x (claims + probes). Record:
+  `docs/experiments/qualitative/M1.3-failure-modes.md`. Plan: `milestone1_part3/`.
 - **No M1.4** — large-graph / bnlearn evaluation deferred to a later evaluation milestone.
 
 Then **Milestone 2** (Causal-ABA-guided ABA Learning bridge), informed by M1.3.
