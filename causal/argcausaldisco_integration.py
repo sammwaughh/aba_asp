@@ -195,6 +195,7 @@ def generate_aba_background_knowledge(
     exclude_cols: Optional[List[str]] = None,
     continuous_bins: int = 2,
     bin_strategy: str = "quantile",
+    definitional_nz: bool = False,
 ) -> Path:
     """Build foldable ABA-ASP background knowledge and companion CSVs.
 
@@ -203,6 +204,9 @@ def generate_aba_background_knowledge(
     - Non-binary discrete variables emit value-specific predicates (x0_val_7(A)).
     - Continuous variables are binned (quantile/uniform) into x0_binK(A).
     - Columns in ``exclude_cols`` are skipped (e.g., the learning target).
+    - When ``definitional_nz`` is True, each non-binary discrete predictor also
+      gets factual nonzero rules ``col_nz(A) :- col_val_1(A).`` /
+      ``col_nz(A) :- col_val_2(A).`` (expanded M1.2 / M12x regime).
     - Outputs: ``{name}.bk.aba`` plus ``{name}.csv`` and ``{name}.binned.csv`` (if any continuous vars).
     """
     lines = []
@@ -243,6 +247,10 @@ def generate_aba_background_knowledge(
                     value = int(df[col].iloc[idx])
                     pred_name = f"{col}_val_{value}"
                     lines.append(f"{pred_name}(A) :- A={sample_id}.")
+                if definitional_nz:
+                    lines.append(f"% Definitional nonzero predicates for {col} (facts)")
+                    lines.append(f"{col}_nz(A) :- {col}_val_1(A).")
+                    lines.append(f"{col}_nz(A) :- {col}_val_2(A).")
         else:
             # Continuous: bin using the shared utility (matches aba_asp.utils.data_utils)
             values = df[col].astype(float).to_numpy()

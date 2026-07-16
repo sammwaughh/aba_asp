@@ -61,7 +61,8 @@ For target \(t\):
 
 ## Background knowledge
 
-For every predictor variable \(x\):
+**Predictors** = every column except the learning target \(t\) (see next section). For
+each such variable \(x\):
 
 - exact-value predicates `x_val_0`, `x_val_1`, `x_val_2`;
 - definitional nonzero rules (**facts**, not assumptions):
@@ -76,19 +77,24 @@ knowledge.
 
 ## Predictors for a target \(t\)
 
+**BK includes every variable except the target \(t\)** (full table columns minus \(t\)),
+with `val` + definitional `nz` for each. That includes **ancestors, siblings, and
+descendants**. Distractors are left in the BK on purpose.
+
 For each \((G,t)\), record explicitly:
 
-| Set | Role |
-|-----|------|
-| **Ancestors of \(t\)** | May appear in a good intensional rule |
-| **Non-ancestors in BK** (e.g. siblings) | Distractors that may appear in BK; citing them in a learned rule is a divergence to inspect |
-| **Descendants of \(t\)** | **Forbidden** as predictors |
+| Set | Role in BK | Role in a *good* learned rule |
+|-----|------------|-------------------------------|
+| **Ancestors of \(t\)** | Included | May appear |
+| **Non-ancestor non-descendants** (e.g. siblings, isolated) | Included as distractors | Citing them is a divergence to inspect |
+| **Descendants of \(t\)** | **Included as distractors** | Citing them is an **explicit failure mode** (wrong causal direction) |
 
 Rules:
 
-- Exclude always: \(t\) itself and every **descendant** of \(t\).
-- **Descendant citation is an explicit failure mode** (wrong causal direction); Fabrizio
-  wants this tested.
+- Exclude from BK **only** the target \(t\) itself.
+- **Do include descendants** of \(t\) in BK when they exist. The point of the experiment
+  is to test whether the learner **ignores** them. Fabrizio wants descendant citation
+  tested as a failure mode; excluding them from BK would make that test impossible.
 - In the intended reading, non-target literals in a good intensional rule should be
   **ancestors of \(t\)**, not siblings or descendants.
 
@@ -128,8 +134,9 @@ Before coding a graph:
 2. Nodes, edges, sources \(S\), non-sources \(N\).
 3. \(k=3\); every \(f_y\) for \(y\in N\).
 4. Full \(\mathcal{D}\) (or an unambiguous generation rule = full source factorial).
-5. For every target \(t\in N\): ancestors / non-ancestor distractors / forbidden descendants;
-   \(E^\pm\); \(\mathcal{H}_t^\star\); short semantic success description.
+5. For every target \(t\in N\): ancestors / sibling-or-other distractors / **descendant
+   distractors (in BK)**; \(E^\pm\); \(\mathcal{H}_t^\star\); short semantic success
+   description.
 6. Non-collapse / relevance notes (why the mechanism mix does not make nodes irrelevant).
 
 ## What we record per cell (after runs)
@@ -153,7 +160,8 @@ x2(A) :- x0_nz(A).
 x2(A) :- x1_nz(A).
 ```
 
-BK: `x0`/`x1` value predicates + definitional `*_nz`; target excluded; no descendants.
+BK: `x0`/`x1` value predicates + definitional `*_nz`; target excluded. (No descendants
+on this one-target sink fixture.)
 
 Cells: `(max_collider, x2, ECAI)`, `(max_collider, x2, AAMAS)`.
 
@@ -165,11 +173,12 @@ Cells: `(max_collider, x2, ECAI)`, `(max_collider, x2, AAMAS)`.
 | Labelling (nonzero-positive); \(k=3\) | Locked |
 | BK (`val` + definitional `nz`) | Locked |
 | Configs (ECAI, AAMAS) | Locked |
-| Predictor / descendant policy | Locked |
+| Predictor policy (all non-targets in BK; descendant citation = failure) | Locked (corrected 2026-07-16) |
 | Inspection-first acceptance (no precise pre-enumerated \(\mathcal{A}_t\)) | Locked |
-| Graph selection + per-graph \(f_y\) cards | **In progress** (next) |
+| Graph × mechanism unit set | **Accepted** — [`milestone1_part2_expanded_unit_set.md`](milestone1_part2_expanded_unit_set.md) (U1–U7, 22 cells) |
+| Mechanism cards U1–U7 | **Written** — [`mechanism_cards/`](mechanism_cards/) |
+| Fixtures + 22-cell grid (M12x) | **Constructed** — `handcrafted_m12x.py`, `M12x_{ecai2024,aamas2025}.yaml` |
 
 ## Next step
 
-Select graphs one at a time and write each full mechanism card against this Approach.
-Then implement, run, and inspect.
+Run both M12x arms (`run_grid`), then inspect against mechanism-card \(\mathcal{H}^\star\).

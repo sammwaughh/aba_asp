@@ -8,12 +8,15 @@ random simulators.
 
 from __future__ import annotations
 
-from collections.abc import Callable
+from collections.abc import Callable, Mapping
 from dataclasses import dataclass
 
 import pandas as pd
 
 from causal.metrics import GroundTruth
+
+# (pos_atoms, neg_atoms) for one learning target.
+ExamplesPair = tuple[tuple[str, ...], tuple[str, ...]]
 
 
 @dataclass(frozen=True)
@@ -28,6 +31,26 @@ class HandcraftedFixture:
     nodes: int
     edges: tuple[tuple[int, int], ...]
     default_target: str = "x2"
+    # When set, YAML/grid default targets (inspection order: nearer sources first).
+    learning_targets: tuple[str, ...] | None = None
+    # Per-target E+/E−; if absent, ``pos_examples``/``neg_examples`` apply to
+    # ``default_target`` only.
+    examples_by_target: Mapping[str, ExamplesPair] | None = None
+
+    def resolved_learning_targets(self) -> tuple[str, ...]:
+        if self.learning_targets is not None:
+            return self.learning_targets
+        return (self.default_target,)
+
+    def examples_for_target(self, target: str) -> ExamplesPair:
+        if self.examples_by_target is not None and target in self.examples_by_target:
+            return self.examples_by_target[target]
+        if target == self.default_target:
+            return self.pos_examples, self.neg_examples
+        raise ValueError(
+            f"handcrafted fixture {self.key!r} has no examples for target {target!r}; "
+            f"known={sorted((self.examples_by_target or {}).keys()) or [self.default_target]}"
+        )
 
     def ground_truth(self) -> GroundTruth:
         names = tuple(f"x{i}" for i in range(self.nodes))
@@ -126,6 +149,10 @@ from causal.experiments.handcrafted_m12 import (  # noqa: E402
     M12_ALIASES,
     M12_BUILDERS,
 )
+from causal.experiments.handcrafted_m12x import (  # noqa: E402
+    M12X_ALIASES,
+    M12X_BUILDERS,
+)
 
 _ALIASES.update(QI001_ALIASES)
 _BUILDERS.update(QI001_BUILDERS)
@@ -139,3 +166,5 @@ _ALIASES.update(M11_ALIASES)
 _BUILDERS.update(M11_BUILDERS)
 _ALIASES.update(M12_ALIASES)
 _BUILDERS.update(M12_BUILDERS)
+_ALIASES.update(M12X_ALIASES)
+_BUILDERS.update(M12X_BUILDERS)

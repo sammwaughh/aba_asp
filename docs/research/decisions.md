@@ -2,6 +2,36 @@
 
 Recorded decisions that affect experiment direction. Evidence and interpretation remain in experiment records.
 
+## 2026-07-16 — Optional grid.seed (no dummy seed for deterministic grids)
+
+**Decision:** `grid.seed` is optional. Omit it for deterministic experiments
+(M12x). Slug dirs then use `{dgp}__target-{t}` with no `__seed-` suffix.
+`seed: []` is rejected; stochastic discrete/continuous cells still need a seed
+at run time.
+
+## 2026-07-16 — Expanded M1.2 (M12x) grid constructed
+
+**Decision:** Implement U1–U7 as new experiment id **M12x** (pilot `M12_*` /
+`m12_*` left unchanged). Nonzero labels; definitional `*_nz` BK via
+`defaults.definitional_nz`; multi-target cells with `grid.cell_dir: slug`;
+**no** `grid.seed`.
+
+**Artefacts:** `handcrafted_m12x.py`; `M12x_{ecai2024,aamas2025}.yaml`;
+`docs/experiments/qualitative/M1.2-expanded.md`.
+
+## 2026-07-16 — Expanded M1.2: descendants stay in BK as distractors
+
+**Decision (correction):** When learning target \(t\), background knowledge includes
+**all variables except \(t\)**, including **descendants** of \(t\). They are intentional
+distractors. A good learned rule should ignore them and use ancestors only. Citing a
+descendant in an intensional rule is an explicit failure mode Fabrizio wants tested.
+
+**Was wrong:** treating descendants as excluded from BK (that would make the failure-mode
+test impossible).
+
+**Updates:** `milestone1_part2_expanded_approach.md` (Predictors section); unit-set card
+checklist; part2 README; decisions Approach entry below; related pointers.
+
 ## 2026-07-16 — Expanded M1.2 Approach locked (design reference)
 
 **Decision:** Lock the expanded M1.2 **Approach** before graph selection finishes and before
@@ -14,16 +44,19 @@ any new runs. Canonical doc:
   full source factorial; alphabet \(k=3\) always; nonzero-positive labelling.
 - BK: exact `val` predicates + definitional `nz` rules (facts, not assumptions/contraries).
 - Configs: ECAI and AAMAS only.
-- Cells: (fixture, non-source target, config); descendants of the target never appear as
-  predictors (descendant citation = explicit failure mode to test).
-- Good intensional rules should use ancestors of the target; siblings may appear in BK as
-  distractors.
+- Cells: (fixture, non-source target, config); BK includes **all non-target columns**
+  (ancestors, siblings, **and descendants**). Only the target is excluded from BK.
+  Descendant (and sibling) *citation in a learned rule* is a failure/divergence to
+  inspect — distractors are left in BK so the learner can be tested on ignoring them.
+- Good intensional rules should use ancestors of the target only.
 - Reference \(\mathcal{H}_t^\star\) in compact `nz` form; no precisely pre-enumerated
   acceptable set — post-run semantic inspection.
 - Original five pilot fixtures will be redesigned under this regime.
 
-**Still open under the Approach:** which Fabrizio graphs to include, and the per-graph
-mechanism cards.
+**Follow-on (same day):** unit set U1–U7 accepted — see
+`docs/research/milestone_plans/milestone1_part2/milestone1_part2_expanded_unit_set.md`.
+Mechanism cards U1–U7 written under
+`docs/research/milestone_plans/milestone1_part2/mechanism_cards/`.
 
 **Points to:** `milestone1_high_level_path.md` §1 (design lock in progress).
 

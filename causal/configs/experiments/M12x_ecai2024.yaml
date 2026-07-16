@@ -1,0 +1,51 @@
+experiment_id: M12x_ecai2024
+description: "Expanded M1.2 (M12x) arm ECAI: configs/ecai2024_config.pl on units U1–U7 (mechanism cards). Deterministic copy/min/max; k=3; nonzero-positive labels; val+definitional nz BK; all non-source targets; descendants kept in BK as distractors. Unguided ABA Learning rule recovery, NOT Russo-style Causal ABA."
+owner: sam
+
+defaults:
+  graph_type: handcrafted_table
+  bins: 3
+  bin_strategy: uniform
+  prolog_timeout_s: 60
+  query_timeout_s: 5
+  prolog_config: configs/ecai2024_config.pl
+  definitional_nz: true
+
+dgps:
+  - id: m12_u1_separator_copy
+    graph_type: handcrafted_table
+    source: m12_u1_separator_copy
+    targets: [x2]
+  - id: m12_u2_collider_min
+    graph_type: handcrafted_table
+    source: m12_u2_collider_min
+    targets: [x2]
+  - id: m12_u3_collider_max
+    graph_type: handcrafted_table
+    source: m12_u3_collider_max
+    targets: [x2]
+  - id: m12_u4_fork_double_copy
+    graph_type: handcrafted_table
+    source: m12_u4_fork_double_copy
+    targets: [x1, x2]
+  - id: m12_u5_chain_double_copy
+    graph_type: handcrafted_table
+    source: m12_u5_chain_double_copy
+    targets: [x1, x2]
+  - id: m12_u6_g1_and_cone
+    graph_type: handcrafted_table
+    source: m12_u6_g1_and_cone
+    targets: [x2, x3]
+  - id: m12_u7_g1_or_cone
+    graph_type: handcrafted_table
+    source: m12_u7_g1_or_cone
+    targets: [x2, x3]
+
+grid:
+  # No seed: deterministic handcrafted tables (omit grid.seed entirely).
+  # Ignored when DGP entries set targets; required by schema.
+  target: [x2]
+  cell_dir: slug
+
+provenance:
+  code_commit_required: true

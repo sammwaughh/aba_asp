@@ -30,6 +30,7 @@ _CELL_DIR_MODES = frozenset({"hash", "dgp", "slug"})
 
 @dataclass(frozen=True)
 class GridSpec:
+    # Empty when ``grid.seed`` is omitted (deterministic / no-seed experiments).
     seeds: tuple[int, ...]
     target: str | tuple[str, ...]  # "all" or explicit targets
     n: tuple[int, ...] | None = None  # used when DGP entries omit per-dgp ``n``
@@ -53,7 +54,7 @@ class CellSpec:
     nodes: int
     edges: tuple[tuple[int, int], ...]
     n: int
-    seed: int
+    seed: int | None  # None when ``grid.seed`` omitted (no seed dimension)
     target: str
     config_hash: str
     run_id: str
@@ -127,10 +128,15 @@ def _parse_seeds(seed_obj: Any, *, where: str) -> tuple[int, ...]:
 
     Accepts either an explicit non-empty list of ints, or a mapping
     ``{range: [start, end]}`` which expands to ``range(start, end)``.
+    Callers that omit ``grid.seed`` entirely should pass ``None`` and treat the
+    result as “no seed dimension” (empty tuple), not call this helper.
     """
     if isinstance(seed_obj, list):
         if not seed_obj:
-            raise ConfigError(f"{where} must be non-empty")
+            raise ConfigError(
+                f"{where} must be non-empty when present; omit grid.seed for "
+                "deterministic / no-seed experiments"
+            )
         return tuple(_require_int(s, where=f"{where}[{i}]") for i, s in enumerate(seed_obj))
     if isinstance(seed_obj, dict):
         d = _require_dict(seed_obj, where=where)
@@ -196,7 +202,7 @@ def _cell_dir_name(
     *,
     dgp: str,
     target: str,
-    seed: int,
+    seed: int | None,
     run_id: str,
 ) -> str:
     """Return the filesystem directory name for a grid cell."""
@@ -205,6 +211,8 @@ def _cell_dir_name(
     if mode == "dgp":
         return dgp
     if mode == "slug":
+        if seed is None:
+            return f"{dgp}__target-{target}"
         return f"{dgp}__target-{target}__seed-{seed}"
     raise ConfigError(f"unsupported grid.cell_dir mode: {mode!r}")
 
@@ -262,7 +270,7 @@ def _resolve_handcrafted_dgp(dgp: Mapping[str, Any], *, where: str) -> DGPSpec:
     targets_obj = dgp.get("targets")
     targets: tuple[str, ...] | None
     if targets_obj is None:
-        targets = (fx.default_target,)
+        targets = fx.resolved_learning_targets()
     else:
         t_list = _require_list(targets_obj, where=f"{where}.targets")
         targets = tuple(_require_str(t, where=f"{where}.targets[{i}]") for i, t in enumerate(t_list))
@@ -352,7 +360,11 @@ def load_config(path: Path) -> ExperimentConfig:
         dgps.append(spec)
 
     grid_obj = _require_dict(cfg.get("grid"), where="grid")
-    seeds = _parse_seeds(grid_obj.get("seed"), where="grid.seed")
+    seed_obj = grid_obj.get("seed")
+    if seed_obj is None:
+        seeds: tuple[int, ...] = ()
+    else:
+        seeds = _parse_seeds(seed_obj, where="grid.seed")
 
     n_vals: tuple[int, ...] | None
     n_obj = grid_obj.get("n")
@@ -454,12 +466,18 @@ def expand_cells(cfg: ExperimentConfig, *, config_path: Path) -> list[CellSpec]:
         else:
             raise ConfigError(f"DGP {dgp.id} has no n and grid.n is absent")
 
+        # Empty seeds ⇒ one cell with seed=None (no seed dimension).
+        seed_values: tuple[int | None, ...] = (
+            tuple(cfg.grid.seeds) if cfg.grid.seeds else (None,)
+        )
+
         for n in n_values:
-            for seed in cfg.grid.seeds:
+            for seed in seed_values:
                 for target in targets:
+                    seed_token = "none" if seed is None else str(seed)
                     payload = (
                         f"{cfg.experiment_id}|{dgp.id}|{dgp.nodes}|{dgp.edges}|"
-                        f"{n}|{seed}|{target}|{graph_type}|{config_hash}"
+                        f"{n}|{seed_token}|{target}|{graph_type}|{config_hash}"
                     )
                     run_id = _short_run_id(payload)
                     dir_name = _cell_dir_name(

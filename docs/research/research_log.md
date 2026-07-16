@@ -2,6 +2,36 @@
 
 Chronological notes on experiment progress, decisions, and milestones. Detailed evidence remains in experiment records and artefact paths cited below.
 
+## 2026-07-16 — Optional grid.seed; M12x slugs without __seed-
+
+- **Change:** `grid.seed` optional; omit for M12x; slug = `{dgp}__target-{t}`.
+- **Docs:** INFRA.md §3.2; decisions.md.
+
+## 2026-07-16 — Expanded M1.2 (M12x) fixtures + 22-cell grid constructed
+
+- **Fixtures:** `causal/experiments/handcrafted_m12x.py` (U1–U7; nonzero labels).
+- **BK:** `definitional_nz` gated in `generate_aba_background_knowledge` (descendants stay in BK).
+- **Configs:** `M12x_ecai2024.yaml`, `M12x_aamas2025.yaml` (`cell_dir: slug`; no `grid.seed`; 11 cells each).
+- **Record:** `docs/experiments/qualitative/M1.2-expanded.md`.
+- **Verified:** pytest (M12+M12x); dry-run 11+11 cells.
+- **Next:** run both arms, then inspect.
+
+## 2026-07-16 — Expanded M1.2 mechanism cards U1–U7 written
+
+- **Folder:** `docs/research/milestone_plans/milestone1_part2/mechanism_cards/`
+- **Contents:** README + one card per unit (full \(\mathcal{D}\), per-target BK including
+  descendant distractors, \(E^\pm\), \(\mathcal{H}_t^\star\), semantic success).
+- **Next:** implement fixtures/BK from cards → run 22-cell grid → inspect.
+
+## 2026-07-16 — Expanded M1.2: descendants stay in BK (correction)
+
+- **Correction:** When learning target \(t\), BK includes **all other columns**,
+  including descendants. They are distractors; citing them in a learned rule is the
+  failure mode under test. Only \(t\) itself is excluded from BK.
+- **Was wrong:** wording that treated descendants as excluded from BK.
+- **Docs:** Approach Predictors section; unit-set card checklist; part2 README;
+  config-comparison header; `decisions.md`.
+
 ## 2026-07-16 — Expanded M1.2 Approach written
 
 - **Doc:** `docs/research/milestone_plans/milestone1_part2/milestone1_part2_expanded_approach.md`

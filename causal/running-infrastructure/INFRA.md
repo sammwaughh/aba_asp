@@ -155,18 +155,25 @@ provenance:
 - `defaults` apply to every cell; a DGP entry may override `graph_type`,
   `example_split`, `n`, or `targets` for itself.
 - The cell list is the Cartesian product `dgps × n × seeds × targets`.
-- `seed: { range: [a, b] }` expands to `range(a, b)`.
+- `grid.seed` is **optional**. Omit it for deterministic / no-seed experiments
+  (e.g. handcrafted tables): expansion uses a single cell with `seed=None`.
+  When present, `seed: { range: [a, b] }` expands to `range(a, b)`, or use an
+  explicit non-empty list. An empty `seed: []` is rejected — omit the key instead.
+- Stochastic `discrete` / `continuous` cells require a real seed at run time
+  (stage 1 errors if `seed` is `None`).
 - `target: all` expands to `["x0", …, "x_{nodes-1}"]` per DGP.
 - For `graph_type: handcrafted_table`, the DGP entry carries a `source` naming a
   fixture in `handcrafted.py`, and `example_split` is forced to `handcrafted`.
 - Each cell gets a `run_id` = first 12 hex chars of the SHA-1 of
-  `experiment_id|dgp|nodes|edges|n|seed|target|graph_type|config_hash`. This is
-  stored in `metrics.json` / `results.parquet` and is stable across reruns.
+  `experiment_id|dgp|nodes|edges|n|seed|target|graph_type|config_hash`
+  (`seed` token is `none` when `grid.seed` was omitted). This is stored in
+  `metrics.json` / `results.parquet` and is stable across reruns.
 - Optional `grid.cell_dir` controls the filesystem directory name under
   `cells/` (default `hash`):
   - `hash` — `cell_dir_name == run_id` (legacy behaviour; safe for large grids).
   - `dgp` — `cell_dir_name == dgp.id` (e.g. `m11_binary_A`; one cell per DGP).
-  - `slug` — `{dgp}__target-{target}__seed-{seed}` (multiple seeds/targets per DGP).
+  - `slug` — `{dgp}__target-{target}__seed-{seed}` when a seed is present;
+    `{dgp}__target-{target}` when `grid.seed` was omitted.
 - `expand_cells` rejects configs where two cells share the same `cell_dir_name`.
 - Resume (`cell_is_done`): a cell is skipped only when `metrics.json` parses and
   its stored `config_hash` matches the current config. This keeps `dgp`/`slug`
@@ -178,7 +185,8 @@ provenance:
 
 - is missing required keys, or whose `experiment_id` ≠ filename stem;
 - has duplicate DGP ids, or edges referencing nodes outside `range(nodes)`;
-- has a non-positive `n`, an empty seed range, or a target out of range.
+- has a non-positive `n`, an empty seed list when `grid.seed` is present, or a
+  target out of range.
 
 `--dry-run` loads + expands the config, prints the planned cell count, and exits.
 

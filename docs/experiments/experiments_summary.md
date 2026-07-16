@@ -37,8 +37,9 @@ Use the same status categories as `experiment_register.md`.
 | QI-002 greedy | — | Greedy-folding rerun of QI-002 (minimal truth-table baseline) | analysed | `docs/experiments/qualitative/QI002_minimal_motifs_greedy/` | `causal/configs/experiments/QI002_minimal_motifs_greedy.yaml` | `causal/outputs/aba_learning/grid/QI002_minimal_motifs_greedy/` | Interim Experimentation / Progress | Only change `folding_mode: greedy`. 6/6 solved (vs nd 5/6): solves the binary collider nd could not; cat3 collider now exact; clean recovery 3/6 -> 4/6 with one regression (cat3 fork exact -> superset). |
 | QI-004 greedy | — | Greedy-folding rerun of QI-004 (scaled noisy n=20) | analysed | `docs/experiments/qualitative/QI004_scaled_motifs_n20_greedy/` | `causal/configs/experiments/QI004_scaled_motifs_n20_greedy.yaml` | `causal/outputs/aba_learning/grid/QI004_scaled_motifs_n20_greedy/` | Interim Experimentation / Progress | Only change `folding_mode: greedy`. Same outcomes as nd (1 solved, 12 no-solution, 2 errors; 0/15 clean) but ~120x faster (≈1233 s -> ≈10 s). At noisy n=20 greedy changes only runtime; binary errors persist. |
 | M11 | — | m1.1 Parent-position and representation-order control | analysed | `docs/experiments/qualitative/M1.1-parent-position.md` | `causal/configs/experiments/M11_parent_position.yaml`; `M11_parent_position_greedy.yaml` | `M11_parent_position/cells/`; `M11_parent_position_greedy/`; `M11_ablations/` | Interim Experimentation / Progress (Milestone 1) | nd: 8/8 solved; binary σ/π pass; cat3 σ fails (ablation-supported). Stage 7 greedy: binary matches nd; cat3 all supersets; rule-level σ restored under greedy. |
-| M12 | — | m1.2 Published-configuration comparison (ASP-ABAlearnB / Greedy ABA Learning) | pilot analysed; Approach locked; mechanism cards next | `docs/experiments/qualitative/M1.2-config-comparison.md`; Approach `milestone1_part2_expanded_approach.md` | `causal/configs/experiments/M12_ecai2024.yaml`; `M12_aamas2025.yaml` | `causal/outputs/aba_learning/grid/M12_{ecai2024,aamas2025}/` (pilot) | Interim Experimentation / Progress (Milestone 1) | Expanded Approach locked (copy/min/max; k=3; nz BK; ECAI+AAMAS). Next: graph/mechanism cards, then implement/run. No M1.4. |
-| M13 | — | m1.3 Recovery patterns and limits (claims + targeted probes after expanded M1.2) | not started | `docs/experiments/qualitative/M1.3-failure-modes.md` (planned) | — (analysis over expanded M1.2; targeted probes as needed) | `causal/outputs/aba_learning/grid/M13_<ablation-id>/` (only if probes run) | Interim Experimentation / Progress (Milestone 1) | Waits on expanded M1.2. Plain-English evidence-backed subsections; see `milestone1_high_level_path.md`. |
+| M12 | — | m1.2 Published-configuration comparison (pilot) | pilot analysed | `docs/experiments/qualitative/M1.2-config-comparison.md` | `causal/configs/experiments/M12_ecai2024.yaml`; `M12_aamas2025.yaml` | `causal/outputs/aba_learning/grid/M12_{ecai2024,aamas2025}/` | Interim Experimentation / Progress (Milestone 1) | 10-cell pilot analysed. Expanded work continues as M12x. No M1.4. |
+| M12x | — | m1.2 expanded U1–U7 (ECAI/AAMAS; nz BK; 22 cells) | implemented (ready to run) | `docs/experiments/qualitative/M1.2-expanded.md`; cards in `mechanism_cards/` | `causal/configs/experiments/M12x_ecai2024.yaml`; `M12x_aamas2025.yaml` | `causal/outputs/aba_learning/grid/M12x_{ecai2024,aamas2025}/` (pending run) | Interim Experimentation / Progress (Milestone 1) | Fixtures + dry-run 11+11 cells green. Next: run both arms → inspect. |
+| M13 | — | m1.3 Recovery patterns and limits (claims + targeted probes after expanded M1.2) | not started | `docs/experiments/qualitative/M1.3-failure-modes.md` (planned) | — (analysis over expanded M1.2; targeted probes as needed) | `causal/outputs/aba_learning/grid/M13_<ablation-id>/` (only if probes run) | Interim Experimentation / Progress (Milestone 1) | Waits on expanded M1.2 runs. Plain-English evidence-backed subsections; see `milestone1_high_level_path.md`. |
 
 ## Experiment sequence to date and next
 
@@ -150,13 +151,23 @@ Workflow:
 
 ## Next action
 
-**Finish locking expanded M1.2** per
-`docs/research/milestone_plans/milestone1_part2/milestone1_part2_expanded_approach.md`:
-select graphs and write mechanism cards; then implement/run/inspect. After that, **M1.3**.
+**Run expanded M1.2 (M12x)** both arms, then inspect against mechanism-card
+\(\mathcal{H}^\star\). After that, **M1.3**.
+
+```bash
+conda run -n aba-asp python -m causal.experiments.run_grid \
+  --config causal/configs/experiments/M12x_ecai2024.yaml --no-resume
+conda run -n aba-asp python -m causal.experiments.run_grid \
+  --config causal/configs/experiments/M12x_aamas2025.yaml --no-resume
+```
+
+Cell dirs: `cells/{dgp}__target-{t}/` (no `__seed-`; `grid.seed` omitted).
+
 
 Completed so far in Milestone 1:
 
 1. **M1.1 (M11)** — closed.
 2. **M1.2 pilot (M12)** — Stages 0–3 analysed (10 cells).
+3. **M1.2 expanded (M12x)** — fixtures/BK/grid constructed (22 cells; not yet run).
 
-Remaining: expanded M1.2 → M1.3 → Milestone 1 write-up. No M1.4.
+Remaining: M12x run + inspect → M1.3 → Milestone 1 write-up. No M1.4.

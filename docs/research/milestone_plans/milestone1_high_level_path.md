@@ -18,12 +18,15 @@ No Causal ABA integration in this milestone. Large-graph / bnlearn comparisons a
 |------|--------|-------------|
 | **M1.1** | Closed | Parent-position / representation-order control; ordering mechanism established |
 | **M1.2 pilot** | Analysed (Stages 0–3) | Historical 10-cell grid; to be redesigned under the expanded Approach |
-| **M1.2 expanded** | Design lock in progress | Approach locked; graph/mechanism cards next |
+| **M1.2 expanded** | Grid constructed; run next | M12x 22-cell grid ready (`M12x_{ecai2024,aamas2025}`) |
 | **M1.3** | After expanded M1.2 | Evidence-backed claims about recovery patterns and limits |
 | **M1.4** | Does not exist | Large-graph tests deferred to a future evaluation milestone |
 
-**Expanded M1.2 Approach (design reference):**  
-[`milestone1_part2/milestone1_part2_expanded_approach.md`](milestone1_part2/milestone1_part2_expanded_approach.md)
+**Expanded M1.2 Approach:**  
+[`milestone1_part2/milestone1_part2_expanded_approach.md`](milestone1_part2/milestone1_part2_expanded_approach.md)  
+
+**Accepted unit set (U1–U7):**  
+[`milestone1_part2/milestone1_part2_expanded_unit_set.md`](milestone1_part2/milestone1_part2_expanded_unit_set.md)
 
 Pilot artefacts (keep for provenance; not the expanded design):  
 `docs/experiments/qualitative/M1.2-config-comparison.md`,  
@@ -36,16 +39,17 @@ Pilot artefacts (keep for provenance; not the expanded design):
 
 ### 1. Lock the expanded M1.2 design (before more runs) — **in progress**
 
-**Approach locked** (DGP, labelling, BK, configs, predictor policy, inspection stance):  
+**Approach locked:**  
 [`milestone1_part2/milestone1_part2_expanded_approach.md`](milestone1_part2/milestone1_part2_expanded_approach.md)
 
-Still to lock under that Approach:
+**Unit set accepted (U1–U7, 22 cells):**  
+[`milestone1_part2/milestone1_part2_expanded_unit_set.md`](milestone1_part2/milestone1_part2_expanded_unit_set.md)
 
-- **Graph set:** which of Fabrizio’s usable small DAGs to include (exclude random / bnlearn / cycles).
-- **Mechanism cards:** for each selected graph, every \(f_y\in\{\mathrm{copy},\min,\max\}\), every non-source target, ancestor/descendant sets, reference \(\mathcal{H}_t^\star\).
-- Redesign of the original five pilot motifs inside the same regime.
+Still to lock:
 
-Do not implement or run the expanded grid until every selected cell has those inputs written down.
+- **Mechanism cards** for U1–U7 (full per-target ancestors, \(\mathcal{H}_t^\star\), etc.).
+
+Do not implement or run the expanded grid until every selected cell has its card written down.
 
 ### 2. Finish expanded M1.2 (evidence collection)
 

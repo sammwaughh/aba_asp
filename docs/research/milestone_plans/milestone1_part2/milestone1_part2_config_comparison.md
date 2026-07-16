@@ -11,7 +11,7 @@ Stage 4 findings tex deferred until the expanded grid is done.
 **Parent index:** [milestone1-plan.md](../milestone1-plan.md) (Part 2 section)
 
 **Expansion:** follow the Approach doc (deterministic copy/min/max; \(k=3\); nonzero-
-positive; `val`+`nz` BK; ECAI+AAMAS; all non-source targets; descendant exclusion).
+positive; `val`+`nz` BK; ECAI+AAMAS; all non-source targets; descendants kept in BK as distractors).
 
 ## 1. Goal and research question
 

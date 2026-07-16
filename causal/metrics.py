@@ -189,7 +189,7 @@ class CellInputs:
     graph_type: str
     target: str
     n: int
-    seed: int
+    seed: int | None
     config_hash: str
     run_id: str
     bk_path: Path

@@ -212,6 +212,42 @@ def test_expand_cells_cell_dir_slug(tmp_path: Path) -> None:
     }
 
 
+def test_expand_cells_omitted_seed_slug_has_no_seed_suffix(tmp_path: Path) -> None:
+    """When grid.seed is omitted, slug dirs are {dgp}__target-{t} (no __seed-)."""
+    p = tmp_path / "no_seed_slug.yaml"
+    p.write_text(
+        "\n".join(
+            [
+                "experiment_id: no_seed_slug",
+                "description: stub",
+                "defaults:",
+                "  graph_type: handcrafted_table",
+                "  bins: 2",
+                "  folding_steps: 15",
+                "  prolog_timeout_s: 120",
+                "  query_timeout_s: 5",
+                "dgps:",
+                "  - id: m12_u2_collider_min",
+                "    graph_type: handcrafted_table",
+                "    source: m12_u2_collider_min",
+                "    targets: [x2]",
+                "grid:",
+                "  target: [x2]",
+                "  cell_dir: slug",
+                "",
+            ]
+        ),
+        encoding="utf-8",
+    )
+    cfg = load_config(p)
+    assert cfg.grid.seeds == ()
+    cells = expand_cells(cfg, config_path=p)
+    assert len(cells) == 1
+    assert cells[0].seed is None
+    assert cells[0].cell_dir_name == "m12_u2_collider_min__target-x2"
+    assert "seed" not in cells[0].cell_dir_name
+
+
 def test_expand_cells_cell_dir_dgp_collision(tmp_path: Path) -> None:
     cfg_path = _write_cell_dir_stub(tmp_path, cell_dir="dgp", seeds="[0, 1]")
     with pytest.raises(ConfigError, match="duplicate directory name"):
