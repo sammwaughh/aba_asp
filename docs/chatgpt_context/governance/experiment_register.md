@@ -234,8 +234,8 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
 
 ### M12 — m1.2 Published-configuration comparison
 
-- Status: pilot analysed (Stages 0–3); **expansion next**. Pilot grid: 10/10 `solved`; exact-match 2/10; ASP sample coverage 10/10; cell inspection 2026-07-13. Next: expand to Fabrizio small DAGs × chosen DGP(s) per `docs/research/milestone_plans/milestone1_high_level_path.md` (exclude random/bnlearn/cycles; ECAI+AAMAS only; intended rules locked before runs). No M1.4.
-- Planning docs: `docs/research/milestone_plans/milestone1_high_level_path.md`; `docs/research/milestone_plans/milestone1_part2/`.
+- Status: pilot analysed (Stages 0–3); **expanded Approach locked**; graph/mechanism cards next. Pilot grid: 10/10 `solved`; exact-match 2/10; ASP coverage 10/10; cell inspection 2026-07-13. No M1.4.
+- Planning docs: `docs/research/milestone_plans/milestone1_high_level_path.md`; **Approach** `docs/research/milestone_plans/milestone1_part2/milestone1_part2_expanded_approach.md`; `docs/research/milestone_plans/milestone1_part2/`.
 - Record: docs/experiments/qualitative/M1.2-config-comparison.md; Stage-3 inspection: docs/experiments/qualitative/M1.2-config-comparison-cell-inspection.md.
 - Stage-0 artefacts: causal/experiments/handcrafted_m12.py (fixtures m12_sep / m12_conj / m12_disj / m12_fork / m12_chain); causal/tests/test_m12_fixtures.py (validation checks); registration in causal/experiments/handcrafted.py.
 - Stage-1 artefacts: causal/run_aba_asp.py (`prolog_config` + `_build_learning_program`); causal/experiments/run_grid.py (thread `prolog_config`); causal/argcausaldisco_integration.py (shared feature-BK generation); causal/configs/experiments/M12_{ecai2024,aamas2025}.yaml; causal/experiments/m12_summary.py (side-car); tests test_m12_configs.py / test_m12_summary.py / test_runner_program.py + extended test_runner_stage2.py.

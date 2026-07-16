@@ -1,18 +1,17 @@
 # Milestone 1, Part 2 (M1.2) — Published-configuration comparison on divergence-designed fixtures
 
-**Primary path:** [`../milestone1_high_level_path.md`](../milestone1_high_level_path.md)
+**Primary path:** [`../milestone1_high_level_path.md`](../milestone1_high_level_path.md)  
+**Expanded Approach:** [`milestone1_part2_expanded_approach.md`](milestone1_part2_expanded_approach.md)
 
-**Status:** pilot `analysed` (Stages 0–3); **expansion next** (Fabrizio small DAGs ×
-chosen DGP(s) — design not yet locked). Pilot: 10/10 scoped cells `solved` (2026-07-09,
-commit `9123af7`); cell inspection 2026-07-13. Stage 4 findings tex deferred until the
-expanded grid is done (or written as a pilot appendix if useful).
-**Experiment ID:** `M12_config_comparison` (arms `M12_ecai2024`, `M12_aamas2025`)
+**Status:** pilot `analysed` (Stages 0–3); **expanded Approach locked**; graph/mechanism
+cards next. Pilot: 10/10 scoped cells `solved` (2026-07-09, commit `9123af7`); cell
+inspection 2026-07-13. Pilot fixtures/labels will be redesigned under the Approach;
+Stage 4 findings tex deferred until the expanded grid is done.
+**Experiment ID:** `M12_config_comparison` (configs `M12_ecai2024`, `M12_aamas2025`)
 **Parent index:** [milestone1-plan.md](../milestone1-plan.md) (Part 2 section)
 
-**Expansion scope (see high-level path):** usable small DAGs from Fabrizio’s code;
-exclude random graphs, bnlearn, cycles; decide DGP(s) before runs; lock intended learned
-rules per cell; ECAI + AAMAS only; keep intended-rule match and ASP coverage separate;
-primary instrument remains qualitative trace inspection.
+**Expansion:** follow the Approach doc (deterministic copy/min/max; \(k=3\); nonzero-
+positive; `val`+`nz` BK; ECAI+AAMAS; all non-source targets; descendant exclusion).
 
 ## 1. Goal and research question
 

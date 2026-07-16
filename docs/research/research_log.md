@@ -2,6 +2,14 @@
 
 Chronological notes on experiment progress, decisions, and milestones. Detailed evidence remains in experiment records and artefact paths cited below.
 
+## 2026-07-16 — Expanded M1.2 Approach written
+
+- **Doc:** `docs/research/milestone_plans/milestone1_part2/milestone1_part2_expanded_approach.md`
+- **Status:** Approach locked (DGP/BK/labels/configs/predictor policy); still in
+  “Lock the expanded M1.2 design”. Next: select graphs and write mechanism cards.
+- **Pointers updated:** high-level path, part2 README, milestone1-plan, AGENTS.md,
+  decisions.md, registers/summaries as needed.
+
 ## 2026-07-16 — Milestone 1 high-level path: expand M1.2, then M1.3; no M1.4
 
 - **Decision:** see `decisions.md` (2026-07-16). Primary working reference:

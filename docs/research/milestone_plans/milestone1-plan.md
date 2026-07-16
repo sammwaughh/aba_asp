@@ -1,7 +1,9 @@
 # Milestone 1 Plan
 
 **Primary working path:** [`milestone1_high_level_path.md`](milestone1_high_level_path.md)  
-Use that document as the day-to-day reference for what is done, what remains, and the order of work. This file is the milestone index and part summaries.
+**Expanded M1.2 Approach:** [`milestone1_part2/milestone1_part2_expanded_approach.md`](milestone1_part2/milestone1_part2_expanded_approach.md)  
+
+Use the high-level path for order of work, and the Approach while locking graphs/mechanisms. This file is the milestone index and part summaries.
 
 ## Purpose
 
@@ -62,15 +64,17 @@ Findings: `docs/report/findings/milestone1_part1_m11_findings.tex`
 recovery under nd, with a complete trace-level account. It remains available as an M1.3
 claim with evidence; σ/π grids are not repeated in M1.2.
 
-## Part 2: Published-Configuration Comparison (M1.2) — **expanding**
+## Part 2: Published-Configuration Comparison (M1.2) — **design lock in progress**
 
 Planning folder: [`milestone1_part2/`](milestone1_part2/README.md)  
-Detail plan: [`milestone1_part2/milestone1_part2_config_comparison.md`](milestone1_part2/milestone1_part2_config_comparison.md)
+**Approach (locked design reference):** [`milestone1_part2/milestone1_part2_expanded_approach.md`](milestone1_part2/milestone1_part2_expanded_approach.md)  
+Pilot detail plan: [`milestone1_part2/milestone1_part2_config_comparison.md`](milestone1_part2/milestone1_part2_config_comparison.md)
 
 | Phase | Status | Content |
 |-------|--------|---------|
-| Pilot grid | Analysed (Stages 0–3) | 2 arms × 5 minimal handcrafted fixtures (10 cells); locked intended rules; cell inspection |
-| Expanded grid | Next | Fabrizio small DAGs × chosen DGP(s); intended rules locked before runs; same two arms |
+| Pilot grid | Analysed (Stages 0–3) | Historical 10-cell grid; to be redesigned under the Approach |
+| Expanded design | Approach locked; mechanism cards next | Deterministic copy/min/max; \(k=3\); nonzero-positive; `val`+`nz` BK; ECAI+AAMAS; all non-source targets |
+| Expanded runs | After cards | Implement → batch run → inspect |
 
 Arms:
 

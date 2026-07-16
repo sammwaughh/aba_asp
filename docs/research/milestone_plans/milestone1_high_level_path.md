@@ -6,7 +6,7 @@
 
 Organising question for all of Milestone 1:
 
-> When and how are mechanism-aligned rules recovered by unguided ABA Learning — and what is recovered instead?
+> When and how are mechanism-aligned / correct general rules recovered by unguided ABA Learning — and what is recovered instead?
 
 No Causal ABA integration in this milestone. Large-graph / bnlearn comparisons are **not** part of Milestone 1; they are reserved for a later evaluation phase against any Causal-ABA-informed solution.
 
@@ -17,12 +17,15 @@ No Causal ABA integration in this milestone. Large-graph / bnlearn comparisons a
 | Part | Status | What exists |
 |------|--------|-------------|
 | **M1.1** | Closed | Parent-position / representation-order control; ordering mechanism established |
-| **M1.2 pilot** | Analysed (Stages 0–3) | 2 arms × 5 minimal handcrafted fixtures (10 cells); locked intended rules; cell inspection |
-| **M1.2 expanded** | Next | Broader graph set + chosen DGP(s); same qualitative discipline |
+| **M1.2 pilot** | Analysed (Stages 0–3) | Historical 10-cell grid; to be redesigned under the expanded Approach |
+| **M1.2 expanded** | Design lock in progress | Approach locked; graph/mechanism cards next |
 | **M1.3** | After expanded M1.2 | Evidence-backed claims about recovery patterns and limits |
 | **M1.4** | Does not exist | Large-graph tests deferred to a future evaluation milestone |
 
-Pilot artefacts (keep; do not discard):  
+**Expanded M1.2 Approach (design reference):**  
+[`milestone1_part2/milestone1_part2_expanded_approach.md`](milestone1_part2/milestone1_part2_expanded_approach.md)
+
+Pilot artefacts (keep for provenance; not the expanded design):  
 `docs/experiments/qualitative/M1.2-config-comparison.md`,  
 `docs/experiments/qualitative/M1.2-config-comparison-cell-inspection.md`,  
 `causal/outputs/aba_learning/grid/M12_*`.
@@ -31,44 +34,39 @@ Pilot artefacts (keep; do not discard):
 
 ## Path to finish M1.2 and M1.3
 
-### 1. Lock the expanded M1.2 design (before more runs)
+### 1. Lock the expanded M1.2 design (before more runs) — **in progress**
 
-Decide and write down once:
+**Approach locked** (DGP, labelling, BK, configs, predictor policy, inspection stance):  
+[`milestone1_part2/milestone1_part2_expanded_approach.md`](milestone1_part2/milestone1_part2_expanded_approach.md)
 
-- **Graph set:** Fabrizio’s usable small DAGs already in the repo.  
-  **Exclude:** random graphs, bnlearn networks, cycles.
-- **DGP set:** which generative regimes to use, and how many (handcrafted locked mechanisms; Fabrizio random discrete BN; possibly more). Decide carefully; compare within-DGP first; across-DGP only when the question is DGP sensitivity.
-- **Intended learned rules:** for every (graph, DGP, target) cell, state the intended rule(s) derived from true parents/mechanism **before** running.
-- **Arms:** ECAI (`configs/ecai2024_config.pl`) and AAMAS (`configs/aamas2025_config.pl`) only. No RuleML.
-- **Success criteria (kept separate):**
-  1. match to the intended learned rule(s);
-  2. ASP coverage of E⁺ / rejection of E⁻.  
-  Never conflate them. The purpose of the grid is primarily **qualitative inspection of run traces** — what happens, why, and which patterns recur across graphs — to feed M1.3.
+Still to lock under that Approach:
 
-Do not expand the grid until every new cell has a stated intended output.
+- **Graph set:** which of Fabrizio’s usable small DAGs to include (exclude random / bnlearn / cycles).
+- **Mechanism cards:** for each selected graph, every \(f_y\in\{\mathrm{copy},\min,\max\}\), every non-source target, ancestor/descendant sets, reference \(\mathcal{H}_t^\star\).
+- Redesign of the original five pilot motifs inside the same regime.
+
+Do not implement or run the expanded grid until every selected cell has those inputs written down.
 
 ### 2. Finish expanded M1.2 (evidence collection)
 
-- Implement fixtures / simulators for the chosen graphs × DGPs.
-- Run under the same runner / feature-BK discipline as the pilot.
+- Implement fixtures / BK under the Approach.
+- Run all cells: (fixture, non-source target, ECAI|AAMAS).
 - Produce per-cell artefacts and a summary matrix.
-- Inspect in plain English: what was intended, what was learned, whether it matches, what was recovered instead.
+- Inspect in plain English: what was wanted, what was learned, whether it matches, what was recovered instead (including descendant citation as an explicit failure mode).
 - Only then treat M1.2 as **done**.
 
-Detail plan (when expanded): [`milestone1_part2/`](milestone1_part2/README.md).
+Detail: [`milestone1_part2/`](milestone1_part2/README.md).
 
 ### 3. Do M1.3 (claims + attribution)
 
 Using the expanded M1.2 matrix:
 
-- Draft **candidate claims** in plain English about when/how mechanism-aligned rules are recovered and what appears instead.
-- For each claim that matters, design the **smallest follow-up probes** needed (trace reading, option flip, correlation ladder, success-boundary fixture, etc.).
+- Draft **candidate claims** in plain English about when/how correct general rules are recovered and what appears instead.
+- For each claim that matters, design the **smallest follow-up probes** needed.
 - Run those probes; keep only claims that survive.
 - Write M1.3 as evidence-backed subsections in ordinary language (not a forced category system).
 
-M1.3 is done when we can state succinctly: what unguided ABA Learning does on these graphs/DGPs, why (with evidence), and what remains open for Milestone 2.
-
-Detail plan: [`milestone1_part3/`](milestone1_part3/README.md).
+Detail: [`milestone1_part3/`](milestone1_part3/README.md).
 
 ### 4. Close Milestone 1
 
@@ -78,4 +76,4 @@ Consolidate findings into a Milestone 1 write-up answering the organising questi
 
 ## One-line discipline
 
-Expand M1.2 for breadth (graphs × DGPs × locked intended rules) → use that matrix to drive M1.3 claims and targeted evidence → write up Milestone 1 → only later escalate to large-graph evaluation against a Causal-ABA-informed solution.
+Lock Approach + graph/mechanism cards → expand M1.2 evidence → M1.3 claims and probes → Milestone 1 write-up → only later large-graph evaluation against a Causal-ABA-informed solution.

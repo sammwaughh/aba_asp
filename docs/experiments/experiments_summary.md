@@ -37,7 +37,7 @@ Use the same status categories as `experiment_register.md`.
 | QI-002 greedy | — | Greedy-folding rerun of QI-002 (minimal truth-table baseline) | analysed | `docs/experiments/qualitative/QI002_minimal_motifs_greedy/` | `causal/configs/experiments/QI002_minimal_motifs_greedy.yaml` | `causal/outputs/aba_learning/grid/QI002_minimal_motifs_greedy/` | Interim Experimentation / Progress | Only change `folding_mode: greedy`. 6/6 solved (vs nd 5/6): solves the binary collider nd could not; cat3 collider now exact; clean recovery 3/6 -> 4/6 with one regression (cat3 fork exact -> superset). |
 | QI-004 greedy | — | Greedy-folding rerun of QI-004 (scaled noisy n=20) | analysed | `docs/experiments/qualitative/QI004_scaled_motifs_n20_greedy/` | `causal/configs/experiments/QI004_scaled_motifs_n20_greedy.yaml` | `causal/outputs/aba_learning/grid/QI004_scaled_motifs_n20_greedy/` | Interim Experimentation / Progress | Only change `folding_mode: greedy`. Same outcomes as nd (1 solved, 12 no-solution, 2 errors; 0/15 clean) but ~120x faster (≈1233 s -> ≈10 s). At noisy n=20 greedy changes only runtime; binary errors persist. |
 | M11 | — | m1.1 Parent-position and representation-order control | analysed | `docs/experiments/qualitative/M1.1-parent-position.md` | `causal/configs/experiments/M11_parent_position.yaml`; `M11_parent_position_greedy.yaml` | `M11_parent_position/cells/`; `M11_parent_position_greedy/`; `M11_ablations/` | Interim Experimentation / Progress (Milestone 1) | nd: 8/8 solved; binary σ/π pass; cat3 σ fails (ablation-supported). Stage 7 greedy: binary matches nd; cat3 all supersets; rule-level σ restored under greedy. |
-| M12 | — | m1.2 Published-configuration comparison (ASP-ABAlearnB / Greedy ABA Learning) | pilot analysed; expansion next | `docs/experiments/qualitative/M1.2-config-comparison.md`; cell inspection `M1.2-config-comparison-cell-inspection.md` | `causal/configs/experiments/M12_ecai2024.yaml`; `M12_aamas2025.yaml` (`grid.cell_dir: dgp`) | `causal/outputs/aba_learning/grid/M12_{ecai2024,aamas2025}/cells/<fixture>/`; `M12_summary.md` | Interim Experimentation / Progress (Milestone 1) | Pilot Stages 0–3 done (10 cells). Next: expand M1.2 to Fabrizio small DAGs × chosen DGP(s) per `milestone1_high_level_path.md`. No RuleML; no M1.4. |
+| M12 | — | m1.2 Published-configuration comparison (ASP-ABAlearnB / Greedy ABA Learning) | pilot analysed; Approach locked; mechanism cards next | `docs/experiments/qualitative/M1.2-config-comparison.md`; Approach `milestone1_part2_expanded_approach.md` | `causal/configs/experiments/M12_ecai2024.yaml`; `M12_aamas2025.yaml` | `causal/outputs/aba_learning/grid/M12_{ecai2024,aamas2025}/` (pilot) | Interim Experimentation / Progress (Milestone 1) | Expanded Approach locked (copy/min/max; k=3; nz BK; ECAI+AAMAS). Next: graph/mechanism cards, then implement/run. No M1.4. |
 | M13 | — | m1.3 Recovery patterns and limits (claims + targeted probes after expanded M1.2) | not started | `docs/experiments/qualitative/M1.3-failure-modes.md` (planned) | — (analysis over expanded M1.2; targeted probes as needed) | `causal/outputs/aba_learning/grid/M13_<ablation-id>/` (only if probes run) | Interim Experimentation / Progress (Milestone 1) | Waits on expanded M1.2. Plain-English evidence-backed subsections; see `milestone1_high_level_path.md`. |
 
 ## Experiment sequence to date and next
@@ -70,6 +70,7 @@ runs; exclude random graphs, bnlearn, cycles; no RuleML. Primary instrument rema
 qualitative intended-vs-learned / trace inspection; ASP coverage kept separate.
 
 **Primary path:** `docs/research/milestone_plans/milestone1_high_level_path.md`  
+**Approach:** `docs/research/milestone_plans/milestone1_part2/milestone1_part2_expanded_approach.md`  
 Detail: `docs/research/milestone_plans/milestone1_part2/`  
 Pilot record: `docs/experiments/qualitative/M1.2-config-comparison.md`  
 Pilot inspection: `docs/experiments/qualitative/M1.2-config-comparison-cell-inspection.md`
@@ -149,9 +150,9 @@ Workflow:
 
 ## Next action
 
-**Expand M1.2** per `docs/research/milestone_plans/milestone1_high_level_path.md`:
-lock graph set (Fabrizio small DAGs; no random/bnlearn/cycles), decide DGP(s), lock
-intended learned rules, then implement/run/inspect (ECAI + AAMAS only). After that, **M1.3**.
+**Finish locking expanded M1.2** per
+`docs/research/milestone_plans/milestone1_part2/milestone1_part2_expanded_approach.md`:
+select graphs and write mechanism cards; then implement/run/inspect. After that, **M1.3**.
 
 Completed so far in Milestone 1:
 

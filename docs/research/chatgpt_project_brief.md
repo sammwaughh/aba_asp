@@ -60,10 +60,10 @@ recovery characterising what unguided ABA Learning does before causal guidance i
 `docs/report/manuscript/introduction.md` and `docs/report/manuscript/project_plan.md`.
 
 **Milestone status (July 2026):** Milestone 1 Part 1 (M11 / m1.1) is **closed**.
-M1.2 **pilot** (10 cells, ECAI+AAMAS) is analysed. **Next:** expand M1.2 to Fabrizio’s
-usable small DAGs × chosen DGP(s), then M1.3 (evidence-backed recovery patterns and
-limits). There is no M1.4; large-graph / bnlearn evaluation is deferred. Primary path:
-`docs/research/milestone_plans/milestone1_high_level_path.md`.
+M1.2 **pilot** (10 cells) is analysed. Expanded **Approach locked**; next: graph/mechanism
+cards, then implement/run, then M1.3. Approach:
+`docs/research/milestone_plans/milestone1_part2/milestone1_part2_expanded_approach.md`.
+Primary path: `docs/research/milestone_plans/milestone1_high_level_path.md`. No M1.4.
 
 ## Source priority
 

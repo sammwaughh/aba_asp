@@ -124,14 +124,15 @@ establish causal discovery.
 Milestone 1's goal is a **report-ready account of when and how unguided ABA Learning can
 recover mechanism-aligned rules from categorical tabular data — and what is recovered
 instead**. Primary working path:
-`docs/research/milestone_plans/milestone1_high_level_path.md`.
+`docs/research/milestone_plans/milestone1_high_level_path.md`.  
+Expanded Approach:
+`docs/research/milestone_plans/milestone1_part2/milestone1_part2_expanded_approach.md`.
 
 - **M1.1** — closed.
-- **M1.2 pilot** — analysed (10 cells, ECAI+AAMAS). **M1.2 expansion next:** Fabrizio
-  usable small DAGs × chosen DGP(s); exclude random graphs, bnlearn, cycles; lock
-  intended rules before runs; qualitative trace inspection primary.
-- **M1.3** — after expanded M1.2: evidence-backed recovery patterns and limits
-  (plain English; targeted probes as needed).
+- **M1.2 pilot** — analysed (10 cells, ECAI+AAMAS). **Expanded Approach locked**
+  (deterministic copy/min/max; \(k=3\); nonzero-positive; `val`+`nz` BK; ECAI+AAMAS).
+  Next: graph/mechanism cards, then implement/run/inspect.
+- **M1.3** — after expanded M1.2: evidence-backed recovery patterns and limits.
 - **No M1.4** — large-graph / bnlearn evaluation deferred to a later evaluation milestone.
 
 Then **Milestone 2** (Causal-ABA-guided ABA Learning bridge), informed by M1.3.

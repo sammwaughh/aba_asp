@@ -114,7 +114,8 @@ Drafted structure:
 5. **Greedy vs non-deterministic folding (qualitative)**
    - greedy faster (~120x at the QL3 scale), solve rate >= nd, net better clean recovery (colliders), one regression (cat3 fork), no recovery change at the noisy n=20 scale;
    - motivated Milestone 1 Part 2 (M1.2): two-config comparison; pilot 10 cells analysed;
-     expansion next per `milestone1_high_level_path.md`.
+     Approach locked; mechanism cards next
+     (`milestone1_part2_expanded_approach.md`).
 
 6. **M1.1 (M11): parent-position and representation-order control**
    - Stages 0–6 (nd): binary σ/π pass; cat3 σ fails; mechanism ablation-supported (ABL-100–107).
@@ -151,7 +152,7 @@ Explain what will happen after the interim report, following from the QL1/QL2/QL
 
 Drafted milestones (Weeks 1–13, with a Week-11 holiday):
 
-1. **Milestone 1** — report-ready account of when/how unguided ABA Learning recovers mechanism-aligned rules (and what is recovered instead). **Part 1 closed (M1.1).** **Part 2 (M1.2):** pilot analysed (10 cells); expansion next (Fabrizio small DAGs × chosen DGP(s); ECAI+AAMAS). **Part 3 (M1.3):** after expanded M1.2 — evidence-backed recovery patterns and limits. No M1.4 / large-graph evaluation in this milestone. Primary path: `docs/research/milestone_plans/milestone1_high_level_path.md`.
+1. **Milestone 1** — report-ready account of when/how unguided ABA Learning recovers mechanism-aligned rules (and what is recovered instead). **Part 1 closed (M1.1).** **Part 2 (M1.2):** pilot analysed; expanded Approach locked (`milestone1_part2_expanded_approach.md`); graph/mechanism cards next. **Part 3 (M1.3):** after expanded M1.2. No M1.4. Primary path: `milestone1_high_level_path.md`.
 2. **Milestone 2 (Weeks 3–4)** — design the bridge in which Causal ABA-style information guides ABA Learning; specify comparable outputs and metrics.
 3. **Milestone 3 (Weeks 5–6)** — implement causal-guided ABA Learning variants; compare against unguided learning; build bespoke metrics that judge whether causality (not just predictive parents) is learned.
 4. **Milestone 4 (Weeks 7–8)** — scale beyond three-node motifs; set up representative external comparators and a frozen evaluation protocol.

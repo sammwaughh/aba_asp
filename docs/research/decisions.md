@@ -2,6 +2,31 @@
 
 Recorded decisions that affect experiment direction. Evidence and interpretation remain in experiment records.
 
+## 2026-07-16 — Expanded M1.2 Approach locked (design reference)
+
+**Decision:** Lock the expanded M1.2 **Approach** before graph selection finishes and before
+any new runs. Canonical doc:
+`docs/research/milestone_plans/milestone1_part2/milestone1_part2_expanded_approach.md`.
+
+**Locked choices:**
+
+- Deterministic DGP: local mechanisms ∈ {copy, min, max}; copy only for unique parent;
+  full source factorial; alphabet \(k=3\) always; nonzero-positive labelling.
+- BK: exact `val` predicates + definitional `nz` rules (facts, not assumptions/contraries).
+- Configs: ECAI and AAMAS only.
+- Cells: (fixture, non-source target, config); descendants of the target never appear as
+  predictors (descendant citation = explicit failure mode to test).
+- Good intensional rules should use ancestors of the target; siblings may appear in BK as
+  distractors.
+- Reference \(\mathcal{H}_t^\star\) in compact `nz` form; no precisely pre-enumerated
+  acceptable set — post-run semantic inspection.
+- Original five pilot fixtures will be redesigned under this regime.
+
+**Still open under the Approach:** which Fabrizio graphs to include, and the per-graph
+mechanism cards.
+
+**Points to:** `milestone1_high_level_path.md` §1 (design lock in progress).
+
 ## 2026-07-16 — Milestone 1 path restated: expand M1.2, then M1.3; no M1.4
 
 **Decision:** Finish Milestone 1 by (1) expanding M1.2 beyond the pilot 10-cell grid,

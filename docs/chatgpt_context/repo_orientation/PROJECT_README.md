@@ -44,7 +44,7 @@ Experiments are documented under `docs/experiments/`:
 - Experiment records should use the canonical template `docs/experiments/TEMPLATE.md`.
 - The at-a-glance index is `docs/experiments/experiments_summary.md`.
 - Milestone 1 Part 1 (M11 / m1.1) is **closed** (Stages 0–7, June 2026): `docs/experiments/qualitative/M1.1-parent-position.md`; supervisor findings `docs/report/findings/milestone1_part1_m11_findings.tex`.
-- Milestone 1 Part 2 (M1.2) **pilot** is analysed (10 cells). **Next:** expand M1.2 (Fabrizio small DAGs × chosen DGP(s); ECAI+AAMAS), then M1.3. Primary path: `docs/research/milestone_plans/milestone1_high_level_path.md`. No M1.4.
+- Milestone 1 Part 2 (M1.2) **pilot** is analysed (10 cells). Expanded **Approach locked**; next: graph/mechanism cards, then implement/run. Approach: `docs/research/milestone_plans/milestone1_part2/milestone1_part2_expanded_approach.md`. Primary path: `docs/research/milestone_plans/milestone1_high_level_path.md`. No M1.4.
 
 Each experiment record should capture an ID, research question, theoretical motivation,
 setup, exact command, output, interpretation, and next decision. Records are evidence
