@@ -2,6 +2,28 @@
 
 Recorded decisions that affect experiment direction. Evidence and interpretation remain in experiment records.
 
+## 2026-07-17 — M1.3 claim-by-claim Approach
+
+**Decision:** M1.3 uses **claims** (assertions about how ABA Learning learns), distinct
+from the M1.2 reference hypothesis \(\mathcal{H}_t^\star\). Initial claims must be
+induced from visible M12x patterns. The list is live, unordered, and subject to
+keep/refine/split/merge/discard.
+
+Each claim is then investigated to completion before the next: relevant
+`prolog.stdout` transformations and chosen literals → full learned δ,
+assumptions/contraries → claim-specific probes/ablations as required → conclusion →
+`claim_<slug>.tex`. There is **no fixed probe/run cap** and no requirement that every
+claim use a preselected “smallest” probe. Probe design is deferred to the claim.
+
+**Judgment:** exact \(\mathcal{H}_t^\star\) agreement is not the main metric;
+inspection remains against the M1.2 semantic success description. Descendant citation
+is always outside success.
+
+**Docs:** `milestone1_part3_approach.md`; live list
+`milestone1_part3_claim_list.md`; experiment record `M1.3-failure-modes.md`.
+
+**Supersedes for current M1.3 work:** earlier shorthand requiring “smallest probes.”
+
 ## 2026-07-16 — M1.2 closed; begin M1.3
 
 **Decision:** Expanded M1.2 (M12x) is **closed** as an evidence package (22/22

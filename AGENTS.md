@@ -57,7 +57,7 @@ Key experiment records:
 - `docs/experiments/qualitative/M1.1-parent-position.md` — Milestone 1 Part 1 (M11); **`analysed` / closed** (Stages 0–7: nd mechanism, ablations, greedy comparator).
 - `docs/experiments/qualitative/M1.2-config-comparison.md` — Milestone 1 Part 2 (M12) **pilot** analysed (historical; 10 cells).
 - `docs/experiments/qualitative/M1.2-expanded.md` — Milestone 1 Part 2 expanded (**M12x**) **done / analysed** (22 cells; Stage-3 inspection). Approach: `milestone1_part2_expanded_approach.md`.
-- `docs/experiments/qualitative/M1.3-failure-modes.md` — Milestone 1 Part 3 (**M1.3**) **current** (record opened; claims/probes next). Plan: `milestone1_part3/`. There is no M1.4; large-graph / bnlearn evaluation is deferred to a later milestone.
+- `docs/experiments/qualitative/M1.3-failure-modes.md` — Milestone 1 Part 3 (**M1.3**) **current** (six unordered provisional M12x claims drafted; review/order next). Approach and live list: `milestone1_part3/`. There is no M1.4; large-graph / bnlearn evaluation is deferred to a later milestone.
 
 ## Experiment documentation rule
 

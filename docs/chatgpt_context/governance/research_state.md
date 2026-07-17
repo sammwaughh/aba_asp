@@ -131,9 +131,11 @@ Expanded Approach:
 - **M1.1** — closed.
 - **M1.2** — closed: pilot analysed; **M12x** analysed (22/22 solved; Stage-3
   inspection; 0 exact compact-`nz` \(\mathcal{H}^\star\)).
-- **M1.3** — **current (planned / starting):** evidence-backed recovery patterns and
-  limits from M12x (claims + probes). Record:
-  `docs/experiments/qualitative/M1.3-failure-modes.md`. Plan: `milestone1_part3/`.
+- **M1.3** — **current (planned / initial claims drafted):** six unordered
+  M12x-grounded claims in `milestone1_part3_claim_list.md`; review/order next, then
+  trace + claim-specific probes one claim at a time. Record:
+  `docs/experiments/qualitative/M1.3-failure-modes.md`; Approach:
+  `milestone1_part3/milestone1_part3_approach.md`.
 - **No M1.4** — large-graph / bnlearn evaluation deferred to a later evaluation milestone.
 
 Then **Milestone 2** (Causal-ABA-guided ABA Learning bridge), informed by M1.3.

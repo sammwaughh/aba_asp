@@ -82,13 +82,15 @@ Configs: ECAI (`configs/ecai2024_config.pl`), AAMAS (`configs/aamas2025_config.p
 
 ## Part 3: Recovery patterns and limits (M1.3) — **current**
 
-Planning folder: [`milestone1_part3/`](milestone1_part3/README.md)  
-Detail plan: [`milestone1_part3/milestone1_part3_failure_modes.md`](milestone1_part3/milestone1_part3_failure_modes.md)
+Planning folder: [`milestone1_part3/`](milestone1_part3/README.md)
+Approach: [`milestone1_part3/milestone1_part3_approach.md`](milestone1_part3/milestone1_part3_approach.md)
+Live claim list: [`milestone1_part3/milestone1_part3_claim_list.md`](milestone1_part3/milestone1_part3_claim_list.md)
 
-M1.3 turns the **M12x** Stage-3 matrix/inspection into evidence-backed claims: draft
-candidate claims in plain English; design the smallest probes that would support or kill
-each claim; run those probes; write subsections describing each recovery pattern / limit
-with experimental evidence. No forced category scheme required.
+M1.3 turns the **M12x** Stage-3 matrix/inspection into evidence-backed claims. Six
+unordered provisional claims are drafted. After review, choose an investigation order
+and work one claim at a time: relevant trace account → claim-specific probes/ablations
+as required → keep/refine/discard → `claim_<slug>.tex`. No fixed probe budget or forced
+category scheme.
 
 M1.3 finishes when we can state succinctly what unguided ABA Learning does on these
 graphs/DGPs, why, and what remains open for Milestone 2.

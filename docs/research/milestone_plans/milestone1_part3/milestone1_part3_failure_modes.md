@@ -33,16 +33,19 @@ output informs Milestone 2 (Causal ABA integration).
 
 ## 3. Method
 
-1. **Draft candidate claims** in plain English from the expanded M1.2 matrix (and pilot
-   patterns that still hold). Separate observational claims from mechanism claims.
-2. **For each claim that matters**, design the smallest follow-up probe that would
-   support or kill it (trace reading; option flip; correlation ladder; success-boundary
-   fixture; etc.). Targeted ablations are permitted where a hypothesis needs evidence;
-   they are not promised up front.
-3. **Run probes; keep only surviving claims.**
-4. **Write subsections** in ordinary language: describe the pattern → present the
-   experimental evidence → state what is supported, what remains open, and (if anything)
-   what it suggests for later Causal ABA guidance.
+Current method is governed by
+[`milestone1_part3_approach.md`](milestone1_part3_approach.md):
+
+1. Review the unordered M12x-grounded
+   [`milestone1_part3_claim_list.md`](milestone1_part3_claim_list.md), then choose an
+   investigation order.
+2. Work through **one claim at a time**. Read the relevant `prolog.stdout` traces and
+   full learned frameworks; extract relevant transformations, selected literals,
+   assumptions/contraries, and final δ.
+3. Design and run the claim-specific probes/ablations needed to support, refine, or
+   invalidate that claim. No fixed probe/run cap is imposed.
+4. Conclude the claim with explicit evidence and limits, then write
+   `claim_<slug>.tex`. Only then move to the next claim.
 
 Attribution language (shared across both arms vs specific to one published strategy vs
 encoding/pipeline) is useful when the evidence supports it; it is not a mandatory coding

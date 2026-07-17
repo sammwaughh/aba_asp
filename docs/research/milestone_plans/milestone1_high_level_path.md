@@ -1,8 +1,8 @@
 # Milestone 1 — High-level path to completion
 
-**Role:** primary working reference for finishing Milestone 1 (**M1.3** next; M1.2 done).  
+**Role:** primary working reference for finishing Milestone 1 (**M1.3** current; M1.2 done).
 **Parent index:** [`milestone1-plan.md`](milestone1-plan.md)  
-**Status:** active (2026-07-16) — M1.2 closed; begin M1.3
+**Status:** active (2026-07-17) — M1.3 initial claims drafted
 
 Organising question for all of Milestone 1:
 
@@ -19,7 +19,7 @@ No Causal ABA integration in this milestone. Large-graph / bnlearn comparisons a
 | **M1.1** | Closed | Parent-position / representation-order control; ordering mechanism established |
 | **M1.2 pilot** | Analysed (historical) | 10-cell pilot; superseded as primary evidence by M12x |
 | **M1.2 expanded (M12x)** | **Done / analysed** | 22/22 solved; matrix + [`M1.2-expanded-cell-inspection.md`](../../experiments/qualitative/M1.2-expanded-cell-inspection.md); 0 exact compact-`nz` H* |
-| **M1.3** | **Planned / starting** | Record opened; claims + probes from M12x Stage-3 |
+| **M1.3** | **Planned / initial claims drafted** | Six unordered M12x claims; review/order next |
 | **M1.4** | Does not exist | Large-graph tests deferred to a future evaluation milestone |
 
 **Expanded M1.2 Approach:**  
@@ -47,17 +47,18 @@ Evidence package: [`milestone1_part2/`](milestone1_part2/README.md);
 
 ### 3. Do M1.3 (claims + probes) — **current**
 
-Primary inputs: M12x Stage-3 inspection + summary matrix (pilot M1.2 optional provenance).
+Primary inputs: M12x Stage-3 inspection + summary matrix + full learned frameworks and
+traces (pilot M1.2 optional provenance).
 
-- Draft **candidate claims** in plain English about when/how correct general rules are recovered and what appears instead.
-- For each claim that matters, design the **smallest follow-up probes** needed.
-- Run those probes; keep only claims that survive.
-- Write M1.3 as evidence-backed subsections in ordinary language (not a forced category system).
+- Initial **live claim list drafted** from M12x (unordered; subject to change).
+- Review the list and only then choose an investigation order.
+- Work one claim at a time: relevant trace account → claim-specific probes/ablations
+  as required → keep/refine/discard.
+- Write `claim_<slug>.tex` only after that claim is concluded.
+- Final M1.3 write-up: completed claim documents + overarching conclusion.
 
-Seed patterns from Stage-3 (not yet M1.3 claims): 0/22 exact compact-`nz` \(\mathcal{H}^\star\);
-ECAI assumption / early-BK / inferior `val`-expansions; AAMAS descendant citation
-(U5-\(x_1\), U6-\(x_2\), U7-\(x_2\)) and sibling residue (U4).
-
+**M1.3 Approach:** [`milestone1_part3/milestone1_part3_approach.md`](milestone1_part3/milestone1_part3_approach.md)
+**Live claim list:** [`milestone1_part3/milestone1_part3_claim_list.md`](milestone1_part3/milestone1_part3_claim_list.md)
 Detail: [`milestone1_part3/`](milestone1_part3/README.md).
 
 ### 4. Close Milestone 1

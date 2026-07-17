@@ -2,6 +2,24 @@
 
 Chronological notes on experiment progress, decisions, and milestones. Detailed evidence remains in experiment records and artefact paths cited below.
 
+## 2026-07-17 — M1.3 initial live claim list from M12x
+
+- **Approach:** `docs/research/milestone_plans/milestone1_part3/milestone1_part3_approach.md`.
+- **Live list:** `docs/research/milestone_plans/milestone1_part3/milestone1_part3_claim_list.md`.
+- **Method:** intelligent pass over Stage-3 inspection, summary JSON/rules, all
+  mechanism cards, published configs, representative full solutions/traces, and
+  scripted all-cell trace/rule-shape audits.
+- **Output:** six unordered provisional claims:
+  ECAI \(x_0\)-first fold + defeasible repair; AAMAS positive-row saturation; descendant
+  retention divergence; `nz` without replacement abstraction; no local-parent
+  preference; coverage without semantic discrimination.
+- **Important correction:** target δ alone is insufficient for ECAI assumption cells;
+  omitted conditions can be represented by learned contraries. Exact
+  \(\mathcal{H}_t^\star\) mismatch is not a semantic-success verdict.
+- **Status:** initial list ready for Samuel review; no investigation order chosen; no
+  claim-specific M1.3 probe run.
+- **Detailed commands/results:** `docs/experiments/qualitative/M1.3-failure-modes.md`.
+
 ## 2026-07-16 — M1.2 closed; documentation updated for M1.3
 
 - **Decision:** M12x evidence package complete; Part 2 closed; **M1.3 starts**.
