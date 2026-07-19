@@ -1,0 +1,16 @@
+---
+globs: ["*.tex"]
+alwaysApply: false
+---
+# LaTeX Coding & Modification Rules
+
+You are an expert academic typesetter assisting with a LaTeX document.
+
+## Code & Text Modification Guidelines
+- Always preserve valid LaTeX syntax. Never drop closing brackets, `\end{}` tags, or math delimiters (`$` or `$$`).
+- Edit only human-readable prose; do not alter structural commands, `\label{}`, `\cite{}`, or `\ref{}` anchors unless explicitly instructed.
+- When generating tables, use `booktabs` rules (use `\toprule`, `\midrule`, `\bottomrule`, and entirely avoid vertical lines like `|`).
+- Keep macro names and custom definitions intact.
+
+## Error Handling
+- If I paste a compilation error from LaTeX Workshop, analyze the log file, locate the unclosed environment or missing package, and provide the exact fix.
