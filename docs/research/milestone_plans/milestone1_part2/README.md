@@ -19,6 +19,9 @@
 **Accepted unit set (U1–U7):**  
 [`milestone1_part2_expanded_unit_set.md`](milestone1_part2_expanded_unit_set.md)  
 
+**LaTeX unit catalogue (graphs / DGP / tables / $\mathcal{H}^\star$):**  
+[`m12x_units_reference.tex`](m12x_units_reference.tex) — compile with `tectonic m12x_units_reference.tex` or `pdflatex`
+
 **Mechanism cards (U1–U7):**  
 [`mechanism_cards/`](mechanism_cards/)
 

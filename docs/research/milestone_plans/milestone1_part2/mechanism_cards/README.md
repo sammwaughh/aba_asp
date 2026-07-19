@@ -6,7 +6,9 @@ criteria before implementation.
 
 **Status:** written 2026-07-16  
 **Approach:** [`../milestone1_part2_expanded_approach.md`](../milestone1_part2_expanded_approach.md)  
-**Unit set:** [`../milestone1_part2_expanded_unit_set.md`](../milestone1_part2_expanded_unit_set.md)
+**Unit set:** [`../milestone1_part2_expanded_unit_set.md`](../milestone1_part2_expanded_unit_set.md)  
+**Compiled catalogue (all seven units in one PDF-ready `.tex`):**
+[`../m12x_units_reference.tex`](../m12x_units_reference.tex)
 
 | ID | File | Graph | Cells |
 |----|------|-------|------:|

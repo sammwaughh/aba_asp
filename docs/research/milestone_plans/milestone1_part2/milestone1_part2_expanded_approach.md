@@ -178,6 +178,7 @@ Cells: `(max_collider, x2, ECAI)`, `(max_collider, x2, AAMAS)`.
 | Inspection-first acceptance (no precise pre-enumerated \(\mathcal{A}_t\)) | Locked |
 | Graph × mechanism unit set | **Accepted** — [`milestone1_part2_expanded_unit_set.md`](milestone1_part2_expanded_unit_set.md) (U1–U7, 22 cells) |
 | Mechanism cards U1–U7 | **Written** — [`mechanism_cards/`](mechanism_cards/) |
+| LaTeX unit catalogue | **Written** — [`m12x_units_reference.tex`](m12x_units_reference.tex) |
 | Fixtures + 22-cell grid (M12x) | **Done** — run + Stage-3 inspection |
 | Summary matrix + cell reports | **Done** — `M12x_summary.md`; `M12x_cell_reports/` |
 
