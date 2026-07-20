@@ -44,9 +44,9 @@ Experiments are documented under `docs/experiments/`:
 - Experiment records should use the canonical template `docs/experiments/TEMPLATE.md`.
 - The at-a-glance index is `docs/experiments/experiments_summary.md`.
 - Milestone 1 Part 1 (M11 / m1.1) is **closed** (Stages 0–7, June 2026): `docs/experiments/qualitative/M1.1-parent-position.md`; supervisor findings `docs/report/findings/milestone1_part1_m11_findings.tex`.
-- Milestone 1 Part 2 (M1.2 / M12x) is **design locked** (18 cells); prior runner outputs
-  deleted (2026-07-20); awaiting fresh run. **M1.3 paused**; provisional claim drafting
-  withdrawn. Primary path: `docs/research/milestone_plans/milestone1_high_level_path.md`.
+- Milestone 1 Part 2 (M1.2 / M12x) is **closed** (18/18 run + Stage-3, 2026-07-20).
+  **M1.3 claim drafting commencing.** Primary path:
+  `docs/research/milestone_plans/milestone1_high_level_path.md`.
   M1.3 Approach (method):
   `docs/research/milestone_plans/milestone1_part3/milestone1_part3_approach.md`. No M1.4.
 

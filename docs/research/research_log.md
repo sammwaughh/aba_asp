@@ -2,6 +2,15 @@
 
 Chronological notes on experiment progress, decisions, and milestones. Detailed evidence remains in experiment records and artefact paths cited below.
 
+## 2026-07-20 — M12x closed; M1.3 claim drafting commencing
+
+- **Decision:** M12x Stage-3 (18/18) is **closed** as the locked evidence base.
+- **Next:** commence M1.3 claim drafting (live claim list 3–10 from Stage-3 patterns;
+  then investigation order; then one claim at a time).
+- **Do not** reuse withdrawn prior M1.3 claim drafts.
+- **Records:** `M1.2-expanded.md` (closed); `M1.3-failure-modes.md` (planned / drafting);
+  path: `milestone1_high_level_path.md`.
+
 ## 2026-07-20 — Fresh M12x 18-cell run + summary (no Stage-3 yet)
 
 - **Commands:** `run_grid` on `M12x_{ecai2024,aamas2025}.yaml` (`--no-resume`); then

@@ -64,31 +64,33 @@ Findings: `docs/report/findings/milestone1_part1_m11_findings.tex`
 recovery under nd, with a complete trace-level account. It remains available as an M1.3
 claim with evidence; σ/π grids are not repeated in M1.2.
 
-## Part 2: Published-Configuration Comparison (M1.2) — **implemented (awaiting fresh run)**
+## Part 2: Published-Configuration Comparison (M1.2) — **closed / analysed**
 
 Planning folder: [`milestone1_part2/`](milestone1_part2/README.md)  
 **Approach:** [`milestone1_part2/milestone1_part2_expanded_approach.md`](milestone1_part2/milestone1_part2_expanded_approach.md)  
 **Expanded record:** `docs/experiments/qualitative/M1.2-expanded.md`  
-**Stage-3 inspection:** to be written after the fresh run (prior stub deleted 2026-07-20)  
+**Stage-3 inspection:** `docs/experiments/qualitative/M1.2-expanded-cell-inspection.md` (18/18)  
 Pilot (historical): [`milestone1_part2/milestone1_part2_config_comparison.md`](milestone1_part2/milestone1_part2_config_comparison.md)
 
 | Phase | Status | Content |
 |-------|--------|---------|
 | Pilot grid | Analysed (historical) | 10 cells; not the primary expanded evidence |
 | Expanded design | Locked | U1–U7; 18 cells; nonzero-positive; `val`-only BK; ECAI+AAMAS |
-| Expanded runs + inspection | **Pending** | Prior M12x outputs deleted (2026-07-20); fresh run is sole evidence |
+| Expanded runs + inspection | **Done / closed** | Fresh 18/18 `solved` + Stage-3 18/18 (2026-07-20); evidence locked for M1.3 |
 
 Configs: ECAI (`configs/ecai2024_config.pl`), AAMAS (`configs/aamas2025_config.pl`).
 
-## Part 3: Recovery patterns and limits (M1.3) — **paused**
+## Part 3: Recovery patterns and limits (M1.3) — **claim drafting commencing**
 
 Planning folder: [`milestone1_part3/`](milestone1_part3/README.md)  
 Approach (method): [`milestone1_part3/milestone1_part3_approach.md`](milestone1_part3/milestone1_part3_approach.md)  
-Detail plan: [`milestone1_part3/milestone1_part3_failure_modes.md`](milestone1_part3/milestone1_part3_failure_modes.md)
+Detail plan: [`milestone1_part3/milestone1_part3_failure_modes.md`](milestone1_part3/milestone1_part3_failure_modes.md)  
+Experiment record: `docs/experiments/qualitative/M1.3-failure-modes.md`
 
-M1.3 turns a **locked** M12x Stage-3 matrix/inspection into evidence-backed claims.
-Provisional claim drafting from prior M12x grids was **withdrawn** (2026-07-20).
-Restart M1.3 only after the fresh 18-cell M12x run and Stage-3 are locked.
+M1.3 turns the **locked** M12x Stage-3 matrix/inspection into evidence-backed claims.
+Prior provisional claim drafting from earlier M12x grids remains **withdrawn**
+(2026-07-20) and must not be reused. Claim drafting **commences** from the closed
+18-cell Stage-3 package.
 
 M1.3 finishes when we can state succinctly what unguided ABA Learning does on these
 graphs/DGPs, why, and what remains open for Milestone 2.
@@ -96,7 +98,7 @@ See [`milestone1_high_level_path.md`](milestone1_high_level_path.md).
 
 ## Milestone Closure
 
-After fresh M12x and M1.3, consolidate findings into a Milestone 1 conclusion:
+After M1.3, consolidate findings into a Milestone 1 conclusion:
 
 1. when unguided ABA Learning recovers mechanism-aligned rules on categorical tables;
 2. how the two published configurations differ, and on which data properties;
@@ -104,5 +106,5 @@ After fresh M12x and M1.3, consolidate findings into a Milestone 1 conclusion:
 4. which findings motivate Causal ABA-style guidance in Milestone 2, and which are
    pipeline or encoding issues.
 
-**Current progress:** Part 1 closed. Part 2 (M12x) **design locked; awaiting fresh run**.
-Part 3 (M1.3) **paused**. No Part 4 / M1.4.
+**Current progress:** Part 1 closed. Part 2 (M12x) **closed**. Part 3 (M1.3) **claim
+drafting commencing**. No Part 4 / M1.4.

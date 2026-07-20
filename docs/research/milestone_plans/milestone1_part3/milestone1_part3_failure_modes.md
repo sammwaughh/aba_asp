@@ -1,10 +1,10 @@
 # Milestone 1, Part 3 (M1.3) — Recovery patterns and limits
 
-**Status:** `paused` — provisional claim drafting withdrawn (2026-07-20); await fresh M12x Stage-3.  
+**Status:** claim drafting **commencing** (2026-07-20). M12x Stage-3 **closed** as evidence base.  
 **Primary path:** [`../milestone1_high_level_path.md`](../milestone1_high_level_path.md)  
 **Parent index:** [`../milestone1-plan.md`](../milestone1-plan.md)  
 **Approach (method):** [`milestone1_part3_approach.md`](milestone1_part3_approach.md)  
-**Primary evidence (after fresh run):** Stage-3 inspection (to be written);
+**Primary evidence (locked):** `docs/experiments/qualitative/M1.2-expanded-cell-inspection.md`;
 `causal/outputs/aba_learning/grid/M12x_summary.md`
 
 Filename retained for continuity; the work is **not** required to use a fixed “failure

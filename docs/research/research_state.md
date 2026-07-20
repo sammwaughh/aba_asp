@@ -129,11 +129,11 @@ Expanded Approach:
 `docs/research/milestone_plans/milestone1_part2/milestone1_part2_expanded_approach.md`.
 
 - **M1.1** — closed.
-- **M1.2** — **`implemented`:** design locked (18 cells); prior M12x runner outputs
-  deleted (2026-07-20); awaiting fresh `--no-resume` run. Record:
-  `docs/experiments/qualitative/M1.2-expanded.md`.
-- **M1.3** — **paused:** provisional claim drafting **withdrawn**. Method retained in
-  `milestone1_part3_approach.md`. Record:
+- **M1.2 expanded (M12x)** — **closed / analysed:** fresh 18-cell run + Stage-3
+  inspection **18/18** (2026-07-20). Record: `docs/experiments/qualitative/M1.2-expanded.md`.
+  Inspection: `M1.2-expanded-cell-inspection.md`.
+- **M1.3** — **claim drafting commencing:** M12x Stage-3 locked as evidence base.
+  Method: `milestone1_part3_approach.md`. Record:
   `docs/experiments/qualitative/M1.3-failure-modes.md`.
 - **No M1.4** — large-graph / bnlearn evaluation deferred to a later evaluation milestone.
 

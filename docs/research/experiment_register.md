@@ -34,8 +34,8 @@ The earlier n=100 scaled attempt was cut and is not part of the canonical experi
 | QI-004 greedy | — | Greedy-folding rerun of QI-004 (scaled noisy n=20) | analysed |
 | M11 | — | m1.1 Parent-position and representation-order control | analysed (Stages 0–7; ablations + greedy comparator) |
 | M12 | — | m1.2 Published-configuration comparison (ASP-ABAlearnB / Greedy ABA Learning) | analysed (Stages 0–3: 10-cell grid + full cell inspection / failure-mode taxonomy) |
-| M12x | — | m1.2 expanded U1–U7 (ECAI/AAMAS; val-only BK; 18 cells) | run (18/18 solved; Stage-3 pending) |
-| M13 | — | m1.3 Recovery patterns and limits (claims + probes from M12x) | paused |
+| M12x | — | m1.2 expanded U1–U7 (ECAI/AAMAS; val-only BK; 18 cells) | closed / analysed (18/18 Stage-3) |
+| M13 | — | m1.3 Recovery patterns and limits (claims + probes from M12x) | planned (claim drafting commencing) |
 
 ## Template
 
@@ -258,9 +258,9 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
 
 ### M12x — m1.2 expanded U1–U7 grid
 
-- Status: **`run`** — fresh 18-cell grid **18/18 `solved`** (2026-07-20); Stage-3 pending.
+- Status: **`analysed` / closed** — fresh 18-cell grid **18/18 `solved`** (2026-07-20); Stage-3 **done** (18/18); evidence package locked for M1.3.
 - Record: `docs/experiments/qualitative/M1.2-expanded.md`.
-- Inspection: `docs/experiments/qualitative/M1.2-expanded-cell-inspection.md` (in progress; 16/18).
+- Inspection: `docs/experiments/qualitative/M1.2-expanded-cell-inspection.md` (done; 18/18).
 - Design: Approach + unit set + `mechanism_cards/` U1–U7; catalogue `m12x_units_reference.tex`.
 - Fixtures: `causal/experiments/handcrafted_m12x.py` (nonzero-positive; val-only BK).
 - Configs: `causal/configs/experiments/M12x_{ecai2024,aamas2025}.yaml` (`cell_dir: slug`; `grid.seed` omitted).
@@ -268,16 +268,17 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
 - Output: `M12x_{ecai2024,aamas2025}/`; `M12x_summary.md`; `M12x_cell_reports/` (18).
 - Generator: `causal/experiments/m12x_summary.py`.
 - Relation to Causal ABA: none exercised.
-- Next: Stage-3 inspection → M1.3.
+- Next: none for M12x — hand off to M1.3 claim drafting.
 
 ### M13 — m1.3 Recovery patterns and limits
 
-- Status: **paused** — provisional claim drafting from the first M12x grid **withdrawn** (2026-07-20).
+- Status: **`planned`** — claim drafting **commencing** (2026-07-20); M12x Stage-3 locked as evidence base.
 - Planning docs: `docs/research/milestone_plans/milestone1_high_level_path.md`; `docs/research/milestone_plans/milestone1_part3/`.
 - Approach (method): `docs/research/milestone_plans/milestone1_part3/milestone1_part3_approach.md`.
 - Record: `docs/experiments/qualitative/M1.3-failure-modes.md` (plain-English recovery patterns and limits; filename retained).
-- Primary inputs: fresh M12x Stage-3 inspection + summary matrix (once locked).
+- Primary inputs: locked M12x Stage-3 inspection + summary matrix.
 - Research question: across the expanded M1.2 graphs and DGP(s), when does unguided ABA Learning recover the intended mechanism-aligned rules, what is recovered instead when it does not, and what evidence explains those patterns?
-- Method: draft candidate claims → smallest supporting/killing probes → keep surviving claims → write evidence-backed subsections. No forced taxonomy codes. Large-graph / bnlearn evaluation is not in M1.3 (deferred to a later evaluation milestone).
+- Method: draft candidate claims → choose order → smallest supporting/killing probes → keep surviving claims → write evidence-backed subsections. No forced taxonomy codes. Large-graph / bnlearn evaluation is not in M1.3 (deferred to a later evaluation milestone).
 - Relation to Causal ABA: none exercised; deliverable is requirements input for Milestone 2.
 - Report relevance: interim Experimentation / Progress (Milestone 1 Part 3).
+- Next: draft live claim list (3–10) from Stage-3 patterns.

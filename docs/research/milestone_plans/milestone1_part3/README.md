@@ -5,22 +5,22 @@
 **M1.3 Approach (method):**
 [`milestone1_part3_approach.md`](milestone1_part3_approach.md)
 
-**Status:** `paused` — provisional claim drafting from prior M12x grids
-**withdrawn** (2026-07-20). Restart after fresh M12x Stage-3 is locked.
+**Status:** claim drafting **commencing** (2026-07-20). M12x Stage-3 is **closed**
+and locked as the evidence base. Prior provisional claim drafts remain withdrawn.
 
 M1.3 answers, with evidence: when and how mechanism-aligned rules are recovered by
 unguided ABA Learning, what is recovered instead, and why. Write-up subsections use
 plain English; no forced taxonomy codes. Method: one claim at a time through to
 `claim_<slug>.tex` (see Approach).
 
-## Primary inputs (fresh M12x, once locked)
+## Primary inputs (M12x Stage-3 locked)
 
 | Artefact | Path |
 |----------|------|
 | Experiment record | `docs/experiments/qualitative/M1.2-expanded.md` |
-| Stage-3 inspection | `docs/experiments/qualitative/M1.2-expanded-cell-inspection.md` _(after fresh run)_ |
-| Summary matrix | `causal/outputs/aba_learning/grid/M12x_summary.md` _(after fresh run)_ |
-| Cell reports | `causal/outputs/aba_learning/grid/M12x_cell_reports/` _(after fresh run)_ |
+| Stage-3 inspection | `docs/experiments/qualitative/M1.2-expanded-cell-inspection.md` |
+| Summary matrix | `causal/outputs/aba_learning/grid/M12x_summary.md` |
+| Cell reports | `causal/outputs/aba_learning/grid/M12x_cell_reports/` |
 | Approach vocabulary | `../milestone1_part2/milestone1_part2_expanded_approach.md` |
 
 Pilot M1.2 (10 cells) remains optional provenance only.
@@ -33,5 +33,5 @@ Pilot M1.2 (10 cells) remains optional provenance only.
 
 **Parent index:** [milestone1-plan.md](../milestone1-plan.md)
 
-**Next:** none for M1.3 until the fresh 18-cell M12x run and Stage-3 are locked.
-
+**Next:** draft the live claim list (3–10 claims) from visible M12x Stage-3 patterns;
+then choose investigation order; then investigate claims one at a time.

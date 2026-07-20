@@ -49,7 +49,8 @@ Do not describe the current implementation as full Russo-style Causal ABA unless
 The current experimental priority is Milestone 1: a report-ready account of when and how unguided ABA Learning recovers mechanism-aligned rules from categorical tabular data (and what is recovered instead), then design the Causal-ABA-guided bridge (Milestone 2).
 
 **Primary working path:** `docs/research/milestone_plans/milestone1_high_level_path.md`  
-**Expanded M1.2 Approach:** `docs/research/milestone_plans/milestone1_part2/milestone1_part2_expanded_approach.md`
+**Expanded M1.2 Approach:** `docs/research/milestone_plans/milestone1_part2/milestone1_part2_expanded_approach.md`  
+**M1.3 Approach:** `docs/research/milestone_plans/milestone1_part3/milestone1_part3_approach.md`
 
 Key experiment records:
 
@@ -57,10 +58,10 @@ Key experiment records:
 - `docs/experiments/qualitative/M1.1-parent-position.md` — Milestone 1 Part 1 (M11); **`analysed` / closed** (Stages 0–7: nd mechanism, ablations, greedy comparator).
 - `docs/experiments/qualitative/M1.2-config-comparison.md` — Milestone 1 Part 2 (M12) **pilot** analysed (historical; 10 cells).
 - `docs/experiments/qualitative/M1.2-expanded.md` — Milestone 1 Part 2 expanded (**M12x**)
-  **`implemented`** (18-cell design locked; prior outputs deleted 2026-07-20; awaiting
-  fresh run). Catalogue: `milestone1_part2/m12x_units_reference.tex`.
+  **`analysed` / closed** (fresh 18-cell run + Stage-3 inspection 18/18, 2026-07-20).
+  Inspection: `M1.2-expanded-cell-inspection.md`. Catalogue: `milestone1_part2/m12x_units_reference.tex`.
 - `docs/experiments/qualitative/M1.3-failure-modes.md` — Milestone 1 Part 3 (**M1.3**)
-  **paused** (provisional claim drafting withdrawn). Approach method retained:
+  **claim drafting commencing** (M12x Stage-3 locked as evidence base). Approach:
   `milestone1_part3/milestone1_part3_approach.md`. There is no M1.4; large-graph /
   bnlearn evaluation is deferred to a later milestone.
 

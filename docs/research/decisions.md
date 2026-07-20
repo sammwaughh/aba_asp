@@ -2,6 +2,22 @@
 
 Recorded decisions that affect experiment direction. Evidence and interpretation remain in experiment records.
 
+## 2026-07-20 — M12x closed; commence M1.3 claim drafting
+
+**Decision:** The expanded M1.2 (M12x) Stage-3 package is **closed** and locked as the
+sole evidence base for M1.3. Claim drafting for M1.3 **commences** now from the 18/18
+cell inspection and summary matrix. Prior provisional M1.3 claim drafts remain
+withdrawn and must not be reused.
+
+**Evidence package:**
+- `docs/experiments/qualitative/M1.2-expanded.md`
+- `docs/experiments/qualitative/M1.2-expanded-cell-inspection.md` (18/18)
+- `causal/outputs/aba_learning/grid/M12x_summary.md`
+- `causal/outputs/aba_learning/grid/M12x_cell_reports/`
+
+**Next:** draft live claim list (3–10) → choose order → investigate claims one at a time
+per `milestone1_part3_approach.md`.
+
 ## 2026-07-20 — Delete prior M12x outputs; fresh 18-cell run is sole evidence
 
 **Decision:** Delete all prior M12x runner artefacts and the Stage-3 inspection stub.
