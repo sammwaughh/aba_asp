@@ -260,7 +260,7 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
 
 - Status: **`run`** — fresh 18-cell grid **18/18 `solved`** (2026-07-20); Stage-3 pending.
 - Record: `docs/experiments/qualitative/M1.2-expanded.md`.
-- Inspection: `docs/experiments/qualitative/M1.2-expanded-cell-inspection.md` (in progress; 5/18).
+- Inspection: `docs/experiments/qualitative/M1.2-expanded-cell-inspection.md` (in progress; 6/18).
 - Design: Approach + unit set + `mechanism_cards/` U1–U7; catalogue `m12x_units_reference.tex`.
 - Fixtures: `causal/experiments/handcrafted_m12x.py` (nonzero-positive; val-only BK).
 - Configs: `causal/configs/experiments/M12x_{ecai2024,aamas2025}.yaml` (`cell_dir: slug`; `grid.seed` omitted).

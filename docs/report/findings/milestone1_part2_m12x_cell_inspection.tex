@@ -495,6 +495,73 @@ The four conjunctions are precisely the locked \texttt{val} expansion of ``both 
 
 \medskip\hrule\medskip
 
-\emph{Cells 3--9 and 12--18 to follow.}
+\subsection{12. AAMAS \(\times\) \texttt{m12\_u3\_collider\_max} \(\times\) \(t=x_2\)}
+
+\textbf{Cell directory:} \texttt{M12x\_aamas2025/cells/m12\_u3\_collider\_max\_\_target-x2/}\\
+\textbf{Runner outcome:} \texttt{solved}\\
+\textbf{ASP coverage:} positives \texttt{8/8}, negatives \texttt{1/1}
+
+\subsubsection{Setup}
+
+Same unit and target as cell 3: collider \(x_0\to x_2\leftarrow x_1\) with \(x_2:=\max(x_0,x_1)\) on the nine-row factorial; under nonzero-positive labelling, \(x_2\neq 0\) if and only if at least one parent is nonzero. The positive examples are rows \(\{2,3,4,5,6,7,8,9\}\) and the sole negative is row \(\{1\}\). Background knowledge contains exact-value predicates for both parents; the target \(x_2\) is excluded. This arm uses the AAMAS published configuration (\texttt{folding\_mode(greedy)}, \texttt{folding\_selection(mgr)}, \texttt{folding\_space(bk)}, \texttt{asm\_intro(relto)}). The locked reference \(\mathcal{H}_{x_2}^\star\) is the four-clause \texttt{val} expansion of ``at least one parent is nonzero.''
+
+\subsubsection{Intended hypothesis \(\mathcal{H}_{x_2}^\star\)}
+
+\begin{lstlisting}[style=logic,language=Prolog]
+x2(A) :- x0_val_1(A).
+x2(A) :- x0_val_2(A).
+x2(A) :- x1_val_1(A).
+x2(A) :- x1_val_2(A).
+\end{lstlisting}
+
+\subsubsection{What happened}
+
+This cell uses the AAMAS published configuration on the same U3 instance. After the initial optimum, the engine has eight rote rules covering the positives by sample identifier. The trace then computes a greedy folding plan for each of those rules. For every positive, greedy/\texttt{mgr} first replaces the identifier by the \(x_0\) value on that row, then extends the body with the \(x_1\) value on the same row. The planned foldings are therefore the eight nonzero parent pairs of the factorial (every cell except \((x_0,x_1)=(0,0)\)):
+
+\begin{itemize}
+  \item \(A=2\) \(\rightarrow\) \texttt{x0\_val\_0}, \texttt{x1\_val\_1}
+  \item \(A=3\) \(\rightarrow\) \texttt{x0\_val\_0}, \texttt{x1\_val\_2}
+  \item \(A=4\) \(\rightarrow\) \texttt{x0\_val\_1}, \texttt{x1\_val\_0}
+  \item \(A=5\) \(\rightarrow\) \texttt{x0\_val\_1}, \texttt{x1\_val\_1}
+  \item \(A=6\) \(\rightarrow\) \texttt{x0\_val\_1}, \texttt{x1\_val\_2}
+  \item \(A=7\) \(\rightarrow\) \texttt{x0\_val\_2}, \texttt{x1\_val\_0}
+  \item \(A=8\) \(\rightarrow\) \texttt{x0\_val\_2}, \texttt{x1\_val\_1}
+  \item \(A=9\) \(\rightarrow\) \texttt{x0\_val\_2}, \texttt{x1\_val\_2}
+\end{itemize}
+
+Those foldings are then applied one at a time. After each application, entailment is checked against the \textbf{whole current theory}, not against the newly folded clause alone. Each pairwise body matches only its own factorial cell, so it never covers the negative \(A=1\). Every intermediate theory already separates \(E^\pm\), the trace reports \texttt{extended ABA entails <E+,E-> - using folding}, and no assumptions are introduced. Learning stops with \texttt{nothing to fold}. The final solution is the eight specialised conjunctions, with no assumptions and no contraries, and with full ASP coverage.
+
+\subsubsection{What the learner did}
+
+The accepted target rules are:
+
+\begin{lstlisting}[style=logic,language=Prolog]
+x2(A) :- x0_val_0(A), x1_val_1(A).
+x2(A) :- x0_val_0(A), x1_val_2(A).
+x2(A) :- x0_val_1(A), x1_val_0(A).
+x2(A) :- x0_val_1(A), x1_val_1(A).
+x2(A) :- x0_val_1(A), x1_val_2(A).
+x2(A) :- x0_val_2(A), x1_val_0(A).
+x2(A) :- x0_val_2(A), x1_val_1(A).
+x2(A) :- x0_val_2(A), x1_val_2(A).
+\end{lstlisting}
+
+Body-scope variables are \(\{x_0,x_1\}\).
+
+\subsubsection{Match assessment}
+
+This is not an exact match to \(\mathcal{H}_{x_2}^\star\). The locked hypothesis is the compact four-rule OR of unary nonzero conditions on either parent. The learner instead emits an exhaustive enumeration of the eight positive cells.
+
+Extensionally the two presentations coincide: the eight conjunctions cover precisely those rows where \(\max(x_0,x_1)\neq 0\), i.e. at least one parent is nonzero. ASP coverage is complete for that reason. Intensionally, however, the solution never discovers a one-literal generalisation such as \texttt{x2(A) :- x0\_val\_1(A)}; under greedy/\texttt{mgr} each positive is specialised to the full parent pair immediately, and that pair already entails safely, so there is no pressure to fold further or to introduce assumptions.
+
+\textbf{Contrast with ECAI on the same unit.} Under ECAI (cell 3), non-deterministic folding produces an \(x_0\)-first case analysis: pure unary rules on the complete \(x_0\in\{1,2\}\) slices, and an assumption-mediated rule only on the incomplete \(x_0=0\) slice. That is more compact than eight pairwise clauses and closer in spirit to a disjunctive reading, though still not the locked four-rule OR. Under AAMAS, the same unit yields the exhaustive positive-cell enumeration with both parents in every body and no assumptions. Both arms recover the intended concept; they differ in presentation: ECAI's mixed unary/assumption case analysis versus AAMAS's eight specialised conjunctions.
+
+\textbf{Contrast with AAMAS on U2.} The same greedy pairwise specialisation matched \(\mathcal{H}^\star\) exactly on U2, because the locked min hypothesis \emph{is} a set of both-parent conjunctions. On U3 the locked max hypothesis is a unary OR, so the same folding style recovers the concept extensionally but misses \(\mathcal{H}_{x_2}^\star\) syntactically.
+
+\textbf{Short verdict.} Not an exact match to the locked four-rule OR: eight both-parent conjunctions enumerating the positive cells, no assumptions, full coverage of the intended ``at least one parent nonzero'' concept.
+
+\medskip\hrule\medskip
+
+\emph{Cells 4--9 and 13--18 to follow.}
 
 \end{document}
