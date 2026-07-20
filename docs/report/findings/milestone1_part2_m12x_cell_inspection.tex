@@ -268,6 +268,85 @@ So the mismatch with \(\mathcal{H}_{x_2}^\star\) should not be read as a failure
 
 \medskip\hrule\medskip
 
+\subsection{3. ECAI \(\times\) \texttt{m12\_u3\_collider\_max} \(\times\) \(t=x_2\)}
+
+\textbf{Cell directory:} \texttt{M12x\_ecai2024/cells/m12\_u3\_collider\_max\_\_target-x2/}\\
+\textbf{Runner outcome:} \texttt{solved}\\
+\textbf{ASP coverage:} positives \texttt{8/8}, negatives \texttt{1/1}
+
+\subsubsection{Setup}
+
+Unit U3 is the disjunctive counterpart of U2: the same collider \(x_0\to x_2\leftarrow x_1\), now with mechanism \(x_2:=\max(x_0,x_1)\) on the nine-row factorial. Under nonzero-positive labelling, \(x_2\neq 0\) if and only if at least one parent is nonzero. The positive examples are therefore rows \(\{2,3,4,5,6,7,8,9\}\) and the sole negative is row \(\{1\}\). Background knowledge contains exact-value predicates for both parents; the target \(x_2\) is excluded. The locked reference \(\mathcal{H}_{x_2}^\star\) is the four-clause \texttt{val} expansion of ``at least one parent is nonzero.''
+
+\subsubsection{Intended hypothesis \(\mathcal{H}_{x_2}^\star\)}
+
+\begin{lstlisting}[style=logic,language=Prolog]
+x2(A) :- x0_val_1(A).
+x2(A) :- x0_val_2(A).
+x2(A) :- x1_val_1(A).
+x2(A) :- x1_val_2(A).
+\end{lstlisting}
+
+\subsubsection{What happened}
+
+This cell uses the ECAI published configuration on unit U3 with learning target \(x_2\). After the initial optimum there are eight rote rules, one for each positive. Non-deterministic folding proceeds by \(x_0\)-slices and yields a mixed solution: pure unary rules for \(x_0\in\{1,2\}\), and an assumption-mediated rule only on the incomplete \(x_0=0\) slice. The learner returns a solved framework with full ASP coverage. The result is not an exact syntactic match to \(\mathcal{H}_{x_2}^\star\), but it is a compact case analysis that still expresses the intended disjunctive concept.
+
+\subsubsection{What the learner did}
+
+Learning begins from rote coverage of the eight positives. The first fold chosen is \(A=2\) (where \(x_0=0\), \(x_1=1\)), which replaces the identifier by \texttt{x0\_val\_0} alone:
+
+\begin{lstlisting}[style=logic,language=Prolog]
+x2(A) :- x0_val_0(A).
+\end{lstlisting}
+
+That body would also cover the unique negative \(A=1\) (where \(x_0=0\) and \(x_1=0\)), so entailment fails and assumption introduction adds \texttt{alpha\_1}:
+
+\begin{lstlisting}[style=logic,language=Prolog]
+x2(A) :- alpha_1(A), x0_val_0(A).
+\end{lstlisting}
+
+The other positive in the same slice (\(A=3\)) is then deleted as subsumed. Next, \(A=4\) folds to \texttt{x0\_val\_1}. Under \(\max\), every row with \(x_0=1\) is already positive, so this one-literal rule entails \(\langle E^+,E^-\rangle\) immediately and needs no assumption:
+
+\begin{lstlisting}[style=logic,language=Prolog]
+x2(A) :- x0_val_1(A).
+\end{lstlisting}
+
+Positives \(A=5\) and \(A=6\) are subsumed. Likewise \(A=7\) folds to a safe unary rule on the \(x_0=2\) slice:
+
+\begin{lstlisting}[style=logic,language=Prolog]
+x2(A) :- x0_val_2(A).
+\end{lstlisting}
+
+Positives \(A=8\) and \(A=9\) are subsumed. Contrary learning for the negative \(A=1\) first tries \texttt{x0\_val\_0} (rejected), then succeeds with \texttt{x1\_val\_0}:
+
+\begin{lstlisting}[style=logic,language=Prolog]
+c_alpha_1(A) :- x1_val_0(A).
+\end{lstlisting}
+
+In the ASP solution the assumption is realised by
+
+\begin{lstlisting}[style=logic,language=Prolog]
+alpha_1(A) :- not c_alpha_1(A), x0_val_0(A).
+\end{lstlisting}
+
+so on the \(x_0=0\) slice the assumption holds precisely when \(x_1\neq 0\). Body-scope variables of the target rules are \(\{x_0\}\); \(x_1\) appears only through the contrary / assumption pair.
+
+\subsubsection{Match assessment}
+
+This is not an exact match to \(\mathcal{H}_{x_2}^\star\). The learner does not emit the four unary parent rules of the locked OR expansion.
+
+Extensionally, the learned theory is
+
+\[ (x_0=0 \land x_1\neq 0)\;\lor\;(x_0=1)\;\lor\;(x_0=2), \]
+
+which is exactly \(x_0\neq 0\) or \(x_1\neq 0\), the nonzero-positive semantics of \(\max\). ASP coverage is complete for that reason.
+
+Intensionally this is an \(x_0\)-first case analysis: the complete nonzero \(x_0\) slices become ordinary unary rules, and only the incomplete \(x_0=0\) slice needs an assumption to encode ``\(x_1\) nonzero.'' Relative to \(\mathcal{H}_{x_2}^\star\), the presentation differs (no free-standing \texttt{x1\_val\_1} / \texttt{x1\_val\_2} target rules), but the recovered concept is the intended disjunction. The pattern is related to ECAI on U2: assumption machinery is used where a one-literal fold would overgeneralise, while folds that are already safe are kept without assumptions.
+
+\textbf{Short verdict.} Not an exact match to the locked four-rule OR, but a solved, fully covering \(x_0\)-case analysis that encodes the same ``at least one parent nonzero'' concept, with assumptions only on the \(x_0=0\) slice.
+
+\medskip\hrule\medskip
+
 \section{Batch B --- AAMAS (\texttt{M12x\_aamas2025})}
 
 \subsection{10. AAMAS \(\times\) \texttt{m12\_u1\_separator\_copy} \(\times\) \(t=x_2\)}
