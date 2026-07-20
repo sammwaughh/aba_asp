@@ -768,10 +768,11 @@ The non-sources are $N=\{x_1,x_2,x_3\}$, of which only $x_3$ is a learning targe
 The parents of the sink are $\mathrm{Pa}(x_3)=\{x_1,x_2\}$.
 
 \subsection{Mechanisms}
-For each $x_0\in K$, set $x_1:=(x_0+1)\bmod 3$ and include two values of $x_2$:
+For each $x_0\in K$, set $x_1:=(x_0+1)\bmod 3$ and include two values of $x_2$,
+each a function of the common cause (not a sibling-copy mechanism):
 \begin{enumerate}[leftmargin=1.6em,itemsep=0.15em]
   \item $x_2=(x_0+2)\bmod 3$ (the siblings differ);
-  \item $x_2=x_1$ (the siblings collapse).
+  \item $x_2=(x_0+1)\bmod 3$ (the siblings collapse, since this equals $x_1$).
 \end{enumerate}
 The sink is then
 \[

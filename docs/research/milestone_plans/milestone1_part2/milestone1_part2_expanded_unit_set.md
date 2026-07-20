@@ -101,7 +101,7 @@ Alphabet \(k=3\) always. Configs: ECAI, AAMAS. Cells per unit \(= 2\times\) (num
 |--|--|
 | **Graph** | \(x_0\to x_1\), \(x_0\to x_2\), \(x_1\to x_3\), \(x_2\to x_3\) |
 | **Sources \(S\)** | \(\{x_0\}\) (curated multi-row support) → 6 rows |
-| **Mechanisms** | For each \(x_0\): \(x_1:=(x_0+1)\bmod 3\); \(x_2\in\{(x_0+2)\bmod 3,\,x_1\}\); \(x_3:=\|x_1-x_2\|\) |
+| **Mechanisms** | For each \(x_0\): \(x_1:=(x_0+1)\bmod 3\); \(x_2\in\{(x_0+2)\bmod 3,\,(x_0+1)\bmod 3\}\) (differ / collapse); \(x_3:=\|x_1-x_2\|\) |
 | **Targets \(N\)** | \(\{x_3\}\) |
 | **Lesson** | Both-parent sink under correlated siblings; root/sibling alone imperfect |
 | **Cells** | 2 |
