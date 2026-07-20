@@ -37,7 +37,7 @@
 \maketitle
 
 \textbf{Experiment ID:} M12x (Milestone 1 Part 2 expanded)\\
-\textbf{Status:} Stage-3 qualitative inspection \textbf{closed / analysed} (18/18 written); M12x evidence package locked for M1.3\\
+\textbf{Status:} Stage-3 qualitative inspection \textbf{done / analysed} (18/18 written)\\
 \textbf{Date started:} 2026-07-20\\
 \textbf{Parent record:} \href{M1.2-expanded.md}{\texttt{M1.2-expanded.md}}\\
 \textbf{Artefacts:} \texttt{causal/outputs/aba\_learning/grid/M12x\_\{ecai2024,aamas2025\}/cells/\{dgp\}\_\_target-\{t\}/}\\
@@ -136,7 +136,7 @@ Second, the grid runner's \textbf{\texttt{solved}} label records that ABA Learni
 
 \section{Batch A --- ECAI (\texttt{M12x\_ecai2024})}
 
-\subsubsection{ECAI folding control flow}
+\subsection{ECAI folding control flow}
 
 Batch A uses \texttt{configs/ecai2024\_config.pl}: \texttt{learning\_mode(brave)}, \texttt{folding\_mode(nd)}, \texttt{folding\_steps(10)}, \texttt{folding\_selection(any)}, \texttt{folding\_space(all)}, and \texttt{asm\_intro(relto)}. The shared \texttt{gen} skeleton above still applies; what follows is how folding and selection specialise that skeleton on this arm.
 
@@ -152,7 +152,7 @@ Batch A uses \texttt{configs/ecai2024\_config.pl}: \texttt{learning\_mode(brave)
 
 \textbf{How to read ECAI traces in this batch.} Lines of the form \texttt{begin nd folding} / \texttt{1: folding \ldots{} with x*val*} / \texttt{0: DONE} mark a token-bounded fold. \texttt{extended ABA does not entail \ldots{} looking for assumption} followed by \texttt{generating NEW assumption} or \texttt{found: alpha\_\ldots{} OK/KO} mark the repair path. Absence of \texttt{Increasing folding tokens to:} means the derivation completed at the starting budget of one token. As in the shared skeleton, \texttt{nothing to fold} and runner \texttt{solved} record procedural completion; ASP coverage must still be checked separately.
 
-\subsection{1. ECAI \(\times\) \texttt{m12\_u1\_separator\_copy} \(\times\) \(t=x_2\)}
+\subsection{\texorpdfstring{1. ECAI \(\times\) \texttt{m12\_u1\_separator\_copy} \(\times\) \(t=x_2\)}{1. ECAI - m12-u1-separator-copy - target x2}}
 
 \textbf{Cell directory:} \texttt{M12x\_ecai2024/cells/m12\_u1\_separator\_copy\_\_target-x2/}\\
 \textbf{Runner outcome:} \texttt{solved}\\
@@ -162,7 +162,7 @@ Batch A uses \texttt{configs/ecai2024\_config.pl}: \texttt{learning\_mode(brave)
 
 The graph is a separator \(x_1\to x_2\) with an isolated variable \(x_0\). The mechanism sets \(x_2\) equal to \(x_1\) on the full nine-row factorial over \((x_0,x_1)\). Under nonzero-positive labelling the positive examples are rows \(\{2,3,5,6,8,9\}\) and the negative examples are rows \(\{1,4,7\}\). Background knowledge contains exact-value predicates for \(x_0\) and \(x_1\); the target column \(x_2\) is excluded. The ancestors of \(x_2\) are \(\{x_1\}\); the isolated variable \(x_0\) is a distractor; there are no descendants. The design role of this unit is to test whether the learner recovers a unary parent rule and avoids citing the isolated distractor.
 
-\subsubsection{Intended hypothesis \(\mathcal{H}_{x_2}^\star\)}
+\subsubsection{\texorpdfstring{Intended hypothesis \(\mathcal{H}_{x_2}^\star\)}{Intended hypothesis H-star(x2)}}
 
 \begin{lstlisting}[style=logic,language=Prolog]
 x2(A) :- x1_val_1(A).
@@ -226,7 +226,7 @@ Intensionally the solution is misaligned with the intended hypothesis. The learn
 
 \medskip\hrule\medskip
 
-\subsection{2. ECAI \(\times\) \texttt{m12\_u2\_collider\_min} \(\times\) \(t=x_2\)}
+\subsection{\texorpdfstring{2. ECAI \(\times\) \texttt{m12\_u2\_collider\_min} \(\times\) \(t=x_2\)}{2. ECAI - m12-u2-collider-min - target x2}}
 
 \textbf{Cell directory:} \texttt{M12x\_ecai2024/cells/m12\_u2\_collider\_min\_\_target-x2/}\\
 \textbf{Runner outcome:} \texttt{solved}\\
@@ -236,7 +236,7 @@ Intensionally the solution is misaligned with the intended hypothesis. The learn
 
 Unit U2 is a collider \(x_0\to x_2\leftarrow x_1\) with mechanism \(x_2:=\min(x_0,x_1)\) on the full nine-row factorial over \((x_0,x_1)\). Under nonzero-positive labelling, \(x_2\neq 0\) if and only if both parents are nonzero. The positive examples are therefore rows \(\{5,6,8,9\}\) and the negative examples are rows \(\{1,2,3,4,7\}\). Background knowledge contains exact-value predicates for both parents; the target \(x_2\) is excluded. There are no sibling or descendant distractors beyond the two parents themselves. The design role of this unit is to test recovery of a conjunctive both-parent rule. The locked reference \(\mathcal{H}_{x_2}^\star\) enumerates that concept as four ordinary \texttt{val} conjunctions, one for each nonzero pair of parent values.
 
-\subsubsection{Intended hypothesis \(\mathcal{H}_{x_2}^\star\)}
+\subsubsection{\texorpdfstring{Intended hypothesis \(\mathcal{H}_{x_2}^\star\)}{Intended hypothesis H-star(x2)}}
 
 \begin{lstlisting}[style=logic,language=Prolog]
 x2(A) :- x0_val_1(A), x1_val_1(A).
@@ -308,7 +308,7 @@ So the mismatch with \(\mathcal{H}_{x_2}^\star\) should not be read as a failure
 
 \medskip\hrule\medskip
 
-\subsection{3. ECAI \(\times\) \texttt{m12\_u3\_collider\_max} \(\times\) \(t=x_2\)}
+\subsection{\texorpdfstring{3. ECAI \(\times\) \texttt{m12\_u3\_collider\_max} \(\times\) \(t=x_2\)}{3. ECAI - m12-u3-collider-max - target x2}}
 
 \textbf{Cell directory:} \texttt{M12x\_ecai2024/cells/m12\_u3\_collider\_max\_\_target-x2/}\\
 \textbf{Runner outcome:} \texttt{solved}\\
@@ -318,7 +318,7 @@ So the mismatch with \(\mathcal{H}_{x_2}^\star\) should not be read as a failure
 
 Unit U3 is the disjunctive counterpart of U2: the same collider \(x_0\to x_2\leftarrow x_1\), now with mechanism \(x_2:=\max(x_0,x_1)\) on the nine-row factorial. Under nonzero-positive labelling, \(x_2\neq 0\) if and only if at least one parent is nonzero. The positive examples are therefore rows \(\{2,3,4,5,6,7,8,9\}\) and the sole negative is row \(\{1\}\). Background knowledge contains exact-value predicates for both parents; the target \(x_2\) is excluded. The locked reference \(\mathcal{H}_{x_2}^\star\) is the four-clause \texttt{val} expansion of ``at least one parent is nonzero.''
 
-\subsubsection{Intended hypothesis \(\mathcal{H}_{x_2}^\star\)}
+\subsubsection{\texorpdfstring{Intended hypothesis \(\mathcal{H}_{x_2}^\star\)}{Intended hypothesis H-star(x2)}}
 
 \begin{lstlisting}[style=logic,language=Prolog]
 x2(A) :- x0_val_1(A).
@@ -387,7 +387,7 @@ Intensionally this is an \(x_0\)-first case analysis: the complete nonzero \(x_0
 
 \medskip\hrule\medskip
 
-\subsection{4. ECAI \(\times\) \texttt{m12\_u4\_fork\_asymmetric} \(\times\) \(t=x_1\)}
+\subsection{\texorpdfstring{4. ECAI \(\times\) \texttt{m12\_u4\_fork\_asymmetric} \(\times\) \(t=x_1\)}{4. ECAI - m12-u4-fork-asymmetric - target x1}}
 
 \textbf{Cell directory:} \texttt{M12x\_ecai2024/cells/m12\_u4\_fork\_asymmetric\_\_target-x1/}\\
 \textbf{Runner outcome:} \texttt{solved}\\
@@ -397,7 +397,7 @@ Intensionally this is an \(x_0\)-first case analysis: the complete nonzero \(x_0
 
 Unit U4 is a fork \(x_0\to x_1\), \(x_0\to x_2\) on the three-row source factorial over \(x_0\in\{0,1,2\}\). The asymmetric maps are \(x_1:=2\) if \(x_0\neq 2\) else \(0\), and \(x_2:=2\) if \(x_0\neq 0\) else \(0\). For target \(x_1\), nonzero-positive labelling gives \(E^+=\{1,2\}\) and \(E^-=\{3\}\); on the table, \(x_1\neq 0\) if and only if \(x_0\in\{0,1\}\). Background knowledge includes exact-value predicates for the parent \(x_0\) and the sibling distractor \(x_2\); the target \(x_1\) is excluded. The sibling is correlated with \(x_1\) via \(x_0\) but imperfect as a separator (\texttt{x2\_val\_2} holds on both positive row 2 and negative row 3). The locked reference \(\mathcal{H}_{x_1}^\star\) is the two-clause parent expansion of \(x_0\neq 2\).
 
-\subsubsection{Intended hypothesis \(\mathcal{H}_{x_1}^\star\)}
+\subsubsection{\texorpdfstring{Intended hypothesis \(\mathcal{H}_{x_1}^\star\)}{Intended hypothesis H-star(x1)}}
 
 \begin{lstlisting}[style=logic,language=Prolog]
 x1(A) :- x0_val_0(A).
@@ -441,7 +441,7 @@ The two unary parent rules are precisely the locked \texttt{val} expansion of ``
 
 \medskip\hrule\medskip
 
-\subsection{5. ECAI \(\times\) \texttt{m12\_u4\_fork\_asymmetric} \(\times\) \(t=x_2\)}
+\subsection{\texorpdfstring{5. ECAI \(\times\) \texttt{m12\_u4\_fork\_asymmetric} \(\times\) \(t=x_2\)}{5. ECAI - m12-u4-fork-asymmetric - target x2}}
 
 \textbf{Cell directory:} \texttt{M12x\_ecai2024/cells/m12\_u4\_fork\_asymmetric\_\_target-x2/}\\
 \textbf{Runner outcome:} \texttt{solved}\\
@@ -451,7 +451,7 @@ The two unary parent rules are precisely the locked \texttt{val} expansion of ``
 
 Same unit as cell 4: fork \(x_0\to x_1\), \(x_0\to x_2\) on the three-row source factorial, with asymmetric maps \(x_1:=2\) if \(x_0\neq 2\) else \(0\), and \(x_2:=2\) if \(x_0\neq 0\) else \(0\). For target \(x_2\), nonzero-positive labelling gives \(E^+=\{2,3\}\) and \(E^-=\{1\}\); on the table, \(x_2\neq 0\) if and only if \(x_0\neq 0\). Background knowledge includes exact-value predicates for the parent \(x_0\) and the sibling distractor \(x_1\); the target \(x_2\) is excluded. The sibling is correlated with \(x_2\) via \(x_0\) but imperfect as a separator (\texttt{x1\_val\_2} holds on both negative row 1 and positive row 2). The locked reference \(\mathcal{H}_{x_2}^\star\) is the two-clause parent expansion of \(x_0\neq 0\).
 
-\subsubsection{Intended hypothesis \(\mathcal{H}_{x_2}^\star\)}
+\subsubsection{\texorpdfstring{Intended hypothesis \(\mathcal{H}_{x_2}^\star\)}{Intended hypothesis H-star(x2)}}
 
 \begin{lstlisting}[style=logic,language=Prolog]
 x2(A) :- x0_val_1(A).
@@ -497,7 +497,7 @@ The two unary parent rules are precisely the locked \texttt{val} expansion of ``
 
 \medskip\hrule\medskip
 
-\subsection{6. ECAI \(\times\) \texttt{m12\_u5\_chain\_curated} \(\times\) \(t=x_2\)}
+\subsection{\texorpdfstring{6. ECAI \(\times\) \texttt{m12\_u5\_chain\_curated} \(\times\) \(t=x_2\)}{6. ECAI - m12-u5-chain-curated - target x2}}
 
 \textbf{Cell directory:} \texttt{M12x\_ecai2024/cells/m12\_u5\_chain\_curated\_\_target-x2/}\\
 \textbf{Runner outcome:} \texttt{solved}\\
@@ -507,7 +507,7 @@ The two unary parent rules are precisely the locked \texttt{val} expansion of ``
 
 Unit U5 is the chain \(x_0\to x_1\to x_2\) on the curated six-row pilot support: for each \(x_0\in\{0,1,2\}\), the pairs \((x_0,x_0)\) and \((x_0,(x_0+1)\bmod 3)\), with \(x_2:=\operatorname{copy}(x_1)\). Nonzero-positive labelling gives \(E^+=\{2,3,4,5\}\) and \(E^-=\{1,6\}\); on the table, \(x_2\neq 0\) if and only if \(x_1\in\{1,2\}\). Background knowledge includes exact-value predicates for both ancestors \(x_0\) and \(x_1\); the target \(x_2\) is excluded. The direct parent \(x_1\) perfectly separates \(E^\pm\); the grandparent \(x_0\) is correlated but imperfect (\(x_0=0\) and \(x_0=2\) each contain one positive and one negative). The locked reference \(\mathcal{H}_{x_2}^\star\) prefers the parent copy expansion.
 
-\subsubsection{Intended hypothesis \(\mathcal{H}_{x_2}^\star\)}
+\subsubsection{\texorpdfstring{Intended hypothesis \(\mathcal{H}_{x_2}^\star\)}{Intended hypothesis H-star(x2)}}
 
 \begin{lstlisting}[style=logic,language=Prolog]
 x2(A) :- x1_val_1(A).
@@ -576,7 +576,7 @@ The pattern is closely related to ECAI on U1 and U3: non-deterministic folding c
 
 \medskip\hrule\medskip
 
-\subsection{7. ECAI \(\times\) \texttt{m12\_u6\_g1\_min\_diff} \(\times\) \(t=x_2\)}
+\subsection{\texorpdfstring{7. ECAI \(\times\) \texttt{m12\_u6\_g1\_min\_diff} \(\times\) \(t=x_2\)}{7. ECAI - m12-u6-g1-min-diff - target x2}}
 
 \textbf{Cell directory:} \texttt{M12x\_ecai2024/cells/m12\_u6\_g1\_min\_diff\_\_target-x2/}\\
 \textbf{Runner outcome:} \texttt{solved}\\
@@ -586,7 +586,7 @@ The pattern is closely related to ECAI on U1 and U3: non-deterministic folding c
 
 Unit U6 is the four-node G1 graph with mechanisms \(x_2:=\min(x_0,x_1)\) and \(x_3:=x_1-x_2\) on the nine-row source factorial. For target \(x_2\), nonzero-positive labelling gives \(E^+=\{5,6,8,9\}\) and \(E^-=\{1,2,3,4,7\}\); on the table, \(x_2\neq 0\) if and only if both parents are nonzero. Background knowledge includes exact-value predicates for both parents \(x_0,x_1\) and the descendant distractor \(x_3\); the target \(x_2\) is excluded. The descendant is imperfect as a separator of \(E^\pm\) (\(x_3\neq 0\) only on rows 2, 3, 6). The locked reference \(\mathcal{H}_{x_2}^\star\) is the same four-clause both-parents-nonzero expansion as on U2.
 
-\subsubsection{Intended hypothesis \(\mathcal{H}_{x_2}^\star\)}
+\subsubsection{\texorpdfstring{Intended hypothesis \(\mathcal{H}_{x_2}^\star\)}{Intended hypothesis H-star(x2)}}
 
 \begin{lstlisting}[style=logic,language=Prolog]
 x2(A) :- x0_val_1(A), x1_val_1(A).
@@ -647,7 +647,7 @@ Judged against the semantic success description for U6 \(x_2\), however, the lea
 
 \medskip\hrule\medskip
 
-\subsection{8. ECAI \(\times\) \texttt{m12\_u6\_g1\_min\_diff} \(\times\) \(t=x_3\)}
+\subsection{\texorpdfstring{8. ECAI \(\times\) \texttt{m12\_u6\_g1\_min\_diff} \(\times\) \(t=x_3\)}{8. ECAI - m12-u6-g1-min-diff - target x3}}
 
 \textbf{Cell directory:} \texttt{M12x\_ecai2024/cells/m12\_u6\_g1\_min\_diff\_\_target-x3/}\\
 \textbf{Runner outcome:} \texttt{solved}\\
@@ -657,7 +657,7 @@ Judged against the semantic success description for U6 \(x_2\), however, the lea
 
 Same unit as cells 7 and 16: G1 with \(x_2:=\min(x_0,x_1)\) and \(x_3:=x_1-x_2\) on the nine-row factorial. For target \(x_3\), nonzero-positive labelling gives \(E^+=\{2,3,6\}\) and \(E^-=\{1,4,5,7,8,9\}\); on the table, \(x_3\neq 0\) if and only if \(x_1>x_2\). Background knowledge includes exact-value predicates for all non-targets \(x_0,x_1,x_2\); the target \(x_3\) is excluded. The preferred parents are \(\{x_1,x_2\}\); \(x_0\) is a non-parent ancestor via \(x_2\). Neither parent alone separates \(E^\pm\). The locked reference \(\mathcal{H}_{x_3}^\star\) is the three-clause parent case split of \(x_1>x_2\).
 
-\subsubsection{Intended hypothesis \(\mathcal{H}_{x_3}^\star\)}
+\subsubsection{\texorpdfstring{Intended hypothesis \(\mathcal{H}_{x_3}^\star\)}{Intended hypothesis H-star(x3)}}
 
 \begin{lstlisting}[style=logic,language=Prolog]
 x3(A) :- x1_val_1(A), x2_val_0(A).
@@ -722,7 +722,7 @@ The learning path is structurally the same as ECAI outcomes on U5 and on U6 \(x_
 
 \medskip\hrule\medskip
 
-\subsection{9. ECAI \(\times\) \texttt{m12\_u7\_diamond\_noisy} \(\times\) \(t=x_3\)}
+\subsection{\texorpdfstring{9. ECAI \(\times\) \texttt{m12\_u7\_diamond\_noisy} \(\times\) \(t=x_3\)}{9. ECAI - m12-u7-diamond-noisy - target x3}}
 
 \textbf{Cell directory:} \texttt{M12x\_ecai2024/cells/m12\_u7\_diamond\_noisy\_\_target-x3/}\\
 \textbf{Runner outcome:} \texttt{solved}\\
@@ -732,7 +732,7 @@ The learning path is structurally the same as ECAI outcomes on U5 and on U6 \(x_
 
 Unit U7 is a diamond with curated support. For each root value \(x_0\in\{0,1,2\}\), set \(x_1:=(x_0+1)\bmod 3\) and include two values of \(x_2\), both functions of the common cause: \(x_2:=(x_0+2)\bmod 3\) (siblings differ) and \(x_2:=(x_0+1)\bmod 3\) (siblings collapse, equal to \(x_1\)). The sink is \(x_3:=|x_1-x_2|\). The six-row table therefore places, for every \(x_0\), one positive and one negative under nonzero-positive labelling of \(x_3\). On this table, \(x_3\neq 0\) if and only if \(x_1\neq x_2\). The examples are \(E^+=\{1,3,5\}\) and \(E^-=\{2,4,6\}\). Each positive/negative twin shares \((x_0,x_1)\) and differs only in \(x_2\). No unary \texttt{val}-union over \(\{x_0\}\), \(\{x_1\}\), or \(\{x_2\}\) alone separates \(E^\pm\); the parent pair \(\{x_1,x_2\}\) does. Background knowledge includes exact-value predicates for \(x_0\), \(x_1\), and \(x_2\); the target \(x_3\) is excluded. This arm uses the ECAI published configuration (see Batch A control flow). The locked reference \(\mathcal{H}_{x_3}^\star\) enumerates the three sibling pairs on which the siblings differ.
 
-\subsubsection{Intended hypothesis \(\mathcal{H}_{x_3}^\star\)}
+\subsubsection{\texorpdfstring{Intended hypothesis \(\mathcal{H}_{x_3}^\star\)}{Intended hypothesis H-star(x3)}}
 
 \begin{lstlisting}[style=logic,language=Prolog]
 x3(A) :- x1_val_1(A), x2_val_2(A).
@@ -809,7 +809,7 @@ Relative to U7's design purpose---forcing both-parent recovery by making every u
 
 \section{Batch B --- AAMAS (\texttt{M12x\_aamas2025})}
 
-\subsubsection{AAMAS folding control flow}
+\subsection{AAMAS folding control flow}
 
 Batch B uses \texttt{configs/aamas2025\_config.pl}: \texttt{learning\_mode(brave)}, \texttt{folding\_mode(greedy)}, \texttt{folding\_selection(mgr)}, \texttt{folding\_space(bk)}, and \texttt{asm\_intro(relto)}. The shared \texttt{gen} skeleton still applies; what follows is how folding and selection specialise that skeleton on this arm.
 
@@ -831,7 +831,7 @@ after successive folds with each matching BK rule. The greedy procedure is commi
 
 \textbf{How to read AAMAS traces in this batch.} An initial block \texttt{gen: computing greedy foldings} followed by per-sample \texttt{folding [A=i] with \ldots{}} / \texttt{DONE} lines is the precomputation of greedy generalisations. Later \texttt{begin greedy folding} under \texttt{gen1} applies that specialisation to the selected rote rule. \texttt{using folding} without intervening \texttt{generating NEW assumption} means the fold was accepted assumption-free. As in the shared skeleton, \texttt{nothing to fold} and runner \texttt{solved} record procedural completion; ASP coverage must still be checked separately.
 
-\subsection{10. AAMAS \(\times\) \texttt{m12\_u1\_separator\_copy} \(\times\) \(t=x_2\)}
+\subsection{\texorpdfstring{10. AAMAS \(\times\) \texttt{m12\_u1\_separator\_copy} \(\times\) \(t=x_2\)}{10. AAMAS - m12-u1-separator-copy - target x2}}
 
 \textbf{Cell directory:} \texttt{M12x\_aamas2025/cells/m12\_u1\_separator\_copy\_\_target-x2/}\\
 \textbf{Runner outcome:} \texttt{solved}\\
@@ -846,7 +846,7 @@ Same unit and target as cell 1: separator \(x_1\to x_2\) with isolated \(x_0\);
 (\texttt{folding\_mode(greedy)}, \texttt{folding\_selection(mgr)},
 \texttt{folding\_space(bk)}, \texttt{asm\_intro(relto)}).
 
-\subsubsection{Intended hypothesis \(\mathcal{H}_{x_2}^\star\)}
+\subsubsection{\texorpdfstring{Intended hypothesis \(\mathcal{H}_{x_2}^\star\)}{Intended hypothesis H-star(x2)}}
 
 \begin{lstlisting}[style=logic,language=Prolog]
 x2(A) :- x1_val_1(A).
@@ -911,7 +911,7 @@ distractor beside the true parent.
 
 \medskip\hrule\medskip
 
-\subsection{11. AAMAS \(\times\) \texttt{m12\_u2\_collider\_min} \(\times\) \(t=x_2\)}
+\subsection{\texorpdfstring{11. AAMAS \(\times\) \texttt{m12\_u2\_collider\_min} \(\times\) \(t=x_2\)}{11. AAMAS - m12-u2-collider-min - target x2}}
 
 \textbf{Cell directory:} \texttt{M12x\_aamas2025/cells/m12\_u2\_collider\_min\_\_target-x2/}\\
 \textbf{Runner outcome:} \texttt{solved}\\
@@ -921,7 +921,7 @@ distractor beside the true parent.
 
 Same unit and target as cell 2: collider \(x_0\to x_2\leftarrow x_1\) with \(x_2:=\min(x_0,x_1)\) on the nine-row factorial; nonzero-positive examples \(E^+=\{5,6,8,9\}\) and \(E^-=\{1,2,3,4,7\}\); exact-value background knowledge for both parents. This arm uses the AAMAS published configuration (\texttt{folding\_mode(greedy)}, \texttt{folding\_selection(mgr)}, \texttt{folding\_space(bk)}, \texttt{asm\_intro(relto)}).
 
-\subsubsection{Intended hypothesis \(\mathcal{H}_{x_2}^\star\)}
+\subsubsection{\texorpdfstring{Intended hypothesis \(\mathcal{H}_{x_2}^\star\)}{Intended hypothesis H-star(x2)}}
 
 \begin{lstlisting}[style=logic,language=Prolog]
 x2(A) :- x0_val_1(A), x1_val_1(A).
@@ -977,7 +977,7 @@ The four conjunctions are precisely the locked \texttt{val} expansion of ``both 
 
 \medskip\hrule\medskip
 
-\subsection{12. AAMAS \(\times\) \texttt{m12\_u3\_collider\_max} \(\times\) \(t=x_2\)}
+\subsection{\texorpdfstring{12. AAMAS \(\times\) \texttt{m12\_u3\_collider\_max} \(\times\) \(t=x_2\)}{12. AAMAS - m12-u3-collider-max - target x2}}
 
 \textbf{Cell directory:} \texttt{M12x\_aamas2025/cells/m12\_u3\_collider\_max\_\_target-x2/}\\
 \textbf{Runner outcome:} \texttt{solved}\\
@@ -987,7 +987,7 @@ The four conjunctions are precisely the locked \texttt{val} expansion of ``both 
 
 Same unit and target as cell 3: collider \(x_0\to x_2\leftarrow x_1\) with \(x_2:=\max(x_0,x_1)\) on the nine-row factorial; under nonzero-positive labelling, \(x_2\neq 0\) if and only if at least one parent is nonzero. The positive examples are rows \(\{2,3,4,5,6,7,8,9\}\) and the sole negative is row \(\{1\}\). Background knowledge contains exact-value predicates for both parents; the target \(x_2\) is excluded. This arm uses the AAMAS published configuration (\texttt{folding\_mode(greedy)}, \texttt{folding\_selection(mgr)}, \texttt{folding\_space(bk)}, \texttt{asm\_intro(relto)}). The locked reference \(\mathcal{H}_{x_2}^\star\) is the four-clause \texttt{val} expansion of ``at least one parent is nonzero.''
 
-\subsubsection{Intended hypothesis \(\mathcal{H}_{x_2}^\star\)}
+\subsubsection{\texorpdfstring{Intended hypothesis \(\mathcal{H}_{x_2}^\star\)}{Intended hypothesis H-star(x2)}}
 
 \begin{lstlisting}[style=logic,language=Prolog]
 x2(A) :- x0_val_1(A).
@@ -1044,7 +1044,7 @@ Extensionally the two presentations coincide: the eight conjunctions cover preci
 
 \medskip\hrule\medskip
 
-\subsection{13. AAMAS \(\times\) \texttt{m12\_u4\_fork\_asymmetric} \(\times\) \(t=x_1\)}
+\subsection{\texorpdfstring{13. AAMAS \(\times\) \texttt{m12\_u4\_fork\_asymmetric} \(\times\) \(t=x_1\)}{13. AAMAS - m12-u4-fork-asymmetric - target x1}}
 
 \textbf{Cell directory:} \texttt{M12x\_aamas2025/cells/m12\_u4\_fork\_asymmetric\_\_target-x1/}\\
 \textbf{Runner outcome:} \texttt{solved}\\
@@ -1054,7 +1054,7 @@ Extensionally the two presentations coincide: the eight conjunctions cover preci
 
 Same unit and target as cell 4: fork \(x_0\to x_1\), \(x_0\to x_2\) on the three-row source factorial; \(x_1:=2\) if \(x_0\neq 2\) else \(0\); nonzero-positive examples \(E^+=\{1,2\}\) and \(E^-=\{3\}\); on the table, \(x_1\neq 0\) if and only if \(x_0\in\{0,1\}\). Background knowledge includes exact-value predicates for the parent \(x_0\) and the sibling distractor \(x_2\). This arm uses the AAMAS published configuration (\texttt{folding\_mode(greedy)}, \texttt{folding\_selection(mgr)}, \texttt{folding\_space(bk)}, \texttt{asm\_intro(relto)}). The locked reference \(\mathcal{H}_{x_1}^\star\) is the two-clause unary parent expansion of \(x_0\neq 2\).
 
-\subsubsection{Intended hypothesis \(\mathcal{H}_{x_1}^\star\)}
+\subsubsection{\texorpdfstring{Intended hypothesis \(\mathcal{H}_{x_1}^\star\)}{Intended hypothesis H-star(x1)}}
 
 \begin{lstlisting}[style=logic,language=Prolog]
 x1(A) :- x0_val_0(A).
@@ -1095,7 +1095,7 @@ Extensionally the theory still separates \(E^\pm\) with full ASP coverage: on th
 
 \medskip\hrule\medskip
 
-\subsection{14. AAMAS \(\times\) \texttt{m12\_u4\_fork\_asymmetric} \(\times\) \(t=x_2\)}
+\subsection{\texorpdfstring{14. AAMAS \(\times\) \texttt{m12\_u4\_fork\_asymmetric} \(\times\) \(t=x_2\)}{14. AAMAS - m12-u4-fork-asymmetric - target x2}}
 
 \textbf{Cell directory:} \texttt{M12x\_aamas2025/cells/m12\_u4\_fork\_asymmetric\_\_target-x2/}\\
 \textbf{Runner outcome:} \texttt{solved}\\
@@ -1105,7 +1105,7 @@ Extensionally the theory still separates \(E^\pm\) with full ASP coverage: on th
 
 Same unit and target as cell 5: fork \(x_0\to x_1\), \(x_0\to x_2\) on the three-row source factorial; \(x_2:=2\) if \(x_0\neq 0\) else \(0\); nonzero-positive examples \(E^+=\{2,3\}\) and \(E^-=\{1\}\); on the table, \(x_2\neq 0\) if and only if \(x_0\neq 0\). Background knowledge includes exact-value predicates for the parent \(x_0\) and the sibling distractor \(x_1\). This arm uses the AAMAS published configuration (\texttt{folding\_mode(greedy)}, \texttt{folding\_selection(mgr)}, \texttt{folding\_space(bk)}, \texttt{asm\_intro(relto)}). The locked reference \(\mathcal{H}_{x_2}^\star\) is the two-clause unary parent expansion of \(x_0\neq 0\).
 
-\subsubsection{Intended hypothesis \(\mathcal{H}_{x_2}^\star\)}
+\subsubsection{\texorpdfstring{Intended hypothesis \(\mathcal{H}_{x_2}^\star\)}{Intended hypothesis H-star(x2)}}
 
 \begin{lstlisting}[style=logic,language=Prolog]
 x2(A) :- x0_val_1(A).
@@ -1148,7 +1148,7 @@ Extensionally the theory still separates \(E^\pm\) with full ASP coverage: on th
 
 \medskip\hrule\medskip
 
-\subsection{15. AAMAS \(\times\) \texttt{m12\_u5\_chain\_curated} \(\times\) \(t=x_2\)}
+\subsection{\texorpdfstring{15. AAMAS \(\times\) \texttt{m12\_u5\_chain\_curated} \(\times\) \(t=x_2\)}{15. AAMAS - m12-u5-chain-curated - target x2}}
 
 \textbf{Cell directory:} \texttt{M12x\_aamas2025/cells/m12\_u5\_chain\_curated\_\_target-x2/}\\
 \textbf{Runner outcome:} \texttt{solved}\\
@@ -1158,7 +1158,7 @@ Extensionally the theory still separates \(E^\pm\) with full ASP coverage: on th
 
 Same unit and target as cell 6: chain \(x_0\to x_1\to x_2\) on the curated six-row support with \(x_2:=\operatorname{copy}(x_1)\); nonzero-positive examples \(E^+=\{2,3,4,5\}\) and \(E^-=\{1,6\}\); on the table, \(x_2\neq 0\) if and only if \(x_1\in\{1,2\}\). Background knowledge includes exact-value predicates for both ancestors. This arm uses the AAMAS published configuration (\texttt{folding\_mode(greedy)}, \texttt{folding\_selection(mgr)}, \texttt{folding\_space(bk)}, \texttt{asm\_intro(relto)}). The locked reference \(\mathcal{H}_{x_2}^\star\) prefers the unary parent copy expansion.
 
-\subsubsection{Intended hypothesis \(\mathcal{H}_{x_2}^\star\)}
+\subsubsection{\texorpdfstring{Intended hypothesis \(\mathcal{H}_{x_2}^\star\)}{Intended hypothesis H-star(x2)}}
 
 \begin{lstlisting}[style=logic,language=Prolog]
 x2(A) :- x1_val_1(A).
@@ -1203,7 +1203,7 @@ Extensionally the theory separates \(E^\pm\) with full ASP coverage: each rule i
 
 \medskip\hrule\medskip
 
-\subsection{16. AAMAS \(\times\) \texttt{m12\_u6\_g1\_min\_diff} \(\times\) \(t=x_2\)}
+\subsection{\texorpdfstring{16. AAMAS \(\times\) \texttt{m12\_u6\_g1\_min\_diff} \(\times\) \(t=x_2\)}{16. AAMAS - m12-u6-g1-min-diff - target x2}}
 
 \textbf{Cell directory:} \texttt{M12x\_aamas2025/cells/m12\_u6\_g1\_min\_diff\_\_target-x2/}\\
 \textbf{Runner outcome:} \texttt{solved}\\
@@ -1213,7 +1213,7 @@ Extensionally the theory separates \(E^\pm\) with full ASP coverage: each rule i
 
 Same unit and target as cell 7: G1 with \(x_2:=\min(x_0,x_1)\) and \(x_3:=x_1-x_2\) on the nine-row factorial; nonzero-positive examples \(E^+=\{5,6,8,9\}\) and \(E^-=\{1,2,3,4,7\}\); on the table, \(x_2\neq 0\) if and only if both parents are nonzero. Background knowledge includes both parents and the descendant distractor \(x_3\). This arm uses the AAMAS published configuration (\texttt{folding\_mode(greedy)}, \texttt{folding\_selection(mgr)}, \texttt{folding\_space(bk)}, \texttt{asm\_intro(relto)}). The locked reference \(\mathcal{H}_{x_2}^\star\) is the four-clause both-parents-nonzero expansion (same as U2); citing \(x_3\) is an explicit failure mode.
 
-\subsubsection{Intended hypothesis \(\mathcal{H}_{x_2}^\star\)}
+\subsubsection{\texorpdfstring{Intended hypothesis \(\mathcal{H}_{x_2}^\star\)}{Intended hypothesis H-star(x2)}}
 
 \begin{lstlisting}[style=logic,language=Prolog]
 x2(A) :- x0_val_1(A), x1_val_1(A).
@@ -1262,7 +1262,7 @@ Extensionally the theory still separates \(E^\pm\) with full ASP coverage: the p
 
 \medskip\hrule\medskip
 
-\subsection{17. AAMAS \(\times\) \texttt{m12\_u6\_g1\_min\_diff} \(\times\) \(t=x_3\)}
+\subsection{\texorpdfstring{17. AAMAS \(\times\) \texttt{m12\_u6\_g1\_min\_diff} \(\times\) \(t=x_3\)}{17. AAMAS - m12-u6-g1-min-diff - target x3}}
 
 \textbf{Cell directory:} \texttt{M12x\_aamas2025/cells/m12\_u6\_g1\_min\_diff\_\_target-x3/}\\
 \textbf{Runner outcome:} \texttt{solved}\\
@@ -1272,7 +1272,7 @@ Extensionally the theory still separates \(E^\pm\) with full ASP coverage: the p
 
 Same unit and target as cell 8: G1 with \(x_2:=\min(x_0,x_1)\) and \(x_3:=x_1-x_2\) on the nine-row factorial; nonzero-positive examples \(E^+=\{2,3,6\}\) and \(E^-=\{1,4,5,7,8,9\}\); on the table, \(x_3\neq 0\) if and only if \(x_1>x_2\). Background knowledge includes exact-value predicates for \(x_0\), \(x_1\), and \(x_2\). This arm uses the AAMAS published configuration (\texttt{folding\_mode(greedy)}, \texttt{folding\_selection(mgr)}, \texttt{folding\_space(bk)}, \texttt{asm\_intro(relto)}). The locked reference \(\mathcal{H}_{x_3}^\star\) is the three-clause parent case split of \(x_1>x_2\); \(x_0\) is a non-parent ancestor and should not appear in a preferred solution.
 
-\subsubsection{Intended hypothesis \(\mathcal{H}_{x_3}^\star\)}
+\subsubsection{\texorpdfstring{Intended hypothesis \(\mathcal{H}_{x_3}^\star\)}{Intended hypothesis H-star(x3)}}
 
 \begin{lstlisting}[style=logic,language=Prolog]
 x3(A) :- x1_val_1(A), x2_val_0(A).
@@ -1318,7 +1318,7 @@ Extensionally the theory separates \(E^\pm\) with full ASP coverage: the parent 
 
 \medskip\hrule\medskip
 
-\subsection{18. AAMAS \(\times\) \texttt{m12\_u7\_diamond\_noisy} \(\times\) \(t=x_3\)}
+\subsection{\texorpdfstring{18. AAMAS \(\times\) \texttt{m12\_u7\_diamond\_noisy} \(\times\) \(t=x_3\)}{18. AAMAS - m12-u7-diamond-noisy - target x3}}
 
 \textbf{Cell directory:} \texttt{M12x\_aamas2025/cells/m12\_u7\_diamond\_noisy\_\_target-x3/}\\
 \textbf{Runner outcome:} \texttt{solved}\\
@@ -1328,7 +1328,7 @@ Extensionally the theory separates \(E^\pm\) with full ASP coverage: the parent 
 
 Same unit and target as cell 9: diamond with curated support; \(x_1:=(x_0+1)\bmod 3\); two \(x_2\) arms per root (\(x_2:=(x_0+2)\bmod 3\) and \(x_2:=(x_0+1)\bmod 3\)); sink \(x_3:=|x_1-x_2|\). Nonzero-positive examples \(E^+=\{1,3,5\}\) and \(E^-=\{2,4,6\}\); on the table, \(x_3\neq 0\) if and only if \(x_1\neq x_2\). Each twin pair shares \((x_0,x_1)\) and differs only in \(x_2\). Background knowledge includes exact-value predicates for \(x_0\), \(x_1\), and \(x_2\). This arm uses the AAMAS published configuration (see Batch B control flow). The locked reference \(\mathcal{H}_{x_3}^\star\) is the three-clause parent case split of \(x_1\neq x_2\); the common cause \(x_0\) is a non-parent ancestor and should not appear in a preferred solution.
 
-\subsubsection{Intended hypothesis \(\mathcal{H}_{x_3}^\star\)}
+\subsubsection{\texorpdfstring{Intended hypothesis \(\mathcal{H}_{x_3}^\star\)}{Intended hypothesis H-star(x3)}}
 
 \begin{lstlisting}[style=logic,language=Prolog]
 x3(A) :- x1_val_1(A), x2_val_2(A).
