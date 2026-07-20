@@ -2,14 +2,15 @@
 
 **Role:** working reference for Milestone 1 Part 3 — investigating **claims** about how
 unguided ABA Learning behaves on the locked M1.2 regime.
-**Status:** active (2026-07-17) — initial claim list ready for review; no order set.
+**Status:** method retained; claim drafting **paused** until redesigned M12x is locked
+(2026-07-20). Prior provisional claim list withdrawn.
 **Primary path:** [`../milestone1_high_level_path.md`](../milestone1_high_level_path.md)
 **Parent index:** [`../milestone1-plan.md`](../milestone1-plan.md)
 
-**M1.2 Approach (locked; vocabulary source):**
+**M1.2 Approach (vocabulary source):**
 [`../milestone1_part2/milestone1_part2_expanded_approach.md`](../milestone1_part2/milestone1_part2_expanded_approach.md)
 
-**M12x evidence base:**
+**M12x evidence base (after redesign):**
 `docs/experiments/qualitative/M1.2-expanded.md`;
 `docs/experiments/qualitative/M1.2-expanded-cell-inspection.md`;
 `causal/outputs/aba_learning/grid/M12x_summary.md`
@@ -18,9 +19,10 @@ unguided ABA Learning behaves on the locked M1.2 regime.
 
 ## Relation to M1.2
 
-The M1.2 Approach is locked (regime, cells, \(\mathcal{H}_t^\star\), semantic success
-description, M12x). M1.3 does **not** redesign it. It investigates **claims** about how
-unguided ABA Learning behaves on that regime, using M1.2 vocabulary.
+M1.3 starts only once the M1.2 / M12x regime, cells, \(\mathcal{H}_t^\star\), and
+semantic success descriptions are locked. M1.3 does **not** redesign that regime. It
+investigates **claims** about how unguided ABA Learning behaves on it, using M1.2
+vocabulary.
 
 In M1.2, **hypothesis** means the design artefact \(\mathcal{H}_t^\star\).
 In M1.3, say **claim** for a scientific assertion about how ABA Learning learns. Those
@@ -55,10 +57,9 @@ Keep M1.2 notation:
 
 - Acceptance remains **inspection-first** against the M1.2 semantic success description.
 - **Descendant citation** is always outside semantic success.
-- Exact match to \(\mathcal{H}_t^\star\) may be noted once (e.g. 0/22 on M12x); it is
-  mostly uninteresting as a metric. Claims work at a **more specific** level of what was
-  recovered and whether it is acceptable / inferior / divergent under the semantic
-  description.
+- Exact match to \(\mathcal{H}_t^\star\) may be noted once; it is mostly uninteresting as
+  a metric. Claims work at a **more specific** level of what was recovered and whether
+  it is acceptable / inferior / divergent under the semantic description.
 
 ---
 
@@ -70,7 +71,7 @@ Keep M1.2 notation:
   and explain that particular divergence.
 - **No claim investigation order until the list exists.** Order is chosen after the
   list is generated.
-- A **dedicated live working claim list** (editable as work proceeds) holds the
+- A **dedicated live working claim list** (created when drafting begins) holds the
   current set of claims.
 - Each active claim also has its **own live working doc**. When that claim is
   finished, write `claim_<slug>.tex` (slug tied to the pattern). Then move to the
@@ -82,7 +83,7 @@ Keep M1.2 notation:
 
 Base for thinking up and initially validating the claim list. Cursor does an
 intelligent pass over M12x (inspection + patterns) to help generate that list — not a
-full re-trace of all 22 cells under the M1.3 trace standard before claiming.
+full re-trace of all cells under the M1.3 trace standard before claiming.
 
 ---
 
@@ -122,7 +123,7 @@ fixed stop rule beyond covering the interesting M12x patterns.
 | Artefact | Purpose |
 |----------|---------|
 | This file | M1.3 Approach (point of reference) |
-| [`milestone1_part3_claim_list.md`](milestone1_part3_claim_list.md) | Live, unordered list of \(C_i\); subject to change |
+| Live claim list (when drafting starts) | Unordered list of \(C_i\); subject to change |
 | Live working doc per claim | Experimentation notes while \(C_i\) is open |
 | `claim_<slug>.tex` | Frozen findings chapter after \(C_i\) is done |
 | `docs/experiments/qualitative/M1.3-failure-modes.md` | Experiment record for M1.3 |

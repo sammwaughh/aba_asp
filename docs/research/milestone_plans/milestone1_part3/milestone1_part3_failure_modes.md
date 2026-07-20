@@ -1,9 +1,10 @@
 # Milestone 1, Part 3 (M1.3) — Recovery patterns and limits
 
-**Status:** `planned / starting` — M12x complete; experiment record opened; begin claims + probes.  
+**Status:** `paused` — provisional claim drafting withdrawn (2026-07-20); redesign M12x first.  
 **Primary path:** [`../milestone1_high_level_path.md`](../milestone1_high_level_path.md)  
 **Parent index:** [`../milestone1-plan.md`](../milestone1-plan.md)  
-**Primary evidence:** `docs/experiments/qualitative/M1.2-expanded-cell-inspection.md`;
+**Approach (method):** [`milestone1_part3_approach.md`](milestone1_part3_approach.md)  
+**Primary evidence (after redesign):** `docs/experiments/qualitative/M1.2-expanded-cell-inspection.md`;
 `causal/outputs/aba_learning/grid/M12x_summary.md`
 
 Filename retained for continuity; the work is **not** required to use a fixed “failure
@@ -33,19 +34,16 @@ output informs Milestone 2 (Causal ABA integration).
 
 ## 3. Method
 
-Current method is governed by
-[`milestone1_part3_approach.md`](milestone1_part3_approach.md):
-
-1. Review the unordered M12x-grounded
-   [`milestone1_part3_claim_list.md`](milestone1_part3_claim_list.md), then choose an
-   investigation order.
-2. Work through **one claim at a time**. Read the relevant `prolog.stdout` traces and
-   full learned frameworks; extract relevant transformations, selected literals,
-   assumptions/contraries, and final δ.
-3. Design and run the claim-specific probes/ablations needed to support, refine, or
-   invalidate that claim. No fixed probe/run cap is imposed.
-4. Conclude the claim with explicit evidence and limits, then write
-   `claim_<slug>.tex`. Only then move to the next claim.
+1. **Draft candidate claims** in plain English from the expanded M1.2 matrix (and pilot
+   patterns that still hold). Separate observational claims from mechanism claims.
+2. **For each claim that matters**, design the smallest follow-up probe that would
+   support or kill it (trace reading; option flip; correlation ladder; success-boundary
+   fixture; etc.). Targeted ablations are permitted where a hypothesis needs evidence;
+   they are not promised up front.
+3. **Run probes; keep only surviving claims.**
+4. **Write subsections** in ordinary language: describe the pattern → present the
+   experimental evidence → state what is supported, what remains open, and (if anything)
+   what it suggests for later Causal ABA guidance.
 
 Attribution language (shared across both arms vs specific to one published strategy vs
 encoding/pipeline) is useful when the evidence supports it; it is not a mandatory coding

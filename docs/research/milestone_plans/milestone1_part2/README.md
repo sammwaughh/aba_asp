@@ -2,7 +2,7 @@
 
 **Primary path:** [`../milestone1_high_level_path.md`](../milestone1_high_level_path.md)
 
-**Status:** **done / closed** — pilot analysed; M12x analysed (Stage-3 done); M1.3 next
+**Status:** **redesign in progress** — first M12x grid historical; fix U4–U7 mechanisms before M1.3
 
 | Phase | Status | Notes |
 |-------|--------|-------|
@@ -61,4 +61,4 @@
 
 **Parent index:** [milestone1-plan.md](../milestone1-plan.md)
 
-**Next:** M1.3 (claims + probes from Stage-3 patterns).
+**Next:** redesign U4–U7 (fork/chain, then alternating cone gates); update cards/catalogue/fixtures; re-run M12x.

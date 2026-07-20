@@ -2,8 +2,8 @@
 
 **Role:** locked design reference for the expanded M1.2 (M12x) grid — graphs, mechanisms,
 BK/labelling regime, and \(\mathcal{H}^\star\) acceptance.  
-**Status:** complete as design for M12x (2026-07-16) — runs + Stage-3 inspection done;
-vocabulary still used by M1.3.  
+**Status:** design vocabulary retained; **mechanism redesign in progress** (2026-07-20) —
+first M12x run historical; U4–U7 being replaced before re-lock.  
 **Primary path:** [`../milestone1_high_level_path.md`](../milestone1_high_level_path.md)  
 **Parent index:** [`../milestone1-plan.md`](../milestone1-plan.md)
 
@@ -179,8 +179,8 @@ Cells: `(max_collider, x2, ECAI)`, `(max_collider, x2, AAMAS)`.
 | Graph × mechanism unit set | **Accepted** — [`milestone1_part2_expanded_unit_set.md`](milestone1_part2_expanded_unit_set.md) (U1–U7, 22 cells) |
 | Mechanism cards U1–U7 | **Written** — [`mechanism_cards/`](mechanism_cards/) |
 | LaTeX unit catalogue | **Written** — [`m12x_units_reference.tex`](m12x_units_reference.tex) |
-| Fixtures + 22-cell grid (M12x) | **Done** — run + Stage-3 inspection |
-| Summary matrix + cell reports | **Done** — `M12x_summary.md`; `M12x_cell_reports/` |
+| Fixtures + 22-cell grid (M12x) | **First run historical — redesign** |
+| Summary matrix + cell reports | **First run historical — redesign** |
 
 ## Next step
 

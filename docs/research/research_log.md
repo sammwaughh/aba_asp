@@ -2,23 +2,14 @@
 
 Chronological notes on experiment progress, decisions, and milestones. Detailed evidence remains in experiment records and artefact paths cited below.
 
-## 2026-07-17 — M1.3 initial live claim list from M12x
+## 2026-07-20 — Withdraw M1.3 claim drafting; redesign M12x
 
-- **Approach:** `docs/research/milestone_plans/milestone1_part3/milestone1_part3_approach.md`.
-- **Live list:** `docs/research/milestone_plans/milestone1_part3/milestone1_part3_claim_list.md`.
-- **Method:** intelligent pass over Stage-3 inspection, summary JSON/rules, all
-  mechanism cards, published configs, representative full solutions/traces, and
-  scripted all-cell trace/rule-shape audits.
-- **Output:** six unordered provisional claims:
-  ECAI \(x_0\)-first fold + defeasible repair; AAMAS positive-row saturation; descendant
-  retention divergence; `nz` without replacement abstraction; no local-parent
-  preference; coverage without semantic discrimination.
-- **Important correction:** target δ alone is insufficient for ECAI assumption cells;
-  omitted conditions can be represented by learned contraries. Exact
-  \(\mathcal{H}_t^\star\) mismatch is not a semantic-success verdict.
-- **Status:** initial list ready for Samuel review; no investigation order chosen; no
-  claim-specific M1.3 probe run.
-- **Detailed commands/results:** `docs/experiments/qualitative/M1.3-failure-modes.md`.
+- **Decision:** Delete provisional M1.3 claim analysis (claim list + claim working doc).
+  U4/U5 double-copy and U6/U7 double min/max are uninformative; first M12x grid is
+  historical only.
+- **Kept:** `milestone1_part3_approach.md` (method only; status paused).
+- **Current work:** redesign M12x mechanisms (fork first), then re-run and re-inspect.
+- **Do not** draft M1.3 claims until redesigned M12x is locked.
 
 ## 2026-07-16 — M1.2 closed; documentation updated for M1.3
 
@@ -30,7 +21,7 @@ Chronological notes on experiment progress, decisions, and milestones. Detailed 
   chatgpt_context governance / orientation mirrors.
 - **Record opened:** `docs/experiments/qualitative/M1.3-failure-modes.md`
   (seed patterns listed; claims/probes still TBD).
-- **Next work:** draft candidate M1.3 claims from Stage-3 seed patterns.
+- **Superseded 2026-07-20:** M1.3 claim drafting withdrawn; M12x redesign required.
 
 ## 2026-07-16 — M12x Stage-3 cell inspection (22 cells)
 

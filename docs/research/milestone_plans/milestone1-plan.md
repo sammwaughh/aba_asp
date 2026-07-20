@@ -76,29 +76,28 @@ Pilot (historical): [`milestone1_part2/milestone1_part2_config_comparison.md`](m
 |-------|--------|---------|
 | Pilot grid | Analysed (historical) | 10 cells; not the primary expanded evidence |
 | Expanded design | Locked | U1–U7; copy/min/max; \(k=3\); nonzero-positive; `val`+`nz` BK; ECAI+AAMAS |
-| Expanded runs + inspection | **Done** | M12x 22/22 `solved`; matrix; Stage-3 inspection (0 exact compact-`nz` \(\mathcal{H}^\star\)) |
+| Expanded runs + inspection | **Superseded — redesign** | First M12x 22/22 run kept as historical; U4–U7 mechanisms being replaced |
 
 Configs: ECAI (`configs/ecai2024_config.pl`), AAMAS (`configs/aamas2025_config.pl`).
 
-## Part 3: Recovery patterns and limits (M1.3) — **current**
+## Part 3: Recovery patterns and limits (M1.3) — **paused**
 
-Planning folder: [`milestone1_part3/`](milestone1_part3/README.md)
-Approach: [`milestone1_part3/milestone1_part3_approach.md`](milestone1_part3/milestone1_part3_approach.md)
-Live claim list: [`milestone1_part3/milestone1_part3_claim_list.md`](milestone1_part3/milestone1_part3_claim_list.md)
+Planning folder: [`milestone1_part3/`](milestone1_part3/README.md)  
+Approach (method): [`milestone1_part3/milestone1_part3_approach.md`](milestone1_part3/milestone1_part3_approach.md)  
+Detail plan: [`milestone1_part3/milestone1_part3_failure_modes.md`](milestone1_part3/milestone1_part3_failure_modes.md)
 
-M1.3 turns the **M12x** Stage-3 matrix/inspection into evidence-backed claims. Six
-unordered provisional claims are drafted. After review, choose an investigation order
-and work one claim at a time: relevant trace account → claim-specific probes/ablations
-as required → keep/refine/discard → `claim_<slug>.tex`. No fixed probe budget or forced
-category scheme.
+M1.3 turns a **locked** M12x Stage-3 matrix/inspection into evidence-backed claims.
+Provisional claim drafting from the first M12x grid was **withdrawn** (2026-07-20)
+because U4–U7 mechanisms were uninformative. Restart M1.3 only after redesigned M12x
+is locked and re-analysed.
 
 M1.3 finishes when we can state succinctly what unguided ABA Learning does on these
 graphs/DGPs, why, and what remains open for Milestone 2.
-See [`milestone1_high_level_path.md`](milestone1_high_level_path.md) §3.
+See [`milestone1_high_level_path.md`](milestone1_high_level_path.md).
 
 ## Milestone Closure
 
-After expanded M1.2 and M1.3, consolidate findings into a Milestone 1 conclusion:
+After redesigned M12x and M1.3, consolidate findings into a Milestone 1 conclusion:
 
 1. when unguided ABA Learning recovers mechanism-aligned rules on categorical tables;
 2. how the two published configurations differ, and on which data properties;
@@ -106,5 +105,5 @@ After expanded M1.2 and M1.3, consolidate findings into a Milestone 1 conclusion
 4. which findings motivate Causal ABA-style guidance in Milestone 2, and which are
    pipeline or encoding issues.
 
-**Current progress:** Part 1 closed. Part 2 (M12x) **done / analysed**. Part 3 (M1.3)
-**next**. No Part 4 / M1.4.
+**Current progress:** Part 1 closed. Part 2 (M12x) **redesign in progress**. Part 3
+(M1.3) **paused** until redesigned M12x is locked. No Part 4 / M1.4.

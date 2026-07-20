@@ -1,8 +1,8 @@
 # Milestone 1 — High-level path to completion
 
-**Role:** primary working reference for finishing Milestone 1 (**M1.3** current; M1.2 done).
+**Role:** primary working reference for finishing Milestone 1.  
 **Parent index:** [`milestone1-plan.md`](milestone1-plan.md)  
-**Status:** active (2026-07-17) — M1.3 initial claims drafted
+**Status:** active (2026-07-20) — **redesign M12x** (U4–U7 mechanisms); M1.3 paused
 
 Organising question for all of Milestone 1:
 
@@ -18,8 +18,8 @@ No Causal ABA integration in this milestone. Large-graph / bnlearn comparisons a
 |------|--------|-------------|
 | **M1.1** | Closed | Parent-position / representation-order control; ordering mechanism established |
 | **M1.2 pilot** | Analysed (historical) | 10-cell pilot; superseded as primary evidence by M12x |
-| **M1.2 expanded (M12x)** | **Done / analysed** | 22/22 solved; matrix + [`M1.2-expanded-cell-inspection.md`](../../experiments/qualitative/M1.2-expanded-cell-inspection.md); 0 exact compact-`nz` H* |
-| **M1.3** | **Planned / initial claims drafted** | Six unordered M12x claims; review/order next |
+| **M1.2 expanded (M12x)** | **Redesign in progress** | First grid run retained as historical only; U4/U5 double-copy and U6/U7 double min/max are uninformative and will be replaced |
+| **M1.3** | **Paused** | Method kept (`milestone1_part3_approach.md`); provisional claim list **withdrawn** |
 | **M1.4** | Does not exist | Large-graph tests deferred to a future evaluation milestone |
 
 **Expanded M1.2 Approach:**  
@@ -35,31 +35,19 @@ Pilot artefacts (keep for provenance; not the expanded design):
 
 ---
 
-## Path (M1.2 done; finish M1.3)
+## Path (redesign M12x; then M1.3)
 
-### 1–2. Expanded M1.2 — **done**
+### 1–2. Expanded M1.2 — **redesign, then re-run**
 
-Approach + U1–U7 cards + M12x grid + Stage-3 inspection complete.  
-Evidence package: [`milestone1_part2/`](milestone1_part2/README.md);
-[`M1.2-expanded.md`](../../experiments/qualitative/M1.2-expanded.md);
-[`M1.2-expanded-cell-inspection.md`](../../experiments/qualitative/M1.2-expanded-cell-inspection.md);
-`causal/outputs/aba_learning/grid/M12x_summary.md`.
+Fix uninformative mechanisms (fork/chain first; then alternating min/max cones), update
+cards / unit catalogue / fixtures, re-run M12x, and rewrite Stage-3 inspection against
+the new grid.  
+Working catalogue: [`milestone1_part2/m12x_units_reference.tex`](milestone1_part2/m12x_units_reference.tex).
 
-### 3. Do M1.3 (claims + probes) — **current**
+### 3. Do M1.3 (claims + probes) — **after redesigned M12x is locked**
 
-Primary inputs: M12x Stage-3 inspection + summary matrix + full learned frameworks and
-traces (pilot M1.2 optional provenance).
-
-- Initial **live claim list drafted** from M12x (unordered; subject to change).
-- Review the list and only then choose an investigation order.
-- Work one claim at a time: relevant trace account → claim-specific probes/ablations
-  as required → keep/refine/discard.
-- Write `claim_<slug>.tex` only after that claim is concluded.
-- Final M1.3 write-up: completed claim documents + overarching conclusion.
-
-**M1.3 Approach:** [`milestone1_part3/milestone1_part3_approach.md`](milestone1_part3/milestone1_part3_approach.md)
-**Live claim list:** [`milestone1_part3/milestone1_part3_claim_list.md`](milestone1_part3/milestone1_part3_claim_list.md)
-Detail: [`milestone1_part3/`](milestone1_part3/README.md).
+Method: [`milestone1_part3/milestone1_part3_approach.md`](milestone1_part3/milestone1_part3_approach.md).  
+Do not draft claims from the withdrawn first-grid analysis.
 
 ### 4. Close Milestone 1
 
@@ -69,4 +57,4 @@ Consolidate findings into a Milestone 1 write-up answering the organising questi
 
 ## One-line discipline
 
-M1.2 evidence locked → **M1.3 claims and probes** → Milestone 1 write-up → only later large-graph evaluation against a Causal-ABA-informed solution.
+**Redesigned M12x locked** → **M1.3 claims and probes** → Milestone 1 write-up → only later large-graph evaluation against a Causal-ABA-informed solution.

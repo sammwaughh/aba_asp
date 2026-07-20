@@ -75,7 +75,8 @@ Not responsible for:
 
 | Date | Tool | Task | Output / artefact | Used in report? | Samuel verification / edits | Notes |
 |---|---|---|---|---|---|---|
-| 2026-07-17 | Cursor | M1.3 Approach integration and initial M12x claim synthesis | `milestone1_part3_approach.md`; `milestone1_part3_claim_list.md`; M1.3 experiment record / registers | not yet; provisional investigation plan | pending Samuel review | Six unordered claims induced from M12x; scripted trace/rule audits; no M1.3 probe or final claim prose. |
+| 2026-07-20 | Cursor | Withdraw M1.3 claim analysis; mark M12x redesign | deleted claim list + claim working doc; status/path docs; Approach paused | no | Samuel directed | First-grid claims not reusable; redesign U4–U7 before M1.3. |
+| 2026-07-17 | Cursor | M1.3 Approach integration and initial M12x claim synthesis | `milestone1_part3_approach.md`; claim list (later deleted) | no | withdrawn 2026-07-20 | Six unordered claims from first M12x grid; **withdrawn** as uninformative fixtures. |
 | 2026-06-22 | Cursor | M1.1 final closure (Stages 0–7) | `M1.1-parent-position.md`; findings tex; decisions; registers; claims; supervisor_guidance; milestone plans; `chatgpt_context` sync | m1.1 closed for report | synced; pending Samuel review | Stage 7 greedy complete; QI-002 disambiguation; M1.2 next. |
 | 2026-06-22 | Cursor | M1.1 ablation doc sync; findings rewrite | `milestone1_part1_m11_findings.tex`; `M1.1-parent-position.md`; milestone plans; `decisions.md`; registers; claims M11-C-007 | findings tex §Integrated conclusion | pending Samuel review | Post-ABL-100–107; nd mechanism analysed. |
 | 2026-06-22 | Cursor | M1.1 ablation pipeline + execution | `m11_ablation_*.py`; `M11_ablations/`; Stage 6 record | evidence for findings | pending Samuel review | ABL-101 pass; closure criteria met. |

@@ -2,27 +2,18 @@
 
 Recorded decisions that affect experiment direction. Evidence and interpretation remain in experiment records.
 
-## 2026-07-17 — M1.3 claim-by-claim Approach
+## 2026-07-20 — Withdraw M1.3 claims; redesign M12x U4–U7
 
-**Decision:** M1.3 uses **claims** (assertions about how ABA Learning learns), distinct
-from the M1.2 reference hypothesis \(\mathcal{H}_t^\star\). Initial claims must be
-induced from visible M12x patterns. The list is live, unordered, and subject to
-keep/refine/split/merge/discard.
+**Decision:** Provisional M1.3 claim drafting from the first M12x grid is **withdrawn**
+and deleted (claim list + claim working doc). Double-copy fork/chain (U4/U5) and
+double min/max cones (U6/U7) are uninformative. Priority returns to **getting M12x
+right** (mechanisms → cards/catalogue → fixtures → re-run → Stage-3). M1.3 Approach
+method is retained but paused.
 
-Each claim is then investigated to completion before the next: relevant
-`prolog.stdout` transformations and chosen literals → full learned δ,
-assumptions/contraries → claim-specific probes/ablations as required → conclusion →
-`claim_<slug>.tex`. There is **no fixed probe/run cap** and no requirement that every
-claim use a preselected “smallest” probe. Probe design is deferred to the claim.
-
-**Judgment:** exact \(\mathcal{H}_t^\star\) agreement is not the main metric;
-inspection remains against the M1.2 semantic success description. Descendant citation
-is always outside success.
-
-**Docs:** `milestone1_part3_approach.md`; live list
-`milestone1_part3_claim_list.md`; experiment record `M1.3-failure-modes.md`.
-
-**Supersedes for current M1.3 work:** earlier shorthand requiring “smallest probes.”
+**Fork intent (U4, agreed in discussion):**  
+\(x_2 := 2\) iff \(x_0\neq 0\) (nz \(\mathcal{H}^\star\));  
+\(x_1 := 2\) iff \(x_0\neq 2\) (case-based val \(\mathcal{H}^\star\)); imperfect sibling
+confounds on both targets.
 
 ## 2026-07-16 — M1.2 closed; begin M1.3
 
@@ -34,8 +25,7 @@ keep survivors; write evidence-backed subsections.
 **Primary inputs:** `M1.2-expanded-cell-inspection.md`; `M12x_summary.md`;
 Approach vocabulary; `milestone1_part3/`.
 
-**Not claimed yet:** any M1.3 recovery-pattern claim — drafting starts next.
-
+**Superseded 2026-07-20:** see redesign decision above.
 ## 2026-07-16 — Optional grid.seed (no dummy seed for deterministic grids)
 
 **Decision:** `grid.seed` is optional. Omit it for deterministic experiments
@@ -92,7 +82,7 @@ any new runs. Canonical doc:
 Mechanism cards U1–U7 written under
 `docs/research/milestone_plans/milestone1_part2/mechanism_cards/`.
 
-**Points to:** `milestone1_high_level_path.md` (M1.2 closed; M1.3 current).
+**Points to:** `milestone1_high_level_path.md` (M12x redesign; M1.3 paused).
 
 ## 2026-07-16 — Milestone 1 path restated: expand M1.2, then M1.3; no M1.4
 
