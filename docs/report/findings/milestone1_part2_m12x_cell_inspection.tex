@@ -37,7 +37,7 @@
 \maketitle
 
 \textbf{Experiment ID:} M12x (Milestone 1 Part 2 expanded)\\
-\textbf{Status:} Stage-3 qualitative inspection \textbf{in progress} (12/18 written)\\
+\textbf{Status:} Stage-3 qualitative inspection \textbf{in progress} (14/18 written)\\
 \textbf{Date started:} 2026-07-20\\
 \textbf{Parent record:} \href{M1.2-expanded.md}{\texttt{M1.2-expanded.md}}\\
 \textbf{Artefacts:} \texttt{causal/outputs/aba\_learning/grid/M12x\_\{ecai2024,aamas2025\}/cells/\{dgp\}\_\_target-\{t\}/}\\
@@ -74,7 +74,7 @@ This is \textbf{not} Russo-style Causal ABA. The object of study is unguided ABA
 4 & ECAI & \texttt{m12\_u4\_fork\_asymmetric} & \(x_1\) & Y & Exact \(\mathcal{H}^\star\): two unary parent rules; sibling unused \\
 5 & ECAI & \texttt{m12\_u4\_fork\_asymmetric} & \(x_2\) & Y & Exact \(\mathcal{H}^\star\): two unary parent rules; sibling unused (mirror of cell 4) \\
 6 & ECAI & \texttt{m12\_u5\_chain\_curated} & \(x_2\) & N & Ancestor \(x_0\) case + assumptions; parent only in contraries \\
-7 & ECAI & \texttt{m12\_u6\_g1\_min\_diff} & \(x_2\) & --- & \emph{pending} \\
+7 & ECAI & \texttt{m12\_u6\_g1\_min\_diff} & \(x_2\) & N & Assumption-mediated both-parents-nonzero (as U2); descendant unused \\
 8 & ECAI & \texttt{m12\_u6\_g1\_min\_diff} & \(x_3\) & --- & \emph{pending} \\
 9 & ECAI & \texttt{m12\_u7\_diamond\_noisy} & \(x_3\) & --- & \emph{pending} \\
 10 & AAMAS & \texttt{m12\_u1\_separator\_copy} & \(x_2\) & N & Six specialised conjunctions; isolated \(x_0\) retained beside parent \\
@@ -83,7 +83,7 @@ This is \textbf{not} Russo-style Causal ABA. The object of study is unguided ABA
 13 & AAMAS & \texttt{m12\_u4\_fork\_asymmetric} & \(x_1\) & N & Parent + sibling conjunctions; cites distractor \(x_2\) \\
 14 & AAMAS & \texttt{m12\_u4\_fork\_asymmetric} & \(x_2\) & N & Parent + sibling conjunctions; cites distractor \(x_1\) \\
 15 & AAMAS & \texttt{m12\_u5\_chain\_curated} & \(x_2\) & N & Parent + grandparent conjunctions; ancestor retained \\
-16 & AAMAS & \texttt{m12\_u6\_g1\_min\_diff} & \(x_2\) & --- & \emph{pending} \\
+16 & AAMAS & \texttt{m12\_u6\_g1\_min\_diff} & \(x_2\) & N & Both-parent rules + descendant \(x_3\); cites\_descendant \\
 17 & AAMAS & \texttt{m12\_u6\_g1\_min\_diff} & \(x_3\) & --- & \emph{pending} \\
 18 & AAMAS & \texttt{m12\_u7\_diamond\_noisy} & \(x_3\) & --- & \emph{pending} \\
 \bottomrule
@@ -536,6 +536,77 @@ The pattern is closely related to ECAI on U1 and U3: non-deterministic folding c
 
 \medskip\hrule\medskip
 
+\subsection{7. ECAI \(\times\) \texttt{m12\_u6\_g1\_min\_diff} \(\times\) \(t=x_2\)}
+
+\textbf{Cell directory:} \texttt{M12x\_ecai2024/cells/m12\_u6\_g1\_min\_diff\_\_target-x2/}\\
+\textbf{Runner outcome:} \texttt{solved}\\
+\textbf{ASP coverage:} positives \texttt{4/4}, negatives \texttt{5/5}
+
+\subsubsection{Setup}
+
+Unit U6 is the four-node G1 graph with mechanisms \(x_2:=\min(x_0,x_1)\) and \(x_3:=x_1-x_2\) on the nine-row source factorial. For target \(x_2\), nonzero-positive labelling gives \(E^+=\{5,6,8,9\}\) and \(E^-=\{1,2,3,4,7\}\); on the table, \(x_2\neq 0\) if and only if both parents are nonzero. Background knowledge includes exact-value predicates for both parents \(x_0,x_1\) and the descendant distractor \(x_3\); the target \(x_2\) is excluded. The descendant is imperfect as a separator of \(E^\pm\) (\(x_3\neq 0\) only on rows 2, 3, 6). The locked reference \(\mathcal{H}_{x_2}^\star\) is the same four-clause both-parents-nonzero expansion as on U2.
+
+\subsubsection{Intended hypothesis \(\mathcal{H}_{x_2}^\star\)}
+
+\begin{lstlisting}[style=logic,language=Prolog]
+x2(A) :- x0_val_1(A), x1_val_1(A).
+x2(A) :- x0_val_1(A), x1_val_2(A).
+x2(A) :- x0_val_2(A), x1_val_1(A).
+x2(A) :- x0_val_2(A), x1_val_2(A).
+\end{lstlisting}
+
+\subsubsection{What happened}
+
+This cell uses the ECAI published configuration on unit U6 with learning target \(x_2\). After the initial optimum there are four rote rules, one for each positive. Non-deterministic folding proceeds by \(x_0\)-slices: one-literal folds on \texttt{x0\_val\_1} and \texttt{x0\_val\_2} overgeneralise within those slices (they would cover negatives with \(x_1=0\)), so assumption introduction repairs each slice. Contrary learning recovers \(x_1\neq 0\). The descendant \(x_3\) is available in BK but is never cited. The learner returns a solved framework with full ASP coverage that is not an exact syntactic match to \(\mathcal{H}_{x_2}^\star\), but encodes the same both-parents-nonzero concept.
+
+\subsubsection{What the learner did}
+
+Learning begins from rote coverage of the four positives. The first fold chosen is \(A=5\) (where \(x_0=1\), \(x_1=1\)), which replaces the identifier by \texttt{x0\_val\_1} alone:
+
+\begin{lstlisting}[style=logic,language=Prolog]
+x2(A) :- x0_val_1(A).
+\end{lstlisting}
+
+That body would also cover the negative \(A=4\) (where \(x_0=1\), \(x_1=0\)), so entailment fails and assumption introduction adds \texttt{alpha\_1}:
+
+\begin{lstlisting}[style=logic,language=Prolog]
+x2(A) :- alpha_1(A), x0_val_1(A).
+\end{lstlisting}
+
+Positive \(A=6\) is then deleted as subsumed. Next, \(A=8\) folds to \texttt{x0\_val\_2}, which would cover the negative \(A=7\), so assumption introduction adds \texttt{alpha\_2}:
+
+\begin{lstlisting}[style=logic,language=Prolog]
+x2(A) :- alpha_2(A), x0_val_2(A).
+\end{lstlisting}
+
+Positive \(A=9\) is subsumed. Contrary folding for \texttt{c\_alpha\_1} and \texttt{c\_alpha\_2} first tries the matching \(x_0\) literal (rejected), then succeeds with \texttt{x1\_val\_0} on the negatives \(A=4\) and \(A=7\):
+
+\begin{lstlisting}[style=logic,language=Prolog]
+c_alpha_1(A) :- x1_val_0(A).
+c_alpha_2(A) :- x1_val_0(A).
+\end{lstlisting}
+
+In the ASP solution the assumptions are realised by
+
+\begin{lstlisting}[style=logic,language=Prolog]
+alpha_1(A) :- not c_alpha_1(A), x0_val_1(A).
+alpha_2(A) :- not c_alpha_2(A), x0_val_2(A).
+\end{lstlisting}
+
+so on an \(x_0\in\{1,2\}\) row the assumption holds precisely when \(x_1\neq 0\). Body-scope variables of the target rules are \(\{x_0\}\); the second parent \(x_1\) appears in the contrary conditions. Descendant predicates \texttt{x3\_val\_*} do not appear in any learned rule.
+
+\subsubsection{Match assessment}
+
+This is not an exact match to \(\mathcal{H}_{x_2}^\star\). The learner does not produce the four ordinary both-parent conjunctions.
+
+Judged against the semantic success description for U6 \(x_2\), however, the learned framework is a strong assumption-mediated encoding of both-parents-nonzero, and it avoids the descendant failure mode: \(x_3\) is never cited. On an \(x_0\in\{1,2\}\) row, \(x_2\) holds if and only if the assumption is undefeated if and only if \(x_1\neq 0\). That is exactly the nonzero-positive semantics of \(\min\). ASP coverage is complete for that reason.
+
+\textbf{Comparison with ECAI on U2 (cell 2).} The learning path and final intension are essentially the same as on the three-node min collider: unary \(x_0\) folds, assumptions on both nonzero \(x_0\) slices, and \texttt{x1\_val\_0} contraries. The new U6 pressure is the descendant distractor in BK; under ECAI that pressure is resisted here.
+
+\textbf{Short verdict.} Not an exact match to the locked four-clause \(\mathcal{H}_{x_2}^\star\), but an elegant assumption-mediated both-parents-nonzero solution with descendant \(x_3\) unused and full coverage.
+
+\medskip\hrule\medskip
+
 \section{Batch B --- AAMAS (\texttt{M12x\_aamas2025})}
 
 \subsection{10. AAMAS \(\times\) \texttt{m12\_u1\_separator\_copy} \(\times\) \(t=x_2\)}
@@ -910,6 +981,65 @@ Extensionally the theory separates \(E^\pm\) with full ASP coverage: each rule i
 
 \medskip\hrule\medskip
 
-\emph{Cells 7--9 and 16--18 to follow.}
+\subsection{16. AAMAS \(\times\) \texttt{m12\_u6\_g1\_min\_diff} \(\times\) \(t=x_2\)}
+
+\textbf{Cell directory:} \texttt{M12x\_aamas2025/cells/m12\_u6\_g1\_min\_diff\_\_target-x2/}\\
+\textbf{Runner outcome:} \texttt{solved}\\
+\textbf{ASP coverage:} positives \texttt{4/4}, negatives \texttt{5/5}
+
+\subsubsection{Setup}
+
+Same unit and target as cell 7: G1 with \(x_2:=\min(x_0,x_1)\) and \(x_3:=x_1-x_2\) on the nine-row factorial; nonzero-positive examples \(E^+=\{5,6,8,9\}\) and \(E^-=\{1,2,3,4,7\}\); on the table, \(x_2\neq 0\) if and only if both parents are nonzero. Background knowledge includes both parents and the descendant distractor \(x_3\). This arm uses the AAMAS published configuration (\texttt{folding\_mode(greedy)}, \texttt{folding\_selection(mgr)}, \texttt{folding\_space(bk)}, \texttt{asm\_intro(relto)}). The locked reference \(\mathcal{H}_{x_2}^\star\) is the four-clause both-parents-nonzero expansion (same as U2); citing \(x_3\) is an explicit failure mode.
+
+\subsubsection{Intended hypothesis \(\mathcal{H}_{x_2}^\star\)}
+
+\begin{lstlisting}[style=logic,language=Prolog]
+x2(A) :- x0_val_1(A), x1_val_1(A).
+x2(A) :- x0_val_1(A), x1_val_2(A).
+x2(A) :- x0_val_2(A), x1_val_1(A).
+x2(A) :- x0_val_2(A), x1_val_2(A).
+\end{lstlisting}
+
+\subsubsection{What happened}
+
+This cell uses the AAMAS published configuration on the same U6 \(x_2\) instance. After the initial optimum, the engine has four rote rules covering the positives by sample identifier. The trace then computes a greedy folding plan for each rule. For every positive, greedy/\texttt{mgr} first folds in the \(x_0\) value, then the \(x_1\) value, then continues to the descendant \(x_3\) value on the same row. The planned foldings are therefore three-literal specialisations:
+
+\begin{itemize}
+  \item \(A=5\) \(\rightarrow\) \texttt{x0\_val\_1}, \texttt{x1\_val\_1}, \texttt{x3\_val\_0}
+  \item \(A=6\) \(\rightarrow\) \texttt{x0\_val\_1}, \texttt{x1\_val\_2}, \texttt{x3\_val\_1}
+  \item \(A=8\) \(\rightarrow\) \texttt{x0\_val\_2}, \texttt{x1\_val\_1}, \texttt{x3\_val\_0}
+  \item \(A=9\) \(\rightarrow\) \texttt{x0\_val\_2}, \texttt{x1\_val\_2}, \texttt{x3\_val\_0}
+\end{itemize}
+
+Those foldings are applied one at a time. Each body matches only its own factorial cell, so none covers a negative. Every intermediate theory already separates \(E^\pm\), the trace reports \texttt{extended ABA entails <E+,E-> - using folding}, and no assumptions are introduced. Learning stops with \texttt{nothing to fold}. The final solution contains the four parent pairs of \(\mathcal{H}_{x_2}^\star\), each contaminated by a descendant conjunct.
+
+\subsubsection{What the learner did}
+
+The accepted target rules are:
+
+\begin{lstlisting}[style=logic,language=Prolog]
+x2(A) :- x0_val_1(A), x1_val_1(A), x3_val_0(A).
+x2(A) :- x0_val_1(A), x1_val_2(A), x3_val_1(A).
+x2(A) :- x0_val_2(A), x1_val_1(A), x3_val_0(A).
+x2(A) :- x0_val_2(A), x1_val_2(A), x3_val_0(A).
+\end{lstlisting}
+
+Body-scope variables are \(\{x_0,x_1,x_3\}\).
+
+\subsubsection{Match assessment}
+
+This is not an exact match to \(\mathcal{H}_{x_2}^\star\). Stripping the \texttt{x3\_val\_*} literals would yield exactly the locked four-clause hypothesis; with those literals retained, every target body cites the descendant.
+
+Extensionally the theory still separates \(E^\pm\) with full ASP coverage: the parent pairs alone already characterise both-parents-nonzero, and the descendant conjuncts are redundant specialisations to the observed \(x_3\) values on those four rows. Intensionally this is the explicit descendant failure mode U6 was designed to probe. Relative to semantic success, both parents are recovered, but the solution is not free of descendant citation.
+
+\textbf{Comparison with ECAI on the same cell (cell 7).} Under ECAI, non-deterministic folding never cites \(x_3\); it recovers both-parents-nonzero via assumptions and contraries. Under AAMAS, greedy specialisation recovers the parent pairs but continues folding into BK until the descendant is included. Both arms cover the labelling; they differ on whether the imperfect descendant enters the intension.
+
+\textbf{Comparison with AAMAS on U2 (cell 11).} On U2 the same greedy pairwise style matched \(\mathcal{H}^\star\) exactly, because BK contained only the two parents. On U6 the extra descendant column in BK is enough for greedy/\texttt{mgr} to over-specialise beyond \(\mathcal{H}_{x_2}^\star\).
+
+\textbf{Short verdict.} Not an exact match: four both-parent conjunctions each contaminated by descendant \(x_3\); explicit descendant failure mode; full coverage, no assumptions.
+
+\medskip\hrule\medskip
+
+\emph{Cells 8--9 and 17--18 to follow.}
 
 \end{document}
