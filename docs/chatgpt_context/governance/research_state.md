@@ -129,8 +129,9 @@ Expanded Approach:
 `docs/research/milestone_plans/milestone1_part2/milestone1_part2_expanded_approach.md`.
 
 - **M1.1** — closed.
-- **M1.2** — **redesign in progress:** first M12x grid historical; U4–U7 mechanisms
-  being replaced (double-copy / double min-max uninformative).
+- **M1.2** — **`implemented`:** design locked (18 cells); prior M12x runner outputs
+  deleted (2026-07-20); awaiting fresh `--no-resume` run. Record:
+  `docs/experiments/qualitative/M1.2-expanded.md`.
 - **M1.3** — **paused:** provisional claim drafting **withdrawn**. Method retained in
   `milestone1_part3_approach.md`. Record:
   `docs/experiments/qualitative/M1.3-failure-modes.md`.

@@ -57,8 +57,8 @@ Key experiment records:
 - `docs/experiments/qualitative/M1.1-parent-position.md` — Milestone 1 Part 1 (M11); **`analysed` / closed** (Stages 0–7: nd mechanism, ablations, greedy comparator).
 - `docs/experiments/qualitative/M1.2-config-comparison.md` — Milestone 1 Part 2 (M12) **pilot** analysed (historical; 10 cells).
 - `docs/experiments/qualitative/M1.2-expanded.md` — Milestone 1 Part 2 expanded (**M12x**)
-  first grid **historical**; **redesign in progress** (U4–U7 mechanisms). Catalogue:
-  `milestone1_part2/m12x_units_reference.tex`.
+  **`implemented`** (18-cell design locked; prior outputs deleted 2026-07-20; awaiting
+  fresh run). Catalogue: `milestone1_part2/m12x_units_reference.tex`.
 - `docs/experiments/qualitative/M1.3-failure-modes.md` — Milestone 1 Part 3 (**M1.3**)
   **paused** (provisional claim drafting withdrawn). Approach method retained:
   `milestone1_part3/milestone1_part3_approach.md`. There is no M1.4; large-graph /

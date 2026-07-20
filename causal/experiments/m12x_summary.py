@@ -59,18 +59,16 @@ HSTAR: dict[tuple[str, str], frozenset[str]] = {
             "x2(A):-x1_val_2(A)",
         }
     ),
-    ("m12_u4_fork_double_copy", "x1"): frozenset(
+    ("m12_u4_fork_asymmetric", "x1"): frozenset(
         {"x1(A):-x0_val_0(A)", "x1(A):-x0_val_1(A)"}
     ),
-    ("m12_u4_fork_double_copy", "x2"): frozenset(
+    ("m12_u4_fork_asymmetric", "x2"): frozenset(
         {"x2(A):-x0_val_1(A)", "x2(A):-x0_val_2(A)"}
     ),
-    # U5/x1: no parent-aligned perfect H* (descendant is unique perfect separator).
-    ("m12_u5_chain_double_copy", "x1"): frozenset(),
-    ("m12_u5_chain_double_copy", "x2"): frozenset(
+    ("m12_u5_chain_curated", "x2"): frozenset(
         {"x2(A):-x1_val_1(A)", "x2(A):-x1_val_2(A)"}
     ),
-    ("m12_u6_g1_and_cone", "x2"): frozenset(
+    ("m12_u6_g1_min_diff", "x2"): frozenset(
         {
             "x2(A):-x0_val_1(A),x1_val_1(A)",
             "x2(A):-x0_val_1(A),x1_val_2(A)",
@@ -78,14 +76,14 @@ HSTAR: dict[tuple[str, str], frozenset[str]] = {
             "x2(A):-x0_val_2(A),x1_val_2(A)",
         }
     ),
-    ("m12_u6_g1_and_cone", "x3"): frozenset(
+    ("m12_u6_g1_min_diff", "x3"): frozenset(
         {
             "x3(A):-x1_val_1(A),x2_val_0(A)",
             "x3(A):-x1_val_2(A),x2_val_0(A)",
             "x3(A):-x1_val_2(A),x2_val_1(A)",
         }
     ),
-    ("m12_u7_g1_or_cone", "x3"): frozenset(
+    ("m12_u7_diamond_noisy", "x3"): frozenset(
         {
             "x3(A):-x1_val_1(A),x2_val_2(A)",
             "x3(A):-x1_val_2(A),x2_val_0(A)",
@@ -111,37 +109,32 @@ STRUCT: dict[tuple[str, str], dict[str, frozenset[str]]] = {
         "other_distractors": frozenset(),
         "descendants": frozenset(),
     },
-    ("m12_u4_fork_double_copy", "x1"): {
+    ("m12_u4_fork_asymmetric", "x1"): {
         "ancestors": frozenset({"x0"}),
         "other_distractors": frozenset({"x2"}),
         "descendants": frozenset(),
     },
-    ("m12_u4_fork_double_copy", "x2"): {
+    ("m12_u4_fork_asymmetric", "x2"): {
         "ancestors": frozenset({"x0"}),
         "other_distractors": frozenset({"x1"}),
         "descendants": frozenset(),
     },
-    ("m12_u5_chain_double_copy", "x1"): {
-        "ancestors": frozenset({"x0"}),
-        "other_distractors": frozenset(),
-        "descendants": frozenset({"x2"}),
-    },
-    ("m12_u5_chain_double_copy", "x2"): {
+    ("m12_u5_chain_curated", "x2"): {
         "ancestors": frozenset({"x0", "x1"}),
         "other_distractors": frozenset(),
         "descendants": frozenset(),
     },
-    ("m12_u6_g1_and_cone", "x2"): {
+    ("m12_u6_g1_min_diff", "x2"): {
         "ancestors": frozenset({"x0", "x1"}),
         "other_distractors": frozenset(),
         "descendants": frozenset({"x3"}),
     },
-    ("m12_u6_g1_and_cone", "x3"): {
+    ("m12_u6_g1_min_diff", "x3"): {
         "ancestors": frozenset({"x0", "x1", "x2"}),
         "other_distractors": frozenset(),
         "descendants": frozenset(),
     },
-    ("m12_u7_g1_or_cone", "x3"): {
+    ("m12_u7_diamond_noisy", "x3"): {
         "ancestors": frozenset({"x0", "x1", "x2"}),
         "other_distractors": frozenset(),
         "descendants": frozenset(),
@@ -153,13 +146,12 @@ PARENTS: dict[tuple[str, str], frozenset[str]] = {
     ("m12_u1_separator_copy", "x2"): frozenset({"x1"}),
     ("m12_u2_collider_min", "x2"): frozenset({"x0", "x1"}),
     ("m12_u3_collider_max", "x2"): frozenset({"x0", "x1"}),
-    ("m12_u4_fork_double_copy", "x1"): frozenset({"x0"}),
-    ("m12_u4_fork_double_copy", "x2"): frozenset({"x0"}),
-    ("m12_u5_chain_double_copy", "x1"): frozenset({"x0"}),
-    ("m12_u5_chain_double_copy", "x2"): frozenset({"x1"}),
-    ("m12_u6_g1_and_cone", "x2"): frozenset({"x0", "x1"}),
-    ("m12_u6_g1_and_cone", "x3"): frozenset({"x1", "x2"}),
-    ("m12_u7_g1_or_cone", "x3"): frozenset({"x1", "x2"}),
+    ("m12_u4_fork_asymmetric", "x1"): frozenset({"x0"}),
+    ("m12_u4_fork_asymmetric", "x2"): frozenset({"x0"}),
+    ("m12_u5_chain_curated", "x2"): frozenset({"x1"}),
+    ("m12_u6_g1_min_diff", "x2"): frozenset({"x0", "x1"}),
+    ("m12_u6_g1_min_diff", "x3"): frozenset({"x1", "x2"}),
+    ("m12_u7_diamond_noisy", "x3"): frozenset({"x1", "x2"}),
 }
 
 _CELL_DIR_RE = re.compile(r"^(?P<dgp>.+)__target-(?P<target>x\d+)$")

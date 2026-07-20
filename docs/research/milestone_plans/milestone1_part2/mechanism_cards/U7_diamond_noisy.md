@@ -1,9 +1,9 @@
 # U7 — Diamond + noisy fork arms
 
 **Unit ID:** U7  
-**Fixture id:** `m12_u7_g1_or_cone`  
+**Fixture id:** `m12_u7_diamond_noisy`  
 **Lesson:** Both-parent sink recovery when \(\mathrm{Pa}(x_3)=\{x_1,x_2\}\) are **correlated siblings** under a common cause; root and each sibling alone are imperfect separators (U5-style curated “noisy” arms)  
-**Provenance:** Fresh U7 (2026-07-20). Replaces G1 double-max / OR cone. Fixture key kept for path stability.  
+**Provenance:** Fresh U7 (2026-07-20). Replaces G1 double-max / OR cone. Fixture key `m12_u7_diamond_noisy`.  
 **Cells:** 2 — `(U7, x3, ECAI)`, `(U7, x3, AAMAS)`
 
 ---

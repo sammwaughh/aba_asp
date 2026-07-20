@@ -1,10 +1,10 @@
 # Milestone 1, Part 3 (M1.3) — Recovery patterns and limits
 
-**Status:** `paused` — provisional claim drafting withdrawn (2026-07-20); redesign M12x first.  
+**Status:** `paused` — provisional claim drafting withdrawn (2026-07-20); await fresh M12x Stage-3.  
 **Primary path:** [`../milestone1_high_level_path.md`](../milestone1_high_level_path.md)  
 **Parent index:** [`../milestone1-plan.md`](../milestone1-plan.md)  
 **Approach (method):** [`milestone1_part3_approach.md`](milestone1_part3_approach.md)  
-**Primary evidence (after redesign):** `docs/experiments/qualitative/M1.2-expanded-cell-inspection.md`;
+**Primary evidence (after fresh run):** Stage-3 inspection (to be written);
 `causal/outputs/aba_learning/grid/M12x_summary.md`
 
 Filename retained for continuity; the work is **not** required to use a fixed “failure
@@ -23,10 +23,10 @@ output informs Milestone 2 (Causal ABA integration).
 
 ## 2. Inputs
 
-- **M12x (required):** Stage-3 inspection
-  (`docs/experiments/qualitative/M1.2-expanded-cell-inspection.md`);
+- **M12x (required, after fresh run):** Stage-3 inspection (to be written);
   summary matrix (`M12x_summary.md`); cell reports; runner cells under
   `causal/outputs/aba_learning/grid/M12x_{ecai2024,aamas2025}/`.
+  Prior M12x outputs were deleted (2026-07-20).
 - Pilot M1.2 inspection (optional provenance).
 - M1.1 record: BK/representation ordering as one established limit under nd.
 - Backing papers: ECAI 2024 (ASP-ABAlearnB), AAMAS 2025 (Greedy ABA Learning), and

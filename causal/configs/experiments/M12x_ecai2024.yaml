@@ -1,5 +1,5 @@
 experiment_id: M12x_ecai2024
-description: "Expanded M1.2 (M12x) arm ECAI: configs/ecai2024_config.pl on units U1–U7 (mechanism cards). Deterministic categorical mechanisms; k=3; nonzero-positive labels; val-only BK; all non-source targets; descendants kept in BK as distractors. Unguided ABA Learning rule recovery, NOT Russo-style Causal ABA."
+description: "Expanded M1.2 (M12x) arm ECAI: configs/ecai2024_config.pl on units U1–U7 (mechanism cards). Deterministic categorical mechanisms; k=3; nonzero-positive labels; val-only BK; learning targets as locked on cards (not always every non-source); descendants kept in BK as distractors. Unguided ABA Learning rule recovery, NOT Russo-style Causal ABA."
 owner: sam
 
 defaults:
@@ -23,21 +23,21 @@ dgps:
     graph_type: handcrafted_table
     source: m12_u3_collider_max
     targets: [x2]
-  - id: m12_u4_fork_double_copy
+  - id: m12_u4_fork_asymmetric
     graph_type: handcrafted_table
-    source: m12_u4_fork_double_copy
+    source: m12_u4_fork_asymmetric
     targets: [x1, x2]
-  - id: m12_u5_chain_double_copy
+  - id: m12_u5_chain_curated
     graph_type: handcrafted_table
-    source: m12_u5_chain_double_copy
-    targets: [x1, x2]
-  - id: m12_u6_g1_and_cone
+    source: m12_u5_chain_curated
+    targets: [x2]
+  - id: m12_u6_g1_min_diff
     graph_type: handcrafted_table
-    source: m12_u6_g1_and_cone
+    source: m12_u6_g1_min_diff
     targets: [x2, x3]
-  - id: m12_u7_g1_or_cone
+  - id: m12_u7_diamond_noisy
     graph_type: handcrafted_table
-    source: m12_u7_g1_or_cone
+    source: m12_u7_diamond_noisy
     targets: [x3]
 
 grid:

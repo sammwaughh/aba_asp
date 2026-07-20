@@ -2,6 +2,15 @@
 
 Chronological notes on experiment progress, decisions, and milestones. Detailed evidence remains in experiment records and artefact paths cited below.
 
+## 2026-07-20 — Delete prior M12x outputs; reset to awaiting fresh run
+
+- **Deleted:** `M12x_{ecai2024,aamas2025}/`, `M12x_summary.md`/`.json`,
+  `M12x_learned_rules.md`, `M12x_cell_reports/`, and
+  `M1.2-expanded-cell-inspection.md`.
+- **Kept:** pilot `M12_*` artefacts; locked design (fixtures, YAMLs, cards, catalogue).
+- **Status:** M12x → **`implemented`** (18-cell design locked; no live runner evidence).
+- **Next:** `--no-resume` both arms → `m12x_summary` → Stage-3 → M1.3.
+
 ## 2026-07-20 — Withdraw M1.3 claim drafting; redesign M12x
 
 - **Decision:** Delete provisional M1.3 claim analysis (claim list + claim working doc).
@@ -26,13 +35,14 @@ Chronological notes on experiment progress, decisions, and milestones. Detailed 
 ## 2026-07-16 — M12x Stage-3 cell inspection (22 cells)
 
 - **Doc:** `docs/experiments/qualitative/M1.2-expanded-cell-inspection.md`
-  (superseded stub after 2026-07-20 redesign; Stage-3 rewrite pending).
+  (historical first-grid write-up; stub later deleted with all prior M12x outputs
+  on 2026-07-20).
 - **Vocabulary:** Approach (`config`, \(\mathcal{H}_t^\star\), `val`, ancestors /
   distractors / descendant failure mode).
 - **Headline (first grid, historical):** no exact \(\mathcal{H}^\star\) matches on that
   22-cell package; AAMAS cited descendants on several cells; ECAI often
   assumption-mediated.
-- **Status:** first-grid Stage-3 superseded by redesign. Next: redesign Stage-3, then M1.3.
+- **Status:** voided — not evidence for the locked design.
 
 ## 2026-07-16 — M12x summary matrix + 22 cell reports
 

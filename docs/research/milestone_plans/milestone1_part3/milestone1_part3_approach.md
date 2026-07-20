@@ -2,18 +2,17 @@
 
 **Role:** working reference for Milestone 1 Part 3 — investigating **claims** about how
 unguided ABA Learning behaves on the locked M1.2 regime.
-**Status:** method retained; claim drafting **paused** until redesigned M12x is locked
-(2026-07-20). Prior provisional claim list withdrawn.
+**Status:** method retained; claim drafting **paused** until fresh M12x Stage-3 is locked
+(2026-07-20). Prior provisional claim list withdrawn; prior M12x outputs deleted.
 **Primary path:** [`../milestone1_high_level_path.md`](../milestone1_high_level_path.md)
 **Parent index:** [`../milestone1-plan.md`](../milestone1-plan.md)
 
 **M1.2 Approach (vocabulary source):**
 [`../milestone1_part2/milestone1_part2_expanded_approach.md`](../milestone1_part2/milestone1_part2_expanded_approach.md)
 
-**M12x evidence base (after redesign):**
+**M12x evidence base (after fresh run):**
 `docs/experiments/qualitative/M1.2-expanded.md`;
-`docs/experiments/qualitative/M1.2-expanded-cell-inspection.md`;
-`causal/outputs/aba_learning/grid/M12x_summary.md`
+Stage-3 inspection (to be written); `causal/outputs/aba_learning/grid/M12x_summary.md`
 
 ---
 

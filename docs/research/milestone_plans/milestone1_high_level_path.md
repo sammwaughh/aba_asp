@@ -2,7 +2,7 @@
 
 **Role:** primary working reference for finishing Milestone 1.  
 **Parent index:** [`milestone1-plan.md`](milestone1-plan.md)  
-**Status:** active (2026-07-20) — **M12x redesign re-run done** (20/20); Stage-3 rewrite next; M1.3 paused
+**Status:** active (2026-07-20) — **M12x design locked** (18 cells); prior runner outputs deleted; fresh run next; M1.3 paused
 
 Organising question for all of Milestone 1:
 
@@ -18,7 +18,7 @@ No Causal ABA integration in this milestone. Large-graph / bnlearn comparisons a
 |------|--------|-------------|
 | **M1.1** | Closed | Parent-position / representation-order control; ordering mechanism established |
 | **M1.2 pilot** | Analysed (historical) | 10-cell pilot; superseded as primary evidence by M12x |
-| **M1.2 expanded (M12x)** | **Run (Stage-3 pending)** | Redesign re-run **20/20 `solved`** (2026-07-20); rewrite inspection before M1.3 |
+| **M1.2 expanded (M12x)** | **`implemented`** (awaiting run) | Design locked; prior `M12x_*` outputs deleted (2026-07-20); fresh 18-cell run next |
 | **M1.3** | **Paused** | Method kept (`milestone1_part3_approach.md`); provisional claim list **withdrawn** |
 | **M1.4** | Does not exist | Large-graph tests deferred to a future evaluation milestone |
 
@@ -35,19 +35,19 @@ Pilot artefacts (keep for provenance; not the expanded design):
 
 ---
 
-## Path (redesign M12x; then M1.3)
+## Path (fresh M12x run; then M1.3)
 
-### 1–2. Expanded M1.2 — **redesign, then re-run**
+### 1–2. Expanded M1.2 — **run locked design**
 
-Fix uninformative mechanisms (fork/chain first; then alternating min/max cones), update
-cards / unit catalogue / fixtures, re-run M12x, and rewrite Stage-3 inspection against
-the new grid.  
-Working catalogue: [`milestone1_part2/m12x_units_reference.tex`](milestone1_part2/m12x_units_reference.tex).
+Design (U1–U7, val-only BK, 18 cells) is locked. Run both arms with `--no-resume`,
+regenerate `m12x_summary`, then write Stage-3 inspection.  
+Working catalogue: [`milestone1_part2/m12x_units_reference.tex`](milestone1_part2/m12x_units_reference.tex).  
+Prior M12x runner outputs are voided; do not treat them as evidence.
 
-### 3. Do M1.3 (claims + probes) — **after redesigned M12x is locked**
+### 3. Do M1.3 (claims + probes) — **after fresh M12x Stage-3 is locked**
 
 Method: [`milestone1_part3/milestone1_part3_approach.md`](milestone1_part3/milestone1_part3_approach.md).  
-Do not draft claims from the withdrawn first-grid analysis.
+Do not draft claims from withdrawn or deleted prior M12x analyses.
 
 ### 4. Close Milestone 1
 
@@ -57,4 +57,4 @@ Consolidate findings into a Milestone 1 write-up answering the organising questi
 
 ## One-line discipline
 
-**Redesigned M12x locked** → **M1.3 claims and probes** → Milestone 1 write-up → only later large-graph evaluation against a Causal-ABA-informed solution.
+**Fresh M12x locked** → **M1.3 claims and probes** → Milestone 1 write-up → only later large-graph evaluation against a Causal-ABA-informed solution.

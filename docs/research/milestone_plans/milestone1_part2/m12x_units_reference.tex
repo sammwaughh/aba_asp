@@ -87,8 +87,8 @@ A \textbf{unit} is one graph together with one data-generating process and a fix
 set of learning targets.
 A \textbf{cell} is one triple consisting of a unit, a learning target, and a learner
 configuration.
-There are seven units and ten unit--target pairs.
-Crossing each pair with the two configurations yields twenty cells in total.
+There are seven units and nine unit--target pairs.
+Crossing each pair with the two configurations yields eighteen cells in total.
 
 For each unit, the sections below give:
 \begin{enumerate}[leftmargin=1.6em,itemsep=0.2em]
@@ -210,11 +210,11 @@ U1 & separator with isolated $x_0$ & $\{x_2\}$ & 2 & 9 & 2 \\
 U2 & collider & $\{x_2\}$ & 2 & 9 & 2 \\
 U3 & collider & $\{x_2\}$ & 2 & 9 & 2 \\
 U4 & fork & $\{x_1,x_2\}$ & 1 & 3 & 4 \\
-U5 & chain (curated support) & $\{x_1,x_2\}$ & 1 & 6 & 4 \\
+U5 & chain (curated support) & $\{x_2\}$ & 1 & 6 & 2 \\
 U6 & four-node G1 & $\{x_2,x_3\}$ & 2 & 9 & 4 \\
 U7 & diamond (curated support) & $\{x_3\}$ & 1 & 6 & 2 \\
 \midrule
- & & \textbf{10 targets} & & & \textbf{20} \\
+ & & \textbf{9 targets} & & & \textbf{18} \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -463,7 +463,7 @@ true parent separates the nonzero labelling of that child while the sibling is
 associated with the target yet imperfect as a separator.
 
 \medskip
-\noindent\textbf{Fixture key:} \texttt{m12\_u4\_fork\_double\_copy}.
+\noindent\textbf{Fixture key:} \texttt{m12\_u4\_fork\_asymmetric}.
 \textbf{Learning targets:} $\{x_1,x_2\}$.
 
 \subsection{Graph}
@@ -551,15 +551,15 @@ x2(A) :- x0\_val\_2(A).
 \paragraph{Purpose.}
 Unit U5 restores the pilot chain construction in which the intermediate is not a
 single-valued function of the root.
-For the sink $x_2$, the unit tests whether the learner prefers the direct parent $x_1$
-over a correlated but imperfect ancestor $x_0$.
-For the intermediate $x_1$, the descendant $x_2$ remains in the background knowledge;
-on this table that descendant is extensionally tied to $x_1$, so citing it is an
-explicit failure mode rather than an intended rule.
+The sole learning target is the sink $x_2$.
+The unit tests whether the learner prefers the direct parent $x_1$ over a correlated
+but imperfect ancestor $x_0$.
+(The intermediate $x_1$ is not a learning target: on this table the descendant $x_2$
+is extensionally tied to $x_1$, so there is no parent-aligned intended rule for $x_1$.)
 
 \medskip
-\noindent\textbf{Fixture key:} \texttt{m12\_u5\_chain\_double\_copy}.
-\textbf{Learning targets:} $\{x_1,x_2\}$.
+\noindent\textbf{Fixture key:} \texttt{m12\_u5\_chain\_curated}.
+\textbf{Learning targets:} $\{x_2\}$.
 
 \subsection{Graph}
 \begin{center}
@@ -574,6 +574,7 @@ explicit failure mode rather than an intended rule.
 The node set is $V=\{x_0,x_1,x_2\}$.
 The edge set is $E=\{x_0\to x_1,\,x_1\to x_2\}$.
 The source set is $S=\{x_0\}$ and the non-source set is $N=\{x_1,x_2\}$.
+Only $x_2$ is a learning target in this unit.
 
 \subsection{Mechanisms}
 This unit does \emph{not} use full source factorial with a single-valued map
@@ -605,29 +606,13 @@ id & $x_0$ & $x_1$ & $x_2$ \\
 \end{tabular}
 \end{center}
 
-\subsection{Target \texorpdfstring{$t=x_1$}{t = x1}}
-\begin{targetbox}[Learning target $x_1$]
-The positive examples are $E^+=\{2,3,4,5\}$ and the negative examples are
-$E^-=\{1,6\}$.
-Because $x_2=x_1$ on every row, $x_1\neq 0$ if and only if $x_2\neq 0$.
-The parent $x_0$ is an imperfect separator of this labelling: each of $x_0=0$ and
-$x_0=2$ appears on both a positive and a negative row.
-Background knowledge includes $\mathtt{val}$ predicates for $x_0$ and for the
-descendant $x_2$.
-\end{targetbox}
-
-\noindent
-There is \emph{no} parent-aligned intended rule $\mathcal{H}_{x_1}^\star$.
-No set of clauses using only $\mathtt{x0\_val\_*}$ separates $E^\pm$ perfectly.
-Rules that cite only the descendant $x_2$ are extensionally perfect on $\mathcal{D}$
-but are treated as the descendant-citation failure mode, not as the reference.
-
 \subsection{Target \texorpdfstring{$t=x_2$}{t = x2}}
 \begin{targetbox}[Learning target $x_2$]
 The positive examples are $E^+=\{2,3,4,5\}$ and the negative examples are
 $E^-=\{1,6\}$.
 On this table, $x_2\neq 0$ if and only if $x_1\in\{1,2\}$.
-The ancestor $x_0$ is imperfect for the same reason as above.
+The ancestor $x_0$ is imperfect: each of $x_0=0$ and $x_0=2$ appears on both a
+positive and a negative row.
 Background knowledge includes $\mathtt{val}$ predicates for $x_0$ and $x_1$.
 \end{targetbox}
 
@@ -654,7 +639,7 @@ The sink $x_3$ is the arithmetic difference $x_1-x_2$; under nonzero-positive la
 this is exactly the strict inequality $x_1>x_2$, which requires both parents of $x_3$.
 
 \medskip
-\noindent\textbf{Fixture key:} \texttt{m12\_u6\_g1\_and\_cone}.
+\noindent\textbf{Fixture key:} \texttt{m12\_u6\_g1\_min\_diff}.
 \textbf{Learning targets:} $\{x_2,x_3\}$.
 
 \subsection{Graph}
@@ -759,8 +744,7 @@ The intended rule therefore cannot be replaced by a perfect $\mathtt{x0\_val\_*}
 union, and each sibling alone is likewise imperfect.
 
 \medskip
-\noindent\textbf{Fixture key:} \texttt{m12\_u7\_g1\_or\_cone}
-(historical key retained for path stability).
+\noindent\textbf{Fixture key:} \texttt{m12\_u7\_diamond\_noisy}.
 \textbf{Learning targets:} $\{x_3\}$.
 
 \subsection{Graph}

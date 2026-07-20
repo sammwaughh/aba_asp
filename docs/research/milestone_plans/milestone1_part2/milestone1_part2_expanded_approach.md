@@ -2,13 +2,13 @@
 
 **Role:** locked design reference for the expanded M1.2 (M12x) grid — graphs, mechanisms,
 BK/labelling regime, and \(\mathcal{H}^\star\) acceptance.  
-**Status:** design vocabulary retained; **U1–U7 locked; redesign re-run 20/20 `solved`**
-(2026-07-20). Stage-3 inspection rewrite next.  
+**Status:** design vocabulary retained; **U1–U7 locked (18 cells)**; awaiting fresh
+learning run (prior M12x outputs deleted 2026-07-20).  
 **Primary path:** [`../milestone1_high_level_path.md`](../milestone1_high_level_path.md)  
 **Parent index:** [`../milestone1-plan.md`](../milestone1-plan.md)
 
-Evidence package: `docs/experiments/qualitative/M1.2-expanded.md`;
-`M1.2-expanded-cell-inspection.md`; `causal/outputs/aba_learning/grid/M12x_summary.md`.
+Evidence package (after fresh run): `docs/experiments/qualitative/M1.2-expanded.md`;
+Stage-3 inspection (to be written); `causal/outputs/aba_learning/grid/M12x_summary.md`.
 
 ---
 
@@ -168,14 +168,15 @@ Cells: `(max_collider, x2, ECAI)`, `(max_collider, x2, AAMAS)`.
 | Configs (ECAI, AAMAS) | Locked |
 | Predictor policy (all non-targets in BK; descendant citation = failure) | Locked (corrected 2026-07-16) |
 | Inspection-first acceptance (no precise pre-enumerated \(\mathcal{A}_t\)) | Locked |
-| Graph × mechanism unit set | **Updated** — U1–U7 redesigned (20-cell grid) |
+| Graph × mechanism unit set | **Updated** — U1–U7 redesigned (18-cell grid) |
 | Mechanism cards U1–U7 | **Updated** — U7 diamond replaces OR cone |
 | LaTeX unit catalogue | **Updated** — U1–U7 |
-| Fixtures + grid (M12x) | Redesign run (20 cells; val-only BK) |
-| Summary matrix + cell reports | Redesign run (regenerate after Stage-3) |
+| Fixtures + grid (M12x) | Constructed (18 cells; val-only BK); awaiting fresh run |
+| Summary matrix + cell reports | **Pending** — after fresh `--no-resume` run |
 
 ## Next step
 
-Re-run M12x on the redesigned 20-cell grid; then Stage-3 inspection.
-M1.3 stays paused until the redesigned grid is locked.
+Run M12x on the locked 18-cell grid (`--no-resume` both arms → `m12x_summary`); then
+Stage-3 inspection. Prior M12x outputs deleted (2026-07-20). M1.3 stays paused until
+that Stage-3 is locked.
 Separation-contract Stage-0 checks across U1–U6 are a follow-on (not blocking U7 lock).

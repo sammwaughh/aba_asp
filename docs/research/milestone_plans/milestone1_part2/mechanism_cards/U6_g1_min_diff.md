@@ -1,7 +1,7 @@
 # U6 — Fabrizio G1 + min then difference
 
 **Unit ID:** U6  
-**Fixture id:** `m12_u6_g1_and_cone`  
+**Fixture id:** `m12_u6_g1_min_diff`  
 **Lesson:** Four-node G1; intermediate min (both parents); sink \(x_3\neq 0\iff x_1>x_2\) needs both \(\mathrm{Pa}(x_3)\); imperfect descendant distractor when learning \(x_2\)  
 **Provenance (graph):** `ArgCausalDisco/tests.py` — `four_node_shapPC_example` / README four-node example (edge set G1). **Mechanisms and DGP are project-chosen**, not from ArgCausalDisco. Redesign 2026-07-20 (replace double-min collapse).  
 **Cells:** 4 — each of \(\{x_2,x_3\}\) × {ECAI, AAMAS}

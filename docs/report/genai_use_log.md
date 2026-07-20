@@ -75,6 +75,7 @@ Not responsible for:
 
 | Date | Tool | Task | Output / artefact | Used in report? | Samuel verification / edits | Notes |
 |---|---|---|---|---|---|---|
+| 2026-07-20 | Cursor | Delete prior M12x outputs; reset status docs | deleted M12x_* grid trees/summary/cell-inspection; status → implemented awaiting fresh run | no | Samuel directed | Clean slate before locked 18-cell run; prior grids not evidence. |
 | 2026-07-20 | Cursor | Withdraw M1.3 claim analysis; mark M12x redesign | deleted claim list + claim working doc; status/path docs; Approach paused | no | Samuel directed | First-grid claims not reusable; redesign U4–U7 before M1.3. |
 | 2026-07-17 | Cursor | M1.3 Approach integration and initial M12x claim synthesis | `milestone1_part3_approach.md`; claim list (later deleted) | no | withdrawn 2026-07-20 | Six unordered claims from first M12x grid; **withdrawn** as uninformative fixtures. |
 | 2026-06-22 | Cursor | M1.1 final closure (Stages 0–7) | `M1.1-parent-position.md`; findings tex; decisions; registers; claims; supervisor_guidance; milestone plans; `chatgpt_context` sync | m1.1 closed for report | synced; pending Samuel review | Stage 7 greedy complete; QI-002 disambiguation; M1.2 next. |

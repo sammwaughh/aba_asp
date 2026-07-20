@@ -2,38 +2,74 @@
 
 Recorded decisions that affect experiment direction. Evidence and interpretation remain in experiment records.
 
+## 2026-07-20 — Delete prior M12x outputs; fresh 18-cell run is sole evidence
+
+**Decision:** Delete all prior M12x runner artefacts and the Stage-3 inspection stub.
+Status resets to **`implemented`** (design locked; awaiting fresh run). Do not treat
+any previous M12x grid (22-cell or redesign) as evidence for the locked design.
+
+**Deleted:**
+- `causal/outputs/aba_learning/grid/M12x_{ecai2024,aamas2025}/`
+- `M12x_summary.md` / `.json`; `M12x_learned_rules.md`; `M12x_cell_reports/`
+- `docs/experiments/qualitative/M1.2-expanded-cell-inspection.md`
+
+**Next evidence:** `--no-resume` both arms → `m12x_summary` → new Stage-3 only.
+
+## 2026-07-20 — Rename M12x fixture keys U4–U7 to match mechanisms
+
+**Decision:** Rename keys (and mechanism card filenames) so names match the catalogue:
+
+| Old | New |
+|-----|-----|
+| `m12_u4_fork_double_copy` | `m12_u4_fork_asymmetric` |
+| `m12_u5_chain_double_copy` | `m12_u5_chain_curated` |
+| `m12_u6_g1_and_cone` | `m12_u6_g1_min_diff` |
+| `m12_u7_g1_or_cone` | `m12_u7_diamond_noisy` |
+
+Also drop “all non-source targets” / “always full factorial” slogans where they conflict
+with U5/U7 curated support and selective targets.
+
+## 2026-07-20 — U5: drop intermediate \(x_1\) as learning target
+
+**Decision:** U5 learning target is \(x_2\) only (2 cells). Do not learn \(x_1\):
+on the pilot table \(x_2=\operatorname{copy}(x_1)\), so there is no parent-aligned
+\(\mathcal{H}_{x_1}^\star\) and the descendant is the unique perfect separator in BK.
+Descendant-citation failure mode remains covered by U6-\(x_2\). Grid size **18 cells**
+(9 unit–target pairs × {ECAI, AAMAS}).
+
 ## 2026-07-20 — U7 diamond (noisy fork arms)
 
 **Decision:** Replace U7 G1 OR cone with diamond
 \(x_0\to x_1,\,x_0\to x_2,\,x_1\to x_3,\,x_2\to x_3\).
 Curated support (U5-style): for each \(x_0\), \(x_1:=(x_0+1)\bmod 3\) and
 \(x_2\in\{(x_0+2)\bmod 3,\,x_1\}\); \(x_3:=|x_1-x_2|\).
-Nonzero-positive; `val`-only. Target \(x_3\) only (2 cells). Fixture key kept
-`m12_u7_g1_or_cone`. Grid size **20 cells** (was 22). Root and each sibling fail as
+Nonzero-positive; `val`-only. Target \(x_3\) only (2 cells). Fixture key
+`m12_u7_diamond_noisy`. Grid size was **20 cells** after this change (later 18 after
+dropping U5-\(x_1\)). Root and each sibling fail as
 `val`-union separators; \(\mathcal{H}^\star\) needs both \(\{x_1,x_2\}\).
 
 ## 2026-07-20 — U6 min then difference (not double-min)
 
 **Decision:** Keep Fabrizio G1. Mechanisms: \(x_2:=\min(x_0,x_1)\), \(x_3:=x_1-x_2\).
-Nonzero-positive labels; `val`-only BK/\(\mathcal{H}^\star\). Fixture key kept as
-`m12_u6_g1_and_cone`. Sink concept: \(x_3\neq 0\iff x_1>x_2\) (both parents required).
+Nonzero-positive labels; `val`-only BK/\(\mathcal{H}^\star\). Fixture key
+`m12_u6_g1_min_diff`. Sink concept: \(x_3\neq 0\iff x_1>x_2\) (both parents required).
 Rejects alternating min/max (projects to \(x_1\)) and double-min (\(x_3=x_2\)).
 
 ## 2026-07-20 — U5 pilot chain (correlated ancestor)
 
 **Decision:** Replace U5 double copy with the pilot `m12_chain` 6-row support:
 for each \(x_0\), pairs \((x_0,x_0)\) and \((x_0,(x_0+1)\bmod 3)\); \(x_2:=\operatorname{copy}(x_1)\).
-Nonzero-positive labels; `val`-only BK/\(\mathcal{H}^\star\). Fixture key kept as
-`m12_u5_chain_double_copy`. Both targets \(\{x_1,x_2\}\) retained.
-\(\mathcal{H}_{x_2}^\star\): `x1_val_1`/`x1_val_2`. \(\mathcal{H}_{x_1}^\star\): none
-(parent imperfect; descendant is unique perfect separator in BK — failure mode, not reference).
+Nonzero-positive labels; `val`-only BK/\(\mathcal{H}^\star\). Fixture key
+`m12_u5_chain_curated`. Learning target \(x_2\) only
+(\(\mathcal{H}_{x_2}^\star\): `x1_val_1`/`x1_val_2`). Intermediate \(x_1\) was briefly
+retained then dropped the same day (see decision above).
 
 ## 2026-07-20 — U4 Option B fork (asymmetric maps)
 
 **Decision:** Replace U4 double copy with
 \(x_1 := 2\cdot\mathbf{1}_{x_0\neq 2}\), \(x_2 := 2\cdot\mathbf{1}_{x_0\neq 0}\).
 Parent unique perfect separator; sibling imperfect. Nonzero-positive labels; `val`-only
-\(\mathcal{H}^\star\). Fixture key kept as `m12_u4_fork_double_copy` for path stability.
+\(\mathcal{H}^\star\). Fixture key `m12_u4_fork_asymmetric`.
 
 ## 2026-07-20 — M12x: val-only BK; keep nonzero-positive labels
 

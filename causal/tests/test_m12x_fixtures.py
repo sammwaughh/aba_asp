@@ -17,30 +17,40 @@ _EXPECTED_EDGES = {
     "m12_u1_separator_copy": ((1, 2),),
     "m12_u2_collider_min": ((0, 2), (1, 2)),
     "m12_u3_collider_max": ((0, 2), (1, 2)),
-    "m12_u4_fork_double_copy": ((0, 1), (0, 2)),
-    "m12_u5_chain_double_copy": ((0, 1), (1, 2)),
-    "m12_u6_g1_and_cone": ((0, 2), (1, 2), (1, 3), (2, 3)),
-    "m12_u7_g1_or_cone": ((0, 1), (0, 2), (1, 3), (2, 3)),
+    "m12_u4_fork_asymmetric": ((0, 1), (0, 2)),
+    "m12_u5_chain_curated": ((0, 1), (1, 2)),
+    "m12_u6_g1_min_diff": ((0, 2), (1, 2), (1, 3), (2, 3)),
+    "m12_u7_diamond_noisy": ((0, 1), (0, 2), (1, 3), (2, 3)),
 }
 
 _EXPECTED_ROWS = {
     "m12_u1_separator_copy": 9,
     "m12_u2_collider_min": 9,
     "m12_u3_collider_max": 9,
-    "m12_u4_fork_double_copy": 3,
-    "m12_u5_chain_double_copy": 6,
-    "m12_u6_g1_and_cone": 9,
-    "m12_u7_g1_or_cone": 6,
+    "m12_u4_fork_asymmetric": 3,
+    "m12_u5_chain_curated": 6,
+    "m12_u6_g1_min_diff": 9,
+    "m12_u7_diamond_noisy": 6,
+}
+
+_EXPECTED_NODES = {
+    "m12_u1_separator_copy": 3,
+    "m12_u2_collider_min": 3,
+    "m12_u3_collider_max": 3,
+    "m12_u4_fork_asymmetric": 3,
+    "m12_u5_chain_curated": 3,
+    "m12_u6_g1_min_diff": 4,
+    "m12_u7_diamond_noisy": 4,
 }
 
 _EXPECTED_TARGETS = {
     "m12_u1_separator_copy": ("x2",),
     "m12_u2_collider_min": ("x2",),
     "m12_u3_collider_max": ("x2",),
-    "m12_u4_fork_double_copy": ("x1", "x2"),
-    "m12_u5_chain_double_copy": ("x1", "x2"),
-    "m12_u6_g1_and_cone": ("x2", "x3"),
-    "m12_u7_g1_or_cone": ("x3",),
+    "m12_u4_fork_asymmetric": ("x1", "x2"),
+    "m12_u5_chain_curated": ("x2",),
+    "m12_u6_g1_min_diff": ("x2", "x3"),
+    "m12_u7_diamond_noisy": ("x3",),
 }
 
 
@@ -57,7 +67,7 @@ def test_registry_has_seven_units() -> None:
 def test_edges_nodes_rows(source: str) -> None:
     fx = _fx(source)
     assert fx.edges == _EXPECTED_EDGES[source]
-    assert fx.nodes == (4 if "g1" in source else 3)
+    assert fx.nodes == _EXPECTED_NODES[source]
     assert len(fx.df) == _EXPECTED_ROWS[source]
     assert fx.resolved_learning_targets() == _EXPECTED_TARGETS[source]
 
@@ -92,7 +102,7 @@ def test_u3_max_table() -> None:
 
 
 def test_u6_min_then_difference() -> None:
-    fx = _fx("m12_u6_g1_and_cone")
+    fx = _fx("m12_u6_g1_min_diff")
     assert fx.df["x0"].tolist() == [0, 0, 0, 1, 1, 1, 2, 2, 2]
     assert fx.df["x1"].tolist() == [0, 1, 2, 0, 1, 2, 0, 1, 2]
     assert fx.df["x2"].tolist() == [0, 0, 0, 0, 1, 1, 0, 1, 2]
@@ -109,7 +119,7 @@ def test_u6_min_then_difference() -> None:
 
 
 def test_u7_noisy_diamond() -> None:
-    fx = _fx("m12_u7_g1_or_cone")
+    fx = _fx("m12_u7_diamond_noisy")
     assert fx.df["x0"].tolist() == [0, 0, 1, 1, 2, 2]
     assert fx.df["x1"].tolist() == [1, 1, 2, 2, 0, 0]
     assert fx.df["x2"].tolist() == [2, 1, 0, 2, 1, 0]
@@ -127,7 +137,7 @@ def test_u7_noisy_diamond() -> None:
 
 
 def test_u7_bk_sink_val_only(tmp_path: Path) -> None:
-    text = _bk("m12_u7_g1_or_cone", "x3", tmp_path)
+    text = _bk("m12_u7_diamond_noisy", "x3", tmp_path)
     assert "Skipping excluded variable: x3" in text
     for col in ("x0", "x1", "x2"):
         assert f"{col}_val_" in text
@@ -139,7 +149,7 @@ def test_u1_copy_ignores_x0() -> None:
 
 
 def test_u4_asymmetric_fork() -> None:
-    u4 = _fx("m12_u4_fork_double_copy")
+    u4 = _fx("m12_u4_fork_asymmetric")
     assert u4.df["x0"].tolist() == [0, 1, 2]
     assert u4.df["x1"].tolist() == [2, 2, 0]
     assert u4.df["x2"].tolist() == [0, 2, 2]
@@ -150,7 +160,7 @@ def test_u4_asymmetric_fork() -> None:
 
 
 def test_u5_pilot_chain() -> None:
-    u5 = _fx("m12_u5_chain_double_copy")
+    u5 = _fx("m12_u5_chain_curated")
     assert u5.df["x0"].tolist() == [0, 0, 1, 1, 2, 2]
     assert u5.df["x1"].tolist() == [0, 1, 1, 2, 2, 0]
     assert u5.df["x2"].tolist() == [0, 1, 1, 2, 2, 0]
@@ -198,8 +208,8 @@ def _bk(source: str, target: str, tmp_path: Path) -> str:
     [
         ("m12_u1_separator_copy", "x2", ("x0", "x1"), None),
         ("m12_u2_collider_min", "x2", ("x0", "x1"), None),
-        ("m12_u5_chain_double_copy", "x1", ("x0", "x2"), "x2"),
-        ("m12_u6_g1_and_cone", "x2", ("x0", "x1", "x3"), "x3"),
+        ("m12_u5_chain_curated", "x2", ("x0", "x1"), None),
+        ("m12_u6_g1_min_diff", "x2", ("x0", "x1", "x3"), "x3"),
     ],
 )
 def test_bk_includes_non_targets_val_only(

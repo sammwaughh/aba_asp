@@ -20,7 +20,8 @@ Include only if: distinct lesson; inspectable (\(|S|\le 2\) preferred); non-coll
 
 ## Accepted units (core)
 
-Alphabet \(k=3\) always. Configs: ECAI, AAMAS. Cells per unit \(= 2\times|N|\).
+Alphabet \(k=3\) always. Configs: ECAI, AAMAS. Cells per unit \(= 2\times\) (number of
+**learning targets** on the card), not automatically \(2\times|N|\).
 
 ### U1 — Separator + copy
 
@@ -77,9 +78,9 @@ Alphabet \(k=3\) always. Configs: ECAI, AAMAS. Cells per unit \(= 2\times|N|\).
 | **Graph** | \(x_0 \to x_1 \to x_2\) |
 | **Sources \(S\)** | \(\{x_0\}\) (curated support; not full factorial) → 6 rows |
 | **Mechanisms** | Pilot \((x_0,x_1)\) pairs; \(x_2 := \operatorname{copy}(x_1)\) |
-| **Targets \(N\)** | \(\{x_1,x_2\}\) |
-| **Lesson** | Parent vs correlated ancestor (sink); descendant-in-BK when learning intermediate |
-| **Cells** | 4 |
+| **Targets** | \(\{x_2\}\) only (intermediate \(x_1\) not a learning target) |
+| **Lesson** | Parent vs correlated ancestor on the sink |
+| **Cells** | 2 |
 | **Provenance** | Restored pilot `m12_chain` (2026-07-20); nonzero-positive; `val`-only |
 
 ### U6 — Fabrizio G1 + min then difference
@@ -116,11 +117,11 @@ Alphabet \(k=3\) always. Configs: ECAI, AAMAS. Cells per unit \(= 2\times|N|\).
 | U2 | collider | \(x_2=\min\) | 2 | 9 | 1 | 2 |
 | U3 | collider | \(x_2=\max\) | 2 | 9 | 1 | 2 |
 | U4 | fork | \(x_1=2\cdot 1_{x_0\neq 2},\ x_2=2\cdot 1_{x_0\neq 0}\) | 1 | 3 | 2 | 4 |
-| U5 | chain | pilot \((x_0,x_1)\) support; \(x_2=\mathrm{copy}(x_1)\) | 1 | 6 | 2 | 4 |
+| U5 | chain | pilot \((x_0,x_1)\) support; \(x_2=\mathrm{copy}(x_1)\) | 1 | 6 | 1 | 2 |
 | U6 | Fabrizio G1 | \(x_2=\min,\ x_3=x_1-x_2\) | 2 | 9 | 2 | 4 |
 | U7 | diamond | noisy fork arms; \(x_3=\|x_1-x_2\|\) | 1 | 6 | 1 | 2 |
 
-**Total: 7 units, 20 cells.**
+**Total: 7 units, 18 cells.**
 
 ---
 
@@ -157,6 +158,6 @@ per-target ancestors / other distractors / **descendant distractors (included in
 | Approach | Locked |
 | Unit set (this file) | **Accepted** |
 | Mechanism cards U1–U7 | **Written** — [`mechanism_cards/`](mechanism_cards/) |
-| Fixtures + grid (M12x) | Constructed |
-| Learning runs | Done — 22/22 solved |
-| Inspection vs \(\mathcal{H}^\star\) | **Done** — `M1.2-expanded-cell-inspection.md` |
+| Fixtures + grid (M12x) | Constructed (18 cells; val-only BK) |
+| Learning runs | **Pending** — prior outputs deleted; fresh `--no-resume` next |
+| Inspection vs \(\mathcal{H}^\star\) | **Pending** — Stage-3 after fresh run |

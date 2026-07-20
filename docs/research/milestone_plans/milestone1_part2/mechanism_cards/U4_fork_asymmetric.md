@@ -1,7 +1,7 @@
 # U4 — Fork + asymmetric maps
 
 **Unit ID:** U4  
-**Fixture id:** `m12_u4_fork_double_copy`  
+**Fixture id:** `m12_u4_fork_asymmetric`  
 **Lesson:** Parent vs sibling distractor (sibling correlated but imperfect separator)  
 **Provenance:** Redesigned from pilot `m12_fork`; Option B overlapping-support maps (2026-07-20)  
 **Cells:** 4 — each of \(\{x_1,x_2\}\) × {ECAI, AAMAS}
