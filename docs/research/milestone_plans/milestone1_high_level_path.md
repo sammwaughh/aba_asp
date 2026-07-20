@@ -2,7 +2,7 @@
 
 **Role:** primary working reference for finishing Milestone 1.  
 **Parent index:** [`milestone1-plan.md`](milestone1-plan.md)  
-**Status:** active (2026-07-20) — **redesign M12x** (U1–U7 locked, 20 cells; re-run pending); M1.3 paused
+**Status:** active (2026-07-20) — **M12x redesign re-run done** (20/20); Stage-3 rewrite next; M1.3 paused
 
 Organising question for all of Milestone 1:
 
@@ -18,7 +18,7 @@ No Causal ABA integration in this milestone. Large-graph / bnlearn comparisons a
 |------|--------|-------------|
 | **M1.1** | Closed | Parent-position / representation-order control; ordering mechanism established |
 | **M1.2 pilot** | Analysed (historical) | 10-cell pilot; superseded as primary evidence by M12x |
-| **M1.2 expanded (M12x)** | **Redesign locked; re-run pending** | U1–U7 mechanisms updated (20-cell grid); first 22-cell run historical only |
+| **M1.2 expanded (M12x)** | **Run (Stage-3 pending)** | Redesign re-run **20/20 `solved`** (2026-07-20); rewrite inspection before M1.3 |
 | **M1.3** | **Paused** | Method kept (`milestone1_part3_approach.md`); provisional claim list **withdrawn** |
 | **M1.4** | Does not exist | Large-graph tests deferred to a future evaluation milestone |
 

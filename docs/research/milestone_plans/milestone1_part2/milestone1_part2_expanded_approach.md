@@ -2,8 +2,8 @@
 
 **Role:** locked design reference for the expanded M1.2 (M12x) grid — graphs, mechanisms,
 BK/labelling regime, and \(\mathcal{H}^\star\) acceptance.  
-**Status:** design vocabulary retained; **U1–U7 mechanisms locked** (2026-07-20) —
-first M12x run historical; re-run on 20-cell grid next.  
+**Status:** design vocabulary retained; **U1–U7 locked; redesign re-run 20/20 `solved`**
+(2026-07-20). Stage-3 inspection rewrite next.  
 **Primary path:** [`../milestone1_high_level_path.md`](../milestone1_high_level_path.md)  
 **Parent index:** [`../milestone1-plan.md`](../milestone1-plan.md)
 

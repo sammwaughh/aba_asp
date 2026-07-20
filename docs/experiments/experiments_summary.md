@@ -38,7 +38,7 @@ Use the same status categories as `experiment_register.md`.
 | QI-004 greedy | — | Greedy-folding rerun of QI-004 (scaled noisy n=20) | analysed | `docs/experiments/qualitative/QI004_scaled_motifs_n20_greedy/` | `causal/configs/experiments/QI004_scaled_motifs_n20_greedy.yaml` | `causal/outputs/aba_learning/grid/QI004_scaled_motifs_n20_greedy/` | Interim Experimentation / Progress | Only change `folding_mode: greedy`. Same outcomes as nd (1 solved, 12 no-solution, 2 errors; 0/15 clean) but ~120x faster (≈1233 s -> ≈10 s). At noisy n=20 greedy changes only runtime; binary errors persist. |
 | M11 | — | m1.1 Parent-position and representation-order control | analysed | `docs/experiments/qualitative/M1.1-parent-position.md` | `causal/configs/experiments/M11_parent_position.yaml`; `M11_parent_position_greedy.yaml` | `M11_parent_position/cells/`; `M11_parent_position_greedy/`; `M11_ablations/` | Interim Experimentation / Progress (Milestone 1) | nd: 8/8 solved; binary σ/π pass; cat3 σ fails (ablation-supported). Stage 7 greedy: binary matches nd; cat3 all supersets; rule-level σ restored under greedy. |
 | M12 | — | m1.2 Published-configuration comparison (pilot) | pilot analysed | `docs/experiments/qualitative/M1.2-config-comparison.md` | `causal/configs/experiments/M12_ecai2024.yaml`; `M12_aamas2025.yaml` | `causal/outputs/aba_learning/grid/M12_{ecai2024,aamas2025}/` | Interim Experimentation / Progress (Milestone 1) | 10-cell pilot analysed (historical). Expanded as M12x (redesign). No M1.4. |
-| M12x | — | m1.2 expanded U1–U7 (ECAI/AAMAS; nz BK; 22 cells) | redesign | `M1.2-expanded.md`; `M1.2-expanded-cell-inspection.md` | `M12x_{ecai2024,aamas2025}.yaml` | `M12x_summary.md`; `M12x_cell_reports/` | Interim Experimentation / Progress (Milestone 1) | First grid historical; U4–U7 mechanisms being replaced. Catalogue: `m12x_units_reference.tex`. |
+| M12x | — | m1.2 expanded U1–U7 (ECAI/AAMAS; val-only BK; 20 cells) | run | `M1.2-expanded.md`; `M1.2-expanded-cell-inspection.md` | `M12x_{ecai2024,aamas2025}.yaml` | `M12x_summary.md`; `M12x_cell_reports/` | Interim Experimentation / Progress (Milestone 1) | Redesign re-run 20/20 solved (2026-07-20). Stage-3 rewrite pending. Catalogue: `m12x_units_reference.tex`. |
 | M13 | — | m1.3 Recovery patterns and limits (claims + targeted probes from M12x) | paused | `docs/experiments/qualitative/M1.3-failure-modes.md` | — | `causal/outputs/aba_learning/grid/M13_<ablation-id>/` (only if probes run) | Interim Experimentation / Progress (Milestone 1) | Claim drafting withdrawn; Approach method retained. Restart after redesigned M12x. |
 
 ## Experiment sequence to date and next
@@ -66,25 +66,24 @@ Initial eight-cell metamorphic grid complete (nd + Stage 7 greedy). nd: binary p
 Status: **`analysed` / superseded by redesign**
 
 First expanded grid (M12x): U1–U7 × ECAI/AAMAS = 22 cells, all `solved`; Stage-3
-inspection written. Retained as historical; U4–U7 mechanisms are being replaced.
+against nz-BK / double-copy fixtures — historical only.
 
 **Primary path:** `docs/research/milestone_plans/milestone1_high_level_path.md`  
 **Approach:** `docs/research/milestone_plans/milestone1_part2/milestone1_part2_expanded_approach.md`  
 Expanded record: `docs/experiments/qualitative/M1.2-expanded.md`  
-Stage-3 inspection: `docs/experiments/qualitative/M1.2-expanded-cell-inspection.md`  
-Matrix: `causal/outputs/aba_learning/grid/M12x_summary.md`  
+Stage-3 inspection: `docs/experiments/qualitative/M1.2-expanded-cell-inspection.md` (historical)  
 Pilot: `docs/experiments/qualitative/M1.2-config-comparison.md`
 
-### In progress: Milestone 1 Part 2 — M12x redesign
+### In progress: Milestone 1 Part 2 — M12x redesign re-run
 
-Status: **`redesign`** — replace uninformative U4–U7 mechanisms; then re-run and
-re-inspect. First 22-cell grid retained as historical only.
+Status: **`run`** — redesigned 20-cell grid **20/20 `solved`** (2026-07-20); matrix refreshed.
+Stage-3 inspection rewrite next. Matrix: `causal/outputs/aba_learning/grid/M12x_summary.md`
 
 ### Paused: Milestone 1 Part 3 — recovery patterns and limits (M1.3)
 
 Status: **`paused`** — provisional claim drafting from the first M12x grid
 **withdrawn** (2026-07-20). Method: `milestone1_part3_approach.md`. Restart after
-redesigned M12x is locked. No M1.4 — large-graph / bnlearn evaluation is deferred.
+redesigned Stage-3. No M1.4 — large-graph / bnlearn evaluation is deferred.
 
 **Primary path:** `docs/research/milestone_plans/milestone1_high_level_path.md`  
 Detail: `docs/research/milestone_plans/milestone1_part3/`
@@ -153,13 +152,12 @@ Workflow:
 
 ## Next action
 
-**Redesign M12x** — fix U4/U5 fork/chain and U6/U7 cone mechanisms; update cards and
-catalogue; re-run; re-inspect. Then restart M1.3.
+**Rewrite M12x Stage-3 inspection** for the redesign re-run (20/20 solved), then restart M1.3.
 
 Completed so far in Milestone 1:
 
 1. **M1.1 (M11)** — closed.
 2. **M1.2 pilot (M12)** — Stages 0–3 analysed (10 cells).
-3. **M1.2 expanded (M12x)** — first grid analysed; **redesign in progress**.
+3. **M1.2 expanded (M12x)** — redesign re-run complete; Stage-3 rewrite pending.
 
-Remaining: redesigned M12x → M1.3 → Milestone 1 write-up. No M1.4.
+Remaining: Stage-3 → M1.3 → Milestone 1 write-up. No M1.4.

@@ -2,7 +2,7 @@
 
 **Primary path:** [`../milestone1_high_level_path.md`](../milestone1_high_level_path.md)
 
-**Status:** **redesign complete pending re-run** — U1–U7 mechanisms locked (20-cell grid); re-run M12x before M1.3
+**Status:** **run complete; Stage-3 rewrite pending** — redesigned 20-cell M12x **20/20 `solved`** (2026-07-20)
 
 | Phase | Status | Notes |
 |-------|--------|-------|
@@ -61,4 +61,4 @@
 
 **Parent index:** [milestone1-plan.md](../milestone1-plan.md)
 
-**Next:** re-run M12x (20 cells); Stage-3 inspection; optional Stage-0 separation-contract tests.
+**Next:** rewrite Stage-3 inspection for the redesign re-run; then M1.3.
