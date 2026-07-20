@@ -2,6 +2,15 @@
 
 Chronological notes on experiment progress, decisions, and milestones. Detailed evidence remains in experiment records and artefact paths cited below.
 
+## 2026-07-20 — Fresh M12x 18-cell run + summary (no Stage-3 yet)
+
+- **Commands:** `run_grid` on `M12x_{ecai2024,aamas2025}.yaml` (`--no-resume`); then
+  `python -m causal.experiments.m12x_summary`.
+- **Result:** ECAI 9/9 `solved`; AAMAS 9/9 `solved`; 18 cell reports written.
+- **Artefacts:** `M12x_{ecai2024,aamas2025}/`; `M12x_summary.md`/`.json`;
+  `M12x_cell_reports/`.
+- **Next:** Stage-3 qualitative inspection (no interpretation recorded in this entry).
+
 ## 2026-07-20 — Delete prior M12x outputs; reset to awaiting fresh run
 
 - **Deleted:** `M12x_{ecai2024,aamas2025}/`, `M12x_summary.md`/`.json`,

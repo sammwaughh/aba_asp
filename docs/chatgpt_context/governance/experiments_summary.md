@@ -38,7 +38,7 @@ Use the same status categories as `experiment_register.md`.
 | QI-004 greedy | — | Greedy-folding rerun of QI-004 (scaled noisy n=20) | analysed | `docs/experiments/qualitative/QI004_scaled_motifs_n20_greedy/` | `causal/configs/experiments/QI004_scaled_motifs_n20_greedy.yaml` | `causal/outputs/aba_learning/grid/QI004_scaled_motifs_n20_greedy/` | Interim Experimentation / Progress | Only change `folding_mode: greedy`. Same outcomes as nd (1 solved, 12 no-solution, 2 errors; 0/15 clean) but ~120x faster (≈1233 s -> ≈10 s). At noisy n=20 greedy changes only runtime; binary errors persist. |
 | M11 | — | m1.1 Parent-position and representation-order control | analysed | `docs/experiments/qualitative/M1.1-parent-position.md` | `causal/configs/experiments/M11_parent_position.yaml`; `M11_parent_position_greedy.yaml` | `M11_parent_position/cells/`; `M11_parent_position_greedy/`; `M11_ablations/` | Interim Experimentation / Progress (Milestone 1) | nd: 8/8 solved; binary σ/π pass; cat3 σ fails (ablation-supported). Stage 7 greedy: binary matches nd; cat3 all supersets; rule-level σ restored under greedy. |
 | M12 | — | m1.2 Published-configuration comparison (pilot) | pilot analysed | `docs/experiments/qualitative/M1.2-config-comparison.md` | `causal/configs/experiments/M12_ecai2024.yaml`; `M12_aamas2025.yaml` | `causal/outputs/aba_learning/grid/M12_{ecai2024,aamas2025}/` | Interim Experimentation / Progress (Milestone 1) | 10-cell pilot analysed (historical). Expanded as M12x (redesign). No M1.4. |
-| M12x | — | m1.2 expanded U1–U7 (ECAI/AAMAS; val-only BK; 18 cells) | implemented | `M1.2-expanded.md` | `M12x_{ecai2024,aamas2025}.yaml` | _(none yet; prior outputs deleted)_ | Interim Experimentation / Progress (Milestone 1) | Design locked; prior M12x outputs deleted 2026-07-20; fresh 18-cell run next. Catalogue: `m12x_units_reference.tex`. |
+| M12x | — | m1.2 expanded U1–U7 (ECAI/AAMAS; val-only BK; 18 cells) | run | `M1.2-expanded.md` | `M12x_{ecai2024,aamas2025}.yaml` | `M12x_summary.md`; `M12x_cell_reports/` (18) | Interim Experimentation / Progress (Milestone 1) | Fresh 18/18 solved (2026-07-20); Stage-3 pending. Catalogue: `m12x_units_reference.tex`. |
 | M13 | — | m1.3 Recovery patterns and limits (claims + targeted probes from M12x) | paused | `docs/experiments/qualitative/M1.3-failure-modes.md` | — | `causal/outputs/aba_learning/grid/M13_<ablation-id>/` (only if probes run) | Interim Experimentation / Progress (Milestone 1) | Claim drafting withdrawn; Approach method retained. Restart after fresh M12x Stage-3. |
 
 ## Experiment sequence to date and next
@@ -61,14 +61,15 @@ Status: **`analysed`**
 
 Initial eight-cell metamorphic grid complete (nd + Stage 7 greedy). nd: binary passes all checks; cat3 fails σ-invariance (ablation-supported). Stage 7 greedy: binary matches nd; cat3 rule-level σ restored; all cat3 cells are parent supersets (B/C regress from nd singleton). Findings: `docs/report/findings/milestone1_part1_m11_findings.tex`. Record: `docs/experiments/qualitative/M1.1-parent-position.md`.
 
-### Next: Milestone 1 Part 2 — M12x fresh 18-cell run
+### In progress: Milestone 1 Part 2 — M12x Stage-3
 
-Status: **`implemented`** — design locked; **prior M12x runner outputs deleted** (2026-07-20).
-Awaiting `--no-resume` on both arms, then `m12x_summary`, then Stage-3 inspection.
+Status: **`run`** — fresh 18-cell grid **18/18 `solved`** (2026-07-20); summary regenerated.
+Stage-3 qualitative inspection next.
 
 **Primary path:** `docs/research/milestone_plans/milestone1_high_level_path.md`  
 **Approach:** `docs/research/milestone_plans/milestone1_part2/milestone1_part2_expanded_approach.md`  
 Expanded record: `docs/experiments/qualitative/M1.2-expanded.md`  
+Matrix: `causal/outputs/aba_learning/grid/M12x_summary.md`  
 Pilot (historical): `docs/experiments/qualitative/M1.2-config-comparison.md`
 
 ### Paused: Milestone 1 Part 3 — recovery patterns and limits (M1.3)
@@ -144,12 +145,12 @@ Workflow:
 
 ## Next action
 
-**Run the locked M12x 18-cell grid** (`--no-resume` both arms → `m12x_summary`), then Stage-3 inspection, then restart M1.3.
+**Rewrite M12x Stage-3 inspection** for the fresh 18-cell run, then restart M1.3.
 
 Completed so far in Milestone 1:
 
 1. **M1.1 (M11)** — closed.
 2. **M1.2 pilot (M12)** — Stages 0–3 analysed (10 cells).
-3. **M1.2 expanded (M12x)** — design locked; prior outputs deleted; fresh run pending.
+3. **M1.2 expanded (M12x)** — fresh run complete (18/18 solved); Stage-3 pending.
 
-Remaining: fresh M12x run → Stage-3 → M1.3 → Milestone 1 write-up. No M1.4.
+Remaining: Stage-3 → M1.3 → Milestone 1 write-up. No M1.4.
