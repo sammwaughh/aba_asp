@@ -34,7 +34,7 @@ The earlier n=100 scaled attempt was cut and is not part of the canonical experi
 | QI-004 greedy | — | Greedy-folding rerun of QI-004 (scaled noisy n=20) | analysed |
 | M11 | — | m1.1 Parent-position and representation-order control | analysed (Stages 0–7; ablations + greedy comparator) |
 | M12 | — | m1.2 Published-configuration comparison (ASP-ABAlearnB / Greedy ABA Learning) | analysed (Stages 0–3: 10-cell grid + full cell inspection / failure-mode taxonomy) |
-| M12x | — | m1.2 expanded U1–U7 (ECAI/AAMAS; nz BK; 22 cells) | redesign (first grid historical) |
+| M12x | — | m1.2 expanded U1–U7 (ECAI/AAMAS; val-only BK; 20 cells) | run (redesign 2026-07-20; Stage-3 pending) |
 | M13 | — | m1.3 Recovery patterns and limits (claims + probes from M12x) | paused |
 
 ## Template
@@ -258,18 +258,19 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
 
 ### M12x — m1.2 expanded U1–U7 grid
 
-- Status: **analysed** (2026-07-16): 22/22 `solved`; matrix; Stage-3 inspection complete.
+- Status: **`run`** (redesign re-run 2026-07-20): **20/20 `solved`**; Stage-3 rewrite pending.
+  First 22-cell grid is historical only.
 - Record: `docs/experiments/qualitative/M1.2-expanded.md`.
-- Inspection: `docs/experiments/qualitative/M1.2-expanded-cell-inspection.md`.
-- Design: Approach + unit set + `mechanism_cards/` U1–U7.
+- Inspection: `docs/experiments/qualitative/M1.2-expanded-cell-inspection.md` (superseded stub; Stage-3 rewrite pending).
+- Design: Approach + unit set + `mechanism_cards/` U1–U7 (redesigned 2026-07-20).
 - Fixtures: `causal/experiments/handcrafted_m12x.py` (nonzero-positive; multi-target E±).
-- BK: `defaults.definitional_nz: true` → `xi_nz` facts; target excluded; descendants kept.
+- BK: exact-value (`val`) predicates only; target excluded; descendants kept.
 - Configs: `causal/configs/experiments/M12x_{ecai2024,aamas2025}.yaml` (`cell_dir: slug`; `grid.seed` omitted).
-- Cells: 11 per config × 2 = 22; dirs `{dgp}__target-{t}`.
-- Output: `M12x_{ecai2024,aamas2025}/`; `M12x_summary.md`; `M12x_cell_reports/`.
+- Cells: 10 per config × 2 = **20**; dirs `{dgp}__target-{t}`.
+- Output: `M12x_{ecai2024,aamas2025}/`; `M12x_summary.md`; `M12x_cell_reports/` (20).
 - Generator: `causal/experiments/m12x_summary.py`.
 - Relation to Causal ABA: none exercised.
-- Next: redesign U4–U7; re-run M12x (do not start M1.3 claims from this grid).
+- Next: rewrite Stage-3 inspection; then M1.3.
 
 ### M13 — m1.3 Recovery patterns and limits
 

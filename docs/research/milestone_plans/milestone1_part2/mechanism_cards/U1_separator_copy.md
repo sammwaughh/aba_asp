@@ -72,7 +72,6 @@ Exclude **only** \(x_2\). Include **both** \(x_0\) and \(x_1\) (distractor stays
 - `x0_val_0`, `x0_val_1`, `x0_val_2`
 - `x1_val_0`, `x1_val_1`, `x1_val_2`
 
-No `*_nz` predicates.
 
 ### 4.3 Labels
 
@@ -90,8 +89,7 @@ x2(A) :- x1_val_1(A).
 x2(A) :- x1_val_2(A).
 ```
 
-This is the compact `val` account of “\(x_1\neq 0\)” under nonzero-positive labelling
-(there is no `*_nz` language in BK).
+This is the compact `val` account of “\(x_1\neq 0\)” under nonzero-positive labelling.
 
 ### 4.5 Semantic success (inspection)
 

@@ -259,12 +259,12 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
 ### M12x — m1.2 expanded U1–U7 grid
 
 - Status: **`run`** (redesign re-run 2026-07-20): **20/20 `solved`**; Stage-3 rewrite pending.
-  First 22-cell / nz-BK grid is historical only.
+  First 22-cell grid is historical only.
 - Record: `docs/experiments/qualitative/M1.2-expanded.md`.
-- Inspection: `docs/experiments/qualitative/M1.2-expanded-cell-inspection.md` (first-grid text historical).
+- Inspection: `docs/experiments/qualitative/M1.2-expanded-cell-inspection.md` (first-grid text superseded; Stage-3 rewrite pending).
 - Design: Approach + unit set + `mechanism_cards/` U1–U7 (redesigned 2026-07-20).
 - Fixtures: `causal/experiments/handcrafted_m12x.py` (nonzero-positive; multi-target E±).
-- BK: `defaults.definitional_nz: false` → `val` only; target excluded; descendants kept.
+- BK: exact-value (`val`) predicates only; target excluded; descendants kept.
 - Configs: `causal/configs/experiments/M12x_{ecai2024,aamas2025}.yaml` (`cell_dir: slug`; `grid.seed` omitted).
 - Cells: 10 per config × 2 = **20**; dirs `{dgp}__target-{t}`.
 - Output: `M12x_{ecai2024,aamas2025}/`; `M12x_summary.md`; `M12x_cell_reports/` (20).

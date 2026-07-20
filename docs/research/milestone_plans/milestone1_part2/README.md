@@ -46,10 +46,10 @@
 **Locked expansion choices (summary)** — full detail in the Approach:
 
 - Deterministic DGP: copy / min / max; full source factorial; \(k=3\); nonzero-positive labels.
-- BK: `val` + definitional `nz` (not assumptions).
+- BK: exact-value (`val`) predicates only.
 - Configs: ECAI and AAMAS only.
 - Cells: (fixture, non-source target, config); BK = all non-targets (descendants included as distractors; citing them in a learned rule is a failure mode).
-- Inspection-first acceptance; compact `nz` reference hypotheses preferred.
+- Inspection-first acceptance; intended \(\mathcal{H}_t^\star\) stated in the `val` language.
 
 | Document | Purpose |
 |----------|---------|

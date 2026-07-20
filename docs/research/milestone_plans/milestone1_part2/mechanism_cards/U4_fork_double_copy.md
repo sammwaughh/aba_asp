@@ -70,7 +70,6 @@ Exclude **only** \(x_1\). Include \(x_0\) and sibling \(x_2\):
 - `x0_val_0`, `x0_val_1`, `x0_val_2`
 - `x2_val_0`, `x2_val_1`, `x2_val_2`
 
-No `*_nz` predicates.
 
 ### 4.3 Labels
 
@@ -120,7 +119,6 @@ Exclude **only** \(x_2\). Include \(x_0\) and sibling \(x_1\):
 - `x0_val_0`, `x0_val_1`, `x0_val_2`
 - `x1_val_0`, `x1_val_1`, `x1_val_2`
 
-No `*_nz` predicates.
 
 ### 5.3 Labels
 

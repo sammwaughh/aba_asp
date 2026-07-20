@@ -1,5 +1,5 @@
 experiment_id: M12x_ecai2024
-description: "Expanded M1.2 (M12x) arm ECAI: configs/ecai2024_config.pl on units U1–U7 (mechanism cards). Deterministic categorical mechanisms; k=3; nonzero-positive labels; val-only BK (no definitional *_nz); all non-source targets; descendants kept in BK as distractors. Unguided ABA Learning rule recovery, NOT Russo-style Causal ABA."
+description: "Expanded M1.2 (M12x) arm ECAI: configs/ecai2024_config.pl on units U1–U7 (mechanism cards). Deterministic categorical mechanisms; k=3; nonzero-positive labels; val-only BK; all non-source targets; descendants kept in BK as distractors. Unguided ABA Learning rule recovery, NOT Russo-style Causal ABA."
 owner: sam
 
 defaults:
@@ -9,7 +9,6 @@ defaults:
   prolog_timeout_s: 60
   query_timeout_s: 5
   prolog_config: configs/ecai2024_config.pl
-  definitional_nz: false
 
 dgps:
   - id: m12_u1_separator_copy

@@ -26,18 +26,20 @@ Chronological notes on experiment progress, decisions, and milestones. Detailed 
 ## 2026-07-16 — M12x Stage-3 cell inspection (22 cells)
 
 - **Doc:** `docs/experiments/qualitative/M1.2-expanded-cell-inspection.md`
-- **Vocabulary:** Approach (`config`, \(\mathcal{H}_t^\star\), `nz`/`val`, ancestors /
+  (superseded stub after 2026-07-20 redesign; Stage-3 rewrite pending).
+- **Vocabulary:** Approach (`config`, \(\mathcal{H}_t^\star\), `val`, ancestors /
   distractors / descendant failure mode).
-- **Headline:** 0/22 exact compact-`nz` \(\mathcal{H}^\star\); AAMAS cites descendants
-  on U5-x1, U6-x2, U7-x2; ECAI often assumption-mediated or inferior `val`-expansions.
-- **Status:** expanded M1.2 `analysed`. Next: M1.3 claims + probes.
+- **Headline (first grid, historical):** no exact \(\mathcal{H}^\star\) matches on that
+  22-cell package; AAMAS cited descendants on several cells; ECAI often
+  assumption-mediated.
+- **Status:** first-grid Stage-3 superseded by redesign. Next: redesign Stage-3, then M1.3.
 
 ## 2026-07-16 — M12x summary matrix + 22 cell reports
 
 - **Command:** `python -m causal.experiments.m12x_summary`
-- **Outputs:** `M12x_summary.md` / `.json`; `M12x_cell_reports/` (22 cells).
-- **Detectors:** 0/22 exact compact-nz H*; ECAI 3 val-expansions; AAMAS 3 descendant
-  citations (U5-x1, U6-x2, U7-x2).
+- **Outputs:** `M12x_summary.md` / `.json`; `M12x_cell_reports/` (then 22 cells; now 20).
+- **Detectors (first grid, historical):** no exact \(\mathcal{H}^\star\) matches; several
+  descendant citations under AAMAS.
 - **Next:** Stage-3 plain-English inspection write-up → M1.3.
 
 ## 2026-07-16 — M12x learning run: 22/22 solved
@@ -58,7 +60,8 @@ Chronological notes on experiment progress, decisions, and milestones. Detailed 
 ## 2026-07-16 — Expanded M1.2 (M12x) fixtures + 22-cell grid constructed
 
 - **Fixtures:** `causal/experiments/handcrafted_m12x.py` (U1–U7; nonzero labels).
-- **BK:** `definitional_nz` gated in `generate_aba_background_knowledge` (descendants stay in BK).
+- **BK:** exact-value (`val`) predicates in `generate_aba_background_knowledge`
+  (descendants stay in BK).
 - **Configs:** `M12x_ecai2024.yaml`, `M12x_aamas2025.yaml` (`cell_dir: slug`; no `grid.seed`; 11 cells each).
 - **Record:** `docs/experiments/qualitative/M1.2-expanded.md`.
 - **Verified:** pytest (M12+M12x); dry-run 11+11 cells.

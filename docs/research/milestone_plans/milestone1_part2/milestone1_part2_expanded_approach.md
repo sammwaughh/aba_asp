@@ -68,8 +68,6 @@ each such variable \(x\):
 
 - exact-value predicates `x_val_0`, `x_val_1`, `x_val_2` only.
 
-No definitional `*_nz` predicates in BK.
-
 ## Predictors for a target \(t\)
 
 **BK includes every variable except the target \(t\)** (full table columns minus \(t\)),
@@ -149,11 +147,13 @@ Graph: \(x_0\to x_2\leftarrow x_1\); sources \(\{x_0,x_1\}\); \(x_2:=\max(x_0,x_
 Reference:
 
 ```prolog
-x2(A) :- x0_nz(A).
-x2(A) :- x1_nz(A).
+x2(A) :- x0_val_1(A).
+x2(A) :- x0_val_2(A).
+x2(A) :- x1_val_1(A).
+x2(A) :- x1_val_2(A).
 ```
 
-BK: `x0`/`x1` value predicates + definitional `*_nz`; target excluded. (No descendants
+BK: `x0`/`x1` exact-value predicates; target excluded. (No descendants
 on this one-target sink fixture.)
 
 Cells: `(max_collider, x2, ECAI)`, `(max_collider, x2, AAMAS)`.
@@ -164,15 +164,15 @@ Cells: `(max_collider, x2, ECAI)`, `(max_collider, x2, AAMAS)`.
 |------|--------|
 | DGP family (deterministic; full source factorial; unit-specific single-parent maps) | **Updating** |
 | Labelling (nonzero-positive); \(k=3\) | Locked (for now; per-unit overrides allowed later) |
-| BK (`val` only; no definitional `*_nz`) | **Updated 2026-07-20** |
+| BK (`val` only) | Locked |
 | Configs (ECAI, AAMAS) | Locked |
 | Predictor policy (all non-targets in BK; descendant citation = failure) | Locked (corrected 2026-07-16) |
 | Inspection-first acceptance (no precise pre-enumerated \(\mathcal{A}_t\)) | Locked |
 | Graph × mechanism unit set | **Updated** — U1–U7 redesigned (20-cell grid) |
 | Mechanism cards U1–U7 | **Updated** — U7 diamond replaces OR cone |
 | LaTeX unit catalogue | **Updated** — U1–U7 |
-| Fixtures + grid (M12x) | **First run historical — redesign** (`definitional_nz: false`; 20 cells) |
-| Summary matrix + cell reports | **First run historical — redesign** |
+| Fixtures + grid (M12x) | Redesign run (20 cells; val-only BK) |
+| Summary matrix + cell reports | Redesign run (regenerate after Stage-3) |
 
 ## Next step
 

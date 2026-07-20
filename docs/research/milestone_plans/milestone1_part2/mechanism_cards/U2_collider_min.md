@@ -70,7 +70,6 @@ Exclude **only** \(x_2\). Include:
 - `x0_val_0`, `x0_val_1`, `x0_val_2`
 - `x1_val_0`, `x1_val_1`, `x1_val_2`
 
-No `*_nz` predicates.
 
 ### 4.3 Labels
 
@@ -90,7 +89,7 @@ x2(A) :- x0_val_2(A), x1_val_1(A).
 x2(A) :- x0_val_2(A), x1_val_2(A).
 ```
 
-`val` expansion of “both parents nonzero” (no `*_nz` in BK).
+`val` expansion of “both parents nonzero”.
 
 ### 4.5 Semantic success (inspection)
 

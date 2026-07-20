@@ -77,7 +77,6 @@ Exclude **only** \(x_3\). Include:
 - `x1_val_0`, `x1_val_1`, `x1_val_2`
 - `x2_val_0`, `x2_val_1`, `x2_val_2`
 
-No `*_nz` predicates.
 
 ### 4.3 Labels
 

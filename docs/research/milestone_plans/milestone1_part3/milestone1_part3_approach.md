@@ -46,7 +46,7 @@ Keep M1.2 notation:
 |------|------------------|
 | Cell \((\text{fixture},\,t,\,\text{config})\) | Experimental unit |
 | \(\mathcal{D}\), \(E^\pm\), BK | Locked inputs from M1.2 Approach |
-| \(\mathcal{H}_t^\star\) | Reference compact-`nz` rule set only — not the interesting metric |
+| \(\mathcal{H}_t^\star\) | Reference `val`-language rule set only — not the interesting metric |
 | Semantic success description | Inspection-first acceptance criterion from M1.2 |
 | Learned δ, traces | What was recovered and how |
 | **Claim** \(C_i\) | Assertion about how ABA Learning learns — **not** \(\mathcal{H}_t^\star\) |

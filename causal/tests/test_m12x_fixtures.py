@@ -127,12 +127,10 @@ def test_u7_noisy_diamond() -> None:
 
 
 def test_u7_bk_sink_val_only(tmp_path: Path) -> None:
-    text = _bk("m12_u7_g1_or_cone", "x3", tmp_path, nz=False)
+    text = _bk("m12_u7_g1_or_cone", "x3", tmp_path)
     assert "Skipping excluded variable: x3" in text
-    assert "_nz(A)" not in text
     for col in ("x0", "x1", "x2"):
         assert f"{col}_val_" in text
-        assert f"{col}_nz" not in text
 
 
 def test_u1_copy_ignores_x0() -> None:
@@ -181,15 +179,14 @@ def _cell(source: str, target: str) -> CellSpec:
     )
 
 
-def _bk(source: str, target: str, tmp_path: Path, *, nz: bool) -> str:
+def _bk(source: str, target: str, tmp_path: Path) -> str:
     out = execute_cell_stage2(
         _cell(source, target),
-        tmp_path / f"{source}_{target}_{int(nz)}",
+        tmp_path / f"{source}_{target}",
         graph_type="handcrafted_table",
         bins=3,
         bin_strategy="uniform",
         example_split="handcrafted",
-        definitional_nz=nz,
     )
     assert out.outcome == "ok", (source, target, out.outcome, out.failure_reason)
     assert out.bk_path is not None
@@ -212,23 +209,11 @@ def test_bk_includes_non_targets_val_only(
     must_include_descendant: str | None,
     tmp_path: Path,
 ) -> None:
-    text = _bk(source, target, tmp_path, nz=False)
+    text = _bk(source, target, tmp_path)
     assert f"Skipping excluded variable: {target}" in text
     assert f"{target}_val_" not in text
-    assert "_nz(A)" not in text
     for col in bk_cols:
         assert f"{col}_val_" in text
-        assert f"{col}_nz" not in text
     if must_include_descendant is not None:
         d = must_include_descendant
         assert f"{d}_val_" in text
-        assert f"{d}_nz" not in text
-
-
-def test_definitional_nz_optional(tmp_path: Path) -> None:
-    text_off = _bk("m12_u1_separator_copy", "x2", tmp_path, nz=False)
-    assert "x0_val_" in text_off
-    assert "_nz(A)" not in text_off
-    text_on = _bk("m12_u1_separator_copy", "x2", tmp_path, nz=True)
-    assert "x0_nz(A) :- x0_val_1(A)." in text_on
-    assert "x1_nz(A) :- x1_val_2(A)." in text_on

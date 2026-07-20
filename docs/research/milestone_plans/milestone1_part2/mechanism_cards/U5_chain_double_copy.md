@@ -71,7 +71,6 @@ Exclude **only** \(x_1\). Include parent \(x_0\) **and descendant \(x_2\)**:
 - `x0_val_0`, `x0_val_1`, `x0_val_2`
 - `x2_val_0`, `x2_val_1`, `x2_val_2`
 
-No `*_nz` predicates.
 
 **Do not** omit \(x_2\) from BK. The point of this cell is to test whether the learner
 cites the descendant.
@@ -126,7 +125,6 @@ Exclude **only** \(x_2\). Include both ancestors:
 - `x0_val_0`, `x0_val_1`, `x0_val_2`
 - `x1_val_0`, `x1_val_1`, `x1_val_2`
 
-No `*_nz` predicates.
 
 ### 5.3 Labels
 

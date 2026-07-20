@@ -66,7 +66,7 @@ Initial eight-cell metamorphic grid complete (nd + Stage 7 greedy). nd: binary p
 Status: **`analysed` / superseded by redesign**
 
 First expanded grid (M12x): U1–U7 × ECAI/AAMAS = 22 cells, all `solved`; Stage-3
-against nz-BK / double-copy fixtures — historical only.
+against the pre-redesign fixtures — historical only.
 
 **Primary path:** `docs/research/milestone_plans/milestone1_high_level_path.md`  
 **Approach:** `docs/research/milestone_plans/milestone1_part2/milestone1_part2_expanded_approach.md`  

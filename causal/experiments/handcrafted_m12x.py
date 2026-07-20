@@ -2,8 +2,8 @@
 
 Design: ``docs/research/milestone_plans/milestone1_part2/mechanism_cards/``.
 Regime: alphabet {0,1,2}; full source factorial (U5/U7: curated multi-row support);
-nonzero-positive labels (E+ = t != 0). BK is ``val``-only: M12x YAML sets
-``defaults.definitional_nz: false`` (no definitional ``*_nz`` predicates).
+nonzero-positive labels (E+ = t != 0). Background knowledge uses exact-value
+(``val``) predicates only.
 
 Pilot fixtures in ``handcrafted_m12.py`` are left unchanged.
 """

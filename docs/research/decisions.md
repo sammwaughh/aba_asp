@@ -35,11 +35,11 @@ Nonzero-positive labels; `val`-only BK/\(\mathcal{H}^\star\). Fixture key kept a
 Parent unique perfect separator; sibling imperfect. Nonzero-positive labels; `val`-only
 \(\mathcal{H}^\star\). Fixture key kept as `m12_u4_fork_double_copy` for path stability.
 
-## 2026-07-20 — M12x: drop definitional `*_nz`; keep nonzero-positive labels
+## 2026-07-20 — M12x: val-only BK; keep nonzero-positive labels
 
-**Decision:** BK is `val`-only (`definitional_nz: false` on M12x YAML). Labels remain
-\(E^+=\{t\neq 0\}\), \(E^-=\{t=0\}\) unless a unit card later overrides. Reference
-\(\mathcal{H}^\star\) is written in `val` (U1 done: two `x1_val_1/2` rules).
+**Decision:** Background knowledge uses exact-value (`val`) predicates only.
+Labels remain \(E^+=\{t\neq 0\}\), \(E^-=\{t=0\}\) unless a unit card later overrides.
+Reference \(\mathcal{H}^\star\) is written in `val` (U1: two `x1_val_1/2` rules).
 
 **U1:** graph/mechanism/table unchanged; card, catalogue, summary H*, and configs updated.
 
@@ -52,7 +52,7 @@ right** (mechanisms → cards/catalogue → fixtures → re-run → Stage-3). M1
 method is retained but paused.
 
 **Fork intent (U4, agreed in discussion):**  
-\(x_2 := 2\) iff \(x_0\neq 0\) (nz \(\mathcal{H}^\star\));  
+\(x_2 := 2\) iff \(x_0\neq 0\);  
 \(x_1 := 2\) iff \(x_0\neq 2\) (case-based val \(\mathcal{H}^\star\)); imperfect sibling
 confounds on both targets.
 
@@ -77,9 +77,8 @@ at run time.
 ## 2026-07-16 — Expanded M1.2 (M12x) grid constructed
 
 **Decision:** Implement U1–U7 as new experiment id **M12x** (pilot `M12_*` /
-`m12_*` left unchanged). Nonzero labels; definitional `*_nz` BK via
-`defaults.definitional_nz`; multi-target cells with `grid.cell_dir: slug`;
-**no** `grid.seed`.
+`m12_*` left unchanged). Nonzero-positive labels; `val`-only BK; multi-target cells
+with `grid.cell_dir: slug`; **no** `grid.seed`.
 
 **Artefacts:** `handcrafted_m12x.py`; `M12x_{ecai2024,aamas2025}.yaml`;
 `docs/experiments/qualitative/M1.2-expanded.md`.
@@ -107,14 +106,14 @@ any new runs. Canonical doc:
 
 - Deterministic DGP: local mechanisms ∈ {copy, min, max}; copy only for unique parent;
   full source factorial; alphabet \(k=3\) always; nonzero-positive labelling.
-- BK: exact `val` predicates + definitional `nz` rules (facts, not assumptions/contraries).
+- BK: exact-value (`val`) predicates only.
 - Configs: ECAI and AAMAS only.
 - Cells: (fixture, non-source target, config); BK includes **all non-target columns**
   (ancestors, siblings, **and descendants**). Only the target is excluded from BK.
   Descendant (and sibling) *citation in a learned rule* is a failure/divergence to
   inspect — distractors are left in BK so the learner can be tested on ignoring them.
 - Good intensional rules should use ancestors of the target only.
-- Reference \(\mathcal{H}_t^\star\) in compact `nz` form; no precisely pre-enumerated
+- Reference \(\mathcal{H}_t^\star\) in the `val` language; no precisely pre-enumerated
   acceptable set — post-run semantic inspection.
 - Original five pilot fixtures will be redesigned under this regime.
 

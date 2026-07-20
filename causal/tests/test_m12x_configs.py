@@ -37,7 +37,6 @@ def test_m12x_expands_to_ten_cells(cfg_path: Path) -> None:
     assert all(c.seed is None for c in cells)
     assert all(c.cell_dir_name == f"{c.dgp}__target-{c.target}" for c in cells)
     assert cfg.grid.seeds == ()
-    assert cfg.defaults.get("definitional_nz") is False
     prolog = Path(cfg.defaults["prolog_config"])
     if not prolog.is_file():
         # configs/ is relative to repo root

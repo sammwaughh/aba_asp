@@ -80,7 +80,6 @@ Exclude **only** \(x_2\). Include ancestors **and descendant \(x_3\)**:
 - `x1_val_0`, `x1_val_1`, `x1_val_2`
 - `x3_val_0`, `x3_val_1`, `x3_val_2`
 
-No `*_nz` predicates.
 
 **Critical:** \(x_3\) **must** appear in BK when learning \(x_2\).
 
@@ -136,7 +135,6 @@ Exclude **only** \(x_3\). Include:
 - `x1_val_0`, `x1_val_1`, `x1_val_2`
 - `x2_val_0`, `x2_val_1`, `x2_val_2`
 
-No `*_nz` predicates.
 
 ### 5.3 Labels
 

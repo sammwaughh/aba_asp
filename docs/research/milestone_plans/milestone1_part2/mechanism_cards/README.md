@@ -26,13 +26,13 @@ criteria before implementation.
 
 - Alphabet \(K=\{0,1,2\}\); full source factorial; propagate in topological order.
 - Labels: \(E^+=\{t\neq 0\}\), \(E^-=\{t=0\}\) unless a unit card overrides.
-- BK: for every column except \(t\), `*_val_0/1/2` only (**no** definitional `*_nz`).
+- BK: for every column except \(t\), exact-value predicates `*_val_0/1/2`.
 - **Descendants of \(t\) stay in BK** as distractors; citing them in a learned rule is a failure mode.
 - Only \(t\) itself is excluded from feature BK.
 - Configs: ECAI (`configs/ecai2024_config.pl`), AAMAS (`configs/aamas2025_config.pl`).
 - Acceptance is inspection-first against \(\mathcal{H}_t^\star\) / the semantic description; no precise pre-enumerated \(\mathcal{A}_t\).
-- Compact `nz` reference preferred; equivalent `val`-expansion is inferior.
+- Intended \(\mathcal{H}_t^\star\) is stated in the `val` language on each card.
 
 ## Next
 
-Implement fixtures and BK from these cards → run 22-cell grid → inspect.
+Implement fixtures and BK from these cards → run 20-cell grid → inspect.

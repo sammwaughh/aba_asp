@@ -75,7 +75,7 @@ Pilot (historical): [`milestone1_part2/milestone1_part2_config_comparison.md`](m
 | Phase | Status | Content |
 |-------|--------|---------|
 | Pilot grid | Analysed (historical) | 10 cells; not the primary expanded evidence |
-| Expanded design | Locked | U1–U7; copy/min/max; \(k=3\); nonzero-positive; `val`+`nz` BK; ECAI+AAMAS |
+| Expanded design | Locked | U1–U7; copy/min/max; \(k=3\); nonzero-positive; `val`-only BK; ECAI+AAMAS |
 | Expanded runs + inspection | **Superseded — redesign** | First M12x 22/22 run kept as historical; U4–U7 mechanisms being replaced |
 
 Configs: ECAI (`configs/ecai2024_config.pl`), AAMAS (`configs/aamas2025_config.pl`).
