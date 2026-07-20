@@ -1,5 +1,5 @@
 experiment_id: M12x_aamas2025
-description: "Expanded M1.2 (M12x) arm AAMAS: configs/aamas2025_config.pl on units U1–U7 (mechanism cards). Deterministic copy/min/max; k=3; nonzero-positive labels; val+definitional nz BK; all non-source targets; descendants kept in BK as distractors. Unguided ABA Learning rule recovery, NOT Russo-style Causal ABA."
+description: "Expanded M1.2 (M12x) arm AAMAS: configs/aamas2025_config.pl on units U1–U7 (mechanism cards). Deterministic categorical mechanisms; k=3; nonzero-positive labels; val-only BK (no definitional *_nz); all non-source targets; descendants kept in BK as distractors. Unguided ABA Learning rule recovery, NOT Russo-style Causal ABA."
 owner: sam
 
 defaults:
@@ -9,7 +9,7 @@ defaults:
   prolog_timeout_s: 60
   query_timeout_s: 5
   prolog_config: configs/aamas2025_config.pl
-  definitional_nz: true
+  definitional_nz: false
 
 dgps:
   - id: m12_u1_separator_copy
@@ -39,7 +39,7 @@ dgps:
   - id: m12_u7_g1_or_cone
     graph_type: handcrafted_table
     source: m12_u7_g1_or_cone
-    targets: [x2, x3]
+    targets: [x3]
 
 grid:
   # No seed: deterministic handcrafted tables (omit grid.seed entirely).

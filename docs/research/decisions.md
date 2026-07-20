@@ -2,6 +2,47 @@
 
 Recorded decisions that affect experiment direction. Evidence and interpretation remain in experiment records.
 
+## 2026-07-20 — U7 diamond (noisy fork arms)
+
+**Decision:** Replace U7 G1 OR cone with diamond
+\(x_0\to x_1,\,x_0\to x_2,\,x_1\to x_3,\,x_2\to x_3\).
+Curated support (U5-style): for each \(x_0\), \(x_1:=(x_0+1)\bmod 3\) and
+\(x_2\in\{(x_0+2)\bmod 3,\,x_1\}\); \(x_3:=|x_1-x_2|\).
+Nonzero-positive; `val`-only. Target \(x_3\) only (2 cells). Fixture key kept
+`m12_u7_g1_or_cone`. Grid size **20 cells** (was 22). Root and each sibling fail as
+`val`-union separators; \(\mathcal{H}^\star\) needs both \(\{x_1,x_2\}\).
+
+## 2026-07-20 — U6 min then difference (not double-min)
+
+**Decision:** Keep Fabrizio G1. Mechanisms: \(x_2:=\min(x_0,x_1)\), \(x_3:=x_1-x_2\).
+Nonzero-positive labels; `val`-only BK/\(\mathcal{H}^\star\). Fixture key kept as
+`m12_u6_g1_and_cone`. Sink concept: \(x_3\neq 0\iff x_1>x_2\) (both parents required).
+Rejects alternating min/max (projects to \(x_1\)) and double-min (\(x_3=x_2\)).
+
+## 2026-07-20 — U5 pilot chain (correlated ancestor)
+
+**Decision:** Replace U5 double copy with the pilot `m12_chain` 6-row support:
+for each \(x_0\), pairs \((x_0,x_0)\) and \((x_0,(x_0+1)\bmod 3)\); \(x_2:=\operatorname{copy}(x_1)\).
+Nonzero-positive labels; `val`-only BK/\(\mathcal{H}^\star\). Fixture key kept as
+`m12_u5_chain_double_copy`. Both targets \(\{x_1,x_2\}\) retained.
+\(\mathcal{H}_{x_2}^\star\): `x1_val_1`/`x1_val_2`. \(\mathcal{H}_{x_1}^\star\): none
+(parent imperfect; descendant is unique perfect separator in BK — failure mode, not reference).
+
+## 2026-07-20 — U4 Option B fork (asymmetric maps)
+
+**Decision:** Replace U4 double copy with
+\(x_1 := 2\cdot\mathbf{1}_{x_0\neq 2}\), \(x_2 := 2\cdot\mathbf{1}_{x_0\neq 0}\).
+Parent unique perfect separator; sibling imperfect. Nonzero-positive labels; `val`-only
+\(\mathcal{H}^\star\). Fixture key kept as `m12_u4_fork_double_copy` for path stability.
+
+## 2026-07-20 — M12x: drop definitional `*_nz`; keep nonzero-positive labels
+
+**Decision:** BK is `val`-only (`definitional_nz: false` on M12x YAML). Labels remain
+\(E^+=\{t\neq 0\}\), \(E^-=\{t=0\}\) unless a unit card later overrides. Reference
+\(\mathcal{H}^\star\) is written in `val` (U1 done: two `x1_val_1/2` rules).
+
+**U1:** graph/mechanism/table unchanged; card, catalogue, summary H*, and configs updated.
+
 ## 2026-07-20 — Withdraw M1.3 claims; redesign M12x U4–U7
 
 **Decision:** Provisional M1.3 claim drafting from the first M12x grid is **withdrawn**

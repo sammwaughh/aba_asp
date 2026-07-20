@@ -42,7 +42,7 @@ Alphabet \(k=3\) always. Configs: ECAI, AAMAS. Cells per unit \(= 2\times|N|\).
 | **Sources \(S\)** | \(\{x_0,x_1\}\) → 9 rows |
 | **Mechanisms** | \(x_2 := \min(x_0,x_1)\) |
 | **Targets \(N\)** | \(\{x_2\}\) |
-| **Lesson** | Conjunctive / AND nonzero rule |
+| **Lesson** | Conjunctive / both parents nonzero (min; `val` \(\mathcal{H}^\star\)) |
 | **Cells** | 2 |
 | **Provenance** | Redesigned pilot `m12_conj` (same graph as U3) |
 
@@ -54,59 +54,57 @@ Alphabet \(k=3\) always. Configs: ECAI, AAMAS. Cells per unit \(= 2\times|N|\).
 | **Sources \(S\)** | \(\{x_0,x_1\}\) → 9 rows |
 | **Mechanisms** | \(x_2 := \max(x_0,x_1)\) |
 | **Targets \(N\)** | \(\{x_2\}\) |
-| **Lesson** | Disjunctive / OR nonzero rule |
+| **Lesson** | Disjunctive / either parent nonzero (max; `val` \(\mathcal{H}^\star\)) |
 | **Cells** | 2 |
 | **Provenance** | Redesigned pilot `m12_disj` |
 
-### U4 — Fork + double copy
+### U4 — Fork + asymmetric maps
 
 | | |
 |--|--|
 | **Graph** | \(x_0 \to x_1\), \(x_0 \to x_2\) |
 | **Sources \(S\)** | \(\{x_0\}\) → 3 rows |
-| **Mechanisms** | \(x_1 := \operatorname{copy}(x_0)\), \(x_2 := \operatorname{copy}(x_0)\) |
+| **Mechanisms** | \(x_1 := 2\cdot\mathbf{1}_{x_0\neq 2}\), \(x_2 := 2\cdot\mathbf{1}_{x_0\neq 0}\) |
 | **Targets \(N\)** | \(\{x_1,x_2\}\) |
-| **Lesson** | Sibling distractor when sibling is extensionally tied to the parent |
+| **Lesson** | Parent vs sibling distractor (sibling correlated but imperfect separator) |
 | **Cells** | 4 |
-| **Provenance** | Redesigned pilot `m12_fork` (old asymmetric map dropped; not copy/min/max) |
+| **Provenance** | Option B redesign of pilot `m12_fork` (2026-07-20) |
 
-### U5 — Chain + double copy
+### U5 — Chain + correlated ancestor (pilot)
 
 | | |
 |--|--|
 | **Graph** | \(x_0 \to x_1 \to x_2\) |
-| **Sources \(S\)** | \(\{x_0\}\) → 3 rows |
-| **Mechanisms** | \(x_1 := \operatorname{copy}(x_0)\), \(x_2 := \operatorname{copy}(x_1)\) |
+| **Sources \(S\)** | \(\{x_0\}\) (curated support; not full factorial) → 6 rows |
+| **Mechanisms** | Pilot \((x_0,x_1)\) pairs; \(x_2 := \operatorname{copy}(x_1)\) |
 | **Targets \(N\)** | \(\{x_1,x_2\}\) |
-| **Lesson** | Parent vs ancestor cut; depth so descendant distractors appear in BK when learning intermediates |
+| **Lesson** | Parent vs correlated ancestor (sink); descendant-in-BK when learning intermediate |
 | **Cells** | 4 |
-| **Provenance** | Redesigned pilot `m12_chain` |
+| **Provenance** | Restored pilot `m12_chain` (2026-07-20); nonzero-positive; `val`-only |
 
-### U6 — Fabrizio G1 + AND cone
+### U6 — Fabrizio G1 + min then difference
 
 | | |
 |--|--|
 | **Graph (G1)** | \(0\to 2\), \(1\to 2\), \(1\to 3\), \(2\to 3\) |
 | **Sources \(S\)** | \(\{0,1\}\) → 9 rows |
-| **Mechanisms** | \(x_2 := \min(x_0,x_1)\), \(x_3 := \min(x_1,x_2)\) |
+| **Mechanisms** | \(x_2 := \min(x_0,x_1)\), \(x_3 := x_1-x_2\) |
 | **Targets \(N\)** | \(\{x_2,x_3\}\) |
-| **Boolean** | \(\Phi_{x_2}=\Phi_{x_3}=z_0\land z_1\) (sources remain relevant) |
-| **Lesson** | Fabrizio 4-node; intermediate on a two-level AND |
+| **Lesson** | Intermediate min (U2-style); sink \(x_3\neq 0\iff x_1>x_2\) needs both parents; imperfect descendant distractor |
 | **Cells** | 4 |
-| **Provenance** | `ArgCausalDisco/tests.py` — `four_node_shapPC_example` / README four-node example |
+| **Provenance** | G1 graph from ArgCausalDisco; mechanisms redesigned 2026-07-20 |
 
-### U7 — Fabrizio G1 + OR cone
+### U7 — Diamond + noisy fork arms
 
 | | |
 |--|--|
-| **Graph** | Same G1 as U6 |
-| **Sources \(S\)** | \(\{0,1\}\) → 9 rows |
-| **Mechanisms** | \(x_2 := \max(x_0,x_1)\), \(x_3 := \max(x_1,x_2)\) |
-| **Targets \(N\)** | \(\{x_2,x_3\}\) |
-| **Boolean** | \(\Phi_{x_2}=\Phi_{x_3}=z_0\lor z_1\) |
-| **Lesson** | Fabrizio 4-node; intermediate on a two-level OR |
-| **Cells** | 4 |
-| **Provenance** | Same G1 as U6 |
+| **Graph** | \(x_0\to x_1\), \(x_0\to x_2\), \(x_1\to x_3\), \(x_2\to x_3\) |
+| **Sources \(S\)** | \(\{x_0\}\) (curated multi-row support) → 6 rows |
+| **Mechanisms** | For each \(x_0\): \(x_1:=(x_0+1)\bmod 3\); \(x_2\in\{(x_0+2)\bmod 3,\,x_1\}\); \(x_3:=\|x_1-x_2\|\) |
+| **Targets \(N\)** | \(\{x_3\}\) |
+| **Lesson** | Both-parent sink under correlated siblings; root/sibling alone imperfect |
+| **Cells** | 2 |
+| **Provenance** | Fresh U7 (2026-07-20); replaces G1 OR cone |
 
 ---
 
@@ -117,12 +115,12 @@ Alphabet \(k=3\) always. Configs: ECAI, AAMAS. Cells per unit \(= 2\times|N|\).
 | U1 | sep (+ isolated \(x_0\)) | \(x_2=\mathrm{copy}(x_1)\) | 2 | 9 | 1 | 2 |
 | U2 | collider | \(x_2=\min\) | 2 | 9 | 1 | 2 |
 | U3 | collider | \(x_2=\max\) | 2 | 9 | 1 | 2 |
-| U4 | fork | \(x_1=\mathrm{copy}(x_0),\ x_2=\mathrm{copy}(x_0)\) | 1 | 3 | 2 | 4 |
-| U5 | chain | \(x_1=\mathrm{copy}(x_0),\ x_2=\mathrm{copy}(x_1)\) | 1 | 3 | 2 | 4 |
-| U6 | Fabrizio G1 | \(x_2=\min,\ x_3=\min\) | 2 | 9 | 2 | 4 |
-| U7 | Fabrizio G1 | \(x_2=\max,\ x_3=\max\) | 2 | 9 | 2 | 4 |
+| U4 | fork | \(x_1=2\cdot 1_{x_0\neq 2},\ x_2=2\cdot 1_{x_0\neq 0}\) | 1 | 3 | 2 | 4 |
+| U5 | chain | pilot \((x_0,x_1)\) support; \(x_2=\mathrm{copy}(x_1)\) | 1 | 6 | 2 | 4 |
+| U6 | Fabrizio G1 | \(x_2=\min,\ x_3=x_1-x_2\) | 2 | 9 | 2 | 4 |
+| U7 | diamond | noisy fork arms; \(x_3=\|x_1-x_2\|\) | 1 | 6 | 1 | 2 |
 
-**Total: 7 units, 22 cells.**
+**Total: 7 units, 20 cells.**
 
 ---
 
@@ -130,12 +128,15 @@ Alphabet \(k=3\) always. Configs: ECAI, AAMAS. Cells per unit \(= 2\times|N|\).
 
 | Candidate | Why |
 |-----------|-----|
-| G1 with mixed min/max | Non-collapse fails: \(\Phi_{x_3}\) ignores a source |
-| G1a / G1c / G1d | No new Boolean lesson beyond U6/U7 for this wave |
+| G1 with mixed min/max | Algebraic projection \(x_3=x_1\); superseded by U6 difference sink |
+| G1 double min/max | \(x_3=x_2\) collapse; superseded by U6 redesign |
+| G1 OR cone / max-then-difference U7 | Semantic overlap with U3/U6; superseded by diamond U7 |
+| G1a / G1c / G1d | No new Boolean lesson beyond U6 for this wave |
 | G3 sprinkler | Single source + unary copy only ⇒ Boolean-trivial under Approach toolkit |
 | G4 Colombo / G5 six-node | Poor inspectability vs lesson gained |
-| Path-mixed stretch (\(\|S\|=3\)) | Deferred; min/max already covered across U2/U3/U6/U7 |
-| Pilot fork asymmetric map | Not copy/min/max; replaced by U4 |
+| Path-mixed stretch (\(\|S\|=3\)) | Deferred; min/max already covered across U2/U3/U6 |
+| Pilot fork asymmetric map | Superseded by U4 Option B overlapping supports |
+| Chain double copy (3-row tie) | Superseded by U5 pilot correlated-ancestor support |
 
 ---
 

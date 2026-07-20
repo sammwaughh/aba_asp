@@ -15,17 +15,17 @@ from causal.experiments.m12x_summary import (
 from causal.experiments.paths import grid_root
 
 
-def test_hstar_covers_eleven_cells() -> None:
-    assert len(HSTAR) == 11
+def test_hstar_covers_ten_cells() -> None:
+    assert len(HSTAR) == 10
 
 
 @pytest.mark.parametrize("arm", ARMS)
-def test_summarize_arm_has_eleven_cells_if_run(arm: str) -> None:
+def test_summarize_arm_has_ten_cells_if_run(arm: str) -> None:
     cells = grid_root() / arm / "cells"
     if not cells.is_dir():
         pytest.skip(f"{arm} not run yet")
     rows = summarize_arm(arm)
-    assert len(rows) == 11
+    assert len(rows) == 10
     assert all(r.outcome == "solved" for r in rows)
 
 
@@ -37,4 +37,4 @@ def test_write_summary_smoke(tmp_path: Path) -> None:
     md, js, reports = write_summary(rows, root=tmp_path)
     assert md.is_file() and js.is_file()
     assert (reports / "README.md").is_file()
-    assert len(list(reports.glob("*/*.md"))) == 22
+    assert len(list(reports.glob("*/*.md"))) == 20

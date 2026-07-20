@@ -2,8 +2,8 @@
 
 **Role:** locked design reference for the expanded M1.2 (M12x) grid — graphs, mechanisms,
 BK/labelling regime, and \(\mathcal{H}^\star\) acceptance.  
-**Status:** design vocabulary retained; **mechanism redesign in progress** (2026-07-20) —
-first M12x run historical; U4–U7 being replaced before re-lock.  
+**Status:** design vocabulary retained; **U1–U7 mechanisms locked** (2026-07-20) —
+first M12x run historical; re-run on 20-cell grid next.  
 **Primary path:** [`../milestone1_high_level_path.md`](../milestone1_high_level_path.md)  
 **Parent index:** [`../milestone1-plan.md`](../milestone1-plan.md)
 
@@ -37,13 +37,14 @@ For each selected DAG \(G=(V,E)\):
 - Alphabet always \(K=\{0,1,2\}\).
 - Sources \(S\): nodes with no parents.
 - Non-sources \(N\): all other nodes.
-- For each \(y\in N\), fix one deterministic mechanism
-  \[
-  y=f_y(\mathrm{Pa}(y))\in\{\operatorname{copy},\min,\max\},
-  \]
-  with **copy only when** \(|\mathrm{Pa}(y)|=1\).
+- For each \(y\in N\), fix one deterministic mechanism \(y=f_y(\mathrm{Pa}(y))\).
+  Multi-parent nodes use \(\min\) or \(\max\). Single-parent maps are unit-specific
+  (e.g. \(\operatorname{copy}\) on U1; asymmetric indicators on U4).
+  U5 is an exception: pilot curated \((x_0,x_1)\) support with \(x_2:=\operatorname{copy}(x_1)\)
+  (not full source factorial; \(x_1\) not single-valued in \(x_0\)).
+  U7 is an exception: curated diamond support (noisy \(x_2\) given \(x_0\); \(x_3:=|x_1-x_2|\)).
 - Table \(\mathcal{D}\): **full source factorial** over \(K^{|S|}\), then propagate in
-  topological order.
+  topological order (U5/U7: curated multi-row support instead).
 - Mix mechanisms so composition is nontrivial and nodes remain relevant.
 
 The original five pilot fixtures are **redesigned inside this same regime** (not preserved
@@ -65,21 +66,14 @@ For target \(t\):
 **Predictors** = every column except the learning target \(t\) (see next section). For
 each such variable \(x\):
 
-- exact-value predicates `x_val_0`, `x_val_1`, `x_val_2`;
-- definitional nonzero rules (**facts**, not assumptions):
+- exact-value predicates `x_val_0`, `x_val_1`, `x_val_2` only.
 
-```prolog
-x_nz(A) :- x_val_1(A).
-x_nz(A) :- x_val_2(A).
-```
-
-No contrary/assumption encoding of nonzero: nonzero is observed fact, not defeasible
-knowledge.
+No definitional `*_nz` predicates in BK.
 
 ## Predictors for a target \(t\)
 
 **BK includes every variable except the target \(t\)** (full table columns minus \(t\)),
-with `val` + definitional `nz` for each. That includes **ancestors, siblings, and
+with `val` predicates for each. That includes **ancestors, siblings, and
 descendants**. Distractors are left in the BK on purpose.
 
 For each \((G,t)\), record explicitly:
@@ -111,11 +105,9 @@ sources first, sinks last.
 ## Reference hypothesis vs post-run judgment
 
 For each \((G,t)\), design a **reference hypothesis** \(\mathcal{H}_t^\star\): a compact
-intensional rule set in the `nz` language derived from the mechanisms
-(e.g. max collider: `t(A) :- a_nz(A).` and `t(A) :- b_nz(A).`).
-
-Because `nz` is in BK, a correct compact `nz` rule is preferred; an equivalent
-`val`-expansion is considered inferior.
+intensional rule set in the `val` language that separates \(E^\pm\) on \(\mathcal{D}\)
+(e.g. U1: `x2(A) :- x1_val_1(A).` and `x2(A) :- x1_val_2(A).` under nonzero-positive
+labelling).
 
 There is **no precisely pre-enumerated acceptable set**. Acceptance is judged **after the
 run** by inspection, against a semantic description such as:
@@ -170,19 +162,20 @@ Cells: `(max_collider, x2, ECAI)`, `(max_collider, x2, AAMAS)`.
 
 | Item | Status |
 |------|--------|
-| DGP family (deterministic copy/min/max; full source factorial) | Locked |
-| Labelling (nonzero-positive); \(k=3\) | Locked |
-| BK (`val` + definitional `nz`) | Locked |
+| DGP family (deterministic; full source factorial; unit-specific single-parent maps) | **Updating** |
+| Labelling (nonzero-positive); \(k=3\) | Locked (for now; per-unit overrides allowed later) |
+| BK (`val` only; no definitional `*_nz`) | **Updated 2026-07-20** |
 | Configs (ECAI, AAMAS) | Locked |
 | Predictor policy (all non-targets in BK; descendant citation = failure) | Locked (corrected 2026-07-16) |
 | Inspection-first acceptance (no precise pre-enumerated \(\mathcal{A}_t\)) | Locked |
-| Graph × mechanism unit set | **Accepted** — [`milestone1_part2_expanded_unit_set.md`](milestone1_part2_expanded_unit_set.md) (U1–U7, 22 cells) |
-| Mechanism cards U1–U7 | **Written** — [`mechanism_cards/`](mechanism_cards/) |
-| LaTeX unit catalogue | **Written** — [`m12x_units_reference.tex`](m12x_units_reference.tex) |
-| Fixtures + 22-cell grid (M12x) | **First run historical — redesign** |
+| Graph × mechanism unit set | **Updated** — U1–U7 redesigned (20-cell grid) |
+| Mechanism cards U1–U7 | **Updated** — U7 diamond replaces OR cone |
+| LaTeX unit catalogue | **Updated** — U1–U7 |
+| Fixtures + grid (M12x) | **First run historical — redesign** (`definitional_nz: false`; 20 cells) |
 | Summary matrix + cell reports | **First run historical — redesign** |
 
 ## Next step
 
-M1.2 design/evidence is closed. Use this Approach as vocabulary for **M1.3**
-(claims + probes): [`../milestone1_part3/`](../milestone1_part3/README.md).
+Re-run M12x on the redesigned 20-cell grid; then Stage-3 inspection.
+M1.3 stays paused until the redesigned grid is locked.
+Separation-contract Stage-0 checks across U1–U6 are a follow-on (not blocking U7 lock).

@@ -1,9 +1,9 @@
-# U4 — Fork + double copy
+# U4 — Fork + asymmetric maps
 
 **Unit ID:** U4  
-**Fixture id (proposed):** `m12_u4_fork_double_copy`  
-**Lesson:** Sibling distractor when the sibling is extensionally tied to the parent  
-**Provenance:** Redesigned pilot `m12_fork` under the Approach regime (old asymmetric map dropped; both children are copy)  
+**Fixture id:** `m12_u4_fork_double_copy`  
+**Lesson:** Parent vs sibling distractor (sibling correlated but imperfect separator)  
+**Provenance:** Redesigned from pilot `m12_fork`; Option B overlapping-support maps (2026-07-20)  
 **Cells:** 4 — each of \(\{x_1,x_2\}\) × {ECAI, AAMAS}
 
 ---
@@ -30,26 +30,26 @@
 ## 2. Alphabet and mechanisms
 
 - \(K=\{0,1,2\}\) for every variable.
-- \(x_1 := \operatorname{copy}(x_0)\)
-- \(x_2 := \operatorname{copy}(x_0)\)
+- \(x_1 := 2\) if \(x_0 \neq 2\), else \(0\)
+- \(x_2 := 2\) if \(x_0 \neq 0\), else \(0\)
 
-Boolean nonzero sketch: \(\Phi_{x_1}=\Phi_{x_2}=z_0\). On \(\mathcal{D}\),
-\(x_0=x_1=x_2\) in every row (perfect extensional tie among parent and both children).
+Parent is the unique perfect separator of each child’s nonzero labelling; the sibling is
+associated via \(x_0\) but imperfect (same sibling value on a positive and a negative row).
 
 ---
 
 ## 3. Data \(\mathcal{D}\)
 
-**Generation:** full source factorial over \(K^{|S|}\) (\(3^1=3\) rows), then both copies.
+**Generation:** full source factorial over \(K^{|S|}\) (\(3^1=3\) rows), then both maps.
 Sample ids are 1-based.
 
-| id | \(x_0\) | \(x_1=\operatorname{copy}(x_0)\) | \(x_2=\operatorname{copy}(x_0)\) |
-|---:|--------:|--------------------------------:|--------------------------------:|
-| 1 | 0 | 0 | 0 |
-| 2 | 1 | 1 | 1 |
-| 3 | 2 | 2 | 2 |
+| id | \(x_0\) | \(x_1\) | \(x_2\) |
+|---:|--------:|--------:|--------:|
+| 1 | 0 | 2 | 0 |
+| 2 | 1 | 2 | 2 |
+| 3 | 2 | 0 | 2 |
 
-No duplicate rows. Small table: inspectability preferred over size.
+No duplicate rows. No perfect tie among \(x_0\), \(x_1\), \(x_2\).
 
 ---
 
@@ -67,40 +67,37 @@ No duplicate rows. Small table: inspectability preferred over size.
 
 Exclude **only** \(x_1\). Include \(x_0\) and sibling \(x_2\):
 
-- `x0_val_*` + definitional `x0_nz`
-- `x2_val_*` + definitional `x2_nz`
+- `x0_val_0`, `x0_val_1`, `x0_val_2`
+- `x2_val_0`, `x2_val_1`, `x2_val_2`
 
-```prolog
-x0_nz(A) :- x0_val_1(A).
-x0_nz(A) :- x0_val_2(A).
-x2_nz(A) :- x2_val_1(A).
-x2_nz(A) :- x2_val_2(A).
-```
+No `*_nz` predicates.
 
 ### 4.3 Labels
 
 | | Definition on \(\mathcal{D}\) | Row ids |
 |--|------------------------------|---------|
-| \(E^+\) | \(x_1 \neq 0\) | 2, 3 |
-| \(E^-\) | \(x_1 = 0\) | 1 |
+| \(E^+\) | \(x_1 \neq 0\) | 1, 2 |
+| \(E^-\) | \(x_1 = 0\) | 3 |
 
-On \(\mathcal{D}\): \(x_1\neq 0\) iff \(x_0\neq 0\) iff \(x_2\neq 0\).
+On \(\mathcal{D}\): \(x_1\neq 0\) iff \(x_0\in\{0,1\}\). Sibling \(x_2=2\) on id 2 (pos) and id 3 (neg).
 
 ### 4.4 Reference hypothesis \(\mathcal{H}_{x_1}^\star\)
 
 ```prolog
-x1(A) :- x0_nz(A).
+x1(A) :- x0_val_0(A).
+x1(A) :- x0_val_1(A).
 ```
+
+Do not cite sibling \(x_2\).
 
 ### 4.5 Semantic success (inspection)
 
-An intensional, general rule that correctly characterises \(x_1\neq 0\) using the
-**parent** \(x_0\), without rote sample-id casework, and **without citing the sibling
-\(x_2\)** even though \(x_2\) is extensionally equivalent on this table.
+An intensional rule that characterises \(x_1\neq 0\) via the **parent** \(x_0\)
+(\(x_0\neq 2\)), without rote sample-id casework, and **without citing the sibling**.
 
 ### 4.6 Divergences to watch
 
-- Citing `x2_nz` / `x2_val_*` (sibling distractor; may be extensionally correct on \(\mathcal{D}\)).
+- Citing `x2_val_*` (sibling distractor).
 - Rote / sample-id rules.
 - Missing the parent.
 
@@ -120,15 +117,10 @@ An intensional, general rule that correctly characterises \(x_1\neq 0\) using th
 
 Exclude **only** \(x_2\). Include \(x_0\) and sibling \(x_1\):
 
-- `x0_val_*` + definitional `x0_nz`
-- `x1_val_*` + definitional `x1_nz`
+- `x0_val_0`, `x0_val_1`, `x0_val_2`
+- `x1_val_0`, `x1_val_1`, `x1_val_2`
 
-```prolog
-x0_nz(A) :- x0_val_1(A).
-x0_nz(A) :- x0_val_2(A).
-x1_nz(A) :- x1_val_1(A).
-x1_nz(A) :- x1_val_2(A).
-```
+No `*_nz` predicates.
 
 ### 5.3 Labels
 
@@ -137,22 +129,25 @@ x1_nz(A) :- x1_val_2(A).
 | \(E^+\) | \(x_2 \neq 0\) | 2, 3 |
 | \(E^-\) | \(x_2 = 0\) | 1 |
 
-On \(\mathcal{D}\): \(x_2\neq 0\) iff \(x_0\neq 0\) iff \(x_1\neq 0\).
+On \(\mathcal{D}\): \(x_2\neq 0\) iff \(x_0\neq 0\). Sibling \(x_1=2\) on id 1 (neg) and id 2 (pos).
 
 ### 5.4 Reference hypothesis \(\mathcal{H}_{x_2}^\star\)
 
 ```prolog
-x2(A) :- x0_nz(A).
+x2(A) :- x0_val_1(A).
+x2(A) :- x0_val_2(A).
 ```
+
+Do not cite sibling \(x_1\).
 
 ### 5.5 Semantic success (inspection)
 
-Symmetric to \(x_1\): characterise \(x_2\neq 0\) via parent \(x_0\), without citing sibling
+Characterise \(x_2\neq 0\) via parent \(x_0\) (\(x_0\neq 0\)), without citing sibling
 \(x_1\), without rote sample-id casework.
 
 ### 5.6 Divergences to watch
 
-- Citing `x1_nz` / `x1_val_*` (sibling).
+- Citing `x1_val_*` (sibling).
 - Rote / sample-id rules.
 - Missing the parent.
 
@@ -160,10 +155,10 @@ Symmetric to \(x_1\): characterise \(x_2\neq 0\) via parent \(x_0\), without cit
 
 ## 6. Non-collapse / relevance
 
-Both children are mechanism-defined copies of the unique source. The scientific point is
-not Boolean collapse of a source, but **sibling distraction under perfect correlation**:
-the sibling is a valid extensional separator on \(\mathcal{D}\) yet is not an ancestor.
-Old pilot asymmetric fork map is out of scope (not copy/min/max).
+The two children use different deterministic maps of \(x_0\), so parent and sibling are
+not extensionally equivalent. The scientific point is **sibling distraction under
+imperfect correlation**: the sibling is associated with the target via the common cause
+but is not a zero-error separator of \(E^\pm\).
 
 ---
 
@@ -176,4 +171,4 @@ Old pilot asymmetric fork map is out of scope (not copy/min/max).
 | U4-x2-ECAI | U4 | \(x_2\) | ECAI |
 | U4-x2-AAMAS | U4 | \(x_2\) | AAMAS |
 
-Inspection order: either child first (symmetric); both are sinks relative to each other.
+Inspection order: \(x_2\) (parent-nonzero lesson) then \(x_1\) (parent-not-2 lesson), or either.

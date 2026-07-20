@@ -61,7 +61,7 @@
 \large Graphs, mechanisms, tables, and reference hypotheses\\[0.25em]
 \normalsize Expanded Milestone~1 Part~2 (U1--U7)}
 \author{Causal ABA Learning project --- Samuel Waugh}
-\date{Compiled from locked mechanism cards (2026-07-16)}
+\date{Compiled from mechanism cards (redesign in progress, 2026-07-20)}
 
 \begin{document}
 \maketitle
@@ -94,26 +94,28 @@ $\mathcal{H}_t^\star$.
   \item[DGP]
     Full source factorial over $K^{|S|}$, then propagate mechanisms in
     topological order.
-    Mechanisms are drawn from
-    $\{\operatorname{copy},\min,\max\}$,
-    with $\operatorname{copy}$ only when $|\mathrm{Pa}(y)|=1$.
+    Mechanisms for multi-parent nodes are drawn from $\{\min,\max\}$.
+    Single-parent maps may be unit-specific deterministic functions of the parent
+    (U1: $\operatorname{copy}$; U4: asymmetric indicators).
+    U5 uses the pilot curated $(x_0,x_1)$ support with $x_2:=\operatorname{copy}(x_1)$
+    (not full source factorial; $x_1$ is not single-valued in $x_0$).
+    U7 uses a curated diamond support (noisy fork arms; see~\S\ref{sec:u7}).
   \item[Labels (per target~$t$)]
     $E^+=\{t\neq 0\}$,\quad $E^-=\{t=0\}$
     (1-based sample ids on $\mathcal{D}$).
+    Units may later override this per card; U1--U7 keep nonzero-positive.
   \item[Background knowledge]
     Every column except~$t$: exact-value predicates
-    \texttt{*\_val\_0/1/2} plus definitional nonzero facts
-    \begin{quote}\ttfamily\small
-      x\_nz(A) :- x\_val\_1(A).\\
-      x\_nz(A) :- x\_val\_2(A).
-    \end{quote}
+    \texttt{*\_val\_0/1/2} only.
+    No definitional \texttt{*\_nz} predicates.
     Descendants of~$t$ remain in BK as distractors; citing them in a learned
     rule is an explicit failure mode.
   \item[Reference hypothesis]
-    Compact \texttt{nz}-language rule preferred;
-    equivalent \texttt{val}-expansions are extensionally acceptable but inferior.
+    Compact intensional rules in the \texttt{val} language
+    (equationally: the parent conditions that separate $E^\pm$ on $\mathcal{D}$).
+    U5/$t{=}x_1$ has no parent-aligned perfect $\mathcal{H}^\star$ (descendant only).
   \item[Cell count]
-    7~units, 11~(unit, target) pairs, 22~cells after $\times\{\text{ECAI},\text{AAMAS}\}$.
+    7~units, 10~(unit, target) pairs, 20~cells after $\times\{\text{ECAI},\text{AAMAS}\}$.
 \end{description}
 
 \subsection*{At-a-glance}
@@ -127,12 +129,12 @@ ID & Graph & Mechanisms & Targets~$N$ & $|S|$ & Rows & Cells \\
 U1 & separator (+ isolated $x_0$) & $x_2:=\operatorname{copy}(x_1)$ & $\{x_2\}$ & 2 & 9 & 2 \\
 U2 & collider & $x_2:=\min(x_0,x_1)$ & $\{x_2\}$ & 2 & 9 & 2 \\
 U3 & collider & $x_2:=\max(x_0,x_1)$ & $\{x_2\}$ & 2 & 9 & 2 \\
-U4 & fork & $x_1:=\operatorname{copy}(x_0)$,\;$x_2:=\operatorname{copy}(x_0)$ & $\{x_1,x_2\}$ & 1 & 3 & 4 \\
-U5 & chain & $x_1:=\operatorname{copy}(x_0)$,\;$x_2:=\operatorname{copy}(x_1)$ & $\{x_1,x_2\}$ & 1 & 3 & 4 \\
-U6 & Fabrizio G1 & $x_2:=\min$,\;$x_3:=\min$ & $\{x_2,x_3\}$ & 2 & 9 & 4 \\
-U7 & Fabrizio G1 & $x_2:=\max$,\;$x_3:=\max$ & $\{x_2,x_3\}$ & 2 & 9 & 4 \\
+U4 & fork & $x_1:=2\cdot\mathbf{1}_{x_0\neq 2}$,\;$x_2:=2\cdot\mathbf{1}_{x_0\neq 0}$ & $\{x_1,x_2\}$ & 1 & 3 & 4 \\
+U5 & chain & pilot $(x_0,x_1)$ support;\;$x_2:=\operatorname{copy}(x_1)$ & $\{x_1,x_2\}$ & 1 & 6 & 4 \\
+U6 & Fabrizio G1 & $x_2:=\min$;\;$x_3:=x_1-x_2$ & $\{x_2,x_3\}$ & 2 & 9 & 4 \\
+U7 & diamond & noisy fork arms;\;$x_3:=|x_1-x_2|$ & $\{x_3\}$ & 1 & 6 & 2 \\
 \midrule
- & & & \textbf{11 targets} & & & \textbf{22} \\
+ & & & \textbf{10 targets} & & & \textbf{20} \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -165,7 +167,7 @@ $N=\{x_2\}$.
 \[
   x_2 \;:=\; \operatorname{copy}(x_1).
 \]
-Boolean nonzero sketch: $\Phi_{x_2}=z_1$.
+Isolated $x_0$ does not enter the mechanism.
 
 \subsection{Table \texorpdfstring{$\mathcal{D}$}{D}}
 Full factorial over $(x_0,x_1)$; then $x_2=x_1$.
@@ -192,14 +194,16 @@ id & $x_0$ & $x_1$ & $x_2=\operatorname{copy}(x_1)$ \\
 \subsection{Target \texorpdfstring{$t=x_2$}{t = x2}}
 \begin{targetbox}[Single target --- sink]
 Ancestors $\{x_1\}$; distractor $\{x_0\}$ (isolated, in BK); descendants $\emptyset$.\\
-BK predictors: $x_0$, $x_1$ (exclude only $x_2$).\\
-$E^+=\{2,3,5,6,8,9\}$ (6 rows);\quad $E^-=\{1,4,7\}$ (3 rows).
+BK predictors: $x_0$, $x_1$ (exclude only $x_2$; \texttt{val} only, no \texttt{*\_nz}).\\
+$E^+=\{2,3,5,6,8,9\}$ (6 rows, $x_2\neq 0$);\quad $E^-=\{1,4,7\}$ (3 rows, $x_2=0$).
 \end{targetbox}
 
 \noindent\textbf{Reference $\mathcal{H}_{x_2}^\star$:}
 \begin{quote}\ttfamily\small
-x2(A) :- x1\_nz(A).
+x2(A) :- x1\_val\_1(A).\\
+x2(A) :- x1\_val\_2(A).
 \end{quote}
+\noindent\textit{Do not cite isolated $x_0$.}
 
 % ===========================================================================
 \section{U2 --- Collider + min}
@@ -208,7 +212,7 @@ x2(A) :- x1\_nz(A).
 
 \unitmeta{m12\_u2\_collider\_min}{2}{9}{$\{x_2\}$ (single target)}
 
-\paragraph{Lesson.} Conjunctive / AND nonzero rule.
+\paragraph{Lesson.} Conjunctive / both parents nonzero (min).
 
 \subsection{Graph}
 \begin{center}
@@ -230,7 +234,7 @@ $N=\{x_2\}$.
 \[
   x_2 \;:=\; \min(x_0,x_1).
 \]
-Boolean nonzero sketch: $\Phi_{x_2}=z_0\land z_1$.
+On $\mathcal{D}$: $x_2\neq 0$ iff both parents are nonzero.
 
 \subsection{Table \texorpdfstring{$\mathcal{D}$}{D}}
 \begin{center}
@@ -255,14 +259,17 @@ id & $x_0$ & $x_1$ & $x_2=\min$ \\
 \subsection{Target \texorpdfstring{$t=x_2$}{t = x2}}
 \begin{targetbox}[Single target --- sink]
 Ancestors $\{x_0,x_1\}$; other distractors $\emptyset$; descendants $\emptyset$.\\
-BK predictors: $x_0$, $x_1$.\\
+BK predictors: $x_0$, $x_1$ (\texttt{val} only, no \texttt{*\_nz}).\\
 $E^+=\{5,6,8,9\}$ (4 rows);\quad $E^-=\{1,2,3,4,7\}$ (5 rows).\\
 On $\mathcal{D}$: $x_2\neq 0$ iff $x_0\neq 0$ and $x_1\neq 0$.
 \end{targetbox}
 
 \noindent\textbf{Reference $\mathcal{H}_{x_2}^\star$:}
 \begin{quote}\ttfamily\small
-x2(A) :- x0\_nz(A), x1\_nz(A).
+x2(A) :- x0\_val\_1(A), x1\_val\_1(A).\\
+x2(A) :- x0\_val\_1(A), x1\_val\_2(A).\\
+x2(A) :- x0\_val\_2(A), x1\_val\_1(A).\\
+x2(A) :- x0\_val\_2(A), x1\_val\_2(A).
 \end{quote}
 
 % ===========================================================================
@@ -272,7 +279,7 @@ x2(A) :- x0\_nz(A), x1\_nz(A).
 
 \unitmeta{m12\_u3\_collider\_max}{2}{9}{$\{x_2\}$ (single target)}
 
-\paragraph{Lesson.} Disjunctive / OR nonzero rule.\\
+\paragraph{Lesson.} Disjunctive / either parent nonzero (max).\\
 \textit{Same edge set as U2; mechanism differs (max vs min).}
 
 \subsection{Graph}
@@ -295,7 +302,7 @@ $N=\{x_2\}$.
 \[
   x_2 \;:=\; \max(x_0,x_1).
 \]
-Boolean nonzero sketch: $\Phi_{x_2}=z_0\lor z_1$.
+On $\mathcal{D}$: $x_2\neq 0$ iff at least one parent is nonzero.
 
 \subsection{Table \texorpdfstring{$\mathcal{D}$}{D}}
 \begin{center}
@@ -320,26 +327,28 @@ id & $x_0$ & $x_1$ & $x_2=\max$ \\
 \subsection{Target \texorpdfstring{$t=x_2$}{t = x2}}
 \begin{targetbox}[Single target --- sink]
 Ancestors $\{x_0,x_1\}$; other distractors $\emptyset$; descendants $\emptyset$.\\
-BK predictors: $x_0$, $x_1$.\\
+BK predictors: $x_0$, $x_1$ (\texttt{val} only, no \texttt{*\_nz}).\\
 $E^+=\{2,\ldots,9\}$ (8 rows);\quad $E^-=\{1\}$ (1 row).\\
 On $\mathcal{D}$: $x_2\neq 0$ iff $x_0\neq 0$ or $x_1\neq 0$.
 \end{targetbox}
 
 \noindent\textbf{Reference $\mathcal{H}_{x_2}^\star$:}
 \begin{quote}\ttfamily\small
-x2(A) :- x0\_nz(A).\\
-x2(A) :- x1\_nz(A).
+x2(A) :- x0\_val\_1(A).\\
+x2(A) :- x0\_val\_2(A).\\
+x2(A) :- x1\_val\_1(A).\\
+x2(A) :- x1\_val\_2(A).
 \end{quote}
 
 % ===========================================================================
-\section{U4 --- Fork + double copy}
+\section{U4 --- Fork + asymmetric maps}
 \label{sec:u4}
 % ===========================================================================
 
 \unitmeta{m12\_u4\_fork\_double\_copy}{1}{3}{%
-  $\boldsymbol{\{x_1,\,x_2\}}$ --- \textbf{two targets} (symmetric children)}
+  $\boldsymbol{\{x_1,\,x_2\}}$ --- \textbf{two targets} (asymmetric children)}
 
-\paragraph{Lesson.} Sibling distractor under perfect extensional tie to the parent.
+\paragraph{Lesson.} Parent vs sibling distractor (sibling correlated but imperfect).
 
 \subsection{Graph}
 \begin{center}
@@ -359,22 +368,29 @@ $N=\{x_1,x_2\}$.
 
 \subsection{Mechanisms}
 \begin{align*}
-  x_1 &\;:=\; \operatorname{copy}(x_0),\\
-  x_2 &\;:=\; \operatorname{copy}(x_0).
+  x_1 &\;:=\;
+  \begin{cases}
+    2 & \text{if } x_0\neq 2\\
+    0 & \text{otherwise}
+  \end{cases},\\
+  x_2 &\;:=\;
+  \begin{cases}
+    2 & \text{if } x_0\neq 0\\
+    0 & \text{otherwise}
+  \end{cases}.
 \end{align*}
-Boolean nonzero sketch: $\Phi_{x_1}=\Phi_{x_2}=z_0$.
-On $\mathcal{D}$, $x_0=x_1=x_2$ in every row.
+Parent uniquely separates each child's nonzero labelling; sibling is imperfect.
 
 \subsection{Table \texorpdfstring{$\mathcal{D}$}{D}}
 \begin{center}
 \small
 \begin{tabular}{@{}rrrr@{}}
 \toprule
-id & $x_0$ & $x_1=\operatorname{copy}(x_0)$ & $x_2=\operatorname{copy}(x_0)$ \\
+id & $x_0$ & $x_1$ & $x_2$ \\
 \midrule
-1 & 0 & 0 & 0 \\
-2 & 1 & 1 & 1 \\
-3 & 2 & 2 & 2 \\
+1 & 0 & 2 & 0 \\
+2 & 1 & 2 & 2 \\
+3 & 2 & 0 & 2 \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -383,40 +399,43 @@ id & $x_0$ & $x_1=\operatorname{copy}(x_0)$ & $x_2=\operatorname{copy}(x_0)$ \\
 \subsection{Target \texorpdfstring{$t=x_1$}{t = x1}}
 \begin{targetbox}[Target 1 of 2 --- child of $x_0$]
 Ancestors $\{x_0\}$; sibling distractor $\{x_2\}$ (\textbf{in BK}); descendants $\emptyset$.\\
-BK predictors: $x_0$, $x_2$ (exclude only $x_1$).\\
-$E^+=\{2,3\}$;\quad $E^-=\{1\}$.\\
-On $\mathcal{D}$: $x_1\neq 0$ iff $x_0\neq 0$ iff $x_2\neq 0$.
+BK predictors: $x_0$, $x_2$ (\texttt{val} only, no \texttt{*\_nz}).\\
+$E^+=\{1,2\}$;\quad $E^-=\{3\}$.\\
+On $\mathcal{D}$: $x_1\neq 0$ iff $x_0\in\{0,1\}$.
 \end{targetbox}
 
 \noindent\textbf{Reference $\mathcal{H}_{x_1}^\star$:}
 \begin{quote}\ttfamily\small
-x1(A) :- x0\_nz(A).
+x1(A) :- x0\_val\_0(A).\\
+x1(A) :- x0\_val\_1(A).
 \end{quote}
-\noindent\textit{Do not cite sibling $x_2$ (even though extensionally equivalent).}
+\noindent\textit{Do not cite sibling $x_2$.}
 
 % ----- target x2 -----
 \subsection{Target \texorpdfstring{$t=x_2$}{t = x2}}
-\begin{targetbox}[Target 2 of 2 --- child of $x_0$ (symmetric)]
+\begin{targetbox}[Target 2 of 2 --- child of $x_0$]
 Ancestors $\{x_0\}$; sibling distractor $\{x_1\}$ (\textbf{in BK}); descendants $\emptyset$.\\
-BK predictors: $x_0$, $x_1$ (exclude only $x_2$).\\
-$E^+=\{2,3\}$;\quad $E^-=\{1\}$.
+BK predictors: $x_0$, $x_1$ (\texttt{val} only, no \texttt{*\_nz}).\\
+$E^+=\{2,3\}$;\quad $E^-=\{1\}$.\\
+On $\mathcal{D}$: $x_2\neq 0$ iff $x_0\neq 0$.
 \end{targetbox}
 
 \noindent\textbf{Reference $\mathcal{H}_{x_2}^\star$:}
 \begin{quote}\ttfamily\small
-x2(A) :- x0\_nz(A).
+x2(A) :- x0\_val\_1(A).\\
+x2(A) :- x0\_val\_2(A).
 \end{quote}
 \noindent\textit{Do not cite sibling $x_1$.}
 
 % ===========================================================================
-\section{U5 --- Chain + double copy}
+\section{U5 --- Chain + correlated ancestor (pilot)}
 \label{sec:u5}
 % ===========================================================================
 
-\unitmeta{m12\_u5\_chain\_double\_copy}{1}{3}{%
+\unitmeta{m12\_u5\_chain\_double\_copy}{1}{6}{%
   $\boldsymbol{\{x_1,\,x_2\}}$ --- \textbf{two targets} (intermediate + sink)}
 
-\paragraph{Lesson.} Parent vs ancestor cut; when learning the intermediate, the descendant stays in BK.
+\paragraph{Lesson.} Parent vs correlated ancestor (sink); descendant-in-BK when learning the intermediate.
 
 \subsection{Graph}
 \begin{center}
@@ -435,23 +454,27 @@ $S=\{x_0\}$,\quad
 $N=\{x_1,x_2\}$.
 
 \subsection{Mechanisms}
-\begin{align*}
-  x_1 &\;:=\; \operatorname{copy}(x_0),\\
-  x_2 &\;:=\; \operatorname{copy}(x_1).
-\end{align*}
-Boolean nonzero sketch: $\Phi_{x_1}=\Phi_{x_2}=z_0$.
-On $\mathcal{D}$, $x_0=x_1=x_2$ in every row.
+For each $x_0\in K$, include pairs
+$(x_0,x_1)=(x_0,x_0)$ and $(x_0,(x_0+1)\bmod 3)$; then
+\begin{equation*}
+  x_2 \;:=\; \operatorname{copy}(x_1).
+\end{equation*}
+Not full source factorial: $x_1$ is not a single-valued function of $x_0$.
+Parent $x_1$ uniquely separates nonzero labelling of $x_2$; ancestor $x_0$ is imperfect.
 
 \subsection{Table \texorpdfstring{$\mathcal{D}$}{D}}
 \begin{center}
 \small
 \begin{tabular}{@{}rrrr@{}}
 \toprule
-id & $x_0$ & $x_1=\operatorname{copy}(x_0)$ & $x_2=\operatorname{copy}(x_1)$ \\
+id & $x_0$ & $x_1$ & $x_2=\operatorname{copy}(x_1)$ \\
 \midrule
 1 & 0 & 0 & 0 \\
-2 & 1 & 1 & 1 \\
-3 & 2 & 2 & 2 \\
+2 & 0 & 1 & 1 \\
+3 & 1 & 1 & 1 \\
+4 & 1 & 2 & 2 \\
+5 & 2 & 2 & 2 \\
+6 & 2 & 0 & 0 \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -459,45 +482,47 @@ id & $x_0$ & $x_1=\operatorname{copy}(x_0)$ & $x_2=\operatorname{copy}(x_1)$ \\
 % ----- target x1 -----
 \subsection{Target \texorpdfstring{$t=x_1$}{t = x1} (intermediate)}
 \begin{targetbox}[Target 1 of 2 --- intermediate; descendant distractor cell]
-Ancestors $\{x_0\}$; other distractors $\emptyset$;
+Ancestors $\{x_0\}$ (imperfect under nonzero labelling); other distractors $\emptyset$;
 descendants $\{x_2\}$ (\textbf{in BK}; citing = failure mode).\\
-BK predictors: $x_0$, $x_2$ (exclude only $x_1$).\\
-$E^+=\{2,3\}$;\quad $E^-=\{1\}$.\\
-On $\mathcal{D}$: $x_1\neq 0$ iff $x_0\neq 0$ iff $x_2\neq 0$.
+BK predictors: $x_0$, $x_2$ (\texttt{val} only, no \texttt{*\_nz}).\\
+$E^+=\{2,3,4,5\}$;\quad $E^-=\{1,6\}$.\\
+On $\mathcal{D}$: $x_1\neq 0$ iff $x_2\neq 0$ (because $x_2=x_1$).
 \end{targetbox}
 
 \noindent\textbf{Reference $\mathcal{H}_{x_1}^\star$:}
-\begin{quote}\ttfamily\small
-x1(A) :- x0\_nz(A).
-\end{quote}
-\noindent\textit{Must not cite descendant $x_2$.}
+\textit{None (parent-aligned).}
+No perfect \texttt{x0\_val\_*} separator.
+Descendant rules are extensionally perfect but are \textbf{not} $\mathcal{H}^\star$.
 
 % ----- target x2 -----
 \subsection{Target \texorpdfstring{$t=x_2$}{t = x2} (sink)}
 \begin{targetbox}[Target 2 of 2 --- sink; parent vs ancestor]
-Ancestors $\{x_0,x_1\}$ (parent $x_1$ preferred; $x_0$ is grandparent);
+Ancestors $\{x_0,x_1\}$ (parent $x_1$ preferred; $x_0$ correlated but imperfect);
 descendants $\emptyset$.\\
-BK predictors: $x_0$, $x_1$ (exclude only $x_2$).\\
-$E^+=\{2,3\}$;\quad $E^-=\{1\}$.
+BK predictors: $x_0$, $x_1$ (\texttt{val} only, no \texttt{*\_nz}).\\
+$E^+=\{2,3,4,5\}$;\quad $E^-=\{1,6\}$.\\
+On $\mathcal{D}$: $x_2\neq 0$ iff $x_1\in\{1,2\}$.
 \end{targetbox}
 
 \noindent\textbf{Reference $\mathcal{H}_{x_2}^\star$ (direct parent):}
 \begin{quote}\ttfamily\small
-x2(A) :- x1\_nz(A).
+x2(A) :- x1\_val\_1(A).\\
+x2(A) :- x1\_val\_2(A).
 \end{quote}
 \noindent
-\textit{Note:} \texttt{x2(A) :- x0\_nz(A).} is extensionally correct on $\mathcal{D}$
-but is a parent-vs-ancestor divergence, not the reference.
+\textit{Note:} no \texttt{x0\_val\_*}-only rule set matches this labelling perfectly.
+Ancestor citation is a parent-vs-ancestor divergence, not the reference.
 
 % ===========================================================================
-\section{U6 --- Fabrizio G1 + AND cone}
+\section{U6 --- Fabrizio G1 + min then difference}
 \label{sec:u6}
 % ===========================================================================
 
 \unitmeta{m12\_u6\_g1\_and\_cone}{2}{9}{%
   $\boldsymbol{\{x_2,\,x_3\}}$ --- \textbf{two targets} (intermediate + sink)}
 
-\paragraph{Lesson.} Four-node G1; two-level AND; descendant distractor when learning~$x_2$.\\
+\paragraph{Lesson.} Four-node G1; intermediate min (both parents); sink
+$x_3\neq 0\iff x_1>x_2$ needs both $\mathrm{Pa}(x_3)$; imperfect descendant distractor.\\
 \textit{Graph provenance:} Fabrizio G1
 (\texttt{ArgCausalDisco} four-node example).
 Mechanisms/DGP are project-chosen.
@@ -526,28 +551,28 @@ $\mathrm{Pa}(x_3)=\{x_1,x_2\}$.
 \subsection{Mechanisms}
 \begin{align*}
   x_2 &\;:=\; \min(x_0,x_1),\\
-  x_3 &\;:=\; \min(x_1,x_2).
+  x_3 &\;:=\; x_1-x_2.
 \end{align*}
-Boolean nonzero sketch: $\Phi_{x_2}=\Phi_{x_3}=z_0\land z_1$.\\
-Composition identity on $\mathcal{D}$:
-$\min(x_1,\min(x_0,x_1))=\min(x_0,x_1)$, so $x_3=x_2$ in every row.
+On $\mathcal{D}$, $x_2\le x_1$, so $x_3\in\{0,1,2\}$.
+Sink nonzero labelling: $x_3\neq 0$ iff $x_1>x_2$ (both parents required).
+No $x_3\equiv x_2$ or $x_3\equiv x_1$ collapse.
 
 \subsection{Table \texorpdfstring{$\mathcal{D}$}{D}}
 \begin{center}
 \small
 \begin{tabular}{@{}rrrrr@{}}
 \toprule
-id & $x_0$ & $x_1$ & $x_2=\min(x_0,x_1)$ & $x_3=\min(x_1,x_2)$ \\
+id & $x_0$ & $x_1$ & $x_2=\min(x_0,x_1)$ & $x_3=x_1-x_2$ \\
 \midrule
 1 & 0 & 0 & 0 & 0 \\
-2 & 0 & 1 & 0 & 0 \\
-3 & 0 & 2 & 0 & 0 \\
+2 & 0 & 1 & 0 & 1 \\
+3 & 0 & 2 & 0 & 2 \\
 4 & 1 & 0 & 0 & 0 \\
-5 & 1 & 1 & 1 & 1 \\
+5 & 1 & 1 & 1 & 0 \\
 6 & 1 & 2 & 1 & 1 \\
 7 & 2 & 0 & 0 & 0 \\
-8 & 2 & 1 & 1 & 1 \\
-9 & 2 & 2 & 2 & 2 \\
+8 & 2 & 1 & 1 & 0 \\
+9 & 2 & 2 & 2 & 0 \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -556,131 +581,107 @@ id & $x_0$ & $x_1$ & $x_2=\min(x_0,x_1)$ & $x_3=\min(x_1,x_2)$ \\
 \subsection{Target \texorpdfstring{$t=x_2$}{t = x2} (intermediate)}
 \begin{targetbox}[Target 1 of 2 --- intermediate; descendant $x_3$ in BK]
 Ancestors $\{x_0,x_1\}$; descendants $\{x_3\}$ (\textbf{in BK}; citing = failure mode).\\
-BK predictors: $x_0$, $x_1$, $x_3$ (exclude only $x_2$).\\
+BK predictors: $x_0$, $x_1$, $x_3$ (\texttt{val} only, no \texttt{*\_nz}).\\
 $E^+=\{5,6,8,9\}$ (4);\quad $E^-=\{1,2,3,4,7\}$ (5).\\
-On $\mathcal{D}$: $x_2\neq 0$ iff $x_0\neq 0$ and $x_1\neq 0$ (also iff $x_3\neq 0$).
+On $\mathcal{D}$: $x_2\neq 0$ iff $x_0\neq 0$ and $x_1\neq 0$.
+Descendant $x_3\neq 0$ only on $\{2,3,6\}$ (imperfect separator).
 \end{targetbox}
 
 \noindent\textbf{Reference $\mathcal{H}_{x_2}^\star$:}
 \begin{quote}\ttfamily\small
-x2(A) :- x0\_nz(A), x1\_nz(A).
+x2(A) :- x0\_val\_1(A), x1\_val\_1(A).\\
+x2(A) :- x0\_val\_1(A), x1\_val\_2(A).\\
+x2(A) :- x0\_val\_2(A), x1\_val\_1(A).\\
+x2(A) :- x0\_val\_2(A), x1\_val\_2(A).
 \end{quote}
-\noindent\textit{Must not cite descendant $x_3$ (despite $x_3=x_2$ on $\mathcal{D}$).}
+\noindent\textit{Must not cite descendant $x_3$.}
 
 % ----- target x3 -----
 \subsection{Target \texorpdfstring{$t=x_3$}{t = x3} (sink)}
-\begin{targetbox}[Target 2 of 2 --- sink]
+\begin{targetbox}[Target 2 of 2 --- sink; $x_1>x_2$]
 Ancestors $\{x_0,x_1,x_2\}$; parents $\{x_1,x_2\}$; descendants $\emptyset$.\\
-BK predictors: $x_0$, $x_1$, $x_2$ (exclude only $x_3$).\\
-$E^+=\{5,6,8,9\}$ (4);\quad $E^-=\{1,2,3,4,7\}$ (5).\\
-On $\mathcal{D}$: $x_3\neq 0$ iff $x_1\neq 0$ and $x_2\neq 0$
-(equivalently iff $x_0\neq 0$ and $x_1\neq 0$).
+BK predictors: $x_0$, $x_1$, $x_2$ (\texttt{val} only, no \texttt{*\_nz}).\\
+$E^+=\{2,3,6\}$ (3);\quad $E^-=\{1,4,5,7,8,9\}$ (6).\\
+On $\mathcal{D}$: $x_3\neq 0$ iff $x_1>x_2$ (neither parent alone separates).
 \end{targetbox}
 
 \noindent\textbf{Reference $\mathcal{H}_{x_3}^\star$ (parent-based):}
 \begin{quote}\ttfamily\small
-x3(A) :- x1\_nz(A), x2\_nz(A).
+x3(A) :- x1\_val\_1(A), x2\_val\_0(A).\\
+x3(A) :- x1\_val\_2(A), x2\_val\_0(A).\\
+x3(A) :- x1\_val\_2(A), x2\_val\_1(A).
 \end{quote}
-\noindent
-\textit{Alternative (extensionally equivalent on $\mathcal{D}$):}
-\texttt{x3(A) :- x0\_nz(A), x1\_nz(A).}
---- record if recovered; prefer parent form as $\mathcal{H}^\star$.
 
 % ===========================================================================
-\section{U7 --- Fabrizio G1 + OR cone}
+\section{U7 --- Diamond + noisy fork arms}
 \label{sec:u7}
 % ===========================================================================
 
-\unitmeta{m12\_u7\_g1\_or\_cone}{2}{9}{%
-  $\boldsymbol{\{x_2,\,x_3\}}$ --- \textbf{two targets} (intermediate + sink)}
+\unitmeta{m12\_u7\_g1\_or\_cone}{1}{6}{%
+  $\{x_3\}$ (single target --- sink)}
 
-\paragraph{Lesson.} Same G1 as U6; two-level OR; descendant distractor when learning~$x_2$.\\
-\textit{Same edge set as U6; mechanism differs (max vs min).}
+\paragraph{Lesson.} Both-parent sink when parents are correlated siblings; root and each
+sibling alone imperfect (U5-style curated noisy arms).
 
 \subsection{Graph}
 \begin{center}
-\begin{tikzpicture}[dag]
-  \node[v] (x0) at (0,1.4) {$x_0$};
-  \node[v] (x1) at (0,-1.4) {$x_1$};
-  \node[v] (x2) at (2.4,0) {$x_2$};
-  \node[v] (x3) at (4.8,0) {$x_3$};
+\begin{tikzpicture}[dag, node distance=14mm and 18mm]
+  \node[v] (x0) {$x_0$};
+  \node[v, above right=12mm and 18mm of x0] (x1) {$x_1$};
+  \node[v, below right=12mm and 18mm of x0] (x2) {$x_2$};
+  \node[v, right=36mm of x0] (x3) {$x_3$};
+  \path (x0) edge (x1);
   \path (x0) edge (x2);
-  \path (x1) edge (x2);
   \path (x1) edge (x3);
   \path (x2) edge (x3);
 \end{tikzpicture}
 \end{center}
 \noindent
 $V=\{x_0,x_1,x_2,x_3\}$,\quad
-$E=\{x_0\to x_2,\; x_1\to x_2,\; x_1\to x_3,\; x_2\to x_3\}$,\\
-$S=\{x_0,x_1\}$,\quad
-$N=\{x_2,x_3\}$.
+$E=\{x_0\to x_1,\; x_0\to x_2,\; x_1\to x_3,\; x_2\to x_3\}$,\\
+$S=\{x_0\}$,\quad
+$N=\{x_1,x_2,x_3\}$,\quad
+$\mathrm{Pa}(x_3)=\{x_1,x_2\}$.
 
 \subsection{Mechanisms}
-\begin{align*}
-  x_2 &\;:=\; \max(x_0,x_1),\\
-  x_3 &\;:=\; \max(x_1,x_2).
-\end{align*}
-Boolean nonzero sketch: $\Phi_{x_2}=\Phi_{x_3}=z_0\lor z_1$.\\
-Composition identity on $\mathcal{D}$:
-$\max(x_1,\max(x_0,x_1))=\max(x_0,x_1)$, so $x_3=x_2$ in every row.
+For each $x_0\in K$: $x_1:=(x_0+1)\bmod 3$; two $x_2$ values
+$(x_0+2)\bmod 3$ (differ) and $x_1$ (collapse); then
+\begin{equation*}
+  x_3 \;:=\; |x_1-x_2|.
+\end{equation*}
+Not full source factorial. On $\mathcal{D}$: $x_3\neq 0$ iff $x_1\neq x_2$.
+No singleton among $\{x_0,x_1,x_2\}$ is a perfect \texttt{val}-union separator of $E^\pm$.
 
 \subsection{Table \texorpdfstring{$\mathcal{D}$}{D}}
 \begin{center}
 \small
 \begin{tabular}{@{}rrrrr@{}}
 \toprule
-id & $x_0$ & $x_1$ & $x_2=\max(x_0,x_1)$ & $x_3=\max(x_1,x_2)$ \\
+id & $x_0$ & $x_1$ & $x_2$ & $x_3=|x_1-x_2|$ \\
 \midrule
-1 & 0 & 0 & 0 & 0 \\
-2 & 0 & 1 & 1 & 1 \\
-3 & 0 & 2 & 2 & 2 \\
-4 & 1 & 0 & 1 & 1 \\
-5 & 1 & 1 & 1 & 1 \\
-6 & 1 & 2 & 2 & 2 \\
-7 & 2 & 0 & 2 & 2 \\
-8 & 2 & 1 & 2 & 2 \\
-9 & 2 & 2 & 2 & 2 \\
+1 & 0 & 1 & 2 & 1 \\
+2 & 0 & 1 & 1 & 0 \\
+3 & 1 & 2 & 0 & 2 \\
+4 & 1 & 2 & 2 & 0 \\
+5 & 2 & 0 & 1 & 1 \\
+6 & 2 & 0 & 0 & 0 \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-% ----- target x2 -----
-\subsection{Target \texorpdfstring{$t=x_2$}{t = x2} (intermediate)}
-\begin{targetbox}[Target 1 of 2 --- intermediate; descendant $x_3$ in BK]
-Ancestors $\{x_0,x_1\}$; descendants $\{x_3\}$ (\textbf{in BK}; citing = failure mode).\\
-BK predictors: $x_0$, $x_1$, $x_3$ (exclude only $x_2$).\\
-$E^+=\{2,\ldots,9\}$ (8);\quad $E^-=\{1\}$ (1).\\
-On $\mathcal{D}$: $x_2\neq 0$ iff $x_0\neq 0$ or $x_1\neq 0$ (also iff $x_3\neq 0$).
-\end{targetbox}
-
-\noindent\textbf{Reference $\mathcal{H}_{x_2}^\star$:}
-\begin{quote}\ttfamily\small
-x2(A) :- x0\_nz(A).\\
-x2(A) :- x1\_nz(A).
-\end{quote}
-\noindent\textit{Must not cite descendant $x_3$.}
-
-% ----- target x3 -----
 \subsection{Target \texorpdfstring{$t=x_3$}{t = x3} (sink)}
-\begin{targetbox}[Target 2 of 2 --- sink]
+\begin{targetbox}[Single target --- both sibling parents]
 Ancestors $\{x_0,x_1,x_2\}$; parents $\{x_1,x_2\}$; descendants $\emptyset$.\\
-BK predictors: $x_0$, $x_1$, $x_2$ (exclude only $x_3$).\\
-$E^+=\{2,\ldots,9\}$ (8);\quad $E^-=\{1\}$ (1).\\
-On $\mathcal{D}$: $x_3\neq 0$ iff $x_1\neq 0$ or $x_2\neq 0$
-(equivalently iff $x_0\neq 0$ or $x_1\neq 0$).
+BK predictors: $x_0$, $x_1$, $x_2$ (\texttt{val} only, no \texttt{*\_nz}).\\
+$E^+=\{1,3,5\}$;\quad $E^-=\{2,4,6\}$.\\
+On $\mathcal{D}$: $x_3\neq 0$ iff $x_1\neq x_2$.
 \end{targetbox}
 
-\noindent\textbf{Reference $\mathcal{H}_{x_3}^\star$ (parent-based):}
+\noindent\textbf{Reference $\mathcal{H}_{x_3}^\star$:}
 \begin{quote}\ttfamily\small
-x3(A) :- x1\_nz(A).\\
-x3(A) :- x2\_nz(A).
-\end{quote}
-\noindent
-\textit{Alternative (extensionally equivalent on $\mathcal{D}$):}
-\begin{quote}\ttfamily\small
-x3(A) :- x0\_nz(A).\\
-x3(A) :- x1\_nz(A).
+x3(A) :- x1\_val\_1(A), x2\_val\_2(A).\\
+x3(A) :- x1\_val\_2(A), x2\_val\_0(A).\\
+x3(A) :- x1\_val\_0(A), x2\_val\_1(A).
 \end{quote}
 
 % ===========================================================================

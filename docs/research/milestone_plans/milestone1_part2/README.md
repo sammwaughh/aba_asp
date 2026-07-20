@@ -2,7 +2,7 @@
 
 **Primary path:** [`../milestone1_high_level_path.md`](../milestone1_high_level_path.md)
 
-**Status:** **redesign in progress** — first M12x grid historical; fix U4–U7 mechanisms before M1.3
+**Status:** **redesign complete pending re-run** — U1–U7 mechanisms locked (20-cell grid); re-run M12x before M1.3
 
 | Phase | Status | Notes |
 |-------|--------|-------|
@@ -54,11 +54,11 @@
 | Document | Purpose |
 |----------|---------|
 | [milestone1_part2_expanded_approach.md](milestone1_part2_expanded_approach.md) | **Locked Approach** for expanded M1.2 |
-| [milestone1_part2_expanded_unit_set.md](milestone1_part2_expanded_unit_set.md) | **Accepted units U1–U7** (22 cells) |
+| [milestone1_part2_expanded_unit_set.md](milestone1_part2_expanded_unit_set.md) | **Accepted units U1–U7** (20 cells) |
 | [mechanism_cards/](mechanism_cards/) | **Mechanism cards U1–U7** (tables, BK, \(\mathcal{H}^\star\)) |
 | [milestone1_part2_config_comparison.md](milestone1_part2_config_comparison.md) | Pilot detail plan (historical; update as expansion proceeds) |
 | [../milestone1_high_level_path.md](../milestone1_high_level_path.md) | High-level path for finishing M1.2 then M1.3 |
 
 **Parent index:** [milestone1-plan.md](../milestone1-plan.md)
 
-**Next:** redesign U4–U7 (fork/chain, then alternating cone gates); update cards/catalogue/fixtures; re-run M12x.
+**Next:** re-run M12x (20 cells); Stage-3 inspection; optional Stage-0 separation-contract tests.

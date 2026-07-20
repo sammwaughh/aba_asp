@@ -1,8 +1,8 @@
 # U3 — Collider + max
 
 **Unit ID:** U3  
-**Fixture id (proposed):** `m12_u3_collider_max`  
-**Lesson:** Disjunctive / OR nonzero rule  
+**Fixture id:** `m12_u3_collider_max`  
+**Lesson:** Disjunctive / either parent nonzero (max)  
 **Provenance:** Redesigned pilot `m12_disj` under the Approach regime (graph retained; DGP/labels/BK redesigned)  
 **Cells:** 2 — `(U3, x2, ECAI)`, `(U3, x2, AAMAS)`
 
@@ -30,7 +30,7 @@ Same edge set as U2; mechanism differs.
 - \(K=\{0,1,2\}\) for every variable.
 - \(x_2 := \max(x_0,x_1)\).
 
-Boolean nonzero sketch: \(\Phi_{x_2}=z_0\lor z_1\).
+On \(\mathcal{D}\): \(x_2\neq 0\) iff at least one parent is nonzero.
 
 ---
 
@@ -69,15 +69,10 @@ No duplicate rows. Sink fixture: no variables beyond \(x_2\).
 
 Exclude **only** \(x_2\). Include:
 
-- `x0_val_0`, `x0_val_1`, `x0_val_2` and definitional `x0_nz`
-- `x1_val_0`, `x1_val_1`, `x1_val_2` and definitional `x1_nz`
+- `x0_val_0`, `x0_val_1`, `x0_val_2`
+- `x1_val_0`, `x1_val_1`, `x1_val_2`
 
-```prolog
-x0_nz(A) :- x0_val_1(A).
-x0_nz(A) :- x0_val_2(A).
-x1_nz(A) :- x1_val_1(A).
-x1_nz(A) :- x1_val_2(A).
-```
+No `*_nz` predicates.
 
 ### 4.3 Labels
 
@@ -91,12 +86,13 @@ On \(\mathcal{D}\): \(x_2\neq 0\) iff \(x_0\neq 0\) or \(x_1\neq 0\).
 ### 4.4 Reference hypothesis \(\mathcal{H}_{x_2}^\star\)
 
 ```prolog
-x2(A) :- x0_nz(A).
-x2(A) :- x1_nz(A).
+x2(A) :- x0_val_1(A).
+x2(A) :- x0_val_2(A).
+x2(A) :- x1_val_1(A).
+x2(A) :- x1_val_2(A).
 ```
 
-Compact `nz` form preferred (Approach worked template). A correct `val`-expansion of
-the same disjunction is extensionally acceptable but inferior.
+`val` expansion of “either parent nonzero” (no `*_nz` in BK).
 
 ### 4.5 Semantic success (inspection)
 
@@ -109,14 +105,13 @@ No descendants exist to cite on this sink fixture.
 - Conjunctive / AND-style rule (wrong mechanism; under-covers positives).
 - Single-parent rule that fails on rows where only the other parent is nonzero.
 - Rote / sample-id rules.
-- Exact-value casework that fails to generalise the nonzero pattern.
 
 ---
 
 ## 5. Non-collapse / relevance
 
-Either parent being nonzero suffices for \(\Phi_{x_2}=z_0\lor z_1\). Both sources remain
-relevant (each alone can force \(x_2\neq 0\)). Same graph as U2; mechanism differs.
+Either parent being nonzero suffices. Both sources remain relevant (each alone can force
+\(x_2\neq 0\)). Same graph as U2; mechanism differs.
 
 ---
 

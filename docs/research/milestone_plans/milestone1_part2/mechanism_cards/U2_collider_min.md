@@ -1,8 +1,8 @@
 # U2 — Collider + min
 
 **Unit ID:** U2  
-**Fixture id (proposed):** `m12_u2_collider_min`  
-**Lesson:** Conjunctive / AND nonzero rule  
+**Fixture id:** `m12_u2_collider_min`  
+**Lesson:** Conjunctive / both parents nonzero (min)  
 **Provenance:** Redesigned pilot `m12_conj` under the Approach regime (graph retained; DGP/labels/BK redesigned)  
 **Cells:** 2 — `(U2, x2, ECAI)`, `(U2, x2, AAMAS)`
 
@@ -28,7 +28,7 @@ x0 ----→ x2 ←---- x1
 - \(K=\{0,1,2\}\) for every variable.
 - \(x_2 := \min(x_0,x_1)\).
 
-Boolean nonzero sketch: \(\Phi_{x_2}=z_0\land z_1\) (both parents nonzero).
+On \(\mathcal{D}\): \(x_2\neq 0\) iff both parents are nonzero.
 
 ---
 
@@ -67,15 +67,10 @@ No duplicate rows. Sink fixture: no variables beyond \(x_2\).
 
 Exclude **only** \(x_2\). Include:
 
-- `x0_val_0`, `x0_val_1`, `x0_val_2` and definitional `x0_nz`
-- `x1_val_0`, `x1_val_1`, `x1_val_2` and definitional `x1_nz`
+- `x0_val_0`, `x0_val_1`, `x0_val_2`
+- `x1_val_0`, `x1_val_1`, `x1_val_2`
 
-```prolog
-x0_nz(A) :- x0_val_1(A).
-x0_nz(A) :- x0_val_2(A).
-x1_nz(A) :- x1_val_1(A).
-x1_nz(A) :- x1_val_2(A).
-```
+No `*_nz` predicates.
 
 ### 4.3 Labels
 
@@ -89,11 +84,13 @@ On \(\mathcal{D}\): \(x_2\neq 0\) iff \(x_0\neq 0\) and \(x_1\neq 0\).
 ### 4.4 Reference hypothesis \(\mathcal{H}_{x_2}^\star\)
 
 ```prolog
-x2(A) :- x0_nz(A), x1_nz(A).
+x2(A) :- x0_val_1(A), x1_val_1(A).
+x2(A) :- x0_val_1(A), x1_val_2(A).
+x2(A) :- x0_val_2(A), x1_val_1(A).
+x2(A) :- x0_val_2(A), x1_val_2(A).
 ```
 
-Compact `nz` form preferred. A correct `val`-expansion of the same conjunction is
-extensionally acceptable but inferior.
+`val` expansion of “both parents nonzero” (no `*_nz` in BK).
 
 ### 4.5 Semantic success (inspection)
 
@@ -106,13 +103,12 @@ No descendants exist to cite on this sink fixture.
 - Missing one parent (covers some negatives, or under-covers positives).
 - Disjunctive / OR-style rule (wrong mechanism; would cover \(E^-\) rows where only one parent is nonzero).
 - Rote / sample-id rules.
-- Exact-value casework that fails to generalise the nonzero pattern.
 
 ---
 
 ## 5. Non-collapse / relevance
 
-Both parents are needed for \(\Phi_{x_2}=z_0\land z_1\). Neither source is Boolean-irrelevant.
+Both parents are needed for the nonzero labelling. Neither source is irrelevant.
 Same graph as U3; mechanism differs (min vs max).
 
 ---

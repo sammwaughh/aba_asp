@@ -1,9 +1,9 @@
-# U5 — Chain + double copy
+# U5 — Chain + correlated ancestor (pilot)
 
 **Unit ID:** U5  
-**Fixture id (proposed):** `m12_u5_chain_double_copy`  
-**Lesson:** Parent vs ancestor cut; when learning the intermediate, a **descendant stays in BK** as a distractor  
-**Provenance:** Redesigned pilot `m12_chain` under the Approach regime  
+**Fixture id:** `m12_u5_chain_double_copy`  
+**Lesson:** Parent vs correlated ancestor (sink); when learning the intermediate, a **descendant stays in BK** as a distractor  
+**Provenance:** Restored pilot `m12_chain` support under the Approach regime (nonzero-positive labels; `val`-only BK/\(\mathcal{H}^\star\); 2026-07-20)  
 **Cells:** 4 — each of \(\{x_1,x_2\}\) × {ECAI, AAMAS}
 
 ---
@@ -26,26 +26,31 @@ x0 ----→ x1 ----→ x2
 ## 2. Alphabet and mechanisms
 
 - \(K=\{0,1,2\}\) for every variable.
-- \(x_1 := \operatorname{copy}(x_0)\)
-- \(x_2 := \operatorname{copy}(x_1)\)
+- **Support (not full source factorial):** for each \(x_0\in K\), include the two pairs
+  \((x_0,x_1)=(x_0,x_0)\) and \((x_0,(x_0+1)\bmod 3)\).
+- \(x_2 := \operatorname{copy}(x_1)\).
 
-Boolean nonzero sketch: \(\Phi_{x_1}=\Phi_{x_2}=z_0\). On \(\mathcal{D}\),
-\(x_0=x_1=x_2\) in every row (perfect extensional tie along the chain).
+So \(x_1\) is **not** a single-valued function of \(x_0\) on \(\mathcal{D}\); the table is the
+pilot correlated-ancestor construction. Sink \(x_2\) is deterministic given \(x_1\).
 
 ---
 
 ## 3. Data \(\mathcal{D}\)
 
-**Generation:** full source factorial over \(K^{|S|}\) (\(3^1=3\) rows), then propagate
-in topological order. Sample ids are 1-based.
+**Generation:** curated 6-row support (pilot `m12_chain`), then \(x_2:=x_1\).
+Sample ids are 1-based.
 
-| id | \(x_0\) | \(x_1=\operatorname{copy}(x_0)\) | \(x_2=\operatorname{copy}(x_1)\) |
-|---:|--------:|--------------------------------:|--------------------------------:|
+| id | \(x_0\) | \(x_1\) | \(x_2=\operatorname{copy}(x_1)\) |
+|---:|--------:|--------:|--------------------------------:|
 | 1 | 0 | 0 | 0 |
-| 2 | 1 | 1 | 1 |
-| 3 | 2 | 2 | 2 |
+| 2 | 0 | 1 | 1 |
+| 3 | 1 | 1 | 1 |
+| 4 | 1 | 2 | 2 |
+| 5 | 2 | 2 | 2 |
+| 6 | 2 | 0 | 0 |
 
-No duplicate rows.
+No duplicate rows. Parent \(x_1\) uniquely separates nonzero labelling of \(x_2\);
+ancestor \(x_0\) is associated but imperfect.
 
 ---
 
@@ -55,7 +60,7 @@ No duplicate rows.
 
 | Set | Members | Role |
 |-----|---------|------|
-| Ancestors of \(t\) | \(\{x_0\}\) | May appear in a good rule |
+| Ancestors of \(t\) | \(\{x_0\}\) | Imperfect separator under nonzero labelling |
 | Other distractors (non-ancestor, non-descendant) | \(\emptyset\) | — |
 | Descendants of \(t\) | \(\{x_2\}\) | **Included in BK as distractors**; citing them is an **explicit failure mode** |
 
@@ -63,45 +68,44 @@ No duplicate rows.
 
 Exclude **only** \(x_1\). Include parent \(x_0\) **and descendant \(x_2\)**:
 
-- `x0_val_*` + definitional `x0_nz`
-- `x2_val_*` + definitional `x2_nz`
+- `x0_val_0`, `x0_val_1`, `x0_val_2`
+- `x2_val_0`, `x2_val_1`, `x2_val_2`
 
-```prolog
-x0_nz(A) :- x0_val_1(A).
-x0_nz(A) :- x0_val_2(A).
-x2_nz(A) :- x2_val_1(A).
-x2_nz(A) :- x2_val_2(A).
-```
+No `*_nz` predicates.
 
 **Do not** omit \(x_2\) from BK. The point of this cell is to test whether the learner
-ignores the descendant.
+cites the descendant.
 
 ### 4.3 Labels
 
 | | Definition on \(\mathcal{D}\) | Row ids |
 |--|------------------------------|---------|
-| \(E^+\) | \(x_1 \neq 0\) | 2, 3 |
-| \(E^-\) | \(x_1 = 0\) | 1 |
+| \(E^+\) | \(x_1 \neq 0\) | 2, 3, 4, 5 |
+| \(E^-\) | \(x_1 = 0\) | 1, 6 |
 
-On \(\mathcal{D}\): \(x_1\neq 0\) iff \(x_0\neq 0\) iff \(x_2\neq 0\).
+On \(\mathcal{D}\): \(x_1\neq 0\) iff \(x_2\neq 0\) (because \(x_2=x_1\)). Parent \(x_0\) is
+**imperfect** (\(x_0=0\): id 1 neg / id 2 pos; \(x_0=2\): id 5 pos / id 6 neg).
 
 ### 4.4 Reference hypothesis \(\mathcal{H}_{x_1}^\star\)
 
-```prolog
-x1(A) :- x0_nz(A).
-```
+**None (parent-aligned).** There is no perfect separator among ancestor `x0_val_*`
+predicates. The unique perfect separator in BK is the **descendant** \(x_2\), which must
+**not** be the reference.
+
+Do not treat descendant rules as \(\mathcal{H}^\star\). Inspection is failure-mode first
+(descendant citation), not `exact_hstar`.
 
 ### 4.5 Semantic success (inspection)
 
-An intensional, general rule that correctly characterises \(x_1\neq 0\) using the
-**parent** \(x_0\), without rote sample-id casework, and **without citing the descendant
-\(x_2\)** — even though \(x_2\) is extensionally equivalent on this table.
+Prefer rules that do **not** cite descendant \(x_2\). Perfect coverage via `x2_val_*`
+alone is extensionally available on \(\mathcal{D}\) and counts as the **descendant
+failure mode**.
 
 ### 4.6 Divergences to watch
 
-- Citing `x2_nz` / `x2_val_*` (**descendant failure mode**; may be extensionally correct on \(\mathcal{D}\)).
+- Citing `x2_val_*` (**descendant failure mode**; extensionally perfect on \(\mathcal{D}\)).
 - Rote / sample-id rules.
-- Missing the parent.
+- Ancestor-only attempts that fail coverage (expected under imperfect \(x_0\)).
 
 ---
 
@@ -111,7 +115,7 @@ An intensional, general rule that correctly characterises \(x_1\neq 0\) using th
 
 | Set | Members | Role |
 |-----|---------|------|
-| Ancestors of \(t\) | \(\{x_0,x_1\}\) | Parent \(x_1\) preferred; grandparent \(x_0\) is also an ancestor |
+| Ancestors of \(t\) | \(\{x_0,x_1\}\) | Parent \(x_1\) preferred; grandparent \(x_0\) is correlated but imperfect |
 | Other distractors (non-ancestor, non-descendant) | \(\emptyset\) | — |
 | Descendants of \(t\) | \(\emptyset\) | (none; sink) |
 
@@ -119,46 +123,43 @@ An intensional, general rule that correctly characterises \(x_1\neq 0\) using th
 
 Exclude **only** \(x_2\). Include both ancestors:
 
-- `x0_val_*` + definitional `x0_nz`
-- `x1_val_*` + definitional `x1_nz`
+- `x0_val_0`, `x0_val_1`, `x0_val_2`
+- `x1_val_0`, `x1_val_1`, `x1_val_2`
 
-```prolog
-x0_nz(A) :- x0_val_1(A).
-x0_nz(A) :- x0_val_2(A).
-x1_nz(A) :- x1_val_1(A).
-x1_nz(A) :- x1_val_2(A).
-```
+No `*_nz` predicates.
 
 ### 5.3 Labels
 
 | | Definition on \(\mathcal{D}\) | Row ids |
 |--|------------------------------|---------|
-| \(E^+\) | \(x_2 \neq 0\) | 2, 3 |
-| \(E^-\) | \(x_2 = 0\) | 1 |
+| \(E^+\) | \(x_2 \neq 0\) | 2, 3, 4, 5 |
+| \(E^-\) | \(x_2 = 0\) | 1, 6 |
 
-On \(\mathcal{D}\): \(x_2\neq 0\) iff \(x_1\neq 0\) iff \(x_0\neq 0\).
+On \(\mathcal{D}\): \(x_2\neq 0\) iff \(x_1\in\{1,2\}\). Ancestor \(x_0\) is imperfect
+(same mixed rows as in §4.3).
 
 ### 5.4 Reference hypothesis \(\mathcal{H}_{x_2}^\star\)
 
 Prefer the **direct parent**:
 
 ```prolog
-x2(A) :- x1_nz(A).
+x2(A) :- x1_val_1(A).
+x2(A) :- x1_val_2(A).
 ```
 
-**Note (parent vs ancestor):** `x2(A) :- x0_nz(A).` is extensionally correct on
-\(\mathcal{D}\) but uses the grandparent rather than the parent. Treat that as a
-parent-vs-ancestor divergence to inspect, not as the reference \(\mathcal{H}^\star\).
+**Note (parent vs ancestor):** no `x0_val_*`-only rule set matches this labelling
+perfectly. Ancestor-only or ancestor-contaminated bodies are parent-vs-ancestor
+divergences to inspect.
 
 ### 5.5 Semantic success (inspection)
 
 An intensional, general rule that correctly characterises \(x_2\neq 0\) on \(\mathcal{D}\)
-using ancestor information appropriately — ideally the direct parent \(x_1\) — without
-rote sample-id casework. No descendants to cite.
+using the direct parent \(x_1\), without rote sample-id casework, and without relying on
+the imperfect ancestor alone.
 
 ### 5.6 Divergences to watch
 
-- Grandparent-only rule (`x0_nz`) when parent is available (parent vs ancestor cut).
+- Grandparent / ancestor citation when parent is available (parent vs ancestor cut).
 - Rote / sample-id rules.
 - Empty / vacuous rules.
 
@@ -166,10 +167,10 @@ rote sample-id casework. No descendants to cite.
 
 ## 6. Non-collapse / relevance
 
-Along the chain every variable is mechanism-defined and Boolean-tied to \(z_0\). The
-lessons are structural: (i) when learning \(x_1\), **keep \(x_2\) in BK** and check
-whether it is cited; (ii) when learning \(x_2\), prefer parent over grandparent under
-perfect correlation.
+The curated support keeps \(x_0\) associated with \(x_2\) without making it a perfect
+separator. Sink recovery has a clean parent-aligned \(\mathcal{H}^\star\). Intermediate
+learning stresses **descendant-in-BK** under a table where the descendant is
+extensionally tied to the target.
 
 ---
 
