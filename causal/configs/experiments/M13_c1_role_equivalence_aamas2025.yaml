@@ -1,0 +1,29 @@
+experiment_id: M13_c1_role_equivalence_aamas2025
+description: "M13-C1 AAMAS causal-role-underdetermination control: two valid causal models with identical table, BK, E+/E-, target, and feature order, but different direct parents of x2. Unguided ABA Learning, not Russo-style Causal ABA."
+owner: sam
+
+defaults:
+  graph_type: handcrafted_table
+  bins: 3
+  bin_strategy: uniform
+  prolog_timeout_s: 60
+  query_timeout_s: 5
+  prolog_config: configs/aamas2025_config.pl
+
+dgps:
+  - id: m13_c1_parent_x0
+    graph_type: handcrafted_table
+    source: m13_c1_parent_x0
+    targets: [x2]
+  - id: m13_c1_parent_x1
+    graph_type: handcrafted_table
+    source: m13_c1_parent_x1
+    targets: [x2]
+
+grid:
+  # Deterministic handcrafted tables: omit grid.seed.
+  target: [x2]
+  cell_dir: slug
+
+provenance:
+  code_commit_required: true
