@@ -54,12 +54,12 @@ must not redefine success as coverage alone.
 
 ## 4. Deliverable
 
-- Experiment record with evidence-backed subsections:
-  `docs/experiments/qualitative/M1.3-failure-modes.md` (name retained; content =
-  recovery patterns and limits).
-- Findings write-up:
-  `docs/report/findings/milestone1_part3_m13_failure_taxonomy.tex` (or renamed when
-  drafting if a clearer title is preferred).
+- Bucket 1 claims (**locked**):
+  `docs/experiments/qualitative/M1.3-bucket1-claims.md` and
+  `docs/report/findings/milestone1_part3_bucket1_claims.tex`.
+- Bucket 2 claims (live):
+  `docs/experiments/qualitative/M1.3-bucket2-claims.md` and
+  `docs/report/findings/milestone1_part3_bucket2_claims.tex`.
 - Registers and claims ledger synced.
 
 M1.3 is done when Milestone 1 can answer succinctly: what unguided ABA Learning does on
@@ -69,9 +69,12 @@ these graphs/DGPs, why (with evidence), and what remains open for Milestone 2.
 
 | Artefact | Path |
 |----------|------|
-| Experiment record | `docs/experiments/qualitative/M1.3-failure-modes.md` |
+| Bucket 1 claims (MD) | `docs/experiments/qualitative/M1.3-bucket1-claims.md` (locked) |
+| Bucket 1 claims (TeX) | `docs/report/findings/milestone1_part3_bucket1_claims.tex` |
+| Bucket 2 claims (MD) | `docs/experiments/qualitative/M1.3-bucket2-claims.md` |
+| Bucket 2 claims (TeX) | `docs/report/findings/milestone1_part3_bucket2_claims.tex` |
 | Ablation artefacts (if any) | `causal/outputs/aba_learning/grid/M13_<ablation-id>/` |
-| Findings | `docs/report/findings/milestone1_part3_m13_failure_taxonomy.tex` |
+| Findings (Bucket 1 TeX) | `docs/report/findings/milestone1_part3_bucket1_claims.tex` |
 | Registers | `docs/experiments/experiments_summary.md`, `docs/research/experiment_register.md`, `docs/report/claims_ledger.md` |
 
 ## 6. Caveats

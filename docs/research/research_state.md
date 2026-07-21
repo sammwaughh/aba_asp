@@ -132,9 +132,10 @@ Expanded Approach:
 - **M1.2 expanded (M12x)** — **closed / analysed:** fresh 18-cell run + Stage-3
   inspection **18/18** (2026-07-20). Record: `docs/experiments/qualitative/M1.2-expanded.md`.
   Inspection: `M1.2-expanded-cell-inspection.md`.
-- **M1.3** — **claim drafting commencing:** M12x Stage-3 locked as evidence base.
-  Method: `milestone1_part3_approach.md`. Record:
-  `docs/experiments/qualitative/M1.3-failure-modes.md`.
+- **M1.3** — **in progress:** Bucket 1 **written / locked**; Bucket 2 **commencing**.
+  Method: `milestone1_part3_approach.md`. Records:
+  `docs/experiments/qualitative/M1.3-bucket1-claims.md` (locked);
+  `docs/experiments/qualitative/M1.3-bucket2-claims.md` (live).
 - **No M1.4** — large-graph / bnlearn evaluation deferred to a later evaluation milestone.
 
 Then **Milestone 2** (Causal-ABA-guided ABA Learning bridge), informed by M1.3.

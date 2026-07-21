@@ -35,7 +35,7 @@ The earlier n=100 scaled attempt was cut and is not part of the canonical experi
 | M11 | — | m1.1 Parent-position and representation-order control | analysed (Stages 0–7; ablations + greedy comparator) |
 | M12 | — | m1.2 Published-configuration comparison (ASP-ABAlearnB / Greedy ABA Learning) | analysed (Stages 0–3: 10-cell grid + full cell inspection / failure-mode taxonomy) |
 | M12x | — | m1.2 expanded U1–U7 (ECAI/AAMAS; val-only BK; 18 cells) | closed / analysed (18/18 Stage-3) |
-| M13 | — | m1.3 Recovery patterns and limits (claims + probes from M12x) | planned (claim drafting commencing) |
+| M13 | — | m1.3 Recovery patterns and limits (claims + probes from M12x) | in progress (Bucket 1 locked; Bucket 2 commencing) |
 
 ## Template
 
@@ -272,13 +272,14 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
 
 ### M13 — m1.3 Recovery patterns and limits
 
-- Status: **`planned`** — claim drafting **commencing** (2026-07-20); M12x Stage-3 locked as evidence base.
+- Status: **`in progress`** — Bucket 1 **written / locked** (2026-07-21); Bucket 2 **commencing**.
 - Planning docs: `docs/research/milestone_plans/milestone1_high_level_path.md`; `docs/research/milestone_plans/milestone1_part3/`.
 - Approach (method): `docs/research/milestone_plans/milestone1_part3/milestone1_part3_approach.md`.
-- Record: `docs/experiments/qualitative/M1.3-failure-modes.md` (plain-English recovery patterns and limits; filename retained).
-- Primary inputs: locked M12x Stage-3 inspection + summary matrix.
+- Bucket 1 (locked): `docs/experiments/qualitative/M1.3-bucket1-claims.md` (TeX: `docs/report/findings/milestone1_part3_bucket1_claims.tex`).
+- Bucket 2 (live): `docs/experiments/qualitative/M1.3-bucket2-claims.md` (TeX: `docs/report/findings/milestone1_part3_bucket2_claims.tex`).
+- Primary inputs: locked M12x Stage-3 inspection + summary matrix; Bucket 2 may add probe artefacts under `causal/outputs/aba_learning/grid/M13_<ablation-id>/`.
 - Research question: across the expanded M1.2 graphs and DGP(s), when does unguided ABA Learning recover the intended mechanism-aligned rules, what is recovered instead when it does not, and what evidence explains those patterns?
-- Method: draft candidate claims → choose order → smallest supporting/killing probes → keep surviving claims → write evidence-backed subsections. No forced taxonomy codes. Large-graph / bnlearn evaluation is not in M1.3 (deferred to a later evaluation milestone).
+- Method: Bucket 1 claims from theory/engine/M12x (done); Bucket 2 claims needing probes/controls (next). Large-graph / bnlearn evaluation is not in M1.3 (deferred to a later evaluation milestone).
 - Relation to Causal ABA: none exercised; deliverable is requirements input for Milestone 2.
 - Report relevance: interim Experimentation / Progress (Milestone 1 Part 3).
-- Next: draft live claim list (3–10) from Stage-3 patterns.
+- Next: draft and write Bucket 2 claims one at a time.

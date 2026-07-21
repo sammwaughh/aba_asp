@@ -5,13 +5,14 @@
 **M1.3 Approach (method):**
 [`milestone1_part3_approach.md`](milestone1_part3_approach.md)
 
-**Status:** claim drafting **commencing** (2026-07-20). M12x Stage-3 is **closed**
-and locked as the evidence base. Prior provisional claim drafts remain withdrawn.
+**Status:** Bucket 1 **written / locked**. Bucket 2 claim drafting **commencing**.
+M12x Stage-3 remains the locked observational evidence base. Prior provisional
+claim drafts remain withdrawn.
 
 M1.3 answers, with evidence: when and how mechanism-aligned rules are recovered by
-unguided ABA Learning, what is recovered instead, and why. Write-up subsections use
-plain English; no forced taxonomy codes. Method: one claim at a time through to
-`claim_<slug>.tex` (see Approach).
+unguided ABA Learning, what is recovered instead, and why. Bucket 1 claims
+(immediately defensible from theory, engine, and locked M12x) are complete.
+Bucket 2 claims (needing probes/controls) are next.
 
 ## Primary inputs (M12x Stage-3 locked)
 
@@ -25,13 +26,28 @@ plain English; no forced taxonomy codes. Method: one claim at a time through to
 
 Pilot M1.2 (10 cells) remains optional provenance only.
 
+## Bucket 1 claim documents (locked)
+
+| Document | Purpose |
+|----------|---------|
+| [`M1.3-bucket1-claims.md`](../../../experiments/qualitative/M1.3-bucket1-claims.md) | Bucket 1 claims (4 written) |
+| [`milestone1_part3_bucket1_claims.tex`](../../../report/findings/milestone1_part3_bucket1_claims.tex) | TeX companion |
+
+## Bucket 2 claim documents (live)
+
+| Document | Purpose |
+|----------|---------|
+| [`M1.3-bucket2-claims.md`](../../../experiments/qualitative/M1.3-bucket2-claims.md) | Live working Markdown: claim wording, argument, probe evidence |
+| [`milestone1_part3_bucket2_claims.tex`](../../../report/findings/milestone1_part3_bucket2_claims.tex) | Mirroring TeX companion |
+
+## Planning docs
+
 | Document | Purpose |
 |----------|---------|
 | [milestone1_part3_approach.md](milestone1_part3_approach.md) | **M1.3 Approach** — claims, method, write-up |
-| [milestone1_part3_failure_modes.md](milestone1_part3_failure_modes.md) | Detail plan for claims, probes, and evidence-backed write-up |
+| [milestone1_part3_failure_modes.md](milestone1_part3_failure_modes.md) | Detail plan (historical filename; recovery patterns and limits) |
 | [../milestone1_high_level_path.md](../milestone1_high_level_path.md) | High-level path |
 
 **Parent index:** [milestone1-plan.md](../milestone1-plan.md)
 
-**Next:** draft the live claim list (3–10 claims) from visible M12x Stage-3 patterns;
-then choose investigation order; then investigate claims one at a time.
+**Next:** refine and write Bucket 2 claims one at a time in the Bucket 2 working Markdown.

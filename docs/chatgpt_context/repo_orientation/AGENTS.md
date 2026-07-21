@@ -60,10 +60,12 @@ Key experiment records:
 - `docs/experiments/qualitative/M1.2-expanded.md` — Milestone 1 Part 2 expanded (**M12x**)
   **`analysed` / closed** (fresh 18-cell run + Stage-3 inspection 18/18, 2026-07-20).
   Inspection: `M1.2-expanded-cell-inspection.md`. Catalogue: `milestone1_part2/m12x_units_reference.tex`.
-- `docs/experiments/qualitative/M1.3-failure-modes.md` — Milestone 1 Part 3 (**M1.3**)
-  **claim drafting commencing** (M12x Stage-3 locked as evidence base). Approach:
-  `milestone1_part3/milestone1_part3_approach.md`. There is no M1.4; large-graph /
-  bnlearn evaluation is deferred to a later milestone.
+- `docs/experiments/qualitative/M1.3-bucket1-claims.md` — Milestone 1 Part 3 (**M1.3**)
+  Bucket 1 claims (**written / locked**; TeX: `milestone1_part3_bucket1_claims.tex`).
+- `docs/experiments/qualitative/M1.3-bucket2-claims.md` — M1.3 Bucket 2 claims
+  (**commencing**; TeX: `milestone1_part3_bucket2_claims.tex`).
+  Approach: `milestone1_part3/milestone1_part3_approach.md`. There is no M1.4;
+  large-graph / bnlearn evaluation is deferred to a later milestone.
 
 ## Experiment documentation rule
 

@@ -2,7 +2,7 @@
 
 **Role:** primary working reference for finishing Milestone 1.  
 **Parent index:** [`milestone1-plan.md`](milestone1-plan.md)  
-**Status:** active (2026-07-20) — **M12x closed** (18/18 Stage-3); **M1.3 claim drafting commencing**
+**Status:** active (2026-07-21) — **M12x closed** (18/18 Stage-3); **M1.3** Bucket 1 locked; Bucket 2 commencing
 
 Organising question for all of Milestone 1:
 
@@ -48,13 +48,14 @@ Design (U1–U7, val-only BK, 18 cells) locked; both arms run (`--no-resume`);
 Working catalogue: [`milestone1_part2/m12x_units_reference.tex`](milestone1_part2/m12x_units_reference.tex).  
 Prior wiped M12x outputs remain void.
 
-### 3. Do M1.3 (claims + probes) — **commencing**
+\subsection 3. Do M1.3 (claims + probes) — **in progress**
 
 Method: [`milestone1_part3/milestone1_part3_approach.md`](milestone1_part3/milestone1_part3_approach.md).  
-Experiment record: `docs/experiments/qualitative/M1.3-failure-modes.md`.  
-**Immediate next:** draft the live claim list (3–10 claims) from visible M12x Stage-3
-patterns; then choose investigation order; then one claim at a time through to
-`claim_<slug>.tex`. Do not use withdrawn prior claim drafts.
+Bucket 1 (**locked**): `docs/experiments/qualitative/M1.3-bucket1-claims.md`
+(TeX: `docs/report/findings/milestone1_part3_bucket1_claims.tex`).  
+Bucket 2 (**commencing**): `docs/experiments/qualitative/M1.3-bucket2-claims.md`
+(TeX: `docs/report/findings/milestone1_part3_bucket2_claims.tex`).  
+**Immediate next:** draft and write Bucket 2 claims one at a time (probes/controls as needed). Do not reuse withdrawn prior claim drafts.
 
 ### 4. Close Milestone 1
 

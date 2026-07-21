@@ -2,6 +2,22 @@
 
 Recorded decisions that affect experiment direction. Evidence and interpretation remain in experiment records.
 
+## 2026-07-21 — M1.3 Bucket 1 locked; commence Bucket 2
+
+**Decision:** M1.3 Bucket 1 (four claims with Markdown record and TeX companion) is
+**written / locked**. Bucket 2 claim drafting **commences** now. Bucket 2 claims are
+those that need probes, controls, or interventions beyond the locked M12x Stage-3
+package.
+
+**Artefacts:**
+- Bucket 1: `docs/experiments/qualitative/M1.3-bucket1-claims.md`;
+  `docs/report/findings/milestone1_part3_bucket1_claims.tex`
+- Bucket 2 stubs: `docs/experiments/qualitative/M1.3-bucket2-claims.md`;
+  `docs/report/findings/milestone1_part3_bucket2_claims.tex`
+
+**Next:** refine and write Bucket 2 claims one at a time per
+`milestone1_part3_approach.md`.
+
 ## 2026-07-20 — M12x closed; commence M1.3 claim drafting
 
 **Decision:** The expanded M1.2 (M12x) Stage-3 package is **closed** and locked as the

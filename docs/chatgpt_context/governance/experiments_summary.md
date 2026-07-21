@@ -39,7 +39,7 @@ Use the same status categories as `experiment_register.md`.
 | M11 | — | m1.1 Parent-position and representation-order control | analysed | `docs/experiments/qualitative/M1.1-parent-position.md` | `causal/configs/experiments/M11_parent_position.yaml`; `M11_parent_position_greedy.yaml` | `M11_parent_position/cells/`; `M11_parent_position_greedy/`; `M11_ablations/` | Interim Experimentation / Progress (Milestone 1) | nd: 8/8 solved; binary σ/π pass; cat3 σ fails (ablation-supported). Stage 7 greedy: binary matches nd; cat3 all supersets; rule-level σ restored under greedy. |
 | M12 | — | m1.2 Published-configuration comparison (pilot) | pilot analysed | `docs/experiments/qualitative/M1.2-config-comparison.md` | `causal/configs/experiments/M12_ecai2024.yaml`; `M12_aamas2025.yaml` | `causal/outputs/aba_learning/grid/M12_{ecai2024,aamas2025}/` | Interim Experimentation / Progress (Milestone 1) | 10-cell pilot analysed (historical). Expanded as M12x (redesign). No M1.4. |
 | M12x | — | m1.2 expanded U1–U7 (ECAI/AAMAS; val-only BK; 18 cells) | closed / analysed | `M1.2-expanded.md` | `M12x_{ecai2024,aamas2025}.yaml` | `M12x_summary.md`; `M12x_cell_reports/` (18) | Interim Experimentation / Progress (Milestone 1) | Fresh 18/18 solved + Stage-3 18/18 (2026-07-20); **closed**; evidence locked for M1.3. |
-| M13 | — | m1.3 Recovery patterns and limits (claims + targeted probes from M12x) | planned | `docs/experiments/qualitative/M1.3-failure-modes.md` | — | `causal/outputs/aba_learning/grid/M13_<ablation-id>/` (only if probes run) | Interim Experimentation / Progress (Milestone 1) | Claim drafting **commencing**; M12x Stage-3 locked as evidence base. |
+| M13 | — | m1.3 Recovery patterns and limits (claims + targeted probes from M12x) | in progress | `M1.3-bucket1-claims.md` (locked); `M1.3-bucket2-claims.md` | — | `causal/outputs/aba_learning/grid/M13_<ablation-id>/` (only if probes run) | Interim Experimentation / Progress (Milestone 1) | Bucket 1 locked (4 claims); Bucket 2 commencing. |
 
 ## Experiment sequence to date and next
 
@@ -75,13 +75,14 @@ Pilot (historical): `docs/experiments/qualitative/M1.2-config-comparison.md`
 
 ### Current: Milestone 1 Part 3 — recovery patterns and limits (M1.3)
 
-Status: **`planned`** — claim drafting **commencing** (2026-07-20). M12x Stage-3 locked
-as evidence base. Method: `milestone1_part3_approach.md`. No M1.4 — large-graph /
-bnlearn evaluation is deferred.
+Status: **`in progress`** — Bucket 1 **written / locked** (2026-07-21); Bucket 2
+**commencing**. M12x Stage-3 locked as observational evidence base. Method:
+`milestone1_part3_approach.md`. No M1.4 — large-graph / bnlearn evaluation is deferred.
 
 **Primary path:** `docs/research/milestone_plans/milestone1_high_level_path.md`  
 Detail: `docs/research/milestone_plans/milestone1_part3/`  
-Record: `docs/experiments/qualitative/M1.3-failure-modes.md`
+Bucket 1 (locked): `docs/experiments/qualitative/M1.3-bucket1-claims.md`  
+Bucket 2 (live): `docs/experiments/qualitative/M1.3-bucket2-claims.md`
 
 ## Current metric families
 
@@ -147,13 +148,13 @@ Workflow:
 
 ## Next action
 
-**Commence M1.3 claim drafting** from the locked M12x Stage-3 evidence base (live claim
-list 3–10 → investigation order → one claim at a time).
+**Commence M1.3 Bucket 2** claim drafting (probes/controls as needed). Bucket 1 is locked.
 
 Completed so far in Milestone 1:
 
 1. **M1.1 (M11)** — closed.
 2. **M1.2 pilot (M12)** — Stages 0–3 analysed (10 cells).
 3. **M1.2 expanded (M12x)** — closed (18/18 solved + Stage-3 18/18).
+4. **M1.3 Bucket 1** — locked (4 claims + TeX mirror).
 
-Remaining: M1.3 → Milestone 1 write-up. No M1.4.
+Remaining: M1.3 Bucket 2 → Milestone 1 write-up. No M1.4.

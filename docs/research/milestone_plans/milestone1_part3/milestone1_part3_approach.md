@@ -2,8 +2,9 @@
 
 **Role:** working reference for Milestone 1 Part 3 — investigating **claims** about how
 unguided ABA Learning behaves on the locked M1.2 regime.
-**Status:** claim drafting **commencing** (2026-07-20). M12x Stage-3 is **closed** and
-locked as the evidence base. Prior provisional claim list remains withdrawn.
+**Status:** Bucket 1 **written / locked** (2026-07-21). Bucket 2 claim drafting
+**commencing**. M12x Stage-3 is **closed** and locked as the observational evidence
+base. Prior provisional claim list remains withdrawn.
 **Primary path:** [`../milestone1_high_level_path.md`](../milestone1_high_level_path.md)
 **Parent index:** [`../milestone1-plan.md`](../milestone1-plan.md)
 
@@ -126,5 +127,8 @@ fixed stop rule beyond covering the interesting M12x patterns.
 | Live claim list (when drafting starts) | Unordered list of \(C_i\); subject to change |
 | Live working doc per claim | Experimentation notes while \(C_i\) is open |
 | `claim_<slug>.tex` | Frozen findings chapter after \(C_i\) is done |
-| `docs/experiments/qualitative/M1.3-failure-modes.md` | Experiment record for M1.3 |
+| `docs/experiments/qualitative/M1.3-bucket1-claims.md` | Bucket 1 claims (**locked**) |
+| `docs/report/findings/milestone1_part3_bucket1_claims.tex` | TeX companion for Bucket 1 |
+| `docs/experiments/qualitative/M1.3-bucket2-claims.md` | Live Bucket 2 claim working record |
+| `docs/report/findings/milestone1_part3_bucket2_claims.tex` | TeX companion for Bucket 2 |
 | M12x Stage-3 inspection | Observational base for the initial claim list |
