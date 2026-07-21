@@ -63,7 +63,9 @@ Key experiment records:
 - `docs/experiments/qualitative/M1.3-bucket1-claims.md` — Milestone 1 Part 3 (**M1.3**)
   Bucket 1 claims (**written / locked**; TeX: `milestone1_part3_bucket1_claims.tex`).
 - `docs/experiments/qualitative/M1.3-bucket2-claims.md` — M1.3 Bucket 2 claims
-  (**commencing**; TeX: `milestone1_part3_bucket2_claims.tex`).
+  (Claims 1–2 **written / analysed** from M13-C1/C2; Claim 3 next).
+  Probe records: `M13-C1-causal-role-underdetermination/experiment.md`;
+  `M13-C2-bk-feature-order/experiment.md`.
   Approach: `milestone1_part3/milestone1_part3_approach.md`. There is no M1.4;
   large-graph / bnlearn evaluation is deferred to a later milestone.
 

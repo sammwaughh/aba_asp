@@ -20,4 +20,5 @@
 **Accepted unit set (U1–U7):**  
 [`milestone1_part2_expanded_unit_set.md`](milestone1_part2_expanded_unit_set.md)
 
-**Next:** none for Part 2 — M1.3 in progress (Bucket 1 locked; Bucket 2 commencing).
+**Next:** none for Part 2 — M1.3 in progress (Bucket 1 locked; Bucket 2 Claims 1–2
+analysed; Claim 3 next).

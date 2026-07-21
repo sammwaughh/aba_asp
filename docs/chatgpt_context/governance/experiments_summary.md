@@ -39,7 +39,9 @@ Use the same status categories as `experiment_register.md`.
 | M11 | — | m1.1 Parent-position and representation-order control | analysed | `docs/experiments/qualitative/M1.1-parent-position.md` | `causal/configs/experiments/M11_parent_position.yaml`; `M11_parent_position_greedy.yaml` | `M11_parent_position/cells/`; `M11_parent_position_greedy/`; `M11_ablations/` | Interim Experimentation / Progress (Milestone 1) | nd: 8/8 solved; binary σ/π pass; cat3 σ fails (ablation-supported). Stage 7 greedy: binary matches nd; cat3 all supersets; rule-level σ restored under greedy. |
 | M12 | — | m1.2 Published-configuration comparison (pilot) | pilot analysed | `docs/experiments/qualitative/M1.2-config-comparison.md` | `causal/configs/experiments/M12_ecai2024.yaml`; `M12_aamas2025.yaml` | `causal/outputs/aba_learning/grid/M12_{ecai2024,aamas2025}/` | Interim Experimentation / Progress (Milestone 1) | 10-cell pilot analysed (historical). Expanded as M12x (redesign). No M1.4. |
 | M12x | — | m1.2 expanded U1–U7 (ECAI/AAMAS; val-only BK; 18 cells) | closed / analysed | `M1.2-expanded.md` | `M12x_{ecai2024,aamas2025}.yaml` | `M12x_summary.md`; `M12x_cell_reports/` (18) | Interim Experimentation / Progress (Milestone 1) | Fresh 18/18 solved + Stage-3 18/18 (2026-07-20); **closed**; evidence locked for M1.3. |
-| M13 | — | m1.3 Recovery patterns and limits (claims + targeted probes from M12x) | in progress | `M1.3-bucket1-claims.md` (locked); `M1.3-bucket2-claims.md` | — | `causal/outputs/aba_learning/grid/M13_<ablation-id>/` (only if probes run) | Interim Experimentation / Progress (Milestone 1) | Bucket 1 locked (4 claims); Bucket 2 commencing. |
+| M13 | — | m1.3 Recovery patterns and limits (claims + targeted probes from M12x) | in progress | `M1.3-bucket1-claims.md` (locked); `M1.3-bucket2-claims.md` | — | `causal/outputs/aba_learning/grid/M13_<claim-id>/` | Interim Experimentation / Progress (Milestone 1) | Bucket 1 locked (4 claims); Bucket 2 Claims 1–2 written from M13-C1/C2; Claim 3 next. |
+| M13-C1 | M13 | Causal-role underdetermination under learner-input equivalence | analysed | `M13-C1-causal-role-underdetermination/experiment.md` | `M13_c1_role_equivalence_{ecai2024,aamas2025}.yaml` | `M13_c1_role_equivalence_summary.{md,json}`; 4 cell dirs | Interim Experimentation / Progress (Milestone 1) | 4/4 solved; paired inputs/delta/coverage identical. ECAI exact under \(G_0\), sibling-only under \(G_1\); AAMAS parent-plus-sibling under both. |
+| M13-C2 | M13 | Comparative sensitivity to BK feature-block order | analysed | `M13-C2-bk-feature-order/experiment.md` | `M13_c2_bk_order_{ecai2024,aamas2025}.yaml` | `M13_c2_bk_order_summary.{md,json}`; 20 cell dirs | Interim Experimentation / Progress (Milestone 1) | 20/20 solved. Every tested ECAI order produced a distinct delta within U2/U5/U7; AAMAS delta and coverage invariant per family. U5 swap restored exact ECAI parent recovery; U7 coverage depended on whether \(x_2\) was in the first two blocks. |
 
 ## Experiment sequence to date and next
 
@@ -76,8 +78,9 @@ Pilot (historical): `docs/experiments/qualitative/M1.2-config-comparison.md`
 ### Current: Milestone 1 Part 3 — recovery patterns and limits (M1.3)
 
 Status: **`in progress`** — Bucket 1 **written / locked** (2026-07-21); Bucket 2
-**commencing**. M12x Stage-3 locked as observational evidence base. Method:
-`milestone1_part3_approach.md`. No M1.4 — large-graph / bnlearn evaluation is deferred.
+Claims 1–2 **written / analysed** from M13-C1/C2; Claim 3 next. M12x Stage-3 remains
+the locked observational evidence base. Method: `milestone1_part3_approach.md`.
+No M1.4 — large-graph / bnlearn evaluation is deferred.
 
 **Primary path:** `docs/research/milestone_plans/milestone1_high_level_path.md`  
 Detail: `docs/research/milestone_plans/milestone1_part3/`  

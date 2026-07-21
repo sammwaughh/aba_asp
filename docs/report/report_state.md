@@ -153,7 +153,7 @@ Explain what will happen after the interim report, following from the QL1/QL2/QL
 
 Drafted milestones (Weeks 1–13, with a Week-11 holiday):
 
-1. **Milestone 1** — report-ready account of when/how unguided ABA Learning recovers mechanism-aligned rules (and what is recovered instead). **Part 1 closed (M1.1).** **Part 2 (M1.2 / M12x) closed** (18/18 run + Stage-3). **Part 3 (M1.3)** Bucket 1 locked; Bucket 2 commencing. No M1.4. Primary path: `milestone1_high_level_path.md`.
+1. **Milestone 1** — report-ready account of when/how unguided ABA Learning recovers mechanism-aligned rules (and what is recovered instead). **Part 1 closed (M1.1).** **Part 2 (M1.2 / M12x) closed** (18/18 run + Stage-3). **Part 3 (M1.3)** Bucket 1 locked; Bucket 2 Claims 1–2 analysed; Claim 3 next. No M1.4. Primary path: `milestone1_high_level_path.md`.
 2. **Milestone 2 (Weeks 3–4)** — design the bridge in which Causal ABA-style information guides ABA Learning; specify comparable outputs and metrics.
 3. **Milestone 3 (Weeks 5–6)** — implement causal-guided ABA Learning variants; compare against unguided learning; build bespoke metrics that judge whether causality (not just predictive parents) is learned.
 4. **Milestone 4 (Weeks 7–8)** — scale beyond three-node motifs; set up representative external comparators and a frozen evaluation protocol.

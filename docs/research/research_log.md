@@ -2,6 +2,19 @@
 
 Chronological notes on experiment progress, decisions, and milestones. Detailed evidence remains in experiment records and artefact paths cited below.
 
+## 2026-07-21 — M1.3 Bucket 2 Claims 1–2 analysed and written
+
+- **M13-C1:** 4/4 cells `solved`; input-equivalent graph pair confirmed identical
+  learner inputs/delta/coverage with different graph-relative verdicts.
+- **M13-C2:** 20/20 cells `solved`; ECAI delta changed under every tested U2/U5/U7
+  feature order, while AAMAS delta and coverage were invariant within each family.
+- **Key C2 controls:** U5 parent-first order restored exact ECAI parent recovery; U7
+  rejected \(0/3\) negatives exactly when required parent \(x_2\) was third and
+  \(3/3\) otherwise.
+- **Records:** `M13-C1-causal-role-underdetermination/experiment.md`;
+  `M13-C2-bk-feature-order/experiment.md`; `M1.3-bucket2-claims.md`.
+- **Next:** Bucket 2 Claim 3.
+
 ## 2026-07-21 — M1.3 Bucket 1 locked; Bucket 2 commencing
 
 - **Decision:** Bucket 1 (four claims + TeX mirror) is **written / locked**.

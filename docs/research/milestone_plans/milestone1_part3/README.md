@@ -5,14 +5,14 @@
 **M1.3 Approach (method):**
 [`milestone1_part3_approach.md`](milestone1_part3_approach.md)
 
-**Status:** Bucket 1 **written / locked**. Bucket 2 claim drafting **commencing**.
-M12x Stage-3 remains the locked observational evidence base. Prior provisional
-claim drafts remain withdrawn.
+**Status:** Bucket 1 **written / locked**. Bucket 2 Claims 1–2 are
+**written / analysed** from M13-C1/C2; Claim 3 is next. M12x Stage-3 remains the
+locked observational evidence base. Prior provisional claim drafts remain withdrawn.
 
 M1.3 answers, with evidence: when and how mechanism-aligned rules are recovered by
 unguided ABA Learning, what is recovered instead, and why. Bucket 1 claims
 (immediately defensible from theory, engine, and locked M12x) are complete.
-Bucket 2 claims (needing probes/controls) are next.
+Bucket 2 claims use targeted probes/controls beyond that package.
 
 ## Primary inputs (M12x Stage-3 locked)
 
@@ -40,6 +40,13 @@ Pilot M1.2 (10 cells) remains optional provenance only.
 | [`M1.3-bucket2-claims.md`](../../../experiments/qualitative/M1.3-bucket2-claims.md) | Live working Markdown: claim wording, argument, probe evidence |
 | [`milestone1_part3_bucket2_claims.tex`](../../../report/findings/milestone1_part3_bucket2_claims.tex) | Mirroring TeX companion |
 
+## Bucket 2 probe records
+
+| Record | Purpose | Status |
+|--------|---------|--------|
+| [`M13-C1-causal-role-underdetermination/experiment.md`](../../../experiments/qualitative/M13-C1-causal-role-underdetermination/experiment.md) | Input-equivalent \(G/G'\) causal-role control | **Analysed** (4/4) |
+| [`M13-C2-bk-feature-order/experiment.md`](../../../experiments/qualitative/M13-C2-bk-feature-order/experiment.md) | ECAI/AAMAS BK block-order comparison | **Analysed** (20/20) |
+
 ## Planning docs
 
 | Document | Purpose |
@@ -50,4 +57,5 @@ Pilot M1.2 (10 cells) remains optional provenance only.
 
 **Parent index:** [milestone1-plan.md](../milestone1-plan.md)
 
-**Next:** refine and write Bucket 2 claims one at a time in the Bucket 2 working Markdown.
+**Next:** investigate and write Bucket 2 Claim 3 (support-mediated exposure of an
+omitted required parent).

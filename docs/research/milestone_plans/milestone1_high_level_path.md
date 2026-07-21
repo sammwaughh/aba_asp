@@ -2,7 +2,8 @@
 
 **Role:** primary working reference for finishing Milestone 1.  
 **Parent index:** [`milestone1-plan.md`](milestone1-plan.md)  
-**Status:** active (2026-07-21) — **M12x closed** (18/18 Stage-3); **M1.3** Bucket 1 locked; Bucket 2 commencing
+**Status:** active (2026-07-21) — **M12x closed** (18/18 Stage-3); **M1.3**
+Bucket 1 locked; Bucket 2 Claims 1–2 analysed; Claim 3 next
 
 Organising question for all of Milestone 1:
 
@@ -19,7 +20,7 @@ No Causal ABA integration in this milestone. Large-graph / bnlearn comparisons a
 | **M1.1** | Closed | Parent-position / representation-order control; ordering mechanism established |
 | **M1.2 pilot** | Analysed (historical) | 10-cell pilot; superseded as primary evidence by M12x |
 | **M1.2 expanded (M12x)** | **Closed / analysed** | Fresh 18-cell run + Stage-3 inspection **18/18** (2026-07-20); evidence package locked for M1.3 |
-| **M1.3** | **Claim drafting commencing** | Method: `milestone1_part3_approach.md`; next: live claim list from Stage-3 patterns |
+| **M1.3** | **In progress** | Bucket 1 locked; Bucket 2 Claims 1–2 analysed from M13-C1/C2; Claim 3 next |
 | **M1.4** | Does not exist | Large-graph tests deferred to a future evaluation milestone |
 
 **Expanded M1.2 Approach:**  
@@ -48,14 +49,17 @@ Design (U1–U7, val-only BK, 18 cells) locked; both arms run (`--no-resume`);
 Working catalogue: [`milestone1_part2/m12x_units_reference.tex`](milestone1_part2/m12x_units_reference.tex).  
 Prior wiped M12x outputs remain void.
 
-\subsection 3. Do M1.3 (claims + probes) — **in progress**
+### 3. Do M1.3 (claims + probes) — **in progress**
 
 Method: [`milestone1_part3/milestone1_part3_approach.md`](milestone1_part3/milestone1_part3_approach.md).  
 Bucket 1 (**locked**): `docs/experiments/qualitative/M1.3-bucket1-claims.md`
 (TeX: `docs/report/findings/milestone1_part3_bucket1_claims.tex`).  
-Bucket 2 (**commencing**): `docs/experiments/qualitative/M1.3-bucket2-claims.md`
+Bucket 2 (**Claims 1–2 analysed**): `docs/experiments/qualitative/M1.3-bucket2-claims.md`
 (TeX: `docs/report/findings/milestone1_part3_bucket2_claims.tex`).  
-**Immediate next:** draft and write Bucket 2 claims one at a time (probes/controls as needed). Do not reuse withdrawn prior claim drafts.
+Probe records: `M13-C1-causal-role-underdetermination/experiment.md`;
+`M13-C2-bk-feature-order/experiment.md`.  
+**Immediate next:** investigate and write Bucket 2 Claim 3. Do not reuse withdrawn
+prior claim drafts.
 
 ### 4. Close Milestone 1
 

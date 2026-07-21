@@ -35,7 +35,9 @@ The earlier n=100 scaled attempt was cut and is not part of the canonical experi
 | M11 | — | m1.1 Parent-position and representation-order control | analysed (Stages 0–7; ablations + greedy comparator) |
 | M12 | — | m1.2 Published-configuration comparison (ASP-ABAlearnB / Greedy ABA Learning) | analysed (Stages 0–3: 10-cell grid + full cell inspection / failure-mode taxonomy) |
 | M12x | — | m1.2 expanded U1–U7 (ECAI/AAMAS; val-only BK; 18 cells) | closed / analysed (18/18 Stage-3) |
-| M13 | — | m1.3 Recovery patterns and limits (claims + probes from M12x) | in progress (Bucket 1 locked; Bucket 2 commencing) |
+| M13 | — | m1.3 Recovery patterns and limits (claims + probes from M12x) | in progress (Bucket 1 locked; Bucket 2 Claims 1–2 analysed) |
+| M13-C1 | M13 | Causal-role underdetermination under learner-input equivalence | analysed |
+| M13-C2 | M13 | Comparative sensitivity to BK feature-block order | analysed |
 
 ## Template
 
@@ -272,7 +274,8 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
 
 ### M13 — m1.3 Recovery patterns and limits
 
-- Status: **`in progress`** — Bucket 1 **written / locked** (2026-07-21); Bucket 2 **commencing**.
+- Status: **`in progress`** — Bucket 1 **written / locked** (2026-07-21);
+  Bucket 2 Claims 1–2 **written / analysed**; Claim 3 next.
 - Planning docs: `docs/research/milestone_plans/milestone1_high_level_path.md`; `docs/research/milestone_plans/milestone1_part3/`.
 - Approach (method): `docs/research/milestone_plans/milestone1_part3/milestone1_part3_approach.md`.
 - Bucket 1 (locked): `docs/experiments/qualitative/M1.3-bucket1-claims.md` (TeX: `docs/report/findings/milestone1_part3_bucket1_claims.tex`).
@@ -282,4 +285,28 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
 - Method: Bucket 1 claims from theory/engine/M12x (done); Bucket 2 claims needing probes/controls (next). Large-graph / bnlearn evaluation is not in M1.3 (deferred to a later evaluation milestone).
 - Relation to Causal ABA: none exercised; deliverable is requirements input for Milestone 2.
 - Report relevance: interim Experimentation / Progress (Milestone 1 Part 3).
-- Next: draft and write Bucket 2 claims one at a time.
+- Next: investigate and write Bucket 2 Claim 3.
+
+#### M13-C1 — causal-role underdetermination
+
+- Status: **`analysed`** (2026-07-21); 4/4 cells runner-`solved`.
+- Record:
+  `docs/experiments/qualitative/M13-C1-causal-role-underdetermination/experiment.md`.
+- Configs: `M13_c1_role_equivalence_{ecai2024,aamas2025}.yaml`.
+- Summary: `M13_c1_role_equivalence_summary.{md,json}`.
+- Result: learner-visible inputs, normalised delta, and coverage were identical within
+  each graph-labelled pair. ECAI was exact under \(G_0\) and sibling-only under \(G_1\);
+  AAMAS retained parent plus sibling under both.
+- Next: none; supports Bucket 2 Claim 1.
+
+#### M13-C2 — BK feature-block order
+
+- Status: **`analysed`** (2026-07-21); 20/20 cells runner-`solved`.
+- Record: `docs/experiments/qualitative/M13-C2-bk-feature-order/experiment.md`.
+- Configs: `M13_c2_bk_order_{ecai2024,aamas2025}.yaml`.
+- Summary: `M13_c2_bk_order_summary.{md,json}`.
+- Result: all tested ECAI feature orders yielded distinct normalised deltas within U2,
+  U5, and U7. AAMAS preserved one normalised delta and coverage result per family.
+  U5 parent-first order restored exact ECAI recovery; U7 negative rejection depended
+  on whether required parent \(x_2\) occurred in the first two blocks.
+- Next: none; supports Bucket 2 Claim 2 and supplies controlled evidence for Claim 3.

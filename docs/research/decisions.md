@@ -2,6 +2,20 @@
 
 Recorded decisions that affect experiment direction. Evidence and interpretation remain in experiment records.
 
+## 2026-07-21 — Accept M13-C1/C2 evidence; proceed to Bucket 2 Claim 3
+
+**Decision:** Bucket 2 Claims 1–2 are written from analysed targeted controls.
+M13-C1 establishes causal-role underdetermination under learner-input equivalence.
+M13-C2 establishes the bounded ECAI/AAMAS contrast under exact-value BK
+feature-block permutations. These claims remain scoped to their stated tasks and do not
+assert full causal discovery or general greedy order-invariance.
+
+**Evidence:** `M13-C1-causal-role-underdetermination/experiment.md`;
+`M13-C2-bk-feature-order/experiment.md`; `M1.3-bucket2-claims.md`.
+
+**Next:** investigate Bucket 2 Claim 3 using the U6/U7 support contrast and the new
+M13-C2 U7 order evidence.
+
 ## 2026-07-21 — M1.3 Bucket 1 locked; commence Bucket 2
 
 **Decision:** M1.3 Bucket 1 (four claims with Markdown record and TeX companion) is

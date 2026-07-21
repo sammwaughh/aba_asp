@@ -51,7 +51,7 @@ def _cell(source: str) -> CellSpec:
 
 
 def test_registry_contains_both_c1_models() -> None:
-    assert set(M13_BUILDERS) == set(_SOURCES)
+    assert set(_SOURCES) <= set(M13_BUILDERS)
     for source in _SOURCES:
         assert _fixture(source).key == source
 

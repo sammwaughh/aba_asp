@@ -1,0 +1,61 @@
+experiment_id: M13_c2_bk_order_aamas2025
+description: "M13-C2 AAMAS comparison of complete BK feature-block permutations on U2, U5, and U7. Named data, graph, target, examples, and BK rule sets are fixed within each family. Unguided ABA Learning, not Russo-style Causal ABA."
+owner: sam
+
+defaults:
+  graph_type: handcrafted_table
+  bins: 3
+  bin_strategy: uniform
+  prolog_timeout_s: 60
+  query_timeout_s: 5
+  prolog_config: configs/aamas2025_config.pl
+
+dgps:
+  - id: m13_c2_u2_x0_x1
+    graph_type: handcrafted_table
+    source: m13_c2_u2_x0_x1
+    targets: [x2]
+  - id: m13_c2_u2_x1_x0
+    graph_type: handcrafted_table
+    source: m13_c2_u2_x1_x0
+    targets: [x2]
+  - id: m13_c2_u5_x0_x1
+    graph_type: handcrafted_table
+    source: m13_c2_u5_x0_x1
+    targets: [x2]
+  - id: m13_c2_u5_x1_x0
+    graph_type: handcrafted_table
+    source: m13_c2_u5_x1_x0
+    targets: [x2]
+  - id: m13_c2_u7_x0_x1_x2
+    graph_type: handcrafted_table
+    source: m13_c2_u7_x0_x1_x2
+    targets: [x3]
+  - id: m13_c2_u7_x0_x2_x1
+    graph_type: handcrafted_table
+    source: m13_c2_u7_x0_x2_x1
+    targets: [x3]
+  - id: m13_c2_u7_x1_x0_x2
+    graph_type: handcrafted_table
+    source: m13_c2_u7_x1_x0_x2
+    targets: [x3]
+  - id: m13_c2_u7_x1_x2_x0
+    graph_type: handcrafted_table
+    source: m13_c2_u7_x1_x2_x0
+    targets: [x3]
+  - id: m13_c2_u7_x2_x0_x1
+    graph_type: handcrafted_table
+    source: m13_c2_u7_x2_x0_x1
+    targets: [x3]
+  - id: m13_c2_u7_x2_x1_x0
+    graph_type: handcrafted_table
+    source: m13_c2_u7_x2_x1_x0
+    targets: [x3]
+
+grid:
+  # Deterministic handcrafted tables: omit grid.seed.
+  target: [x2]
+  cell_dir: slug
+
+provenance:
+  code_commit_required: true

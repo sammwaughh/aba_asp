@@ -80,20 +80,21 @@ Pilot (historical): [`milestone1_part2/milestone1_part2_config_comparison.md`](m
 
 Configs: ECAI (`configs/ecai2024_config.pl`), AAMAS (`configs/aamas2025_config.pl`).
 
-## Part 3: Recovery patterns and limits (M1.3) — **in progress** (Bucket 1 locked; Bucket 2 commencing)
+## Part 3: Recovery patterns and limits (M1.3) — **in progress** (Bucket 1 locked; Bucket 2 Claims 1–2 analysed)
 
 Planning folder: [`milestone1_part3/`](milestone1_part3/README.md)  
 Approach (method): [`milestone1_part3/milestone1_part3_approach.md`](milestone1_part3/milestone1_part3_approach.md)  
 Detail plan: [`milestone1_part3/milestone1_part3_failure_modes.md`](milestone1_part3/milestone1_part3_failure_modes.md)  
 Bucket 1 (**locked**): `docs/experiments/qualitative/M1.3-bucket1-claims.md`
 (TeX: `docs/report/findings/milestone1_part3_bucket1_claims.tex`)  
-Bucket 2 (**commencing**): `docs/experiments/qualitative/M1.3-bucket2-claims.md`
+Bucket 2 (**Claims 1–2 analysed**): `docs/experiments/qualitative/M1.3-bucket2-claims.md`
 (TeX: `docs/report/findings/milestone1_part3_bucket2_claims.tex`)
 
 M1.3 turns the **locked** M12x Stage-3 matrix/inspection into evidence-backed claims.
 Bucket 1 (immediately defensible from theory, engine, and locked M12x) is **written**.
-Bucket 2 (claims needing probes/controls) is next. Prior provisional claim drafting
-from earlier M12x grids remains **withdrawn** (2026-07-20) and must not be reused.
+Bucket 2 Claims 1–2 are supported by M13-C1/C2 targeted controls; Claim 3 is next.
+Prior provisional claim drafting from earlier M12x grids remains **withdrawn**
+(2026-07-20) and must not be reused.
 
 M1.3 finishes when we can state succinctly what unguided ABA Learning does on these
 graphs/DGPs, why, and what remains open for Milestone 2.
@@ -110,4 +111,5 @@ After M1.3, consolidate findings into a Milestone 1 conclusion:
    pipeline or encoding issues.
 
 **Current progress:** Part 1 closed. Part 2 (M12x) **closed**. Part 3 (M1.3) **in
-progress** — Bucket 1 locked; Bucket 2 commencing. No Part 4 / M1.4.
+progress** — Bucket 1 locked; Bucket 2 Claims 1–2 analysed; Claim 3 next. No Part 4 /
+M1.4.
