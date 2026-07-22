@@ -35,7 +35,7 @@ The earlier n=100 scaled attempt was cut and is not part of the canonical experi
 | M11 | — | m1.1 Parent-position and representation-order control | analysed (Stages 0–7; ablations + greedy comparator) |
 | M12 | — | m1.2 Published-configuration comparison (ASP-ABAlearnB / Greedy ABA Learning) | analysed (Stages 0–3: 10-cell grid + full cell inspection / failure-mode taxonomy) |
 | M12x | — | m1.2 expanded U1–U7 (ECAI/AAMAS; val-only BK; 18 cells) | closed / analysed (18/18 Stage-3) |
-| M13 | — | m1.3 Recovery patterns and limits (claims + probes from M12x) | in progress (Bucket 1 locked; Bucket 2 Claims 1–2 analysed) |
+| M13 | — | m1.3 capabilities and limits of unguided ABA Learning for causal recovery | in progress (Buckets 1–2 locked; Bucket 3 planning pending) |
 | M13-C1 | M13 | Causal-role underdetermination under learner-input equivalence | analysed |
 | M13-C2 | M13 | Comparative sensitivity to BK feature-block order | analysed |
 
@@ -272,20 +272,28 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
 - Relation to Causal ABA: none exercised.
 - Next: none for M12x — hand off to M1.3 claim drafting.
 
-### M13 — m1.3 Recovery patterns and limits
+### M13 — m1.3 causal-recovery capabilities and limits
 
-- Status: **`in progress`** — Bucket 1 **written / locked** (2026-07-21);
-  Bucket 2 Claims 1–2 **written / analysed**; Claim 3 next.
+- Status: **`in progress`** — Bucket 1 **written / locked**; Bucket 2
+  **locked / closed** with Claims 1–2; Bucket 3 **planning pending** following
+  Fabrizio's 22 July expanded-scope guidance.
 - Planning docs: `docs/research/milestone_plans/milestone1_high_level_path.md`; `docs/research/milestone_plans/milestone1_part3/`.
 - Approach (method): `docs/research/milestone_plans/milestone1_part3/milestone1_part3_approach.md`.
 - Bucket 1 (locked): `docs/experiments/qualitative/M1.3-bucket1-claims.md` (TeX: `docs/report/findings/milestone1_part3_bucket1_claims.tex`).
-- Bucket 2 (live): `docs/experiments/qualitative/M1.3-bucket2-claims.md` (TeX: `docs/report/findings/milestone1_part3_bucket2_claims.tex`).
-- Primary inputs: locked M12x Stage-3 inspection + summary matrix; Bucket 2 may add probe artefacts under `causal/outputs/aba_learning/grid/M13_<ablation-id>/`.
-- Research question: across the expanded M1.2 graphs and DGP(s), when does unguided ABA Learning recover the intended mechanism-aligned rules, what is recovered instead when it does not, and what evidence explains those patterns?
-- Method: Bucket 1 claims from theory/engine/M12x (done); Bucket 2 claims needing probes/controls (next). Large-graph / bnlearn evaluation is not in M1.3 (deferred to a later evaluation milestone).
+- Bucket 2 (locked): `docs/experiments/qualitative/M1.3-bucket2-claims.md` (two claims; M13-C1/C2).
+- Bucket 3 (planning): `docs/experiments/qualitative/M1.3-bucket3-claims.md`.
+- Primary inputs: locked M12x/Bucket 1/Bucket 2 evidence and Fabrizio's 22 July
+  supervisor guidance.
+- Expanded research question (planning formulation): across controlled targets,
+  data-availability conditions, graph/mechanism structures, and learning strategies,
+  what causal structure can unguided ABA Learning recover, and which failures are
+  strategic versus informational/identifiability limitations?
+- Method: not yet fixed for Bucket 3. Theory/evidence review and collaborative planning
+  precede claims, fixtures, and run matrices.
 - Relation to Causal ABA: none exercised; deliverable is requirements input for Milestone 2.
 - Report relevance: interim Experimentation / Progress (Milestone 1 Part 3).
-- Next: investigate and write Bucket 2 Claim 3.
+- Next: synchronise ChatGPT context, then plan Bucket 3. Do not create an M13-C3
+  experiment entry until a specific investigation is approved.
 
 #### M13-C1 — causal-role underdetermination
 
@@ -309,4 +317,5 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
   U5, and U7. AAMAS preserved one normalised delta and coverage result per family.
   U5 parent-first order restored exact ECAI recovery; U7 negative rejection depended
   on whether required parent \(x_2\) occurred in the first two blocks.
-- Next: none; supports Bucket 2 Claim 2 and supplies controlled evidence for Claim 3.
+- Next: none; supports locked Bucket 2 Claim 2. The proposed Bucket 2 Claim 3 was
+  parked on 22 July.

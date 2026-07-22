@@ -109,6 +109,11 @@ Add claims after each experiment is analysed. Report labels: QL1 = QI-001, QL2 =
 
 ### M13 (m1.3 Bucket 2)
 
+Bucket 2 is **locked / closed** with the claims below. The proposed
+deterministic-target Claim 3 was parked on 22 July and has no ledger entry. Bucket 3 is
+planning-pending and must not receive claim IDs until specific investigations produce
+reviewed evidence.
+
 | Claim ID | Claim | Strength | Evidence | Caveats | Report location | Status |
 |---|---|---|---|---|---|---|
 | M13-C1-C-001 | For the input-equivalent M13-C1 pair, changing only the valid external causal graph left data, BK, examples, normalised learned delta, and ASP coverage unchanged within each configuration, while graph-relative parent recovery changed. ECAI's same \(x_0\)-rules were exact under \(G_0\) and sibling-only under \(G_1\); AAMAS retained parent plus sibling under both. | bounded | `M13-C1-causal-role-underdetermination/experiment.md`; `M13_c1_role_equivalence_summary.{md,json}`; 4 cell artefacts | Minimal perfect-copy construction; demonstrates underdetermination when graph role is absent from learner input, not prevalence in arbitrary data or causal discovery. | Experimentation / Progress; M1.3 Bucket 2 | active |

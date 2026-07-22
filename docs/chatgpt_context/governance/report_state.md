@@ -123,7 +123,21 @@ Drafted structure:
    - Stage 7 (greedy): binary matches nd; cat3 rule-level σ restored; all cat3 cells parent supersets.
    - Status **`analysed`**; findings: `docs/report/findings/milestone1_part1_m11_findings.tex`.
 
-7. **Interim interpretation and limitations**
+7. **M12x and M1.3 completed evidence**
+   - M12x: 18/18 cells run and inspected; locked categorical target-wise evidence.
+   - Bucket 1: four claims locked.
+   - Bucket 2: two claims locked from M13-C1 causal-role underdetermination and M13-C2
+     BK feature-block-order controls.
+   - These records remain evidence and will not be redone during the new scope.
+
+8. **22 July supervisor expansion (planning, not results)**
+   - M1.3 continues through Bucket 3 before Milestone 2;
+   - planning dimensions: target variation, partial data, larger controlled graphs,
+     explicit independence/Markov-equivalence analysis, graph–mechanism validity, and
+     strategy-versus-information attribution;
+   - no Bucket 3 claims or experiment matrix approved yet.
+
+9. **Interim interpretation and limitations**
    - bounded conclusion: parent recovery works in selected idealised cases but is not robust across motifs/encodings/noise;
    - does not implement full Russo-style Causal ABA; learned predictive rules are not automatically causal; continuous variables are binned; metrics need refinement beyond parent membership.
 
@@ -135,12 +149,18 @@ Required evidence for drafting / revision:
 - `docs/experiments/qualitative/M1.1-parent-position.md`;
 - `docs/experiments/qualitative/greedy_vs_nd_qualitative_handoff.md`;
 - `docs/report/findings/milestone1_part1_m11_findings.tex`;
+- `docs/experiments/qualitative/M1.2-expanded-cell-inspection.md`;
+- `docs/experiments/qualitative/M1.3-bucket1-claims.md`;
+- `docs/experiments/qualitative/M1.3-bucket2-claims.md`;
+- `docs/experiments/qualitative/M13-C1-causal-role-underdetermination/experiment.md`;
+- `docs/experiments/qualitative/M13-C2-bk-feature-order/experiment.md`;
+- `docs/research/supervisor_guidance.md` (22 July section; guidance only);
 - `docs/report/claims_ledger.md`;
 - selected figures/tables from `docs/report/figure_table_index.md`.
 
 ### 5. Project Plan
 
-Status: `drafted`
+Status: `drafted`; revision required after Bucket 3 planning
 
 Current source:
 
@@ -153,14 +173,22 @@ Explain what will happen after the interim report, following from the QL1/QL2/QL
 
 Drafted milestones (Weeks 1–13, with a Week-11 holiday):
 
-1. **Milestone 1** — report-ready account of when/how unguided ABA Learning recovers mechanism-aligned rules (and what is recovered instead). **Part 1 closed (M1.1).** **Part 2 (M1.2 / M12x) closed** (18/18 run + Stage-3). **Part 3 (M1.3)** Bucket 1 locked; Bucket 2 Claims 1–2 analysed; Claim 3 next. No M1.4. Primary path: `milestone1_high_level_path.md`.
+1. **Milestone 1** — report-ready account of unguided ABA Learning's capabilities and
+   limitations for causal recovery. Parts 1–2 closed; M1.3 Buckets 1–2 locked;
+   Bucket 3 planning pending under Fabrizio's 22 July guidance. The widened scope
+   remains M1.3 and precedes Milestone 2. No M1.4. Primary path:
+   `milestone1_high_level_path.md`.
 2. **Milestone 2 (Weeks 3–4)** — design the bridge in which Causal ABA-style information guides ABA Learning; specify comparable outputs and metrics.
 3. **Milestone 3 (Weeks 5–6)** — implement causal-guided ABA Learning variants; compare against unguided learning; build bespoke metrics that judge whether causality (not just predictive parents) is learned.
 4. **Milestone 4 (Weeks 7–8)** — scale beyond three-node motifs; set up representative external comparators and a frozen evaluation protocol.
 5. **Milestone 5 (Weeks 9–10)** — evaluation, ablations, and a supervisor-reviewable full draft before the break.
 6. **Milestone 6 (Weeks 12–13)** — supervisor-feedback edits, final polish, and presentation preparation.
 
-The core direction is "Causal ABA guides ABA Learning"; parent-set recovery is groundwork (RQ1), not the main contribution.
+The core direction remains "Causal ABA guides ABA Learning", but the current project-plan
+chapter must not imply that Milestone 2 begins immediately after the fixed-target
+categorical study. Bucket 3 first broadens the diagnosis of targets, data availability,
+larger controlled structures, and observational identifiability. The milestone schedule
+should be revised only after that plan is approved.
 
 Required evidence for drafting / revision:
 
@@ -239,5 +267,8 @@ The five report chapters are drafted under `docs/report/manuscript/`. The curren
 - reason about the discrepancy between the handcrafted DGP's expected outputs and the actual learned rules;
 - describe the DGP clearly, including where the QL3 noise comes from;
 - report F1 in place of the clean-recovery score;
-- implement the QL2 parent-position swap so order-dependence can be shown;
+- treat the earlier QL2 parent-position-swap action as superseded by the completed M11
+  and M13-C2 order controls;
+- defer Bucket 3 report claims and project-plan detail until its theory/evidence review
+  and investigation plan are approved;
 - keep the claims ledger in step with any revised interpretations.

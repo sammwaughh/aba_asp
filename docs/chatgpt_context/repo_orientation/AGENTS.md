@@ -46,7 +46,11 @@ Do not describe the current implementation as full Russo-style Causal ABA unless
 
 ## Experimental priority
 
-The current experimental priority is Milestone 1: a report-ready account of when and how unguided ABA Learning recovers mechanism-aligned rules from categorical tabular data (and what is recovered instead), then design the Causal-ABA-guided bridge (Milestone 2).
+The current experimental priority is the supervisor-expanded Milestone 1 / M1.3:
+characterise what causal structure unguided ABA Learning can recover across controlled
+targets, data-availability conditions, graph/mechanism structures, and strategies, and
+separate strategy failures from information/identifiability limits. This remains
+groundwork for the Causal-ABA-guided bridge (Milestone 2), which has not started.
 
 **Primary working path:** `docs/research/milestone_plans/milestone1_high_level_path.md`  
 **Expanded M1.2 Approach:** `docs/research/milestone_plans/milestone1_part2/milestone1_part2_expanded_approach.md`  
@@ -63,11 +67,15 @@ Key experiment records:
 - `docs/experiments/qualitative/M1.3-bucket1-claims.md` — Milestone 1 Part 3 (**M1.3**)
   Bucket 1 claims (**written / locked**; TeX: `milestone1_part3_bucket1_claims.tex`).
 - `docs/experiments/qualitative/M1.3-bucket2-claims.md` — M1.3 Bucket 2 claims
-  (Claims 1–2 **written / analysed** from M13-C1/C2; Claim 3 next).
+  (**locked / closed** with Claims 1–2 from M13-C1/C2).
   Probe records: `M13-C1-causal-role-underdetermination/experiment.md`;
   `M13-C2-bk-feature-order/experiment.md`.
+- `docs/experiments/qualitative/M1.3-bucket3-claims.md` — M1.3 Bucket 3
+  (**planning pending**, opened from Fabrizio's 22 July guidance). Do not invent claims,
+  fixtures, or a run matrix before the theory/evidence review and Samuel's approval.
   Approach: `milestone1_part3/milestone1_part3_approach.md`. There is no M1.4;
-  large-graph / bnlearn evaluation is deferred to a later milestone.
+  larger controlled fixtures may be used in Bucket 3, while large-scale / bnlearn
+  evaluation remains deferred.
 
 ## Experiment documentation rule
 

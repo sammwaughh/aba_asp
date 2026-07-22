@@ -13,17 +13,20 @@ acyclicity, d-separation) is used as argumentative background knowledge to const
 or interpret ABA Learning transformations. See `docs/report/manuscript/introduction.md` and
 `docs/report/manuscript/project_plan.md`.
 
-The current empirical work is the **groundwork** stage (RQ1): a narrower target-wise ABA
-Learning pipeline that converts a data table into ABA background predicates, runs ABA Learning
-for a chosen target, and compares the variables in learned target-rule bodies against the true
-direct parents of a known synthetic graph. This parent-set comparison is a **diagnostic proxy**,
-not a proof of causal discovery.
+The current empirical implementation remains a **target-wise ABA Learning** pipeline that
+converts a data table into ABA background predicates and learns a framework for a chosen target.
+The completed work used parent-set and expected-rule comparisons as diagnostic proxies. Under
+Fabrizio's 22 July guidance, RQ1 now broadens to ask how collections of target-wise outputs,
+target choice, data availability, graph/mechanism structure, and observational
+identifiability affect what causal structure can be recovered. This is still groundwork,
+not a proof or implementation of full causal discovery.
 
 ## Research questions
 
-- **RQ1** — When does unguided ABA Learning recover parent variables in learned target rules,
-  rather than ancestors, descendants, siblings, correlated non-parents or representation
-  artefacts?
+- **RQ1** — Under which targets, data-availability conditions, graph/mechanism structures,
+  and learning strategies can unguided ABA Learning recover mechanism-aligned local rules
+  or support recovery of causal structure; what does it recover instead; and which failures
+  are strategic versus observationally non-identifiable?
 - **RQ2** — Can Causal ABA-style evidence and graph constraints guide ABA Learning towards
   rules/frameworks that are more causally meaningful, interpretable, robust or efficient?
 - **RQ3** — How does the resulting causally guided ABA Learning bridge compare with
@@ -118,12 +121,24 @@ establish causal discovery.
 - Result interpretation must distinguish **empirical parent recovery** from
   **causal-argumentative discovery** (stable extensions ↔ compatible DAGs). The former does not
   establish the latter.
+- The expanded M1.3 must distinguish a learning-strategy failure from an
+  **identifiability/information limitation**. Markov-equivalent or otherwise
+  observationally indistinguishable structures cannot be separated merely by changing
+  the learner.
+- Future fixture design requires explicit graph–mechanism compatibility and verified
+  marginal/conditional-independence statements. Fabrizio's 22 July fork/chain example
+  remains a theory question to formalise, not a settled claim.
+- “Missing data” is not yet operationalised; missing rows, cell values, variables, and
+  combinations are distinct interventions.
 
 ## Next milestone
 
-Milestone 1's goal is a **report-ready account of when and how unguided ABA Learning can
-recover mechanism-aligned rules from categorical tabular data — and what is recovered
-instead**. Primary working path:
+Milestone 1's goal is a **report-ready account of what causal structure unguided ABA
+Learning can recover from controlled tabular data, under which targets, data-availability
+conditions, graph/mechanism structures, and learning strategies — and which limitations
+are informational rather than strategic**. The completed categorical target-wise work
+remains the foundation; the new scope does not yet imply a full causal-discovery
+implementation. Primary working path:
 `docs/research/milestone_plans/milestone1_high_level_path.md`.  
 Expanded Approach:
 `docs/research/milestone_plans/milestone1_part2/milestone1_part2_expanded_approach.md`.
@@ -132,13 +147,17 @@ Expanded Approach:
 - **M1.2 expanded (M12x)** — **closed / analysed:** fresh 18-cell run + Stage-3
   inspection **18/18** (2026-07-20). Record: `docs/experiments/qualitative/M1.2-expanded.md`.
   Inspection: `M1.2-expanded-cell-inspection.md`.
-- **M1.3** — **in progress:** Bucket 1 **written / locked**; Bucket 2 Claims 1–2
-  **written / analysed** from M13-C1/C2; Claim 3 next.
+- **M1.3** — **in progress:** Bucket 1 **written / locked**; Bucket 2
+  **locked / closed** with Claims 1–2 from M13-C1/C2; Bucket 3 **planning pending**
+  under Fabrizio's 22 July expanded-scope guidance.
   Method: `milestone1_part3_approach.md`. Records:
   `docs/experiments/qualitative/M1.3-bucket1-claims.md` (locked);
-  `docs/experiments/qualitative/M1.3-bucket2-claims.md` (live);
+  `docs/experiments/qualitative/M1.3-bucket2-claims.md` (locked);
+  `docs/experiments/qualitative/M1.3-bucket3-claims.md` (planning);
   `docs/experiments/qualitative/M13-C1-causal-role-underdetermination/experiment.md`;
   `docs/experiments/qualitative/M13-C2-bk-feature-order/experiment.md`.
-- **No M1.4** — large-graph / bnlearn evaluation deferred to a later evaluation milestone.
+- **No M1.4** — the widened work remains M1.3. Later large-scale external evaluation
+  remains deferred beyond this supervisor-driven controlled investigation.
 
-Then **Milestone 2** (Causal-ABA-guided ABA Learning bridge), informed by M1.3.
+Then **Milestone 2** (Causal-ABA-guided ABA Learning bridge), informed by the expanded
+M1.3. Milestone 2 has not started.

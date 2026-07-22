@@ -7,15 +7,18 @@ Use the high-level path for order of work, and the Approach while locking graphs
 
 ## Purpose
 
-Milestone 1 produces a **report-ready account of when and how unguided ABA Learning can
-recover mechanism-aligned rules from categorical tabular data** — and what is recovered
-instead. "Unguided" means the inherited ABALearn engine as published, with no Causal ABA
-integrations (those are Milestone 2 and beyond).
+Milestone 1 produces a **report-ready account of what causal structure unguided ABA
+Learning can recover from controlled tabular data, under which targets,
+data-availability conditions, graph/mechanism structures, and learning strategies —
+and which limitations are informational rather than strategic**. "Unguided" means the
+inherited ABALearn engine as published, with no Causal ABA integrations (those are
+Milestone 2 and beyond).
 
-The organising question is: given a small categorical table generated from a known graph
-\(G\) and mechanism, and a fixed encoding into an ABA learning problem, do the published
-variants of ABA Learning return the rules that the mechanism warrants — and when they do
-not, what happens and why?
+The completed M1.1/M1.2 and M1.3 Buckets 1–2 answer this first for selected targets in
+small categorical fixtures. Fabrizio's 22 July review expands M1.3 to investigate target
+variation, partial data availability, larger controlled structures, explicit
+independence/Markov-equivalence properties, and attribution of strategy failures versus
+information limitations.
 
 Framing rules for the whole milestone:
 
@@ -27,19 +30,23 @@ Framing rules for the whole milestone:
 - Quantitative metrics are **at-a-glance detectors only**. The instrument is qualitative
   inspection of `bk.sol.aba` and `prolog.stdout` — what happens, why, and which patterns
   recur across graphs.
-- This is RQ1 groundwork, not causal discovery. Say "recovery of mechanism-aligned rules",
-  not "learning causality".
+- This remains an investigation of the current target-wise ABA Learning bridge, not an
+  implementation of Russo-style Causal ABA or a claim of full causal discovery.
+- Claims must separate failures of a specified learning strategy from cases where the
+  available observations do not identify the causal structure.
 
-### Scope restrictions (fixed for the milestone)
+### Current scope and guardrails
 
-- **Categorical data only.** Continuous / large-scale bnlearn comparisons are out of
-  Milestone 1 (reserved for a later evaluation phase against any Causal-ABA-informed
-  solution). There is **no M1.4**.
-- **No binary-only fixtures** as the primary evidence base (categorical encodings expose
-  the mechanism classes of interest).
-- **Arms:** ECAI and AAMAS only (no RuleML).
-- **Graphs for the expanded M1.2:** Fabrizio’s usable small DAGs in the repo; exclude
-  random graphs, bnlearn networks, and cycles.
+- M12x and Buckets 1–2 remain locked; the new work is Bucket 3 within M1.3.
+- Categorical \(K=3\) remains the completed baseline. Additional category counts and
+  non-discrete data are possible Bucket 3 dimensions, not yet committed experiments.
+- Larger **controlled** DAGs are in scope. Random graphs and bnlearn-scale evaluation
+  remain outside the immediate Bucket 3 planning.
+- ECAI and AAMAS are the completed comparison arms. Any Bucket 3 strategy set must be
+  decided during planning.
+- Future fixtures must document graph–mechanism validity, support, expected outputs,
+  and relevant marginal/conditional-independence and Markov-equivalence properties.
+- There is **no M1.4**; this supervisor-driven expansion remains M1.3.
 
 ## Working Method
 
@@ -80,36 +87,40 @@ Pilot (historical): [`milestone1_part2/milestone1_part2_config_comparison.md`](m
 
 Configs: ECAI (`configs/ecai2024_config.pl`), AAMAS (`configs/aamas2025_config.pl`).
 
-## Part 3: Recovery patterns and limits (M1.3) — **in progress** (Bucket 1 locked; Bucket 2 Claims 1–2 analysed)
+## Part 3: Causal-recovery capabilities and limits (M1.3) — **in progress** (Buckets 1–2 locked; Bucket 3 planning)
 
 Planning folder: [`milestone1_part3/`](milestone1_part3/README.md)  
 Approach (method): [`milestone1_part3/milestone1_part3_approach.md`](milestone1_part3/milestone1_part3_approach.md)  
 Detail plan: [`milestone1_part3/milestone1_part3_failure_modes.md`](milestone1_part3/milestone1_part3_failure_modes.md)  
 Bucket 1 (**locked**): `docs/experiments/qualitative/M1.3-bucket1-claims.md`
 (TeX: `docs/report/findings/milestone1_part3_bucket1_claims.tex`)  
-Bucket 2 (**Claims 1–2 analysed**): `docs/experiments/qualitative/M1.3-bucket2-claims.md`
+Bucket 2 (**locked / closed; two claims**): `docs/experiments/qualitative/M1.3-bucket2-claims.md`
 (TeX: `docs/report/findings/milestone1_part3_bucket2_claims.tex`)
+Bucket 3 (**planning pending**):
+`docs/experiments/qualitative/M1.3-bucket3-claims.md`
 
-M1.3 turns the **locked** M12x Stage-3 matrix/inspection into evidence-backed claims.
-Bucket 1 (immediately defensible from theory, engine, and locked M12x) is **written**.
-Bucket 2 Claims 1–2 are supported by M13-C1/C2 targeted controls; Claim 3 is next.
-Prior provisional claim drafting from earlier M12x grids remains **withdrawn**
-(2026-07-20) and must not be reused.
+Buckets 1–2 turn the locked M12x inspection and M13-C1/C2 controls into six
+evidence-backed claims. Bucket 3 expands the scope under Fabrizio's 22 July guidance;
+its claim list, fixtures, and run matrix are not yet approved. Prior provisional claim
+drafting from earlier M12x grids remains **withdrawn** (2026-07-20) and must not be
+reused.
 
-M1.3 finishes when we can state succinctly what unguided ABA Learning does on these
-graphs/DGPs, why, and what remains open for Milestone 2.
+M1.3 finishes when we can state what causal structure unguided ABA Learning can recover
+under the approved controlled variations, why it succeeds or fails, and which limits
+motivate Milestone 2 rather than merely reflecting observational non-identifiability.
 See [`milestone1_high_level_path.md`](milestone1_high_level_path.md).
 
 ## Milestone Closure
 
 After M1.3, consolidate findings into a Milestone 1 conclusion:
 
-1. when unguided ABA Learning recovers mechanism-aligned rules on categorical tables;
-2. how the two published configurations differ, and on which data properties;
-3. what is systematically recovered instead, with evidence;
-4. which findings motivate Causal ABA-style guidance in Milestone 2, and which are
-   pipeline or encoding issues.
+1. when target-wise ABA Learning recovers mechanism-aligned rules;
+2. how target choice, data availability, graph/mechanism structure, and strategy affect
+   recovery;
+3. when collections of target-wise outputs support graph recovery;
+4. which failures are strategic, representational, data-driven, or
+   identifiability-limited;
+5. which diagnosed limitations motivate Causal ABA-style guidance in Milestone 2.
 
 **Current progress:** Part 1 closed. Part 2 (M12x) **closed**. Part 3 (M1.3) **in
-progress** — Bucket 1 locked; Bucket 2 Claims 1–2 analysed; Claim 3 next. No Part 4 /
-M1.4.
+progress** — Buckets 1–2 locked; Bucket 3 planning pending. No Part 4 / M1.4.

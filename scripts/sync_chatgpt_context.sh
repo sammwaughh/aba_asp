@@ -20,6 +20,7 @@ governance=(
   "docs/report/claims_ledger.md=claims_ledger.md"
   "docs/report/report_state.md=report_state.md"
   "docs/experiments/experiments_summary.md=experiments_summary.md"
+  "docs/experiments/qualitative/M1.3-bucket3-claims.md=M1.3-bucket3-claims.md"
 )
 
 # repo_orientation/ : "<source>=<dest-name>"

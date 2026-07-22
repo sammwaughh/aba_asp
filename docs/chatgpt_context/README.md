@@ -18,7 +18,7 @@ Do not edit files in this folder by hand; edits will be overwritten on the next 
 
 ## Manifest
 
-### governance/ (7)
+### governance/ (8)
 
 | Mirror file | Repo source (source of truth) |
 |---|---|
@@ -29,6 +29,7 @@ Do not edit files in this folder by hand; edits will be overwritten on the next 
 | `governance/claims_ledger.md` | `docs/report/claims_ledger.md` |
 | `governance/report_state.md` | `docs/report/report_state.md` |
 | `governance/experiments_summary.md` | `docs/experiments/experiments_summary.md` |
+| `governance/M1.3-bucket3-claims.md` | `docs/experiments/qualitative/M1.3-bucket3-claims.md` |
 
 ### repo_orientation/ (7)
 

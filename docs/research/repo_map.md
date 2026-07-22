@@ -102,6 +102,15 @@ aba_asp/
   - `qualitative/M1.1-parent-position.md` — Milestone 1 Part 1 (M11) metamorphic
     control; **closed** (Stages 0–7, June 2026)
     parent-position control.
+  - `qualitative/M1.2-expanded.md` and
+    `qualitative/M1.2-expanded-cell-inspection.md` — locked M12x evidence.
+  - `qualitative/M1.3-bucket1-claims.md` — locked Bucket 1 claim record.
+  - `qualitative/M1.3-bucket2-claims.md` — locked Bucket 2 claim record
+    (M13-C1/C2).
+  - `qualitative/M1.3-bucket3-claims.md` — supervisor-expanded Bucket 3 planning
+    record; no approved claims/experiments yet.
+  - `qualitative/M13-C1-causal-role-underdetermination/` and
+    `qualitative/M13-C2-bk-feature-order/` — analysed Bucket 2 probe records.
   - `report/findings/` — supervisor-facing milestone findings logs (`.tex`).
   - `templates/` — older copy templates retained for reference.
 - `docs/report/` — report-support docs (evidence-to-prose guardrails, not report prose):

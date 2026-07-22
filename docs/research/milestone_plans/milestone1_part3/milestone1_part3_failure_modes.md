@@ -1,6 +1,7 @@
 # Milestone 1, Part 3 (M1.3) — Recovery patterns and limits
 
-**Status:** claim drafting **commencing** (2026-07-20). M12x Stage-3 **closed** as evidence base.  
+**Status:** historical Bucket 1/2 detail plan. Bucket 1 and Bucket 2 are now
+**locked**; Bucket 3 planning follows Fabrizio's 22 July scope expansion.
 **Primary path:** [`../milestone1_high_level_path.md`](../milestone1_high_level_path.md)  
 **Parent index:** [`../milestone1-plan.md`](../milestone1-plan.md)  
 **Approach (method):** [`milestone1_part3_approach.md`](milestone1_part3_approach.md)  
@@ -9,6 +10,11 @@
 
 Filename retained for continuity; the work is **not** required to use a fixed “failure
 mode” taxonomy. Prefer plain-English descriptions of recovery patterns and limits.
+
+The method below describes the completed M12x-centred Bucket 1/2 phase. It is not the
+approved plan for Bucket 3. See
+`docs/experiments/qualitative/M1.3-bucket3-claims.md` and the current part-3
+`README.md` before using this file as a next-step guide.
 
 ## 1. Goal and research question
 
@@ -57,9 +63,11 @@ must not redefine success as coverage alone.
 - Bucket 1 claims (**locked**):
   `docs/experiments/qualitative/M1.3-bucket1-claims.md` and
   `docs/report/findings/milestone1_part3_bucket1_claims.tex`.
-- Bucket 2 claims (live):
+- Bucket 2 claims (**locked**):
   `docs/experiments/qualitative/M1.3-bucket2-claims.md` and
   `docs/report/findings/milestone1_part3_bucket2_claims.tex`.
+- Bucket 3 planning:
+  `docs/experiments/qualitative/M1.3-bucket3-claims.md`.
 - Registers and claims ledger synced.
 
 M1.3 is done when Milestone 1 can answer succinctly: what unguided ABA Learning does on
@@ -73,6 +81,7 @@ these graphs/DGPs, why (with evidence), and what remains open for Milestone 2.
 | Bucket 1 claims (TeX) | `docs/report/findings/milestone1_part3_bucket1_claims.tex` |
 | Bucket 2 claims (MD) | `docs/experiments/qualitative/M1.3-bucket2-claims.md` |
 | Bucket 2 claims (TeX) | `docs/report/findings/milestone1_part3_bucket2_claims.tex` |
+| Bucket 3 planning (MD) | `docs/experiments/qualitative/M1.3-bucket3-claims.md` |
 | Ablation artefacts (if any) | `causal/outputs/aba_learning/grid/M13_<ablation-id>/` |
 | Findings (Bucket 1 TeX) | `docs/report/findings/milestone1_part3_bucket1_claims.tex` |
 | Registers | `docs/experiments/experiments_summary.md`, `docs/research/experiment_register.md`, `docs/report/claims_ledger.md` |
@@ -82,5 +91,6 @@ these graphs/DGPs, why (with evidence), and what remains open for Milestone 2.
 - Scope claims carefully (graph, DGP, arm, encoding).
 - Distinguish paper claims from this repository’s pipeline behaviour.
 - Preserve ABA foundations / ABA Learning / Causal ABA / current `causal/` bridge.
-- M1.3 makes no causal-discovery claims and does not include large-graph / bnlearn
-  evaluation (deferred to a later milestone’s evaluation phase).
+- The current bridge remains target-wise ABA Learning, not full causal discovery.
+  Bucket 3 investigates capabilities, limitations, and identifiability under controlled
+  extensions; large-scale external evaluation remains a later phase.

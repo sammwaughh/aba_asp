@@ -362,6 +362,6 @@ whereas AAMAS's normalised learned framework and coverage did not.
 
 ## Next decision
 
-Write M1.3 Bucket 2 Claim 2 from this analysed record, the locked M1.1/M12x evidence,
-and the relevant engine control flow. Treat the U7 result as additional support for the
-subsequent support-mediated omitted-parent claim, without merging the two claims.
+None for M13-C2. Its evidence is incorporated into locked Bucket 2 Claim 2. The proposed
+support-mediated Bucket 2 Claim 3 was parked on 22 July; preserve the U7 evidence for
+possible use only after Bucket 3 planning identifies an approved investigation.

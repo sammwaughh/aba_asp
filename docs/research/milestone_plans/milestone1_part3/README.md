@@ -5,14 +5,16 @@
 **M1.3 Approach (method):**
 [`milestone1_part3_approach.md`](milestone1_part3_approach.md)
 
-**Status:** Bucket 1 **written / locked**. Bucket 2 Claims 1–2 are
-**written / analysed** from M13-C1/C2; Claim 3 is next. M12x Stage-3 remains the
-locked observational evidence base. Prior provisional claim drafts remain withdrawn.
+**Status:** Bucket 1 **locked**. Bucket 2 **locked / closed** with Claims 1–2 from
+M13-C1/C2. Bucket 3 **planning pending** following Fabrizio's 22 July expanded-scope
+guidance. M12x and Buckets 1–2 remain fixed evidence. The proposed Bucket 2 Claim 3 was
+parked. Milestone 2 has not started.
 
-M1.3 answers, with evidence: when and how mechanism-aligned rules are recovered by
-unguided ABA Learning, what is recovered instead, and why. Bucket 1 claims
-(immediately defensible from theory, engine, and locked M12x) are complete.
-Bucket 2 claims use targeted probes/controls beyond that package.
+Buckets 1–2 answer, with evidence, when and how mechanism-aligned target rules were
+recovered in the locked categorical regime and what was recovered instead. Bucket 3
+broadens M1.3 towards causal-recovery capabilities and limits across targets,
+data-availability conditions, larger graph/mechanism fixtures, and
+independence/identifiability structure. Its detailed method is not yet decided.
 
 ## Primary inputs (M12x Stage-3 locked)
 
@@ -33,12 +35,18 @@ Pilot M1.2 (10 cells) remains optional provenance only.
 | [`M1.3-bucket1-claims.md`](../../../experiments/qualitative/M1.3-bucket1-claims.md) | Bucket 1 claims (4 written) |
 | [`milestone1_part3_bucket1_claims.tex`](../../../report/findings/milestone1_part3_bucket1_claims.tex) | TeX companion |
 
-## Bucket 2 claim documents (live)
+## Bucket 2 claim documents (locked)
 
 | Document | Purpose |
 |----------|---------|
-| [`M1.3-bucket2-claims.md`](../../../experiments/qualitative/M1.3-bucket2-claims.md) | Live working Markdown: claim wording, argument, probe evidence |
+| [`M1.3-bucket2-claims.md`](../../../experiments/qualitative/M1.3-bucket2-claims.md) | Locked two-claim Markdown record |
 | [`milestone1_part3_bucket2_claims.tex`](../../../report/findings/milestone1_part3_bucket2_claims.tex) | Mirroring TeX companion |
+
+## Bucket 3 planning record
+
+| Document | Purpose | Status |
+|----------|---------|--------|
+| [`M1.3-bucket3-claims.md`](../../../experiments/qualitative/M1.3-bucket3-claims.md) | Supervisor-driven scope and planning guardrails | **Planning pending** |
 
 ## Bucket 2 probe records
 
@@ -57,5 +65,5 @@ Pilot M1.2 (10 cells) remains optional provenance only.
 
 **Parent index:** [milestone1-plan.md](../milestone1-plan.md)
 
-**Next:** investigate and write Bucket 2 Claim 3 (support-mediated exposure of an
-omitted required parent).
+**Next:** synchronise/upload the ChatGPT context and collaboratively plan Bucket 3.
+Do not define claims, fixtures, or a run matrix before that process is approved.

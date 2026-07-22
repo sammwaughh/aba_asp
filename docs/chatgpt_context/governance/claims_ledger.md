@@ -107,6 +107,19 @@ Add claims after each experiment is analysed. Report labels: QL1 = QI-001, QL2 =
 | M11-C-004 | Under greedy folding on the m1.1 eight-cell grid, cat3 rule-level σ-invariance (A↔B, D↔C) and π-equivariance hold, but **no** cat3 cell returns the pre-specified parent singleton: all four produce three rote-specific two-literal supersets (parent value predicate plus one non-parent literal). nd singleton cells B and C **regress** to superset under greedy. Greedy does **not** fix singleton recovery; it avoids the nd assumption-commitment path (H-G-third confirmed on cat3 A). | bounded | Stage 7 `M11_parent_position_greedy/`; `summary/compare_nd_greedy.md`; M1.1 record §Stage 7 | Binary greedy matches nd; not a strategy-default claim (M1.2 instead compares the scoped ECAI and AAMAS configurations). | Experimentation / Progress; findings tex §Greedy | active |
 | M11-C-005 | m1.1 initial eight-cell nd grid: binary passes all σ and π checks; cat3 fails σ-invariance (A↔B, D↔C) while π holds on B↔C only. Mechanism and ablations (Stage 4–6) explain cat3 σ failure; D vs C audited and intervened. | ablation-supported | M1.1 record; transformation table; M11_ablations | Metamorphic verdicts + ablation closure. | Experimentation / Progress | active |
 
+### M13 (m1.3 Bucket 2)
+
+Bucket 2 is **locked / closed** with the claims below. The proposed
+deterministic-target Claim 3 was parked on 22 July and has no ledger entry. Bucket 3 is
+planning-pending and must not receive claim IDs until specific investigations produce
+reviewed evidence.
+
+| Claim ID | Claim | Strength | Evidence | Caveats | Report location | Status |
+|---|---|---|---|---|---|---|
+| M13-C1-C-001 | For the input-equivalent M13-C1 pair, changing only the valid external causal graph left data, BK, examples, normalised learned delta, and ASP coverage unchanged within each configuration, while graph-relative parent recovery changed. ECAI's same \(x_0\)-rules were exact under \(G_0\) and sibling-only under \(G_1\); AAMAS retained parent plus sibling under both. | bounded | `M13-C1-causal-role-underdetermination/experiment.md`; `M13_c1_role_equivalence_summary.{md,json}`; 4 cell artefacts | Minimal perfect-copy construction; demonstrates underdetermination when graph role is absent from learner input, not prevalence in arbitrary data or causal discovery. | Experimentation / Progress; M1.3 Bucket 2 | active |
+| M13-C2-C-001 | Under complete BK feature-block permutations on U2, U5, and U7, every tested order yielded a distinct ECAI normalised delta within its family, while AAMAS preserved one normalised delta and one coverage result per family. | bounded | `M13-C2-bk-feature-order/experiment.md`; `M13_c2_bk_order_summary.{md,json}`; 20 cell traces/solutions | Published ECAI/AAMAS configs and exact-value handcrafted fixtures only; not general greedy order-invariance. | Experimentation / Progress; M1.3 Bucket 2 | active |
+| M13-C2-C-002 | On U5, putting parent \(x_1\) before ancestor \(x_0\) changed ECAI from a fully covering non-parent assumption framework to exact assumption-free parent recovery. On U7, ECAI rejected \(0/3\) negatives exactly when required parent \(x_2\) was third; all four orders placing \(x_2\) in the first two blocks rejected \(3/3\). | bounded | M13-C2 record and summary; U5/U7 `prolog.stdout`, `bk.sol.aba`, and `metrics.json` | Representation-order intervention; does not show that order is the only cause of all ECAI failures. | Experimentation / Progress; M1.3 Bucket 2 | active |
+
 ## Claims not to make
 
 These claims should not appear in report prose unless later evidence explicitly changes their status.

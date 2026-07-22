@@ -8,6 +8,65 @@ Supervisors: **Fabrizio** (primary) and **Francesco**.
 
 ---
 
+## Meeting with Fabrizio (22 July 2026 — expanded M1.3 scope)
+
+Context: Samuel presented the completed M12x analysis and M1.3 Bucket 1/2 findings.
+Fabrizio considered the analysis a good foundation, but asked for a broader Milestone 1
+investigation before work begins on the Causal-ABA-guided integration in Milestone 2.
+These notes record Samuel's account of the meeting; they are guidance, not experiment
+evidence or settled report claims.
+
+### Core points
+
+- Preserve the completed work. Do **not** redo M12x, Bucket 1, or Bucket 2.
+- Expand M1.3 towards a fuller investigation of what unguided ABA Learning can and
+  cannot recover about causal structure from tabular data.
+- Vary the **learning target** within controlled fixtures, and move towards analysis
+  that is not tied to one preselected target. Investigate when target-wise outputs can
+  support recovery of the actual causal graph.
+- Vary **data availability**, including cases where parts of the tabular observations
+  are absent. The exact missingness intervention (rows, cell values, variables, or a
+  combination) remains to be clarified during planning.
+- Use larger controlled graphs. More nodes can reveal limitations hidden by minimal
+  motifs; the four-node U7 diamond is a useful example.
+- Ensure each graph is genuinely compatible with its data-generating mechanisms.
+  Future fixture descriptions must state the graph, mechanisms, support, and expected
+  observable relations precisely.
+- Develop a sound understanding of **marginal independence**, **conditional
+  independence**, correlation, and **Markov equivalence classes** before designing the
+  expanded fixtures. Future graph/mechanism records should state these properties
+  explicitly where relevant.
+- Distinguish failures attributable to the ABA Learning strategy under specified
+  conditions from failures caused by unavailable information, observational
+  equivalence, representation, or data limitations.
+- Fabrizio raised a fork/chain indistinguishability example involving conditioning on a
+  middle variable. The exact graphical and conditional-independence statement must be
+  checked against the canonical theory before it is used as a claim or fixture-design
+  premise.
+- The investigation need not remain restricted to the current three-category discrete
+  regime. Increasing the number of categories and considering non-discrete data are
+  possible dimensions, not yet committed experiments.
+
+### Agreed project consequence
+
+Milestone 1 continues for the coming week. M1.3 will gain a new **Bucket 3** for claims
+supported by supervisor-driven exploratory and targeted investigations. Bucket 1
+remains locked. Bucket 2 closes with its two completed claims and M13-C1/C2 evidence.
+The previously discussed deterministic-target Claim 3 is not being added to Bucket 2.
+Milestone 2 has not started.
+
+### Actions before experiment planning
+
+1. Bring canonical repository documentation up to date.
+2. Regenerate and upload the ChatGPT Project context bundle.
+3. Review the relevant causal theory and completed evidence with Samuel, ChatGPT, and
+   Cursor supporting the planning process; Samuel owns decisions and Fabrizio's
+   guidance defines the new research scope.
+4. Do not create a detailed Bucket 3 claim list, fixture portfolio, or run matrix until
+   that planning process is complete.
+
+---
+
 ## Meeting with Fabrizio (June 2026, M1.1 review)
 
 Context: Samuel presented the initial m1.1 eight-cell nd grid results and interim
@@ -174,11 +233,21 @@ judgement-heavy moments; use fast/Instant only for trivial formatting.
 - **M1.1 (M11) parent-position metamorphic control** — **`closed`** (Stages 0–7). nd mechanism
   ablation-supported; Stage 7 greedy comparator complete. Findings:
   `docs/report/findings/milestone1_part1_m11_findings.tex`.
+- **M1.2 expanded (M12x)** — **closed / analysed** (18/18 Stage-3).
+- **M1.3 Bucket 1** — locked with four M12x/theory/engine claims.
+- **M1.3 Bucket 2** — locked with two targeted-control claims from M13-C1/C2.
 
 ## Outstanding actions
 
-- **M1.3:** trace-level attribution and failure-mode taxonomy over the M1.2 outcome matrix
-  (plan: `docs/research/milestone_plans/milestone1_part3/milestone1_part3_failure_modes.md`).
+- **M1.3 Bucket 3:** complete theory/evidence review and agree the expanded plan before
+  implementing new fixtures. Scope comes from the 22 July section above.
+- Clarify the intended missing-data interventions.
+- Verify and formalise the relevant marginal/conditional-independence and
+  Markov-equivalence statements, including Fabrizio's fork/chain example.
+- Decide how target variation and collections of target-wise outputs will be evaluated
+  against the causal graph.
+- Distinguish strategy failures from observational/data limitations in every future
+  claim.
 - **M1.1 optional:** Stage 5 runner call-chain doc (non-blocking).
 - Give each presented result an interpretation and a conclusion; reason explicitly about
   DGP-expected vs actual learned rules (M1.1 done; QL series partially done).

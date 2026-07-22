@@ -178,5 +178,7 @@ Cells: `(max_collider, x2, ECAI)`, `(max_collider, x2, AAMAS)`.
 
 ## Next step
 
-**M12x closed.** M1.3 claim drafting commencing from the Stage-3 evidence base.
-Separation-contract Stage-0 checks across U1–U6 remain optional follow-on (not blocking).
+**M12x closed and preserved as fixed evidence.** M1.3 Buckets 1–2 are locked; Bucket 3
+planning follows Fabrizio's 22 July expanded-scope guidance. M12x will not be redone.
+Separation-contract Stage-0 checks across U1–U6 remain optional provenance work (not
+blocking).

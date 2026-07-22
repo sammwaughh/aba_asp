@@ -2,7 +2,32 @@
 
 Recorded decisions that affect experiment direction. Evidence and interpretation remain in experiment records.
 
-## 2026-07-21 — Accept M13-C1/C2 evidence; proceed to Bucket 2 Claim 3
+## 2026-07-22 — Close Bucket 2; expand M1.3 with supervisor-driven Bucket 3
+
+**Decision:** M1.3 Bucket 2 is **locked / closed** with two claims supported by
+M13-C1 and M13-C2. The proposed deterministic-target failure claim is parked and is not
+part of Bucket 2. M12x and Buckets 1–2 remain fixed evidence and will not be redone.
+
+Following Fabrizio's 22 July guidance, Milestone 1 continues for the coming week.
+M1.3 will expand through a new Bucket 3 whose claims and experiments are not yet
+decided. The planning scope includes target variation, partial data availability,
+larger controlled graphs, explicit marginal/conditional-independence and Markov
+equivalence analysis, graph–mechanism validity, and separation of learning-strategy
+failures from information or data limitations. Category-count and non-discrete
+extensions remain possible rather than committed.
+
+**Guardrail:** this is a scope decision, not an experiment plan. Do not invent Bucket 3
+claims, fixtures, or conclusions before the planned theory/evidence review and
+Samuel's approval.
+
+**Records:** `docs/research/supervisor_guidance.md` (22 July meeting);
+`docs/experiments/qualitative/M1.3-bucket3-claims.md`;
+`docs/research/milestone_plans/milestone1_part3/`.
+
+**Next:** synchronise the ChatGPT context, then conduct the collaborative Bucket 3
+planning process. Milestone 2 has not started.
+
+## 2026-07-21 — Accept M13-C1/C2 evidence; proceed to Bucket 2 Claim 3 *(next-step superseded 22 July)*
 
 **Decision:** Bucket 2 Claims 1–2 are written from analysed targeted controls.
 M13-C1 establishes causal-role underdetermination under learner-input equivalence.
@@ -13,8 +38,9 @@ assert full causal discovery or general greedy order-invariance.
 **Evidence:** `M13-C1-causal-role-underdetermination/experiment.md`;
 `M13-C2-bk-feature-order/experiment.md`; `M1.3-bucket2-claims.md`.
 
-**Next:** investigate Bucket 2 Claim 3 using the U6/U7 support contrast and the new
-M13-C2 U7 order evidence.
+**Historical next step:** investigate Bucket 2 Claim 3 using the U6/U7 support contrast
+and the new M13-C2 U7 order evidence. Superseded by the 22 July decision to close
+Bucket 2 and open Bucket 3.
 
 ## 2026-07-21 — M1.3 Bucket 1 locked; commence Bucket 2
 
@@ -309,7 +335,7 @@ approach; this entry is the sole record of the superseded casebase construction.
 **Records:** `docs/experiments/qualitative/M1.2-config-comparison.md`;
 `docs/research/milestone_plans/milestone1_part2/milestone1_part2_config_comparison.md`.
 
-## 2026-07-08 — Milestone 1 re-scoped: M1.2 published-configuration comparison; M1.3 failure-mode taxonomy; no M1.4
+## 2026-07-08 — Milestone 1 re-scoped: M1.2 published-configuration comparison; M1.3 failure-mode taxonomy; no M1.4 *(Bucket 3 scope restrictions superseded 22 July)*
 
 **Decision:** Milestone 1's goal is a report-ready account of **when and how unguided ABA
 Learning recovers mechanism-aligned rules from categorical tabular data**. Two remaining

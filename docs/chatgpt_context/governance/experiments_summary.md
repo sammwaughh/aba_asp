@@ -39,7 +39,7 @@ Use the same status categories as `experiment_register.md`.
 | M11 | — | m1.1 Parent-position and representation-order control | analysed | `docs/experiments/qualitative/M1.1-parent-position.md` | `causal/configs/experiments/M11_parent_position.yaml`; `M11_parent_position_greedy.yaml` | `M11_parent_position/cells/`; `M11_parent_position_greedy/`; `M11_ablations/` | Interim Experimentation / Progress (Milestone 1) | nd: 8/8 solved; binary σ/π pass; cat3 σ fails (ablation-supported). Stage 7 greedy: binary matches nd; cat3 all supersets; rule-level σ restored under greedy. |
 | M12 | — | m1.2 Published-configuration comparison (pilot) | pilot analysed | `docs/experiments/qualitative/M1.2-config-comparison.md` | `causal/configs/experiments/M12_ecai2024.yaml`; `M12_aamas2025.yaml` | `causal/outputs/aba_learning/grid/M12_{ecai2024,aamas2025}/` | Interim Experimentation / Progress (Milestone 1) | 10-cell pilot analysed (historical). Expanded as M12x (redesign). No M1.4. |
 | M12x | — | m1.2 expanded U1–U7 (ECAI/AAMAS; val-only BK; 18 cells) | closed / analysed | `M1.2-expanded.md` | `M12x_{ecai2024,aamas2025}.yaml` | `M12x_summary.md`; `M12x_cell_reports/` (18) | Interim Experimentation / Progress (Milestone 1) | Fresh 18/18 solved + Stage-3 18/18 (2026-07-20); **closed**; evidence locked for M1.3. |
-| M13 | — | m1.3 Recovery patterns and limits (claims + targeted probes from M12x) | in progress | `M1.3-bucket1-claims.md` (locked); `M1.3-bucket2-claims.md` | — | `causal/outputs/aba_learning/grid/M13_<claim-id>/` | Interim Experimentation / Progress (Milestone 1) | Bucket 1 locked (4 claims); Bucket 2 Claims 1–2 written from M13-C1/C2; Claim 3 next. |
+| M13 | — | m1.3 causal-recovery capabilities and limits of unguided ABA Learning | in progress | `M1.3-bucket1-claims.md` (locked); `M1.3-bucket2-claims.md` (locked); `M1.3-bucket3-claims.md` (planning) | — | `causal/outputs/aba_learning/grid/M13_<approved-id>/` | Interim Experimentation / Progress (Milestone 1) | Buckets 1–2 locked; Bucket 3 planning pending from Fabrizio's 22 July expanded-scope guidance. M12x/Buckets 1–2 will not be redone. |
 | M13-C1 | M13 | Causal-role underdetermination under learner-input equivalence | analysed | `M13-C1-causal-role-underdetermination/experiment.md` | `M13_c1_role_equivalence_{ecai2024,aamas2025}.yaml` | `M13_c1_role_equivalence_summary.{md,json}`; 4 cell dirs | Interim Experimentation / Progress (Milestone 1) | 4/4 solved; paired inputs/delta/coverage identical. ECAI exact under \(G_0\), sibling-only under \(G_1\); AAMAS parent-plus-sibling under both. |
 | M13-C2 | M13 | Comparative sensitivity to BK feature-block order | analysed | `M13-C2-bk-feature-order/experiment.md` | `M13_c2_bk_order_{ecai2024,aamas2025}.yaml` | `M13_c2_bk_order_summary.{md,json}`; 20 cell dirs | Interim Experimentation / Progress (Milestone 1) | 20/20 solved. Every tested ECAI order produced a distinct delta within U2/U5/U7; AAMAS delta and coverage invariant per family. U5 swap restored exact ECAI parent recovery; U7 coverage depended on whether \(x_2\) was in the first two blocks. |
 
@@ -75,17 +75,20 @@ Inspection: `docs/experiments/qualitative/M1.2-expanded-cell-inspection.md`
 Matrix: `causal/outputs/aba_learning/grid/M12x_summary.md`  
 Pilot (historical): `docs/experiments/qualitative/M1.2-config-comparison.md`
 
-### Current: Milestone 1 Part 3 — recovery patterns and limits (M1.3)
+### Current: Milestone 1 Part 3 — causal-recovery capabilities and limits (M1.3)
 
-Status: **`in progress`** — Bucket 1 **written / locked** (2026-07-21); Bucket 2
-Claims 1–2 **written / analysed** from M13-C1/C2; Claim 3 next. M12x Stage-3 remains
-the locked observational evidence base. Method: `milestone1_part3_approach.md`.
-No M1.4 — large-graph / bnlearn evaluation is deferred.
+Status: **`in progress`** — Bucket 1 **locked**; Bucket 2 **locked / closed** with
+Claims 1–2 from M13-C1/C2; Bucket 3 **planning pending** following Fabrizio's 22 July
+scope review. M12x and Buckets 1–2 remain fixed evidence. Method:
+`milestone1_part3_approach.md`. The widened work remains M1.3; Milestone 2 has not
+started.
 
 **Primary path:** `docs/research/milestone_plans/milestone1_high_level_path.md`  
 Detail: `docs/research/milestone_plans/milestone1_part3/`  
 Bucket 1 (locked): `docs/experiments/qualitative/M1.3-bucket1-claims.md`  
-Bucket 2 (live): `docs/experiments/qualitative/M1.3-bucket2-claims.md`
+Bucket 2 (locked): `docs/experiments/qualitative/M1.3-bucket2-claims.md`
+
+Bucket 3 (planning): `docs/experiments/qualitative/M1.3-bucket3-claims.md`
 
 ## Current metric families
 
@@ -141,23 +144,36 @@ Workflow:
 4. Samuel verifies, edits, and integrates into the report.
 5. Claims are checked against `docs/report/claims_ledger.md`.
 
-## Current open questions
+## Current open questions (Bucket 3 planning)
 
-- Why does the configured learner return no solution on the binary collider (QL2) when a conjunctive parent rule exists in the table?
-- Under which noise levels and sample sizes can ABA Learning recover parents in the scaled noisy setting (a systematic sweep beyond QL3's arbitrary hyper-parameters)?
-- What is the root cause of the binary `unknown constant` errors in QL3, and how should the BK encoding be fixed?
-- Is actual fold count available, or only folding-token/runtime proxies (for M1.2 efficiency comparisons)?
-- What success metrics beyond parent membership best capture whether causality is being learned (supervisor guidance: construct expected outputs from graph + DGP and compare against actual learned rules)?
+- How should targets be varied, and when can a collection of target-wise learned
+  frameworks support recovery of the actual causal graph?
+- Which forms of partial data should be tested: omitted rows, missing cell values,
+  omitted variables, or combinations?
+- Which marginal and conditional independences are entailed by candidate
+  graph/mechanism fixtures, and which graphs lie in the same Markov equivalence class?
+- Under which larger controlled graphs do current strategy limitations become visible?
+- How should failures be attributed between learning strategy, encoding,
+  data availability, and observational non-identifiability?
+- Which category-count or non-discrete extensions are justified after the core
+  theory/fixture design is settled?
+
+Earlier QL implementation questions remain recorded in their experiment records but are
+not the immediate planning priority.
 
 ## Next action
 
-**Commence M1.3 Bucket 2** claim drafting (probes/controls as needed). Bucket 1 is locked.
+**Synchronise and upload the ChatGPT context, then plan M1.3 Bucket 3** from Fabrizio's
+expanded-scope guidance. Do not create claims or run matrices before that planning is
+approved.
 
 Completed so far in Milestone 1:
 
 1. **M1.1 (M11)** — closed.
 2. **M1.2 pilot (M12)** — Stages 0–3 analysed (10 cells).
 3. **M1.2 expanded (M12x)** — closed (18/18 solved + Stage-3 18/18).
-4. **M1.3 Bucket 1** — locked (4 claims + TeX mirror).
+4. **M1.3 Bucket 1** — locked (4 claims).
+5. **M1.3 Bucket 2** — locked (2 claims; M13-C1/C2).
 
-Remaining: M1.3 Bucket 2 → Milestone 1 write-up. No M1.4.
+Remaining: M1.3 Bucket 3 planning/investigation → Milestone 1 synthesis. No M1.4;
+Milestone 2 follows the expanded M1.3.

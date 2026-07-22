@@ -41,9 +41,10 @@ assessment as validation.
    writes/submits the report, approves implementation plans and commits.
 2. **Cursor** — implementation agent. Live repo inspection, code edits, tests, diffs,
    environment/run debugging, implementation of QL experiments.
-3. **ChatGPT** — research/theory/writing agent (this brief). Designs experiments, reviews
-   Cursor plans/diffs conceptually, checks theory–code alignment, drafts report text,
-   formalises results, and writes prompts for Cursor.
+3. **ChatGPT** — research/theory/writing agent (this brief). Helps formalise and compare
+   experiment plans within Samuel/supervisor-approved scope, reviews Cursor plans/diffs
+   conceptually, checks theory–code alignment, drafts report text, formalises results,
+   and writes prompts for Cursor.
 
 Flow: Samuel/supervisors decide ideas and design → ChatGPT helps articulate/document and review
 → Samuel decides → Cursor implements → ChatGPT reviews and helps write up → Samuel
@@ -51,19 +52,54 @@ approves/commits.
 
 ## Current project direction
 
-The settled research direction is **Causal ABA guides ABA Learning**: causal information
-(candidate arrows, no-edge claims, conditional-independence evidence, acyclicity, d-separation)
-is used as argumentative background knowledge to constrain, prioritise or interpret ABA Learning
-transformations, with the ultimate aim of learning causal relationships from data in an
-argumentative form. The interim experiments (RQ1) are **groundwork**: target-wise parent-set
-recovery characterising what unguided ABA Learning does before causal guidance is added. See
-`docs/report/manuscript/introduction.md` and `docs/report/manuscript/project_plan.md`.
+The longer-term direction remains **Causal ABA guides ABA Learning**: causal information
+(candidate arrows, no-edge claims, conditional-independence evidence, acyclicity, and
+d-separation) may later be represented argumentatively to constrain, prioritise, or interpret
+ABA Learning transformations. Milestone 2 will investigate that bridge, but **Milestone 2 has
+not started**.
 
-**Milestone status (July 2026):** Milestone 1 Part 1 (M11 / m1.1) is **closed**.
-M1.2 **pilot** (10 cells) is analysed. Expanded **Approach locked**; next: graph/mechanism
-cards, then implement/run, then M1.3. Approach:
-`docs/research/milestone_plans/milestone1_part2/milestone1_part2_expanded_approach.md`.
-Primary path: `docs/research/milestone_plans/milestone1_high_level_path.md`. No M1.4.
+The immediate priority is the supervisor-expanded **Milestone 1 / M1.3** investigation of
+unguided ABA Learning's capabilities and limitations for causal recovery from controlled
+tabular data. The current implementation remains target-wise ABA Learning; the expanded
+investigation must not be described as an implementation of full causal discovery.
+
+**Completed evidence (July 2026):**
+
+- M1.1 (M11) closed: parent-position/order mechanism, ablations, greedy comparator.
+- M1.2 expanded (M12x) closed: 18/18 run and Stage-3 inspection.
+- M1.3 Bucket 1 locked: four claims from theory/engine/M12x.
+- M1.3 Bucket 2 locked: two claims supported by M13-C1 (causal-role
+  underdetermination) and M13-C2 (BK feature-block order).
+
+**22 July supervisor pivot:** Fabrizio accepted the completed analysis as a good foundation
+and asked for a wider M1.3 investigation before Milestone 2. Bucket 3 is
+**planning pending**. The supervisor-defined dimensions are target variation and
+target-agnostic analysis; partial/missing tabular information; larger controlled graphs;
+explicit graph–mechanism validity; correlation, marginal/conditional independence, and
+Markov equivalence; attribution of learning-strategy failures versus information/data
+limitations; and possible category-count or non-discrete extensions. These are planning
+dimensions, not approved experiments or claims.
+
+M12x and Buckets 1–2 remain locked and will not be redone. There is no M1.4; the widened work
+remains M1.3. Primary path:
+`docs/research/milestone_plans/milestone1_high_level_path.md`. Bucket 3 planning record:
+`docs/experiments/qualitative/M1.3-bucket3-claims.md`.
+
+## Immediate ChatGPT Project task
+
+Samuel will use the refreshed ChatGPT context to work collaboratively on a strong Bucket 3
+plan. ChatGPT should:
+
+- help Samuel formalise Fabrizio's supplied scope and separate distinct research questions;
+- surface assumptions, theory prerequisites, confounds, and trade-offs;
+- distinguish strategic learner failures from observational non-identifiability;
+- insist that Markov-equivalence and independence statements are checked against canonical
+  theory before use;
+- organise candidate investigation structures for Samuel to decide.
+
+ChatGPT must not present its proposed plan as independent research validation. Exact
+missingness interventions, claim wording, fixture portfolios, strategy arms, category counts,
+and data types remain undecided.
 
 ## Source priority
 

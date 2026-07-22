@@ -75,6 +75,8 @@ Not responsible for:
 
 | Date | Tool | Task | Output / artefact | Used in report? | Samuel verification / edits | Notes |
 |---|---|---|---|---|---|---|
+| 2026-07-22 | Cursor | Record Fabrizio scope review; close Bucket 2; open Bucket 3; refresh ChatGPT context | supervisor guidance; research state/decisions/log; milestone plans; Bucket 3 planning stub; regenerated `docs/chatgpt_context/` | no (planning context) | Samuel supplied meeting notes and directed pivot | No Bucket 3 claims or experiments generated; mirrors prepared for manual re-upload. |
+| 2026-07-21 | Cursor | M1.3 Bucket 2 targeted controls and Markdown claim records | M13-C1 (4 cells), M13-C2 (20 cells), experiment records/summaries; Bucket 2 Claims 1–2 | evidence candidate | Samuel reviewed claim direction and requested implementation | Current bridge described as unguided target-wise ABA Learning; no full Causal ABA claim. |
 | 2026-07-20 | Cursor | Delete prior M12x outputs; reset status docs | deleted M12x_* grid trees/summary/cell-inspection; status → implemented awaiting fresh run | no | Samuel directed | Clean slate before locked 18-cell run; prior grids not evidence. |
 | 2026-07-20 | Cursor | Withdraw M1.3 claim analysis; mark M12x redesign | deleted claim list + claim working doc; status/path docs; Approach paused | no | Samuel directed | First-grid claims not reusable; redesign U4–U7 before M1.3. |
 | 2026-07-17 | Cursor | M1.3 Approach integration and initial M12x claim synthesis | `milestone1_part3_approach.md`; claim list (later deleted) | no | withdrawn 2026-07-20 | Six unordered claims from first M12x grid; **withdrawn** as uninformative fixtures. |

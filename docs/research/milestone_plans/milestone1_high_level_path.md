@@ -2,14 +2,19 @@
 
 **Role:** primary working reference for finishing Milestone 1.  
 **Parent index:** [`milestone1-plan.md`](milestone1-plan.md)  
-**Status:** active (2026-07-21) — **M12x closed** (18/18 Stage-3); **M1.3**
-Bucket 1 locked; Bucket 2 Claims 1–2 analysed; Claim 3 next
+**Status:** active (2026-07-22) — **M12x closed**; M1.3 Buckets 1–2 **locked**;
+Bucket 3 **planning pending** from Fabrizio's expanded-scope review
 
 Organising question for all of Milestone 1:
 
-> When and how are mechanism-aligned / correct general rules recovered by unguided ABA Learning — and what is recovered instead?
+> Across controlled targets, data-availability conditions, graph/mechanism structures,
+> and learning strategies, what causal structure can unguided ABA Learning recover,
+> what does it recover instead, and which limits are informational rather than
+> strategic?
 
-No Causal ABA integration in this milestone. Large-graph / bnlearn comparisons are **not** part of Milestone 1; they are reserved for a later evaluation phase against any Causal-ABA-informed solution.
+No Causal ABA integration in this milestone. M1.3 may add larger **controlled** fixtures
+under Bucket 3; large-scale / bnlearn evaluation remains reserved for a later phase
+against any Causal-ABA-informed solution.
 
 ---
 
@@ -20,8 +25,8 @@ No Causal ABA integration in this milestone. Large-graph / bnlearn comparisons a
 | **M1.1** | Closed | Parent-position / representation-order control; ordering mechanism established |
 | **M1.2 pilot** | Analysed (historical) | 10-cell pilot; superseded as primary evidence by M12x |
 | **M1.2 expanded (M12x)** | **Closed / analysed** | Fresh 18-cell run + Stage-3 inspection **18/18** (2026-07-20); evidence package locked for M1.3 |
-| **M1.3** | **In progress** | Bucket 1 locked; Bucket 2 Claims 1–2 analysed from M13-C1/C2; Claim 3 next |
-| **M1.4** | Does not exist | Large-graph tests deferred to a future evaluation milestone |
+| **M1.3** | **In progress** | Buckets 1–2 locked; Bucket 3 planning pending from 22 July supervisor guidance |
+| **M1.4** | Does not exist | Expanded controlled investigation remains within M1.3 |
 
 **Expanded M1.2 Approach:**  
 [`milestone1_part2/milestone1_part2_expanded_approach.md`](milestone1_part2/milestone1_part2_expanded_approach.md)  
@@ -54,12 +59,18 @@ Prior wiped M12x outputs remain void.
 Method: [`milestone1_part3/milestone1_part3_approach.md`](milestone1_part3/milestone1_part3_approach.md).  
 Bucket 1 (**locked**): `docs/experiments/qualitative/M1.3-bucket1-claims.md`
 (TeX: `docs/report/findings/milestone1_part3_bucket1_claims.tex`).  
-Bucket 2 (**Claims 1–2 analysed**): `docs/experiments/qualitative/M1.3-bucket2-claims.md`
+Bucket 2 (**locked / closed; two claims**): `docs/experiments/qualitative/M1.3-bucket2-claims.md`
 (TeX: `docs/report/findings/milestone1_part3_bucket2_claims.tex`).  
 Probe records: `M13-C1-causal-role-underdetermination/experiment.md`;
 `M13-C2-bk-feature-order/experiment.md`.  
-**Immediate next:** investigate and write Bucket 2 Claim 3. Do not reuse withdrawn
-prior claim drafts.
+Bucket 3 (**planning pending**):
+`docs/experiments/qualitative/M1.3-bucket3-claims.md`.
+
+**Immediate next:** synchronise/upload the ChatGPT context, then plan Bucket 3 from
+Fabrizio's 22 July scope: target variation, partial data, larger controlled graphs,
+explicit independence/Markov-equivalence analysis, graph–mechanism validity, and
+strategy-versus-information attribution. No detailed claim list or run matrix is yet
+approved.
 
 ### 4. Close Milestone 1
 
@@ -69,4 +80,6 @@ Consolidate findings into a Milestone 1 write-up answering the organising questi
 
 ## One-line discipline
 
-**M12x Stage-3 locked** → **M1.3 claims and probes** → Milestone 1 write-up → only later large-graph evaluation against a Causal-ABA-informed solution.
+**M12x + Buckets 1–2 locked** → **Bucket 3 theory/evidence review and approved
+investigations** → Milestone 1 synthesis → Milestone 2 guidance design → later
+large-scale evaluation.

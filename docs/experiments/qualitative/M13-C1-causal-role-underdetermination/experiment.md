@@ -358,9 +358,8 @@ causally privileged.
 
 ## Next decision
 
-Write M1.3 Bucket 2 Claim 1 from this analysed record and its locked theory/engine
-context. Then proceed to the separate BK-order comparison; do not treat this experiment
-as an order-invariance test.
+None for M13-C1. Its evidence is incorporated into locked Bucket 2 Claim 1. Preserve
+the record unchanged while Bucket 3 planning proceeds.
 
 ## Samuel review checklist
 

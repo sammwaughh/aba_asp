@@ -2,6 +2,24 @@
 
 Chronological notes on experiment progress, decisions, and milestones. Detailed evidence remains in experiment records and artefact paths cited below.
 
+## 2026-07-22 — Fabrizio scope review; M1.3 Bucket 3 pivot
+
+- **Supervisor outcome:** existing M12x and M1.3 analysis accepted as a useful
+  foundation; broader causal-discovery capability/limitation investigation required.
+- **Closed:** Bucket 2 locked with Claims 1–2 (M13-C1/C2). Proposed Claim 3 parked.
+- **Preserved:** M12x and Buckets 1–2 will not be redone.
+- **New scope dimensions (planning pending):** varying targets; partial/missing
+  tabular information; larger controlled graphs; explicit correlation,
+  marginal/conditional independence, and Markov equivalence; graph–mechanism
+  consistency; attribution of learning-strategy versus information/data limitations;
+  possible additional categories or non-discrete data.
+- **Status:** Milestone 1 / M1.3 continues for the coming week; Bucket 3 opened
+  structurally but has no approved claims or experiment matrix yet. Milestone 2 not
+  started.
+- **Immediate next:** update/synchronise the ChatGPT context, then begin collaborative
+  planning from the supervisor-defined scope.
+- **Guidance:** `docs/research/supervisor_guidance.md` (22 July 2026).
+
 ## 2026-07-21 — M1.3 Bucket 2 Claims 1–2 analysed and written
 
 - **M13-C1:** 4/4 cells `solved`; input-equivalent graph pair confirmed identical

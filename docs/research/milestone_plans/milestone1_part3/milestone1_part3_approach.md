@@ -2,10 +2,10 @@
 
 **Role:** working reference for Milestone 1 Part 3 — investigating **claims** about how
 unguided ABA Learning behaves on the locked M1.2 regime.
-**Status:** Bucket 1 **written / locked** (2026-07-21). Bucket 2 Claims 1–2 are
-**written / analysed** from M13-C1/C2; Claim 3 is next. M12x Stage-3 is **closed**
-and locked as the observational evidence base. Prior provisional claim list remains
-withdrawn.
+**Status:** Bucket 1 **locked**; Bucket 2 **locked / closed** with Claims 1–2;
+Bucket 3 **planning pending** (2026-07-22 scope expansion). M12x and Buckets 1–2
+remain fixed evidence. The method below records the completed Bucket 1/2 workflow;
+Bucket 3's detailed approach is not yet approved.
 **Primary path:** [`../milestone1_high_level_path.md`](../milestone1_high_level_path.md)
 **Parent index:** [`../milestone1-plan.md`](../milestone1-plan.md)
 
@@ -16,6 +16,22 @@ withdrawn.
 `docs/experiments/qualitative/M1.2-expanded.md`;
 `docs/experiments/qualitative/M1.2-expanded-cell-inspection.md` (18/18);
 `causal/outputs/aba_learning/grid/M12x_summary.md`
+
+---
+
+## 22 July 2026 scope expansion
+
+Following Fabrizio's review, M1.3 now continues beyond the fixed M12x regime through a
+new Bucket 3. The supervisor-defined planning dimensions are: target variation and
+target-agnostic analysis; partial data availability; larger controlled graphs;
+graph–mechanism validity; explicit correlation, marginal/conditional independence, and
+Markov equivalence; attribution of strategy failures versus information/data
+limitations; and possible category-count or non-discrete extensions.
+
+This section is a scope record, not an experiment design. No Bucket 3 claim list,
+fixture portfolio, or run matrix is approved. See
+`docs/experiments/qualitative/M1.3-bucket3-claims.md` and the 22 July section of
+`docs/research/supervisor_guidance.md`.
 
 ---
 
@@ -114,9 +130,12 @@ evidence-qualified; no headline-driven framing.
 
 ## M2-readiness
 
-Kept claims give non-overlapping insight into unguided recovery on this principled cell
-class — enough to begin Causal ABA integration. No reusable eval protocol in M1.3. No
-fixed stop rule beyond covering the interesting M12x patterns.
+Buckets 1–2 provide non-overlapping insight into the locked categorical target-wise
+regime, but Fabrizio's 22 July review requires a broader M1.3 capability/limitation
+investigation before Causal ABA integration begins. Bucket 3 must clarify target
+variation, data availability, larger structures, and observational identifiability so
+that any Milestone 2 guidance is motivated by diagnosed limitations rather than by the
+fixed M12x regime alone.
 
 ---
 
@@ -130,6 +149,7 @@ fixed stop rule beyond covering the interesting M12x patterns.
 | `claim_<slug>.tex` | Frozen findings chapter after \(C_i\) is done |
 | `docs/experiments/qualitative/M1.3-bucket1-claims.md` | Bucket 1 claims (**locked**) |
 | `docs/report/findings/milestone1_part3_bucket1_claims.tex` | TeX companion for Bucket 1 |
-| `docs/experiments/qualitative/M1.3-bucket2-claims.md` | Live Bucket 2 claim working record |
+| `docs/experiments/qualitative/M1.3-bucket2-claims.md` | Bucket 2 claims (**locked**) |
 | `docs/report/findings/milestone1_part3_bucket2_claims.tex` | TeX companion for Bucket 2 |
+| `docs/experiments/qualitative/M1.3-bucket3-claims.md` | Bucket 3 scope / planning record |
 | M12x Stage-3 inspection | Observational base for the initial claim list |
