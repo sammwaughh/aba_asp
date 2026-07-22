@@ -88,6 +88,177 @@ aba_asp/
 - Tests: `causal/tests/` (config/dgp unit tests; solver-gated runner/query tests that
   auto-skip when `swipl`/`clingo`/`pyarrow`/fixtures are absent).
 
+## Milestone 1.2 expanded (M12x): documents, code and cells
+
+M12x is the **closed / locked 18-cell evidence package** for Milestone 1 Part 2
+expanded. Do not confuse it with the earlier 10-cell M12 pilot, whose fixtures,
+configs and summaries use `M12_*` rather than `M12x_*`.
+
+### Design and evidence documents
+
+- Primary M1.2 expanded approach:
+  `docs/research/milestone_plans/milestone1_part2/milestone1_part2_expanded_approach.md`.
+- Unit-set overview:
+  `docs/research/milestone_plans/milestone1_part2/milestone1_part2_expanded_unit_set.md`.
+- Per-unit mechanism cards:
+  `docs/research/milestone_plans/milestone1_part2/mechanism_cards/U1_*.md`
+  through `U7_*.md`; the directory `README.md` is their index.
+- Consolidated unit catalogue:
+  `docs/research/milestone_plans/milestone1_part2/m12x_units_reference.tex`
+  (with generated PDF beside it).
+- Experiment record:
+  `docs/experiments/qualitative/M1.2-expanded.md`.
+- Authoritative 18-cell qualitative inspection:
+  `docs/experiments/qualitative/M1.2-expanded-cell-inspection.md`.
+- Report-facing copy of the inspection:
+  `docs/report/findings/milestone1_part2_m12x_cell_inspection.tex`
+  (with generated PDF beside it).
+
+### Fixture, configuration, summary and test code
+
+- Seven U1–U7 fixture builders:
+  `causal/experiments/handcrafted_m12x.py`.
+- Shared fixture registry:
+  `causal/experiments/handcrafted.py` (registers `M12X_BUILDERS`).
+- Published-configuration grid arms:
+  `causal/configs/experiments/M12x_ecai2024.yaml` and
+  `causal/configs/experiments/M12x_aamas2025.yaml`.
+- Summary and detector generator:
+  `causal/experiments/m12x_summary.py`.
+- Relevant tests:
+  `causal/tests/test_m12x_fixtures.py`,
+  `causal/tests/test_m12x_configs.py`, and
+  `causal/tests/test_m12x_summary.py`.
+
+### M12x output and cell layout
+
+- ECAI arm:
+  `causal/outputs/aba_learning/grid/M12x_ecai2024/`.
+- AAMAS arm:
+  `causal/outputs/aba_learning/grid/M12x_aamas2025/`.
+- Each arm has nine cell directories under `cells/`, using
+  `{fixture}__target-{target}`:
+  - `m12_u1_separator_copy__target-x2`
+  - `m12_u2_collider_min__target-x2`
+  - `m12_u3_collider_max__target-x2`
+  - `m12_u4_fork_asymmetric__target-x1`
+  - `m12_u4_fork_asymmetric__target-x2`
+  - `m12_u5_chain_curated__target-x2`
+  - `m12_u6_g1_min_diff__target-x2`
+  - `m12_u6_g1_min_diff__target-x3`
+  - `m12_u7_diamond_noisy__target-x3`
+- A cell directory contains the generated table and learner artefacts, including
+  `data.csv`, `bk.aba`, `bk.sol.aba`, `bk.sol.asp`, `prolog.stdout`, and
+  `metrics.json`. Arm-level run metadata includes `manifest.json`,
+  `results.parquet`, and `run.log`.
+- Cross-arm summaries:
+  `causal/outputs/aba_learning/grid/M12x_summary.md` and
+  `M12x_summary.json`.
+- Generated per-cell detector reports:
+  `causal/outputs/aba_learning/grid/M12x_cell_reports/`, split into
+  `M12x_ecai2024/` and `M12x_aamas2025/`.
+
+The generated output tree is evidence and must not be hand-edited. The experiment
+record and cell-inspection document explain which artefacts are authoritative and how
+runner `solved`, ASP coverage, exact \(\mathcal H_t^\star\) match, and semantic
+judgement differ.
+
+## Milestone 1.3: claims, probes and future work
+
+M1.3 currently has two locked claim buckets and one planning bucket. Its shared method
+and terminology live in
+`docs/research/milestone_plans/milestone1_part3/milestone1_part3_approach.md`;
+`milestone1_part3_failure_modes.md` records the failure-mode vocabulary.
+
+### Claim and findings documents
+
+- Bucket 1 (four locked claims):
+  `docs/experiments/qualitative/M1.3-bucket1-claims.md`.
+- Bucket 1 report companion:
+  `docs/report/findings/milestone1_part3_bucket1_claims.tex`
+  (with generated PDF beside it).
+- Bucket 2 (two locked claims):
+  `docs/experiments/qualitative/M1.3-bucket2-claims.md`.
+- Bucket 2 report companion:
+  `docs/report/findings/milestone1_part3_bucket2_claims.tex`
+  (with generated PDF beside it).
+- Bucket 3 planning record:
+  `docs/experiments/qualitative/M1.3-bucket3-claims.md`.
+  It contains supervisor-defined planning dimensions, not approved claims, fixtures,
+  configurations or a run matrix.
+
+### M13-C1 probe: causal-role underdetermination
+
+- Evidence record:
+  `docs/experiments/qualitative/M13-C1-causal-role-underdetermination/experiment.md`.
+- Fixtures and registry:
+  `causal/experiments/handcrafted_m13.py` and
+  `causal/experiments/handcrafted.py`.
+- Two arm configs:
+  `causal/configs/experiments/M13_c1_role_equivalence_ecai2024.yaml` and
+  `M13_c1_role_equivalence_aamas2025.yaml`.
+- Summary generator and tests:
+  `causal/experiments/m13_c1_summary.py` and
+  `causal/tests/test_m13_c1_fixtures.py`.
+- Four generated cells (two graph-labelled fixtures in each arm):
+  `causal/outputs/aba_learning/grid/M13_c1_role_equivalence_{ecai2024,aamas2025}/cells/`
+  with slugs `m13_c1_parent_x0__target-x2` and
+  `m13_c1_parent_x1__target-x2`.
+- Cross-arm outputs:
+  `causal/outputs/aba_learning/grid/M13_c1_role_equivalence_summary.md`
+  and `.json`.
+
+### M13-C2 probe: BK feature-block order
+
+- Evidence record:
+  `docs/experiments/qualitative/M13-C2-bk-feature-order/experiment.md`.
+- Order-variant fixtures:
+  `causal/experiments/handcrafted_m13.py`.
+- Two arm configs:
+  `causal/configs/experiments/M13_c2_bk_order_ecai2024.yaml` and
+  `M13_c2_bk_order_aamas2025.yaml`.
+- Summary generator and tests:
+  `causal/experiments/m13_c2_summary.py` and
+  `causal/tests/test_m13_c2_fixtures.py`.
+- Twenty generated cells (ten order variants in each arm):
+  `causal/outputs/aba_learning/grid/M13_c2_bk_order_{ecai2024,aamas2025}/cells/`.
+  The ten fixture slugs comprise two U2 orders, two U5 orders, and all six U7
+  predictor-block permutations; each cell adds `__target-x2` (U2/U5) or
+  `__target-x3` (U7).
+- Cross-arm outputs:
+  `causal/outputs/aba_learning/grid/M13_c2_bk_order_summary.md` and `.json`.
+
+M13-C1 and M13-C2 are completed evidence for locked Bucket 2. They are not a generic
+directory for all future M1.3 work.
+
+### Where Bucket 3 work goes once approved
+
+Bucket 3 is **planning pending**. The current sources are its planning record above,
+the 22 July section of `docs/research/supervisor_guidance.md`, and
+`docs/research/research_state.md`. There are no approved Bucket 3 code files, configs,
+cells or output grids yet.
+
+After Samuel approves a specific experiment, follow the established layout:
+
+- evidence record:
+  `docs/experiments/qualitative/<experiment-id>/experiment.md`;
+- fixture or analysis code:
+  a clearly named module under `causal/experiments/`, registered through the existing
+  harness only where needed;
+- grid config:
+  `causal/configs/experiments/<experiment-id-or-arm>.yaml`;
+- focused tests:
+  `causal/tests/test_<experiment-id-or-feature>.py`;
+- generated cells:
+  `causal/outputs/aba_learning/grid/<experiment-id-or-arm>/cells/<cell-slug>/`;
+- generated cross-cell summary:
+  `causal/outputs/aba_learning/grid/<experiment-id>_summary.{md,json}` when a
+  dedicated summary generator is warranted.
+
+Also update `docs/experiments/experiments_summary.md` and
+`docs/research/experiment_register.md`. Do not create Bucket 3 fixtures or cells merely
+from the planning dimensions; the exact investigation design must be approved first.
+
 ## Documentation / theory files (`docs/`)
 
 - `docs/theory/` — **canonical**: `theory_primer.md`, `background.tex`,
