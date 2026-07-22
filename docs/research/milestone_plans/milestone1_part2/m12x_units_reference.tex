@@ -1,1375 +1,836 @@
-\documentclass[11pt]{article}
-\usepackage[a4paper,margin=25mm]{geometry}
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
-\usepackage{textcomp}
+\documentclass[11pt,a4paper]{article}
+
+% ---------------------------------------------------------------------------
+% M12x unit catalogue --- design reference for Expanded Milestone 1 Part 2
+% Canonical sources: mechanism_cards/, milestone1_part2_expanded_*.md
+% Implementation: causal/experiments/handcrafted_m12x.py
+% ---------------------------------------------------------------------------
+
+\usepackage[margin=2.2cm]{geometry}
 \usepackage{amsmath,amssymb}
-\usepackage{xcolor}
-\usepackage{booktabs,longtable,array}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
 \usepackage{enumitem}
-\usepackage{listings}
-\usepackage[hidelinks]{hyperref}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=black,urlcolor=blue!50!black,citecolor=black}
 
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{0.55em}
-\setlist{nosep,leftmargin=*}
-\emergencystretch=3em
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
 
-\lstdefinestyle{logic}{
-  basicstyle=\ttfamily\small,
-  columns=fullflexible,
-  keepspaces=true,
-  breaklines=true,
-  frame=single,
-  framerule=0.3pt,
-  rulecolor=\color{black!35},
-  xleftmargin=0.5em,
-  xrightmargin=0.5em,
-  aboveskip=0.7em,
-  belowskip=0.7em,
-  showstringspaces=false
+\tikzset{
+  dag/.style={>=Stealth, every edge/.style={draw=black!80, thick, ->}},
+  v/.style={
+    circle, draw=black!75, thick, minimum size=7.2mm,
+    inner sep=0pt, font=\sffamily\small
+  },
+  viso/.style={v, dashed, draw=black!45},
 }
 
-\title{M12x --- Cell-by-cell logical inspection (18 cells)}
-\author{}
-\date{}
+\newtcolorbox{targetbox}[1][]{%
+  colback=blue!3!white,
+  colframe=blue!40!black,
+  coltitle=white,
+  colbacktitle=blue!40!black,
+  boxrule=0.6pt,
+  left=4pt,right=4pt,top=3pt,bottom=3pt,
+  fonttitle=\bfseries\sffamily\small,
+  title=#1,
+  before skip=0.6em,
+  after skip=0.5em,
+}
+
+\title{M12x Unit Catalogue\\[0.35em]
+\large Graphs, mechanisms, data tables, and intended learned rules\\[0.25em]
+\normalsize Expanded Milestone~1 Part~2 (units U1--U7)}
+\author{Causal ABA Learning project --- Samuel Waugh}
+\date{2026-07-20}
+
 \begin{document}
 \maketitle
 
-\textbf{Experiment ID:} M12x (Milestone 1 Part 2 expanded)\\
-\textbf{Status:} Stage-3 qualitative inspection \textbf{done / analysed} (18/18 written)\\
-\textbf{Date started:} 2026-07-20\\
-\textbf{Parent record:} \href{M1.2-expanded.md}{\texttt{M1.2-expanded.md}}\\
-\textbf{Artefacts:} \texttt{causal/outputs/aba\_learning/grid/M12x\_\{ecai2024,aamas2025\}/cells/\{dgp\}\_\_target-\{t\}/}\\
-\textbf{Side-car matrix:} \texttt{causal/outputs/aba\_learning/grid/M12x\_summary.md}\\
-\textbf{Per-cell detector reports:} \texttt{causal/outputs/aba\_learning/grid/M12x\_cell\_reports/}\\
-\textbf{Fixtures:} \texttt{causal/experiments/handcrafted\_m12x.py}\\
-\textbf{Catalogue:} \texttt{docs/research/milestone\_plans/milestone1\_part2/m12x\_units\_reference.tex}\\
-\textbf{Grid run:} 2026-07-20 (18/18 cells \texttt{solved}; summary regenerated same day)
+\begin{abstract}
+\noindent
+This document catalogues the seven experimental \emph{units} used in the expanded
+Milestone~1 Part~2 grid (experiment identifier M12x).
+Each unit specifies a directed acyclic graph, a data-generating mechanism, a finite
+observational table, and one or more learning targets together with an intended
+learned rule for that target.
+The catalogue records \emph{inputs} to ABA Learning only; it does not report learner
+outputs.
+It is written so that a reader unfamiliar with the project shorthand can understand
+what is held fixed, what varies across units, and what rule each cell is designed to
+probe.
+\end{abstract}
 
-This document inspects each of the 18 \texttt{(arm \(\times\) fixture \(\times\) target)} cells. For every completed cell it records: the locked setup and \(\mathcal{H}_t^\star\); a clear reading of how ABA Learning produced the learned framework; and whether and why that framework matches or fails the intended hypothesis and semantic success description.
+\tableofcontents
+\vspace{0.75em}
+\noindent\rule{\linewidth}{0.4pt}
 
-The object of study is unguided ABA Learning recovery of mechanism-aligned target rules from categorical tabular background knowledge and positive/negative examples.
+% ===========================================================================
+\section{Purpose of this catalogue}
+\label{sec:purpose}
+% ===========================================================================
 
-\textbf{Reading conventions.} Learned \(\delta\) is the new intensional material in \texttt{bk.sol.aba} after variable-canonical background knowledge subtraction. Exact match means the learned target rules equal \(\mathcal{H}_t^\star\) after normalisation. ASP \texttt{pos\_covered} / \texttt{neg\_rejected} fractions are coverage facts from the side-car; they are not a substitute for intensional match. Acceptance remains inspection-first against the Approach semantic description.
+The M12x experiment asks when and how two published ABA Learning configurations
+(ECAI~2024 and AAMAS~2025) recover intended intensional rules from categorical
+tabular data generated by known mechanisms on small directed acyclic graphs.
+The experiment uses the project's existing ABA Learning bridge over tabular data.
+It does \emph{not} implement Russo-style Causal ABA (arrow, no-edge, or independence
+assumptions with stable extensions as candidate graphs).
 
-\medskip\hrule\medskip
+A \textbf{unit} is one graph together with one data-generating process and a fixed
+set of learning targets.
+A \textbf{cell} is one triple consisting of a unit, a learning target, and a learner
+configuration.
+There are seven units and nine unit--target pairs.
+Crossing each pair with the two configurations yields eighteen cells in total.
 
-\section{Inspection checklist (18)}
+For each unit, the sections below give:
+\begin{enumerate}[leftmargin=1.6em,itemsep=0.2em]
+  \item a natural-language statement of the unit's scientific purpose;
+  \item the graph;
+  \item the mechanisms used to generate the table;
+  \item the observational table $\mathcal{D}$;
+  \item for each learning target, the positive and negative example sets and the
+        intended learned rule $\mathcal{H}_t^\star$.
+\end{enumerate}
 
-{\small
-\setlength{\tabcolsep}{3pt}
-\begin{longtable}{@{}>{\centering\arraybackslash}p{0.035\textwidth}p{0.075\textwidth}p{0.235\textwidth}>{\centering\arraybackslash}p{0.055\textwidth}>{\centering\arraybackslash}p{0.105\textwidth}p{0.355\textwidth}@{}}
+% ===========================================================================
+\section{Notation and terminology}
+\label{sec:notation}
+% ===========================================================================
+
+\paragraph{Graph.}
+Let $G=(V,E)$ be a directed acyclic graph.
+The node set is written $V=\{x_0,x_1,\ldots\}$ and the edge set $E\subseteq V\times V$.
+An edge $x_i\to x_j$ means that $x_i$ is a direct cause of $x_j$ in the data-generating
+story for that unit.
+The \textbf{parents} of a node $x$ are
+$\mathrm{Pa}(x)=\{y\in V:(y\to x)\in E\}$.
+The \textbf{ancestors} of $x$ are all nodes with a directed path to $x$ (excluding $x$).
+The \textbf{descendants} of $x$ are all nodes reachable from $x$ by a directed path
+(excluding $x$).
+The \textbf{sources} are $S=\{x\in V:\mathrm{Pa}(x)=\emptyset\}$.
+The \textbf{non-sources} are $N=V\setminus S$.
+
+\paragraph{Alphabet and table.}
+Every variable takes values in the finite alphabet $K=\{0,1,2\}$.
+An observational table $\mathcal{D}$ is a finite list of rows.
+Each row is an assignment of a value in $K$ to every variable in $V$.
+Rows are indexed by \textbf{sample identifiers} $1,2,\ldots,|\mathcal{D}|$ in the
+order shown in each unit's table.
+
+\paragraph{Mechanisms.}
+Except where a unit explicitly uses curated multi-row support (U5 and U7), the table
+is built by taking the full Cartesian product $K^{|S|}$ over source assignments and
+then evaluating a deterministic function
+$x:=f_x(\mathrm{Pa}(x))$
+for each non-source $x$ in a topological order.
+The notation $\operatorname{copy}(y)$ means the identity map $y\mapsto y$.
+The notation $|a-b|$ means absolute difference on the integers $\{0,1,2\}$.
+
+\paragraph{Learning target and examples.}
+A \textbf{learning target} $t\in N$ is the variable whose predicate the learner must
+characterise.
+Under the shared labelling regime used for all units in this catalogue, the
+\textbf{positive examples} are
+\[
+  E^+=\{\,i\in\{1,\ldots,|\mathcal{D}|\}: \text{the value of }t\text{ in row }i
+  \text{ is not }0\,\},
+\]
+and the \textbf{negative examples} are
+\[
+  E^-=\{\,i\in\{1,\ldots,|\mathcal{D}|\}: \text{the value of }t\text{ in row }i
+  \text{ is }0\,\}.
+\]
+In the ABA Learning input these appear as ground atoms $t(i)$ for $i\in E^+$
+(positive) and $i\in E^-$ (negative).
+
+\paragraph{Background knowledge.}
+For a fixed target $t$, the background knowledge contains exact-value predicates
+for every variable other than $t$.
+The atom $x_i\_\mathtt{val}\_v(A)$ is true of sample identifier $A$ precisely when
+variable $x_i$ equals $v$ in that row.
+If $t$ has descendants in $G$, those descendants remain in the background knowledge
+as available predictors.
+Citing a descendant in a learned rule for $t$ is recorded as an explicit failure mode
+in later inspection.
+
+\paragraph{Intended learned rule.}
+For each target $t$, the symbol $\mathcal{H}_t^\star$ denotes a compact set of Horn
+clauses in the $\mathtt{val}$ language that correctly separates $E^+$ from $E^-$ on
+$\mathcal{D}$ and that uses the intended parent (or parents) of $t$.
+This is the reference against which learned rules are compared.
+It is an intensional design target for inspection, not a claim that the learner must
+emit that exact syntax.
+
+\paragraph{Configurations.}
+The two learner configurations are the published Prolog files abbreviated
+ECAI and AAMAS.
+Their filenames are \path{ecai2024_config.pl} and \path{aamas2025_config.pl}.
+Both files live in the repository directory named \texttt{configs}.
+
+% ===========================================================================
+\section{Shared experimental regime}
+\label{sec:regime}
+% ===========================================================================
+
+The following choices are held fixed across U1--U7 unless a unit section states an
+explicit exception.
+
+\begin{enumerate}[leftmargin=1.6em,itemsep=0.35em]
+  \item Every variable has alphabet $K=\{0,1,2\}$.
+  \item Labels are nonzero-positive: $E^+$ contains exactly the rows where $t\neq 0$,
+        and $E^-$ contains exactly the rows where $t=0$.
+  \item Background knowledge uses only $\mathtt{val}$ predicates
+        (exact-value atoms $x_i\_\mathtt{val}\_v$).
+  \item Units U1--U4 and U6 build $\mathcal{D}$ by full source factorial over $K^{|S|}$
+        followed by deterministic propagation.
+        Units U5 and U7 instead use a curated multi-row support that is not a
+        single-valued function of the sources alone; those constructions are stated
+        in full in their sections.
+  \item Each unit--target pair is run once under ECAI and once under AAMAS, giving
+        twenty cells in total.
+\end{enumerate}
+
+\subsection*{Overview of units}
+
+\begin{center}
+\small
+\begin{tabular}{@{}cllccrr@{}}
 \toprule
-\# & Arm & Fixture & Target & Exact \(\mathcal{H}^\star\)? & Short verdict \\
+ID & Graph family & Learning targets & $|S|$ & $|\mathcal{D}|$ & Cells \\
 \midrule
-\endfirsthead
-\toprule
-\# & Arm & Fixture & Target & Exact \(\mathcal{H}^\star\)? & Short verdict \\
+U1 & separator with isolated $x_0$ & $\{x_2\}$ & 2 & 9 & 2 \\
+U2 & collider & $\{x_2\}$ & 2 & 9 & 2 \\
+U3 & collider & $\{x_2\}$ & 2 & 9 & 2 \\
+U4 & fork & $\{x_1,x_2\}$ & 1 & 3 & 4 \\
+U5 & chain (curated support) & $\{x_2\}$ & 1 & 6 & 2 \\
+U6 & four-node G1 & $\{x_2,x_3\}$ & 2 & 9 & 4 \\
+U7 & diamond (curated support) & $\{x_3\}$ & 1 & 6 & 2 \\
 \midrule
-\endhead
-1 & ECAI & \texttt{m12\_u1\_separator\_copy} & \(x_2\) & N & Assumption-mediated via isolated \(x_0\); parent only in contraries \\
-2 & ECAI & \texttt{m12\_u2\_collider\_min} & \(x_2\) & N & Elegant assumption-mediated both-parents-nonzero (not the locked 4-clause form) \\
-3 & ECAI & \texttt{m12\_u3\_collider\_max} & \(x_2\) & N & \(x_0\)-case OR: pure unary on \(x_0\in\{1,2\}\); assumption only on \(x_0=0\) slice \\
-4 & ECAI & \texttt{m12\_u4\_fork\_asymmetric} & \(x_1\) & Y & Exact \(\mathcal{H}^\star\): two unary parent rules; sibling unused \\
-5 & ECAI & \texttt{m12\_u4\_fork\_asymmetric} & \(x_2\) & Y & Exact \(\mathcal{H}^\star\): two unary parent rules; sibling unused (mirror of cell 4) \\
-6 & ECAI & \texttt{m12\_u5\_chain\_curated} & \(x_2\) & N & Ancestor \(x_0\) case + assumptions; parent only in contraries \\
-7 & ECAI & \texttt{m12\_u6\_g1\_min\_diff} & \(x_2\) & N & Assumption-mediated both-parents-nonzero (as U2); descendant unused \\
-8 & ECAI & \texttt{m12\_u6\_g1\_min\_diff} & \(x_3\) & N & Ancestor \(x_0\) + assumptions; \(x_2\) unused; not \(x_1>x_2\) form \\
-9 & ECAI & \texttt{m12\_u7\_diamond\_noisy} & \(x_3\) & N & Covering failure: \(x_0\)+assumptions; \(x_2\) never selected; ASP neg \(0/3\) \\
-10 & AAMAS & \texttt{m12\_u1\_separator\_copy} & \(x_2\) & N & Six specialised conjunctions; isolated \(x_0\) retained beside parent \\
-11 & AAMAS & \texttt{m12\_u2\_collider\_min} & \(x_2\) & Y & Exact \(\mathcal{H}^\star\): four both-parent conjunctions, no assumptions \\
-12 & AAMAS & \texttt{m12\_u3\_collider\_max} & \(x_2\) & N & Eight pairwise positive-cell conjunctions; not the locked unary OR \\
-13 & AAMAS & \texttt{m12\_u4\_fork\_asymmetric} & \(x_1\) & N & Parent + sibling conjunctions; cites distractor \(x_2\) \\
-14 & AAMAS & \texttt{m12\_u4\_fork\_asymmetric} & \(x_2\) & N & Parent + sibling conjunctions; cites distractor \(x_1\) \\
-15 & AAMAS & \texttt{m12\_u5\_chain\_curated} & \(x_2\) & N & Parent + grandparent conjunctions; ancestor retained \\
-16 & AAMAS & \texttt{m12\_u6\_g1\_min\_diff} & \(x_2\) & N & Both-parent rules + descendant \(x_3\); cites\_descendant \\
-17 & AAMAS & \texttt{m12\_u6\_g1\_min\_diff} & \(x_3\) & N & \(\mathcal{H}^\star\) parent pairs + ancestor \(x_0\); cites\_non\_parent\_ancestor \\
-18 & AAMAS & \texttt{m12\_u7\_diamond\_noisy} & \(x_3\) & N & \(\mathcal{H}^\star\) parent pairs + ancestor \(x_0\); cites\_non\_parent\_ancestor \\
+ & & \textbf{9 targets} & & & \textbf{18} \\
 \bottomrule
-\end{longtable}
-}
-
-\medskip\hrule\medskip
-
-\section{Shared regime (locked)}
-
-\begin{itemize}
-  \item Alphabet \(K=\{0,1,2\}\); nonzero-positive labels \(E^+=\{t\neq 0\}\), \(E^-=\{t=0\}\) unless a unit card overrides.
-  \item Background knowledge: exact-value predicates \texttt{xi\_val\_v} for every non-target column (descendants kept as distractors).
-  \item Configs: ECAI (\texttt{configs/ecai2024\_config.pl}); AAMAS (\texttt{configs/aamas2025\_config.pl}).
-  \item Reference hypotheses \(\mathcal{H}_t^\star\) and structural sets are as in the unit catalogue and \texttt{m12x\_summary.py} look-up tables.
-\end{itemize}
-
-\textbf{Effective options (confirmed in cell traces):}
-
-\begin{itemize}
-  \item \textbf{ECAI:} brave learning; \texttt{folding\_mode(nd)}; \texttt{folding\_selection(any)}; \texttt{folding\_space(all)}; \texttt{asm\_intro(relto)}; \texttt{post\_folding\_test\_entailment(true)}.
-  \item \textbf{AAMAS:} brave learning; greedy folding; published AAMAS options consulted verbatim from \texttt{configs/aamas2025\_config.pl}.
-\end{itemize}
-
-\subsection{Shared ABALearn control flow (\texttt{gen})}
-
-Both M12x arms run the same generalisation procedure in \texttt{gen.pl}. What differs between ECAI and AAMAS is how each fold is computed and which non-intensional rule is selected for folding; those differences are stated at the top of each batch. The shared skeleton is as follows.
-
-Learning begins from background knowledge together with a list of \textbf{non-intensional} (rote) rules. Rote learning introduces one such rule per positive example, of the form \(t(A) \leftarrow A=i\), and later may introduce further rote rules for contraries of newly introduced assumptions. Only non-intensional rules are candidates for folding. Background \texttt{val} predicates are folding \emph{material}: they may appear in folded bodies, but they are not themselves selected as rules to fold.
-
-The outer driver is \texttt{genT}. It first attempts a complete derivation with the current folding settings via \texttt{gen1}. Under non-deterministic folding only, if that attempt fails entirely, \texttt{genT} increases the folding-token budget by one (up to \texttt{folding\_steps}) and retries. Under greedy folding that deepening branch does not apply. Procedural success for \texttt{genT} means that \texttt{gen1} returned a finished framework; it does not by itself certify that the written solution separates \(\langle E^+,E^-\rangle\) under the project's post-hoc ASP coverage check.
-
-\textbf{\texttt{gen1}} selects one foldable non-intensional rule \(S\), computes a fold \(F\) of \(S\), and passes \(F\) to \texttt{gen2}. If no foldable non-intensional rule remains, the trace reports \texttt{gen1: nothing to fold} and \texttt{gen1} succeeds, returning the current ABA framework as the learned solution.
-
-\textbf{\texttt{gen2}} tests whether extending the current framework by \(F\) already entails \(\langle E^+,E^-\rangle\). If it does, the fold is kept (\texttt{extended ABA entails <E+,E-> - using folding}) and control returns to \texttt{gen1}. If it does not, and assumption introduction is enabled, \texttt{gen2} attempts repair rather than treating the failed entailment as an immediate global failure. Under the shared M12x setting \texttt{asm\_intro(relto)}, it first looks for an existing assumption relative to the body of \(F\); if one is found, control passes to \texttt{gen3}. Otherwise it mints a new assumption \(\alpha\), forms the patched rule with \(\alpha\) in the body, and continues through \texttt{gen4} into \texttt{gen6}.
-
-\textbf{\texttt{gen3}} handles reuse of an existing assumption under \texttt{relto}. If the framework with the reused assumption entails \(\langle E^+,E^-\rangle\), the trace reports \textbf{OK} and control returns to \texttt{gen1}. If not, it reports \textbf{KO} and that alternative fails, allowing Prolog to backtrack into other folding choices for the same non-intensional rule where available.
-
-\textbf{\texttt{gen4} / \texttt{gen5}} only route after a new assumption has been generated. Both M12x arms use \texttt{relto}, so \texttt{gen4} proceeds directly to \texttt{gen6}. The \texttt{sechk} path (\texttt{gen5}) is unused in this experiment.
-
-\textbf{\texttt{gen6}} rote-learns contrary atoms for the new assumption (typically rules of the form \(c_\alpha(A) \leftarrow A=j\)) and appends them to the non-intensional list, so they become later folding targets. Under \textbf{cautious} learning, \texttt{gen6} then re-checks entailment and fails if the check does not hold. Under \textbf{brave} learning---which both M12x arms use---that re-check is skipped, and control returns to \texttt{gen1} even if \(\langle E^+,E^-\rangle\) is not yet entailed.
-
-Two outcome distinctions used throughout the cell write-ups follow from this skeleton.
-
-First, \textbf{engine termination} (\texttt{nothing to fold}, writing \texttt{bk.sol.*}) means the non-intensional list was emptied by a successful \texttt{gen1} derivation. It does not mean that every preferred parent appeared in a body, nor that tokens were raised to the configured ceiling.
-
-Second, the grid runner's \textbf{\texttt{solved}} label records that ABA Learning completed and produced a solution artefact. \textbf{ASP coverage} (positives covered / negatives rejected under brave entailment on \texttt{bk.sol.asp}) is a separate, post-hoc check of whether that artefact separates \(\langle E^+,E^-\rangle\). A cell may therefore be runner-\texttt{solved} and still fail to reject negatives.
-
-\medskip\hrule\medskip
-
-\section{Batch A --- ECAI (\texttt{M12x\_ecai2024})}
-
-\subsection{ECAI folding control flow}
-
-Batch A uses \texttt{configs/ecai2024\_config.pl}: \texttt{learning\_mode(brave)}, \texttt{folding\_mode(nd)}, \texttt{folding\_steps(10)}, \texttt{folding\_selection(any)}, \texttt{folding\_space(all)}, and \texttt{asm\_intro(relto)}. The shared \texttt{gen} skeleton above still applies; what follows is how folding and selection specialise that skeleton on this arm.
-
-\textbf{Which rule is folded.} Under \texttt{folding\_selection(any)}, \texttt{gen1} may select any remaining non-intensional rule (after deleting those already subsumed). There is no preference for ``most general'' rote rules.
-
-\textbf{How a fold is computed.} Under \texttt{folding\_mode(nd)}, each fold call is token-bounded. The token counter starts at \(1\) every run. With \(k\) tokens, non-deterministic folding may replace body literals by background (or, under \texttt{folding\_space(all)}, other foldable) rule heads up to \(k\) times in that call. The first success of the fold procedure is often a \textbf{one-literal} body when \(k=1\): the sample identifier \(A=i\) is replaced by a single \texttt{val} predicate, the trace reports \texttt{0: DONE}, and that candidate is passed to \texttt{gen2}. Alternative fold literals for the same rote rule remain as Prolog choice points, but they are explored only if the accepted path later fails.
-
-\textbf{When the token budget rises.} The configured ceiling \texttt{folding\_steps(10)} is not the starting budget. \texttt{genT} increases tokens by one (and prints \texttt{* Increasing folding tokens to: \ldots{}}) only if the whole \texttt{gen1} search at the current budget fails. If assumption introduction keeps producing a continuing derivation that eventually reaches \texttt{nothing to fold}, tokens never rise. Multi-literal parent--parent bodies therefore appear only when earlier one-token (or low-token) repair paths fail hard enough to force deepening.
-
-\textbf{What happens when a fold overgeneralises.} This is the distinctive ECAI behaviour relative to AAMAS. If \texttt{gen2} finds that the folded rule does not entail \(\langle E^+,E^-\rangle\), the engine does not treat that as a cue to discard the fold and search for a better body as its primary next step. Under \texttt{asm\_intro(relto)} it attempts assumption introduction on \textbf{that same} fold: reuse an existing relative assumption (\texttt{gen3}: OK/KO) or mint a new \(\alpha\) and rote-learn its contrary (\texttt{gen6}). Under brave mode, \texttt{gen6} does not require entailment before returning to \texttt{gen1}. The effective procedure is therefore \textbf{cover-and-repair}: accept a locally available fold, and if it overgeneralises, push exceptions into assumptions and contraries rather than retracting the fold in favour of another intension.
-
-\textbf{\texttt{folding\_space(all)}.} Folding is not restricted to the original background-knowledge block; fold candidates may include other rules admitted into the folding table. In the M12x tables the first successful one-literal folds are still typically \texttt{xi\_val\_*} feature predicates, ordered by how \texttt{select\_rule} enumerates matching heads.
-
-\textbf{How to read ECAI traces in this batch.} Lines of the form \texttt{begin nd folding} / \texttt{1: folding \ldots{} with x*val*} / \texttt{0: DONE} mark a token-bounded fold. \texttt{extended ABA does not entail \ldots{} looking for assumption} followed by \texttt{generating NEW assumption} or \texttt{found: alpha\_\ldots{} OK/KO} mark the repair path. Absence of \texttt{Increasing folding tokens to:} means the derivation completed at the starting budget of one token. As in the shared skeleton, \texttt{nothing to fold} and runner \texttt{solved} record procedural completion; ASP coverage must still be checked separately.
-
-\subsection{\texorpdfstring{1. ECAI \(\times\) \texttt{m12\_u1\_separator\_copy} \(\times\) \(t=x_2\)}{1. ECAI - m12-u1-separator-copy - target x2}}
-
-\textbf{Cell directory:} \texttt{M12x\_ecai2024/cells/m12\_u1\_separator\_copy\_\_target-x2/}\\
-\textbf{Runner outcome:} \texttt{solved}\\
-\textbf{ASP coverage:} positives \texttt{6/6}, negatives \texttt{3/3}
-
-\subsubsection{Setup}
-
-The graph is a separator \(x_1\to x_2\) with an isolated variable \(x_0\). The mechanism sets \(x_2\) equal to \(x_1\) on the full nine-row factorial over \((x_0,x_1)\). Under nonzero-positive labelling the positive examples are rows \(\{2,3,5,6,8,9\}\) and the negative examples are rows \(\{1,4,7\}\). Background knowledge contains exact-value predicates for \(x_0\) and \(x_1\); the target column \(x_2\) is excluded. The ancestors of \(x_2\) are \(\{x_1\}\); the isolated variable \(x_0\) is a distractor; there are no descendants. The design role of this unit is to test whether the learner recovers a unary parent rule and avoids citing the isolated distractor.
-
-\subsubsection{\texorpdfstring{Intended hypothesis \(\mathcal{H}_{x_2}^\star\)}{Intended hypothesis H-star(x2)}}
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x2(A) :- x1_val_1(A).
-x2(A) :- x1_val_2(A).
-\end{lstlisting}
-
-These two clauses characterise \(x_2\neq 0\) by the parent \(x_1\) being nonzero. They must not cite the isolated distractor \(x_0\).
-
-\subsubsection{What happened}
-
-This cell uses the ECAI published configuration on unit U1 with learning target \(x_2\). The learner returned a solved framework with full ASP coverage of the examples. That framework does not match \(\mathcal{H}_{x_2}^\star\) intensionally. The target rules cite the isolated distractor \(x_0\) together with assumptions, and the true parent \(x_1\) appears only in the contrary conditions.
-
-\subsubsection{What the learner did}
-
-Learning begins from rote rules that cover each positive example by its sample identifier:
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x2(A) :- A=2.
-x2(A) :- A=3.
-x2(A) :- A=5.
-x2(A) :- A=6.
-x2(A) :- A=8.
-x2(A) :- A=9.
-\end{lstlisting}
-
-Under non-deterministic folding with selection \texttt{any} and folding space \texttt{all}, the first successful fold for a representative positive in each \(x_0\)-slice replaces that identifier by a value predicate of the isolated column \(x_0\). The first fold yields a body containing only \texttt{x0\_val\_0}; later folds yield only \texttt{x0\_val\_1} and only \texttt{x0\_val\_2}:
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x2(A) :- x0_val_0(A).   % from A=2; overgeneralises within the x0=0 slice
-x2(A) :- x0_val_1(A).   % from A=5
-x2(A) :- x0_val_2(A).   % from A=8
-\end{lstlisting}
-
-Each of those bodies overgeneralises within its slice, because the negative example that shares the same \(x_0\) value would also be covered. Entailment of the labelled example set therefore fails, and assumption introduction relative to the failing body adds a fresh assumption \texttt{alpha\_1}, \texttt{alpha\_2}, or \texttt{alpha\_3}. The remaining positive examples in the same slice are then deleted as subsumed. The repaired target rules are:
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x2(A) :- alpha_1(A), x0_val_0(A).
-x2(A) :- alpha_2(A), x0_val_1(A).
-x2(A) :- alpha_3(A), x0_val_2(A).
-\end{lstlisting}
-
-Contrary learning is driven by the three negative examples, which are exactly the rows with \(x_1=0\). For each contrary, folding first tries the matching \(x_0\) literal already used in the corresponding target rule. That attempt is rejected, because the engine cannot introduce an assumption already tied to that body. Folding then succeeds with \texttt{x1\_val\_0}:
-
-\begin{lstlisting}[style=logic,language=Prolog]
-c_alpha_1(A) :- x1_val_0(A).
-c_alpha_2(A) :- x1_val_0(A).
-c_alpha_3(A) :- x1_val_0(A).
-\end{lstlisting}
-
-The accepted solution therefore has three assumption-mediated target rules keyed by \(x_0\), and three identical contrary rules that block those assumptions whenever \(x_1=0\). Body-scope variables of the target rules are \(\{x_0\}\). The parent \(x_1\) appears only in the framework-scope contrary conditions.
-
-\subsubsection{Match assessment}
-
-The learned target rules are not an exact match to \(\mathcal{H}_{x_2}^\star\).
-
-On the complete partition of the table by \(x_0\), an assumption remains undefeated on a row in that slice if and only if \texttt{x1\_val\_0} fails, which is exactly when \(x_1\in\{1,2\}\). Taken together, the three rules therefore cover the six positives and reject the three negatives. In that limited extensional sense the solution agrees with the nonzero-positive copy semantics of U1.
-
-Intensionally the solution is misaligned with the intended hypothesis. The learner folded the isolated distractor \(x_0\) before the true parent \(x_1\). It repaired the resulting overgeneralisation by introducing assumptions. It recovered the true separator only as contrary conditions on \(x_1\). The intended hypothesis cites \(x_1\) directly in ordinary target rules and does not mention \(x_0\) at all.
-
-\textbf{Short verdict.} The cell is solved and extensionally adequate, but intensionally it encodes the parent concept through assumptions keyed by the isolated distractor, with the true parent appearing only in the contraries.
-
-\medskip\hrule\medskip
-
-\subsection{\texorpdfstring{2. ECAI \(\times\) \texttt{m12\_u2\_collider\_min} \(\times\) \(t=x_2\)}{2. ECAI - m12-u2-collider-min - target x2}}
-
-\textbf{Cell directory:} \texttt{M12x\_ecai2024/cells/m12\_u2\_collider\_min\_\_target-x2/}\\
-\textbf{Runner outcome:} \texttt{solved}\\
-\textbf{ASP coverage:} positives \texttt{4/4}, negatives \texttt{5/5}
-
-\subsubsection{Setup}
-
-Unit U2 is a collider \(x_0\to x_2\leftarrow x_1\) with mechanism \(x_2:=\min(x_0,x_1)\) on the full nine-row factorial over \((x_0,x_1)\). Under nonzero-positive labelling, \(x_2\neq 0\) if and only if both parents are nonzero. The positive examples are therefore rows \(\{5,6,8,9\}\) and the negative examples are rows \(\{1,2,3,4,7\}\). Background knowledge contains exact-value predicates for both parents; the target \(x_2\) is excluded. There are no sibling or descendant distractors beyond the two parents themselves. The design role of this unit is to test recovery of a conjunctive both-parent rule. The locked reference \(\mathcal{H}_{x_2}^\star\) enumerates that concept as four ordinary \texttt{val} conjunctions, one for each nonzero pair of parent values.
-
-\subsubsection{\texorpdfstring{Intended hypothesis \(\mathcal{H}_{x_2}^\star\)}{Intended hypothesis H-star(x2)}}
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x2(A) :- x0_val_1(A), x1_val_1(A).
-x2(A) :- x0_val_1(A), x1_val_2(A).
-x2(A) :- x0_val_2(A), x1_val_1(A).
-x2(A) :- x0_val_2(A), x1_val_2(A).
-\end{lstlisting}
-
-\subsubsection{What happened}
-
-This cell uses the ECAI published configuration on unit U2 with learning target \(x_2\). The learner returned a solved framework with full ASP coverage. It did not emit the four locked case clauses. Instead it recovered a compact assumption-mediated representation of the same semantic idea: \(x_0\) is nonzero in the target bodies, and \(x_1\) is nonzero through undefeated assumptions whose contraries fire exactly when \(x_1=0\).
-
-\subsubsection{What the learner did}
-
-Learning begins from rote rules for the four positives:
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x2(A) :- A=5.
-x2(A) :- A=6.
-x2(A) :- A=8.
-x2(A) :- A=9.
-\end{lstlisting}
-
-Under non-deterministic folding with selection \texttt{any} and folding space \texttt{all}, the first fold for \(A=5\) (where \(x_0=1\)) replaces the sample identifier by \texttt{x0\_val\_1} alone:
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x2(A) :- x0_val_1(A).
-\end{lstlisting}
-
-That body overgeneralises: it would also cover the negative row \(A=4\), where \(x_0=1\) but \(x_1=0\). Entailment of the labelled example set therefore fails, and assumption introduction adds \texttt{alpha\_1}:
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x2(A) :- alpha_1(A), x0_val_1(A).
-\end{lstlisting}
-
-The remaining positive in the same \(x_0=1\) slice (\(A=6\)) is then deleted as subsumed. The same pattern occurs for the \(x_0=2\) slice: fold \(A=8\) to \texttt{x0\_val\_2}, introduce \texttt{alpha\_2}, and delete \(A=9\) as subsumed:
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x2(A) :- alpha_2(A), x0_val_2(A).
-\end{lstlisting}
-
-Contrary learning is driven by the negatives that sit in those same \(x_0\) slices, namely \(A=4\) and \(A=7\) (both have \(x_1=0\)). Folding each contrary first tries the matching \(x_0\) literal already used in the corresponding target rule; that attempt is rejected. Folding then succeeds with \texttt{x1\_val\_0}:
-
-\begin{lstlisting}[style=logic,language=Prolog]
-c_alpha_1(A) :- x1_val_0(A).
-c_alpha_2(A) :- x1_val_0(A).
-\end{lstlisting}
-
-In the ASP solution these assumptions are realised by default-negation rules scoped to the same \(x_0\)-slices:
-
-\begin{lstlisting}[style=logic,language=Prolog]
-alpha_1(A) :- not c_alpha_1(A), x0_val_1(A).
-alpha_2(A) :- not c_alpha_2(A), x0_val_2(A).
-\end{lstlisting}
-
-Those clauses are what allow each assumption to hold on its slice precisely when the corresponding contrary fails, that is when \(x_1\neq 0\). Without them, \texttt{alpha\_1} and \texttt{alpha\_2} would never be derived, and the target rules that depend on them would not cover the positives.
-
-Negatives with \(x_0=0\) (rows \(\{1,2,3\}\)) never enter these target bodies, so they need no contrary repair. Body-scope variables of the target rules are \(\{x_0\}\). The second parent \(x_1\) appears in the contrary conditions, and thereby controls whether the assumptions succeed.
-
-\subsubsection{Match assessment}
-
-Relative to the locked case enumeration \(\mathcal{H}_{x_2}^\star\), this is not an exact syntactic match. The learner does not produce the four ordinary both-parent conjunctions.
-
-Judged against the semantic success description for U2, however, the learned framework is a strong and arguably more elegant intensional solution. It characterises nonzero \(x_2\) under \(\min\) by combining an explicit nonzero condition on one parent in the target bodies with an assumption-mediated nonzero condition on the other parent. On an \(x_0\in\{1,2\}\) row, \(x_2\) holds if and only if the assumption is undefeated if and only if \(x_1\neq 0\). That is exactly ``both parents are nonzero,'' expressed with two target rules and the ABA assumption machinery rather than with four case clauses. ASP coverage is complete for that reason.
-
-So the mismatch with \(\mathcal{H}_{x_2}^\star\) should not be read as a failure to recover the intended concept. It is a mismatch with one particular syntactic presentation of that concept. The learned form uses assumptions to represent nonzeroness compactly.
-
-\textbf{Short verdict.} Not an exact match to the locked four-clause \(\mathcal{H}_{x_2}^\star\), but an elegant assumption-mediated encoding of the same both-parents-nonzero concept, with full coverage.
-
-\medskip\hrule\medskip
-
-\subsection{\texorpdfstring{3. ECAI \(\times\) \texttt{m12\_u3\_collider\_max} \(\times\) \(t=x_2\)}{3. ECAI - m12-u3-collider-max - target x2}}
-
-\textbf{Cell directory:} \texttt{M12x\_ecai2024/cells/m12\_u3\_collider\_max\_\_target-x2/}\\
-\textbf{Runner outcome:} \texttt{solved}\\
-\textbf{ASP coverage:} positives \texttt{8/8}, negatives \texttt{1/1}
-
-\subsubsection{Setup}
-
-Unit U3 is the disjunctive counterpart of U2: the same collider \(x_0\to x_2\leftarrow x_1\), now with mechanism \(x_2:=\max(x_0,x_1)\) on the nine-row factorial. Under nonzero-positive labelling, \(x_2\neq 0\) if and only if at least one parent is nonzero. The positive examples are therefore rows \(\{2,3,4,5,6,7,8,9\}\) and the sole negative is row \(\{1\}\). Background knowledge contains exact-value predicates for both parents; the target \(x_2\) is excluded. The locked reference \(\mathcal{H}_{x_2}^\star\) is the four-clause \texttt{val} expansion of ``at least one parent is nonzero.''
-
-\subsubsection{\texorpdfstring{Intended hypothesis \(\mathcal{H}_{x_2}^\star\)}{Intended hypothesis H-star(x2)}}
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x2(A) :- x0_val_1(A).
-x2(A) :- x0_val_2(A).
-x2(A) :- x1_val_1(A).
-x2(A) :- x1_val_2(A).
-\end{lstlisting}
-
-\subsubsection{What happened}
-
-This cell uses the ECAI published configuration on unit U3 with learning target \(x_2\). After the initial optimum there are eight rote rules, one for each positive. Non-deterministic folding proceeds by \(x_0\)-slices and yields a mixed solution: pure unary rules for \(x_0\in\{1,2\}\), and an assumption-mediated rule only on the incomplete \(x_0=0\) slice. The learner returns a solved framework with full ASP coverage. The result is not an exact syntactic match to \(\mathcal{H}_{x_2}^\star\), but it is a compact case analysis that still expresses the intended disjunctive concept.
-
-\subsubsection{What the learner did}
-
-Learning begins from rote coverage of the eight positives. The first fold chosen is \(A=2\) (where \(x_0=0\), \(x_1=1\)), which replaces the identifier by \texttt{x0\_val\_0} alone:
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x2(A) :- x0_val_0(A).
-\end{lstlisting}
-
-That body would also cover the unique negative \(A=1\) (where \(x_0=0\) and \(x_1=0\)), so entailment fails and assumption introduction adds \texttt{alpha\_1}:
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x2(A) :- alpha_1(A), x0_val_0(A).
-\end{lstlisting}
-
-The other positive in the same slice (\(A=3\)) is then deleted as subsumed. Next, \(A=4\) folds to \texttt{x0\_val\_1}. Under \(\max\), every row with \(x_0=1\) is already positive, so this one-literal rule entails \(\langle E^+,E^-\rangle\) immediately and needs no assumption:
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x2(A) :- x0_val_1(A).
-\end{lstlisting}
-
-Positives \(A=5\) and \(A=6\) are subsumed. Likewise \(A=7\) folds to a safe unary rule on the \(x_0=2\) slice:
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x2(A) :- x0_val_2(A).
-\end{lstlisting}
-
-Positives \(A=8\) and \(A=9\) are subsumed. Contrary learning for the negative \(A=1\) first tries \texttt{x0\_val\_0} (rejected), then succeeds with \texttt{x1\_val\_0}:
-
-\begin{lstlisting}[style=logic,language=Prolog]
-c_alpha_1(A) :- x1_val_0(A).
-\end{lstlisting}
-
-In the ASP solution the assumption is realised by
-
-\begin{lstlisting}[style=logic,language=Prolog]
-alpha_1(A) :- not c_alpha_1(A), x0_val_0(A).
-\end{lstlisting}
-
-so on the \(x_0=0\) slice the assumption holds precisely when \(x_1\neq 0\). Body-scope variables of the target rules are \(\{x_0\}\); \(x_1\) appears only through the contrary / assumption pair.
-
-\subsubsection{Match assessment}
-
-This is not an exact match to \(\mathcal{H}_{x_2}^\star\). The learner does not emit the four unary parent rules of the locked OR expansion.
-
-Extensionally, the learned theory is
-
-\[ (x_0=0 \land x_1\neq 0)\;\lor\;(x_0=1)\;\lor\;(x_0=2), \]
-
-which is exactly \(x_0\neq 0\) or \(x_1\neq 0\), the nonzero-positive semantics of \(\max\). ASP coverage is complete for that reason.
-
-Intensionally this is an \(x_0\)-first case analysis: the complete nonzero \(x_0\) slices become ordinary unary rules, and only the incomplete \(x_0=0\) slice needs an assumption to encode ``\(x_1\) nonzero.'' Relative to \(\mathcal{H}_{x_2}^\star\), the presentation differs (no free-standing \texttt{x1\_val\_1} / \texttt{x1\_val\_2} target rules), but the recovered concept is the intended disjunction. The pattern is related to ECAI on U2: assumption machinery is used where a one-literal fold would overgeneralise, while folds that are already safe are kept without assumptions.
-
-\textbf{Short verdict.} Not an exact match to the locked four-rule OR, but a solved, fully covering \(x_0\)-case analysis that encodes the same ``at least one parent nonzero'' concept, with assumptions only on the \(x_0=0\) slice.
-
-\medskip\hrule\medskip
-
-\subsection{\texorpdfstring{4. ECAI \(\times\) \texttt{m12\_u4\_fork\_asymmetric} \(\times\) \(t=x_1\)}{4. ECAI - m12-u4-fork-asymmetric - target x1}}
-
-\textbf{Cell directory:} \texttt{M12x\_ecai2024/cells/m12\_u4\_fork\_asymmetric\_\_target-x1/}\\
-\textbf{Runner outcome:} \texttt{solved}\\
-\textbf{ASP coverage:} positives \texttt{2/2}, negatives \texttt{1/1}
-
-\subsubsection{Setup}
-
-Unit U4 is a fork \(x_0\to x_1\), \(x_0\to x_2\) on the three-row source factorial over \(x_0\in\{0,1,2\}\). The asymmetric maps are \(x_1:=2\) if \(x_0\neq 2\) else \(0\), and \(x_2:=2\) if \(x_0\neq 0\) else \(0\). For target \(x_1\), nonzero-positive labelling gives \(E^+=\{1,2\}\) and \(E^-=\{3\}\); on the table, \(x_1\neq 0\) if and only if \(x_0\in\{0,1\}\). Background knowledge includes exact-value predicates for the parent \(x_0\) and the sibling distractor \(x_2\); the target \(x_1\) is excluded. The sibling is correlated with \(x_1\) via \(x_0\) but imperfect as a separator (\texttt{x2\_val\_2} holds on both positive row 2 and negative row 3). The locked reference \(\mathcal{H}_{x_1}^\star\) is the two-clause parent expansion of \(x_0\neq 2\).
-
-\subsubsection{\texorpdfstring{Intended hypothesis \(\mathcal{H}_{x_1}^\star\)}{Intended hypothesis H-star(x1)}}
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x1(A) :- x0_val_0(A).
-x1(A) :- x0_val_1(A).
-\end{lstlisting}
-
-\subsubsection{What happened}
-
-This cell uses the ECAI published configuration on unit U4 with learning target \(x_1\). After the initial optimum there are two rote rules, one for each positive. Non-deterministic folding replaces each identifier by the corresponding parent value in a single step, and both folds entail \(\langle E^+,E^-\rangle\) immediately. The learner returns a solved framework with full ASP coverage, no assumptions, and no citation of the sibling.
-
-\subsubsection{What the learner did}
-
-Learning begins from rote coverage of the two positives:
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x1(A) :- A=1.
-x1(A) :- A=2.
-\end{lstlisting}
-
-The first fold chosen is \(A=1\) (where \(x_0=0\)), which replaces the identifier by \texttt{x0\_val\_0}:
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x1(A) :- x0_val_0(A).
-\end{lstlisting}
-
-That body covers only the positive row with \(x_0=0\) and does not cover the negative (\(x_0=2\)), so entailment succeeds without assumption introduction. The second fold is \(A=2\) (where \(x_0=1\)), which likewise yields a safe unary parent rule:
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x1(A) :- x0_val_1(A).
-\end{lstlisting}
-
-Learning then stops with \texttt{nothing to fold}. Although sibling predicates (\texttt{x2\_val\_0}, \texttt{x2\_val\_2}) are present in the background knowledge, neither appears in a target body. Body-scope variables of the target rules are \(\{x_0\}\).
-
-\subsubsection{Match assessment}
-
-This is an exact match to \(\mathcal{H}_{x_1}^\star\).
-
-The two unary parent rules are precisely the locked \texttt{val} expansion of ``\(x_0\neq 2\)'' under nonzero-positive labelling of \(x_1\). ASP coverage is complete, the solution uses no assumptions, and the sibling distractor is not cited. Relative to the unit's semantic success description, the learned framework characterises nonzero \(x_1\) via the true parent without rote sample-id casework.
-
-\textbf{Short verdict.} Exact match to \(\mathcal{H}_{x_1}^\star\): two unary parent rules, no assumptions, sibling unused, full coverage.
-
-\medskip\hrule\medskip
-
-\subsection{\texorpdfstring{5. ECAI \(\times\) \texttt{m12\_u4\_fork\_asymmetric} \(\times\) \(t=x_2\)}{5. ECAI - m12-u4-fork-asymmetric - target x2}}
-
-\textbf{Cell directory:} \texttt{M12x\_ecai2024/cells/m12\_u4\_fork\_asymmetric\_\_target-x2/}\\
-\textbf{Runner outcome:} \texttt{solved}\\
-\textbf{ASP coverage:} positives \texttt{2/2}, negatives \texttt{1/1}
-
-\subsubsection{Setup}
-
-Same unit as cell 4: fork \(x_0\to x_1\), \(x_0\to x_2\) on the three-row source factorial, with asymmetric maps \(x_1:=2\) if \(x_0\neq 2\) else \(0\), and \(x_2:=2\) if \(x_0\neq 0\) else \(0\). For target \(x_2\), nonzero-positive labelling gives \(E^+=\{2,3\}\) and \(E^-=\{1\}\); on the table, \(x_2\neq 0\) if and only if \(x_0\neq 0\). Background knowledge includes exact-value predicates for the parent \(x_0\) and the sibling distractor \(x_1\); the target \(x_2\) is excluded. The sibling is correlated with \(x_2\) via \(x_0\) but imperfect as a separator (\texttt{x1\_val\_2} holds on both negative row 1 and positive row 2). The locked reference \(\mathcal{H}_{x_2}^\star\) is the two-clause parent expansion of \(x_0\neq 0\).
-
-\subsubsection{\texorpdfstring{Intended hypothesis \(\mathcal{H}_{x_2}^\star\)}{Intended hypothesis H-star(x2)}}
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x2(A) :- x0_val_1(A).
-x2(A) :- x0_val_2(A).
-\end{lstlisting}
-
-\subsubsection{What happened}
-
-This cell uses the ECAI published configuration on unit U4 with learning target \(x_2\). After the initial optimum there are two rote rules, one for each positive. Non-deterministic folding replaces each identifier by the corresponding parent value in a single step, and both folds entail \(\langle E^+,E^-\rangle\) immediately. The learner returns a solved framework with full ASP coverage, no assumptions, and no citation of the sibling.
-
-\subsubsection{What the learner did}
-
-Learning begins from rote coverage of the two positives:
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x2(A) :- A=2.
-x2(A) :- A=3.
-\end{lstlisting}
-
-The first fold chosen is \(A=2\) (where \(x_0=1\)), which replaces the identifier by \texttt{x0\_val\_1}:
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x2(A) :- x0_val_1(A).
-\end{lstlisting}
-
-That body does not cover the negative (\(x_0=0\)), so entailment succeeds without assumption introduction. The second fold is \(A=3\) (where \(x_0=2\)), which likewise yields a safe unary parent rule:
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x2(A) :- x0_val_2(A).
-\end{lstlisting}
-
-Learning then stops with \texttt{nothing to fold}. Although sibling predicates (\texttt{x1\_val\_2}, \texttt{x1\_val\_0}) are present in the background knowledge, neither appears in a target body. Body-scope variables of the target rules are \(\{x_0\}\).
-
-\subsubsection{Match assessment}
-
-This is an exact match to \(\mathcal{H}_{x_2}^\star\).
-
-The two unary parent rules are precisely the locked \texttt{val} expansion of ``\(x_0\neq 0\)'' under nonzero-positive labelling of \(x_2\). ASP coverage is complete, the solution uses no assumptions, and the sibling distractor is not cited.
-
-\textbf{Comparison with cell 4.} On the same fork under ECAI, target \(x_1\) (cell 4) recovered \(\mathcal{H}_{x_1}^\star\) as \texttt{x0\_val\_0} / \texttt{x0\_val\_1} (parent \(x_0\neq 2\)), while this cell recovers \(\mathcal{H}_{x_2}^\star\) as \texttt{x0\_val\_1} / \texttt{x0\_val\_2} (parent \(x_0\neq 0\)). The learning path is the same in structure: two one-step parent folds, immediate entailment, no assumptions, sibling left unused. The difference is only which nonzero condition the asymmetric map induces, and which child appears in BK as the imperfect sibling distractor. Together, the two ECAI U4 cells show clean parent recovery on both branches of the fork.
-
-\textbf{Short verdict.} Exact match to \(\mathcal{H}_{x_2}^\star\): two unary parent rules, no assumptions, sibling unused, full coverage (mirror of cell 4 on the other child).
-
-\medskip\hrule\medskip
-
-\subsection{\texorpdfstring{6. ECAI \(\times\) \texttt{m12\_u5\_chain\_curated} \(\times\) \(t=x_2\)}{6. ECAI - m12-u5-chain-curated - target x2}}
-
-\textbf{Cell directory:} \texttt{M12x\_ecai2024/cells/m12\_u5\_chain\_curated\_\_target-x2/}\\
-\textbf{Runner outcome:} \texttt{solved}\\
-\textbf{ASP coverage:} positives \texttt{4/4}, negatives \texttt{2/2}
-
-\subsubsection{Setup}
-
-Unit U5 is the chain \(x_0\to x_1\to x_2\) on the curated six-row pilot support: for each \(x_0\in\{0,1,2\}\), the pairs \((x_0,x_0)\) and \((x_0,(x_0+1)\bmod 3)\), with \(x_2:=\operatorname{copy}(x_1)\). Nonzero-positive labelling gives \(E^+=\{2,3,4,5\}\) and \(E^-=\{1,6\}\); on the table, \(x_2\neq 0\) if and only if \(x_1\in\{1,2\}\). Background knowledge includes exact-value predicates for both ancestors \(x_0\) and \(x_1\); the target \(x_2\) is excluded. The direct parent \(x_1\) perfectly separates \(E^\pm\); the grandparent \(x_0\) is correlated but imperfect (\(x_0=0\) and \(x_0=2\) each contain one positive and one negative). The locked reference \(\mathcal{H}_{x_2}^\star\) prefers the parent copy expansion.
-
-\subsubsection{\texorpdfstring{Intended hypothesis \(\mathcal{H}_{x_2}^\star\)}{Intended hypothesis H-star(x2)}}
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x2(A) :- x1_val_1(A).
-x2(A) :- x1_val_2(A).
-\end{lstlisting}
-
-\subsubsection{What happened}
-
-This cell uses the ECAI published configuration on unit U5 with learning target \(x_2\). After the initial optimum there are four rote rules, one for each positive. Non-deterministic folding proceeds by \(x_0\)-slices rather than by the parent \(x_1\): the complete \(x_0=1\) slice becomes a pure unary grandparent rule, while the incomplete \(x_0=0\) and \(x_0=2\) slices force assumption introduction. Contrary learning then recovers \(x_1\neq 0\) as the condition that defeats those assumptions. The learner returns a solved framework with full ASP coverage, but the target bodies cite the imperfect ancestor rather than the preferred parent.
-
-\subsubsection{What the learner did}
-
-Learning begins from rote coverage of the four positives. The first fold chosen is \(A=2\) (where \(x_0=0\), \(x_1=1\)), which replaces the identifier by \texttt{x0\_val\_0} alone:
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x2(A) :- x0_val_0(A).
-\end{lstlisting}
-
-That body also covers the negative \(A=1\) (where \(x_0=0\), \(x_1=0\)), so entailment fails and assumption introduction adds \texttt{alpha\_1}:
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x2(A) :- alpha_1(A), x0_val_0(A).
-\end{lstlisting}
-
-Next, \(A=3\) (where \(x_0=1\), \(x_1=1\)) folds to \texttt{x0\_val\_1}. Under this support every row with \(x_0=1\) is positive, so the unary grandparent rule entails immediately and needs no assumption; \(A=4\) is then deleted as subsumed:
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x2(A) :- x0_val_1(A).
-\end{lstlisting}
-
-Finally \(A=5\) (where \(x_0=2\), \(x_1=2\)) folds to \texttt{x0\_val\_2}, which would also cover the negative \(A=6\), so assumption introduction adds \texttt{alpha\_2}:
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x2(A) :- alpha_2(A), x0_val_2(A).
-\end{lstlisting}
-
-Contrary folding for \texttt{c\_alpha\_1} and \texttt{c\_alpha\_2} first tries the matching \(x_0\) literal (rejected: cannot introduce a further assumption on a body already tied to that assumption), then succeeds with the parent literal \texttt{x1\_val\_0} on both negatives:
-
-\begin{lstlisting}[style=logic,language=Prolog]
-c_alpha_1(A) :- x1_val_0(A).
-c_alpha_2(A) :- x1_val_0(A).
-\end{lstlisting}
-
-In the ASP solution the assumptions are realised by
-
-\begin{lstlisting}[style=logic,language=Prolog]
-alpha_1(A) :- not c_alpha_1(A), x0_val_0(A).
-alpha_2(A) :- not c_alpha_2(A), x0_val_2(A).
-\end{lstlisting}
-
-so on the incomplete \(x_0\) slices the assumption holds precisely when \(x_1\neq 0\). Body-scope variables of the target rules are \(\{x_0\}\); the preferred parent \(x_1\) appears only in the contrary conditions.
-
-\subsubsection{Match assessment}
-
-This is not an exact match to \(\mathcal{H}_{x_2}^\star\). The locked hypothesis is the unary parent expansion of \(x_1\in\{1,2\}\). The learner never emits \texttt{x1\_val\_1} or \texttt{x1\_val\_2} in a target body.
-
-Extensionally the learned theory is an \(x_0\)-first case analysis repaired by parent-valued contraries:
-
-\[ (x_0=0 \land x_1\neq 0)\;\lor\;(x_0=1)\;\lor\;(x_0=2 \land x_1\neq 0), \]
-
-which coincides with \(x_1\neq 0\) on this curated table, so ASP coverage is complete. Intensionally this is the parent-vs-ancestor divergence the unit was designed to probe: the imperfect grandparent occupies the target bodies, and the true parent is recovered only as the contrary of the assumptions needed to repair overgeneral \(x_0\) folds.
-
-The pattern is closely related to ECAI on U1 and U3: non-deterministic folding commits early to a one-literal body on a variable that does not perfectly separate \(E^\pm\) within its incomplete slices, then uses assumption/contrary machinery---here ultimately citing the preferred separator---to restore coverage. Relative to semantic success for U5, the framework covers the labelling but does not recover the intended parent-copy intension.
-
-\textbf{Short verdict.} Not an exact match: grandparent \(x_0\) in target bodies with assumptions on incomplete slices; preferred parent \(x_1\) only in contraries; full coverage.
-
-\medskip\hrule\medskip
-
-\subsection{\texorpdfstring{7. ECAI \(\times\) \texttt{m12\_u6\_g1\_min\_diff} \(\times\) \(t=x_2\)}{7. ECAI - m12-u6-g1-min-diff - target x2}}
-
-\textbf{Cell directory:} \texttt{M12x\_ecai2024/cells/m12\_u6\_g1\_min\_diff\_\_target-x2/}\\
-\textbf{Runner outcome:} \texttt{solved}\\
-\textbf{ASP coverage:} positives \texttt{4/4}, negatives \texttt{5/5}
-
-\subsubsection{Setup}
-
-Unit U6 is the four-node G1 graph with mechanisms \(x_2:=\min(x_0,x_1)\) and \(x_3:=x_1-x_2\) on the nine-row source factorial. For target \(x_2\), nonzero-positive labelling gives \(E^+=\{5,6,8,9\}\) and \(E^-=\{1,2,3,4,7\}\); on the table, \(x_2\neq 0\) if and only if both parents are nonzero. Background knowledge includes exact-value predicates for both parents \(x_0,x_1\) and the descendant distractor \(x_3\); the target \(x_2\) is excluded. The descendant is imperfect as a separator of \(E^\pm\) (\(x_3\neq 0\) only on rows 2, 3, 6). The locked reference \(\mathcal{H}_{x_2}^\star\) is the same four-clause both-parents-nonzero expansion as on U2.
-
-\subsubsection{\texorpdfstring{Intended hypothesis \(\mathcal{H}_{x_2}^\star\)}{Intended hypothesis H-star(x2)}}
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x2(A) :- x0_val_1(A), x1_val_1(A).
-x2(A) :- x0_val_1(A), x1_val_2(A).
-x2(A) :- x0_val_2(A), x1_val_1(A).
-x2(A) :- x0_val_2(A), x1_val_2(A).
-\end{lstlisting}
-
-\subsubsection{What happened}
-
-This cell uses the ECAI published configuration on unit U6 with learning target \(x_2\). After the initial optimum there are four rote rules, one for each positive. Non-deterministic folding proceeds by \(x_0\)-slices: one-literal folds on \texttt{x0\_val\_1} and \texttt{x0\_val\_2} overgeneralise within those slices (they would cover negatives with \(x_1=0\)), so assumption introduction repairs each slice. Contrary learning recovers \(x_1\neq 0\). The descendant \(x_3\) is available in BK but is never cited. The learner returns a solved framework with full ASP coverage that is not an exact syntactic match to \(\mathcal{H}_{x_2}^\star\), but encodes the same both-parents-nonzero concept.
-
-\subsubsection{What the learner did}
-
-Learning begins from rote coverage of the four positives. The first fold chosen is \(A=5\) (where \(x_0=1\), \(x_1=1\)), which replaces the identifier by \texttt{x0\_val\_1} alone:
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x2(A) :- x0_val_1(A).
-\end{lstlisting}
-
-That body would also cover the negative \(A=4\) (where \(x_0=1\), \(x_1=0\)), so entailment fails and assumption introduction adds \texttt{alpha\_1}:
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x2(A) :- alpha_1(A), x0_val_1(A).
-\end{lstlisting}
-
-Positive \(A=6\) is then deleted as subsumed. Next, \(A=8\) folds to \texttt{x0\_val\_2}, which would cover the negative \(A=7\), so assumption introduction adds \texttt{alpha\_2}:
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x2(A) :- alpha_2(A), x0_val_2(A).
-\end{lstlisting}
-
-Positive \(A=9\) is subsumed. Contrary folding for \texttt{c\_alpha\_1} and \texttt{c\_alpha\_2} first tries the matching \(x_0\) literal (rejected), then succeeds with \texttt{x1\_val\_0} on the negatives \(A=4\) and \(A=7\):
-
-\begin{lstlisting}[style=logic,language=Prolog]
-c_alpha_1(A) :- x1_val_0(A).
-c_alpha_2(A) :- x1_val_0(A).
-\end{lstlisting}
-
-In the ASP solution the assumptions are realised by
-
-\begin{lstlisting}[style=logic,language=Prolog]
-alpha_1(A) :- not c_alpha_1(A), x0_val_1(A).
-alpha_2(A) :- not c_alpha_2(A), x0_val_2(A).
-\end{lstlisting}
-
-so on an \(x_0\in\{1,2\}\) row the assumption holds precisely when \(x_1\neq 0\). Body-scope variables of the target rules are \(\{x_0\}\); the second parent \(x_1\) appears in the contrary conditions. Descendant predicates \texttt{x3\_val\_*} do not appear in any learned rule.
-
-\subsubsection{Match assessment}
-
-This is not an exact match to \(\mathcal{H}_{x_2}^\star\). The learner does not produce the four ordinary both-parent conjunctions.
-
-Judged against the semantic success description for U6 \(x_2\), however, the learned framework is a strong assumption-mediated encoding of both-parents-nonzero, and it avoids the descendant failure mode: \(x_3\) is never cited. On an \(x_0\in\{1,2\}\) row, \(x_2\) holds if and only if the assumption is undefeated if and only if \(x_1\neq 0\). That is exactly the nonzero-positive semantics of \(\min\). ASP coverage is complete for that reason.
-
-\textbf{Comparison with ECAI on U2 (cell 2).} The learning path and final intension are essentially the same as on the three-node min collider: unary \(x_0\) folds, assumptions on both nonzero \(x_0\) slices, and \texttt{x1\_val\_0} contraries. The new U6 pressure is the descendant distractor in BK; under ECAI that pressure is resisted here.
-
-\textbf{Short verdict.} Not an exact match to the locked four-clause \(\mathcal{H}_{x_2}^\star\), but an elegant assumption-mediated both-parents-nonzero solution with descendant \(x_3\) unused and full coverage.
-
-\medskip\hrule\medskip
-
-\subsection{\texorpdfstring{8. ECAI \(\times\) \texttt{m12\_u6\_g1\_min\_diff} \(\times\) \(t=x_3\)}{8. ECAI - m12-u6-g1-min-diff - target x3}}
-
-\textbf{Cell directory:} \texttt{M12x\_ecai2024/cells/m12\_u6\_g1\_min\_diff\_\_target-x3/}\\
-\textbf{Runner outcome:} \texttt{solved}\\
-\textbf{ASP coverage:} positives \texttt{3/3}, negatives \texttt{6/6}
-
-\subsubsection{Setup}
-
-Same unit as cells 7 and 16: G1 with \(x_2:=\min(x_0,x_1)\) and \(x_3:=x_1-x_2\) on the nine-row factorial. For target \(x_3\), nonzero-positive labelling gives \(E^+=\{2,3,6\}\) and \(E^-=\{1,4,5,7,8,9\}\); on the table, \(x_3\neq 0\) if and only if \(x_1>x_2\). Background knowledge includes exact-value predicates for all non-targets \(x_0,x_1,x_2\); the target \(x_3\) is excluded. The preferred parents are \(\{x_1,x_2\}\); \(x_0\) is a non-parent ancestor via \(x_2\). Neither parent alone separates \(E^\pm\). The locked reference \(\mathcal{H}_{x_3}^\star\) is the three-clause parent case split of \(x_1>x_2\).
-
-\subsubsection{\texorpdfstring{Intended hypothesis \(\mathcal{H}_{x_3}^\star\)}{Intended hypothesis H-star(x3)}}
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x3(A) :- x1_val_1(A), x2_val_0(A).
-x3(A) :- x1_val_2(A), x2_val_0(A).
-x3(A) :- x1_val_2(A), x2_val_1(A).
-\end{lstlisting}
-
-\subsubsection{What happened}
-
-This cell uses the ECAI published configuration on unit U6 with learning target \(x_3\). After the initial optimum there are three rote rules, one for each positive. Non-deterministic folding selects unary \(x_0\) bodies on the positive-bearing slices \(x_0=0\) and \(x_0=1\); both overgeneralise within those slices, so assumption introduction is required. Contrary learning then introduces \(x_1\)-valued conditions. The preferred parent \(x_2\) does not appear in any target body or contrary. The learner returns a solved framework with full ASP coverage that is not an exact match to \(\mathcal{H}_{x_3}^\star\) and that cites the non-parent ancestor in the target rules.
-
-\subsubsection{What the learner did}
-
-Learning begins from rote coverage of the three positives. The first fold chosen is \(A=2\) (where \(x_0=0\), \(x_1=1\), \(x_2=0\)), which replaces the identifier by \texttt{x0\_val\_0} alone:
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x3(A) :- x0_val_0(A).
-\end{lstlisting}
-
-That body also covers the negative \(A=1\) (where \(x_0=0\), \(x_1=0\)), so entailment fails and assumption introduction adds \texttt{alpha\_1}:
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x3(A) :- alpha_1(A), x0_val_0(A).
-\end{lstlisting}
-
-Positive \(A=3\) is then deleted as subsumed. Next, \(A=6\) (where \(x_0=1\), \(x_1=2\), \(x_2=1\)) folds to \texttt{x0\_val\_1}, which would cover negatives \(A=4\) and \(A=5\) in the same \(x_0\) slice, so assumption introduction adds \texttt{alpha\_2}:
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x3(A) :- alpha_2(A), x0_val_1(A).
-\end{lstlisting}
-
-There is no positive in the \(x_0=2\) slice, so no corresponding target rule is learned. Contrary folding yields:
-
-\begin{lstlisting}[style=logic,language=Prolog]
-c_alpha_1(A) :- x1_val_0(A).
-c_alpha_2(A) :- x1_val_0(A).
-c_alpha_2(A) :- x1_val_1(A).
-\end{lstlisting}
-
-In the ASP solution the assumptions are realised by
-
-\begin{lstlisting}[style=logic,language=Prolog]
-alpha_1(A) :- not c_alpha_1(A), x0_val_0(A).
-alpha_2(A) :- not c_alpha_2(A), x0_val_1(A).
-\end{lstlisting}
-
-so on the \(x_0=0\) slice the assumption holds when \(x_1\neq 0\), and on the \(x_0=1\) slice when \(x_1=2\). Body-scope variables of the target rules are \(\{x_0\}\); parent \(x_1\) appears only in the contrary conditions; preferred parent \(x_2\) is unused.
-
-\subsubsection{Match assessment}
-
-This is not an exact match to \(\mathcal{H}_{x_3}^\star\). The locked hypothesis uses both parents \(x_1\) and \(x_2\). The learner never emits an \texttt{x2\_val\_*} literal.
-
-Extensionally the learned theory is
-
-\[ (x_0=0 \land x_1\neq 0)\;\lor\;(x_0=1 \land x_1=2), \]
-
-which coincides with \(x_1>x_2\) on this factorial table (the only positives are rows 2, 3, and 6), so ASP coverage is complete. Intensionally this is a non-parent-ancestor divergence: the target bodies are organised by \(x_0\), one preferred parent enters only through contraries, and the other preferred parent \(x_2\) is absent. Relative to the semantic success description for U6 \(x_3\), the framework covers the labelling but does not recover the intended two-parent inequality intension.
-
-The learning path is structurally the same as ECAI outcomes on U5 and on U6 \(x_2\): an early one-literal fold on a variable that does not perfectly separate \(E^\pm\) within its incomplete slices, followed by assumption introduction and contrary repair that recovers only part of the preferred parent structure. In this cell that repair reaches \(x_1\) in the contraries but never introduces \(x_2\).
-
-\textbf{Short verdict.} Not an exact match: non-parent ancestor \(x_0\) in target bodies with assumptions; \(x_1\) only in contraries; preferred parent \(x_2\) unused; full coverage.
-
-\medskip\hrule\medskip
-
-\subsection{\texorpdfstring{9. ECAI \(\times\) \texttt{m12\_u7\_diamond\_noisy} \(\times\) \(t=x_3\)}{9. ECAI - m12-u7-diamond-noisy - target x3}}
-
-\textbf{Cell directory:} \texttt{M12x\_ecai2024/cells/m12\_u7\_diamond\_noisy\_\_target-x3/}\\
-\textbf{Runner outcome:} \texttt{solved}\\
-\textbf{ASP coverage:} positives \texttt{3/3}, negatives \texttt{0/3}
-
-\subsubsection{Setup}
-
-Unit U7 is a diamond with curated support. For each root value \(x_0\in\{0,1,2\}\), set \(x_1:=(x_0+1)\bmod 3\) and include two values of \(x_2\), both functions of the common cause: \(x_2:=(x_0+2)\bmod 3\) (siblings differ) and \(x_2:=(x_0+1)\bmod 3\) (siblings collapse, equal to \(x_1\)). The sink is \(x_3:=|x_1-x_2|\). The six-row table therefore places, for every \(x_0\), one positive and one negative under nonzero-positive labelling of \(x_3\). On this table, \(x_3\neq 0\) if and only if \(x_1\neq x_2\). The examples are \(E^+=\{1,3,5\}\) and \(E^-=\{2,4,6\}\). Each positive/negative twin shares \((x_0,x_1)\) and differs only in \(x_2\). No unary \texttt{val}-union over \(\{x_0\}\), \(\{x_1\}\), or \(\{x_2\}\) alone separates \(E^\pm\); the parent pair \(\{x_1,x_2\}\) does. Background knowledge includes exact-value predicates for \(x_0\), \(x_1\), and \(x_2\); the target \(x_3\) is excluded. This arm uses the ECAI published configuration (see Batch A control flow). The locked reference \(\mathcal{H}_{x_3}^\star\) enumerates the three sibling pairs on which the siblings differ.
-
-\subsubsection{\texorpdfstring{Intended hypothesis \(\mathcal{H}_{x_3}^\star\)}{Intended hypothesis H-star(x3)}}
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x3(A) :- x1_val_1(A), x2_val_2(A).
-x3(A) :- x1_val_2(A), x2_val_0(A).
-x3(A) :- x1_val_0(A), x2_val_1(A).
-\end{lstlisting}
-
-\subsubsection{What happened}
-
-After rote learning there are three non-intensional positives. Under ECAI cover-and-repair at token budget \(1\), every target fold accepts a unary \texttt{x0\_val\_*} body; each such body also covers that positive's twin negative, so \texttt{gen2} fails entailment and \texttt{asm\_intro(relto)} patches the fold with a new assumption. Contrary folding then rejects reuse of that assumption under a further \texttt{x0} fold (\texttt{KO}), accepts an \texttt{x1\_val\_*} fold plus a further assumption, and closes the tower by reusing the outer assumptions (\texttt{OK}). Preferred parent \(x_2\) is present in BK throughout but is never selected as a folding literal. The trace ends with \texttt{gen1: nothing to fold} and no \texttt{Increasing folding tokens to:} line. The runner reports \texttt{solved}. ASP brave coverage on \texttt{bk.sol.asp}, however, covers all three positives and \textbf{rejects none of the three negatives}. This is therefore an ECAI \textbf{covering failure}: procedural completion without separation of \(\langle E^+,E^-\rangle\).
-
-\subsubsection{What the learner did}
-
-Rote positives:
-
-\begin{lstlisting}[style=logic]
-ert: x3(A) <- [A=1]
-ert: x3(A) <- [A=3]
-ert: x3(A) <- [A=5]
-\end{lstlisting}
-
-\textbf{Target stage.} For \(A=1\) (row \((0,1,2,1)\)), one-token folding selects \texttt{x0\_val\_0}:
-
-\begin{lstlisting}[style=logic]
-1: folding [A=1] with x0_val_0(...)
-0: DONE
-folding result: x3(A) <- [x0_val_0(A)]
-gen2: extended ABA does not entail <E+,E-> - looking for assumption relative to
-gen2: generating NEW assumption: alpha_1(A)
-assumption introduction result: x3(A) <- [alpha_1(A),x0_val_0(A)]
-ert: c_alpha_1(A) <- [A=2]
-\end{lstlisting}
-
-The same pattern yields \texttt{alpha\_2} with \texttt{x0\_val\_1} (from \(A=3\)) and \texttt{alpha\_3} with \texttt{x0\_val\_2} (from \(A=5\)). Accepted target rules:
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x3(A) :- alpha_1(A), x0_val_0(A).
-x3(A) :- alpha_2(A), x0_val_1(A).
-x3(A) :- alpha_3(A), x0_val_2(A).
-\end{lstlisting}
-
-\textbf{Contrary stage.} Folding \texttt{c\_alpha\_1} on \(A=2\) first tries \texttt{x0\_val\_0} and reuse of \texttt{alpha\_1} (\texttt{KO}), then succeeds with \texttt{x1\_val\_1} and a new assumption \texttt{alpha\_4}. The other two first-level contraries likewise KO on \texttt{x0} and accept \texttt{x1} plus \texttt{alpha\_5} / \texttt{alpha\_6}. Second-level contrary folds then reuse the outer assumptions successfully (\texttt{OK}), e.g. \texttt{c\_alpha\_4(A) :- alpha\_1(A), x0\_val\_0(A)}. Learning stops when no non-intensional rules remain.
-
-In the ASP solution the assumption defaults are
-
-\begin{lstlisting}[style=logic,language=Prolog]
-alpha_1(A) :- not c_alpha_1(A), x0_val_0(A).
-alpha_2(A) :- not c_alpha_2(A), x0_val_1(A).
-alpha_3(A) :- not c_alpha_3(A), x0_val_2(A).
-alpha_4(A) :- not c_alpha_4(A), x1_val_1(A).
-alpha_5(A) :- not c_alpha_5(A), x1_val_2(A).
-alpha_6(A) :- not c_alpha_6(A), x1_val_0(A).
-\end{lstlisting}
-
-with first-level contraries on \(x_1\) and second-level contraries looping back through the outer \(\alpha_i\) and \(x_0\). Body-scope variables of the target rules are \(\{x_0\}\); framework-scope variables are \(\{x_0,x_1\}\). No learned body cites \(x_2\).
-
-\textbf{Why \(x_2\) never arises.} As in the Batch A control flow: with tokens at \(1\), each fold commits to a single BK literal; here the first success on every target fold is \texttt{x0\_val\_*}. When that overgeneralises, \texttt{gen2} repairs \textbf{that} fold by assumption introduction rather than searching for \texttt{x2\_val\_*} or a two-literal parent--parent body. Assumption introduction succeeds; under brave mode \texttt{gen6} continues without a cautious entailment re-check. On the contrary stage, after \texttt{x0} is \texttt{KO}, the next successful alternative is \texttt{x1} plus a new assumption---again without needing \(x_2\). Because this cover-and-repair derivation reaches \texttt{nothing to fold}, \texttt{genT} never raises the token budget toward the ceiling of \(10\). Background \texttt{x2\_val\_*} facts remain unused folding material; \(x_2\) is not tried and discarded on the accepted path.
-
-\subsubsection{Match assessment}
-
-This is not an exact match to \(\mathcal{H}_{x_3}^\star\). The locked hypothesis is the three-clause both-parent case split of \(x_1\neq x_2\). Target bodies cite only the non-parent common cause \(x_0\), gated by assumptions; parent \(x_1\) appears only in contrary conditions; preferred parent \(x_2\) is absent from the learned framework.
-
-Extensionally the outcome is a covering failure, not merely an intensional mismatch. Because each twin pair shares \((x_0,x_1)\), any theory whose learned conditions live only in \(\{x_0,x_1\}\) cannot separate those twins. ASP brave coverage confirms this: positives \texttt{3/3}, negatives \texttt{0/3}. Runner \texttt{solved} must not be read as a covering solution of \(\langle E^+,E^-\rangle\); it records only that ABA Learning emptied the non-intensional list and wrote an artefact.
-
-Relative to U7's design purpose---forcing both-parent recovery by making every unary \texttt{val}-union imperfect---this cell is a clear ECAI failure of the Batch A cover-and-repair regime: early commitment to \(x_0\), repair through \(x_1\)-mediated assumptions, no pressure to reach \(x_2\), and a returned framework that does not reject the curated twin negatives.
-
-\textbf{Comparison with ECAI on U6 \(x_3\) (cell 8).} Cell 8 shows a related early commitment to ancestor \(x_0\) with preferred parent \(x_2\) unused, but there the repaired theory still separates \(E^\pm\) with full ASP coverage. Cell 9 has the same structural learning path, yet on U7's twin design that path is fatal: shared \((x_0,x_1)\) makes the missing \(x_2\) an extensional covering failure.
-
-\textbf{Comparison with AAMAS on the same cell (cell 18).} Deferred in full until cell 18 is written. Preview from the AAMAS artefact: greedy/\texttt{mgr} emits three-literal bodies citing \(x_0\), \(x_1\), and \(x_2\) on each positive row---so both preferred parents appear, with non-parent ancestor residue---rather than an assumption tower that omits \(x_2\).
-
-\textbf{Short verdict.} Covering failure despite runner \texttt{solved}: target bodies only on ancestor \(x_0\) with a nested assumption tower over \(\{x_0,x_1\}\); preferred parent \(x_2\) never selected; ASP rejects \(0/3\) negatives.
-
-\medskip\hrule\medskip
-
-\section{Batch B --- AAMAS (\texttt{M12x\_aamas2025})}
-
-\subsection{AAMAS folding control flow}
-
-Batch B uses \texttt{configs/aamas2025\_config.pl}: \texttt{learning\_mode(brave)}, \texttt{folding\_mode(greedy)}, \texttt{folding\_selection(mgr)}, \texttt{folding\_space(bk)}, and \texttt{asm\_intro(relto)}. The shared \texttt{gen} skeleton still applies; what follows is how folding and selection specialise that skeleton on this arm.
-
-\textbf{Which rule is folded.} Under \texttt{folding\_selection(mgr)}, the engine does not pick an arbitrary non-intensional rule. After rote learning (and after any later contrary rote steps), it first computes greedy generalisations of the new non-intensional facts (\texttt{gen: computing greedy foldings}) and stores them in a most-general-first utility table. \texttt{gen1} then selects a rule among those \textbf{most general} candidates. The effect in M12x traces is that each positive's specialised body is prepared up front, then applied one rote rule at a time.
-
-\textbf{How a fold is computed.} Under \texttt{folding\_mode(greedy)}, a single fold call walks the current body and, for each foldable literal, tries every eligible folding rule from the folding table, accumulating successful head replacements. There is \textbf{no token budget} and no \texttt{genT} iterative deepening. On a typical M12x positive \(A=i\), the result is a \textbf{multi-literal} body that cites every background \texttt{val} predicate true of that row---for example
-
-\begin{lstlisting}[style=logic]
-folding result: x3(A) <- [x0_val_0(A),x1_val_1(A),x2_val_0(A)]
-\end{lstlisting}
-
-after successive folds with each matching BK rule. The greedy procedure is committed (\texttt{!}): it does not leave alternative one-literal folds as open choice points in the way \texttt{nd} does.
-
-\textbf{\texttt{folding\_space(bk)}.} Only rules from the original background-knowledge block are eligible as folding material (rule ids before the learned-rule boundary). Learned target or contrary rules are not used as fold sources. Combined with greedy accumulation, this tends to specialise each positive to the full observed feature conjunction available in BK for that sample.
-
-\textbf{What happens when a fold overgeneralises.} The shared \texttt{gen2} repair path (assumption introduction under \texttt{relto}, then \texttt{gen6} contrary rote learning) remains available. In practice on the M12x AAMAS cells inspected so far, greedy specialisation is usually already tight enough that the folded rule entails \(\langle E^+,E^-\rangle\) immediately. The trace then reports \texttt{extended ABA entails <E+,E-> - using folding} and returns to \texttt{gen1} \textbf{without} introducing assumptions. When a greedy fold still overgeneralises, cover-and-repair can still fire---but assumption towers are the exception on this arm, not the default.
-
-\textbf{Contrast with ECAI (Batch A).} ECAI typically proposes a one-literal fold at token budget \(1\) and, if that overgeneralises, repairs with assumptions. AAMAS typically proposes a fully specialised BK conjunction in one greedy step and keeps it when it already separates the examples. The shared failure modes therefore differ in shape: ECAI's premature commitment is to an early unary column plus exception structure; AAMAS's characteristic residue is \textbf{over-specialisation}---retaining extra BK conjuncts (siblings, ancestors, descendants) beside the literals that would constitute \(\mathcal{H}_t^\star\).
-
-\textbf{How to read AAMAS traces in this batch.} An initial block \texttt{gen: computing greedy foldings} followed by per-sample \texttt{folding [A=i] with \ldots{}} / \texttt{DONE} lines is the precomputation of greedy generalisations. Later \texttt{begin greedy folding} under \texttt{gen1} applies that specialisation to the selected rote rule. \texttt{using folding} without intervening \texttt{generating NEW assumption} means the fold was accepted assumption-free. As in the shared skeleton, \texttt{nothing to fold} and runner \texttt{solved} record procedural completion; ASP coverage must still be checked separately.
-
-\subsection{\texorpdfstring{10. AAMAS \(\times\) \texttt{m12\_u1\_separator\_copy} \(\times\) \(t=x_2\)}{10. AAMAS - m12-u1-separator-copy - target x2}}
-
-\textbf{Cell directory:} \texttt{M12x\_aamas2025/cells/m12\_u1\_separator\_copy\_\_target-x2/}\\
-\textbf{Runner outcome:} \texttt{solved}\\
-\textbf{ASP coverage:} positives \texttt{6/6}, negatives \texttt{3/3}
-
-\subsubsection{Setup}
-
-Same unit and target as cell 1: separator \(x_1\to x_2\) with isolated \(x_0\);
-\(x_2:=\operatorname{copy}(x_1)\) on the nine-row factorial; nonzero-positive examples
-\(E^+=\{2,3,5,6,8,9\}\) and \(E^-=\{1,4,7\}\); exact-value background knowledge for
-\(x_0\) and \(x_1\). This arm uses the AAMAS published configuration
-(\texttt{folding\_mode(greedy)}, \texttt{folding\_selection(mgr)},
-\texttt{folding\_space(bk)}, \texttt{asm\_intro(relto)}).
-
-\subsubsection{\texorpdfstring{Intended hypothesis \(\mathcal{H}_{x_2}^\star\)}{Intended hypothesis H-star(x2)}}
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x2(A) :- x1_val_1(A).
-x2(A) :- x1_val_2(A).
-\end{lstlisting}
-
-\subsubsection{What happened}
-
-This cell uses the AAMAS published configuration on the same U1 instance. The learner
-returned a solved framework with full ASP coverage and with no assumptions or
-contraries. The learned target theory is a six-rule case split: each positive row
-becomes a conjunction of that row's \(x_0\) value and \(x_1\) value. The parent \(x_1\)
-appears in every body, but so does the isolated distractor \(x_0\). The result is
-therefore not an exact match to \(\mathcal{H}_{x_2}^\star\).
-
-\subsubsection{What the learner did}
-
-Learning again begins from rote rules for the six positives. Under greedy folding with
-selection \texttt{mgr} and folding space restricted to background knowledge, each
-positive is folded by adjoining both column values present on that row. For example,
-sample \(A=2\) has \(x_0=0\) and \(x_1=1\), and folds to:
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x2(A) :- x0_val_0(A), x1_val_1(A).
-\end{lstlisting}
-
-Each such two-literal body entails the labelled example set immediately, so no
-assumption introduction is triggered. The same pattern is applied independently to
-every positive. The accepted target rules are:
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x2(A) :- x0_val_0(A), x1_val_1(A).
-x2(A) :- x0_val_0(A), x1_val_2(A).
-x2(A) :- x0_val_1(A), x1_val_1(A).
-x2(A) :- x0_val_1(A), x1_val_2(A).
-x2(A) :- x0_val_2(A), x1_val_1(A).
-x2(A) :- x0_val_2(A), x1_val_2(A).
-\end{lstlisting}
-
-There is no further generalisation that drops the \(x_0\) literals and merges the six
-clauses into the two unary parent rules of \(\mathcal{H}_{x_2}^\star\). Body-scope
-variables are \(\{x_0,x_1\}\). The solution uses no assumptions and no contraries.
-
-\subsubsection{Match assessment}
-
-The learned target rules are not an exact match to \(\mathcal{H}_{x_2}^\star\).
-
-Extensionally, under mutual exclusivity and exhaustiveness of the three \(x_0\) value
-predicates, the six conjunctions cover exactly the rows where \(x_1\in\{1,2\}\). That is
-the same labelling as the intended two-rule parent hypothesis, which is why ASP coverage
-is complete.
-
-Intensionally the solution is a positive-row case split that retains the isolated
-distractor in every body. The true parent is present, but the theory is a
-parent-plus-distractor superset of \(\mathcal{H}_{x_2}^\star\), not the compact unary
-parent rules. Relative to the ECAI twin on this unit, AAMAS avoids assumption-mediated
-repair and keeps \(x_1\) in the target bodies, but it still fails to eliminate \(x_0\).
-
-\textbf{Short verdict.} The cell is solved and extensionally adequate, with no assumptions,
-but intensionally it enumerates six specialised conjunctions that keep the isolated
-distractor beside the true parent.
-
-\medskip\hrule\medskip
-
-\subsection{\texorpdfstring{11. AAMAS \(\times\) \texttt{m12\_u2\_collider\_min} \(\times\) \(t=x_2\)}{11. AAMAS - m12-u2-collider-min - target x2}}
-
-\textbf{Cell directory:} \texttt{M12x\_aamas2025/cells/m12\_u2\_collider\_min\_\_target-x2/}\\
-\textbf{Runner outcome:} \texttt{solved}\\
-\textbf{ASP coverage:} positives \texttt{4/4}, negatives \texttt{5/5}
-
-\subsubsection{Setup}
-
-Same unit and target as cell 2: collider \(x_0\to x_2\leftarrow x_1\) with \(x_2:=\min(x_0,x_1)\) on the nine-row factorial; nonzero-positive examples \(E^+=\{5,6,8,9\}\) and \(E^-=\{1,2,3,4,7\}\); exact-value background knowledge for both parents. This arm uses the AAMAS published configuration (\texttt{folding\_mode(greedy)}, \texttt{folding\_selection(mgr)}, \texttt{folding\_space(bk)}, \texttt{asm\_intro(relto)}).
-
-\subsubsection{\texorpdfstring{Intended hypothesis \(\mathcal{H}_{x_2}^\star\)}{Intended hypothesis H-star(x2)}}
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x2(A) :- x0_val_1(A), x1_val_1(A).
-x2(A) :- x0_val_1(A), x1_val_2(A).
-x2(A) :- x0_val_2(A), x1_val_1(A).
-x2(A) :- x0_val_2(A), x1_val_2(A).
-\end{lstlisting}
-
-\subsubsection{What happened}
-
-This cell uses the AAMAS published configuration on the same U2 instance. After the initial optimum, the engine has four rote rules covering the positives by sample identifier:
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x2(A) :- A=5.
-x2(A) :- A=6.
-x2(A) :- A=8.
-x2(A) :- A=9.
-\end{lstlisting}
-
-The trace then computes a greedy folding plan for each of those four rules. For every positive, greedy/\texttt{mgr} first replaces the identifier by the \(x_0\) value on that row, then extends the body with the \(x_1\) value on the same row. The planned foldings are therefore the four nonzero parent pairs:
-
-\begin{itemize}
-  \item \(A=5\) \(\rightarrow\) \texttt{x0\_val\_1}, \texttt{x1\_val\_1}
-  \item \(A=6\) \(\rightarrow\) \texttt{x0\_val\_1}, \texttt{x1\_val\_2}
-  \item \(A=8\) \(\rightarrow\) \texttt{x0\_val\_2}, \texttt{x1\_val\_1}
-  \item \(A=9\) \(\rightarrow\) \texttt{x0\_val\_2}, \texttt{x1\_val\_2}
-\end{itemize}
-
-Those foldings are then applied one at a time. After each application, entailment is checked against the \textbf{whole current theory}, not against the newly folded clause alone. So after the first fold, the theory still contains the remaining rote rules for \(A=6,8,9\); after the second, the remaining rotes for \(A=8,9\); and so on. Each intermediate theory already separates \(E^\pm\), so the trace reports \texttt{extended ABA entails <E+,E-> - using folding} and never introduces assumptions. Learning stops with \texttt{nothing to fold}. The final solution is the four specialised conjunctions, with no assumptions and no contraries, and with full ASP coverage.
-
-\subsubsection{What the learner did}
-
-The accepted target rules are:
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x2(A) :- x0_val_1(A), x1_val_1(A).   % from A=5
-x2(A) :- x0_val_1(A), x1_val_2(A).   % from A=6
-x2(A) :- x0_val_2(A), x1_val_1(A).   % from A=8
-x2(A) :- x0_val_2(A), x1_val_2(A).   % from A=9
-\end{lstlisting}
-
-Body-scope variables are \(\{x_0,x_1\}\).
-
-\subsubsection{Match assessment}
-
-This is an exact match to \(\mathcal{H}_{x_2}^\star\).
-
-The four conjunctions are precisely the locked \texttt{val} expansion of ``both parents are nonzero.'' ASP coverage is complete, and the solution uses no assumptions.
-
-\textbf{Contrast with ECAI on the same unit.} Under ECAI (cell 2), non-deterministic folding first produces one-literal bodies such as \texttt{x2(A) :- x0\_val\_1(A)}, which overgeneralise within an \(x_0\)-slice and force assumption introduction; the second parent is recovered only through contraries, yielding a compact assumption-mediated encoding of both-parents-nonzero that is semantically successful but not an exact syntactic match to \(\mathcal{H}_{x_2}^\star\). Under AAMAS, greedy folding specialises each positive to the full parent pair immediately, so each intermediate theory remains safe without assumptions and the final rules coincide with \(\mathcal{H}_{x_2}^\star\). Both arms recover the intended concept; they differ in presentation: ECAI's assumption form versus AAMAS's exact case enumeration.
-
-\textbf{Short verdict.} Exact match to \(\mathcal{H}_{x_2}^\star\): four both-parent conjunctions, no assumptions, full coverage.
-
-\medskip\hrule\medskip
-
-\subsection{\texorpdfstring{12. AAMAS \(\times\) \texttt{m12\_u3\_collider\_max} \(\times\) \(t=x_2\)}{12. AAMAS - m12-u3-collider-max - target x2}}
-
-\textbf{Cell directory:} \texttt{M12x\_aamas2025/cells/m12\_u3\_collider\_max\_\_target-x2/}\\
-\textbf{Runner outcome:} \texttt{solved}\\
-\textbf{ASP coverage:} positives \texttt{8/8}, negatives \texttt{1/1}
-
-\subsubsection{Setup}
-
-Same unit and target as cell 3: collider \(x_0\to x_2\leftarrow x_1\) with \(x_2:=\max(x_0,x_1)\) on the nine-row factorial; under nonzero-positive labelling, \(x_2\neq 0\) if and only if at least one parent is nonzero. The positive examples are rows \(\{2,3,4,5,6,7,8,9\}\) and the sole negative is row \(\{1\}\). Background knowledge contains exact-value predicates for both parents; the target \(x_2\) is excluded. This arm uses the AAMAS published configuration (\texttt{folding\_mode(greedy)}, \texttt{folding\_selection(mgr)}, \texttt{folding\_space(bk)}, \texttt{asm\_intro(relto)}). The locked reference \(\mathcal{H}_{x_2}^\star\) is the four-clause \texttt{val} expansion of ``at least one parent is nonzero.''
-
-\subsubsection{\texorpdfstring{Intended hypothesis \(\mathcal{H}_{x_2}^\star\)}{Intended hypothesis H-star(x2)}}
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x2(A) :- x0_val_1(A).
-x2(A) :- x0_val_2(A).
-x2(A) :- x1_val_1(A).
-x2(A) :- x1_val_2(A).
-\end{lstlisting}
-
-\subsubsection{What happened}
-
-This cell uses the AAMAS published configuration on the same U3 instance. After the initial optimum, the engine has eight rote rules covering the positives by sample identifier. The trace then computes a greedy folding plan for each of those rules. For every positive, greedy/\texttt{mgr} first replaces the identifier by the \(x_0\) value on that row, then extends the body with the \(x_1\) value on the same row. The planned foldings are therefore the eight nonzero parent pairs of the factorial (every cell except \((x_0,x_1)=(0,0)\)):
-
-\begin{itemize}
-  \item \(A=2\) \(\rightarrow\) \texttt{x0\_val\_0}, \texttt{x1\_val\_1}
-  \item \(A=3\) \(\rightarrow\) \texttt{x0\_val\_0}, \texttt{x1\_val\_2}
-  \item \(A=4\) \(\rightarrow\) \texttt{x0\_val\_1}, \texttt{x1\_val\_0}
-  \item \(A=5\) \(\rightarrow\) \texttt{x0\_val\_1}, \texttt{x1\_val\_1}
-  \item \(A=6\) \(\rightarrow\) \texttt{x0\_val\_1}, \texttt{x1\_val\_2}
-  \item \(A=7\) \(\rightarrow\) \texttt{x0\_val\_2}, \texttt{x1\_val\_0}
-  \item \(A=8\) \(\rightarrow\) \texttt{x0\_val\_2}, \texttt{x1\_val\_1}
-  \item \(A=9\) \(\rightarrow\) \texttt{x0\_val\_2}, \texttt{x1\_val\_2}
-\end{itemize}
-
-Those foldings are then applied one at a time. After each application, entailment is checked against the \textbf{whole current theory}, not against the newly folded clause alone. Each pairwise body matches only its own factorial cell, so it never covers the negative \(A=1\). Every intermediate theory already separates \(E^\pm\), the trace reports \texttt{extended ABA entails <E+,E-> - using folding}, and no assumptions are introduced. Learning stops with \texttt{nothing to fold}. The final solution is the eight specialised conjunctions, with no assumptions and no contraries, and with full ASP coverage.
-
-\subsubsection{What the learner did}
-
-The accepted target rules are:
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x2(A) :- x0_val_0(A), x1_val_1(A).
-x2(A) :- x0_val_0(A), x1_val_2(A).
-x2(A) :- x0_val_1(A), x1_val_0(A).
-x2(A) :- x0_val_1(A), x1_val_1(A).
-x2(A) :- x0_val_1(A), x1_val_2(A).
-x2(A) :- x0_val_2(A), x1_val_0(A).
-x2(A) :- x0_val_2(A), x1_val_1(A).
-x2(A) :- x0_val_2(A), x1_val_2(A).
-\end{lstlisting}
-
-Body-scope variables are \(\{x_0,x_1\}\).
-
-\subsubsection{Match assessment}
-
-This is not an exact match to \(\mathcal{H}_{x_2}^\star\). The locked hypothesis is the compact four-rule OR of unary nonzero conditions on either parent. The learner instead emits an exhaustive enumeration of the eight positive cells.
-
-Extensionally the two presentations coincide: the eight conjunctions cover precisely those rows where \(\max(x_0,x_1)\neq 0\), i.e. at least one parent is nonzero. ASP coverage is complete for that reason. Intensionally, however, the solution never discovers a one-literal generalisation such as \texttt{x2(A) :- x0\_val\_1(A)}; under greedy/\texttt{mgr} each positive is specialised to the full parent pair immediately, and that pair already entails safely, so there is no pressure to fold further or to introduce assumptions.
-
-\textbf{Contrast with ECAI on the same unit.} Under ECAI (cell 3), non-deterministic folding produces an \(x_0\)-first case analysis: pure unary rules on the complete \(x_0\in\{1,2\}\) slices, and an assumption-mediated rule only on the incomplete \(x_0=0\) slice. That is more compact than eight pairwise clauses and closer in spirit to a disjunctive reading, though still not the locked four-rule OR. Under AAMAS, the same unit yields the exhaustive positive-cell enumeration with both parents in every body and no assumptions. Both arms recover the intended concept; they differ in presentation: ECAI's mixed unary/assumption case analysis versus AAMAS's eight specialised conjunctions.
-
-\textbf{Contrast with AAMAS on U2.} The same greedy pairwise specialisation matched \(\mathcal{H}^\star\) exactly on U2, because the locked min hypothesis \emph{is} a set of both-parent conjunctions. On U3 the locked max hypothesis is a unary OR, so the same folding style recovers the concept extensionally but misses \(\mathcal{H}_{x_2}^\star\) syntactically.
-
-\textbf{Short verdict.} Not an exact match to the locked four-rule OR: eight both-parent conjunctions enumerating the positive cells, no assumptions, full coverage of the intended ``at least one parent nonzero'' concept.
-
-\medskip\hrule\medskip
-
-\subsection{\texorpdfstring{13. AAMAS \(\times\) \texttt{m12\_u4\_fork\_asymmetric} \(\times\) \(t=x_1\)}{13. AAMAS - m12-u4-fork-asymmetric - target x1}}
-
-\textbf{Cell directory:} \texttt{M12x\_aamas2025/cells/m12\_u4\_fork\_asymmetric\_\_target-x1/}\\
-\textbf{Runner outcome:} \texttt{solved}\\
-\textbf{ASP coverage:} positives \texttt{2/2}, negatives \texttt{1/1}
-
-\subsubsection{Setup}
-
-Same unit and target as cell 4: fork \(x_0\to x_1\), \(x_0\to x_2\) on the three-row source factorial; \(x_1:=2\) if \(x_0\neq 2\) else \(0\); nonzero-positive examples \(E^+=\{1,2\}\) and \(E^-=\{3\}\); on the table, \(x_1\neq 0\) if and only if \(x_0\in\{0,1\}\). Background knowledge includes exact-value predicates for the parent \(x_0\) and the sibling distractor \(x_2\). This arm uses the AAMAS published configuration (\texttt{folding\_mode(greedy)}, \texttt{folding\_selection(mgr)}, \texttt{folding\_space(bk)}, \texttt{asm\_intro(relto)}). The locked reference \(\mathcal{H}_{x_1}^\star\) is the two-clause unary parent expansion of \(x_0\neq 2\).
-
-\subsubsection{\texorpdfstring{Intended hypothesis \(\mathcal{H}_{x_1}^\star\)}{Intended hypothesis H-star(x1)}}
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x1(A) :- x0_val_0(A).
-x1(A) :- x0_val_1(A).
-\end{lstlisting}
-
-\subsubsection{What happened}
-
-This cell uses the AAMAS published configuration on the same U4 \(x_1\) instance. After the initial optimum, the engine has two rote rules covering the positives by sample identifier. The trace then computes a greedy folding plan for each rule. For every positive, greedy/\texttt{mgr} first replaces the identifier by the \(x_0\) value on that row, then extends the body with the sibling \(x_2\) value on the same row. The planned foldings are therefore the observed parent--sibling pairs:
-
-\begin{itemize}
-  \item \(A=1\) \(\rightarrow\) \texttt{x0\_val\_0}, \texttt{x2\_val\_0}
-  \item \(A=2\) \(\rightarrow\) \texttt{x0\_val\_1}, \texttt{x2\_val\_2}
-\end{itemize}
-
-Those foldings are applied one at a time. Each pairwise body matches only its own row on this three-row table, so neither covers the negative \(A=3\). Every intermediate theory already separates \(E^\pm\), the trace reports \texttt{extended ABA entails <E+,E-> - using folding}, and no assumptions are introduced. Learning stops with \texttt{nothing to fold}. The final solution cites both the true parent and the sibling distractor in every target body.
-
-\subsubsection{What the learner did}
-
-The accepted target rules are:
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x1(A) :- x0_val_0(A), x2_val_0(A).
-x1(A) :- x0_val_1(A), x2_val_2(A).
-\end{lstlisting}
-
-Body-scope variables are \(\{x_0,x_2\}\).
-
-\subsubsection{Match assessment}
-
-This is not an exact match to \(\mathcal{H}_{x_1}^\star\). The locked hypothesis uses unary parent conditions only. The learner instead emits two specialised conjunctions that retain the sibling value observed on each positive row.
-
-Extensionally the theory still separates \(E^\pm\) with full ASP coverage: on this table the parent literals alone already suffice, and the sibling conjuncts are redundant specialisations. Intensionally this is a sibling-citation divergence. Relative to the unit's semantic success description, the parent is recovered, but the imperfect sibling distractor is also cited---the failure mode the U4 design was meant to probe.
-
-\textbf{Comparison with ECAI on the same cell (cell 4).} Under ECAI, non-deterministic folding stops after the one-literal parent folds \texttt{x0\_val\_0} and \texttt{x0\_val\_1}, which already entail safely, yielding an exact match to \(\mathcal{H}_{x_1}^\star\) with the sibling unused. Under AAMAS, greedy/\texttt{mgr} continues from the parent literal to the sibling literal on the same row before accepting the fold, so the sibling enters every body even though it is not needed for entailment. Both arms recover a covering theory centred on the parent; they differ in whether the correlated sibling is left out of the intension.
-
-\textbf{Short verdict.} Not an exact match: parent recovered, but sibling \(x_2\) cited in both bodies via greedy pairwise specialisation; full coverage, no assumptions.
-
-\medskip\hrule\medskip
-
-\subsection{\texorpdfstring{14. AAMAS \(\times\) \texttt{m12\_u4\_fork\_asymmetric} \(\times\) \(t=x_2\)}{14. AAMAS - m12-u4-fork-asymmetric - target x2}}
-
-\textbf{Cell directory:} \texttt{M12x\_aamas2025/cells/m12\_u4\_fork\_asymmetric\_\_target-x2/}\\
-\textbf{Runner outcome:} \texttt{solved}\\
-\textbf{ASP coverage:} positives \texttt{2/2}, negatives \texttt{1/1}
-
-\subsubsection{Setup}
-
-Same unit and target as cell 5: fork \(x_0\to x_1\), \(x_0\to x_2\) on the three-row source factorial; \(x_2:=2\) if \(x_0\neq 0\) else \(0\); nonzero-positive examples \(E^+=\{2,3\}\) and \(E^-=\{1\}\); on the table, \(x_2\neq 0\) if and only if \(x_0\neq 0\). Background knowledge includes exact-value predicates for the parent \(x_0\) and the sibling distractor \(x_1\). This arm uses the AAMAS published configuration (\texttt{folding\_mode(greedy)}, \texttt{folding\_selection(mgr)}, \texttt{folding\_space(bk)}, \texttt{asm\_intro(relto)}). The locked reference \(\mathcal{H}_{x_2}^\star\) is the two-clause unary parent expansion of \(x_0\neq 0\).
-
-\subsubsection{\texorpdfstring{Intended hypothesis \(\mathcal{H}_{x_2}^\star\)}{Intended hypothesis H-star(x2)}}
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x2(A) :- x0_val_1(A).
-x2(A) :- x0_val_2(A).
-\end{lstlisting}
-
-\subsubsection{What happened}
-
-This cell uses the AAMAS published configuration on the same U4 \(x_2\) instance. After the initial optimum, the engine has two rote rules covering the positives by sample identifier. The trace then computes a greedy folding plan for each rule. For every positive, greedy/\texttt{mgr} first replaces the identifier by the \(x_0\) value on that row, then extends the body with the sibling \(x_1\) value on the same row. The planned foldings are therefore the observed parent--sibling pairs:
-
-\begin{itemize}
-  \item \(A=2\) \(\rightarrow\) \texttt{x0\_val\_1}, \texttt{x1\_val\_2}
-  \item \(A=3\) \(\rightarrow\) \texttt{x0\_val\_2}, \texttt{x1\_val\_0}
-\end{itemize}
-
-Those foldings are applied one at a time. Each pairwise body matches only its own row on this three-row table, so neither covers the negative \(A=1\). Every intermediate theory already separates \(E^\pm\), the trace reports \texttt{extended ABA entails <E+,E-> - using folding}, and no assumptions are introduced. Learning stops with \texttt{nothing to fold}. The final solution cites both the true parent and the sibling distractor in every target body.
-
-\subsubsection{What the learner did}
-
-The accepted target rules are:
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x2(A) :- x0_val_1(A), x1_val_2(A).
-x2(A) :- x0_val_2(A), x1_val_0(A).
-\end{lstlisting}
-
-Body-scope variables are \(\{x_0,x_1\}\).
-
-\subsubsection{Match assessment}
-
-This is not an exact match to \(\mathcal{H}_{x_2}^\star\). The locked hypothesis uses unary parent conditions only. The learner instead emits two specialised conjunctions that retain the sibling value observed on each positive row.
-
-Extensionally the theory still separates \(E^\pm\) with full ASP coverage: on this table the parent literals alone already suffice, and the sibling conjuncts are redundant specialisations. Intensionally this is a sibling-citation divergence of the same kind as on AAMAS \(x_1\).
-
-\textbf{Comparison with ECAI on the same cell (cell 5).} Under ECAI, non-deterministic folding stops after the one-literal parent folds \texttt{x0\_val\_1} and \texttt{x0\_val\_2}, yielding an exact match to \(\mathcal{H}_{x_2}^\star\) with the sibling unused. Under AAMAS, greedy/\texttt{mgr} continues to the sibling literal on the same row, so \(x_1\) enters every body even though it is not needed for entailment.
-
-\textbf{Comparison with AAMAS on \(x_1\) (cell 13).} The learning path is the same on both branches of the fork: parent first, then sibling, accept pairwise specialisations without assumptions. Cell 13 cites distractor \(x_2\) beside parent \(x_0\); this cell cites distractor \(x_1\) beside parent \(x_0\). Together with the two exact ECAI U4 cells, the four U4 outcomes show a clean arm contrast: ECAI recovers unary parent \(\mathcal{H}^\star\) on both children; AAMAS recovers covering parent-centred rules that also cite the correlated sibling.
-
-\textbf{Short verdict.} Not an exact match: parent recovered, but sibling \(x_1\) cited in both bodies via greedy pairwise specialisation; full coverage, no assumptions (mirror of cell 13).
-
-\medskip\hrule\medskip
-
-\subsection{\texorpdfstring{15. AAMAS \(\times\) \texttt{m12\_u5\_chain\_curated} \(\times\) \(t=x_2\)}{15. AAMAS - m12-u5-chain-curated - target x2}}
-
-\textbf{Cell directory:} \texttt{M12x\_aamas2025/cells/m12\_u5\_chain\_curated\_\_target-x2/}\\
-\textbf{Runner outcome:} \texttt{solved}\\
-\textbf{ASP coverage:} positives \texttt{4/4}, negatives \texttt{2/2}
-
-\subsubsection{Setup}
-
-Same unit and target as cell 6: chain \(x_0\to x_1\to x_2\) on the curated six-row support with \(x_2:=\operatorname{copy}(x_1)\); nonzero-positive examples \(E^+=\{2,3,4,5\}\) and \(E^-=\{1,6\}\); on the table, \(x_2\neq 0\) if and only if \(x_1\in\{1,2\}\). Background knowledge includes exact-value predicates for both ancestors. This arm uses the AAMAS published configuration (\texttt{folding\_mode(greedy)}, \texttt{folding\_selection(mgr)}, \texttt{folding\_space(bk)}, \texttt{asm\_intro(relto)}). The locked reference \(\mathcal{H}_{x_2}^\star\) prefers the unary parent copy expansion.
-
-\subsubsection{\texorpdfstring{Intended hypothesis \(\mathcal{H}_{x_2}^\star\)}{Intended hypothesis H-star(x2)}}
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x2(A) :- x1_val_1(A).
-x2(A) :- x1_val_2(A).
-\end{lstlisting}
-
-\subsubsection{What happened}
-
-This cell uses the AAMAS published configuration on the same U5 instance. After the initial optimum, the engine has four rote rules covering the positives by sample identifier. The trace then computes a greedy folding plan for each rule. For every positive, greedy/\texttt{mgr} first replaces the identifier by the grandparent \(x_0\) value on that row, then extends the body with the parent \(x_1\) value on the same row. The planned foldings are therefore the four observed ancestor--parent pairs on the positives:
-
-\begin{itemize}
-  \item \(A=2\) \(\rightarrow\) \texttt{x0\_val\_0}, \texttt{x1\_val\_1}
-  \item \(A=3\) \(\rightarrow\) \texttt{x0\_val\_1}, \texttt{x1\_val\_1}
-  \item \(A=4\) \(\rightarrow\) \texttt{x0\_val\_1}, \texttt{x1\_val\_2}
-  \item \(A=5\) \(\rightarrow\) \texttt{x0\_val\_2}, \texttt{x1\_val\_2}
-\end{itemize}
-
-Those foldings are applied one at a time. Each pairwise body matches only its own row on this support, so none covers a negative. Every intermediate theory already separates \(E^\pm\), the trace reports \texttt{extended ABA entails <E+,E-> - using folding}, and no assumptions are introduced. Learning stops with \texttt{nothing to fold}. The final solution cites both the preferred parent and the imperfect grandparent in every target body.
-
-\subsubsection{What the learner did}
-
-The accepted target rules are:
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x2(A) :- x0_val_0(A), x1_val_1(A).
-x2(A) :- x0_val_1(A), x1_val_1(A).
-x2(A) :- x0_val_1(A), x1_val_2(A).
-x2(A) :- x0_val_2(A), x1_val_2(A).
-\end{lstlisting}
-
-Body-scope variables are \(\{x_0,x_1\}\).
-
-\subsubsection{Match assessment}
-
-This is not an exact match to \(\mathcal{H}_{x_2}^\star\). The locked hypothesis is the compact unary parent expansion. The learner instead emits four specialised conjunctions that retain the grandparent value observed on each positive row.
-
-Extensionally the theory separates \(E^\pm\) with full ASP coverage: each rule is a positive cell of the curated support, and together they cover exactly the rows where \(x_1\in\{1,2\}\). Intensionally the parent \(x_1\) is present in every body---so the preferred separator is recovered as a conjunct---but the imperfect ancestor \(x_0\) is also cited throughout. That is the parent-vs-ancestor contamination the unit watches for: success is not the clean parent-only intension of \(\mathcal{H}_{x_2}^\star\).
-
-\textbf{Comparison with ECAI on the same cell (cell 6).} Under ECAI, non-deterministic folding commits to unary \(x_0\) bodies, forces assumptions on the incomplete \(x_0\) slices, and recovers \(x_1\neq 0\) only through contraries; the preferred parent never appears in a target body. Under AAMAS, greedy specialisation keeps both ancestors in every body, needs no assumptions, and does place the parent in the target rules---but only beside the grandparent. Both arms cover the labelling and both miss exact \(\mathcal{H}_{x_2}^\star\); they differ in where the parent appears (contrary-only under ECAI versus redundant conjunct under AAMAS) and in whether assumptions are used.
-
-\textbf{Short verdict.} Not an exact match: four parent--grandparent conjunctions; parent present but ancestor retained; no assumptions, full coverage.
-
-\medskip\hrule\medskip
-
-\subsection{\texorpdfstring{16. AAMAS \(\times\) \texttt{m12\_u6\_g1\_min\_diff} \(\times\) \(t=x_2\)}{16. AAMAS - m12-u6-g1-min-diff - target x2}}
-
-\textbf{Cell directory:} \texttt{M12x\_aamas2025/cells/m12\_u6\_g1\_min\_diff\_\_target-x2/}\\
-\textbf{Runner outcome:} \texttt{solved}\\
-\textbf{ASP coverage:} positives \texttt{4/4}, negatives \texttt{5/5}
-
-\subsubsection{Setup}
-
-Same unit and target as cell 7: G1 with \(x_2:=\min(x_0,x_1)\) and \(x_3:=x_1-x_2\) on the nine-row factorial; nonzero-positive examples \(E^+=\{5,6,8,9\}\) and \(E^-=\{1,2,3,4,7\}\); on the table, \(x_2\neq 0\) if and only if both parents are nonzero. Background knowledge includes both parents and the descendant distractor \(x_3\). This arm uses the AAMAS published configuration (\texttt{folding\_mode(greedy)}, \texttt{folding\_selection(mgr)}, \texttt{folding\_space(bk)}, \texttt{asm\_intro(relto)}). The locked reference \(\mathcal{H}_{x_2}^\star\) is the four-clause both-parents-nonzero expansion (same as U2); citing \(x_3\) is an explicit failure mode.
-
-\subsubsection{\texorpdfstring{Intended hypothesis \(\mathcal{H}_{x_2}^\star\)}{Intended hypothesis H-star(x2)}}
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x2(A) :- x0_val_1(A), x1_val_1(A).
-x2(A) :- x0_val_1(A), x1_val_2(A).
-x2(A) :- x0_val_2(A), x1_val_1(A).
-x2(A) :- x0_val_2(A), x1_val_2(A).
-\end{lstlisting}
-
-\subsubsection{What happened}
-
-This cell uses the AAMAS published configuration on the same U6 \(x_2\) instance. After the initial optimum, the engine has four rote rules covering the positives by sample identifier. The trace then computes a greedy folding plan for each rule. For every positive, greedy/\texttt{mgr} first folds in the \(x_0\) value, then the \(x_1\) value, then continues to the descendant \(x_3\) value on the same row. The planned foldings are therefore three-literal specialisations:
-
-\begin{itemize}
-  \item \(A=5\) \(\rightarrow\) \texttt{x0\_val\_1}, \texttt{x1\_val\_1}, \texttt{x3\_val\_0}
-  \item \(A=6\) \(\rightarrow\) \texttt{x0\_val\_1}, \texttt{x1\_val\_2}, \texttt{x3\_val\_1}
-  \item \(A=8\) \(\rightarrow\) \texttt{x0\_val\_2}, \texttt{x1\_val\_1}, \texttt{x3\_val\_0}
-  \item \(A=9\) \(\rightarrow\) \texttt{x0\_val\_2}, \texttt{x1\_val\_2}, \texttt{x3\_val\_0}
-\end{itemize}
-
-Those foldings are applied one at a time. Each body matches only its own factorial cell, so none covers a negative. Every intermediate theory already separates \(E^\pm\), the trace reports \texttt{extended ABA entails <E+,E-> - using folding}, and no assumptions are introduced. Learning stops with \texttt{nothing to fold}. The final solution contains the four parent pairs of \(\mathcal{H}_{x_2}^\star\), each contaminated by a descendant conjunct.
-
-\subsubsection{What the learner did}
-
-The accepted target rules are:
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x2(A) :- x0_val_1(A), x1_val_1(A), x3_val_0(A).
-x2(A) :- x0_val_1(A), x1_val_2(A), x3_val_1(A).
-x2(A) :- x0_val_2(A), x1_val_1(A), x3_val_0(A).
-x2(A) :- x0_val_2(A), x1_val_2(A), x3_val_0(A).
-\end{lstlisting}
-
-Body-scope variables are \(\{x_0,x_1,x_3\}\).
-
-\subsubsection{Match assessment}
-
-This is not an exact match to \(\mathcal{H}_{x_2}^\star\). Stripping the \texttt{x3\_val\_*} literals would yield exactly the locked four-clause hypothesis; with those literals retained, every target body cites the descendant.
-
-Extensionally the theory still separates \(E^\pm\) with full ASP coverage: the parent pairs alone already characterise both-parents-nonzero, and the descendant conjuncts are redundant specialisations to the observed \(x_3\) values on those four rows. Intensionally this is the explicit descendant failure mode U6 was designed to probe. Relative to semantic success, both parents are recovered, but the solution is not free of descendant citation.
-
-\textbf{Comparison with ECAI on the same cell (cell 7).} Under ECAI, non-deterministic folding never cites \(x_3\); it recovers both-parents-nonzero via assumptions and contraries. Under AAMAS, greedy specialisation recovers the parent pairs but continues folding into BK until the descendant is included. Both arms cover the labelling; they differ on whether the imperfect descendant enters the intension.
-
-\textbf{Comparison with AAMAS on U2 (cell 11).} On U2 the same greedy pairwise style matched \(\mathcal{H}^\star\) exactly, because BK contained only the two parents. On U6 the extra descendant column in BK is enough for greedy/\texttt{mgr} to over-specialise beyond \(\mathcal{H}_{x_2}^\star\).
-
-\textbf{Short verdict.} Not an exact match: four both-parent conjunctions each contaminated by descendant \(x_3\); explicit descendant failure mode; full coverage, no assumptions.
-
-\medskip\hrule\medskip
-
-\subsection{\texorpdfstring{17. AAMAS \(\times\) \texttt{m12\_u6\_g1\_min\_diff} \(\times\) \(t=x_3\)}{17. AAMAS - m12-u6-g1-min-diff - target x3}}
-
-\textbf{Cell directory:} \texttt{M12x\_aamas2025/cells/m12\_u6\_g1\_min\_diff\_\_target-x3/}\\
-\textbf{Runner outcome:} \texttt{solved}\\
-\textbf{ASP coverage:} positives \texttt{3/3}, negatives \texttt{6/6}
-
-\subsubsection{Setup}
-
-Same unit and target as cell 8: G1 with \(x_2:=\min(x_0,x_1)\) and \(x_3:=x_1-x_2\) on the nine-row factorial; nonzero-positive examples \(E^+=\{2,3,6\}\) and \(E^-=\{1,4,5,7,8,9\}\); on the table, \(x_3\neq 0\) if and only if \(x_1>x_2\). Background knowledge includes exact-value predicates for \(x_0\), \(x_1\), and \(x_2\). This arm uses the AAMAS published configuration (\texttt{folding\_mode(greedy)}, \texttt{folding\_selection(mgr)}, \texttt{folding\_space(bk)}, \texttt{asm\_intro(relto)}). The locked reference \(\mathcal{H}_{x_3}^\star\) is the three-clause parent case split of \(x_1>x_2\); \(x_0\) is a non-parent ancestor and should not appear in a preferred solution.
-
-\subsubsection{\texorpdfstring{Intended hypothesis \(\mathcal{H}_{x_3}^\star\)}{Intended hypothesis H-star(x3)}}
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x3(A) :- x1_val_1(A), x2_val_0(A).
-x3(A) :- x1_val_2(A), x2_val_0(A).
-x3(A) :- x1_val_2(A), x2_val_1(A).
-\end{lstlisting}
-
-\subsubsection{What happened}
-
-This cell uses the AAMAS published configuration on the same U6 \(x_3\) instance. After the initial optimum, the engine has three rote rules covering the positives by sample identifier. The trace then computes a greedy folding plan for each rule. For every positive, greedy/\texttt{mgr} folds in the \(x_0\), \(x_1\), and \(x_2\) values observed on that row, yielding three-literal specialisations:
-
-\begin{itemize}
-  \item \(A=2\) \(\rightarrow\) \texttt{x0\_val\_0}, \texttt{x1\_val\_1}, \texttt{x2\_val\_0}
-  \item \(A=3\) \(\rightarrow\) \texttt{x0\_val\_0}, \texttt{x1\_val\_2}, \texttt{x2\_val\_0}
-  \item \(A=6\) \(\rightarrow\) \texttt{x0\_val\_1}, \texttt{x1\_val\_2}, \texttt{x2\_val\_1}
-\end{itemize}
-
-Those foldings are applied one at a time. Each body matches only its own factorial cell, so none covers a negative. Every intermediate theory already separates \(E^\pm\), the trace reports \texttt{extended ABA entails <E+,E-> - using folding}, and no assumptions are introduced. Learning stops with \texttt{nothing to fold}. The final solution contains the three parent pairs of \(\mathcal{H}_{x_3}^\star\), each extended by a non-parent ancestor conjunct.
-
-\subsubsection{What the learner did}
-
-The accepted target rules are:
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x3(A) :- x0_val_0(A), x1_val_1(A), x2_val_0(A).
-x3(A) :- x0_val_0(A), x1_val_2(A), x2_val_0(A).
-x3(A) :- x0_val_1(A), x1_val_2(A), x2_val_1(A).
-\end{lstlisting}
-
-Body-scope variables are \(\{x_0,x_1,x_2\}\).
-
-\subsubsection{Match assessment}
-
-This is not an exact match to \(\mathcal{H}_{x_3}^\star\). Stripping the \texttt{x0\_val\_*} literals would yield exactly the locked three-clause parent case split; with those literals retained, every target body cites the non-parent ancestor.
-
-Extensionally the theory separates \(E^\pm\) with full ASP coverage: the parent pairs alone already characterise \(x_1>x_2\) on this table, and the \(x_0\) conjuncts are redundant specialisations to the observed ancestor values on the three positive rows. Intensionally both preferred parents are present in every body---so the intended two-parent inequality structure is recovered as a sub-conjunction---but the solution is contaminated by ancestor citation. Relative to the semantic success description, this is therefore a partial recovery of the preferred intension rather than an exact match to \(\mathcal{H}_{x_3}^\star\).
-
-\textbf{Comparison with ECAI on the same cell (cell 8).} Under ECAI, non-deterministic folding organises the target bodies by \(x_0\), recovers \(x_1\) only through contraries, and never cites preferred parent \(x_2\). Under AAMAS, greedy specialisation places both \(x_1\) and \(x_2\) in every target body, but also retains \(x_0\). Both arms cover the labelling and both miss exact \(\mathcal{H}_{x_3}^\star\); they differ in whether the preferred two-parent structure appears in the target rules and in whether assumptions are used.
-
-\textbf{Comparison with AAMAS on U6 \(x_2\) (cell 16).} The same greedy over-specialisation pattern appears: the literals that would constitute \(\mathcal{H}^\star\) are recovered, then an additional BK column (\(x_3\) there; \(x_0\) here) is folded in as a redundant conjunct. In both cells the extra literal is the variable the unit treats as a structural distractor relative to the locked hypothesis.
-
-\textbf{Short verdict.} Not an exact match: three parent-pair rules each contaminated by non-parent ancestor \(x_0\); both preferred parents present; full coverage, no assumptions.
-
-\medskip\hrule\medskip
-
-\subsection{\texorpdfstring{18. AAMAS \(\times\) \texttt{m12\_u7\_diamond\_noisy} \(\times\) \(t=x_3\)}{18. AAMAS - m12-u7-diamond-noisy - target x3}}
-
-\textbf{Cell directory:} \texttt{M12x\_aamas2025/cells/m12\_u7\_diamond\_noisy\_\_target-x3/}\\
-\textbf{Runner outcome:} \texttt{solved}\\
-\textbf{ASP coverage:} positives \texttt{3/3}, negatives \texttt{3/3}
-
-\subsubsection{Setup}
-
-Same unit and target as cell 9: diamond with curated support; \(x_1:=(x_0+1)\bmod 3\); two \(x_2\) arms per root (\(x_2:=(x_0+2)\bmod 3\) and \(x_2:=(x_0+1)\bmod 3\)); sink \(x_3:=|x_1-x_2|\). Nonzero-positive examples \(E^+=\{1,3,5\}\) and \(E^-=\{2,4,6\}\); on the table, \(x_3\neq 0\) if and only if \(x_1\neq x_2\). Each twin pair shares \((x_0,x_1)\) and differs only in \(x_2\). Background knowledge includes exact-value predicates for \(x_0\), \(x_1\), and \(x_2\). This arm uses the AAMAS published configuration (see Batch B control flow). The locked reference \(\mathcal{H}_{x_3}^\star\) is the three-clause parent case split of \(x_1\neq x_2\); the common cause \(x_0\) is a non-parent ancestor and should not appear in a preferred solution.
-
-\subsubsection{\texorpdfstring{Intended hypothesis \(\mathcal{H}_{x_3}^\star\)}{Intended hypothesis H-star(x3)}}
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x3(A) :- x1_val_1(A), x2_val_2(A).
-x3(A) :- x1_val_2(A), x2_val_0(A).
-x3(A) :- x1_val_0(A), x2_val_1(A).
-\end{lstlisting}
-
-\subsubsection{What happened}
-
-After the initial optimum there are three rote rules, one per positive. The trace first computes greedy foldings for each (\texttt{gen: computing greedy foldings}). For every positive, greedy/\texttt{mgr} folds in the \(x_0\), \(x_1\), and \(x_2\) values observed on that row, yielding three-literal specialisations:
-
-\begin{itemize}
-  \item \(A=1\) \(\rightarrow\) \texttt{x0\_val\_0}, \texttt{x1\_val\_1}, \texttt{x2\_val\_2}
-  \item \(A=3\) \(\rightarrow\) \texttt{x0\_val\_1}, \texttt{x1\_val\_2}, \texttt{x2\_val\_0}
-  \item \(A=5\) \(\rightarrow\) \texttt{x0\_val\_2}, \texttt{x1\_val\_0}, \texttt{x2\_val\_1}
-\end{itemize}
-
-Those foldings are applied one at a time under \texttt{gen1}. Each body matches only its own positive cell (the twin negative shares \((x_0,x_1)\) but not \(x_2\)), so none covers a negative. Every intermediate theory already separates \(E^\pm\); the trace reports \texttt{extended ABA entails <E+,E-> - using folding}; no assumptions are introduced. Learning stops with \texttt{nothing to fold}. The final solution contains the three parent pairs of \(\mathcal{H}_{x_3}^\star\), each contaminated by a non-parent ancestor conjunct.
-
-\subsubsection{What the learner did}
-
-The accepted target rules are:
-
-\begin{lstlisting}[style=logic,language=Prolog]
-x3(A) :- x0_val_0(A), x1_val_1(A), x2_val_2(A).
-x3(A) :- x0_val_1(A), x1_val_2(A), x2_val_0(A).
-x3(A) :- x0_val_2(A), x1_val_0(A), x2_val_1(A).
-\end{lstlisting}
-
-Body-scope variables are \(\{x_0,x_1,x_2\}\).
-
-\subsubsection{Match assessment}
-
-This is not an exact match to \(\mathcal{H}_{x_3}^\star\). Stripping the \texttt{x0\_val\_*} literals would yield exactly the locked three-clause parent case split; with those literals retained, every target body cites the non-parent ancestor.
-
-Extensionally the theory separates \(E^\pm\) with full ASP coverage: the parent pairs alone already characterise \(x_1\neq x_2\) on this table, and the \(x_0\) conjuncts are redundant specialisations to the observed root values on the three positive rows. Intensionally both preferred parents are present in every body---so the intended both-parent inequality structure is recovered as a sub-conjunction---but the solution is contaminated by ancestor citation. Relative to U7's design purpose, this is therefore a partial recovery of the preferred intension rather than an exact match to \(\mathcal{H}_{x_3}^\star\), and it is the Batch B over-specialisation pattern (see AAMAS folding control flow).
-
-\textbf{Comparison with ECAI on the same cell (cell 9).} Under ECAI, cover-and-repair commits to unary \(x_0\) bodies, builds a nested assumption tower over \(\{x_0,x_1\}\), never selects \(x_2\), and fails ASP coverage of the negatives (\texttt{0/3}). Under AAMAS, greedy specialisation places both \(x_1\) and \(x_2\) in every target body, needs no assumptions, and fully separates \(E^\pm\)---but also retains \(x_0\). The arms therefore diverge sharply on this unit: ECAI is a covering failure that misses a preferred parent; AAMAS is extensionally adequate and recovers both parents as conjuncts, missing exact \(\mathcal{H}_{x_3}^\star\) only through ancestor residue.
-
-\textbf{Comparison with AAMAS on U6 \(x_3\) (cell 17).} The same greedy pattern appears: the literals that would constitute \(\mathcal{H}^\star\) are recovered, then an additional BK column (ancestor \(x_0\)) is folded in as a redundant conjunct. In both cells the extra literal is the structural distractor relative to the locked hypothesis; on U7 that distractor is the common cause that the curated twins were designed to make imperfect as a unary separator.
-
-\textbf{Short verdict.} Not an exact match: three parent-pair rules each contaminated by non-parent ancestor \(x_0\); both preferred parents present; full coverage, no assumptions.
+\end{tabular}
+\end{center}
+
+% ===========================================================================
+\section{U1 --- Separator with copy}
+\label{sec:u1}
+% ===========================================================================
+
+\paragraph{Purpose.}
+Unit U1 tests whether ABA Learning recovers a unary parent rule for a sink that is an
+exact copy of its unique parent, while an isolated irrelevant variable remains available
+in the background knowledge.
+The intended behaviour is to cite the true parent and not the isolated distractor.
+
+\medskip
+\noindent\textbf{Fixture key:} \texttt{m12\_u1\_separator\_copy}.
+\textbf{Learning targets:} $\{x_2\}$.
+
+\subsection{Graph}
+\begin{center}
+\begin{tikzpicture}[dag, node distance=18mm and 22mm]
+  \node[viso, label={[font=\scriptsize\sffamily, text=black!45]above:isolated}] (x0) {$x_0$};
+  \node[v, right=28mm of x0] (x1) {$x_1$};
+  \node[v, right=of x1] (x2) {$x_2$};
+  \path (x1) edge (x2);
+\end{tikzpicture}
+\end{center}
+The node set is $V=\{x_0,x_1,x_2\}$.
+The edge set is $E=\{x_1\to x_2\}$.
+The sources are $S=\{x_0,x_1\}$ and the non-sources are $N=\{x_2\}$.
+Variable $x_0$ has no incident edges.
+
+\subsection{Mechanisms}
+The only non-source mechanism is
+\[
+  x_2 \;:=\; \operatorname{copy}(x_1).
+\]
+Variable $x_0$ does not enter any mechanism.
+
+\subsection{Observational table}
+The table is the full factorial over $(x_0,x_1)\in K\times K$, after which $x_2$ is set
+equal to $x_1$.
+There are nine rows.
+
+\begin{center}
+\small
+\begin{tabular}{@{}rrrr@{}}
+\toprule
+id & $x_0$ & $x_1$ & $x_2$ \\
+\midrule
+1 & 0 & 0 & 0 \\
+2 & 0 & 1 & 1 \\
+3 & 0 & 2 & 2 \\
+4 & 1 & 0 & 0 \\
+5 & 1 & 1 & 1 \\
+6 & 1 & 2 & 2 \\
+7 & 2 & 0 & 0 \\
+8 & 2 & 1 & 1 \\
+9 & 2 & 2 & 2 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Target \texorpdfstring{$t=x_2$}{t = x2}}
+\begin{targetbox}[Learning target $x_2$]
+The positive examples are the six rows where $x_2\neq 0$, namely
+$E^+=\{2,3,5,6,8,9\}$.
+The negative examples are $E^-=\{1,4,7\}$.
+Background knowledge includes $\mathtt{val}$ predicates for $x_0$ and $x_1$ and
+excludes $x_2$.
+The ancestors of $x_2$ are $\{x_1\}$.
+The isolated variable $x_0$ is a distractor in the background knowledge.
+There are no descendants of $x_2$.
+\end{targetbox}
+
+\noindent
+The intended learned rule is
+\begin{quote}\ttfamily\small
+x2(A) :- x1\_val\_1(A).\\
+x2(A) :- x1\_val\_2(A).
+\end{quote}
+These clauses characterise $x_2\neq 0$ by the parent $x_1$ being nonzero.
+They must not cite the isolated distractor $x_0$.
+
+% ===========================================================================
+\section{U2 --- Collider with minimum}
+\label{sec:u2}
+% ===========================================================================
+
+\paragraph{Purpose.}
+Unit U2 tests recovery of a conjunctive both-parent rule.
+The sink is the minimum of two independent parents, so under nonzero-positive labelling
+the target is nonzero if and only if both parents are nonzero.
+
+\medskip
+\noindent\textbf{Fixture key:} \texttt{m12\_u2\_collider\_min}.
+\textbf{Learning targets:} $\{x_2\}$.
+
+\subsection{Graph}
+\begin{center}
+\begin{tikzpicture}[dag]
+  \node[v] (x0) at (0,1.2) {$x_0$};
+  \node[v] (x1) at (2.8,1.2) {$x_1$};
+  \node[v] (x2) at (1.4,0) {$x_2$};
+  \path (x0) edge (x2);
+  \path (x1) edge (x2);
+\end{tikzpicture}
+\end{center}
+The node set is $V=\{x_0,x_1,x_2\}$.
+The edge set is $E=\{x_0\to x_2,\,x_1\to x_2\}$.
+The sources are $S=\{x_0,x_1\}$ and the non-sources are $N=\{x_2\}$.
+The parents of $x_2$ are $\mathrm{Pa}(x_2)=\{x_0,x_1\}$.
+
+\subsection{Mechanisms}
+\[
+  x_2 \;:=\; \min(x_0,x_1).
+\]
+
+\subsection{Observational table}
+The table is the full factorial over $(x_0,x_1)\in K\times K$.
+There are nine rows.
+
+\begin{center}
+\small
+\begin{tabular}{@{}rrrr@{}}
+\toprule
+id & $x_0$ & $x_1$ & $x_2=\min(x_0,x_1)$ \\
+\midrule
+1 & 0 & 0 & 0 \\
+2 & 0 & 1 & 0 \\
+3 & 0 & 2 & 0 \\
+4 & 1 & 0 & 0 \\
+5 & 1 & 1 & 1 \\
+6 & 1 & 2 & 1 \\
+7 & 2 & 0 & 0 \\
+8 & 2 & 1 & 1 \\
+9 & 2 & 2 & 2 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Target \texorpdfstring{$t=x_2$}{t = x2}}
+\begin{targetbox}[Learning target $x_2$]
+The positive examples are $E^+=\{5,6,8,9\}$ and the negative examples are
+$E^-=\{1,2,3,4,7\}$.
+On this table, $x_2\neq 0$ if and only if $x_0\neq 0$ and $x_1\neq 0$.
+Background knowledge includes $\mathtt{val}$ predicates for $x_0$ and $x_1$.
+\end{targetbox}
+
+\noindent
+The intended learned rule is
+\begin{quote}\ttfamily\small
+x2(A) :- x0\_val\_1(A), x1\_val\_1(A).\\
+x2(A) :- x0\_val\_1(A), x1\_val\_2(A).\\
+x2(A) :- x0\_val\_2(A), x1\_val\_1(A).\\
+x2(A) :- x0\_val\_2(A), x1\_val\_2(A).
+\end{quote}
+These four clauses are the $\mathtt{val}$ expansion of ``both parents are nonzero''.
+
+% ===========================================================================
+\section{U3 --- Collider with maximum}
+\label{sec:u3}
+% ===========================================================================
+
+\paragraph{Purpose.}
+Unit U3 is the disjunctive counterpart of U2.
+The sink is the maximum of the same two parents, so under nonzero-positive labelling
+the target is nonzero if and only if at least one parent is nonzero.
+The intended learned rule is a two-parent disjunction expressed as four single-literal
+clauses.
+
+\medskip
+\noindent\textbf{Fixture key:} \texttt{m12\_u3\_collider\_max}.
+\textbf{Learning targets:} $\{x_2\}$.
+
+\subsection{Graph}
+\begin{center}
+\begin{tikzpicture}[dag]
+  \node[v] (x0) at (0,1.2) {$x_0$};
+  \node[v] (x1) at (2.8,1.2) {$x_1$};
+  \node[v] (x2) at (1.4,0) {$x_2$};
+  \path (x0) edge (x2);
+  \path (x1) edge (x2);
+\end{tikzpicture}
+\end{center}
+The graph is identical to U2:
+$V=\{x_0,x_1,x_2\}$,
+$E=\{x_0\to x_2,\,x_1\to x_2\}$,
+$S=\{x_0,x_1\}$,
+and $N=\{x_2\}$.
+
+\subsection{Mechanisms}
+\[
+  x_2 \;:=\; \max(x_0,x_1).
+\]
+
+\subsection{Observational table}
+\begin{center}
+\small
+\begin{tabular}{@{}rrrr@{}}
+\toprule
+id & $x_0$ & $x_1$ & $x_2=\max(x_0,x_1)$ \\
+\midrule
+1 & 0 & 0 & 0 \\
+2 & 0 & 1 & 1 \\
+3 & 0 & 2 & 2 \\
+4 & 1 & 0 & 1 \\
+5 & 1 & 1 & 1 \\
+6 & 1 & 2 & 2 \\
+7 & 2 & 0 & 2 \\
+8 & 2 & 1 & 2 \\
+9 & 2 & 2 & 2 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Target \texorpdfstring{$t=x_2$}{t = x2}}
+\begin{targetbox}[Learning target $x_2$]
+The positive examples are $E^+=\{2,3,4,5,6,7,8,9\}$ and the negative example set is
+$E^-=\{1\}$.
+On this table, $x_2\neq 0$ if and only if $x_0\neq 0$ or $x_1\neq 0$.
+Background knowledge includes $\mathtt{val}$ predicates for $x_0$ and $x_1$.
+\end{targetbox}
+
+\noindent
+The intended learned rule is
+\begin{quote}\ttfamily\small
+x2(A) :- x0\_val\_1(A).\\
+x2(A) :- x0\_val\_2(A).\\
+x2(A) :- x1\_val\_1(A).\\
+x2(A) :- x1\_val\_2(A).
+\end{quote}
+These clauses are the $\mathtt{val}$ expansion of ``at least one parent is nonzero''.
+
+% ===========================================================================
+\section{U4 --- Fork with asymmetric maps}
+\label{sec:u4}
+% ===========================================================================
+
+\paragraph{Purpose.}
+Unit U4 tests parent recovery under a fork when a correlated sibling is present in the
+background knowledge.
+Each child is a deterministic but asymmetric function of the common cause $x_0$, so the
+true parent separates the nonzero labelling of that child while the sibling is
+associated with the target yet imperfect as a separator.
+
+\medskip
+\noindent\textbf{Fixture key:} \texttt{m12\_u4\_fork\_asymmetric}.
+\textbf{Learning targets:} $\{x_1,x_2\}$.
+
+\subsection{Graph}
+\begin{center}
+\begin{tikzpicture}[dag, node distance=14mm and 18mm]
+  \node[v] (x0) {$x_0$};
+  \node[v, above right=12mm and 18mm of x0] (x1) {$x_1$};
+  \node[v, below right=12mm and 18mm of x0] (x2) {$x_2$};
+  \path (x0) edge (x1);
+  \path (x0) edge (x2);
+\end{tikzpicture}
+\end{center}
+The node set is $V=\{x_0,x_1,x_2\}$.
+The edge set is $E=\{x_0\to x_1,\,x_0\to x_2\}$.
+The source set is $S=\{x_0\}$ and the non-source set is $N=\{x_1,x_2\}$.
+
+\subsection{Mechanisms}
+\begin{align*}
+  x_1 &\;:=\;
+  \begin{cases}
+    2 & \text{if } x_0\neq 2,\\
+    0 & \text{if } x_0=2,
+  \end{cases}
+  \\
+  x_2 &\;:=\;
+  \begin{cases}
+    2 & \text{if } x_0\neq 0,\\
+    0 & \text{if } x_0=0.
+  \end{cases}
+\end{align*}
+
+\subsection{Observational table}
+The table is the full factorial over $x_0\in K$, which yields three rows.
+
+\begin{center}
+\small
+\begin{tabular}{@{}rrrr@{}}
+\toprule
+id & $x_0$ & $x_1$ & $x_2$ \\
+\midrule
+1 & 0 & 2 & 0 \\
+2 & 1 & 2 & 2 \\
+3 & 2 & 0 & 2 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Target \texorpdfstring{$t=x_1$}{t = x1}}
+\begin{targetbox}[Learning target $x_1$]
+The positive examples are $E^+=\{1,2\}$ and the negative examples are $E^-=\{3\}$.
+On this table, $x_1\neq 0$ if and only if $x_0\in\{0,1\}$.
+Background knowledge includes $\mathtt{val}$ predicates for the parent $x_0$ and the
+sibling $x_2$.
+Citing the sibling is a divergence.
+\end{targetbox}
+
+\noindent
+The intended learned rule is
+\begin{quote}\ttfamily\small
+x1(A) :- x0\_val\_0(A).\\
+x1(A) :- x0\_val\_1(A).
+\end{quote}
+
+\subsection{Target \texorpdfstring{$t=x_2$}{t = x2}}
+\begin{targetbox}[Learning target $x_2$]
+The positive examples are $E^+=\{2,3\}$ and the negative examples are $E^-=\{1\}$.
+On this table, $x_2\neq 0$ if and only if $x_0\neq 0$.
+Background knowledge includes $\mathtt{val}$ predicates for the parent $x_0$ and the
+sibling $x_1$.
+Citing the sibling is a divergence.
+\end{targetbox}
+
+\noindent
+The intended learned rule is
+\begin{quote}\ttfamily\small
+x2(A) :- x0\_val\_1(A).\\
+x2(A) :- x0\_val\_2(A).
+\end{quote}
+
+% ===========================================================================
+\section{U5 --- Chain with curated correlated ancestor}
+\label{sec:u5}
+% ===========================================================================
+
+\paragraph{Purpose.}
+Unit U5 restores the pilot chain construction in which the intermediate is not a
+single-valued function of the root.
+The sole learning target is the sink $x_2$.
+The unit tests whether the learner prefers the direct parent $x_1$ over a correlated
+but imperfect ancestor $x_0$.
+(The intermediate $x_1$ is not a learning target: on this table the descendant $x_2$
+is extensionally tied to $x_1$, so there is no parent-aligned intended rule for $x_1$.)
+
+\medskip
+\noindent\textbf{Fixture key:} \texttt{m12\_u5\_chain\_curated}.
+\textbf{Learning targets:} $\{x_2\}$.
+
+\subsection{Graph}
+\begin{center}
+\begin{tikzpicture}[dag, node distance=20mm]
+  \node[v] (x0) {$x_0$};
+  \node[v, right=of x0] (x1) {$x_1$};
+  \node[v, right=of x1] (x2) {$x_2$};
+  \path (x0) edge (x1);
+  \path (x1) edge (x2);
+\end{tikzpicture}
+\end{center}
+The node set is $V=\{x_0,x_1,x_2\}$.
+The edge set is $E=\{x_0\to x_1,\,x_1\to x_2\}$.
+The source set is $S=\{x_0\}$ and the non-source set is $N=\{x_1,x_2\}$.
+Only $x_2$ is a learning target in this unit.
+
+\subsection{Mechanisms}
+This unit does \emph{not} use full source factorial with a single-valued map
+$x_1=f(x_0)$.
+Instead, for each $x_0\in K$ the table includes the two pairs
+$(x_0,x_1)=(x_0,x_0)$ and $(x_0,(x_0+1)\bmod 3)$.
+The sink is then deterministic:
+\[
+  x_2 \;:=\; \operatorname{copy}(x_1).
+\]
+Thus $x_1$ is multi-valued given $x_0$, while $x_2$ equals $x_1$ in every row.
+
+\subsection{Observational table}
+There are six rows.
+
+\begin{center}
+\small
+\begin{tabular}{@{}rrrr@{}}
+\toprule
+id & $x_0$ & $x_1$ & $x_2$ \\
+\midrule
+1 & 0 & 0 & 0 \\
+2 & 0 & 1 & 1 \\
+3 & 1 & 1 & 1 \\
+4 & 1 & 2 & 2 \\
+5 & 2 & 2 & 2 \\
+6 & 2 & 0 & 0 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Target \texorpdfstring{$t=x_2$}{t = x2}}
+\begin{targetbox}[Learning target $x_2$]
+The positive examples are $E^+=\{2,3,4,5\}$ and the negative examples are
+$E^-=\{1,6\}$.
+On this table, $x_2\neq 0$ if and only if $x_1\in\{1,2\}$.
+The ancestor $x_0$ is imperfect: each of $x_0=0$ and $x_0=2$ appears on both a
+positive and a negative row.
+Background knowledge includes $\mathtt{val}$ predicates for $x_0$ and $x_1$.
+\end{targetbox}
+
+\noindent
+The intended learned rule uses the direct parent:
+\begin{quote}\ttfamily\small
+x2(A) :- x1\_val\_1(A).\\
+x2(A) :- x1\_val\_2(A).
+\end{quote}
+A rule set that uses only the ancestor $x_0$ cannot match this labelling perfectly.
+Ancestor citation when the parent is available is a divergence from
+$\mathcal{H}_{x_2}^\star$.
+
+% ===========================================================================
+\section{U6 --- Four-node G1 with minimum then difference}
+\label{sec:u6}
+% ===========================================================================
+
+\paragraph{Purpose.}
+Unit U6 uses the four-node Fabrizio G1 edge set with project-chosen mechanisms.
+The intermediate $x_2$ is a minimum of two sources, so its nonzero labelling is the
+same conjunctive concept as in U2, now with a descendant in the background knowledge.
+The sink $x_3$ is the arithmetic difference $x_1-x_2$; under nonzero-positive labelling
+this is exactly the strict inequality $x_1>x_2$, which requires both parents of $x_3$.
+
+\medskip
+\noindent\textbf{Fixture key:} \texttt{m12\_u6\_g1\_min\_diff}.
+\textbf{Learning targets:} $\{x_2,x_3\}$.
+
+\subsection{Graph}
+\begin{center}
+\begin{tikzpicture}[dag]
+  \node[v] (x0) at (0,1.4) {$x_0$};
+  \node[v] (x1) at (0,-1.4) {$x_1$};
+  \node[v] (x2) at (2.4,0) {$x_2$};
+  \node[v] (x3) at (4.8,0) {$x_3$};
+  \path (x0) edge (x2);
+  \path (x1) edge (x2);
+  \path (x1) edge (x3);
+  \path (x2) edge (x3);
+\end{tikzpicture}
+\end{center}
+The node set is $V=\{x_0,x_1,x_2,x_3\}$.
+The edge set is
+$E=\{x_0\to x_2,\,x_1\to x_2,\,x_1\to x_3,\,x_2\to x_3\}$.
+The sources are $S=\{x_0,x_1\}$ and the non-sources are $N=\{x_2,x_3\}$.
+The parent sets are $\mathrm{Pa}(x_2)=\{x_0,x_1\}$ and $\mathrm{Pa}(x_3)=\{x_1,x_2\}$.
+
+\subsection{Mechanisms}
+\begin{align*}
+  x_2 &\;:=\; \min(x_0,x_1),\\
+  x_3 &\;:=\; x_1-x_2.
+\end{align*}
+Because $x_2\le x_1$ holds on every row of the factorial table, the difference
+$x_3$ always lies in $\{0,1,2\}$.
+
+\subsection{Observational table}
+\begin{center}
+\small
+\begin{tabular}{@{}rrrrr@{}}
+\toprule
+id & $x_0$ & $x_1$ & $x_2=\min(x_0,x_1)$ & $x_3=x_1-x_2$ \\
+\midrule
+1 & 0 & 0 & 0 & 0 \\
+2 & 0 & 1 & 0 & 1 \\
+3 & 0 & 2 & 0 & 2 \\
+4 & 1 & 0 & 0 & 0 \\
+5 & 1 & 1 & 1 & 0 \\
+6 & 1 & 2 & 1 & 1 \\
+7 & 2 & 0 & 0 & 0 \\
+8 & 2 & 1 & 1 & 0 \\
+9 & 2 & 2 & 2 & 0 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Target \texorpdfstring{$t=x_2$}{t = x2}}
+\begin{targetbox}[Learning target $x_2$]
+The positive examples are $E^+=\{5,6,8,9\}$ and the negative examples are
+$E^-=\{1,2,3,4,7\}$.
+On this table, $x_2\neq 0$ if and only if $x_0\neq 0$ and $x_1\neq 0$.
+The descendant $x_3$ is nonzero only on rows $\{2,3,6\}$, so it is an imperfect
+separator of $E^\pm$ for $x_2$.
+Background knowledge includes $\mathtt{val}$ predicates for $x_0$, $x_1$, and $x_3$.
+\end{targetbox}
+
+\noindent
+The intended learned rule is the same conjunctive pattern as in U2:
+\begin{quote}\ttfamily\small
+x2(A) :- x0\_val\_1(A), x1\_val\_1(A).\\
+x2(A) :- x0\_val\_1(A), x1\_val\_2(A).\\
+x2(A) :- x0\_val\_2(A), x1\_val\_1(A).\\
+x2(A) :- x0\_val\_2(A), x1\_val\_2(A).
+\end{quote}
+These clauses must not cite the descendant $x_3$.
+
+\subsection{Target \texorpdfstring{$t=x_3$}{t = x3}}
+\begin{targetbox}[Learning target $x_3$]
+The positive examples are $E^+=\{2,3,6\}$ and the negative examples are
+$E^-=\{1,4,5,7,8,9\}$.
+On this table, $x_3\neq 0$ if and only if $x_1>x_2$.
+Neither parent alone separates this labelling.
+Background knowledge includes $\mathtt{val}$ predicates for $x_0$, $x_1$, and $x_2$.
+The variable $x_0$ is a non-parent ancestor of $x_3$.
+\end{targetbox}
+
+\noindent
+The intended learned rule is the parent-based case split of $x_1>x_2$:
+\begin{quote}\ttfamily\small
+x3(A) :- x1\_val\_1(A), x2\_val\_0(A).\\
+x3(A) :- x1\_val\_2(A), x2\_val\_0(A).\\
+x3(A) :- x1\_val\_2(A), x2\_val\_1(A).
+\end{quote}
+
+% ===========================================================================
+\section{U7 --- Diamond with curated noisy fork arms}
+\label{sec:u7}
+% ===========================================================================
+
+\paragraph{Purpose.}
+Unit U7 tests both-parent recovery for a sink whose parents are correlated siblings
+under a common cause.
+A three-row deterministic factorial diamond would allow a perfect root-only case-split
+of many labellings.
+To prevent that escape, U7 uses a curated support in the style of U5: for each root
+value, two sibling configurations are included so that the same $x_0$ appears on both
+a positive and a negative row for the sink labelling.
+The intended rule therefore cannot be replaced by a perfect $\mathtt{x0\_val\_*}$
+union, and each sibling alone is likewise imperfect.
+
+\medskip
+\noindent\textbf{Fixture key:} \texttt{m12\_u7\_diamond\_noisy}.
+\textbf{Learning targets:} $\{x_3\}$.
+
+\subsection{Graph}
+\begin{center}
+\begin{tikzpicture}[dag, node distance=14mm and 18mm]
+  \node[v] (x0) {$x_0$};
+  \node[v, above right=12mm and 18mm of x0] (x1) {$x_1$};
+  \node[v, below right=12mm and 18mm of x0] (x2) {$x_2$};
+  \node[v, right=36mm of x0] (x3) {$x_3$};
+  \path (x0) edge (x1);
+  \path (x0) edge (x2);
+  \path (x1) edge (x3);
+  \path (x2) edge (x3);
+\end{tikzpicture}
+\end{center}
+The node set is $V=\{x_0,x_1,x_2,x_3\}$.
+The edge set is
+$E=\{x_0\to x_1,\,x_0\to x_2,\,x_1\to x_3,\,x_2\to x_3\}$.
+The source set is $S=\{x_0\}$.
+The non-sources are $N=\{x_1,x_2,x_3\}$, of which only $x_3$ is a learning target.
+The parents of the sink are $\mathrm{Pa}(x_3)=\{x_1,x_2\}$.
+
+\subsection{Mechanisms}
+For each $x_0\in K$, set $x_1:=(x_0+1)\bmod 3$ and include two values of $x_2$:
+\begin{enumerate}[leftmargin=1.6em,itemsep=0.15em]
+  \item $x_2=(x_0+2)\bmod 3$ (the siblings differ);
+  \item $x_2=x_1$ (the siblings collapse).
+\end{enumerate}
+The sink is then
+\[
+  x_3 \;:=\; |x_1-x_2|.
+\]
+On the resulting table, $x_3\neq 0$ if and only if $x_1\neq x_2$.
+
+\subsection{Observational table}
+There are six rows.
+
+\begin{center}
+\small
+\begin{tabular}{@{}rrrrr@{}}
+\toprule
+id & $x_0$ & $x_1$ & $x_2$ & $x_3=|x_1-x_2|$ \\
+\midrule
+1 & 0 & 1 & 2 & 1 \\
+2 & 0 & 1 & 1 & 0 \\
+3 & 1 & 2 & 0 & 2 \\
+4 & 1 & 2 & 2 & 0 \\
+5 & 2 & 0 & 1 & 1 \\
+6 & 2 & 0 & 0 & 0 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Target \texorpdfstring{$t=x_3$}{t = x3}}
+\begin{targetbox}[Learning target $x_3$]
+The positive examples are $E^+=\{1,3,5\}$ and the negative examples are
+$E^-=\{2,4,6\}$.
+On this table, $x_3\neq 0$ if and only if $x_1\neq x_2$.
+No $\mathtt{val}$-union over $\{x_0\}$ alone, over $\{x_1\}$ alone, or over $\{x_2\}$
+alone separates $E^\pm$ perfectly.
+The pair $\{x_1,x_2\}$ does separate $E^\pm$.
+Background knowledge includes $\mathtt{val}$ predicates for $x_0$, $x_1$, and $x_2$.
+\end{targetbox}
+
+\noindent
+The intended learned rule is
+\begin{quote}\ttfamily\small
+x3(A) :- x1\_val\_1(A), x2\_val\_2(A).\\
+x3(A) :- x1\_val\_2(A), x2\_val\_0(A).\\
+x3(A) :- x1\_val\_0(A), x2\_val\_1(A).
+\end{quote}
+These three clauses list the sibling value pairs on which the siblings differ.
+
+% ===========================================================================
+\section*{Source pointers}
+% ===========================================================================
+
+\begin{description}[leftmargin=1.4em,style=nextline,itemsep=0.2em]
+  \item[Mechanism cards]
+    \texttt{docs/research/milestone\_plans/milestone1\_part2/mechanism\_cards/}
+  \item[Unit set]
+    \texttt{milestone1\_part2\_expanded\_unit\_set.md}
+  \item[Approach]
+    \texttt{milestone1\_part2\_expanded\_approach.md}
+  \item[Implementation]
+    \texttt{causal/experiments/handcrafted\_m12x.py}
+\end{description}
 
 \end{document}
