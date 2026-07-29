@@ -69,6 +69,17 @@ aba_asp/
   graph-theoretic MEC/CPDAG certificates, checked BIF exports, and target-free
   nested-prefix samples are derived from it. This is pre-learning evaluator
   infrastructure, not Russo-style Causal ABA or a learned-rule graph decoder.
+- `targetwise/` — target-complete runner over one explicitly selected frozen
+  causal-fixture sample. It validates fixture/sample hashes and metadata,
+  constructs symmetric binary exact-value BK and E+/E− for every variable,
+  executes target cells serially, and writes inspectable per-target and
+  collection artefacts. Graph metadata is evaluator-only and no cross-target
+  graph/CPDAG decoder is applied. Configuration schema:
+  `causal/configs/targetwise/M13_b3_binary_diamond_n50_seed42_aamas2025.yaml`;
+  compact diagnostics and the one-query joint brave-task check are implemented
+  in `causal/targetwise/diagnostics.py` and
+  `causal/targetwise/semantics.py`; focused tests:
+  `causal/tests/test_targetwise_collection.py`.
 - `argcausaldisco_integration.py` — data → ABA pipeline.
   `generate_aba_background_knowledge()` (table → feature predicates → `.bk.aba`),
   `pick_target_variable()` (target + E+/E− split), `_extract_learned_rules()` (solution − BK).
@@ -241,7 +252,8 @@ directory for all future M1.3 work.
 Bucket 3 claims and ABA Learning experiments remain **planning pending**. The current
 sources are its planning record above, the 22 July section of
 `docs/research/supervisor_guidance.md`, and `docs/research/research_state.md`. There are
-no approved Bucket 3 claims, learning configs, cells, or output grids.
+no approved Bucket 3 claims, experiment-specific learning configs, executed target
+cells, or output grids.
 
 Samuel has approved the pre-learning construction and certification tooling for the
 first bounded fixture:
@@ -257,22 +269,30 @@ These files establish the generating DAG, exact population, assumptions, standar
 MEC/CPDAG, and one target-free IID table. They do not approve target-wise ABA Learning
 runs, a union-of-rules graph decoder, an experiment matrix, or a Bucket 3 claim.
 
-After Samuel approves a specific experiment, follow the established layout:
+Reusable target-wise execution infrastructure now exists, without executed research
+cells:
 
-- evidence record:
-  `docs/experiments/qualitative/<experiment-id>/experiment.md`;
-- fixture or analysis code:
-  a clearly named module under `causal/experiments/`, registered through the existing
-  harness only where needed;
-- grid config:
-  `causal/configs/experiments/<experiment-id-or-arm>.yaml`;
-- focused tests:
-  `causal/tests/test_<experiment-id-or-feature>.py`;
-- generated cells:
-  `causal/outputs/aba_learning/grid/<experiment-id-or-arm>/cells/<cell-slug>/`;
-- generated cross-cell summary:
-  `causal/outputs/aba_learning/grid/<experiment-id>_summary.{md,json}` when a
-  dedicated summary generator is warranted.
+- implementation and usage boundary: `causal/targetwise/` and its `README.md`;
+- bounded configuration:
+  `causal/configs/targetwise/M13_b3_binary_diamond_n50_seed42_aamas2025.yaml`;
+- focused tests: `causal/tests/test_targetwise_collection.py`;
+- intended generated hierarchy:
+  `causal/outputs/aba_learning/targetwise/<fixture-id>/<sample-stem>/`,
+  with one `cells/target-<variable>/` directory per automatically discovered target.
+
+The runner keeps a byte-identical table copy in every cell for inspection, but passes
+only the exact-value BK and recorded E+/E− arrays to ABA Learning. It preserves raw
+engine output, compact target-wise diagnostics, target reports, and a collection
+summary. The diagnostics retain rules, ABA components, body variables/lengths,
+outcome/runtime, and one joint brave-task stable-model result. They omit inherited
+coverage panels and parent/graph proxies. The summary explicitly does not union
+learned rules into a graph or assess CPDAG recovery.
+
+After Samuel approves a specific experiment, add its config and evidence record, run
+the target-wise collection (or the established grid harness if the approved question
+requires that structure), and update the experiment indexes. For a target-wise
+collection the generated cells belong under the hierarchy above; grid experiments
+retain `causal/outputs/aba_learning/grid/<experiment-id-or-arm>/`.
 
 Also update `docs/experiments/experiments_summary.md` and
 `docs/research/experiment_register.md`. Do not create Bucket 3 fixtures or cells merely

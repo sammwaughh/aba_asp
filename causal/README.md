@@ -39,6 +39,30 @@ python causal/scripts/summarize_experiment.py --experiment E00_continuous_smoke
 
 Outputs: `causal/outputs/aba_learning/grid/<experiment_id>/` (`cells/<cell_dir_name>/metrics.json` — defaults to hash `run_id`; configurable via `grid.cell_dir`), `results.parquet`, `run.log`). Summaries are written to `causal/experiments/figures/<experiment_id>_summary.{md,png}`.
 
+### Target-complete causal-fixture runs
+
+`causal.targetwise` is the bounded runner for a generated causal-fixture
+directory and one explicitly selected frozen sample. It validates the fixture
+and sample provenance, builds symmetric binary exact-value tasks, and can run
+ABA Learning once for every variable without resampling or exposing graph
+metadata to the learner.
+
+```bash
+python -m causal.targetwise.cli validate \
+  --config causal/configs/targetwise/M13_b3_binary_diamond_n50_seed42_aamas2025.yaml
+
+python -m causal.targetwise.cli prepare \
+  --config causal/configs/targetwise/M13_b3_binary_diamond_n50_seed42_aamas2025.yaml
+
+python -m causal.targetwise.cli run \
+  --config causal/configs/targetwise/M13_b3_binary_diamond_n50_seed42_aamas2025.yaml
+```
+
+The named configuration selects the frozen `n50_seed42` diamond sample and the
+AAMAS 2025 brave learner configuration. Its presence is not an experiment
+result. See `causal/targetwise/README.md` for the exact input/output contract,
+retained diagnostics, and interpretation boundary.
+
 ## Environment & Setup
 
 Full setup (verified locally): [`docs/research/environment_setup.md`](../docs/research/environment_setup.md).
@@ -52,6 +76,12 @@ Full setup (verified locally): [`docs/research/environment_setup.md`](../docs/re
   population/faithfulness/MEC/CPDAG certificates, BIF interoperability, and
   target-free nested-prefix sampling. See `fixtures/README.md`. This layer does
   not run ABA Learning or decode learned rules into a graph.
+- `targetwise/`: validates one generated fixture/sample bundle, constructs one
+  binary exact-value ABA task per variable, runs the tasks serially, and writes
+  inspectable target cells plus collection-level manifests and summaries. Each
+  completed framework receives one joint brave-task stable-model check. The
+  runner does not calculate parent-set scores or aggregate learned rules into a
+  graph or CPDAG.
 - `argcausaldisco_integration.py`: generate data → predicates → BK → optional ABA-ASP run.
 	- Functions: `generate_aba_background_knowledge()`, `pick_target_variable()`, `_extract_learned_rules()`.
 - `run_aba_asp.py`: wrapper for SWI-Prolog/Clingo; class `ABASPRunner` executes learning runs.
@@ -81,6 +111,9 @@ Full setup (verified locally): [`docs/research/environment_setup.md`](../docs/re
 ## Outputs
 - `outputs/argcausaldisco/`: demo pipeline artifacts.
 - `outputs/aba_learning/grid/<experiment_id>/`: per-cell metrics and parquet from `run_grid` (do not commit).
+- `outputs/aba_learning/targetwise/<fixture-id>/<sample-stem>/`: one collection
+  containing `cells/target-<variable>/{input,output}` plus target reports,
+  metrics, a manifest, and collection summary (do not commit).
 - `outputs/aba_learning/`: legacy solution files from `test_aba_learning.py`.
 
 ## Running Tests
@@ -91,6 +124,10 @@ python causal/test_aba_learning.py
 
 # Demo pipeline
 python causal/argcausaldisco_integration.py
+
+# Focused fixture and target-wise infrastructure
+python -m pytest causal/tests/test_causal_fixture_*.py \
+  causal/tests/test_targetwise_collection.py
 ```
 
 ## Tests Overview
