@@ -49,19 +49,23 @@ metadata to the learner.
 
 ```bash
 python -m causal.targetwise.cli validate \
-  --config causal/configs/targetwise/M13_b3_binary_diamond_n50_seed42_aamas2025.yaml
+  --config causal/configs/targetwise/m13_bucket3_binary_diamond/aamas2025/n50_seed42.yaml
 
 python -m causal.targetwise.cli prepare \
-  --config causal/configs/targetwise/M13_b3_binary_diamond_n50_seed42_aamas2025.yaml
+  --config causal/configs/targetwise/m13_bucket3_binary_diamond/aamas2025/n50_seed42.yaml
 
 python -m causal.targetwise.cli run \
-  --config causal/configs/targetwise/M13_b3_binary_diamond_n50_seed42_aamas2025.yaml
+  --config causal/configs/targetwise/m13_bucket3_binary_diamond/aamas2025/n50_seed42.yaml
+
+python -m causal.targetwise.cli run \
+  --config causal/configs/targetwise/m13_bucket3_binary_diamond/ecai2024/n50_seed42.yaml
 ```
 
-The named configuration selects the frozen `n50_seed42` diamond sample and the
-AAMAS 2025 brave learner configuration. Its presence is not an experiment
-result. See `causal/targetwise/README.md` for the exact input/output contract,
-retained diagnostics, and interpretation boundary.
+The two run configurations select the same frozen `n50_seed42` diamond sample
+and differ in their published brave learner configuration. Their presence is
+not an experiment result. See `causal/targetwise/README.md` for the exact
+identity rules, input/output contract, retained diagnostics, and interpretation
+boundary.
 
 ## Environment & Setup
 
@@ -111,9 +115,9 @@ Full setup (verified locally): [`docs/research/environment_setup.md`](../docs/re
 ## Outputs
 - `outputs/argcausaldisco/`: demo pipeline artifacts.
 - `outputs/aba_learning/grid/<experiment_id>/`: per-cell metrics and parquet from `run_grid` (do not commit).
-- `outputs/aba_learning/targetwise/<fixture-id>/<sample-stem>/`: one collection
-  containing `cells/target-<variable>/{input,output}` plus target reports,
-  metrics, a manifest, and collection summary (do not commit).
+- `outputs/aba_learning/targetwise/<fixture-id>/<configuration-id>/<sample-stem>/`:
+  one collection containing `cells/target-<variable>/{input,output}` plus target
+  reports, metrics, a manifest, and collection summary (do not commit).
 - `outputs/aba_learning/`: legacy solution files from `test_aba_learning.py`.
 
 ## Running Tests

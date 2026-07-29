@@ -25,6 +25,8 @@ def build_target_summary(
 
     return {
         "target": task.target,
+        "configuration_id": config.configuration_id,
+        "configuration_hash": config.configuration_hash,
         "predictor_order": list(task.predictor_order),
         "n_positive": task.n_positive,
         "n_negative": task.n_negative,
@@ -64,6 +66,8 @@ def build_target_summary(
             "metrics": str(cell_paths.metrics_json_path),
         },
         "learner": {
+            "configuration_id": config.configuration_id,
+            "configuration_hash": config.configuration_hash,
             "prolog_config": str(config.prolog_config),
             "prolog_config_sha256": config.prolog_config_hash,
             "learning_mode": config.learning_mode,
@@ -111,6 +115,7 @@ def write_target_report(
         f"# Target-wise cell: {task.target}",
         "",
         f"- **Fixture:** `{bundle.fixture_id}`",
+        f"- **Configuration:** `{config.configuration_id}`",
         f"- **Sample:** `{bundle.sample_name}` (n={bundle.n}, seed={bundle.seed})",
         f"- **Target:** `{task.target}`",
         f"- **Predictor order:** `{', '.join(task.predictor_order)}`",
@@ -229,6 +234,11 @@ def write_collection_summary(
             "type": config.encoding_type,
             "example_policy": config.example_policy,
         },
+        "configuration": {
+            "id": config.configuration_id,
+            "hash": config.configuration_hash,
+            "manifest": str(paths.configuration_manifest_path),
+        },
         "learner": {
             "prolog_config": str(config.prolog_config),
             "prolog_config_sha256": config.prolog_config_hash,
@@ -252,6 +262,8 @@ def write_collection_summary(
         f"# Target-complete collection: {bundle.fixture_id} / {bundle.sample_name}",
         "",
         f"- **Sample:** n={bundle.n}, seed={bundle.seed}",
+        f"- **Configuration:** `{config.configuration_id}`",
+        f"- **Configuration hash:** `{config.configuration_hash}`",
         f"- **Sample hash:** `{bundle.sample_hash}`",
         f"- **Encoding:** `{config.encoding_type}` / `{config.example_policy}`",
         f"- **Learner configuration:** `{config.prolog_config}`",

@@ -126,6 +126,7 @@ def _write_config(
     fixture_directory: Path,
     *,
     description: str = "test target-complete collection",
+    configuration_id: str = "aamas2025",
     encoding_type: str = "exact_value",
     sample: str = "samples/n8_seed42.csv",
     prolog_config: Path | None = None,
@@ -136,6 +137,8 @@ def _write_config(
     config_path.write_text(
         f"""\
 description: "{description}"
+configuration:
+  id: "{configuration_id}"
 fixture:
   directory: "{fixture_directory}"
   sample: "{sample}"
@@ -247,6 +250,8 @@ def test_config_loader_is_strict_and_resolves_paths(tmp_path: Path) -> None:
     config = load_targetwise_config(config_path)
 
     assert config.fixture_directory == fixture_directory.resolve()
+    assert config.configuration_id == "aamas2025"
+    assert config.configuration_hash.startswith("sha256:")
     assert config.sample == Path("samples/n8_seed42.csv")
     assert config.encoding_type == "exact_value"
     assert config.example_policy == "binary_one_vs_zero"
@@ -263,6 +268,41 @@ def test_config_loader_is_strict_and_resolves_paths(tmp_path: Path) -> None:
     )
     with pytest.raises(TargetwiseConfigError, match="exact_value"):
         load_targetwise_config(bad_path)
+
+
+def test_config_rejects_unsafe_configuration_identifier(tmp_path: Path) -> None:
+    fixture_directory = _write_fixture_bundle(tmp_path)
+    config_path = _write_config(
+        tmp_path,
+        fixture_directory,
+        configuration_id="../ecai2024",
+    )
+
+    with pytest.raises(TargetwiseConfigError, match="configuration.id"):
+        load_targetwise_config(config_path)
+
+
+def test_configuration_hash_is_stable_across_selected_samples(
+    tmp_path: Path,
+) -> None:
+    fixture_directory = _write_fixture_bundle(tmp_path)
+    first = load_targetwise_config(
+        _write_config(
+            tmp_path,
+            fixture_directory,
+            sample="samples/n8_seed42.csv",
+        )
+    )
+    second = load_targetwise_config(
+        _write_config(
+            tmp_path,
+            fixture_directory,
+            sample="samples/n16_seed42.csv",
+        )
+    )
+
+    assert first.configuration_hash == second.configuration_hash
+    assert first.config_hash != second.config_hash
 
 
 def test_config_rejects_non_brave_learning_mode(tmp_path: Path) -> None:
@@ -468,16 +508,25 @@ def test_exact_value_encoder_rejects_names_outside_initial_predicate_contract(
         build_binary_target_task(bundle, "a")
 
 
-def test_targetwise_paths_match_fixture_sample_target_hierarchy(
+def test_targetwise_paths_match_fixture_configuration_sample_target_hierarchy(
     tmp_path: Path,
 ) -> None:
     paths = TargetwiseCollectionPaths.for_bundle(
         fixture_id="m13_bucket3_binary_diamond",
+        configuration_id="aamas2025",
         sample_name="n50_seed42",
         output_root=tmp_path,
     )
 
-    assert paths.root == (tmp_path / "m13_bucket3_binary_diamond" / "n50_seed42")
+    assert paths.root == (
+        tmp_path / "m13_bucket3_binary_diamond" / "aamas2025" / "n50_seed42"
+    )
+    assert paths.configuration_root == (
+        tmp_path / "m13_bucket3_binary_diamond" / "aamas2025"
+    )
+    assert paths.configuration_manifest_path == (
+        paths.configuration_root / "configuration_manifest.json"
+    )
     assert paths.cell("x2").data_path == (
         paths.root / "cells" / "target-x2" / "input" / "data.csv"
     )
@@ -543,7 +592,53 @@ def test_prepare_writes_all_targets_without_running_learner(
         ]
     manifest = json.loads(prepared.paths.manifest_path.read_text(encoding="utf-8"))
     assert manifest["status"] == "prepared"
+    assert manifest["configuration"]["id"] == "aamas2025"
+    assert manifest["configuration"]["hash"] == config.configuration_hash
     assert manifest["target_order"] == list(_VARIABLES)
+    configuration_manifest = json.loads(
+        prepared.paths.configuration_manifest_path.read_text(encoding="utf-8")
+    )
+    assert configuration_manifest["configuration"] == {
+        "id": "aamas2025",
+        "hash": config.configuration_hash,
+    }
+    assert configuration_manifest["fixture"]["id"] == "test_binary_diamond"
+
+
+def test_configuration_ids_create_separate_sample_collections(
+    tmp_path: Path,
+) -> None:
+    fixture_directory = _write_fixture_bundle(tmp_path / "source")
+    aamas = load_targetwise_config(
+        _write_config(
+            tmp_path,
+            fixture_directory,
+            configuration_id="aamas2025",
+        )
+    )
+    ecai = load_targetwise_config(
+        _write_config(
+            tmp_path,
+            fixture_directory,
+            configuration_id="ecai2024",
+        )
+    )
+
+    aamas_prepared = prepare_collection(aamas, output_root=tmp_path / "outputs")
+    ecai_prepared = prepare_collection(ecai, output_root=tmp_path / "outputs")
+
+    assert aamas_prepared.paths.root != ecai_prepared.paths.root
+    assert aamas_prepared.paths.root.parts[-3:] == (
+        "test_binary_diamond",
+        "aamas2025",
+        "n8_seed42",
+    )
+    assert ecai_prepared.paths.root.parts[-3:] == (
+        "test_binary_diamond",
+        "ecai2024",
+        "n8_seed42",
+    )
+    assert aamas.configuration_hash != ecai.configuration_hash
 
 
 def test_prepare_refuses_to_overwrite_changed_frozen_input(
@@ -571,6 +666,8 @@ def test_output_directory_rejects_a_different_run_configuration(
     second = load_targetwise_config(
         _write_config(tmp_path, fixture_directory, description="second")
     )
+    assert first.configuration_hash == second.configuration_hash
+    assert first.config_hash != second.config_hash
     prepare_collection(first, output_root=tmp_path / "outputs")
 
     with pytest.raises(ArtifactConflictError, match="different"):
@@ -601,6 +698,7 @@ def test_output_directory_rejects_changed_prolog_configuration_bytes(
 
     assert first.config_hash == changed.config_hash
     assert first.prolog_config_hash != changed.prolog_config_hash
+    assert first.configuration_hash != changed.configuration_hash
     with pytest.raises(ArtifactConflictError, match="different"):
         prepare_collection(changed, output_root=tmp_path / "outputs")
 
@@ -631,6 +729,8 @@ def test_fake_runner_executes_all_targets_and_writes_inspection_bundle(
     assert len(results) == 4
     assert tuple(results.columns) == TARGETWISE_RESULT_COLUMNS
     assert set(results["target"]) == set(_VARIABLES)
+    assert set(results["configuration_id"]) == {"aamas2025"}
+    assert set(results["configuration_hash"]) == {config.configuration_hash}
     assert set(results["n_target_rules"]) == {4}
     assert set(results["joint_brave_status"]) == {"SAT"}
     assert not any("parent" in column for column in results.columns)
@@ -818,10 +918,13 @@ def test_cli_validate_and_prepare_are_machine_inspectable(
 ) -> None:
     fixture_directory = _write_fixture_bundle(tmp_path / "source")
     config_path = _write_config(tmp_path, fixture_directory)
+    config = load_targetwise_config(config_path)
 
     assert targetwise_main(["validate", "--config", str(config_path)]) == 0
     validated = json.loads(capsys.readouterr().out)
     assert validated["validated"] is True
+    assert validated["configuration_id"] == "aamas2025"
+    assert validated["configuration_hash"] == config.configuration_hash
     assert validated["targets"] == list(_VARIABLES)
     assert validated["learning_mode"] == "brave"
     assert validated["joint_check_timeout_s"] == 1.0

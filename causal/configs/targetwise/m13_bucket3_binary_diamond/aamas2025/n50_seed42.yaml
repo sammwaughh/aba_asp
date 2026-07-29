@@ -1,0 +1,17 @@
+description: "Target-complete ABA Learning over one frozen causal-fixture sample."
+
+configuration:
+  id: aamas2025
+
+fixture:
+  directory: causal/outputs/causal_fixtures/m13_bucket3_binary_diamond
+  sample: samples/n50_seed42.csv
+
+encoding:
+  type: exact_value
+  example_policy: binary_one_vs_zero
+
+learner:
+  prolog_config: configs/aamas2025_config.pl
+  prolog_timeout_s: 300
+  joint_check_timeout_s: 5

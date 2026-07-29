@@ -69,6 +69,7 @@ class TargetCellPaths:
 class TargetwiseCollectionPaths:
     root: Path
     fixture_id: str
+    configuration_id: str
     sample_name: str
 
     @classmethod
@@ -76,10 +77,15 @@ class TargetwiseCollectionPaths:
         cls,
         *,
         fixture_id: str,
+        configuration_id: str,
         sample_name: str,
         output_root: Path | str | None = None,
     ) -> "TargetwiseCollectionPaths":
         fixture_component = _safe_component(fixture_id, where="fixture identifier")
+        configuration_component = _safe_component(
+            configuration_id,
+            where="configuration identifier",
+        )
         sample_component = _safe_component(
             sample_name, where="sample name", sample=True
         )
@@ -89,10 +95,25 @@ class TargetwiseCollectionPaths:
             else targetwise_output_root()
         )
         return cls(
-            root=root / fixture_component / sample_component,
+            root=(
+                root / fixture_component / configuration_component / sample_component
+            ),
             fixture_id=fixture_component,
+            configuration_id=configuration_component,
             sample_name=sample_component,
         )
+
+    @property
+    def fixture_root(self) -> Path:
+        return self.root.parent.parent
+
+    @property
+    def configuration_root(self) -> Path:
+        return self.root.parent
+
+    @property
+    def configuration_manifest_path(self) -> Path:
+        return self.configuration_root / "configuration_manifest.json"
 
     @property
     def manifest_path(self) -> Path:

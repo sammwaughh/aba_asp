@@ -50,6 +50,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         result = {
             "validated": True,
             "fixture_id": bundle.fixture_id,
+            "configuration_id": config.configuration_id,
+            "configuration_hash": config.configuration_hash,
             "sample": bundle.sample_name,
             "n": bundle.n,
             "seed": bundle.seed,
@@ -66,6 +68,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         result = {
             "prepared": True,
             "fixture_id": prepared.bundle.fixture_id,
+            "configuration_id": config.configuration_id,
             "sample": prepared.bundle.sample_name,
             "targets": list(prepared.tasks),
             "output_directory": str(prepared.paths.root),
@@ -80,6 +83,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         result = {
             "completed": manifest.get("status") == "completed",
             "fixture_id": prepared.bundle.fixture_id,
+            "configuration_id": config.configuration_id,
             "sample": prepared.bundle.sample_name,
             "targets": list(prepared.tasks),
             "outcome_counts": manifest.get("outcome_counts", {}),

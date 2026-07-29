@@ -25,6 +25,8 @@ class TargetwiseRunConfig:
 
     config_path: Path
     config_hash: str
+    configuration_id: str
+    configuration_hash: str
     description: str | None
     fixture_directory: Path
     sample: Path
@@ -40,6 +42,7 @@ class TargetwiseRunConfig:
 _LEARNING_MODE_RE = re.compile(
     r"set_lopt\s*\(\s*learning_mode\s*\(\s*([a-z]+)\s*\)\s*\)"
 )
+_CONFIGURATION_ID_RE = re.compile(r"^[A-Za-z][A-Za-z0-9_-]*$")
 
 
 def _mapping(value: Any, *, where: str) -> Mapping[str, Any]:
@@ -92,6 +95,16 @@ def _canonical_hash(value: Any) -> str:
     return f"sha256:{hashlib.sha256(payload.encode('utf-8')).hexdigest()}"
 
 
+def _configuration_id(value: Any) -> str:
+    identifier = _string(value, where="configuration.id")
+    if not _CONFIGURATION_ID_RE.fullmatch(identifier):
+        raise TargetwiseConfigError(
+            "configuration.id must start with a letter and contain only "
+            "letters, digits, underscores, or hyphens"
+        )
+    return identifier
+
+
 def _read_learning_mode(prolog_config: Path) -> str:
     text = prolog_config.read_text(encoding="utf-8")
     modes = set(_LEARNING_MODE_RE.findall(text))
@@ -125,13 +138,21 @@ def load_targetwise_config(path: Path | str) -> TargetwiseRunConfig:
     _check_keys(
         raw,
         where="config",
-        required={"fixture", "encoding", "learner"},
+        required={"configuration", "fixture", "encoding", "learner"},
         optional={"description"},
     )
 
     description = raw.get("description")
     if description is not None and not isinstance(description, str):
         raise TargetwiseConfigError("description must be a string when present")
+
+    configuration = _mapping(raw["configuration"], where="configuration")
+    _check_keys(
+        configuration,
+        where="configuration",
+        required={"id"},
+    )
+    configuration_id = _configuration_id(configuration["id"])
 
     fixture = _mapping(raw["fixture"], where="fixture")
     _check_keys(
@@ -185,6 +206,7 @@ def load_targetwise_config(path: Path | str) -> TargetwiseRunConfig:
     )
     if not prolog_config.is_file():
         raise FileNotFoundError(prolog_config)
+    prolog_config_hash = file_sha256(prolog_config)
     learning_mode = _read_learning_mode(prolog_config)
     prolog_timeout_s = _positive_number(
         learner.get("prolog_timeout_s", 120),
@@ -194,17 +216,34 @@ def load_targetwise_config(path: Path | str) -> TargetwiseRunConfig:
         learner.get("joint_check_timeout_s", 5),
         where="learner.joint_check_timeout_s",
     )
+    configuration_hash = _canonical_hash(
+        {
+            "configuration_id": configuration_id,
+            "encoding": {
+                "type": encoding_type,
+                "example_policy": example_policy,
+            },
+            "learner": {
+                "prolog_config_sha256": prolog_config_hash,
+                "learning_mode": learning_mode,
+                "prolog_timeout_s": prolog_timeout_s,
+                "joint_check_timeout_s": joint_check_timeout_s,
+            },
+        }
+    )
 
     return TargetwiseRunConfig(
         config_path=config_path,
         config_hash=_canonical_hash(raw),
+        configuration_id=configuration_id,
+        configuration_hash=configuration_hash,
         description=description,
         fixture_directory=fixture_directory,
         sample=sample,
         encoding_type=encoding_type,
         example_policy=example_policy,
         prolog_config=prolog_config,
-        prolog_config_hash=file_sha256(prolog_config),
+        prolog_config_hash=prolog_config_hash,
         learning_mode=learning_mode,
         prolog_timeout_s=prolog_timeout_s,
         joint_check_timeout_s=joint_check_timeout_s,

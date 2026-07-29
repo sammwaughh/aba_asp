@@ -75,7 +75,7 @@ aba_asp/
   executes target cells serially, and writes inspectable per-target and
   collection artefacts. Graph metadata is evaluator-only and no cross-target
   graph/CPDAG decoder is applied. Configuration schema:
-  `causal/configs/targetwise/M13_b3_binary_diamond_n50_seed42_aamas2025.yaml`;
+  `causal/configs/targetwise/m13_bucket3_binary_diamond/{aamas2025,ecai2024}/n50_seed42.yaml`;
   compact diagnostics and the one-query joint brave-task check are implemented
   in `causal/targetwise/diagnostics.py` and
   `causal/targetwise/semantics.py`; focused tests:
@@ -273,12 +273,13 @@ Reusable target-wise execution infrastructure now exists, without executed resea
 cells:
 
 - implementation and usage boundary: `causal/targetwise/` and its `README.md`;
-- bounded configuration:
-  `causal/configs/targetwise/M13_b3_binary_diamond_n50_seed42_aamas2025.yaml`;
+- bounded configurations:
+  `causal/configs/targetwise/m13_bucket3_binary_diamond/{aamas2025,ecai2024}/n50_seed42.yaml`;
 - focused tests: `causal/tests/test_targetwise_collection.py`;
 - intended generated hierarchy:
-  `causal/outputs/aba_learning/targetwise/<fixture-id>/<sample-stem>/`,
-  with one `cells/target-<variable>/` directory per automatically discovered target.
+  `causal/outputs/aba_learning/targetwise/<fixture-id>/<configuration-id>/<sample-stem>/`,
+  with a configuration-level contract manifest and one
+  `cells/target-<variable>/` directory per automatically discovered target.
 
 The runner keeps a byte-identical table copy in every cell for inspection, but passes
 only the exact-value BK and recorded E+/E− arrays to ABA Learning. It preserves raw

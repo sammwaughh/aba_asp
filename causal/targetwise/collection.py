@@ -51,7 +51,7 @@ from causal.targetwise.semantics import (
 )
 
 
-TARGETWISE_RUNNER_VERSION = 2
+TARGETWISE_RUNNER_VERSION = 3
 
 
 @dataclass(frozen=True)
@@ -122,7 +122,8 @@ def _run_id(
     target: str,
 ) -> str:
     payload = (
-        f"{bundle.fixture_id}|{bundle.sample_name}|{bundle.sample_hash}|"
+        f"{bundle.fixture_id}|{config.configuration_id}|"
+        f"{config.configuration_hash}|{bundle.sample_name}|{bundle.sample_hash}|"
         f"{target}|{config.config_hash}|{config.prolog_config_hash}"
     )
     return hashlib.sha1(payload.encode("utf-8")).hexdigest()[:12]
@@ -138,8 +139,12 @@ def _task_manifest(
 ) -> dict[str, Any]:
     parents = [source for source, target in bundle.edges if target == task.target]
     return {
-        "task_manifest_schema_version": 2,
+        "task_manifest_schema_version": 3,
         "targetwise_runner_version": TARGETWISE_RUNNER_VERSION,
+        "configuration": {
+            "id": config.configuration_id,
+            "hash": config.configuration_hash,
+        },
         "fixture": {
             "id": bundle.fixture_id,
             "directory": str(bundle.fixture_directory),
@@ -241,7 +246,7 @@ def _base_manifest(
             }
         )
     return {
-        "targetwise_manifest_schema_version": 2,
+        "targetwise_manifest_schema_version": 3,
         "targetwise_runner_version": TARGETWISE_RUNNER_VERSION,
         "status": status,
         "fixture": {
@@ -261,6 +266,11 @@ def _base_manifest(
         "encoding": {
             "type": config.encoding_type,
             "example_policy": config.example_policy,
+        },
+        "configuration": {
+            "id": config.configuration_id,
+            "hash": config.configuration_hash,
+            "manifest": str(prepared.paths.configuration_manifest_path),
         },
         "learner": {
             "prolog_config": str(config.prolog_config),
@@ -308,16 +318,78 @@ def _guard_existing_manifest(
         ) from exc
     if (
         existing.get("run_config", {}).get("hash") != config.config_hash
+        or existing.get("configuration", {}).get("id") != config.configuration_id
+        or existing.get("configuration", {}).get("hash") != config.configuration_hash
         or existing.get("sample", {}).get("csv_sha256") != bundle.sample_hash
         or existing.get("fixture", {}).get("semantic_hash") != bundle.semantic_hash
         or existing.get("learner", {}).get("prolog_config_sha256")
         != config.prolog_config_hash
     ):
         raise ArtifactConflictError(
-            "the fixture/sample output directory already belongs to a different "
-            f"target-wise run configuration: {path.parent}"
+            "the fixture/configuration/sample output directory already belongs "
+            f"to a different target-wise run configuration: {path.parent}"
         )
     return existing
+
+
+def _configuration_manifest_document(
+    *,
+    config: TargetwiseRunConfig,
+    bundle: LoadedCausalFixtureBundle,
+) -> dict[str, Any]:
+    return {
+        "targetwise_configuration_manifest_schema_version": 1,
+        "targetwise_runner_version": TARGETWISE_RUNNER_VERSION,
+        "fixture": {
+            "id": bundle.fixture_id,
+            "semantic_hash": bundle.semantic_hash,
+        },
+        "configuration": {
+            "id": config.configuration_id,
+            "hash": config.configuration_hash,
+        },
+        "encoding": {
+            "type": config.encoding_type,
+            "example_policy": config.example_policy,
+        },
+        "learner": {
+            "prolog_config": str(config.prolog_config),
+            "prolog_config_sha256": config.prolog_config_hash,
+            "learning_mode": config.learning_mode,
+            "prolog_timeout_s": config.prolog_timeout_s,
+            "joint_check_timeout_s": config.joint_check_timeout_s,
+        },
+        "boundary": (
+            "This manifest pins the non-sample target-wise execution contract "
+            "shared by all sample collections in this configuration directory."
+        ),
+    }
+
+
+def _guard_configuration_manifest(
+    path: Path,
+    *,
+    config: TargetwiseRunConfig,
+    bundle: LoadedCausalFixtureBundle,
+) -> None:
+    expected = _configuration_manifest_document(config=config, bundle=bundle)
+    if path.is_file():
+        try:
+            existing = json.loads(path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError as exc:
+            raise ArtifactConflictError(
+                f"cannot validate target-wise configuration manifest: {path}"
+            ) from exc
+        if existing != expected:
+            raise ArtifactConflictError(
+                "configuration directory is already pinned to a different "
+                f"target-wise execution contract: {path.parent}"
+            )
+        return
+    write_text_once(
+        path,
+        json.dumps(expected, indent=2, sort_keys=True) + "\n",
+    )
 
 
 def prepare_collection(
@@ -333,8 +405,14 @@ def prepare_collection(
     )
     paths = TargetwiseCollectionPaths.for_bundle(
         fixture_id=bundle.fixture_id,
+        configuration_id=config.configuration_id,
         sample_name=bundle.sample_name,
         output_root=output_root,
+    )
+    _guard_configuration_manifest(
+        paths.configuration_manifest_path,
+        config=config,
+        bundle=bundle,
     )
     existing_manifest = _guard_existing_manifest(
         paths.manifest_path,
@@ -550,8 +628,13 @@ def _execute_target(
 
     run_id = _run_id(bundle=bundle, config=config, target=task.target)
     panel = build_targetwise_diagnostics(
-        experiment_id=f"targetwise:{bundle.fixture_id}:{bundle.sample_name}",
+        experiment_id=(
+            f"targetwise:{bundle.fixture_id}:{config.configuration_id}:"
+            f"{bundle.sample_name}"
+        ),
         fixture_id=bundle.fixture_id,
+        configuration_id=config.configuration_id,
+        configuration_hash=config.configuration_hash,
         sample_name=bundle.sample_name,
         target=task.target,
         n=bundle.n,

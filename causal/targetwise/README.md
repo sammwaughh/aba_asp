@@ -20,10 +20,25 @@ initial implementation.
 
 ## Configuration
 
-The current bounded configuration is
-`causal/configs/targetwise/M13_b3_binary_diamond_n50_seed42_aamas2025.yaml`.
-The selected sample path is relative to the fixture directory. Targets are
-always discovered from the validated fixture/sample metadata.
+Target-wise YAML files require an explicit `configuration.id`. This stable,
+safe path component identifies the non-sample execution contract. The selected
+sample path is relative to the fixture directory, and targets are always
+discovered from validated fixture/sample metadata.
+
+The current bounded files mirror the generated hierarchy:
+
+```text
+causal/configs/targetwise/
+└── m13_bucket3_binary_diamond/
+    ├── aamas2025/
+    │   └── n50_seed42.yaml
+    └── ecai2024/
+        └── n50_seed42.yaml
+```
+
+YAML filenames and parent directories are organisational. Output identity is
+derived from the validated fixture ID, explicit `configuration.id`, and
+selected CSV stem.
 
 ## Commands
 
@@ -31,13 +46,16 @@ Run from the repository root in the canonical `aba-asp` environment:
 
 ```bash
 python -m causal.targetwise.cli validate \
-  --config causal/configs/targetwise/M13_b3_binary_diamond_n50_seed42_aamas2025.yaml
+  --config causal/configs/targetwise/m13_bucket3_binary_diamond/aamas2025/n50_seed42.yaml
 
 python -m causal.targetwise.cli prepare \
-  --config causal/configs/targetwise/M13_b3_binary_diamond_n50_seed42_aamas2025.yaml
+  --config causal/configs/targetwise/m13_bucket3_binary_diamond/aamas2025/n50_seed42.yaml
 
 python -m causal.targetwise.cli run \
-  --config causal/configs/targetwise/M13_b3_binary_diamond_n50_seed42_aamas2025.yaml
+  --config causal/configs/targetwise/m13_bucket3_binary_diamond/aamas2025/n50_seed42.yaml
+
+python -m causal.targetwise.cli run \
+  --config causal/configs/targetwise/m13_bucket3_binary_diamond/ecai2024/n50_seed42.yaml
 ```
 
 `prepare` writes all target inputs without invoking ABA Learning. `run` reuses
@@ -77,36 +95,40 @@ experiment infrastructure.
 ```text
 causal/outputs/aba_learning/targetwise/
 └── <fixture-id>/
-    └── <sample-stem>/
-        ├── manifest.json
-        ├── run.log
-        ├── results.parquet
-        ├── summary.md
-        ├── summary.json
-        └── cells/
-            └── target-<variable>/
-                ├── input/
-                │   ├── data.csv
-                │   ├── bk.aba
-                │   ├── examples.json
-                │   └── task_manifest.json
-                ├── output/
-                │   ├── targetwise_<run-id>.aba
-                │   ├── targetwise_<run-id>.sol.aba
-                │   ├── targetwise_<run-id>.sol.asp  (when emitted)
-                │   ├── prolog.stdout
-                │   ├── prolog.stderr
-                │   └── engine artefacts
-                ├── metrics.json
-                ├── metrics.parquet
-                └── report.md
+    └── <configuration-id>/
+        ├── configuration_manifest.json
+        └── <sample-stem>/
+            ├── manifest.json
+            ├── run.log
+            ├── results.parquet
+            ├── summary.md
+            ├── summary.json
+            └── cells/
+                └── target-<variable>/
+                    ├── input/
+                    │   ├── data.csv
+                    │   ├── bk.aba
+                    │   ├── examples.json
+                    │   └── task_manifest.json
+                    ├── output/
+                    │   ├── targetwise_<run-id>.aba
+                    │   ├── targetwise_<run-id>.sol.aba
+                    │   ├── targetwise_<run-id>.sol.asp  (when emitted)
+                    │   ├── prolog.stdout
+                    │   ├── prolog.stderr
+                    │   └── engine artefacts
+                    ├── metrics.json
+                    ├── metrics.parquet
+                    └── report.md
 ```
 
 `metrics.json` retains rule and ABA-component lists for direct inspection.
 `metrics.parquet` and root `results.parquet` contain the same approved
 diagnostic family in aggregation-safe scalar/JSON-string columns.
 
-One fixture/sample output directory represents one canonical learner
-configuration. A different configuration is rejected rather than silently
-overwriting or mixing the evidence. Completed collections are idempotent:
-re-running the same command does not invoke the learner again.
+`configuration_manifest.json` pins the encoding, Prolog configuration bytes,
+learning mode, and timeouts shared by every sample below that configuration
+directory. A conflicting execution contract is rejected rather than silently
+mixing evidence. Each fixture/configuration/sample directory is independently
+immutable and completed collections are idempotent: re-running the same command
+does not invoke the learner again.
