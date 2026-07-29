@@ -1,0 +1,95 @@
+{
+  "bif_round_trip": {
+    "errors": [],
+    "implementation_hash": "sha256:4dee1de1c06da5ea32ee3b853760f54fde23654d2cb8eea034706b767f0077ed",
+    "limitations": [
+      "BIF probabilities are floating point rather than exact rationals",
+      "BIF state labels are serialized as strings",
+      "BIF does not preserve causal-sufficiency or IID-sampling declarations"
+    ],
+    "max_absolute_probability_error": 0.0,
+    "ok": true,
+    "pgmpy_version": "1.1.2",
+    "tolerance": 1e-12
+  },
+  "boundaries": [
+    "the fixture graph and certificate are evaluator-only",
+    "no target is selected during fixture definition or sampling",
+    "no ABA Learning run is performed by this package",
+    "no learned-rule-to-CPDAG decoder is asserted",
+    "generated fixture artefacts are not experiment claims"
+  ],
+  "certificate_summary": {
+    "causal_markov_condition": "verified",
+    "causal_sufficiency": "declared_satisfied_by_fixture_design",
+    "ci_query_count": 24,
+    "mec_size": 3,
+    "ordinary_faithfulness": "verified_exactly"
+  },
+  "derived_artifacts": {
+    "bif": {
+      "path": "model.bif",
+      "sha256": "sha256:48ccadb1463e3ac3a4248380736b3c73fec78796d23158b101eb8d3f72e9af3c"
+    },
+    "certificate": {
+      "path": "certificate.json",
+      "sha256": "sha256:d9d61803ed152b5ccbd6082fbd14206f28f1a5dcb36382a4261eca24c84ea6fb"
+    },
+    "population": {
+      "path": "population.csv",
+      "sha256": "sha256:631aed29846cbddca65794f248db21cb1176f743b46e979836b900900fff2d58"
+    },
+    "sample_csv": {
+      "path": "samples/n50_seed42.csv",
+      "sha256": "sha256:e6b16c86b3dca50e49b905a5024e2cd5a54228cf076cdb620fc229a23517b735"
+    },
+    "sample_manifest": {
+      "path": "samples/n50_seed42.manifest.json",
+      "sha256": "sha256:f566be426a3f4acfc86af5ccf5f6d3f1f7fabfcac8251a1fc1f1e979d9320fd1"
+    }
+  },
+  "fixture": {
+    "document_hash": "sha256:a855b4b6228ffbb334e456452200c4521b526ac65eaa55f6cedaac9a1893c765",
+    "document_hash_basis": "canonical parsed YAML document",
+    "edges": [
+      [
+        "x0",
+        "x1"
+      ],
+      [
+        "x0",
+        "x2"
+      ],
+      [
+        "x1",
+        "x3"
+      ],
+      [
+        "x2",
+        "x3"
+      ]
+    ],
+    "id": "m13_bucket3_binary_diamond",
+    "model_class": "positive_finite_discrete_causal_bayesian_network",
+    "semantic_hash": "sha256:6650750a67109c41e3458bfde52b38634e905ee6d24b3ff6e5bc3e9b818ee299",
+    "source_hash": "sha256:c3c59c2a624fdc51cdf27cd6cd5dd5a716b475e6196662139d2c002532a39626",
+    "source_hash_basis": "exact UTF-8 source-file bytes",
+    "source_path": "/Users/samuelwaugh/Desktop/Causal ABA Learning/aba_asp/causal/fixtures/specs/m13_bucket3_binary_diamond.yaml",
+    "title": "M1.3 Bucket 3 positive stochastic binary diamond",
+    "variables": [
+      "x0",
+      "x1",
+      "x2",
+      "x3"
+    ]
+  },
+  "fixture_manifest_schema_version": 1,
+  "fixture_toolkit_version": 1,
+  "sample": {
+    "csv_sha256": "sha256:e6b16c86b3dca50e49b905a5024e2cd5a54228cf076cdb620fc229a23517b735",
+    "n": 50,
+    "seed": 42,
+    "target": null,
+    "unique_joint_states_observed": 13
+  }
+}

@@ -1,0 +1,71 @@
+schema_version: 1
+id: m13_bucket3_binary_diamond
+title: M1.3 Bucket 3 positive stochastic binary diamond
+description: >-
+  Four-variable observational causal Bayesian network used to define a
+  population before any target is selected or any ABA Learning run is made.
+
+variables:
+  - name: x0
+    states: [0, 1]
+  - name: x1
+    states: [0, 1]
+  - name: x2
+    states: [0, 1]
+  - name: x3
+    states: [0, 1]
+
+graph:
+  edges:
+    - [x0, x1]
+    - [x0, x2]
+    - [x1, x3]
+    - [x2, x3]
+
+mechanisms:
+  x0:
+    parents: []
+    cpt:
+      - when: {}
+        probabilities: ["1/2", "1/2"]
+
+  x1:
+    parents: [x0]
+    cpt:
+      - when: {x0: 0}
+        probabilities: ["7/10", "3/10"]
+      - when: {x0: 1}
+        probabilities: ["3/10", "7/10"]
+
+  x2:
+    parents: [x0]
+    cpt:
+      - when: {x0: 0}
+        probabilities: ["7/10", "3/10"]
+      - when: {x0: 1}
+        probabilities: ["3/10", "7/10"]
+
+  x3:
+    parents: [x1, x2]
+    cpt:
+      - when: {x1: 0, x2: 0}
+        probabilities: ["4/5", "1/5"]
+      - when: {x1: 0, x2: 1}
+        probabilities: ["7/20", "13/20"]
+      - when: {x1: 1, x2: 0}
+        probabilities: ["7/20", "13/20"]
+      - when: {x1: 1, x2: 1}
+        probabilities: ["1/5", "4/5"]
+
+assumptions:
+  causal_sufficiency:
+    declared: true
+    exogenous_noise: mutually_independent_private_exogenous_noise
+  observational_sampling:
+    regime: observational_iid
+
+metadata:
+  milestone: M1.3
+  bucket: 3
+  target_visible_to_generator: false
+  faithfulness_is_derived_not_declared: true

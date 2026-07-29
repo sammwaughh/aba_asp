@@ -1,0 +1,986 @@
+{
+  "assumptions_and_results": {
+    "causal_markov_condition": {
+      "exact_graph_implied_ci_violations": 0,
+      "factorisation_basis": "the joint was derived as the product of the validated local CPTs over the DAG",
+      "status": "verified"
+    },
+    "causal_sufficiency": {
+      "basis": "the fixture declares one mutually independent private exogenous noise variable per observed node; this is not inferred from the CPTs or observational population",
+      "exogenous_noise": "mutually_independent_private_exogenous_noise",
+      "observationally_testable_from_joint_distribution": false,
+      "status": "declared_satisfied_by_fixture_design"
+    },
+    "ordinary_faithfulness": {
+      "basis": "the exact population CI set equals the graph d-separation set over the exhaustive singleton-pair audit",
+      "faithful": true,
+      "status": "verified_exactly",
+      "why_singleton_audit_is_sufficient": "DAG factorisation establishes the global Markov direction. A DAG d-separates two variable sets exactly when it d-separates every cross-pair, while probabilistic setwise conditional independence implies every cross-pair conditional independence by decomposition. Therefore any extra setwise population independence would yield an extra singleton-pair independence detected by this audit."
+    },
+    "sampling_regime": "observational_iid"
+  },
+  "certificate_schema_version": 1,
+  "conditional_independence_audit": {
+    "extra_independences": [],
+    "graph_implied_independence_count": 2,
+    "graph_implied_independences": [
+      {
+        "conditioning": [
+          "x1",
+          "x2"
+        ],
+        "x": "x0",
+        "y": "x3"
+      },
+      {
+        "conditioning": [
+          "x0"
+        ],
+        "x": "x1",
+        "y": "x2"
+      }
+    ],
+    "markov_violations": [],
+    "population_independence_count": 2,
+    "population_independences": [
+      {
+        "conditioning": [
+          "x1",
+          "x2"
+        ],
+        "x": "x0",
+        "y": "x3"
+      },
+      {
+        "conditioning": [
+          "x0"
+        ],
+        "x": "x1",
+        "y": "x2"
+      }
+    ],
+    "queries": [
+      {
+        "conditioning": [],
+        "dependence_witness": {
+          "conditioning_assignment": [],
+          "difference": "1/10",
+          "lhs_p_xy_s_times_p_s": "7/20",
+          "p_s": "1",
+          "p_x_s": "1/2",
+          "p_xy_s": "7/20",
+          "p_y_s": "1/2",
+          "rhs_p_x_s_times_p_y_s": "1/4",
+          "x_value": 0,
+          "y_value": 0
+        },
+        "graph_d_separated": false,
+        "population_independent": false,
+        "x": "x0",
+        "y": "x1"
+      },
+      {
+        "conditioning": [
+          "x2"
+        ],
+        "dependence_witness": {
+          "conditioning_assignment": [
+            [
+              "x2",
+              0
+            ]
+          ],
+          "difference": "21/1000",
+          "lhs_p_xy_s_times_p_s": "49/400",
+          "p_s": "1/2",
+          "p_x_s": "7/20",
+          "p_xy_s": "49/200",
+          "p_y_s": "29/100",
+          "rhs_p_x_s_times_p_y_s": "203/2000",
+          "x_value": 0,
+          "y_value": 0
+        },
+        "graph_d_separated": false,
+        "population_independent": false,
+        "x": "x0",
+        "y": "x1"
+      },
+      {
+        "conditioning": [
+          "x3"
+        ],
+        "dependence_witness": {
+          "conditioning_assignment": [
+            [
+              "x3",
+              0
+            ]
+          ],
+          "difference": "1663/100000",
+          "lhs_p_xy_s_times_p_s": "406847/4000000",
+          "p_s": "437/1000",
+          "p_x_s": "557/2000",
+          "p_xy_s": "931/4000",
+          "p_y_s": "611/2000",
+          "rhs_p_x_s_times_p_y_s": "340327/4000000",
+          "x_value": 0,
+          "y_value": 0
+        },
+        "graph_d_separated": false,
+        "population_independent": false,
+        "x": "x0",
+        "y": "x1"
+      },
+      {
+        "conditioning": [
+          "x2",
+          "x3"
+        ],
+        "dependence_witness": {
+          "conditioning_assignment": [
+            [
+              "x2",
+              0
+            ],
+            [
+              "x3",
+              0
+            ]
+          ],
+          "difference": "147/25000",
+          "lhs_p_xy_s_times_p_s": "29939/500000",
+          "p_s": "611/2000",
+          "p_x_s": "931/4000",
+          "p_xy_s": "49/250",
+          "p_y_s": "29/125",
+          "rhs_p_x_s_times_p_y_s": "26999/500000",
+          "x_value": 0,
+          "y_value": 0
+        },
+        "graph_d_separated": false,
+        "population_independent": false,
+        "x": "x0",
+        "y": "x1"
+      },
+      {
+        "conditioning": [],
+        "dependence_witness": {
+          "conditioning_assignment": [],
+          "difference": "1/10",
+          "lhs_p_xy_s_times_p_s": "7/20",
+          "p_s": "1",
+          "p_x_s": "1/2",
+          "p_xy_s": "7/20",
+          "p_y_s": "1/2",
+          "rhs_p_x_s_times_p_y_s": "1/4",
+          "x_value": 0,
+          "y_value": 0
+        },
+        "graph_d_separated": false,
+        "population_independent": false,
+        "x": "x0",
+        "y": "x2"
+      },
+      {
+        "conditioning": [
+          "x1"
+        ],
+        "dependence_witness": {
+          "conditioning_assignment": [
+            [
+              "x1",
+              0
+            ]
+          ],
+          "difference": "21/1000",
+          "lhs_p_xy_s_times_p_s": "49/400",
+          "p_s": "1/2",
+          "p_x_s": "7/20",
+          "p_xy_s": "49/200",
+          "p_y_s": "29/100",
+          "rhs_p_x_s_times_p_y_s": "203/2000",
+          "x_value": 0,
+          "y_value": 0
+        },
+        "graph_d_separated": false,
+        "population_independent": false,
+        "x": "x0",
+        "y": "x2"
+      },
+      {
+        "conditioning": [
+          "x3"
+        ],
+        "dependence_witness": {
+          "conditioning_assignment": [
+            [
+              "x3",
+              0
+            ]
+          ],
+          "difference": "1663/100000",
+          "lhs_p_xy_s_times_p_s": "406847/4000000",
+          "p_s": "437/1000",
+          "p_x_s": "557/2000",
+          "p_xy_s": "931/4000",
+          "p_y_s": "611/2000",
+          "rhs_p_x_s_times_p_y_s": "340327/4000000",
+          "x_value": 0,
+          "y_value": 0
+        },
+        "graph_d_separated": false,
+        "population_independent": false,
+        "x": "x0",
+        "y": "x2"
+      },
+      {
+        "conditioning": [
+          "x1",
+          "x3"
+        ],
+        "dependence_witness": {
+          "conditioning_assignment": [
+            [
+              "x1",
+              0
+            ],
+            [
+              "x3",
+              0
+            ]
+          ],
+          "difference": "147/25000",
+          "lhs_p_xy_s_times_p_s": "29939/500000",
+          "p_s": "611/2000",
+          "p_x_s": "931/4000",
+          "p_xy_s": "49/250",
+          "p_y_s": "29/125",
+          "rhs_p_x_s_times_p_y_s": "26999/500000",
+          "x_value": 0,
+          "y_value": 0
+        },
+        "graph_d_separated": false,
+        "population_independent": false,
+        "x": "x0",
+        "y": "x2"
+      },
+      {
+        "conditioning": [],
+        "dependence_witness": {
+          "conditioning_assignment": [],
+          "difference": "3/50",
+          "lhs_p_xy_s_times_p_s": "557/2000",
+          "p_s": "1",
+          "p_x_s": "1/2",
+          "p_xy_s": "557/2000",
+          "p_y_s": "437/1000",
+          "rhs_p_x_s_times_p_y_s": "437/2000",
+          "x_value": 0,
+          "y_value": 0
+        },
+        "graph_d_separated": false,
+        "population_independent": false,
+        "x": "x0",
+        "y": "x3"
+      },
+      {
+        "conditioning": [
+          "x1"
+        ],
+        "dependence_witness": {
+          "conditioning_assignment": [
+            [
+              "x1",
+              0
+            ]
+          ],
+          "difference": "189/20000",
+          "lhs_p_xy_s_times_p_s": "931/8000",
+          "p_s": "1/2",
+          "p_x_s": "7/20",
+          "p_xy_s": "931/4000",
+          "p_y_s": "611/2000",
+          "rhs_p_x_s_times_p_y_s": "4277/40000",
+          "x_value": 0,
+          "y_value": 0
+        },
+        "graph_d_separated": false,
+        "population_independent": false,
+        "x": "x0",
+        "y": "x3"
+      },
+      {
+        "conditioning": [
+          "x2"
+        ],
+        "dependence_witness": {
+          "conditioning_assignment": [
+            [
+              "x2",
+              0
+            ]
+          ],
+          "difference": "189/20000",
+          "lhs_p_xy_s_times_p_s": "931/8000",
+          "p_s": "1/2",
+          "p_x_s": "7/20",
+          "p_xy_s": "931/4000",
+          "p_y_s": "611/2000",
+          "rhs_p_x_s_times_p_y_s": "4277/40000",
+          "x_value": 0,
+          "y_value": 0
+        },
+        "graph_d_separated": false,
+        "population_independent": false,
+        "x": "x0",
+        "y": "x3"
+      },
+      {
+        "conditioning": [
+          "x1",
+          "x2"
+        ],
+        "dependence_witness": null,
+        "graph_d_separated": true,
+        "population_independent": true,
+        "x": "x0",
+        "y": "x3"
+      },
+      {
+        "conditioning": [],
+        "dependence_witness": {
+          "conditioning_assignment": [],
+          "difference": "1/25",
+          "lhs_p_xy_s_times_p_s": "29/100",
+          "p_s": "1",
+          "p_x_s": "1/2",
+          "p_xy_s": "29/100",
+          "p_y_s": "1/2",
+          "rhs_p_x_s_times_p_y_s": "1/4",
+          "x_value": 0,
+          "y_value": 0
+        },
+        "graph_d_separated": false,
+        "population_independent": false,
+        "x": "x1",
+        "y": "x2"
+      },
+      {
+        "conditioning": [
+          "x0"
+        ],
+        "dependence_witness": null,
+        "graph_d_separated": true,
+        "population_independent": true,
+        "x": "x1",
+        "y": "x2"
+      },
+      {
+        "conditioning": [
+          "x3"
+        ],
+        "dependence_witness": {
+          "conditioning_assignment": [
+            [
+              "x3",
+              0
+            ]
+          ],
+          "difference": "6443/800000",
+          "lhs_p_xy_s_times_p_s": "12673/125000",
+          "p_s": "437/1000",
+          "p_x_s": "611/2000",
+          "p_xy_s": "29/125",
+          "p_y_s": "611/2000",
+          "rhs_p_x_s_times_p_y_s": "373321/4000000",
+          "x_value": 0,
+          "y_value": 0
+        },
+        "graph_d_separated": false,
+        "population_independent": false,
+        "x": "x1",
+        "y": "x2"
+      },
+      {
+        "conditioning": [
+          "x0",
+          "x3"
+        ],
+        "dependence_witness": {
+          "conditioning_assignment": [
+            [
+              "x0",
+              0
+            ],
+            [
+              "x3",
+              0
+            ]
+          ],
+          "difference": "1323/3200000",
+          "lhs_p_xy_s_times_p_s": "27293/500000",
+          "p_s": "557/2000",
+          "p_x_s": "931/4000",
+          "p_xy_s": "49/250",
+          "p_y_s": "931/4000",
+          "rhs_p_x_s_times_p_y_s": "866761/16000000",
+          "x_value": 0,
+          "y_value": 0
+        },
+        "graph_d_separated": false,
+        "population_independent": false,
+        "x": "x1",
+        "y": "x2"
+      },
+      {
+        "conditioning": [],
+        "dependence_witness": {
+          "conditioning_assignment": [],
+          "difference": "87/1000",
+          "lhs_p_xy_s_times_p_s": "611/2000",
+          "p_s": "1",
+          "p_x_s": "1/2",
+          "p_xy_s": "611/2000",
+          "p_y_s": "437/1000",
+          "rhs_p_x_s_times_p_y_s": "437/2000",
+          "x_value": 0,
+          "y_value": 0
+        },
+        "graph_d_separated": false,
+        "population_independent": false,
+        "x": "x1",
+        "y": "x3"
+      },
+      {
+        "conditioning": [
+          "x0"
+        ],
+        "dependence_witness": {
+          "conditioning_assignment": [
+            [
+              "x0",
+              0
+            ]
+          ],
+          "difference": "189/10000",
+          "lhs_p_xy_s_times_p_s": "931/8000",
+          "p_s": "1/2",
+          "p_x_s": "7/20",
+          "p_xy_s": "931/4000",
+          "p_y_s": "557/2000",
+          "rhs_p_x_s_times_p_y_s": "3899/40000",
+          "x_value": 0,
+          "y_value": 0
+        },
+        "graph_d_separated": false,
+        "population_independent": false,
+        "x": "x1",
+        "y": "x3"
+      },
+      {
+        "conditioning": [
+          "x2"
+        ],
+        "dependence_witness": {
+          "conditioning_assignment": [
+            [
+              "x2",
+              0
+            ]
+          ],
+          "difference": "5481/200000",
+          "lhs_p_xy_s_times_p_s": "29/250",
+          "p_s": "1/2",
+          "p_x_s": "29/100",
+          "p_xy_s": "29/125",
+          "p_y_s": "611/2000",
+          "rhs_p_x_s_times_p_y_s": "17719/200000",
+          "x_value": 0,
+          "y_value": 0
+        },
+        "graph_d_separated": false,
+        "population_independent": false,
+        "x": "x1",
+        "y": "x3"
+      },
+      {
+        "conditioning": [
+          "x0",
+          "x2"
+        ],
+        "dependence_witness": {
+          "conditioning_assignment": [
+            [
+              "x0",
+              0
+            ],
+            [
+              "x2",
+              0
+            ]
+          ],
+          "difference": "9261/800000",
+          "lhs_p_xy_s_times_p_s": "343/5000",
+          "p_s": "7/20",
+          "p_x_s": "49/200",
+          "p_xy_s": "49/250",
+          "p_y_s": "931/4000",
+          "rhs_p_x_s_times_p_y_s": "45619/800000",
+          "x_value": 0,
+          "y_value": 0
+        },
+        "graph_d_separated": false,
+        "population_independent": false,
+        "x": "x1",
+        "y": "x3"
+      },
+      {
+        "conditioning": [],
+        "dependence_witness": {
+          "conditioning_assignment": [],
+          "difference": "87/1000",
+          "lhs_p_xy_s_times_p_s": "611/2000",
+          "p_s": "1",
+          "p_x_s": "1/2",
+          "p_xy_s": "611/2000",
+          "p_y_s": "437/1000",
+          "rhs_p_x_s_times_p_y_s": "437/2000",
+          "x_value": 0,
+          "y_value": 0
+        },
+        "graph_d_separated": false,
+        "population_independent": false,
+        "x": "x2",
+        "y": "x3"
+      },
+      {
+        "conditioning": [
+          "x0"
+        ],
+        "dependence_witness": {
+          "conditioning_assignment": [
+            [
+              "x0",
+              0
+            ]
+          ],
+          "difference": "189/10000",
+          "lhs_p_xy_s_times_p_s": "931/8000",
+          "p_s": "1/2",
+          "p_x_s": "7/20",
+          "p_xy_s": "931/4000",
+          "p_y_s": "557/2000",
+          "rhs_p_x_s_times_p_y_s": "3899/40000",
+          "x_value": 0,
+          "y_value": 0
+        },
+        "graph_d_separated": false,
+        "population_independent": false,
+        "x": "x2",
+        "y": "x3"
+      },
+      {
+        "conditioning": [
+          "x1"
+        ],
+        "dependence_witness": {
+          "conditioning_assignment": [
+            [
+              "x1",
+              0
+            ]
+          ],
+          "difference": "5481/200000",
+          "lhs_p_xy_s_times_p_s": "29/250",
+          "p_s": "1/2",
+          "p_x_s": "29/100",
+          "p_xy_s": "29/125",
+          "p_y_s": "611/2000",
+          "rhs_p_x_s_times_p_y_s": "17719/200000",
+          "x_value": 0,
+          "y_value": 0
+        },
+        "graph_d_separated": false,
+        "population_independent": false,
+        "x": "x2",
+        "y": "x3"
+      },
+      {
+        "conditioning": [
+          "x0",
+          "x1"
+        ],
+        "dependence_witness": {
+          "conditioning_assignment": [
+            [
+              "x0",
+              0
+            ],
+            [
+              "x1",
+              0
+            ]
+          ],
+          "difference": "9261/800000",
+          "lhs_p_xy_s_times_p_s": "343/5000",
+          "p_s": "7/20",
+          "p_x_s": "49/200",
+          "p_xy_s": "49/250",
+          "p_y_s": "931/4000",
+          "rhs_p_x_s_times_p_y_s": "45619/800000",
+          "x_value": 0,
+          "y_value": 0
+        },
+        "graph_d_separated": false,
+        "population_independent": false,
+        "x": "x2",
+        "y": "x3"
+      }
+    ],
+    "query_count": 24
+  },
+  "fixture": {
+    "document_hash": "sha256:a855b4b6228ffbb334e456452200c4521b526ac65eaa55f6cedaac9a1893c765",
+    "document_hash_basis": "canonical parsed YAML document",
+    "id": "m13_bucket3_binary_diamond",
+    "semantic_hash": "sha256:6650750a67109c41e3458bfde52b38634e905ee6d24b3ff6e5bc3e9b818ee299",
+    "source_hash": "sha256:c3c59c2a624fdc51cdf27cd6cd5dd5a716b475e6196662139d2c002532a39626",
+    "source_hash_basis": "exact UTF-8 source-file bytes",
+    "source_path": "/Users/samuelwaugh/Desktop/Causal ABA Learning/aba_asp/causal/fixtures/specs/m13_bucket3_binary_diamond.yaml"
+  },
+  "generator": {
+    "algorithms": {
+      "conditional_independence": "exact finite-categorical cross-product identity",
+      "cpdag": "orientation invariance across enumerated MEC",
+      "d_separation": "ancestral moralisation",
+      "mec": "bounded exhaustive skeleton orientation",
+      "population": "exact DAG factorisation"
+    },
+    "fixture_toolkit_version": 1,
+    "implementation_modules": {
+      "causal.fixtures.analysis": "sha256:64aab267fbf7879757c68c9cc04cfb27f5018a60c8ac70334914a97c7e620953",
+      "causal.fixtures.io": "sha256:d1fa67c32537bcc4a5aadd44e30d1a4c2a8e73e7163569aa3df75a276bfe1715",
+      "causal.fixtures.model": "sha256:7481bf7c48db0db0e06dddc2fd3abb649556236cf4cc5d6d41e04d8f28a6d542"
+    }
+  },
+  "graph": {
+    "cpdag": {
+      "directed_edges": [
+        [
+          "x1",
+          "x3"
+        ],
+        [
+          "x2",
+          "x3"
+        ]
+      ],
+      "identified_by_this_population_ci_structure": true,
+      "kind": "graph-theoretic essential graph of the generating DAG MEC",
+      "observational_recovery_scope": "this CPDAG is the population-level CI recovery target only under causal sufficiency, the causal Markov condition, and ordinary faithfulness",
+      "undirected_edges": [
+        [
+          "x0",
+          "x1"
+        ],
+        [
+          "x0",
+          "x2"
+        ]
+      ]
+    },
+    "edges": [
+      [
+        "x0",
+        "x1"
+      ],
+      [
+        "x0",
+        "x2"
+      ],
+      [
+        "x1",
+        "x3"
+      ],
+      [
+        "x2",
+        "x3"
+      ]
+    ],
+    "generating_dag_roles": {
+      "x0": "source",
+      "x1": "internal",
+      "x2": "internal",
+      "x3": "sink"
+    },
+    "markov_equivalence_class": {
+      "members": [
+        {
+          "edges": [
+            [
+              "x0",
+              "x1"
+            ],
+            [
+              "x0",
+              "x2"
+            ],
+            [
+              "x1",
+              "x3"
+            ],
+            [
+              "x2",
+              "x3"
+            ]
+          ]
+        },
+        {
+          "edges": [
+            [
+              "x0",
+              "x2"
+            ],
+            [
+              "x1",
+              "x0"
+            ],
+            [
+              "x1",
+              "x3"
+            ],
+            [
+              "x2",
+              "x3"
+            ]
+          ]
+        },
+        {
+          "edges": [
+            [
+              "x0",
+              "x1"
+            ],
+            [
+              "x1",
+              "x3"
+            ],
+            [
+              "x2",
+              "x0"
+            ],
+            [
+              "x2",
+              "x3"
+            ]
+          ]
+        }
+      ],
+      "method": "exact orientation enumeration by skeleton and unshielded colliders",
+      "size": 3
+    },
+    "roles_across_mec": {
+      "invariant": {
+        "x3": "sink"
+      },
+      "possible": {
+        "x0": [
+          "internal",
+          "source"
+        ],
+        "x1": [
+          "internal",
+          "source"
+        ],
+        "x2": [
+          "internal",
+          "source"
+        ],
+        "x3": [
+          "sink"
+        ]
+      }
+    },
+    "skeleton": [
+      [
+        "x0",
+        "x1"
+      ],
+      [
+        "x0",
+        "x2"
+      ],
+      [
+        "x1",
+        "x3"
+      ],
+      [
+        "x2",
+        "x3"
+      ]
+    ],
+    "state_orders": {
+      "x0": [
+        0,
+        1
+      ],
+      "x1": [
+        0,
+        1
+      ],
+      "x2": [
+        0,
+        1
+      ],
+      "x3": [
+        0,
+        1
+      ]
+    },
+    "topological_order": [
+      "x0",
+      "x1",
+      "x2",
+      "x3"
+    ],
+    "unshielded_colliders": [
+      [
+        "x1",
+        "x3",
+        "x2"
+      ]
+    ],
+    "variables": [
+      "x0",
+      "x1",
+      "x2",
+      "x3"
+    ]
+  },
+  "mechanisms": {
+    "all_edges_active": true,
+    "edge_activity": [
+      {
+        "active": true,
+        "edge": [
+          "x0",
+          "x1"
+        ],
+        "witness": {
+          "conditional_distribution_a": [
+            "7/10",
+            "3/10"
+          ],
+          "conditional_distribution_b": [
+            "3/10",
+            "7/10"
+          ],
+          "other_parent_assignment": [],
+          "parent_states_compared": [
+            0,
+            1
+          ]
+        }
+      },
+      {
+        "active": true,
+        "edge": [
+          "x0",
+          "x2"
+        ],
+        "witness": {
+          "conditional_distribution_a": [
+            "7/10",
+            "3/10"
+          ],
+          "conditional_distribution_b": [
+            "3/10",
+            "7/10"
+          ],
+          "other_parent_assignment": [],
+          "parent_states_compared": [
+            0,
+            1
+          ]
+        }
+      },
+      {
+        "active": true,
+        "edge": [
+          "x1",
+          "x3"
+        ],
+        "witness": {
+          "conditional_distribution_a": [
+            "4/5",
+            "1/5"
+          ],
+          "conditional_distribution_b": [
+            "7/20",
+            "13/20"
+          ],
+          "other_parent_assignment": [
+            [
+              "x2",
+              0
+            ]
+          ],
+          "parent_states_compared": [
+            0,
+            1
+          ]
+        }
+      },
+      {
+        "active": true,
+        "edge": [
+          "x2",
+          "x3"
+        ],
+        "witness": {
+          "conditional_distribution_a": [
+            "4/5",
+            "1/5"
+          ],
+          "conditional_distribution_b": [
+            "7/20",
+            "13/20"
+          ],
+          "other_parent_assignment": [
+            [
+              "x1",
+              0
+            ]
+          ],
+          "parent_states_compared": [
+            0,
+            1
+          ]
+        }
+      }
+    ],
+    "interpretation": "all edges active is a local mechanism/minimality check; it is not by itself a faithfulness proof",
+    "strictly_positive_local_probabilities": true
+  },
+  "population": {
+    "full_support": true,
+    "minimum_joint_probability": "9/1000",
+    "minimum_joint_probability_assignment": {
+      "x0": 0,
+      "x1": 1,
+      "x2": 1,
+      "x3": 0
+    },
+    "normalised": true,
+    "number_of_joint_states": 16,
+    "total_probability": "1"
+  },
+  "scope": {
+    "arithmetic": "fractions.Fraction exact rationals",
+    "ci_audit": "every unordered singleton variable pair and every subset of the remaining variables",
+    "ci_identity": "P(x,y,s)P(s) = P(x,s)P(y,s)",
+    "distribution_level": "exact_population",
+    "faithfulness_scope": "ordinary observational DAG faithfulness",
+    "learner_visible": false
+  }
+}

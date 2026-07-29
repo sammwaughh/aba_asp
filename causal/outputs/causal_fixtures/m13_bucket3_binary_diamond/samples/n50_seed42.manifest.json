@@ -1,0 +1,126 @@
+{
+  "empirical_table_summary": {
+    "state_counts": {
+      "x0": [
+        {
+          "count": 27,
+          "state": 0
+        },
+        {
+          "count": 23,
+          "state": 1
+        }
+      ],
+      "x1": [
+        {
+          "count": 24,
+          "state": 0
+        },
+        {
+          "count": 26,
+          "state": 1
+        }
+      ],
+      "x2": [
+        {
+          "count": 24,
+          "state": 0
+        },
+        {
+          "count": 26,
+          "state": 1
+        }
+      ],
+      "x3": [
+        {
+          "count": 23,
+          "state": 0
+        },
+        {
+          "count": 27,
+          "state": 1
+        }
+      ]
+    },
+    "unique_joint_states_observed": 13
+  },
+  "fixture": {
+    "document_hash": "sha256:a855b4b6228ffbb334e456452200c4521b526ac65eaa55f6cedaac9a1893c765",
+    "document_hash_basis": "canonical parsed YAML document",
+    "id": "m13_bucket3_binary_diamond",
+    "semantic_hash": "sha256:6650750a67109c41e3458bfde52b38634e905ee6d24b3ff6e5bc3e9b818ee299",
+    "source_hash": "sha256:c3c59c2a624fdc51cdf27cd6cd5dd5a716b475e6196662139d2c002532a39626",
+    "source_hash_basis": "exact UTF-8 source-file bytes",
+    "source_path": "/Users/samuelwaugh/Desktop/Causal ABA Learning/aba_asp/causal/fixtures/specs/m13_bucket3_binary_diamond.yaml"
+  },
+  "runtime": {
+    "numpy": "2.2.6",
+    "pandas": "2.3.3",
+    "python": "3.10.20"
+  },
+  "sample": {
+    "csv_columns_are_causal_variables_only": true,
+    "csv_path": "causal/outputs/causal_fixtures/m13_bucket3_binary_diamond/samples/n50_seed42.csv",
+    "csv_sha256": "sha256:e6b16c86b3dca50e49b905a5024e2cd5a54228cf076cdb620fc229a23517b735",
+    "iid_observational_rows": true,
+    "n": 50,
+    "row_identifier": "one-based CSV data-row number; not a causal variable",
+    "seed": 42,
+    "target": null,
+    "target_note": "target selection occurs after this table is frozen"
+  },
+  "sample_manifest_schema_version": 1,
+  "sampler": {
+    "fixture_toolkit_version": 1,
+    "id": "row_major_ancestral_inverse_cdf",
+    "implementation_hash": "sha256:27e6e6a60ddd4f6c90fb8b62f9b511da73af080d14307100bf1f07925ab4f023",
+    "nested_prefix_guarantee": "for the same semantic fixture, seed, sampler version, and orders, sample(n_small) equals the first n_small rows of sample(n_large)",
+    "one_uniform_draw_per_node_per_row": true,
+    "output_column_order": [
+      "x0",
+      "x1",
+      "x2",
+      "x3"
+    ],
+    "parent_orders": {
+      "x0": [],
+      "x1": [
+        "x0"
+      ],
+      "x2": [
+        "x0"
+      ],
+      "x3": [
+        "x1",
+        "x2"
+      ]
+    },
+    "rng": "numpy.random.PCG64",
+    "row_major": true,
+    "state_orders": {
+      "x0": [
+        0,
+        1
+      ],
+      "x1": [
+        0,
+        1
+      ],
+      "x2": [
+        0,
+        1
+      ],
+      "x3": [
+        0,
+        1
+      ]
+    },
+    "topological_order": [
+      "x0",
+      "x1",
+      "x2",
+      "x3"
+    ],
+    "version": 1
+  }
+}

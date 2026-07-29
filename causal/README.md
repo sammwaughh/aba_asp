@@ -48,6 +48,10 @@ Full setup (verified locally): [`docs/research/environment_setup.md`](../docs/re
 - ArgCausalDisco is a **sibling repo**; scripts add its root to `sys.path` automatically. Do not install full `ArgCausalDisco/requirements.txt`.
 
 ## What Lives Here
+- `fixtures/`: exact finite-discrete causal-BN definitions and derived
+  population/faithfulness/MEC/CPDAG certificates, BIF interoperability, and
+  target-free nested-prefix sampling. See `fixtures/README.md`. This layer does
+  not run ABA Learning or decode learned rules into a graph.
 - `argcausaldisco_integration.py`: generate data → predicates → BK → optional ABA-ASP run.
 	- Functions: `generate_aba_background_knowledge()`, `pick_target_variable()`, `_extract_learned_rules()`.
 - `run_aba_asp.py`: wrapper for SWI-Prolog/Clingo; class `ABASPRunner` executes learning runs.
@@ -98,4 +102,3 @@ python causal/argcausaldisco_integration.py
 	- Handcrafted perfect-correlation case (4 samples)
 	- ArgCausalDisco discrete chain (6 samples)
 	- ArgCausalDisco continuous chain (8 samples), confounder (6), collider (8); median E+/E−; folding mode comparisons
-

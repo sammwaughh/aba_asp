@@ -64,6 +64,11 @@ aba_asp/
 
 ## Main Python causal bridge files (`causal/`)
 
+- `fixtures/` — exact positive finite-discrete causal-BN fixture layer. The YAML
+  specification is authoritative; exact population/CI/faithfulness and
+  graph-theoretic MEC/CPDAG certificates, checked BIF exports, and target-free
+  nested-prefix samples are derived from it. This is pre-learning evaluator
+  infrastructure, not Russo-style Causal ABA or a learned-rule graph decoder.
 - `argcausaldisco_integration.py` — data → ABA pipeline.
   `generate_aba_background_knowledge()` (table → feature predicates → `.bk.aba`),
   `pick_target_variable()` (target + E+/E− split), `_extract_learned_rules()` (solution − BK).
@@ -233,10 +238,24 @@ directory for all future M1.3 work.
 
 ### Where Bucket 3 work goes once approved
 
-Bucket 3 is **planning pending**. The current sources are its planning record above,
-the 22 July section of `docs/research/supervisor_guidance.md`, and
-`docs/research/research_state.md`. There are no approved Bucket 3 code files, configs,
-cells or output grids yet.
+Bucket 3 claims and ABA Learning experiments remain **planning pending**. The current
+sources are its planning record above, the 22 July section of
+`docs/research/supervisor_guidance.md`, and `docs/research/research_state.md`. There are
+no approved Bucket 3 claims, learning configs, cells, or output grids.
+
+Samuel has approved the pre-learning construction and certification tooling for the
+first bounded fixture:
+
+- exact fixture package and usage boundary: `causal/fixtures/` and its `README.md`;
+- authoritative binary-diamond definition:
+  `causal/fixtures/specs/m13_bucket3_binary_diamond.yaml`;
+- focused tests: `causal/tests/test_causal_fixture_*.py`;
+- derived fixture-only artefacts:
+  `causal/outputs/causal_fixtures/m13_bucket3_binary_diamond/`.
+
+These files establish the generating DAG, exact population, assumptions, standard
+MEC/CPDAG, and one target-free IID table. They do not approve target-wise ABA Learning
+runs, a union-of-rules graph decoder, an experiment matrix, or a Bucket 3 claim.
 
 After Samuel approves a specific experiment, follow the established layout:
 
