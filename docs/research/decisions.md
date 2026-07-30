@@ -2,6 +2,25 @@
 
 Recorded decisions that affect experiment direction. Evidence and interpretation remain in experiment records.
 
+## 2026-07-30 — Target-wise checked ASP retained only as an artefact audit
+
+**Decision:** For causal-fixture target-wise runs, retain outcome/failure/runtime,
+learned rules and counts, assumptions/contraries, and rule-body variables/lengths.
+Do not add Python-Horn, Prolog-query, independent per-example ASP, parent-set, or
+graph-level coverage panels.
+
+The inherited learner already emits `<BK>.sol_chk.asp` when
+`set_lopt(check_ic)` is enabled. This file contains the final framework's ASP
+serialization together with the joint positive/negative integrity constraints.
+The target-wise runner will invoke Clingo directly on this saved file once and
+record SAT/UNSAT/error/runtime only as a final-serialization integrity audit. It
+will not reconstruct the same constraints around `<BK>.sol.asp`, and the audit
+will not be interpreted as a separate coverage or learner-performance metric.
+
+**Implementation boundary:** target-wise configurations must explicitly enable
+`check_ic`. The inherited ABA Learning engine and completed earlier experiment
+artefacts remain unchanged.
+
 ## 2026-07-22 — Close Bucket 2; expand M1.3 with supervisor-driven Bucket 3
 
 **Decision:** M1.3 Bucket 2 is **locked / closed** with two claims supported by

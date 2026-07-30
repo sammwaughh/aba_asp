@@ -76,7 +76,7 @@ aba_asp/
   collection artefacts. Graph metadata is evaluator-only and no cross-target
   graph/CPDAG decoder is applied. Configuration schema:
   `causal/configs/targetwise/m13_bucket3_binary_diamond/{aamas2025,ecai2024}/n50_seed42.yaml`;
-  compact diagnostics and the one-query joint brave-task check are implemented
+  compact diagnostics and the final checked-ASP artefact audit are implemented
   in `causal/targetwise/diagnostics.py` and
   `causal/targetwise/semantics.py`; focused tests:
   `causal/tests/test_targetwise_collection.py`.
@@ -285,9 +285,12 @@ The runner keeps a byte-identical table copy in every cell for inspection, but p
 only the exact-value BK and recorded E+/E− arrays to ABA Learning. It preserves raw
 engine output, compact target-wise diagnostics, target reports, and a collection
 summary. The diagnostics retain rules, ABA components, body variables/lengths,
-outcome/runtime, and one joint brave-task stable-model result. They omit inherited
-coverage panels and parent/graph proxies. The summary explicitly does not union
-learned rules into a graph or assess CPDAG recovery.
+outcome/runtime, and one final-artefact integrity audit. The audit runs Clingo
+directly on the learner-produced `.sol_chk.asp` emitted under `check_ic`; it does not
+reconstruct example constraints around `.sol.asp` and is not treated as a separate
+coverage metric. The target-wise diagnostics omit inherited coverage panels and
+parent/graph proxies. The summary explicitly does not union learned rules into a
+graph or assess CPDAG recovery.
 
 After Samuel approves a specific experiment, add its config and evidence record, run
 the target-wise collection (or the established grid harness if the approved question

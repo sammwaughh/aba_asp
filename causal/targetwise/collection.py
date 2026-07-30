@@ -44,10 +44,11 @@ from causal.targetwise.reporting import (
     write_target_report,
 )
 from causal.targetwise.semantics import (
-    JointBraveCheckResult,
-    joint_brave_task_check,
+    ArtifactIntegrityCheckResult,
+    final_artifact_integrity_check,
     resolve_solution_asp_path,
-    unavailable_joint_brave_check,
+    resolve_solution_check_asp_path,
+    unavailable_artifact_integrity_check,
 )
 
 
@@ -242,7 +243,7 @@ def _base_manifest(
                 "task_manifest_sha256": file_sha256(cell.task_manifest_path),
                 "outcome": None,
                 "failure_reason": None,
-                "joint_brave_status": None,
+                "artifact_check_status": None,
             }
         )
     return {
@@ -520,7 +521,7 @@ def _execute_target(
     task: BinaryTargetTask,
     *,
     runner_factory: Callable[[], Any],
-    joint_checker: Callable[..., JointBraveCheckResult],
+    artifact_checker: Callable[..., ArtifactIntegrityCheckResult],
 ) -> dict[str, Any]:
     config = prepared.config
     bundle = prepared.bundle
@@ -614,15 +615,17 @@ def _execute_target(
     write_text_once(cell.output_dir / "prolog.stdout", stdout)
     write_text_once(cell.output_dir / "prolog.stderr", stderr)
     solution_asp_path = resolve_solution_asp_path(solution_path, cell.output_dir)
+    solution_check_asp_path = resolve_solution_check_asp_path(
+        solution_path,
+        cell.output_dir,
+    )
     if outcome in {"solved", "completed_empty_delta"}:
-        joint_check = joint_checker(
-            solution_asp_path,
-            task.positive_examples,
-            task.negative_examples,
+        artifact_check = artifact_checker(
+            solution_check_asp_path,
             timeout_s=config.joint_check_timeout_s,
         )
     else:
-        joint_check = unavailable_joint_brave_check(
+        artifact_check = unavailable_artifact_integrity_check(
             f"learner outcome {outcome!r} has no completed framework to check"
         )
 
@@ -647,7 +650,8 @@ def _execute_target(
         aba_learning_runtime_s=wall_clock_s,
         solution_path=solution_path,
         solution_asp_path=solution_asp_path,
-        joint_brave_check=joint_check,
+        solution_check_asp_path=solution_check_asp_path,
+        artifact_integrity_check=artifact_check,
         provenance={
             "fixture_semantic_hash": bundle.semantic_hash,
             "sample_csv_sha256": bundle.sample_hash,
@@ -667,7 +671,9 @@ def run_collection(
     *,
     output_root: Path | str | None = None,
     runner_factory: Callable[[], Any] = ABASPRunner,
-    joint_checker: Callable[..., JointBraveCheckResult] = joint_brave_task_check,
+    artifact_checker: Callable[
+        ..., ArtifactIntegrityCheckResult
+    ] = final_artifact_integrity_check,
 ) -> PreparedTargetwiseCollection:
     """Prepare and serially run ABA Learning once for every fixture variable."""
 
@@ -721,7 +727,7 @@ def run_collection(
             prepared,
             task,
             runner_factory=runner_factory,
-            joint_checker=joint_checker,
+            artifact_checker=artifact_checker,
         )
         summary = write_target_report(
             bundle=prepared.bundle,
@@ -736,7 +742,7 @@ def run_collection(
         entry = target_entries[target]
         entry["outcome"] = outcome
         entry["failure_reason"] = metrics.get("failure_reason")
-        entry["joint_brave_status"] = metrics.get("joint_brave_status")
+        entry["artifact_check_status"] = metrics.get("artifact_check_status")
         manifest["targets"] = [
             target_entries[item] for item in prepared.bundle.variables
         ]

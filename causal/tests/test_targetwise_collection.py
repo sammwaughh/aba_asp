@@ -39,9 +39,9 @@ from causal.targetwise.encoding import (
 )
 from causal.targetwise.paths import TargetwiseCollectionPaths
 from causal.targetwise.semantics import (
-    JointBraveCheckResult,
-    build_joint_brave_constraints,
-    joint_brave_task_check,
+    ArtifactIntegrityCheckResult,
+    final_artifact_integrity_check,
+    resolve_solution_check_asp_path,
 )
 
 
@@ -193,6 +193,19 @@ class _FakeRunner:
             text + "\n".join(learned_rules) + "\n",
             encoding="utf-8",
         )
+        solution_check_asp = predicate_file.with_name(
+            f"{predicate_file.stem}.sol_chk.asp"
+        )
+        solution_check_asp.write_text(
+            text
+            + "\n".join(learned_rules)
+            + "\n"
+            + "\n".join(f":- not {atom}." for atom in positive_examples)
+            + "\n"
+            + "\n".join(f":- {atom}." for atom in negative_examples)
+            + "\n",
+            encoding="utf-8",
+        )
         self.calls.append(
             {
                 "target": target,
@@ -211,33 +224,33 @@ class _FakeRunner:
         }
 
 
-class _FakeJointChecker:
+class _FakeArtifactChecker:
     def __init__(self, status: str = "SAT") -> None:
         self.status = status
         self.calls: list[dict[str, Any]] = []
 
     def __call__(
         self,
-        solution_asp_path: Path | None,
-        positive_examples: tuple[str, ...],
-        negative_examples: tuple[str, ...],
+        solution_check_asp_path: Path | None,
         *,
         timeout_s: float,
-    ) -> JointBraveCheckResult:
-        assert solution_asp_path is not None and solution_asp_path.is_file()
+    ) -> ArtifactIntegrityCheckResult:
+        assert (
+            solution_check_asp_path is not None
+            and solution_check_asp_path.is_file()
+            and solution_check_asp_path.name.endswith(".sol_chk.asp")
+        )
         self.calls.append(
             {
-                "solution_asp_path": solution_asp_path,
-                "positive_examples": positive_examples,
-                "negative_examples": negative_examples,
+                "solution_check_asp_path": solution_check_asp_path,
                 "timeout_s": timeout_s,
             }
         )
-        return JointBraveCheckResult(
+        return ArtifactIntegrityCheckResult(
             status=self.status,
             runtime_s=0.001,
             failure_reason=None,
-            solution_asp_path=str(solution_asp_path),
+            checked_asp_path=str(solution_check_asp_path),
             clingo_path="/test/clingo",
             returncode=10 if self.status == "SAT" else 20,
         )
@@ -319,6 +332,23 @@ def test_config_rejects_non_brave_learning_mode(tmp_path: Path) -> None:
     )
 
     with pytest.raises(TargetwiseConfigError, match="supports brave"):
+        load_targetwise_config(config_path)
+
+
+def test_config_requires_engine_checked_solution_artefact(tmp_path: Path) -> None:
+    fixture_directory = _write_fixture_bundle(tmp_path)
+    unchecked_config = tmp_path / "unchecked.pl"
+    unchecked_config.write_text(
+        ":- set_lopt(learning_mode(brave)).\n",
+        encoding="utf-8",
+    )
+    config_path = _write_config(
+        tmp_path,
+        fixture_directory,
+        prolog_config=unchecked_config,
+    )
+
+    with pytest.raises(TargetwiseConfigError, match=r"set_lopt\(check_ic\)"):
         load_targetwise_config(config_path)
 
 
@@ -680,7 +710,9 @@ def test_output_directory_rejects_changed_prolog_configuration_bytes(
     fixture_directory = _write_fixture_bundle(tmp_path / "source")
     prolog_config = tmp_path / "learner.pl"
     prolog_config.write_text(
-        ":- set_lopt(learning_mode(brave)).\n" ":- set_lopt(folding_mode(greedy)).\n",
+        ":- set_lopt(learning_mode(brave)).\n"
+        ":- set_lopt(folding_mode(greedy)).\n"
+        ":- set_lopt(check_ic).\n",
         encoding="utf-8",
     )
     config_path = _write_config(
@@ -691,7 +723,9 @@ def test_output_directory_rejects_changed_prolog_configuration_bytes(
     first = load_targetwise_config(config_path)
     prepare_collection(first, output_root=tmp_path / "outputs")
     prolog_config.write_text(
-        ":- set_lopt(learning_mode(brave)).\n" ":- set_lopt(folding_mode(nd)).\n",
+        ":- set_lopt(learning_mode(brave)).\n"
+        ":- set_lopt(folding_mode(nd)).\n"
+        ":- set_lopt(check_ic).\n",
         encoding="utf-8",
     )
     changed = load_targetwise_config(config_path)
@@ -710,17 +744,17 @@ def test_fake_runner_executes_all_targets_and_writes_inspection_bundle(
     fixture_directory = _write_fixture_bundle(tmp_path / "source")
     config = load_targetwise_config(_write_config(tmp_path, fixture_directory))
     fake = _FakeRunner()
-    fake_joint = _FakeJointChecker()
+    fake_artifact = _FakeArtifactChecker()
 
     prepared = run_collection(
         config,
         output_root=tmp_path / "outputs",
         runner_factory=lambda: fake,
-        joint_checker=fake_joint,
+        artifact_checker=fake_artifact,
     )
 
     assert [call["target"] for call in fake.calls] == list(_VARIABLES)
-    assert len(fake_joint.calls) == 4
+    assert len(fake_artifact.calls) == 4
     manifest = json.loads(prepared.paths.manifest_path.read_text(encoding="utf-8"))
     assert manifest["status"] == "completed"
     assert manifest["outcome_counts"] == {"solved": 4}
@@ -732,7 +766,7 @@ def test_fake_runner_executes_all_targets_and_writes_inspection_bundle(
     assert set(results["configuration_id"]) == {"aamas2025"}
     assert set(results["configuration_hash"]) == {config.configuration_hash}
     assert set(results["n_target_rules"]) == {4}
-    assert set(results["joint_brave_status"]) == {"SAT"}
+    assert set(results["artifact_check_status"]) == {"SAT"}
     assert not any("parent" in column for column in results.columns)
     assert not any(column.startswith("cov_") for column in results.columns)
     summary = json.loads(prepared.paths.summary_json_path.read_text(encoding="utf-8"))
@@ -753,13 +787,14 @@ def test_fake_runner_executes_all_targets_and_writes_inspection_bundle(
         metrics = json.loads(cell.metrics_json_path.read_text(encoding="utf-8"))
         assert metrics["outcome"] == "solved"
         assert metrics["n_target_rules"] == 4
-        assert metrics["joint_brave_status"] == "SAT"
+        assert metrics["artifact_check_status"] == "SAT"
+        assert metrics["solution_check_asp_path"].endswith(".sol_chk.asp")
         assert metrics["body_lengths"] == [3, 3, 3, 3]
         assert "cov_asp_pos" not in metrics
         assert "body_parent_precision" not in metrics
         report = cell.report_path.read_text(encoding="utf-8")
         assert f"# Target-wise cell: {target}" in report
-        assert "Joint brave-task check" in report
+        assert "Final-artefact integrity audit" in report
         assert "Generating parents" not in report
 
     original_calls = len(fake.calls)
@@ -767,7 +802,7 @@ def test_fake_runner_executes_all_targets_and_writes_inspection_bundle(
         config,
         output_root=tmp_path / "outputs",
         runner_factory=lambda: fake,
-        joint_checker=fake_joint,
+        artifact_checker=fake_artifact,
     )
     assert len(fake.calls) == original_calls
 
@@ -787,13 +822,13 @@ def test_constant_sample_target_is_recorded_as_skipped(
     _write_json(sample_manifest_path, sample_manifest)
     config = load_targetwise_config(_write_config(tmp_path, fixture_directory))
     fake = _FakeRunner()
-    fake_joint = _FakeJointChecker()
+    fake_artifact = _FakeArtifactChecker()
 
     prepared = run_collection(
         config,
         output_root=tmp_path / "outputs",
         runner_factory=lambda: fake,
-        joint_checker=fake_joint,
+        artifact_checker=fake_artifact,
     )
 
     assert [call["target"] for call in fake.calls] == ["x1", "x2", "x3"]
@@ -804,36 +839,33 @@ def test_constant_sample_target_is_recorded_as_skipped(
     assert x0_metrics["failure_reason"] == "empty E+ or E-"
     manifest = json.loads(prepared.paths.manifest_path.read_text(encoding="utf-8"))
     assert manifest["outcome_counts"] == {"skipped": 1, "solved": 3}
-    assert len(fake_joint.calls) == 3
+    assert len(fake_artifact.calls) == 3
 
 
-def test_joint_brave_constraints_encode_one_simultaneous_task() -> None:
-    constraints = build_joint_brave_constraints(
-        ["x3(2)", "x3(4)"],
-        ["x3(1)", "x3(3)"],
-    )
-
-    assert ":- not x3(2)." in constraints
-    assert ":- not x3(4)." in constraints
-    assert ":- x3(1)." in constraints
-    assert ":- x3(3)." in constraints
-
-
-def test_joint_brave_check_runs_clingo_once_and_classifies_sat(
+def test_solution_check_resolver_uses_learner_produced_artefact(
     tmp_path: Path,
 ) -> None:
-    solution_asp = tmp_path / "learned.sol.asp"
-    solution_asp.write_text("x3(2).\n", encoding="utf-8")
+    solution = tmp_path / "learned.sol.aba"
+    solution.write_text("% learned framework\n", encoding="utf-8")
+    checked = tmp_path / "learned.sol_chk.asp"
+    checked.write_text("x3(2).\n:- not x3(2).\n", encoding="utf-8")
+
+    assert resolve_solution_check_asp_path(solution, tmp_path) == checked
+
+
+def test_artifact_integrity_check_runs_saved_file_once_and_classifies_sat(
+    tmp_path: Path,
+) -> None:
+    solution_check_asp = tmp_path / "learned.sol_chk.asp"
+    solution_check_asp.write_text("x3(2).\n:- not x3(2).\n", encoding="utf-8")
     calls: list[dict[str, Any]] = []
 
     def fake_run(command: list[str], **kwargs: Any) -> subprocess.CompletedProcess[str]:
         calls.append({"command": command, **kwargs})
         return subprocess.CompletedProcess(command, 10, "SATISFIABLE\n", "")
 
-    result = joint_brave_task_check(
-        solution_asp,
-        ["x3(2)"],
-        ["x3(1)"],
+    result = final_artifact_integrity_check(
+        solution_check_asp,
         timeout_s=1,
         clingo_path="/test/clingo",
         command_runner=fake_run,
@@ -842,26 +874,25 @@ def test_joint_brave_check_runs_clingo_once_and_classifies_sat(
     assert result.status == "SAT"
     assert result.returncode == 10
     assert len(calls) == 1
-    assert ":- not x3(2)." in calls[0]["input"]
-    assert ":- x3(1)." in calls[0]["input"]
+    assert str(solution_check_asp) in calls[0]["command"]
+    assert "-" not in calls[0]["command"]
+    assert "input" not in calls[0]
     assert "--models=1" in calls[0]["command"]
 
 
-def test_joint_brave_check_classifies_unsat_timeout_and_unavailable(
+def test_artifact_integrity_check_classifies_unsat_timeout_and_unavailable(
     tmp_path: Path,
 ) -> None:
-    solution_asp = tmp_path / "learned.sol.asp"
-    solution_asp.write_text("x3(2).\n", encoding="utf-8")
+    solution_check_asp = tmp_path / "learned.sol_chk.asp"
+    solution_check_asp.write_text("x3(2).\n:- x3(2).\n", encoding="utf-8")
 
     def unsat_run(
         command: list[str], **kwargs: Any
     ) -> subprocess.CompletedProcess[str]:
         return subprocess.CompletedProcess(command, 20, "UNSATISFIABLE\n", "")
 
-    unsat = joint_brave_task_check(
-        solution_asp,
-        ["x3(2)"],
-        ["x3(1)"],
+    unsat = final_artifact_integrity_check(
+        solution_check_asp,
         timeout_s=1,
         clingo_path="/test/clingo",
         command_runner=unsat_run,
@@ -871,40 +902,34 @@ def test_joint_brave_check_classifies_unsat_timeout_and_unavailable(
     def timeout_run(command: list[str], **kwargs: Any) -> Any:
         raise subprocess.TimeoutExpired(command, kwargs["timeout"])
 
-    timed_out = joint_brave_task_check(
-        solution_asp,
-        ["x3(2)"],
-        ["x3(1)"],
+    timed_out = final_artifact_integrity_check(
+        solution_check_asp,
         timeout_s=1,
         clingo_path="/test/clingo",
         command_runner=timeout_run,
     )
     assert timed_out.status == "TIMEOUT"
 
-    unavailable = joint_brave_task_check(
-        tmp_path / "missing.sol.asp",
-        ["x3(2)"],
-        ["x3(1)"],
+    unavailable = final_artifact_integrity_check(
+        tmp_path / "missing.sol_chk.asp",
         timeout_s=1,
     )
     assert unavailable.status == "UNAVAILABLE"
 
 
 @pytest.mark.skipif(shutil.which("clingo") is None, reason="clingo is not on PATH")
-def test_joint_brave_check_with_real_clingo(tmp_path: Path) -> None:
-    solution_asp = tmp_path / "learned.sol.asp"
-    solution_asp.write_text("x3(2).\n", encoding="utf-8")
+def test_artifact_integrity_check_with_real_clingo(tmp_path: Path) -> None:
+    sat_asp = tmp_path / "sat.sol_chk.asp"
+    sat_asp.write_text("x3(2).\n:- not x3(2).\n:- x3(1).\n", encoding="utf-8")
+    unsat_asp = tmp_path / "unsat.sol_chk.asp"
+    unsat_asp.write_text("x3(2).\n:- x3(2).\n", encoding="utf-8")
 
-    sat = joint_brave_task_check(
-        solution_asp,
-        ["x3(2)"],
-        ["x3(1)"],
+    sat = final_artifact_integrity_check(
+        sat_asp,
         timeout_s=2,
     )
-    unsat = joint_brave_task_check(
-        solution_asp,
-        ["x3(2)"],
-        ["x3(2)"],
+    unsat = final_artifact_integrity_check(
+        unsat_asp,
         timeout_s=2,
     )
 

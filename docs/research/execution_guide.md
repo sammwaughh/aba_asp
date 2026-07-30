@@ -122,8 +122,15 @@ Engine learning run (per BK), written next to the BK / in the run cwd:
 
 - `<BK>.sol.aba` — learnt ABA framework (rules + assumptions + contraries).
 - `<BK>.sol.asp` — ASP encoding of the solution.
-- `<BK>.sol_chk.asp` — only if `set_lopt(check_ic)` is enabled.
+- `<BK>.sol_chk.asp` — only if `set_lopt(check_ic)` is enabled; this is the
+  solution ASP together with the joint positive/negative integrity constraints.
 - `aba_asp.csv` — appended run-log row (timestamp, BK, sizes, time).
+
+The target-wise causal-fixture runner requires `check_ic`. Its post-run
+invocation executes the learner-produced
+`<BK>.sol_chk.asp` directly as a final-serialization integrity audit. It does
+not reconstruct those constraints around `<BK>.sol.asp`, and the resulting
+SAT/UNSAT status is not counted as an additional coverage metric.
 
 Engine scratch files (current working directory; see troubleshooting): `asp.clingo`,
 `cc.clingo`, `cc.pl`, `clingo.stderr.log` (and/or `clingo.stderr.txt`).

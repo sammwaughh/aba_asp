@@ -42,6 +42,7 @@ class TargetwiseRunConfig:
 _LEARNING_MODE_RE = re.compile(
     r"set_lopt\s*\(\s*learning_mode\s*\(\s*([a-z]+)\s*\)\s*\)"
 )
+_CHECK_IC_RE = re.compile(r"set_lopt\s*\(\s*check_ic\s*\)")
 _CONFIGURATION_ID_RE = re.compile(r"^[A-Za-z][A-Za-z0-9_-]*$")
 
 
@@ -106,7 +107,10 @@ def _configuration_id(value: Any) -> str:
 
 
 def _read_learning_mode(prolog_config: Path) -> str:
-    text = prolog_config.read_text(encoding="utf-8")
+    text = "\n".join(
+        line.split("%", 1)[0]
+        for line in prolog_config.read_text(encoding="utf-8").splitlines()
+    )
     modes = set(_LEARNING_MODE_RE.findall(text))
     if len(modes) != 1:
         raise TargetwiseConfigError(
@@ -116,8 +120,13 @@ def _read_learning_mode(prolog_config: Path) -> str:
     mode = modes.pop()
     if mode != "brave":
         raise TargetwiseConfigError(
-            "the current target-wise joint semantic check supports brave "
+            "the current target-wise runner supports brave "
             f"learning only; got learning_mode({mode})"
+        )
+    if not _CHECK_IC_RE.search(text):
+        raise TargetwiseConfigError(
+            "learner.prolog_config must explicitly enable set_lopt(check_ic) "
+            "so the engine emits the final .sol_chk.asp integrity artefact"
         )
     return mode
 

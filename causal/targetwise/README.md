@@ -13,6 +13,8 @@ The initial supported learner-visible regime is:
 - exact-value predicates for every non-target observation;
 - target value `1` as `E+` and target value `0` as `E-`;
 - a Prolog configuration that explicitly selects brave learning;
+- a Prolog configuration that explicitly enables `set_lopt(check_ic)`, so the
+  learner emits its checked final ASP artefact;
 - one serial target cell per variable.
 
 Non-binary target policies and learned-rule-to-graph decoding are outside this
@@ -39,6 +41,10 @@ causal/configs/targetwise/
 YAML filenames and parent directories are organisational. Output identity is
 derived from the validated fixture ID, explicit `configuration.id`, and
 selected CSV stem.
+
+`learner.joint_check_timeout_s` bounds the final `.sol_chk.asp` artefact audit.
+The established key is retained so existing configurations and their hashes
+remain stable; it does not denote an additional coverage metric.
 
 ## Commands
 
@@ -77,13 +83,21 @@ Each completed target cell records:
 - assumptions and contraries, including their counts;
 - target-rule body literals, base variables, and lengths;
 - basic solution/parser integrity;
-- one joint brave-task check and its runtime.
+- one final-artefact integrity audit and its runtime.
 
-The joint check invokes Clingo once on the final `.sol.asp`, with all positive
-and negative constraints present simultaneously. `SAT` means that at least one
-stable model contains every `E+` atom and no `E-` atom. It is not a set of
-independent per-example brave-entailment checks. Other possible statuses are
-`UNSAT`, `TIMEOUT`, `ERROR`, and `UNAVAILABLE`.
+With `check_ic` enabled, the inherited learner emits `.sol_chk.asp`: the final
+framework's ASP serialization together with integrity constraints requiring
+one stable model to contain every `E+` atom and no `E-` atom. The target-wise
+post-run layer invokes Clingo directly on that saved file. It does not rebuild
+the constraints around `.sol.asp`.
+
+`SAT` confirms that the final saved checked artefact has a witnessing stable
+model. Because the learner already applies the corresponding condition during
+learning, this invocation is retained only as a serialization and
+artefact-integrity audit. It is not counted as an additional coverage or
+learner-performance metric, and it is not a set of independent per-example
+checks. Other possible audit statuses are `UNSAT`, `TIMEOUT`, `ERROR`, and
+`UNAVAILABLE`.
 
 The target-wise path does not calculate Python-Horn coverage, Prolog query
 coverage, independent per-example ASP coverage, parent-set metrics, or
@@ -114,6 +128,7 @@ causal/outputs/aba_learning/targetwise/
                     │   ├── targetwise_<run-id>.aba
                     │   ├── targetwise_<run-id>.sol.aba
                     │   ├── targetwise_<run-id>.sol.asp  (when emitted)
+                    │   ├── targetwise_<run-id>.sol_chk.asp
                     │   ├── prolog.stdout
                     │   ├── prolog.stderr
                     │   └── engine artefacts

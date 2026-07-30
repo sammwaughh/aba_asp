@@ -9,7 +9,7 @@ from typing import Any, Mapping, Sequence
 import pandas as pd
 
 from causal.metrics import body_vars, parse_delta_rules, target_rule_filter
-from causal.targetwise.semantics import JointBraveCheckResult
+from causal.targetwise.semantics import ArtifactIntegrityCheckResult
 
 
 TARGETWISE_RESULT_COLUMNS: tuple[str, ...] = (
@@ -39,12 +39,13 @@ TARGETWISE_RESULT_COLUMNS: tuple[str, ...] = (
     "body_lengths_json",
     "max_body_length",
     "mean_body_length",
-    "joint_brave_status",
-    "joint_brave_failure_reason",
-    "joint_brave_runtime_s",
+    "artifact_check_status",
+    "artifact_check_failure_reason",
+    "artifact_check_runtime_s",
     "parser_unread_lines",
     "solution_file_bytes",
     "solution_asp_file_bytes",
+    "solution_check_asp_file_bytes",
 )
 
 _STRING_COLUMNS = frozenset(
@@ -65,10 +66,12 @@ _STRING_COLUMNS = frozenset(
         "contraries_json",
         "body_variables_json",
         "body_lengths_json",
-        "joint_brave_status",
+        "artifact_check_status",
     }
 )
-_NULLABLE_STRING_COLUMNS = frozenset({"failure_reason", "joint_brave_failure_reason"})
+_NULLABLE_STRING_COLUMNS = frozenset(
+    {"failure_reason", "artifact_check_failure_reason"}
+)
 _INTEGER_COLUMNS = frozenset(
     {
         "n",
@@ -81,13 +84,14 @@ _INTEGER_COLUMNS = frozenset(
         "parser_unread_lines",
         "solution_file_bytes",
         "solution_asp_file_bytes",
+        "solution_check_asp_file_bytes",
     }
 )
 _FLOAT_COLUMNS = frozenset(
     {
         "aba_learning_runtime_s",
         "mean_body_length",
-        "joint_brave_runtime_s",
+        "artifact_check_runtime_s",
     }
 )
 
@@ -154,7 +158,8 @@ def build_targetwise_diagnostics(
     aba_learning_runtime_s: float,
     solution_path: Path | None,
     solution_asp_path: Path | None,
-    joint_brave_check: JointBraveCheckResult,
+    solution_check_asp_path: Path | None,
+    artifact_integrity_check: ArtifactIntegrityCheckResult,
     provenance: Mapping[str, Any],
 ) -> dict[str, Any]:
     """Build the complete target-wise diagnostics document."""
@@ -195,9 +200,15 @@ def build_targetwise_diagnostics(
         if solution_asp_path is not None and Path(solution_asp_path).is_file()
         else 0
     )
+    solution_check_asp_bytes = (
+        Path(solution_check_asp_path).stat().st_size
+        if solution_check_asp_path is not None
+        and Path(solution_check_asp_path).is_file()
+        else 0
+    )
 
     return {
-        "targetwise_metrics_schema_version": 1,
+        "targetwise_metrics_schema_version": 2,
         "experiment_id": experiment_id,
         "fixture_id": fixture_id,
         "configuration_id": configuration_id,
@@ -227,16 +238,22 @@ def build_targetwise_diagnostics(
             sum(body_lengths) / len(body_lengths) if body_lengths else None
         ),
         "target_rule_body_details": body_details,
-        "joint_brave_status": joint_brave_check.status,
-        "joint_brave_failure_reason": joint_brave_check.failure_reason,
-        "joint_brave_runtime_s": joint_brave_check.runtime_s,
-        "joint_brave_check": joint_brave_check.as_dict(),
+        "artifact_check_status": artifact_integrity_check.status,
+        "artifact_check_failure_reason": artifact_integrity_check.failure_reason,
+        "artifact_check_runtime_s": artifact_integrity_check.runtime_s,
+        "artifact_integrity_check": artifact_integrity_check.as_dict(),
         "parser_unread_lines": _count_parser_unread_lines(solution_path),
         "solution_file_bytes": solution_bytes,
         "solution_asp_file_bytes": solution_asp_bytes,
+        "solution_check_asp_file_bytes": solution_check_asp_bytes,
         "solution_path": str(solution_path) if solution_path is not None else None,
         "solution_asp_path": (
             str(solution_asp_path) if solution_asp_path is not None else None
+        ),
+        "solution_check_asp_path": (
+            str(solution_check_asp_path)
+            if solution_check_asp_path is not None
+            else None
         ),
         "provenance": dict(provenance),
     }

@@ -46,13 +46,16 @@ def build_target_summary(
         "max_body_length": metrics["max_body_length"],
         "mean_body_length": metrics["mean_body_length"],
         "target_rule_body_details": list(metrics["target_rule_body_details"]),
-        "joint_brave_status": metrics["joint_brave_status"],
-        "joint_brave_failure_reason": metrics["joint_brave_failure_reason"],
-        "joint_brave_runtime_s": metrics["joint_brave_runtime_s"],
+        "artifact_check_status": metrics["artifact_check_status"],
+        "artifact_check_failure_reason": metrics["artifact_check_failure_reason"],
+        "artifact_check_runtime_s": metrics["artifact_check_runtime_s"],
         "integrity": {
             "parser_unread_lines": metrics["parser_unread_lines"],
             "solution_file_bytes": metrics["solution_file_bytes"],
             "solution_asp_file_bytes": metrics["solution_asp_file_bytes"],
+            "solution_check_asp_file_bytes": metrics[
+                "solution_check_asp_file_bytes"
+            ],
         },
         "artefacts": {
             "data": str(cell_paths.data_path),
@@ -61,6 +64,7 @@ def build_target_summary(
             "task_manifest": str(cell_paths.task_manifest_path),
             "solution": metrics["solution_path"],
             "solution_asp": metrics["solution_asp_path"],
+            "solution_check_asp": metrics["solution_check_asp_path"],
             "prolog_stdout": str(cell_paths.output_dir / "prolog.stdout"),
             "prolog_stderr": str(cell_paths.output_dir / "prolog.stderr"),
             "metrics": str(cell_paths.metrics_json_path),
@@ -74,10 +78,11 @@ def build_target_summary(
             "config_hash": config.config_hash,
         },
         "boundary": (
-            "The joint brave result asks only whether at least one stable model "
-            "simultaneously contains every E+ atom and no E- atom. It is not an "
-            "independent per-example acceptance table and does not interpret learned "
-            "rule bodies as causal parents or decode a graph."
+            "The artefact audit executes the learner-produced .sol_chk.asp file. "
+            "That file already contains the final framework serialization and the "
+            "joint E+/E- integrity constraints emitted under check_ic. The audit "
+            "checks final-file satisfiability; it is not a new coverage metric, an "
+            "independent per-example acceptance table, or a graph decoder."
         ),
     }
 
@@ -110,7 +115,7 @@ def write_target_report(
         cell_paths=cell_paths,
         metrics=metrics,
     )
-    check_reason = summary["joint_brave_failure_reason"] or "none"
+    check_reason = summary["artifact_check_failure_reason"] or "none"
     lines = [
         f"# Target-wise cell: {task.target}",
         "",
@@ -169,16 +174,19 @@ def write_target_report(
     lines.extend(
         [
             "",
-            "## Joint brave-task check",
+            "## Final-artefact integrity audit",
             "",
-            f"- **Status:** `{summary['joint_brave_status']}`",
-            f"- **Runtime:** {summary['joint_brave_runtime_s']:.6f} seconds",
+            f"- **Status:** `{summary['artifact_check_status']}`",
+            f"- **Runtime:** {summary['artifact_check_runtime_s']:.6f} seconds",
             f"- **Failure reason:** {check_reason}",
             "",
             (
-                "Question checked: does the final serialized learned ABA framework "
-                "have at least one stable model that simultaneously accepts every "
-                "positive example and rejects every negative example?"
+                "Clingo is run directly on the learner-produced `.sol_chk.asp`. "
+                "A `SAT` result confirms that this final serialized checked "
+                "artefact has a witnessing stable model. Because the learner "
+                "already applies the corresponding joint condition internally, "
+                "this is an artefact-integrity audit rather than an additional "
+                "learner-performance or coverage metric."
             ),
             "",
             "## Solution integrity",
@@ -189,6 +197,8 @@ def write_target_report(
             f"{summary['integrity']['solution_file_bytes']}",
             f"- **ASP solution bytes:** "
             f"{summary['integrity']['solution_asp_file_bytes']}",
+            f"- **Checked ASP solution bytes:** "
+            f"{summary['integrity']['solution_check_asp_file_bytes']}",
             "",
             "## Artefacts",
             "",
@@ -197,6 +207,8 @@ def write_target_report(
             f"- Positive/negative examples: `{cell_paths.examples_path}`",
             f"- Task manifest: `{cell_paths.task_manifest_path}`",
             f"- Raw learner output: `{cell_paths.output_dir}`",
+            f"- Checked ASP artefact: "
+            f"`{summary['artefacts']['solution_check_asp'] or 'missing'}`",
             f"- Metrics: `{cell_paths.metrics_json_path}`",
             "",
             "## Interpretation boundary",
@@ -219,7 +231,7 @@ def write_collection_summary(
     """Write Markdown and JSON summaries across every target."""
 
     document = {
-        "summary_schema_version": 2,
+        "summary_schema_version": 3,
         "fixture": {
             "id": bundle.fixture_id,
             "semantic_hash": bundle.semantic_hash,
@@ -247,10 +259,11 @@ def write_collection_summary(
         },
         "targets": list(cells),
         "boundary": (
-            "Target outputs are retained separately. Joint brave checks are one "
-            "witness-existence query per target. No per-example coverage panel, "
-            "parent-set score, union-of-rules graph decoder, CPDAG construction, "
-            "or graph-level recovery claim is applied."
+            "Target outputs are retained separately. The post-run Clingo invocation "
+            "executes each learner-produced .sol_chk.asp only as a final-artefact "
+            "integrity audit; it is not counted as a separate coverage metric. No "
+            "per-example coverage panel, parent-set score, union-of-rules graph "
+            "decoder, CPDAG construction, or graph-level recovery claim is applied."
         ),
     }
     write_text_once(
@@ -270,7 +283,7 @@ def write_collection_summary(
         f"- **Learning mode:** `{config.learning_mode}`",
         f"- **Targets:** {len(cells)}",
         "",
-        "| target | E+ | E- | outcome | delta rules | target rules | assumptions | contraries | body variables | body lengths | joint witness | ABA runtime (s) | check runtime (s) |",
+        "| target | E+ | E- | outcome | delta rules | target rules | assumptions | contraries | body variables | body lengths | artefact audit | ABA runtime (s) | audit runtime (s) |",
         "|---|---:|---:|---|---:|---:|---:|---:|---|---|---|---:|---:|",
     ]
     for cell in cells:
@@ -281,9 +294,9 @@ def write_collection_summary(
             f"{cell['n_contraries']} | "
             f"{', '.join(cell['body_variables']) or 'none'} | "
             f"{cell['body_lengths'] or 'none'} | "
-            f"{cell['joint_brave_status']} | "
+            f"{cell['artifact_check_status']} | "
             f"{cell['aba_learning_runtime_s']:.6f} | "
-            f"{cell['joint_brave_runtime_s']:.6f} |"
+            f"{cell['artifact_check_runtime_s']:.6f} |"
         )
     lines.extend(
         [
