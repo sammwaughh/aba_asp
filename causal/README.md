@@ -85,8 +85,10 @@ Full setup (verified locally): [`docs/research/environment_setup.md`](../docs/re
   inspectable target cells plus collection-level manifests and summaries. Each
   completed framework receives one final-artefact integrity audit by executing
   the learner-produced `.sol_chk.asp` directly. This is not counted as a
-  separate coverage metric. The runner does not calculate parent-set scores or
-  aggregate learned rules into a graph or CPDAG.
+  separate coverage metric. Final solution artefacts use stable `bk.sol*`
+  filenames within each target cell, and `delta.aba` isolates the learned
+  additions from the frozen input BK. The runner does not calculate parent-set
+  scores or aggregate learned rules into a graph or CPDAG.
 - `argcausaldisco_integration.py`: generate data → predicates → BK → optional ABA-ASP run.
 	- Functions: `generate_aba_background_knowledge()`, `pick_target_variable()`, `_extract_learned_rules()`.
 - `run_aba_asp.py`: wrapper for SWI-Prolog/Clingo; class `ABASPRunner` executes learning runs.

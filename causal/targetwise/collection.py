@@ -140,7 +140,7 @@ def _task_manifest(
 ) -> dict[str, Any]:
     parents = [source for source, target in bundle.edges if target == task.target]
     return {
-        "task_manifest_schema_version": 3,
+        "task_manifest_schema_version": 4,
         "targetwise_runner_version": TARGETWISE_RUNNER_VERSION,
         "configuration": {
             "id": config.configuration_id,
@@ -208,6 +208,13 @@ def _task_manifest(
             "generating_edges": [list(edge) for edge in bundle.edges],
             "generating_parents_of_target": parents,
             "not_serialized_into_background_knowledge_or_examples": True,
+        },
+        "output_contract": {
+            "solution_aba": "output/bk.sol.aba",
+            "solution_asp": "output/bk.sol.asp",
+            "solution_check_asp": "output/bk.sol_chk.asp",
+            "learned_delta": "output/delta.aba",
+            "temporary_execution_stem_exposed": False,
         },
         "boundaries": [
             "the same frozen data table is used for every target",
@@ -463,13 +470,44 @@ def prepare_collection(
     return prepared
 
 
-def _copy_stage_outputs(stage: Path, output_dir: Path) -> None:
+def _canonical_engine_artifact_name(
+    name: str,
+    *,
+    execution_stem: str,
+) -> str | None:
+    """Map temporary engine filenames to stable names inside a target cell."""
+
+    if name == f"{execution_stem}.aba":
+        return None
+    canonical = {
+        f"{execution_stem}.bk.sol.aba": "bk.sol.aba",
+        f"{execution_stem}.sol.aba": "bk.sol.aba",
+        f"{execution_stem}.bk.sol.asp": "bk.sol.asp",
+        f"{execution_stem}.sol.asp": "bk.sol.asp",
+        f"{execution_stem}.bk.sol_chk.asp": "bk.sol_chk.asp",
+        f"{execution_stem}.sol_chk.asp": "bk.sol_chk.asp",
+    }
+    return canonical.get(name, name)
+
+
+def _copy_stage_outputs(
+    stage: Path,
+    output_dir: Path,
+    *,
+    execution_stem: str,
+) -> None:
     output_dir.mkdir(parents=True, exist_ok=True)
     for source in sorted(stage.rglob("*")):
         if not source.is_file():
             continue
         relative = source.relative_to(stage)
-        destination = output_dir / relative
+        final_name = _canonical_engine_artifact_name(
+            relative.name,
+            execution_stem=execution_stem,
+        )
+        if final_name is None:
+            continue
+        destination = output_dir / relative.parent / final_name
         write_bytes_once(destination, source.read_bytes())
 
 
@@ -483,9 +521,9 @@ def _relocate_shared_outputs(
 
     ABA-ASP can emit solution files under the repository root even when the
     learner is invoked on a cell-local BK file.  The unique execution stem
-    makes the ownership of those files unambiguous.  This mirrors the existing
-    grid runner's relocation boundary while keeping every final artefact inside
-    the target cell.
+    makes the ownership of those files unambiguous.  Once ownership is resolved,
+    solution artefacts receive stable ``bk.sol*`` names inside the target cell;
+    the execution stem is not exposed in the final inspection bundle.
     """
 
     candidates = (
@@ -502,7 +540,13 @@ def _relocate_shared_outputs(
         source = aba_asp_root / name
         if not source.is_file():
             continue
-        destination = output_dir / name
+        final_name = _canonical_engine_artifact_name(
+            name,
+            execution_stem=execution_stem,
+        )
+        if final_name is None:
+            continue
+        destination = output_dir / final_name
         write_bytes_once(destination, source.read_bytes())
         source.unlink()
 
@@ -545,6 +589,7 @@ def _execute_target(
     timeout = False
     runner_error: str | None = None
     solution_path: Path | None = None
+    learned: list[str] = []
 
     if not task.positive_examples or not task.negative_examples:
         outcome = "skipped"
@@ -588,14 +633,27 @@ def _execute_target(
                 stderr = repr(exc)
             finally:
                 wall_clock_s = time.monotonic() - started
-                _copy_stage_outputs(stage, cell.output_dir)
+                _copy_stage_outputs(
+                    stage,
+                    cell.output_dir,
+                    execution_stem=execution_stem,
+                )
                 _relocate_shared_outputs(
                     execution_stem=execution_stem,
                     output_dir=cell.output_dir,
                 )
 
         solution_path = _find_solution(cell.output_dir)
-        learned = parse_delta_rules(solution_path) if solution_path is not None else []
+        learned = (
+            parse_delta_rules(solution_path, bk_path=cell.bk_path)
+            if solution_path is not None
+            else []
+        )
+        if solution_path is not None:
+            delta_text = "\n".join(learned)
+            if delta_text:
+                delta_text += "\n"
+            write_text_once(cell.delta_path, delta_text)
         if timeout:
             outcome = "timeout"
             failure_reason = runner_error
@@ -651,6 +709,8 @@ def _execute_target(
         solution_path=solution_path,
         solution_asp_path=solution_asp_path,
         solution_check_asp_path=solution_check_asp_path,
+        delta_path=cell.delta_path if cell.delta_path.is_file() else None,
+        learned_rules=learned,
         artifact_integrity_check=artifact_check,
         provenance={
             "fixture_semantic_hash": bundle.semantic_hash,

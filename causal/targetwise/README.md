@@ -74,6 +74,12 @@ in `examples.json`; it does not read `data.csv` or `task_manifest.json`.
 Generating edges and target parents appear only in evaluator fields of the task
 manifest. They are not used by the target-wise diagnostics or reports.
 
+The engine is invoked with a unique temporary BK stem so concurrently visible
+engine artefacts can be attributed to the correct target. That identifier is an
+execution detail only. After collection, the solution files are exposed under
+the stable names `bk.sol.aba`, `bk.sol.asp`, and `bk.sol_chk.asp` inside the
+target's own output directory.
+
 ## Retained diagnostics
 
 Each completed target cell records:
@@ -125,10 +131,10 @@ causal/outputs/aba_learning/targetwise/
                     │   ├── examples.json
                     │   └── task_manifest.json
                     ├── output/
-                    │   ├── targetwise_<run-id>.aba
-                    │   ├── targetwise_<run-id>.sol.aba
-                    │   ├── targetwise_<run-id>.sol.asp  (when emitted)
-                    │   ├── targetwise_<run-id>.sol_chk.asp
+                    │   ├── bk.sol.aba
+                    │   ├── bk.sol.asp
+                    │   ├── bk.sol_chk.asp
+                    │   ├── delta.aba
                     │   ├── prolog.stdout
                     │   ├── prolog.stderr
                     │   └── engine artefacts
@@ -140,6 +146,11 @@ causal/outputs/aba_learning/targetwise/
 `metrics.json` retains rule and ABA-component lists for direct inspection.
 `metrics.parquet` and root `results.parquet` contain the same approved
 diagnostic family in aggregation-safe scalar/JSON-string columns.
+
+`delta.aba` contains exactly the ordered learned delta recorded in
+`metrics.json["delta_rules"]`: solution lines absent from the frozen input BK,
+after removing generated per-row indicator clauses. It therefore includes any
+learned rules, assumptions, and contraries, but no original BK clauses.
 
 `configuration_manifest.json` pins the encoding, Prolog configuration bytes,
 learning mode, and timeouts shared by every sample below that configuration

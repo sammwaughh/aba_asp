@@ -21,6 +21,11 @@ will not be interpreted as a separate coverage or learner-performance metric.
 `check_ic`. The inherited ABA Learning engine and completed earlier experiment
 artefacts remain unchanged.
 
+**Inspection convention:** Future target-wise cells retain unique execution
+stems only internally. Their final output files use `bk.sol.aba`,
+`bk.sol.asp`, and `bk.sol_chk.asp`. Each solved cell also writes `delta.aba`,
+containing exactly the learned additions relative to its frozen input BK.
+
 ## 2026-07-22 — Close Bucket 2; expand M1.3 with supervisor-driven Bucket 3
 
 **Decision:** M1.3 Bucket 2 is **locked / closed** with two claims supported by

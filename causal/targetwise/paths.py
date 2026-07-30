@@ -53,6 +53,22 @@ class TargetCellPaths:
         return self.input_dir / "task_manifest.json"
 
     @property
+    def solution_path(self) -> Path:
+        return self.output_dir / "bk.sol.aba"
+
+    @property
+    def solution_asp_path(self) -> Path:
+        return self.output_dir / "bk.sol.asp"
+
+    @property
+    def solution_check_asp_path(self) -> Path:
+        return self.output_dir / "bk.sol_chk.asp"
+
+    @property
+    def delta_path(self) -> Path:
+        return self.output_dir / "delta.aba"
+
+    @property
     def metrics_json_path(self) -> Path:
         return self.root / "metrics.json"
 

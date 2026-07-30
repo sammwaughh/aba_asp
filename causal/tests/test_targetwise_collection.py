@@ -563,6 +563,12 @@ def test_targetwise_paths_match_fixture_configuration_sample_target_hierarchy(
     assert paths.cell("x2").output_dir == (
         paths.root / "cells" / "target-x2" / "output"
     )
+    assert paths.cell("x2").solution_path == (
+        paths.root / "cells" / "target-x2" / "output" / "bk.sol.aba"
+    )
+    assert paths.cell("x2").solution_asp_path.name == "bk.sol.asp"
+    assert paths.cell("x2").solution_check_asp_path.name == "bk.sol_chk.asp"
+    assert paths.cell("x2").delta_path.name == "delta.aba"
 
     with pytest.raises(ValueError, match="unsafe"):
         paths.cell("../escape")
@@ -576,8 +582,10 @@ def test_shared_engine_outputs_are_relocated_into_the_target_cell(
     engine_root.mkdir()
     shared_solution = engine_root / "targetwise_test.sol.aba"
     shared_asp = engine_root / "targetwise_test.sol.asp"
+    shared_checked_asp = engine_root / "targetwise_test.sol_chk.asp"
     shared_solution.write_text("x0(A) :- x1_val_1(A).\n", encoding="utf-8")
     shared_asp.write_text("x0(1).\n", encoding="utf-8")
+    shared_checked_asp.write_text("x0(1).\n:- not x0(1).\n", encoding="utf-8")
 
     _relocate_shared_outputs(
         execution_stem="targetwise_test",
@@ -587,12 +595,16 @@ def test_shared_engine_outputs_are_relocated_into_the_target_cell(
 
     assert not shared_solution.exists()
     assert not shared_asp.exists()
-    assert (output_dir / "targetwise_test.sol.aba").read_text(
+    assert not shared_checked_asp.exists()
+    assert (output_dir / "bk.sol.aba").read_text(
         encoding="utf-8"
     ) == "x0(A) :- x1_val_1(A).\n"
-    assert (output_dir / "targetwise_test.sol.asp").read_text(
+    assert (output_dir / "bk.sol.asp").read_text(
         encoding="utf-8"
     ) == "x0(1).\n"
+    assert (output_dir / "bk.sol_chk.asp").read_text(
+        encoding="utf-8"
+    ) == "x0(1).\n:- not x0(1).\n"
 
 
 def test_prepare_writes_all_targets_without_running_learner(
@@ -620,6 +632,13 @@ def test_prepare_writes_all_targets_without_running_learner(
         assert task_manifest["evaluator_only"][
             "not_serialized_into_background_knowledge_or_examples"
         ]
+        assert task_manifest["output_contract"] == {
+            "solution_aba": "output/bk.sol.aba",
+            "solution_asp": "output/bk.sol.asp",
+            "solution_check_asp": "output/bk.sol_chk.asp",
+            "learned_delta": "output/delta.aba",
+            "temporary_execution_stem_exposed": False,
+        }
     manifest = json.loads(prepared.paths.manifest_path.read_text(encoding="utf-8"))
     assert manifest["status"] == "prepared"
     assert manifest["configuration"]["id"] == "aamas2025"
@@ -776,25 +795,34 @@ def test_fake_runner_executes_all_targets_and_writes_inspection_bundle(
     for target in _VARIABLES:
         cell = prepared.paths.cell(target)
         output_files = {path.name for path in cell.output_dir.iterdir()}
-        assert any(name.endswith(".sol.aba") for name in output_files)
-        assert any(
-            name.startswith("targetwise_")
-            and name.endswith(".aba")
-            and not name.endswith(".sol.aba")
-            for name in output_files
-        )
-        assert {"prolog.stdout", "prolog.stderr"} <= output_files
+        assert {
+            "bk.sol.aba",
+            "bk.sol.asp",
+            "bk.sol_chk.asp",
+            "delta.aba",
+            "prolog.stdout",
+            "prolog.stderr",
+        } <= output_files
+        assert not any(name.startswith("targetwise_") for name in output_files)
         metrics = json.loads(cell.metrics_json_path.read_text(encoding="utf-8"))
         assert metrics["outcome"] == "solved"
         assert metrics["n_target_rules"] == 4
         assert metrics["artifact_check_status"] == "SAT"
-        assert metrics["solution_check_asp_path"].endswith(".sol_chk.asp")
+        assert metrics["solution_path"].endswith("/output/bk.sol.aba")
+        assert metrics["solution_asp_path"].endswith("/output/bk.sol.asp")
+        assert metrics["solution_check_asp_path"].endswith(
+            "/output/bk.sol_chk.asp"
+        )
+        assert metrics["delta_path"].endswith("/output/delta.aba")
+        delta_lines = cell.delta_path.read_text(encoding="utf-8").splitlines()
+        assert delta_lines == metrics["delta_rules"]
         assert metrics["body_lengths"] == [3, 3, 3, 3]
         assert "cov_asp_pos" not in metrics
         assert "body_parent_precision" not in metrics
         report = cell.report_path.read_text(encoding="utf-8")
         assert f"# Target-wise cell: {target}" in report
         assert "Final-artefact integrity audit" in report
+        assert "Learned delta:" in report
         assert "Generating parents" not in report
 
     original_calls = len(fake.calls)

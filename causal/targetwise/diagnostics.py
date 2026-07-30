@@ -8,7 +8,7 @@ from typing import Any, Mapping, Sequence
 
 import pandas as pd
 
-from causal.metrics import body_vars, parse_delta_rules, target_rule_filter
+from causal.metrics import body_vars, target_rule_filter
 from causal.targetwise.semantics import ArtifactIntegrityCheckResult
 
 
@@ -159,16 +159,14 @@ def build_targetwise_diagnostics(
     solution_path: Path | None,
     solution_asp_path: Path | None,
     solution_check_asp_path: Path | None,
+    delta_path: Path | None,
+    learned_rules: Sequence[str],
     artifact_integrity_check: ArtifactIntegrityCheckResult,
     provenance: Mapping[str, Any],
 ) -> dict[str, Any]:
     """Build the complete target-wise diagnostics document."""
 
-    learned = (
-        parse_delta_rules(solution_path)
-        if solution_path is not None and Path(solution_path).is_file()
-        else []
-    )
+    learned = list(learned_rules)
     target_rules = target_rule_filter(target, learned)
     assumptions = [rule for rule in learned if rule.startswith("assumption(")]
     contraries = [rule for rule in learned if rule.startswith("contrary(")]
@@ -208,7 +206,7 @@ def build_targetwise_diagnostics(
     )
 
     return {
-        "targetwise_metrics_schema_version": 2,
+        "targetwise_metrics_schema_version": 3,
         "experiment_id": experiment_id,
         "fixture_id": fixture_id,
         "configuration_id": configuration_id,
@@ -255,6 +253,7 @@ def build_targetwise_diagnostics(
             if solution_check_asp_path is not None
             else None
         ),
+        "delta_path": str(delta_path) if delta_path is not None else None,
         "provenance": dict(provenance),
     }
 

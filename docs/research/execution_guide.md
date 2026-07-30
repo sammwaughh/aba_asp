@@ -131,6 +131,10 @@ invocation executes the learner-produced
 `<BK>.sol_chk.asp` directly as a final-serialization integrity audit. It does
 not reconstruct those constraints around `<BK>.sol.asp`, and the resulting
 SAT/UNSAT status is not counted as an additional coverage metric.
+Within each final target cell, temporary engine stems are replaced by the
+stable names `bk.sol.aba`, `bk.sol.asp`, and `bk.sol_chk.asp`. The adjacent
+`delta.aba` contains only the learned additions relative to that cell's frozen
+`input/bk.aba`.
 
 Engine scratch files (current working directory; see troubleshooting): `asp.clingo`,
 `cc.clingo`, `cc.pl`, `clingo.stderr.log` (and/or `clingo.stderr.txt`).

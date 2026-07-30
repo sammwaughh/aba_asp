@@ -73,8 +73,11 @@ aba_asp/
   causal-fixture sample. It validates fixture/sample hashes and metadata,
   constructs symmetric binary exact-value BK and E+/E− for every variable,
   executes target cells serially, and writes inspectable per-target and
-  collection artefacts. Graph metadata is evaluator-only and no cross-target
-  graph/CPDAG decoder is applied. Configuration schema:
+  collection artefacts. Temporary engine stems are canonicalised to
+  `bk.sol.aba`, `bk.sol.asp`, and `bk.sol_chk.asp` within each target output;
+  `delta.aba` contains the learned additions relative to the frozen input BK.
+  Graph metadata is evaluator-only and no cross-target graph/CPDAG decoder is
+  applied. Configuration schema:
   `causal/configs/targetwise/m13_bucket3_binary_diamond/{aamas2025,ecai2024}/n50_seed42.yaml`;
   compact diagnostics and the final checked-ASP artefact audit are implemented
   in `causal/targetwise/diagnostics.py` and
@@ -288,9 +291,10 @@ summary. The diagnostics retain rules, ABA components, body variables/lengths,
 outcome/runtime, and one final-artefact integrity audit. The audit runs Clingo
 directly on the learner-produced `.sol_chk.asp` emitted under `check_ic`; it does not
 reconstruct example constraints around `.sol.asp` and is not treated as a separate
-coverage metric. The target-wise diagnostics omit inherited coverage panels and
-parent/graph proxies. The summary explicitly does not union learned rules into a
-graph or assess CPDAG recovery.
+coverage metric. Each target output also exposes a stable `delta.aba` containing
+exactly the learned delta already recorded in its metrics. The target-wise diagnostics
+omit inherited coverage panels and parent/graph proxies. The summary explicitly does
+not union learned rules into a graph or assess CPDAG recovery.
 
 After Samuel approves a specific experiment, add its config and evidence record, run
 the target-wise collection (or the established grid harness if the approved question

@@ -65,6 +65,7 @@ def build_target_summary(
             "solution": metrics["solution_path"],
             "solution_asp": metrics["solution_asp_path"],
             "solution_check_asp": metrics["solution_check_asp_path"],
+            "delta": metrics["delta_path"],
             "prolog_stdout": str(cell_paths.output_dir / "prolog.stdout"),
             "prolog_stderr": str(cell_paths.output_dir / "prolog.stderr"),
             "metrics": str(cell_paths.metrics_json_path),
@@ -209,6 +210,7 @@ def write_target_report(
             f"- Raw learner output: `{cell_paths.output_dir}`",
             f"- Checked ASP artefact: "
             f"`{summary['artefacts']['solution_check_asp'] or 'missing'}`",
+            f"- Learned delta: `{summary['artefacts']['delta'] or 'missing'}`",
             f"- Metrics: `{cell_paths.metrics_json_path}`",
             "",
             "## Interpretation boundary",
@@ -231,7 +233,7 @@ def write_collection_summary(
     """Write Markdown and JSON summaries across every target."""
 
     document = {
-        "summary_schema_version": 3,
+        "summary_schema_version": 4,
         "fixture": {
             "id": bundle.fixture_id,
             "semantic_hash": bundle.semantic_hash,

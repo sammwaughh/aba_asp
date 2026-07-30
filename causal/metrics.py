@@ -239,17 +239,23 @@ def _bk_path_from_sol(sol_path: Path) -> Path:
     raise ValueError(f"Cannot derive BK path from solution file: {sol_path}")
 
 
-def parse_delta_rules(sol_path: Path) -> list[str]:
+def parse_delta_rules(
+    sol_path: Path,
+    *,
+    bk_path: Path | None = None,
+) -> list[str]:
     """Return δ-rules introduced by learning (solution rules minus BK rules).
 
     ``sol_path`` should point to a ``.bk.sol.aba`` (or ``.sol.aba``) file; the
-    corresponding BK file is resolved in the same directory.
+    corresponding BK file is resolved in the same directory unless ``bk_path``
+    is supplied explicitly.  The explicit path supports runners that replace
+    temporary engine stems with canonical final artefact names.
     """
     sol_path = Path(sol_path)
     if not sol_path.is_file():
         return []
 
-    bk_path = _bk_path_from_sol(sol_path)
+    bk_path = Path(bk_path) if bk_path is not None else _bk_path_from_sol(sol_path)
     if not bk_path.is_file():
         return []
 
