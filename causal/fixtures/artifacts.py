@@ -8,7 +8,7 @@ from pathlib import Path
 import tempfile
 
 
-FIXTURE_TOOLKIT_VERSION = 1
+FIXTURE_TOOLKIT_VERSION = 2
 
 
 class ArtifactConflictError(FileExistsError):

@@ -80,6 +80,19 @@ Markov equivalence; attribution of learning-strategy failures versus information
 limitations; and possible category-count or non-discrete extensions. These are planning
 dimensions, not approved experiments or claims.
 
+**31 July immediate focus:** Fabrizio directed the next Bucket 3 work towards binary
+causal fixtures in which mutually independent non-degenerate root variables supply the
+randomness and every non-root variable is a deterministic function of its causal parents.
+For each bounded case, define the mechanism-corresponding evaluator rules, exact
+population support, and fixture-specific faithfulness result before all-target ABALearn
+runs. Then describe what ABALearn learns and why relative to what was in principle
+available. The wider 22 July dimensions remain possible but are deferred.
+
+The existing positive-stochastic diamond and its AAMAS/ECAI target-wise runs are
+preserved as pre-pivot infrastructure provenance, not current Bucket 3 claim evidence.
+No deterministic research fixture, mechanism portfolio, run matrix, or Bucket 3 claim is
+yet approved.
+
 M12x and Buckets 1–2 remain locked and will not be redone. There is no M1.4; the widened work
 remains M1.3. Primary path:
 `docs/research/milestone_plans/milestone1_high_level_path.md`. Bucket 3 planning record:
@@ -87,15 +100,17 @@ remains M1.3. Primary path:
 
 ## Immediate ChatGPT Project task
 
-Samuel will use the refreshed ChatGPT context to work collaboratively on a strong Bucket 3
-plan. ChatGPT should:
+Samuel will use the refreshed ChatGPT context to choose and analyse one deterministic
+Bucket 3 mechanism case at a time. ChatGPT should:
 
 - help Samuel formalise Fabrizio's supplied scope and separate distinct research questions;
 - surface assumptions, theory prerequisites, confounds, and trade-offs;
 - distinguish strategic learner failures from observational non-identifiability;
 - insist that Markov-equivalence and independence statements are checked against canonical
   theory before use;
-- organise candidate investigation structures for Samuel to decide.
+- preserve the separation between full mechanism truth tables, population support,
+  finite-sample support, learner-visible inputs, and learned outputs;
+- avoid predesigning a mechanism portfolio or experiment matrix.
 
 ChatGPT must not present its proposed plan as independent research validation. Exact
 missingness interventions, claim wording, fixture portfolios, strategy arms, category counts,

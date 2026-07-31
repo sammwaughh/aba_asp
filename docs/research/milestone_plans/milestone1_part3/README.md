@@ -6,15 +6,16 @@
 [`milestone1_part3_approach.md`](milestone1_part3_approach.md)
 
 **Status:** Bucket 1 **locked**. Bucket 2 **locked / closed** with Claims 1–2 from
-M13-C1/C2. Bucket 3 **planning pending** following Fabrizio's 22 July expanded-scope
-guidance. M12x and Buckets 1–2 remain fixed evidence. The proposed Bucket 2 Claim 3 was
+M13-C1/C2. Bucket 3's root-stochastic/deterministic-non-root direction is approved
+following Fabrizio's 31 July guidance; the first research fixture and claims remain
+pending. M12x and Buckets 1–2 remain fixed evidence. The proposed Bucket 2 Claim 3 was
 parked. Milestone 2 has not started.
 
 Buckets 1–2 answer, with evidence, when and how mechanism-aligned target rules were
-recovered in the locked categorical regime and what was recovered instead. Bucket 3
-broadens M1.3 towards causal-recovery capabilities and limits across targets,
-data-availability conditions, larger graph/mechanism fixtures, and
-independence/identifiability structure. Its detailed method is not yet decided.
+recovered in the locked categorical regime and what was recovered instead. Bucket 3 now
+begins with one certified deterministic-mechanism fixture at a time, using stochastic
+roots, all-target runs on one table, and a pre-run evaluator reference. Wider
+data-availability, graph-size, and data-type dimensions remain deferred.
 
 ## Primary inputs (M12x Stage-3 locked)
 
@@ -46,7 +47,7 @@ Pilot M1.2 (10 cells) remains optional provenance only.
 
 | Document | Purpose | Status |
 |----------|---------|--------|
-| [`M1.3-bucket3-claims.md`](../../../experiments/qualitative/M1.3-bucket3-claims.md) | Supervisor-driven scope and planning guardrails | **Planning pending** |
+| [`M1.3-bucket3-claims.md`](../../../experiments/qualitative/M1.3-bucket3-claims.md) | Supervisor-driven scope, immediate direction, and planning guardrails | **Direction approved; first fixture pending** |
 
 ## Bucket 2 probe records
 
@@ -65,5 +66,6 @@ Pilot M1.2 (10 cells) remains optional provenance only.
 
 **Parent index:** [milestone1-plan.md](../milestone1-plan.md)
 
-**Next:** synchronise/upload the ChatGPT context and collaboratively plan Bucket 3.
-Do not define claims, fixtures, or a run matrix before that process is approved.
+**Next:** choose the first deterministic graph, root distributions, and non-root
+functions; certify its population and evaluator reference before selecting a sample or
+running ABALearn. Do not define a fixture portfolio or run matrix in advance.

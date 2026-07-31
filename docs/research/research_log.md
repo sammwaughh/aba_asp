@@ -2,6 +2,31 @@
 
 Chronological notes on experiment progress, decisions, and milestones. Detailed evidence remains in experiment records and artefact paths cited below.
 
+## 2026-07-31 — Fabrizio review; deterministic-mechanism Bucket 3 focus
+
+- **Supervisor direction:** use non-degenerate stochastic root distributions with
+  deterministic non-root mechanisms; establish the corresponding mechanism rules before
+  running ABALearn; then describe what is learned and why across enough bounded cases to
+  support a systematic account.
+- **Scientific guardrail:** exact fixture-specific faithfulness and support checks remain
+  required. Determinism does not itself establish faithfulness or causal orientation.
+- **Preserved:** the positive-stochastic diamond and its AAMAS/ECAI target-wise outputs
+  remain pre-pivot exploratory/infrastructure artefacts, not Bucket 3 claim evidence.
+- **Deferred:** the remaining 22 July dimensions, including missingness and broader data
+  types, remain possible later Bucket 3 work.
+- **Approved infrastructure:** backwards-compatible deterministic fixture validation,
+  root-only sampling, structural-support certification, and evaluator-only mechanism
+  references. No deterministic research fixture or run is approved yet.
+- **Implemented and verified:** schema-version-2 fixture support and the generic
+  evaluator reference were added without changing the inherited learner or generated
+  evidence. The focused fixture/target-wise suite passed (`72 passed`), and both
+  preserved stochastic-diamond target-wise configurations validated successfully.
+- **Compatibility guard:** the existing schema-version-1 scientific semantic hash is
+  pinned by test, and the upgraded builder refuses legacy output bundles before writing;
+  preserved generated artefacts were not changed.
+- **Guidance and decision:** `docs/research/supervisor_guidance.md` (31 July section) and
+  `docs/research/decisions.md` (31 July entry).
+
 ## 2026-07-22 — Fabrizio scope review; M1.3 Bucket 3 pivot
 
 - **Supervisor outcome:** existing M12x and M1.3 analysis accepted as a useful

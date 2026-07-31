@@ -3,9 +3,9 @@
 **Role:** working reference for Milestone 1 Part 3 — investigating **claims** about how
 unguided ABA Learning behaves on the locked M1.2 regime.
 **Status:** Bucket 1 **locked**; Bucket 2 **locked / closed** with Claims 1–2;
-Bucket 3 **planning pending** (2026-07-22 scope expansion). M12x and Buckets 1–2
-remain fixed evidence. The method below records the completed Bucket 1/2 workflow;
-Bucket 3's detailed approach is not yet approved.
+Bucket 3's immediate deterministic-mechanism direction is approved (2026-07-31), while
+its first research fixture and claims remain pending. M12x and Buckets 1–2 remain fixed
+evidence. The earlier method below records the completed Bucket 1/2 workflow.
 **Primary path:** [`../milestone1_high_level_path.md`](../milestone1_high_level_path.md)
 **Parent index:** [`../milestone1-plan.md`](../milestone1-plan.md)
 
@@ -32,6 +32,48 @@ This section is a scope record, not an experiment design. No Bucket 3 claim list
 fixture portfolio, or run matrix is approved. See
 `docs/experiments/qualitative/M1.3-bucket3-claims.md` and the 22 July section of
 `docs/research/supervisor_guidance.md`.
+
+## 31 July 2026 immediate approach
+
+Fabrizio's follow-up review made the near-term object more specific: study what ABALearn
+does when stochasticity is confined to independent non-degenerate roots and non-root
+variables are deterministic functions of their causal parents. The remaining 22 July
+dimensions are retained but deferred.
+
+Proceed one causal fixture at a time:
+
+1. **Fix graph and mechanisms.** State the DAG, root distributions, deterministic
+   structural functions, node roles, and graph-theoretic MEC/CPDAG. These are
+   evaluator-only.
+2. **Derive the population.** Factorise the exact finite distribution, enumerate its
+   positive-probability support and structural zeros, and verify the causal Markov
+   condition and ordinary faithfulness for this fixture. Do not infer faithfulness from
+   determinism.
+3. **Fix the evaluator reference.** Record each full non-root truth table; distinguish
+   formal, population-supported, and later sample-observed parent configurations; derive
+   canonical positive-state exact-value rules. Record that root targets have no
+   deterministic causal rule over other observed variables.
+4. **Freeze one target-free sample.** Sample the stochastic roots IID with an explicit
+   seed and propagate deterministic descendants. Choose sample size only after the
+   population/support reference is understood.
+5. **Run all targets on that table.** Changing target creates a new learning task, not a
+   new sample. Keep the evaluator graph and mechanism reference outside BK and examples.
+6. **Inspect before extending.** Describe outcome, trace, learned delta, assumptions,
+   contraries, and rule bodies for every target. Compare them with the evaluator
+   reference semantically and attribute discrepancies to strategy, representation,
+   finite-sample support, population information, or observational identifiability as the
+   evidence permits.
+7. **Write the bounded case and reassess.** Only then decide which contrasting mechanism
+   is needed next. Do not precommit a fixture portfolio or run matrix.
+
+The two-node copy relation is an explicit orientation warning: dependence between
+$A$ and $B:=A$ does not identify $A\to B$ rather than $B\to A$. Whether a larger
+graph supplies orientation information is fixture-dependent and must be analysed rather
+than assumed.
+
+The existing positive-stochastic diamond and its target-wise runs are retained as
+pre-pivot exploratory/infrastructure artefacts. They are not part of the deterministic
+case sequence and do not yet support a Bucket 3 claim.
 
 ---
 
@@ -131,11 +173,11 @@ evidence-qualified; no headline-driven framing.
 ## M2-readiness
 
 Buckets 1–2 provide non-overlapping insight into the locked categorical target-wise
-regime, but Fabrizio's 22 July review requires a broader M1.3 capability/limitation
-investigation before Causal ABA integration begins. Bucket 3 must clarify target
-variation, data availability, larger structures, and observational identifiability so
-that any Milestone 2 guidance is motivated by diagnosed limitations rather than by the
-fixed M12x regime alone.
+regime. Under Fabrizio's 31 July direction, Bucket 3 first needs a mechanism-by-mechanism
+account of deterministic non-root causal models before the broader 22 July dimensions or
+Causal ABA integration are pursued. Any Milestone 2 guidance must be motivated by
+diagnosed learner behaviour and explicit information/identifiability limits rather than
+by the fixed M12x regime alone.
 
 ---
 

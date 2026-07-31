@@ -64,6 +64,28 @@ aba_asp/
 
 ## Main Python causal bridge files (`causal/`)
 
+- `fixtures/` — exact finite-discrete causal-BN fixture layer. The YAML
+  specification is authoritative. Schema version 1 retains the original
+  positive-stochastic regime; schema version 2 supports non-degenerate stochastic
+  roots with deterministic non-roots. Exact population support/CI/faithfulness,
+  standard MEC/CPDAG certificates, evaluator-only mechanism references, checked
+  BIF exports, and target-free nested-prefix samples are derived from it. This is
+  pre-learning evaluator infrastructure, not Russo-style Causal ABA or a
+  learned-rule graph decoder.
+- `targetwise/` — target-complete runner over one explicitly selected frozen
+  causal-fixture sample. It validates fixture/sample hashes and metadata,
+  constructs symmetric binary exact-value BK and E+/E− for every variable,
+  executes target cells serially, and writes inspectable per-target and
+  collection artefacts. Temporary engine stems are canonicalised to
+  `bk.sol.aba`, `bk.sol.asp`, and `bk.sol_chk.asp` within each target output;
+  `delta.aba` contains the learned additions relative to the frozen input BK.
+  Graph metadata is evaluator-only and no cross-target graph/CPDAG decoder is
+  applied. Configuration schema:
+  `causal/configs/targetwise/m13_bucket3_binary_diamond/{aamas2025,ecai2024}/n50_seed42.yaml`;
+  compact diagnostics and the final checked-ASP artefact audit are implemented
+  in `causal/targetwise/diagnostics.py` and
+  `causal/targetwise/semantics.py`; focused tests:
+  `causal/tests/test_targetwise_collection.py`.
 - `argcausaldisco_integration.py` — data → ABA pipeline.
   `generate_aba_background_knowledge()` (table → feature predicates → `.bk.aba`),
   `pick_target_variable()` (target + E+/E− split), `_extract_learned_rules()` (solution − BK).
@@ -231,33 +253,77 @@ and terminology live in
 M13-C1 and M13-C2 are completed evidence for locked Bucket 2. They are not a generic
 directory for all future M1.3 work.
 
-### Where Bucket 3 work goes once approved
+### Bucket 3 infrastructure and current boundary
 
-Bucket 3 is **planning pending**. The current sources are its planning record above,
-the 22 July section of `docs/research/supervisor_guidance.md`, and
-`docs/research/research_state.md`. There are no approved Bucket 3 code files, configs,
-cells or output grids yet.
+Bucket 3 has an approved deterministic-mechanism direction but no approved claim or
+first deterministic research fixture. The current sources are its planning record,
+the 22 and 31 July sections of `docs/research/supervisor_guidance.md`, and
+`docs/research/research_state.md`. Work proceeds one fixture at a time: define the
+graph and mechanisms, certify the exact population and support, state the
+mechanism-aligned evaluator reference, approve the fixture, then sample and run every
+target before inspecting what ABA Learning did and why.
 
-After Samuel approves a specific experiment, follow the established layout:
+Samuel has approved the pre-learning construction and certification tooling for the
+first bounded fixture:
 
-- evidence record:
-  `docs/experiments/qualitative/<experiment-id>/experiment.md`;
-- fixture or analysis code:
-  a clearly named module under `causal/experiments/`, registered through the existing
-  harness only where needed;
-- grid config:
-  `causal/configs/experiments/<experiment-id-or-arm>.yaml`;
-- focused tests:
-  `causal/tests/test_<experiment-id-or-feature>.py`;
-- generated cells:
-  `causal/outputs/aba_learning/grid/<experiment-id-or-arm>/cells/<cell-slug>/`;
-- generated cross-cell summary:
-  `causal/outputs/aba_learning/grid/<experiment-id>_summary.{md,json}` when a
-  dedicated summary generator is warranted.
+- exact fixture package and usage boundary: `causal/fixtures/` and its `README.md`;
+- authoritative binary-diamond definition:
+  `causal/fixtures/specs/m13_bucket3_binary_diamond.yaml`;
+- focused tests: `causal/tests/test_causal_fixture_*.py`;
+- derived fixture-only artefacts:
+  `causal/outputs/causal_fixtures/m13_bucket3_binary_diamond/`.
+
+These files establish the generating DAG, exact population, assumptions, standard
+MEC/CPDAG, and one target-free IID table. The diamond remains a
+**positive-stochastic pre-pivot artefact**; neither its fixture nor its generated
+outputs are deterministic-mechanism evidence. They must remain unchanged.
+
+Reusable target-wise execution infrastructure now exists. The stochastic diamond has
+already produced AAMAS/ECAI target-wise collections for exploratory inspection, but
+those collections pre-date the 31 July direction and do not constitute an approved
+deterministic Bucket 3 investigation:
+
+- implementation and usage boundary: `causal/targetwise/` and its `README.md`;
+- bounded configurations:
+  `causal/configs/targetwise/m13_bucket3_binary_diamond/{aamas2025,ecai2024}/n50_seed42.yaml`;
+- focused tests: `causal/tests/test_targetwise_collection.py`;
+- intended generated hierarchy:
+  `causal/outputs/aba_learning/targetwise/<fixture-id>/<configuration-id>/<sample-stem>/`,
+  with a configuration-level contract manifest and one
+  `cells/target-<variable>/` directory per automatically discovered target.
+
+The fixture toolkit now also supports schema version 2 sources with non-degenerate
+stochastic roots and deterministic non-roots. It samples randomness at roots only,
+checks every deterministic assignment, records structural zeros, and emits
+`mechanism_reference.json`. For binary fixtures with `xN` variable names, that
+evaluator-only reference records full truth tables, root distributions,
+formal/population-supported/sample-observed parent configurations, and canonical
+unsimplified target-value-1 rules. It is never learner-visible and exact syntax match
+is not an automatic success criterion.
+
+The runner keeps a byte-identical table copy in every cell for inspection, but passes
+only the exact-value BK and recorded E+/E− arrays to ABA Learning. It preserves raw
+engine output, compact target-wise diagnostics, target reports, and a collection
+summary. The diagnostics retain rules, ABA components, body variables/lengths,
+outcome/runtime, and one final-artefact integrity audit. The audit runs Clingo
+directly on the learner-produced `.sol_chk.asp` emitted under `check_ic`; it does not
+reconstruct example constraints around `.sol.asp` and is not treated as a separate
+coverage metric. Each target output also exposes a stable `delta.aba` containing
+exactly the learned delta already recorded in its metrics. The target-wise diagnostics
+omit inherited coverage panels and parent/graph proxies. The summary explicitly does
+not union learned rules into a graph or assess CPDAG recovery.
+
+After Samuel approves the first deterministic fixture, add its source specification,
+build and inspect its population/reference artefacts, then add the learning config and
+evidence record and run
+the target-wise collection (or the established grid harness if the approved question
+requires that structure), and update the experiment indexes. For a target-wise
+collection the generated cells belong under the hierarchy above; grid experiments
+retain `causal/outputs/aba_learning/grid/<experiment-id-or-arm>/`.
 
 Also update `docs/experiments/experiments_summary.md` and
-`docs/research/experiment_register.md`. Do not create Bucket 3 fixtures or cells merely
-from the planning dimensions; the exact investigation design must be approved first.
+`docs/research/experiment_register.md`. The wider 22 July dimensions remain deferred;
+do not create fixtures or cells merely from that list.
 
 ## Documentation / theory files (`docs/`)
 
@@ -278,8 +344,8 @@ from the planning dimensions; the exact investigation design must be approved fi
   - `qualitative/M1.3-bucket1-claims.md` — locked Bucket 1 claim record.
   - `qualitative/M1.3-bucket2-claims.md` — locked Bucket 2 claim record
     (M13-C1/C2).
-  - `qualitative/M1.3-bucket3-claims.md` — supervisor-expanded Bucket 3 planning
-    record; no approved claims/experiments yet.
+  - `qualitative/M1.3-bucket3-claims.md` — Bucket 3 direction/planning record;
+    deterministic method approved, first investigation and claims pending.
   - `qualitative/M13-C1-causal-role-underdetermination/` and
     `qualitative/M13-C2-bk-feature-order/` — analysed Bucket 2 probe records.
   - `report/findings/` — supervisor-facing milestone findings logs (`.tex`).

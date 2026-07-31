@@ -17,6 +17,7 @@ from causal.fixtures.model import (
     CausalFixture,
     FixtureValidationError,
     Mechanism,
+    POSITIVE_STOCHASTIC_REGIME,
     StateValue,
     Variable,
 )
@@ -138,6 +139,16 @@ def _semantic_payload(fixture: CausalFixture) -> dict[str, Any]:
     edges = sorted(
         fixture.edges, key=lambda edge: (node_index[edge[0]], node_index[edge[1]])
     )
+    assumptions = {
+        "causal_sufficiency_declared": (
+            fixture.assumptions.causal_sufficiency_declared
+        ),
+        "exogenous_noise": fixture.assumptions.exogenous_noise,
+        "sampling_regime": fixture.assumptions.sampling_regime,
+    }
+    if fixture.schema_version >= 2:
+        assumptions["mechanism_regime"] = fixture.assumptions.mechanism_regime
+
     return {
         "schema_version": fixture.schema_version,
         "id": fixture.fixture_id,
@@ -147,13 +158,7 @@ def _semantic_payload(fixture: CausalFixture) -> dict[str, Any]:
         ],
         "edges": [list(edge) for edge in edges],
         "mechanisms": mechanisms,
-        "assumptions": {
-            "causal_sufficiency_declared": (
-                fixture.assumptions.causal_sufficiency_declared
-            ),
-            "exogenous_noise": fixture.assumptions.exogenous_noise,
-            "sampling_regime": fixture.assumptions.sampling_regime,
-        },
+        "assumptions": assumptions,
     }
 
 
@@ -201,6 +206,10 @@ def load_fixture(path: Path | str) -> LoadedFixture:
     schema_version = raw["schema_version"]
     if isinstance(schema_version, bool) or not isinstance(schema_version, int):
         raise FixtureValidationError("fixture.schema_version must be an int")
+    if schema_version not in {1, 2}:
+        raise FixtureValidationError(
+            f"unsupported fixture schema_version: {schema_version!r}"
+        )
     fixture_id = _require_str(raw["id"], where="fixture.id")
     title = raw.get("title", fixture_id)
     title = _require_str(title, where="fixture.title")
@@ -337,10 +346,13 @@ def load_fixture(path: Path | str) -> LoadedFixture:
         )
 
     assumptions_raw = _require_mapping(raw["assumptions"], where="fixture.assumptions")
+    assumption_keys = {"causal_sufficiency", "observational_sampling"}
+    if schema_version >= 2:
+        assumption_keys.add("mechanism_regime")
     _check_keys(
         assumptions_raw,
         where="fixture.assumptions",
-        required={"causal_sufficiency", "observational_sampling"},
+        required=assumption_keys,
     )
     sufficiency_raw = _require_mapping(
         assumptions_raw["causal_sufficiency"],
@@ -372,6 +384,14 @@ def load_fixture(path: Path | str) -> LoadedFixture:
         sampling_regime=_require_str(
             sampling_raw["regime"],
             where="fixture.assumptions.observational_sampling.regime",
+        ),
+        mechanism_regime=(
+            POSITIVE_STOCHASTIC_REGIME
+            if schema_version == 1
+            else _require_str(
+                assumptions_raw["mechanism_regime"],
+                where="fixture.assumptions.mechanism_regime",
+            )
         ),
     )
 

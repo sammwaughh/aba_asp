@@ -14,12 +14,17 @@ from causal.fixtures.artifacts import (
     write_text_once,
 )
 from causal.fixtures.analysis import (
+    ExactPopulation,
     build_certificate,
     write_certificate_json,
     write_population_csv,
 )
 from causal.fixtures.interop import export_bif
 from causal.fixtures.io import LoadedFixture, load_fixture
+from causal.fixtures.reference import (
+    build_mechanism_reference,
+    write_mechanism_reference,
+)
 from causal.fixtures.sampling import write_sample_artifacts
 
 
@@ -50,7 +55,9 @@ def _write_fixture_manifest(
         "fixture": {
             "id": fixture.fixture_id,
             "title": fixture.title,
-            "model_class": "positive_finite_discrete_causal_bayesian_network",
+            "model_class": "exact_finite_discrete_causal_bayesian_network",
+            "source_schema_version": fixture.schema_version,
+            "mechanism_regime": fixture.assumptions.mechanism_regime,
             "source_path": str(loaded.source_path),
             "source_hash": loaded.source_hash,
             "source_hash_basis": "exact UTF-8 source-file bytes",
@@ -86,6 +93,7 @@ def _write_fixture_manifest(
         "sample": sample_summary,
         "boundaries": [
             "the fixture graph and certificate are evaluator-only",
+            "the mechanism reference is evaluator-only",
             "no target is selected during fixture definition or sampling",
             "no ABA Learning run is performed by this package",
             "no learned-rule-to-CPDAG decoder is asserted",
@@ -107,6 +115,7 @@ def _preflight_bundle_directory(output_dir: Path, *, n: int, seed: int) -> None:
     allowed = {
         Path("population.csv"),
         Path("certificate.json"),
+        Path("mechanism_reference.json"),
         Path("model.bif"),
         Path("fixture_manifest.json"),
         Path("samples") / f"{sample_stem}.csv",
@@ -131,6 +140,12 @@ def _preflight_bundle_directory(output_dir: Path, *, n: int, seed: int) -> None:
             raise ArtifactConflictError(
                 f"cannot validate existing bundle manifest: {manifest_path}"
             ) from exc
+        if existing_manifest.get("fixture_toolkit_version") != FIXTURE_TOOLKIT_VERSION:
+            raise ArtifactConflictError(
+                "output directory contains a bundle produced by a different fixture "
+                "toolkit version; preserve it unchanged and use a new empty output "
+                f"directory: {output_dir}"
+            )
         sample = existing_manifest.get("sample")
         if not isinstance(sample, dict) or sample.get("n") != n or sample.get("seed") != seed:
             raise ArtifactConflictError(
@@ -140,14 +155,14 @@ def _preflight_bundle_directory(output_dir: Path, *, n: int, seed: int) -> None:
 
 def certify_to_directory(
     loaded: LoadedFixture, output_dir: Path
-) -> tuple[dict[str, Any], dict[str, Path]]:
+) -> tuple[ExactPopulation, dict[str, Any], dict[str, Path]]:
     output_dir.mkdir(parents=True, exist_ok=True)
     population, certificate = build_certificate(loaded)
     population_path = write_population_csv(population, output_dir / "population.csv")
     certificate_path = write_certificate_json(
         certificate, output_dir / "certificate.json"
     )
-    return certificate, {
+    return population, certificate, {
         "population": population_path,
         "certificate": certificate_path,
     }
@@ -162,7 +177,7 @@ def build_artifact_bundle(
 ) -> dict[str, Any]:
     """Build the population/certificate, BIF, and one frozen sample."""
     _preflight_bundle_directory(output_dir, n=n, seed=seed)
-    certificate, artifacts = certify_to_directory(loaded, output_dir)
+    population, certificate, artifacts = certify_to_directory(loaded, output_dir)
 
     bif_path = output_dir / "model.bif"
     bif_report = export_bif(loaded.fixture, bif_path)
@@ -179,6 +194,16 @@ def build_artifact_bundle(
     )
     artifacts["sample_csv"] = sample_artifacts.csv_path
     artifacts["sample_manifest"] = sample_artifacts.manifest_path
+
+    mechanism_reference = build_mechanism_reference(
+        loaded,
+        population,
+        sample=sample_artifacts.batch.dataframe,
+        sample_name=sample_stem,
+    )
+    artifacts["mechanism_reference"] = write_mechanism_reference(
+        mechanism_reference, output_dir / "mechanism_reference.json"
+    )
 
     manifest_path = _write_fixture_manifest(
         loaded,
@@ -198,6 +223,8 @@ def build_artifact_bundle(
     )
     return {
         "fixture_id": loaded.fixture.fixture_id,
+        "fixture_schema_version": loaded.fixture.schema_version,
+        "mechanism_regime": loaded.fixture.assumptions.mechanism_regime,
         "output_dir": str(output_dir),
         "manifest": str(manifest_path),
         "faithfulness": certificate["assumptions_and_results"][
@@ -264,6 +291,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         result = {
             "validated": True,
             "fixture_id": loaded.fixture.fixture_id,
+            "fixture_schema_version": loaded.fixture.schema_version,
+            "mechanism_regime": loaded.fixture.assumptions.mechanism_regime,
             "source_hash": loaded.source_hash,
             "document_hash": loaded.document_hash,
             "semantic_hash": loaded.semantic_hash,
@@ -272,7 +301,13 @@ def main(argv: Sequence[str] | None = None) -> int:
             "topological_order": list(loaded.fixture.topological_order),
         }
     elif args.command == "certify":
-        certificate, artifacts = certify_to_directory(loaded, args.output_dir)
+        population, certificate, artifacts = certify_to_directory(
+            loaded, args.output_dir
+        )
+        mechanism_reference = build_mechanism_reference(loaded, population)
+        artifacts["mechanism_reference"] = write_mechanism_reference(
+            mechanism_reference, args.output_dir / "mechanism_reference.json"
+        )
         manifest_path = _write_fixture_manifest(
             loaded,
             output_dir=args.output_dir,

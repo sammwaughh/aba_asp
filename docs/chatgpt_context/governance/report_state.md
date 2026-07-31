@@ -135,9 +135,20 @@ Drafted structure:
    - planning dimensions: target variation, partial data, larger controlled graphs,
      explicit independence/Markov-equivalence analysis, graph–mechanism validity, and
      strategy-versus-information attribution;
-   - no Bucket 3 claims or experiment matrix approved yet.
+   - no Bucket 3 claim or experiment matrix approved.
 
-9. **Interim interpretation and limitations**
+9. **31 July Bucket 3 direction (approved method, not results)**
+   - start with non-degenerate stochastic roots and deterministic non-root mechanisms;
+   - state the mechanism-aligned rule reference before ABALearn, certify exact support
+     and fixture-specific ordinary faithfulness, then run every target on one frozen
+     sample and inspect what was learned and why;
+   - proceed one fixture at a time; the first deterministic research fixture is not yet
+     approved;
+   - preserve the positive-stochastic diamond and its target-wise outputs as pre-pivot
+     exploratory/infrastructure artefacts, not claim evidence;
+   - wider 22 July dimensions remain deferred rather than cancelled.
+
+10. **Interim interpretation and limitations**
    - bounded conclusion: parent recovery works in selected idealised cases but is not robust across motifs/encodings/noise;
    - does not implement full Russo-style Causal ABA; learned predictive rules are not automatically causal; continuous variables are binned; metrics need refinement beyond parent membership.
 
@@ -155,12 +166,14 @@ Required evidence for drafting / revision:
 - `docs/experiments/qualitative/M13-C1-causal-role-underdetermination/experiment.md`;
 - `docs/experiments/qualitative/M13-C2-bk-feature-order/experiment.md`;
 - `docs/research/supervisor_guidance.md` (22 July section; guidance only);
+- `docs/research/supervisor_guidance.md` (31 July section; approved current direction);
+- `docs/experiments/qualitative/M1.3-bucket3-claims.md` (planning record; no new claim);
 - `docs/report/claims_ledger.md`;
 - selected figures/tables from `docs/report/figure_table_index.md`.
 
 ### 5. Project Plan
 
-Status: `drafted`; revision required after Bucket 3 planning
+Status: `drafted`; revision required as Bucket 3 evidence develops
 
 Current source:
 
@@ -175,8 +188,9 @@ Drafted milestones (Weeks 1–13, with a Week-11 holiday):
 
 1. **Milestone 1** — report-ready account of unguided ABA Learning's capabilities and
    limitations for causal recovery. Parts 1–2 closed; M1.3 Buckets 1–2 locked;
-   Bucket 3 planning pending under Fabrizio's 22 July guidance. The widened scope
-   remains M1.3 and precedes Milestone 2. No M1.4. Primary path:
+   Bucket 3 deterministic-mechanism direction approved under Fabrizio's 31 July
+   guidance; first bounded fixture pending. The widened scope remains M1.3 and
+   precedes Milestone 2. No M1.4. Primary path:
    `milestone1_high_level_path.md`.
 2. **Milestone 2 (Weeks 3–4)** — design the bridge in which Causal ABA-style information guides ABA Learning; specify comparable outputs and metrics.
 3. **Milestone 3 (Weeks 5–6)** — implement causal-guided ABA Learning variants; compare against unguided learning; build bespoke metrics that judge whether causality (not just predictive parents) is learned.
@@ -187,8 +201,9 @@ Drafted milestones (Weeks 1–13, with a Week-11 holiday):
 The core direction remains "Causal ABA guides ABA Learning", but the current project-plan
 chapter must not imply that Milestone 2 begins immediately after the fixed-target
 categorical study. Bucket 3 first broadens the diagnosis of targets, data availability,
-larger controlled structures, and observational identifiability. The milestone schedule
-should be revised only after that plan is approved.
+larger controlled structures, and observational identifiability. The immediate
+one-fixture-at-a-time deterministic investigation now precedes those deferred dimensions;
+the milestone schedule should be revised only when evidence justifies it.
 
 Required evidence for drafting / revision:
 

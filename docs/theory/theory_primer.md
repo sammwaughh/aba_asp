@@ -75,6 +75,59 @@ Together, these assumptions allow conditional-independence evidence to be treate
 
 Important limitation: conditional-independence information may identify only a Markov equivalence class rather than a unique DAG.
 
+## **Deterministic causal mechanisms**
+
+For the current M1.3 Bucket 3 investigation, a fixture may place all exogenous
+randomness in the root variables and define every non-root variable as a
+deterministic function of its parents. In structural-equation notation,
+
+```text
+R_i = f_i(U_i)                 for a root R_i
+V_j = f_j(PA_j)               for a non-root V_j
+```
+
+where the root noise variables are mutually independent and have non-degenerate
+distributions. Equivalently, each non-root conditional-probability-table row is
+a point mass. Such a model can still satisfy causal sufficiency and the causal
+Markov factorisation. Its observational distribution generally has structural
+zeros, however, so it is not strictly positive.
+
+Determinism does not by itself prove ordinary faithfulness. A deterministic
+relation can induce additional distributional independences that are not
+d-separations in the generating DAG, including independences that arise because
+a variable becomes constant after conditioning. Therefore each concrete
+fixture must be audited against its exact induced population distribution. A
+fixture certificate should distinguish:
+
+- graph-implied d-separations;
+- statistical independences in the exact population;
+- parent configurations that are formally defined by the mechanism;
+- configurations with positive population probability; and
+- configurations observed in a particular finite sample.
+
+For discrete variables, conditional independence must be tested only on
+conditioning assignments of positive probability. Zero-probability assignments
+do not supply observational evidence about the corresponding conditional.
+
+The standard Markov-equivalence class and CPDAG remain useful references for
+what ordinary conditional-independence information can identify. They are not
+automatically the final recovery object for deterministic models: deterministic
+clusters may require a modified equivalence-class characterisation or additional
+assumptions. In particular, if the only relation is (A \to B) with (B:=A),
+observational data do not orient that two-node edge. A larger graph may orient
+it through other structure, but that must be justified fixture by fixture.
+
+Three recovery questions must remain separate:
+
+1. whether the graph is identifiable from the population distribution;
+2. whether the deterministic mechanism has a rule representation corresponding
+   to the generating parents; and
+3. whether ABA Learning recovers such rules from its encoded finite sample.
+
+The current repository implements exact fixture analysis and target-wise ABA
+Learning. It does not implement deterministic causal discovery algorithms or a
+learned-rule-to-CPDAG decoder.
+
 ## **ABA essentials**
 
 Assumption-Based Argumentation (ABA) is a structured argumentation formalism.

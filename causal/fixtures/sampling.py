@@ -17,11 +17,11 @@ from causal.fixtures.artifacts import (
     file_sha256,
     write_text_once,
 )
-from causal.fixtures.model import CausalFixture, StateValue
+from causal.fixtures.model import CausalFixture, StateValue, point_mass_index
 
 
 SAMPLER_ID = "row_major_ancestral_inverse_cdf"
-SAMPLER_VERSION = 1
+SAMPLER_VERSION = 2
 
 
 @dataclass(frozen=True)
@@ -74,9 +74,14 @@ def sample_iid(fixture: CausalFixture, *, n: int, seed: int) -> SampleBatch:
                 parent: assignment[parent] for parent in mechanism.parents
             }
             probabilities = mechanism.distribution(parent_assignment)
-            assignment[variable] = _choose_state(
-                fixture.states_of(variable), probabilities, float(rng.random())
-            )
+            states = fixture.states_of(variable)
+            certain_index = point_mass_index(probabilities)
+            if certain_index is None:
+                assignment[variable] = _choose_state(
+                    states, probabilities, float(rng.random())
+                )
+            else:
+                assignment[variable] = states[certain_index]
         records.append(
             {variable: assignment[variable] for variable in fixture.variable_names}
         )
@@ -110,6 +115,27 @@ def _state_counts(
     }
 
 
+def _verify_deterministic_assignments(
+    fixture: CausalFixture, dataframe: pd.DataFrame
+) -> int:
+    checks = 0
+    for variable in fixture.deterministic_variables:
+        mechanism = fixture.mechanism_for(variable)
+        states = fixture.states_of(variable)
+        for record in dataframe.to_dict(orient="records"):
+            parent_assignment = {parent: record[parent] for parent in mechanism.parents}
+            probabilities = mechanism.distribution(parent_assignment)
+            certain_index = point_mass_index(probabilities)
+            if certain_index is None:  # pragma: no cover - protected by classification
+                raise AssertionError(f"{variable} ceased to be deterministic")
+            if record[variable] != states[certain_index]:
+                raise AssertionError(
+                    f"sampled value for {variable} violates its deterministic mechanism"
+                )
+            checks += 1
+    return checks
+
+
 def write_sample_artifacts(
     loaded: LoadedFixture,
     *,
@@ -121,6 +147,7 @@ def write_sample_artifacts(
     """Write one deterministic CSV and its provenance/coverage manifest."""
     fixture = loaded.fixture
     batch = sample_iid(fixture, n=n, seed=seed)
+    deterministic_checks = _verify_deterministic_assignments(fixture, batch.dataframe)
     destination = Path(csv_path)
     csv_text = batch.dataframe.to_csv(index=False, lineterminator="\n")
     write_text_once(destination, csv_text)
@@ -151,6 +178,7 @@ def write_sample_artifacts(
             "csv_sha256": csv_hash,
             "csv_columns_are_causal_variables_only": True,
             "row_identifier": "one-based CSV data-row number; not a causal variable",
+            "mechanism_regime": fixture.assumptions.mechanism_regime,
         },
         "sampler": {
             "fixture_toolkit_version": FIXTURE_TOOLKIT_VERSION,
@@ -159,7 +187,14 @@ def write_sample_artifacts(
             "version": SAMPLER_VERSION,
             "rng": "numpy.random.PCG64",
             "row_major": True,
-            "one_uniform_draw_per_node_per_row": True,
+            "draw_policy": (
+                "one uniform draw for each non-degenerate local distribution "
+                "encountered; point-mass mechanisms consume no random draw"
+            ),
+            "stochastic_variables": list(fixture.stochastic_variables),
+            "deterministic_variables": list(fixture.deterministic_variables),
+            "randomness_confined_to_roots": set(fixture.stochastic_variables)
+            <= set(fixture.root_names),
             "topological_order": list(batch.topological_order),
             "output_column_order": list(fixture.variable_names),
             "parent_orders": {
@@ -180,6 +215,8 @@ def write_sample_artifacts(
             "unique_joint_states_observed": int(
                 batch.dataframe.drop_duplicates().shape[0]
             ),
+            "deterministic_assignments_verified": True,
+            "deterministic_assignment_checks": deterministic_checks,
         },
         "runtime": {
             "python": platform.python_version(),

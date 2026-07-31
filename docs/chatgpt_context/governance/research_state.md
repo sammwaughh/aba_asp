@@ -16,10 +16,16 @@ or interpret ABA Learning transformations. See `docs/report/manuscript/introduct
 The current empirical implementation remains a **target-wise ABA Learning** pipeline that
 converts a data table into ABA background predicates and learns a framework for a chosen target.
 The completed work used parent-set and expected-rule comparisons as diagnostic proxies. Under
-Fabrizio's 22 July guidance, RQ1 now broadens to ask how collections of target-wise outputs,
-target choice, data availability, graph/mechanism structure, and observational
-identifiability affect what causal structure can be recovered. This is still groundwork,
-not a proof or implementation of full causal discovery.
+Fabrizio's 31 July guidance, the immediate RQ1 investigation now studies binary causal
+fixtures with non-degenerate stochastic roots and deterministic non-root mechanisms. For
+each bounded case, the mechanism/rule reference is fixed before all-target ABALearn runs,
+after which the learned rules and traces are described against what the population and
+finite sample made available. This remains groundwork, not a proof or implementation of
+full causal discovery.
+
+The broader dimensions opened on 22 July — missing/partial data, larger controlled graphs,
+category counts, non-discrete data, and cross-target graph recovery — remain possible later
+Bucket 3 work but are deferred while this deterministic-mechanism foundation is developed.
 
 ## Research questions
 
@@ -128,6 +134,16 @@ establish causal discovery.
 - Future fixture design requires explicit graph–mechanism compatibility and verified
   marginal/conditional-independence statements. Fabrizio's 22 July fork/chain example
   remains a theory question to formalise, not a settled claim.
+- Deterministic non-root mechanisms introduce structural zero-probability assignments.
+  Root stochasticity and DAG factorisation do not by themselves establish ordinary
+  faithfulness; every population fixture requires an exact, fixture-specific audit.
+- Mechanism recoverability, predictive rule recovery, and graph-orientation recovery are
+  distinct. In particular, the two-node copy relation (A \to B, B:=A) supports symmetric
+  observational prediction and does not identify its direction without additional
+  assumptions or graph structure.
+- A future deterministic fixture must separate its full truth table, population-supported
+  parent configurations, sample-observed configurations, and learner-visible inputs.
+  Root targets have no deterministic causal rule over other observed variables.
 - “Missing data” is not yet operationalised; missing rows, cell values, variables, and
   combinations are distinct interventions.
 
@@ -148,8 +164,9 @@ Expanded Approach:
   inspection **18/18** (2026-07-20). Record: `docs/experiments/qualitative/M1.2-expanded.md`.
   Inspection: `M1.2-expanded-cell-inspection.md`.
 - **M1.3** — **in progress:** Bucket 1 **written / locked**; Bucket 2
-  **locked / closed** with Claims 1–2 from M13-C1/C2; Bucket 3 **planning pending**
-  under Fabrizio's 22 July expanded-scope guidance.
+  **locked / closed** with Claims 1–2 from M13-C1/C2; Bucket 3's immediate
+  deterministic-mechanism direction is approved, but its first research fixture and
+  claims remain pending under Fabrizio's 31 July guidance.
   Method: `milestone1_part3_approach.md`. Records:
   `docs/experiments/qualitative/M1.3-bucket1-claims.md` (locked);
   `docs/experiments/qualitative/M1.3-bucket2-claims.md` (locked);

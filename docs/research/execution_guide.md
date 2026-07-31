@@ -7,8 +7,9 @@ guide covers verified execution workflows only; it does not duplicate environmen
 (see [`environment_setup.md`](environment_setup.md)) and does not propose new experiments
 (see "Relationship to future experiments").
 
-Scope reminder: what runs today is **parent-set recovery via ABA Learning** (does the
-learned rule body for target `xk` match `xk`'s true parents). Russo-style Causal ABA
+Scope reminder: what runs today is **target-wise ABA Learning over tabular data**, with
+learned-rule inspection and, in older grid infrastructure, parent-set diagnostics.
+Russo-style Causal ABA
 (`arr_xy`/`noe_xy`/independence/d-separation) is **not implemented** — see
 [`repo_map.md`](repo_map.md).
 
@@ -144,6 +145,44 @@ Grid run, under `causal/outputs/aba_learning/grid/<experiment_id>/cells/<cell_di
 so dirs are named after the DGP, e.g. `cells/m11_binary_A/`, `cells/m12_sep/`):
 `metrics.json`, `*.parquet`, run logs, per-cell BK/solution artefacts. Summaries:
 `causal/experiments/figures/<experiment_id>_summary.{md,png}`.
+
+## Exact causal-fixture workflow
+
+The fixture source is authoritative and must be approved before sampling or learning.
+Validate a proposed source without writing generated artefacts:
+
+```bash
+python -m causal.fixtures.cli validate \
+  --fixture causal/fixtures/specs/<fixture-id>.yaml
+```
+
+After approval, build the exact population, certificate, BIF interoperability file,
+evaluator-only mechanism reference, and one target-free sample:
+
+```bash
+python -m causal.fixtures.cli build \
+  --fixture causal/fixtures/specs/<fixture-id>.yaml \
+  --output-dir causal/outputs/causal_fixtures/<fixture-id> \
+  --n <n> --seed 42
+```
+
+Schema version 1 is the preserved positive-stochastic regime. Schema version 2,
+`root_stochastic_deterministic_nonroots`, requires non-degenerate stochastic roots and
+point-mass conditional rows for every non-root. The sampler draws root values and
+evaluates non-roots deterministically. The generated certificate reports exact support,
+structural zeros, conditional independences, ordinary faithfulness, and the standard
+MEC/CPDAG. `mechanism_reference.json` is evaluator-only and must not be copied into ABA
+Learning inputs.
+
+Do not rebuild the existing `m13_bucket3_binary_diamond` output directory. Its source,
+sample, and target-wise AAMAS/ECAI outputs are preserved positive-stochastic pre-pivot
+artefacts. Use a new fixture ID and empty output directory for an approved deterministic
+fixture.
+
+The target-wise run follows only after the built population/reference has been
+inspected and the fixture approved. Its configuration selects one frozen sample and
+one learner configuration; the runner automatically executes every variable as target.
+See `causal/targetwise/README.md` for the validated commands and output hierarchy.
 
 ## Optional next checks (not yet validated)
 

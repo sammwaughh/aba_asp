@@ -2,6 +2,38 @@
 
 Recorded decisions that affect experiment direction. Evidence and interpretation remain in experiment records.
 
+## 2026-07-31 — Bucket 3 immediate focus: deterministic mechanisms with root noise
+
+**Decision:** Develop Bucket 3 one mechanism case at a time using binary causal models
+whose root variables have mutually independent non-degenerate distributions and whose
+non-root variables are deterministic functions of their causal parents. Before any
+ABALearn run, derive the population, audit ordinary faithfulness for that exact fixture,
+and record an evaluator-only mechanism/rule reference.
+
+The reference distinguishes the complete structural truth table, population-supported
+parent configurations, configurations observed in the frozen finite sample, and
+canonical positive-state exact-value rules. Root targets are recorded as having no
+deterministic causal rule over other observed variables. Exact rule-string equality is
+not adopted as an automatic recovery verdict.
+
+**Preservation:** The existing positive-stochastic binary diamond, its generated fixture
+artefacts, configurations, and target-wise runs remain unchanged as pre-pivot
+exploratory/infrastructure material. They do not yet support a Bucket 3 claim. M12x and
+Buckets 1–2 remain locked.
+
+**Sequencing:** The wider 22 July dimensions remain within the possible Bucket 3 scope
+but are deferred. No deterministic research fixture, experiment matrix, or claim is
+approved by this decision. The next research decision is the graph, root probabilities,
+and deterministic functions for one first fixture.
+
+**Open theory point:** For (A \to B\) with (B := A) and no other variables,
+observational dependence does not orient the edge. Whether a copy edge can be oriented
+inside a larger graph depends on the additional structure and is not settled here.
+
+**Implementation boundary:** Extend only the generic fixture/certificate/sampling
+infrastructure and documentation. Do not change inherited ABALearn semantics or create
+the first deterministic research fixture without a further Samuel decision.
+
 ## 2026-07-30 — Target-wise checked ASP retained only as an artefact audit
 
 **Decision:** For causal-fixture target-wise runs, retain outcome/failure/runtime,

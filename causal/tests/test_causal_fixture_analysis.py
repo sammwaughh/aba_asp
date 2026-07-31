@@ -13,6 +13,7 @@ from causal.fixtures.analysis import (
     graph_d_separated,
 )
 from causal.fixtures.io import default_diamond_spec_path, load_fixture
+from causal.tests.fixture_test_utils import write_root_stochastic_deterministic_and
 
 
 EXPECTED_DIAMOND_JOINT = {
@@ -238,3 +239,35 @@ assumptions:
     assert certificate["assumptions_and_results"]["ordinary_faithfulness"][
         "faithful"
     ] is True
+
+
+def test_deterministic_and_population_support_and_faithfulness(
+    tmp_path: Path,
+) -> None:
+    loaded = load_fixture(write_root_stochastic_deterministic_and(tmp_path))
+    population, certificate = build_certificate(loaded)
+
+    support = {
+        row.assignment: row.probability
+        for row in population.rows
+        if row.probability > 0
+    }
+    assert support == {
+        (0, 0, 0): Fraction(3, 50),
+        (0, 1, 0): Fraction(7, 50),
+        (1, 0, 0): Fraction(6, 25),
+        (1, 1, 1): Fraction(14, 25),
+    }
+    assert certificate["population"]["support_size"] == 4
+    assert certificate["population"]["structural_zero_count"] == 4
+    assert certificate["population"]["full_support"] is False
+    assert certificate["mechanisms"]["randomness_confined_to_roots"] is True
+    assert certificate["mechanisms"]["stochastic_variables"] == ["x0", "x1"]
+    assert certificate["mechanisms"]["deterministic_variables"] == ["x2"]
+    assert certificate["conditional_independence_audit"][
+        "population_independences"
+    ] == [{"x": "x0", "y": "x1", "conditioning": []}]
+    assert certificate["assumptions_and_results"]["ordinary_faithfulness"][
+        "faithful"
+    ] is True
+    assert certificate["graph"]["markov_equivalence_class"]["size"] == 1

@@ -8,6 +8,67 @@ Supervisors: **Fabrizio** (primary) and **Francesco**.
 
 ---
 
+## Meeting with Fabrizio (31 July 2026 — deterministic-mechanism focus)
+
+Context: Samuel discussed the proposed positive-stochastic Bucket 3 fixture approach
+with Fabrizio. These notes record Samuel's account of the meeting. They are supervisor
+guidance, not experimental evidence or settled report claims.
+
+### Core points
+
+- Do not make stochastic conditional mechanisms the organising issue for the next
+  investigation. It is permissible for stochasticity to enter through mutually
+  independent root variables while non-root variables are deterministic functions of
+  their causal parents.
+- Root variables may have different non-degenerate Bernoulli distributions. An
+  observational table is sampled through these roots and the deterministic mechanisms
+  are then propagated through the DAG.
+- Such a construction can, for an appropriate graph and functions, yield a population
+  that is faithful to its DAG. Faithfulness must nevertheless be checked for the
+  particular fixture rather than inferred from determinism or factorisation alone.
+- Before ABALearn is run, state which deterministic mechanism rules correspond to the
+  generating DAG and which of them are in principle supported by the observational
+  population.
+- A two-variable copy relation, (A \to B\) with (B := A), does not by itself identify
+  the orientation from observational dependence. Whether additional structure in a
+  larger DAG can orient such an edge depends on that larger graph and remains a theory
+  question rather than a blanket premise.
+- The immediate deliverable is a clear description of what ABALearn does for controlled
+  deterministic mechanisms: what it learns, why, and how the result relates to what was
+  in principle learnable.
+- Analyse enough mechanisms, one bounded case at a time, to support a systematic account
+  of recurring behaviour. The mechanism set is not fixed in advance.
+
+### Agreed project consequence
+
+The immediate Bucket 3 focus is now **root-stochastic, non-root-deterministic** binary
+causal fixtures. The broader 22 July dimensions remain possible later work but are
+deferred while this foundation is developed. M12x and Buckets 1–2 remain closed and
+locked; Milestone 2 has not started.
+
+The existing positive-stochastic diamond specification and its target-wise runs are
+preserved as pre-pivot exploratory/infrastructure artefacts. They are not silently
+reinterpreted as deterministic evidence and do not yet support a Bucket 3 claim.
+
+### Approved pre-run reference boundary
+
+For each future deterministic fixture, maintain an evaluator-only reference containing:
+
+- root distributions and complete non-root truth tables;
+- formal, population-supported, and finite-sample-observed parent configurations;
+- canonical exact-value rules for target value (1), where the current binary encoding
+  applies;
+- an explicit statement that a root target has no deterministic causal rule over other
+  observed variables; and
+- a warning that semantic equivalence, not exact rule-string equality alone, governs
+  later interpretation.
+
+This reference must not enter learner-visible background knowledge or examples. No first
+deterministic research fixture, learning configuration, run, or Bucket 3 claim was
+approved by this meeting record.
+
+---
+
 ## Meeting with Fabrizio (22 July 2026 — expanded M1.3 scope)
 
 Context: Samuel presented the completed M12x analysis and M1.3 Bucket 1/2 findings.

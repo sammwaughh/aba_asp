@@ -15,10 +15,10 @@ inherited ABALearn engine as published, with no Causal ABA integrations (those a
 Milestone 2 and beyond).
 
 The completed M1.1/M1.2 and M1.3 Buckets 1–2 answer this first for selected targets in
-small categorical fixtures. Fabrizio's 22 July review expands M1.3 to investigate target
-variation, partial data availability, larger controlled structures, explicit
-independence/Markov-equivalence properties, and attribution of strategy failures versus
-information limitations.
+small categorical fixtures. Fabrizio's 22 July review expanded M1.3; his 31 July review
+set the immediate method as one root-stochastic, deterministic-non-root binary mechanism
+case at a time, with expected mechanism rules fixed before ABALearn. The other expanded
+dimensions remain possible later work.
 
 Framing rules for the whole milestone:
 
@@ -46,6 +46,10 @@ Framing rules for the whole milestone:
   decided during planning.
 - Future fixtures must document graph–mechanism validity, support, expected outputs,
   and relevant marginal/conditional-independence and Markov-equivalence properties.
+- The immediate fixture regime uses mutually independent non-degenerate stochastic roots
+  and deterministic non-root functions. Each fixture needs a full truth table, exact
+  support/faithfulness certificate, and evaluator-only canonical rule reference before a
+  sample or learning run is selected.
 - There is **no M1.4**; this supervisor-driven expansion remains M1.3.
 
 ## Working Method
@@ -87,7 +91,7 @@ Pilot (historical): [`milestone1_part2/milestone1_part2_config_comparison.md`](m
 
 Configs: ECAI (`configs/ecai2024_config.pl`), AAMAS (`configs/aamas2025_config.pl`).
 
-## Part 3: Causal-recovery capabilities and limits (M1.3) — **in progress** (Buckets 1–2 locked; Bucket 3 planning)
+## Part 3: Causal-recovery capabilities and limits (M1.3) — **in progress** (Buckets 1–2 locked; Bucket 3 first fixture pending)
 
 Planning folder: [`milestone1_part3/`](milestone1_part3/README.md)  
 Approach (method): [`milestone1_part3/milestone1_part3_approach.md`](milestone1_part3/milestone1_part3_approach.md)  
@@ -96,12 +100,13 @@ Bucket 1 (**locked**): `docs/experiments/qualitative/M1.3-bucket1-claims.md`
 (TeX: `docs/report/findings/milestone1_part3_bucket1_claims.tex`)  
 Bucket 2 (**locked / closed; two claims**): `docs/experiments/qualitative/M1.3-bucket2-claims.md`
 (TeX: `docs/report/findings/milestone1_part3_bucket2_claims.tex`)
-Bucket 3 (**planning pending**):
+Bucket 3 (**direction approved; first fixture pending**):
 `docs/experiments/qualitative/M1.3-bucket3-claims.md`
 
 Buckets 1–2 turn the locked M12x inspection and M13-C1/C2 controls into six
-evidence-backed claims. Bucket 3 expands the scope under Fabrizio's 22 July guidance;
-its claim list, fixtures, and run matrix are not yet approved. Prior provisional claim
+evidence-backed claims. Bucket 3 now follows Fabrizio's 31 July deterministic-mechanism
+direction one case at a time; its first research fixture, claim list, and any later
+comparative design are not yet approved. Prior provisional claim
 drafting from earlier M12x grids remains **withdrawn** (2026-07-20) and must not be
 reused.
 
@@ -123,4 +128,5 @@ After M1.3, consolidate findings into a Milestone 1 conclusion:
 5. which diagnosed limitations motivate Causal ABA-style guidance in Milestone 2.
 
 **Current progress:** Part 1 closed. Part 2 (M12x) **closed**. Part 3 (M1.3) **in
-progress** — Buckets 1–2 locked; Bucket 3 planning pending. No Part 4 / M1.4.
+progress** — Buckets 1–2 locked; Bucket 3 deterministic-mechanism direction approved
+and first fixture pending. No Part 4 / M1.4.

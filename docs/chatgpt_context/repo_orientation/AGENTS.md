@@ -52,6 +52,14 @@ targets, data-availability conditions, graph/mechanism structures, and strategie
 separate strategy failures from information/identifiability limits. This remains
 groundwork for the Causal-ABA-guided bridge (Milestone 2), which has not started.
 
+Fabrizio's 31 July guidance sets the immediate Bucket 3 method: investigate one binary
+root-stochastic, non-root-deterministic causal fixture at a time. Fix the graph, root
+distributions, deterministic truth tables, population support, exact ordinary-faithfulness
+audit, and evaluator-only canonical rule reference before running all targets on one
+frozen table. The wider 22 July dimensions remain possible but are deferred. Do not infer
+faithfulness from determinism, expose evaluator references to the learner, or create a
+fixture portfolio/run matrix in advance.
+
 **Primary working path:** `docs/research/milestone_plans/milestone1_high_level_path.md`  
 **Expanded M1.2 Approach:** `docs/research/milestone_plans/milestone1_part2/milestone1_part2_expanded_approach.md`  
 **M1.3 Approach:** `docs/research/milestone_plans/milestone1_part3/milestone1_part3_approach.md`
@@ -71,8 +79,10 @@ Key experiment records:
   Probe records: `M13-C1-causal-role-underdetermination/experiment.md`;
   `M13-C2-bk-feature-order/experiment.md`.
 - `docs/experiments/qualitative/M1.3-bucket3-claims.md` — M1.3 Bucket 3
-  (**planning pending**, opened from Fabrizio's 22 July guidance). Do not invent claims,
-  fixtures, or a run matrix before the theory/evidence review and Samuel's approval.
+  (**deterministic-mechanism direction approved; first fixture and claims pending**).
+  Preserve the pre-pivot positive-stochastic diamond and its runs as infrastructure
+  provenance; do not reinterpret them as deterministic claim evidence. Do not invent a
+  research fixture, claim, or run matrix before Samuel's approval.
   Approach: `milestone1_part3/milestone1_part3_approach.md`. There is no M1.4;
   larger controlled fixtures may be used in Bucket 3, while large-scale / bnlearn
   evaluation remains deferred.

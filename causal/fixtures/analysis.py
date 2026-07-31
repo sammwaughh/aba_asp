@@ -560,6 +560,10 @@ def build_certificate(
             "graph-implied conditional independence; this indicates an analyser bug"
         )
     faithful = not markov_violations and not extra_independences
+    support_rows = tuple(row for row in population.rows if row.probability > 0)
+    structural_zero_rows = tuple(row for row in population.rows if row.probability == 0)
+    minimum_row = min(population.rows, key=lambda row: row.probability)
+    minimum_positive_row = min(support_rows, key=lambda row: row.probability)
 
     member_roles = [_node_roles(fixture.variable_names, member) for member in mec.members]
     possible_roles = {
@@ -572,7 +576,6 @@ def build_certificate(
         if len(roles) == 1
     }
 
-    minimum_row = min(population.rows, key=lambda row: row.probability)
     certificate: dict[str, Any] = {
         "certificate_schema_version": 1,
         "generator": {
@@ -609,6 +612,10 @@ def build_certificate(
                 "remaining variables"
             ),
             "ci_identity": "P(x,y,s)P(s) = P(x,s)P(y,s)",
+            "zero_mass_conditioning_assignments": (
+                "the cross-product identity is vacuously satisfied when P(s)=0; "
+                "only positive-mass conditioning assignments constrain CI"
+            ),
             "faithfulness_scope": "ordinary observational DAG faithfulness",
             "learner_visible": False,
         },
@@ -650,6 +657,12 @@ def build_certificate(
                 "identified_by_this_population_ci_structure": (
                     faithful and fixture.assumptions.causal_sufficiency_declared
                 ),
+                "deterministic_relation_boundary": (
+                    "this is the ordinary graph-theoretic CI-based CPDAG. For fixtures "
+                    "with deterministic variables, functional constraints may change "
+                    "what is identifiable beyond ordinary CI information; no such "
+                    "extended recovery object is asserted here."
+                ),
             },
             "roles_across_mec": {
                 "possible": possible_roles,
@@ -657,12 +670,31 @@ def build_certificate(
             },
         },
         "mechanisms": {
+            "regime": fixture.assumptions.mechanism_regime,
             "strictly_positive_local_probabilities": all(
                 probability > 0
                 for mechanism in fixture.mechanisms
                 for row in mechanism.rows
                 for probability in row.probabilities
             ),
+            "root_variables": list(fixture.root_names),
+            "stochastic_variables": list(fixture.stochastic_variables),
+            "deterministic_variables": list(fixture.deterministic_variables),
+            "randomness_confined_to_roots": set(fixture.stochastic_variables)
+            <= set(fixture.root_names),
+            "by_variable": [
+                {
+                    "variable": variable,
+                    "role": "root" if variable in fixture.root_names else "non_root",
+                    "kind": (
+                        "deterministic"
+                        if fixture.mechanism_for(variable).deterministic
+                        else "stochastic"
+                    ),
+                    "parents": list(fixture.parents_of(variable)),
+                }
+                for variable in fixture.variable_names
+            ],
             "edge_activity": [
                 _edge_activity_document(result) for result in edge_activity
             ],
@@ -674,12 +706,23 @@ def build_certificate(
         },
         "population": {
             "number_of_joint_states": len(population.rows),
+            "support_size": len(support_rows),
+            "structural_zero_count": len(structural_zero_rows),
+            "structural_zero_assignments": [
+                population.assignment_mapping(row) for row in structural_zero_rows
+            ],
             "normalised": population.total_probability == Fraction(1, 1),
             "total_probability": fraction_text(population.total_probability),
             "full_support": all(row.probability > 0 for row in population.rows),
             "minimum_joint_probability": fraction_text(minimum_row.probability),
             "minimum_joint_probability_assignment": dict(
                 zip(fixture.variable_names, minimum_row.assignment)
+            ),
+            "minimum_positive_joint_probability": fraction_text(
+                minimum_positive_row.probability
+            ),
+            "minimum_positive_joint_probability_assignment": dict(
+                zip(fixture.variable_names, minimum_positive_row.assignment)
             ),
         },
         "assumptions_and_results": {
@@ -691,9 +734,9 @@ def build_certificate(
                 ),
                 "exogenous_noise": fixture.assumptions.exogenous_noise,
                 "basis": (
-                    "the fixture declares one mutually independent private exogenous "
-                    "noise variable per observed node; this is not inferred from the "
-                    "CPTs or observational population"
+                    "the fixture's exogenous-noise structure is declared in its "
+                    "authoritative specification; causal sufficiency is not inferred "
+                    "from CPTs or the observational population"
                 ),
                 "observationally_testable_from_joint_distribution": False,
             },
@@ -701,7 +744,7 @@ def build_certificate(
                 "status": "verified",
                 "factorisation_basis": (
                     "the joint was derived as the product of the validated local "
-                    "CPTs over the DAG"
+                    "CPTs over the DAG, including point-mass CPTs where declared"
                 ),
                 "exact_graph_implied_ci_violations": len(markov_violations),
             },
@@ -712,6 +755,7 @@ def build_certificate(
                     "the exact population CI set equals the graph d-separation set "
                     "over the exhaustive singleton-pair audit"
                 ),
+                "not_implied_by_determinism_or_factorisation": True,
                 "why_singleton_audit_is_sufficient": (
                     "DAG factorisation establishes the global Markov direction. A DAG "
                     "d-separates two variable sets exactly when it d-separates every "

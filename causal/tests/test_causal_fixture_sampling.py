@@ -10,6 +10,7 @@ import pytest
 from causal.fixtures.io import default_diamond_spec_path, load_fixture
 from causal.fixtures.artifacts import ArtifactConflictError
 from causal.fixtures.sampling import sample_iid, write_sample_artifacts
+from causal.tests.fixture_test_utils import write_root_stochastic_deterministic_and
 
 
 def test_seed_42_golden_prefix_and_summary() -> None:
@@ -97,3 +98,54 @@ def test_invalid_sample_size_is_rejected(n) -> None:
     fixture = load_fixture(default_diamond_spec_path()).fixture
     with pytest.raises(ValueError, match="positive integer"):
         sample_iid(fixture, n=n, seed=42)
+
+
+def test_deterministic_descendants_consume_no_random_draws(tmp_path: Path) -> None:
+    loaded = load_fixture(write_root_stochastic_deterministic_and(tmp_path))
+    frame = sample_iid(loaded.fixture, n=8, seed=42).dataframe
+
+    rng = np.random.Generator(np.random.PCG64(42))
+    expected_roots = []
+    for _ in range(8):
+        x0 = 0 if float(rng.random()) < 0.2 else 1
+        x1 = 0 if float(rng.random()) < 0.3 else 1
+        expected_roots.append([x0, x1])
+
+    assert frame[["x0", "x1"]].values.tolist() == expected_roots
+    assert frame["x2"].tolist() == [x0 & x1 for x0, x1 in expected_roots]
+
+
+def test_deterministic_regime_retains_nested_seed_prefixes(tmp_path: Path) -> None:
+    fixture = load_fixture(
+        write_root_stochastic_deterministic_and(tmp_path)
+    ).fixture
+    small = sample_iid(fixture, n=8, seed=42).dataframe
+    large = sample_iid(fixture, n=20, seed=42).dataframe
+
+    pd.testing.assert_frame_equal(small, large.iloc[:8].reset_index(drop=True))
+
+
+def test_deterministic_sample_manifest_records_root_only_randomness(
+    tmp_path: Path,
+) -> None:
+    loaded = load_fixture(write_root_stochastic_deterministic_and(tmp_path))
+    artifacts = write_sample_artifacts(
+        loaded,
+        n=10,
+        seed=42,
+        csv_path=tmp_path / "n10_seed42.csv",
+    )
+    manifest = json.loads(artifacts.manifest_path.read_text(encoding="utf-8"))
+
+    assert manifest["sample"]["mechanism_regime"] == (
+        "root_stochastic_deterministic_nonroots"
+    )
+    assert manifest["sampler"]["stochastic_variables"] == ["x0", "x1"]
+    assert manifest["sampler"]["deterministic_variables"] == ["x2"]
+    assert manifest["sampler"]["randomness_confined_to_roots"] is True
+    assert manifest["empirical_table_summary"][
+        "deterministic_assignments_verified"
+    ] is True
+    assert manifest["empirical_table_summary"][
+        "deterministic_assignment_checks"
+    ] == 10

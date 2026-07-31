@@ -9,6 +9,7 @@ import yaml
 
 from causal.fixtures.io import default_diamond_spec_path, load_fixture
 from causal.fixtures.model import FixtureValidationError
+from causal.tests.fixture_test_utils import write_root_stochastic_deterministic_and
 
 
 def _mutated_spec(tmp_path: Path, mutate) -> Path:
@@ -39,7 +40,9 @@ def test_loads_approved_binary_diamond_exactly() -> None:
     )
     assert loaded.source_hash.startswith("sha256:")
     assert loaded.document_hash.startswith("sha256:")
-    assert loaded.semantic_hash.startswith("sha256:")
+    assert loaded.semantic_hash == (
+        "sha256:6650750a67109c41e3458bfde52b38634e905ee6d24b3ff6e5bc3e9b818ee299"
+    )
 
 
 def test_yaml_floats_are_rejected_to_preserve_exactness(tmp_path: Path) -> None:
@@ -132,4 +135,71 @@ def test_mixed_state_types_are_rejected_for_type_safe_csv_round_trips(
         lambda raw: raw["variables"][0].update({"states": [0, "one"]}),
     )
     with pytest.raises(FixtureValidationError, match="homogeneous type"):
+        load_fixture(path)
+
+
+def test_schema2_accepts_stochastic_roots_and_deterministic_nonroots(
+    tmp_path: Path,
+) -> None:
+    loaded = load_fixture(write_root_stochastic_deterministic_and(tmp_path))
+    fixture = loaded.fixture
+
+    assert fixture.schema_version == 2
+    assert (
+        fixture.assumptions.mechanism_regime
+        == "root_stochastic_deterministic_nonroots"
+    )
+    assert fixture.root_names == ("x0", "x1")
+    assert fixture.stochastic_variables == ("x0", "x1")
+    assert fixture.deterministic_variables == ("x2",)
+
+
+def test_schema1_remains_strictly_positive(tmp_path: Path) -> None:
+    path = _mutated_spec(
+        tmp_path,
+        lambda raw: raw["mechanisms"]["x0"]["cpt"][0].update(
+            {"probabilities": [1, 0]}
+        ),
+    )
+    with pytest.raises(FixtureValidationError, match="strictly positive"):
+        load_fixture(path)
+
+
+def test_schema2_requires_explicit_mechanism_regime(tmp_path: Path) -> None:
+    path = write_root_stochastic_deterministic_and(tmp_path)
+    raw = yaml.safe_load(path.read_text(encoding="utf-8"))
+    del raw["assumptions"]["mechanism_regime"]
+    path.write_text(yaml.safe_dump(raw, sort_keys=False), encoding="utf-8")
+
+    with pytest.raises(FixtureValidationError, match="mechanism_regime"):
+        load_fixture(path)
+
+
+def test_schema2_rejects_degenerate_roots(tmp_path: Path) -> None:
+    path = write_root_stochastic_deterministic_and(tmp_path)
+    raw = yaml.safe_load(path.read_text(encoding="utf-8"))
+    raw["mechanisms"]["x0"]["cpt"][0]["probabilities"] = [0, 1]
+    path.write_text(yaml.safe_dump(raw, sort_keys=False), encoding="utf-8")
+
+    with pytest.raises(FixtureValidationError, match="root mechanism.*strictly positive"):
+        load_fixture(path)
+
+
+def test_schema2_rejects_stochastic_nonroot_mechanisms(tmp_path: Path) -> None:
+    path = write_root_stochastic_deterministic_and(tmp_path)
+    raw = yaml.safe_load(path.read_text(encoding="utf-8"))
+    raw["mechanisms"]["x2"]["cpt"][0]["probabilities"] = ["1/2", "1/2"]
+    path.write_text(yaml.safe_dump(raw, sort_keys=False), encoding="utf-8")
+
+    with pytest.raises(FixtureValidationError, match="x2 must be deterministic"):
+        load_fixture(path)
+
+
+def test_schema2_rejects_negative_probabilities(tmp_path: Path) -> None:
+    path = write_root_stochastic_deterministic_and(tmp_path)
+    raw = yaml.safe_load(path.read_text(encoding="utf-8"))
+    raw["mechanisms"]["x2"]["cpt"][0]["probabilities"] = [-1, 2]
+    path.write_text(yaml.safe_dump(raw, sort_keys=False), encoding="utf-8")
+
+    with pytest.raises(FixtureValidationError, match="non-negative"):
         load_fixture(path)

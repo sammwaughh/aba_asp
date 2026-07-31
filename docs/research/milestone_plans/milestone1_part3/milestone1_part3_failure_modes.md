@@ -1,7 +1,8 @@
 # Milestone 1, Part 3 (M1.3) — Recovery patterns and limits
 
 **Status:** historical Bucket 1/2 detail plan. Bucket 1 and Bucket 2 are now
-**locked**; Bucket 3 planning follows Fabrizio's 22 July scope expansion.
+**locked**; Bucket 3's current direction is the 31 July root-stochastic,
+deterministic-non-root approach recorded in `milestone1_part3_approach.md`.
 **Primary path:** [`../milestone1_high_level_path.md`](../milestone1_high_level_path.md)  
 **Parent index:** [`../milestone1-plan.md`](../milestone1-plan.md)  
 **Approach (method):** [`milestone1_part3_approach.md`](milestone1_part3_approach.md)  
@@ -12,7 +13,7 @@ Filename retained for continuity; the work is **not** required to use a fixed �
 mode” taxonomy. Prefer plain-English descriptions of recovery patterns and limits.
 
 The method below describes the completed M12x-centred Bucket 1/2 phase. It is not the
-approved plan for Bucket 3. See
+current method for Bucket 3. See
 `docs/experiments/qualitative/M1.3-bucket3-claims.md` and the current part-3
 `README.md` before using this file as a next-step guide.
 

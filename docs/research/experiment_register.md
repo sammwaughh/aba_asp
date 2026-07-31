@@ -35,7 +35,7 @@ The earlier n=100 scaled attempt was cut and is not part of the canonical experi
 | M11 | — | m1.1 Parent-position and representation-order control | analysed (Stages 0–7; ablations + greedy comparator) |
 | M12 | — | m1.2 Published-configuration comparison (ASP-ABAlearnB / Greedy ABA Learning) | analysed (Stages 0–3: 10-cell grid + full cell inspection / failure-mode taxonomy) |
 | M12x | — | m1.2 expanded U1–U7 (ECAI/AAMAS; val-only BK; 18 cells) | closed / analysed (18/18 Stage-3) |
-| M13 | — | m1.3 capabilities and limits of unguided ABA Learning for causal recovery | in progress (Buckets 1–2 locked; Bucket 3 planning pending) |
+| M13 | — | m1.3 capabilities and limits of unguided ABA Learning for causal recovery | in progress (Buckets 1–2 locked; Bucket 3 deterministic direction approved; first investigation pending) |
 | M13-C1 | M13 | Causal-role underdetermination under learner-input equivalence | analysed |
 | M13-C2 | M13 | Comparative sensitivity to BK feature-block order | analysed |
 
@@ -275,25 +275,40 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
 ### M13 — m1.3 causal-recovery capabilities and limits
 
 - Status: **`in progress`** — Bucket 1 **written / locked**; Bucket 2
-  **locked / closed** with Claims 1–2; Bucket 3 **planning pending** following
-  Fabrizio's 22 July expanded-scope guidance.
+  **locked / closed** with Claims 1–2; Bucket 3 deterministic-mechanism direction
+  approved following Fabrizio's 31 July guidance, with the first investigation pending.
 - Planning docs: `docs/research/milestone_plans/milestone1_high_level_path.md`; `docs/research/milestone_plans/milestone1_part3/`.
 - Approach (method): `docs/research/milestone_plans/milestone1_part3/milestone1_part3_approach.md`.
 - Bucket 1 (locked): `docs/experiments/qualitative/M1.3-bucket1-claims.md` (TeX: `docs/report/findings/milestone1_part3_bucket1_claims.tex`).
 - Bucket 2 (locked): `docs/experiments/qualitative/M1.3-bucket2-claims.md` (two claims; M13-C1/C2).
-- Bucket 3 (planning): `docs/experiments/qualitative/M1.3-bucket3-claims.md`.
-- Primary inputs: locked M12x/Bucket 1/Bucket 2 evidence and Fabrizio's 22 July
+- Bucket 3 (direction/planning): `docs/experiments/qualitative/M1.3-bucket3-claims.md`.
+- Primary inputs: locked M12x/Bucket 1/Bucket 2 evidence and Fabrizio's 22 and 31 July
   supervisor guidance.
-- Expanded research question (planning formulation): across controlled targets,
-  data-availability conditions, graph/mechanism structures, and learning strategies,
-  what causal structure can unguided ABA Learning recover, and which failures are
-  strategic versus informational/identifiability limitations?
-- Method: not yet fixed for Bucket 3. Theory/evidence review and collaborative planning
-  precede claims, fixtures, and run matrices.
+- Current research question: for controlled causally sufficient fixtures with
+  non-degenerate stochastic roots and deterministic non-root mechanisms, what
+  mechanism-aligned rules does target-wise ABALearn recover, what does it do instead,
+  and which limitations are strategic rather than informational or identifiable?
+- Method: one investigation at a time. Before an ABALearn run, define the DAG, root
+  distributions and complete deterministic truth tables; derive the exact joint
+  support; audit ordinary faithfulness; record the standard MEC/CPDAG and any
+  deterministic-identifiability caveat; and freeze an evaluator-only rule reference.
+  After Samuel approves the fixture/sample, run every variable as target on one frozen
+  table and inspect the learned frameworks. No run matrix is approved.
+- Infrastructure: schema-version-2 exact fixture validation, root-only sampling,
+  structural-support certification, and evaluator-only `mechanism_reference.json` are
+  implemented. No deterministic research fixture or learning run exists yet.
+- Preservation: the positive-stochastic diamond and its target-wise AAMAS/ECAI outputs
+  remain unchanged pre-pivot exploratory/infrastructure artefacts, not evidence for the
+  deterministic direction.
+- Deferred: missingness, larger graphs, category-count/parameter variation, and
+  non-discrete extensions remain possible later Bucket 3 dimensions.
+- Theory boundary: an isolated deterministic copy (A\to B, B:=A) does not orient the
+  edge observationally. Whether surrounding structure or further assumptions orient a
+  copy edge is open and must be checked for the proposed fixture.
 - Relation to Causal ABA: none exercised; deliverable is requirements input for Milestone 2.
 - Report relevance: interim Experimentation / Progress (Milestone 1 Part 3).
-- Next: synchronise ChatGPT context, then plan Bucket 3. Do not create an M13-C3
-  experiment entry until a specific investigation is approved.
+- Next: choose and approve the first deterministic fixture. Do not create an M13-C3
+  experiment entry until that bounded investigation is specified.
 
 #### M13-C1 — causal-role underdetermination
 

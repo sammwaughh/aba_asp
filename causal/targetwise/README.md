@@ -73,6 +73,10 @@ ABA engine is given `bk.aba` and the positive/negative example arrays recorded
 in `examples.json`; it does not read `data.csv` or `task_manifest.json`.
 Generating edges and target parents appear only in evaluator fields of the task
 manifest. They are not used by the target-wise diagnostics or reports.
+The fixture-level `mechanism_reference.json` is likewise evaluator-only and is
+never passed to ABA Learning. Its bytes are transitively pinned by the fixture
+manifest hash used by the collection, so later inspection can identify the
+exact reference without leaking it into learner-visible inputs.
 
 The engine is invoked with a unique temporary BK stem so concurrently visible
 engine artefacts can be attributed to the correct target. That identifier is an
