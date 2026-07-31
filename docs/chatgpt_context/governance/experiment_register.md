@@ -35,9 +35,10 @@ The earlier n=100 scaled attempt was cut and is not part of the canonical experi
 | M11 | — | m1.1 Parent-position and representation-order control | analysed (Stages 0–7; ablations + greedy comparator) |
 | M12 | — | m1.2 Published-configuration comparison (ASP-ABAlearnB / Greedy ABA Learning) | analysed (Stages 0–3: 10-cell grid + full cell inspection / failure-mode taxonomy) |
 | M12x | — | m1.2 expanded U1–U7 (ECAI/AAMAS; val-only BK; 18 cells) | closed / analysed (18/18 Stage-3) |
-| M13 | — | m1.3 capabilities and limits of unguided ABA Learning for causal recovery | in progress (Buckets 1–2 locked; Bucket 3 deterministic direction approved; first investigation pending) |
+| M13 | — | m1.3 capabilities and limits of unguided ABA Learning for causal recovery | in progress (Buckets 1–2 locked; Bucket 3 M13-C3 pre-run active; no claim) |
 | M13-C1 | M13 | Causal-role underdetermination under learner-input equivalence | analysed |
 | M13-C2 | M13 | Comparative sensitivity to BK feature-block order | analysed |
+| M13-C3 | M13 | Bucket 3 binary deterministic AND collider (pre-run) | implemented (pre-run; learning not run; no claim) |
 
 ## Template
 
@@ -275,13 +276,23 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
 ### M13 — m1.3 causal-recovery capabilities and limits
 
 - Status: **`in progress`** — Bucket 1 **written / locked**; Bucket 2
-  **locked / closed** with Claims 1–2; Bucket 3 deterministic-mechanism direction
-  approved following Fabrizio's 31 July guidance, with the first investigation pending.
+  **locked / closed** with Claims 1–2; Bucket 3 first investigation **M13-C3**
+  active at **pre-run** (fixture certified; sample frozen; ABALearn not run;
+  **no claim**).
 - Planning docs: `docs/research/milestone_plans/milestone1_high_level_path.md`; `docs/research/milestone_plans/milestone1_part3/`.
 - Approach (method): `docs/research/milestone_plans/milestone1_part3/milestone1_part3_approach.md`.
 - Bucket 1 (locked): `docs/experiments/qualitative/M1.3-bucket1-claims.md` (TeX: `docs/report/findings/milestone1_part3_bucket1_claims.tex`).
 - Bucket 2 (locked): `docs/experiments/qualitative/M1.3-bucket2-claims.md` (two claims; M13-C1/C2).
-- Bucket 3 (direction/planning): `docs/experiments/qualitative/M1.3-bucket3-claims.md`.
+- Bucket 3 (planning + active case): `docs/experiments/qualitative/M1.3-bucket3-claims.md`.
+- Active fixture investigation: **M13-C3** —
+  `docs/experiments/qualitative/M13-C3-binary-collider-and/experiment.md`
+  (working dossier: `fixture_dossier.tex`).
+- Fixture ID: `m13_bucket3_binary_collider_and`
+  (\(A\rightarrow C\leftarrow B\); \(A\sim\mathrm{Bern}(0.8)\), \(B\sim\mathrm{Bern}(0.7)\);
+  \(C=A\land B\); frozen sample \(n{=}30\), seed `42`).
+- Pre-run artefacts:
+  `causal/outputs/causal_fixtures/m13_bucket3_binary_collider_and/`.
+- Target-wise learning configs/outputs for this fixture: **none yet**.
 - Primary inputs: locked M12x/Bucket 1/Bucket 2 evidence and Fabrizio's 22 and 31 July
   supervisor guidance.
 - Current research question: for controlled causally sufficient fixtures with
@@ -296,7 +307,7 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
   table and inspect the learned frameworks. No run matrix is approved.
 - Infrastructure: schema-version-2 exact fixture validation, root-only sampling,
   structural-support certification, and evaluator-only `mechanism_reference.json` are
-  implemented. No deterministic research fixture or learning run exists yet.
+  implemented. First deterministic research fixture is certified; learning not yet run.
 - Preservation: the positive-stochastic diamond and its target-wise AAMAS/ECAI outputs
   remain unchanged pre-pivot exploratory/infrastructure artefacts, not evidence for the
   deterministic direction.
@@ -307,8 +318,8 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
   copy edge is open and must be checked for the proposed fixture.
 - Relation to Causal ABA: none exercised; deliverable is requirements input for Milestone 2.
 - Report relevance: interim Experimentation / Progress (Milestone 1 Part 3).
-- Next: choose and approve the first deterministic fixture. Do not create an M13-C3
-  experiment entry until that bounded investigation is specified.
+- Next: approve target-wise configuration(s) and run ABALearn on the frozen
+  M13-C3 sample; inspect before any claim.
 
 #### M13-C1 — causal-role underdetermination
 
@@ -334,3 +345,22 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
   on whether required parent \(x_2\) occurred in the first two blocks.
 - Next: none; supports locked Bucket 2 Claim 2. The proposed Bucket 2 Claim 3 was
   parked on 22 July.
+
+#### M13-C3 — binary deterministic AND collider (Bucket 3 pre-run)
+
+- Status: **`implemented` (pre-run)** — fixture certified; sample frozen; ABALearn
+  not run; **no Bucket 3 claim**.
+- Record:
+  `docs/experiments/qualitative/M13-C3-binary-collider-and/experiment.md`.
+- Working LaTeX dossier:
+  `docs/experiments/qualitative/M13-C3-binary-collider-and/fixture_dossier.tex`.
+- Spec: `causal/fixtures/specs/m13_bucket3_binary_collider_and.yaml`.
+- Pre-run bundle:
+  `causal/outputs/causal_fixtures/m13_bucket3_binary_collider_and/`
+  (population, certificate, mechanism_reference, `samples/n30_seed42.*`).
+- Result (pre-run only): exact population support size 4; ordinary faithfulness
+  `verified_exactly`; MEC size 1; evaluator reference
+  `c(A) :- a_val_1(A), b_val_1(A).` for target `c`; roots
+  `no_observed_parent_deterministic_rule`.
+- Next: approve target-wise learning configuration(s) and run all targets on
+  `n30_seed42`.

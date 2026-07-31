@@ -1,0 +1,263 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=25mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,booktabs}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+\setlist{nosep,leftmargin=*}
+\emergencystretch=3em
+
+\title{M13-C3 working fixture dossier:\\
+binary deterministic AND collider\\
+\texttt{m13\_bucket3\_binary\_collider\_and}}
+\author{}
+\date{Pre-run stage (ABALearn not yet run)}
+
+\begin{document}
+\maketitle
+
+\noindent\textbf{Status.} Active M1.3 Bucket~3 investigation; fixture certified;
+sample \(n{=}30\), seed~\texttt{42} frozen; \textbf{no ABALearn run}; \textbf{no Bucket~3 claim}.
+Companion evidence record:
+\texttt{docs/experiments/qualitative/M13-C3-binary-collider-and/experiment.md}.
+This file is a working mathematical dossier, not report-facing claim prose.
+
+\section{Objects kept distinct}
+
+\begin{enumerate}
+  \item Generating DAG \(G\).
+  \item Structural / conditional mechanisms.
+  \item Exact observational population \(P\).
+  \item Fixture-specific support, Markov, and ordinary-faithfulness analysis.
+  \item Finite IID sample \(\mathcal{D}_{n{=}30}\).
+  \item \emph{Future} table-derived learner inputs (BK, \(E^+\), \(E^-\)).
+  \item \emph{Future} ABALearn outputs (delta / final framework).
+  \item Evaluator-only mechanism reference and bounded interpretation.
+\end{enumerate}
+Items 1--5 and 8 are recorded here. Items 6--7 do not yet exist for this fixture.
+
+\section{Generating graph}
+
+Internal learner-safe names: \(a,b,c\). Mathematical display: \(A,B,C\).
+
+\[
+G:\qquad A \rightarrow C \leftarrow B
+\qquad\text{(no \(A\)--\(B\) edge).}
+\]
+
+Edges in the authoritative YAML:
+\texttt{[a,c]}, \texttt{[b,c]}.
+Unshielded collider at \(C\). Topological order \(a,b,c\).
+Roles: \(A,B\) sources; \(C\) sink.
+
+\section{Mechanisms}
+
+Regime: \texttt{root\_stochastic\_deterministic\_nonroots} (schema version~2).
+
+\begin{align*}
+A &\sim \mathrm{Bernoulli}(4/5),
+& P(A{=}0)&=1/5,& P(A{=}1)&=4/5,\\
+B &\sim \mathrm{Bernoulli}(7/10),
+& P(B{=}0)&=3/10,& P(B{=}1)&=7/10,\\
+C &= A \land B
+&&\text{(deterministic point-mass CPT).}
+\end{align*}
+
+Roots are mutually independent by fixture design
+(\texttt{exogenous\_noise}: \texttt{mutually\_independent\_root\_exogenous\_noise}).
+Randomness is confined to roots; \(C\) consumes no stochastic draw.
+
+Truth table for \(C\mid(A,B)\):
+
+\begin{center}
+\begin{tabular}{@{}cccc@{}}
+\toprule
+\(A\) & \(B\) & \(C\) & \(P(A{=}a,B{=}b)\) \\
+\midrule
+0 & 0 & 0 & \(3/50\) \\
+0 & 1 & 0 & \(7/50\) \\
+1 & 0 & 0 & \(6/25\) \\
+1 & 1 & 1 & \(14/25\) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Both edges are \emph{active} in the local mechanism sense (certificate).
+Active edges are not by themselves a faithfulness proof.
+
+\section{Exact population}
+
+Joint factorisation \(P(a,b,c)=P(a)P(b)P(c\mid a,b)\) yields four positive atoms
+and four structural zeros (\texttt{population.csv}, \texttt{certificate.json}):
+
+\begin{center}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+Assignment \((A,B,C)\) & Exact \(P\) & Decimal \\
+\midrule
+\((0,0,0)\) & \(3/50\) & \(0.06\) \\
+\((0,1,0)\) & \(7/50\) & \(0.14\) \\
+\((1,0,0)\) & \(6/25\) & \(0.24\) \\
+\((1,1,1)\) & \(14/25\) & \(0.56\) \\
+\midrule
+structural zeros &
+\((0,0,1),(0,1,1),(1,0,1),(1,1,0)\) & mass \(0\) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Support size \(4\); joint state space size \(8\); \texttt{full\_support}: false;
+minimum positive joint probability \(3/50\).
+
+\section{Certificates}
+
+Primary artefact:
+\texttt{causal/outputs/causal\_fixtures/m13\_bucket3\_binary\_collider\_and/certificate.json}.
+Scope: exact population; learner-visible flag \texttt{false}.
+
+\subsection{Causal sufficiency}
+Status: \texttt{declared\_satisfied\_by\_fixture\_design}.
+Basis: mutually independent root exogenous noise declared in the YAML.
+Not observationally testable from the joint alone; not inferred from CPTs.
+
+\subsection{Causal Markov condition}
+Status: \texttt{verified}.
+Basis: joint derived as the product of validated local CPTs over \(G\),
+including point-mass rows for \(C\). Graph-implied CI violations: \(0\).
+
+\subsection{Ordinary faithfulness}
+Status: \texttt{verified\_exactly}; \texttt{faithful}: true.
+Basis: exact population CI set equals the graph \(d\)-separation set over the
+exhaustive singleton-pair audit (six queries).
+Explicitly \emph{not} implied by determinism or factorisation alone.
+
+\subsection{Conditional independences}
+Graph-implied and population independences coincide on the singleton audit:
+
+\[
+A \perp B
+\qquad\text{(only population independence).}
+\]
+
+Dependence witnesses exist for \(A\not\!\perp B\mid C\), \(A\not\!\perp C\),
+\(A\not\!\perp C\mid B\), \(B\not\!\perp C\), and \(B\not\!\perp C\mid A\),
+as expected for this collider.
+
+\subsection{MEC and ordinary CI CPDAG}
+Markov equivalence class size \(1\); sole member is \(G\).
+Ordinary graph-theoretic CI CPDAG:
+
+\[
+A \rightarrow C \leftarrow B
+\qquad\text{(no undirected edges).}
+\]
+
+Certificate boundary note (verbatim intent): this is the ordinary CI-based CPDAG;
+for deterministic variables, functional constraints may change what is identifiable
+beyond ordinary CI; no extended recovery object is asserted here.
+
+\section{Evaluator-only mechanism reference}
+
+Artefact:
+\texttt{mechanism\_reference.json}.
+Encoding reference: \texttt{binary\_one\_vs\_zero\_exact\_value}
+(positive state \(1\), negative state \(0\)).
+
+\begin{center}
+\begin{tabular}{@{}llp{0.48\textwidth}@{}}
+\toprule
+Target & Status & Canonical positive rule(s) \\
+\midrule
+\(a\) & \texttt{no\_observed\_parent\_deterministic\_rule} &
+none (stochastic root) \\
+\(b\) & \texttt{no\_observed\_parent\_deterministic\_rule} &
+none (stochastic root) \\
+\(c\) & \texttt{available} &
+\texttt{c(A) :- a\_val\_1(A), b\_val\_1(A).} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+For \(C\), the formal, population-supported, and sample-observed positive rules
+coincide on the string above. The artefact states that syntactic rule equality is
+not an automatic causal-recovery verdict, and that predictive rules for root
+targets do not constitute root-mechanism recovery.
+\textbf{This reference must not enter learner BK or examples.}
+
+\section{Frozen sample}
+
+Approved baseline: \(n{=}30\), seed~\texttt{42}
+(\texttt{samples/n30\_seed42.csv}).
+Target-free IID observational rows; sampler
+\texttt{row\_major\_ancestral\_inverse\_cdf}~v2; NumPy \texttt{PCG64}.
+All \(30\) deterministic assignments verified.
+
+Observed joint counts (all four population atoms appear):
+
+\begin{center}
+\begin{tabular}{@{}lc@{}}
+\toprule
+\((A,B,C)\) & Count \\
+\midrule
+\((1,1,1)\) & \(17\) \\
+\((1,0,0)\) & \(7\) \\
+\((0,1,0)\) & \(4\) \\
+\((0,0,0)\) & \(2\) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Empirical marginals: \(A{=}1\) in \(24/30\); \(B{=}1\) in \(21/30\); \(C{=}1\) in \(17/30\).
+
+\section{Implied target counts under the planned binary policy}
+
+Planned (not yet executed) target-wise policy: target value \(1\) as \(E^+\),
+value \(0\) as \(E^-\). Counts \emph{implied} by the frozen sample marginals:
+
+\begin{center}
+\begin{tabular}{@{}lrr@{}}
+\toprule
+Target & \(\lvert E^+\rvert\) & \(\lvert E^-\rvert\) \\
+\midrule
+\(a\) & \(24\) & \(6\) \\
+\(b\) & \(21\) & \(9\) \\
+\(c\) & \(17\) & \(13\) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+These are \textbf{not} generated learner example arrays and have
+\textbf{not} been supplied to ABALearn. No BK, delta, or solution artefacts
+exist yet for this fixture under
+\texttt{causal/outputs/aba\_learning/targetwise/}.
+
+\section{Provenance (selected hashes)}
+
+From \texttt{fixture\_manifest.json}:
+
+\begin{itemize}
+  \item Source UTF-8 bytes:
+    \texttt{sha256:4ec5bb5726f4359a6b347e519ebcdbf1ef79a945ccd54a40d601dad240d824f8}
+  \item Canonical parsed YAML document:
+    \texttt{sha256:f061e29abc8ba8bc1fcd8630ef1f79e38c8171b36b6ee09afb5f88e94eac4298}
+  \item Semantic model:
+    \texttt{sha256:e76c1ff5b849cf6f11ec161e4dbd23573fb39891d846596b155bf047fd687731}
+  \item Sample CSV:
+    \texttt{sha256:1edae465d0f6b6b662b3c4ed4863af21c1d9b0c1cf428774731dd3f43282a8ca}
+\end{itemize}
+
+\texttt{model.bif} is derived interoperability only (floating-point probabilities);
+it is not authoritative.
+
+\section{Open next step}
+
+Approve and create target-wise configuration(s); run ABALearn once for each of
+\(a,b,c\) on the frozen table; inspect learned frameworks against the
+evaluator-only reference while preserving the distinctions in Section~1.
+No Bucket~3 claim follows from the pre-run stage alone.
+
+\end{document}
