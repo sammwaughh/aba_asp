@@ -1,0 +1,24 @@
+network m13_bucket3_binary_collider_and {
+}
+variable a {
+    type discrete [ 2 ] { 0, 1 };
+}
+variable b {
+    type discrete [ 2 ] { 0, 1 };
+}
+variable c {
+    type discrete [ 2 ] { 0, 1 };
+}
+probability ( a ) {
+    table 0.2, 0.8 ;
+}
+probability ( b ) {
+    table 0.3, 0.7 ;
+}
+probability ( c | a, b ) {
+    ( 0, 0 ) 1.0, 0.0;
+    ( 0, 1 ) 1.0, 0.0;
+    ( 1, 0 ) 1.0, 0.0;
+    ( 1, 1 ) 0.0, 1.0;
+
+}

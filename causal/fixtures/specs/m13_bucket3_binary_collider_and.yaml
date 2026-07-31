@@ -1,0 +1,63 @@
+schema_version: 2
+id: m13_bucket3_binary_collider_and
+title: M1.3 Bucket 3 binary deterministic AND collider
+description: >-
+  Three-variable observational causal Bayesian network with mutually independent
+  non-degenerate stochastic roots A and B and deterministic collider C = A AND B.
+  Internal learner-safe names are a, b, c; mathematical display uses (A,B,C).
+  This is a pre-learning evaluator fixture, not an ABA Learning run or claim.
+
+variables:
+  - name: a
+    states: [0, 1]
+  - name: b
+    states: [0, 1]
+  - name: c
+    states: [0, 1]
+
+graph:
+  edges:
+    - [a, c]
+    - [b, c]
+
+mechanisms:
+  a:
+    parents: []
+    cpt:
+      - when: {}
+        probabilities: ["1/5", "4/5"]
+
+  b:
+    parents: []
+    cpt:
+      - when: {}
+        probabilities: ["3/10", "7/10"]
+
+  c:
+    parents: [a, b]
+    cpt:
+      - when: {a: 0, b: 0}
+        probabilities: [1, 0]
+      - when: {a: 0, b: 1}
+        probabilities: [1, 0]
+      - when: {a: 1, b: 0}
+        probabilities: [1, 0]
+      - when: {a: 1, b: 1}
+        probabilities: [0, 1]
+
+assumptions:
+  mechanism_regime: root_stochastic_deterministic_nonroots
+  causal_sufficiency:
+    declared: true
+    exogenous_noise: mutually_independent_root_exogenous_noise
+  observational_sampling:
+    regime: observational_iid
+
+metadata:
+  milestone: M1.3
+  bucket: 3
+  motif: collider
+  mechanism: deterministic_and
+  display_variables: [A, B, C]
+  target_visible_to_generator: false
+  faithfulness_is_derived_not_declared: true
