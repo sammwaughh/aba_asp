@@ -93,6 +93,12 @@ preserved as pre-pivot infrastructure provenance, not current Bucket 3 claim evi
 No deterministic research fixture, mechanism portfolio, run matrix, or Bucket 3 claim is
 yet approved.
 
+Future target-wise fixtures use lowercase internal variable identifiers `a`, `b`, `c`,
+... in YAML, CSV, ABA predicates, targets, and paths, while scientific notation may use
+(A,B,C,\ldots). Existing `xN` fixtures and evidence remain unchanged. The Python bridge
+reserves `alpha_N`/`c_alpha_N` for learner-generated assumptions and contraries; no
+inherited `.pl` file is changed.
+
 M12x and Buckets 1–2 remain locked and will not be redone. There is no M1.4; the widened work
 remains M1.3. Primary path:
 `docs/research/milestone_plans/milestone1_high_level_path.md`. Bucket 3 planning record:

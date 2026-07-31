@@ -110,9 +110,9 @@ assumptions:
 def test_zero_one_deterministic_cpt_survives_bif_round_trip(tmp_path: Path) -> None:
     fixture = load_fixture(write_root_stochastic_deterministic_and(tmp_path)).fixture
     model = to_pgmpy_model(fixture)
-    cpd = model.get_cpds("x2")
+    cpd = model.get_cpds("c")
 
-    assert cpd.get_value(x2="0", x0="1", x1="1") == 0.0
-    assert cpd.get_value(x2="1", x0="1", x1="1") == 1.0
-    assert cpd.get_value(x2="0", x0="1", x1="0") == 1.0
+    assert cpd.get_value(c="0", a="1", b="1") == 0.0
+    assert cpd.get_value(c="1", a="1", b="1") == 1.0
+    assert cpd.get_value(c="0", a="1", b="0") == 1.0
     assert export_bif(fixture, tmp_path / "deterministic_and.bif").ok

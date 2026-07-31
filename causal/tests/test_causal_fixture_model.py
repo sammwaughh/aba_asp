@@ -149,9 +149,9 @@ def test_schema2_accepts_stochastic_roots_and_deterministic_nonroots(
         fixture.assumptions.mechanism_regime
         == "root_stochastic_deterministic_nonroots"
     )
-    assert fixture.root_names == ("x0", "x1")
-    assert fixture.stochastic_variables == ("x0", "x1")
-    assert fixture.deterministic_variables == ("x2",)
+    assert fixture.root_names == ("a", "b")
+    assert fixture.stochastic_variables == ("a", "b")
+    assert fixture.deterministic_variables == ("c",)
 
 
 def test_schema1_remains_strictly_positive(tmp_path: Path) -> None:
@@ -178,7 +178,7 @@ def test_schema2_requires_explicit_mechanism_regime(tmp_path: Path) -> None:
 def test_schema2_rejects_degenerate_roots(tmp_path: Path) -> None:
     path = write_root_stochastic_deterministic_and(tmp_path)
     raw = yaml.safe_load(path.read_text(encoding="utf-8"))
-    raw["mechanisms"]["x0"]["cpt"][0]["probabilities"] = [0, 1]
+    raw["mechanisms"]["a"]["cpt"][0]["probabilities"] = [0, 1]
     path.write_text(yaml.safe_dump(raw, sort_keys=False), encoding="utf-8")
 
     with pytest.raises(FixtureValidationError, match="root mechanism.*strictly positive"):
@@ -188,17 +188,17 @@ def test_schema2_rejects_degenerate_roots(tmp_path: Path) -> None:
 def test_schema2_rejects_stochastic_nonroot_mechanisms(tmp_path: Path) -> None:
     path = write_root_stochastic_deterministic_and(tmp_path)
     raw = yaml.safe_load(path.read_text(encoding="utf-8"))
-    raw["mechanisms"]["x2"]["cpt"][0]["probabilities"] = ["1/2", "1/2"]
+    raw["mechanisms"]["c"]["cpt"][0]["probabilities"] = ["1/2", "1/2"]
     path.write_text(yaml.safe_dump(raw, sort_keys=False), encoding="utf-8")
 
-    with pytest.raises(FixtureValidationError, match="x2 must be deterministic"):
+    with pytest.raises(FixtureValidationError, match="c must be deterministic"):
         load_fixture(path)
 
 
 def test_schema2_rejects_negative_probabilities(tmp_path: Path) -> None:
     path = write_root_stochastic_deterministic_and(tmp_path)
     raw = yaml.safe_load(path.read_text(encoding="utf-8"))
-    raw["mechanisms"]["x2"]["cpt"][0]["probabilities"] = [-1, 2]
+    raw["mechanisms"]["c"]["cpt"][0]["probabilities"] = [-1, 2]
     path.write_text(yaml.safe_dump(raw, sort_keys=False), encoding="utf-8")
 
     with pytest.raises(FixtureValidationError, match="non-negative"):

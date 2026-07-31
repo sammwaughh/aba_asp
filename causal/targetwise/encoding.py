@@ -3,17 +3,14 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-import re
 from typing import Any
 
+from causal.predicate_naming import learner_variable_name_error
 from causal.targetwise.bundle import LoadedCausalFixtureBundle
 
 
 class TargetwiseEncodingError(ValueError):
     """Raised when a fixture sample cannot use the requested encoding policy."""
-
-
-_PREDICATE_RE = re.compile(r"^x[0-9]+$")
 
 
 @dataclass(frozen=True)
@@ -62,10 +59,9 @@ def _validate_binary_bundle(bundle: LoadedCausalFixtureBundle) -> None:
             raise TargetwiseEncodingError(
                 f"{variable} contains values outside the binary domain: {observed!r}"
             )
-        if not _PREDICATE_RE.fullmatch(variable):
+        if naming_error := learner_variable_name_error(variable):
             raise TargetwiseEncodingError(
-                "the initial target-wise metrics contract requires variable names "
-                f"of the form xN; got {variable!r}"
+                f"target-wise variable {variable!r} {naming_error}"
             )
 
 

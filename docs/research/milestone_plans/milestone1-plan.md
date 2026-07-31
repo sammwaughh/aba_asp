@@ -50,6 +50,8 @@ Framing rules for the whole milestone:
   and deterministic non-root functions. Each fixture needs a full truth table, exact
   support/faithfulness certificate, and evaluator-only canonical rule reference before a
   sample or learning run is selected.
+- New target-wise fixtures use lowercase internal identifiers `a`, `b`, `c`, ... and
+  corresponding mathematical labels (A,B,C,\ldots); existing `xN` evidence is preserved.
 - There is **no M1.4**; this supervisor-driven expansion remains M1.3.
 
 ## Working Method

@@ -24,6 +24,13 @@ decode learned rules into a graph, or run ABA Learning.
 - `samples/*.csv` contains one target-free IID table. Re-selecting a target must
   not resample the table.
 
+For future target-wise fixtures, use safe lowercase learner identifiers such as
+`a`, `b`, `c`, `d`, ... as the YAML variable names and CSV columns. Mathematical
+descriptions may display these as (A,B,C,D,\ldots). Uppercase identifiers are
+not passed directly to Prolog because Prolog reserves an initial uppercase
+letter for logical variables. Existing `x0`, `x1`, ... fixtures remain valid and
+unchanged.
+
 Three hashes keep provenance distinctions explicit: the exact UTF-8 source-file
 bytes, the canonical parsed YAML document, and the normalized scientific model.
 Certificate, BIF, and sampler manifests also identify their implementation and

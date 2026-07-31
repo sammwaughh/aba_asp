@@ -19,11 +19,15 @@ Chronological notes on experiment progress, decisions, and milestones. Detailed 
   references. No deterministic research fixture or run is approved yet.
 - **Implemented and verified:** schema-version-2 fixture support and the generic
   evaluator reference were added without changing the inherited learner or generated
-  evidence. The focused fixture/target-wise suite passed (`72 passed`), and both
+  evidence. The expanded focused fixture/target-wise suite passed (`93 passed`), and both
   preserved stochastic-diamond target-wise configurations validated successfully.
 - **Compatibility guard:** the existing schema-version-1 scientific semantic hash is
   pinned by test, and the upgraded builder refuses legacy output bundles before writing;
   preserved generated artefacts were not changed.
+- **Naming adaptation:** future target-wise fixtures may use lowercase identifiers
+  `a`, `b`, `c`, ... while existing `xN` fixtures remain supported. Fixture-aware
+  diagnostics exclude `alpha_N`/`c_alpha_N` from causal body variables. Both AAMAS and
+  ECAI completed a lowercase-predicate smoke test through the unchanged Prolog engine.
 - **Guidance and decision:** `docs/research/supervisor_guidance.md` (31 July section) and
   `docs/research/decisions.md` (31 July entry).
 

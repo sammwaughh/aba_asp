@@ -17,6 +17,7 @@ from causal.fixtures.artifacts import (
     ArtifactConflictError,
     file_sha256,
 )
+from causal.run_aba_asp import ABASPRunner, SWIPL_PATH
 from causal.targetwise.bundle import (
     CausalFixtureBundleError,
     load_causal_fixture_bundle,
@@ -72,12 +73,22 @@ def _write_json(path: Path, document: dict[str, Any]) -> None:
     )
 
 
-def _write_fixture_bundle(tmp_path: Path) -> Path:
+def _write_fixture_bundle(
+    tmp_path: Path,
+    *,
+    variables: tuple[str, str, str, str] = _VARIABLES,
+) -> Path:
     fixture_id = "test_binary_diamond"
     fixture_directory = tmp_path / fixture_id
     sample_path = fixture_directory / "samples" / "n8_seed42.csv"
     sample_path.parent.mkdir(parents=True)
-    lines = [",".join(_VARIABLES)]
+    edges = (
+        (variables[0], variables[1]),
+        (variables[0], variables[2]),
+        (variables[1], variables[3]),
+        (variables[2], variables[3]),
+    )
+    lines = [",".join(variables)]
     lines.extend(",".join(str(value) for value in row) for row in _SAMPLE_ROWS)
     sample_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
@@ -85,8 +96,8 @@ def _write_fixture_bundle(tmp_path: Path) -> Path:
         "fixture_manifest_schema_version": 1,
         "fixture": {
             "id": fixture_id,
-            "variables": list(_VARIABLES),
-            "edges": [list(edge) for edge in _EDGES],
+            "variables": list(variables),
+            "edges": [list(edge) for edge in edges],
             "source_hash": "sha256:test-source",
             "document_hash": "sha256:test-document",
             "semantic_hash": "sha256:test-semantic",
@@ -113,8 +124,8 @@ def _write_fixture_bundle(tmp_path: Path) -> Path:
             "csv_sha256": file_sha256(sample_path),
         },
         "sampler": {
-            "output_column_order": list(_VARIABLES),
-            "state_orders": {variable: [0, 1] for variable in _VARIABLES},
+            "output_column_order": list(variables),
+            "state_orders": {variable: [0, 1] for variable in variables},
         },
     }
     _write_json(sample_path.with_suffix(".manifest.json"), sample_manifest)
@@ -499,43 +510,41 @@ def test_exact_value_encoder_rejects_nonbinary_state_orders(
         build_binary_target_task(bundle, "x3")
 
 
-def test_exact_value_encoder_rejects_names_outside_initial_predicate_contract(
+def test_exact_value_encoder_accepts_safe_lowercase_variable_names(
     tmp_path: Path,
 ) -> None:
-    fixture_directory = _write_fixture_bundle(tmp_path)
-    fixture_manifest_path = fixture_directory / "fixture_manifest.json"
-    fixture_manifest = json.loads(fixture_manifest_path.read_text(encoding="utf-8"))
-    fixture_manifest["fixture"]["variables"][0] = "a"
-    fixture_manifest["fixture"]["edges"] = [
-        ["a" if node == "x0" else node for node in edge]
-        for edge in fixture_manifest["fixture"]["edges"]
-    ]
-    _write_json(fixture_manifest_path, fixture_manifest)
-
-    sample_path = fixture_directory / "samples" / "n8_seed42.csv"
-    sample_path.write_text(
-        sample_path.read_text(encoding="utf-8").replace(
-            "x0,x1,x2,x3",
-            "a,x1,x2,x3",
-            1,
-        ),
-        encoding="utf-8",
+    fixture_directory = _write_fixture_bundle(
+        tmp_path,
+        variables=("a", "b", "c", "d"),
     )
-    sample_manifest_path = sample_path.with_suffix(".manifest.json")
-    sample_manifest = json.loads(sample_manifest_path.read_text(encoding="utf-8"))
-    sample_manifest["sample"]["csv_sha256"] = file_sha256(sample_path)
-    sample_manifest["sampler"]["output_column_order"][0] = "a"
-    sample_manifest["sampler"]["state_orders"]["a"] = sample_manifest["sampler"][
-        "state_orders"
-    ].pop("x0")
-    _write_json(sample_manifest_path, sample_manifest)
     bundle = load_causal_fixture_bundle(
         fixture_directory,
         Path("samples/n8_seed42.csv"),
     )
 
-    with pytest.raises(TargetwiseEncodingError, match="form xN"):
-        build_binary_target_task(bundle, "a")
+    task = build_binary_target_task(bundle, "c")
+
+    assert task.target == "c"
+    assert task.predictor_order == ("a", "b", "d")
+    assert "c_val_0" not in task.bk_text
+    assert "a_val_0(A) :- A=1." in task.bk_text
+    assert task.positive_examples[-1] == "c(8)"
+
+
+def test_exact_value_encoder_rejects_uppercase_variable_names(
+    tmp_path: Path,
+) -> None:
+    fixture_directory = _write_fixture_bundle(
+        tmp_path,
+        variables=("A", "b", "c", "d"),
+    )
+    bundle = load_causal_fixture_bundle(
+        fixture_directory,
+        Path("samples/n8_seed42.csv"),
+    )
+
+    with pytest.raises(TargetwiseEncodingError, match="lowercase Prolog atom"):
+        build_binary_target_task(bundle, "c")
 
 
 def test_targetwise_paths_match_fixture_configuration_sample_target_hierarchy(
@@ -816,6 +825,7 @@ def test_fake_runner_executes_all_targets_and_writes_inspection_bundle(
         assert metrics["delta_path"].endswith("/output/delta.aba")
         delta_lines = cell.delta_path.read_text(encoding="utf-8").splitlines()
         assert delta_lines == metrics["delta_rules"]
+        assert metrics["body_variables"] == sorted(set(_VARIABLES) - {target})
         assert metrics["body_lengths"] == [3, 3, 3, 3]
         assert "cov_asp_pos" not in metrics
         assert "body_parent_precision" not in metrics
@@ -833,6 +843,77 @@ def test_fake_runner_executes_all_targets_and_writes_inspection_bundle(
         artifact_checker=fake_artifact,
     )
     assert len(fake.calls) == original_calls
+
+
+def test_lowercase_named_collection_preserves_targetwise_diagnostics(
+    tmp_path: Path,
+) -> None:
+    pytest.importorskip("pyarrow")
+    variables = ("a", "b", "c", "d")
+    fixture_directory = _write_fixture_bundle(
+        tmp_path / "source",
+        variables=variables,
+    )
+    config = load_targetwise_config(_write_config(tmp_path, fixture_directory))
+    fake = _FakeRunner()
+
+    prepared = run_collection(
+        config,
+        output_root=tmp_path / "outputs",
+        runner_factory=lambda: fake,
+        artifact_checker=_FakeArtifactChecker(),
+    )
+
+    assert [call["target"] for call in fake.calls] == list(variables)
+    for target in variables:
+        metrics = json.loads(
+            prepared.paths.cell(target).metrics_json_path.read_text(encoding="utf-8")
+        )
+        expected_predictors = sorted(set(variables) - {target})
+        assert metrics["body_variables"] == expected_predictors
+        assert all(
+            detail["body_variables"] == expected_predictors
+            for detail in metrics["target_rule_body_details"]
+        )
+        assert all("alpha" not in variable for variable in metrics["body_variables"])
+
+
+@pytest.mark.skipif(
+    not SWIPL_PATH or shutil.which("clingo") is None,
+    reason="SWI-Prolog and clingo are required for the lowercase-name smoke test",
+)
+@pytest.mark.parametrize("configuration", ["aamas2025", "ecai2024"])
+def test_lowercase_predicates_run_in_unmodified_prolog_engine(
+    tmp_path: Path,
+    configuration: str,
+) -> None:
+    run_directory = tmp_path / configuration
+    run_directory.mkdir()
+    bk_path = run_directory / "lowercase_names.bk.aba"
+    bk_path.write_text(
+        """\
+a_val_0(A) :- A=1.
+a_val_1(A) :- A=2.
+b_val_0(A) :- A=1.
+b_val_1(A) :- A=2.
+""",
+        encoding="utf-8",
+    )
+    runner = ABASPRunner()
+
+    result = runner.run_prolog_aba_asp(
+        bk_path,
+        positive_examples=["c(2)"],
+        negative_examples=["c(1)"],
+        learning_options=None,
+        timeout_s=30,
+        prolog_config=repo_root() / "configs" / f"{configuration}_config.pl",
+    )
+
+    solution_path = run_directory / "lowercase_names.bk.sol.aba"
+    assert result["status"] == "completed", result["stderr"]
+    assert solution_path.is_file()
+    assert "c(A)" in solution_path.read_text(encoding="utf-8")
 
 
 def test_constant_sample_target_is_recorded_as_skipped(

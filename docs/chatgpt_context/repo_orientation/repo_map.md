@@ -85,7 +85,12 @@ aba_asp/
   compact diagnostics and the final checked-ASP artefact audit are implemented
   in `causal/targetwise/diagnostics.py` and
   `causal/targetwise/semantics.py`; focused tests:
-  `causal/tests/test_targetwise_collection.py`.
+  `causal/tests/test_targetwise_collection.py` and
+  `causal/tests/test_predicate_naming.py`.
+- `predicate_naming.py` — shared learner-visible naming contract. It accepts safe
+  lowercase Prolog atoms, reserves ABA/learner namespaces, and extracts exact-value
+  body variables against fixture metadata. Future fixtures use `a`, `b`, `c`, ...;
+  existing `xN` names remain valid. No inherited Prolog file depends on this module.
 - `argcausaldisco_integration.py` — data → ABA pipeline.
   `generate_aba_background_knowledge()` (table → feature predicates → `.bk.aba`),
   `pick_target_variable()` (target + E+/E− split), `_extract_learned_rules()` (solution − BK).

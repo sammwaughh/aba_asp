@@ -698,6 +698,7 @@ def _execute_target(
         configuration_hash=config.configuration_hash,
         sample_name=bundle.sample_name,
         target=task.target,
+        variable_names=bundle.variables,
         n=bundle.n,
         seed=bundle.seed,
         config_hash=config.config_hash,

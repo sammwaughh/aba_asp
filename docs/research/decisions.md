@@ -2,6 +2,25 @@
 
 Recorded decisions that affect experiment direction. Evidence and interpretation remain in experiment records.
 
+## 2026-07-31 — Lowercase learner identifiers for future causal fixtures
+
+**Decision:** Future target-wise causal fixtures use safe lowercase internal variable
+identifiers such as `a`, `b`, `c`, `d`, ... in YAML, CSV, ABA predicates, target names,
+and output paths. Scientific descriptions may display the corresponding variables as
+(A,B,C,D,\ldots). Existing `x0`, `x1`, ... fixtures, configurations, runs, and locked
+evidence remain unchanged and supported.
+
+**Prolog/ABA distinction:** In `c(A)`, `c/1` is the causal-variable predicate and `A` is
+the Prolog variable for a row identifier. Learner-generated assumptions and contraries
+use the separate `alpha_N` and `c_alpha_N` namespaces. Future fixture identifiers must
+not use reserved ABA/learner names such as `assumption`, `contrary`, `not`, `alpha`,
+`alpha_*`, `c_alpha`, or `c_alpha_*`.
+
+**Implementation boundary:** Adapt only the Python fixture/reference/target-wise
+encoding, diagnostics, tests, and documentation. Do not modify inherited `.pl` files or
+the locked legacy metric parser. Target-wise body-variable inspection must use the
+fixture's declared variable list rather than assume names of the form `xN`.
+
 ## 2026-07-31 — Bucket 3 immediate focus: deterministic mechanisms with root noise
 
 **Decision:** Develop Bucket 3 one mechanism case at a time using binary causal models

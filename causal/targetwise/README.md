@@ -8,8 +8,8 @@ the target changes and does not expose graph metadata to the learner.
 The initial supported learner-visible regime is:
 
 - finite binary variables with declared state order `[0, 1]`;
-- variables named `x0`, `x1`, ... under the initial predicate and rule-body
-  inspection contract;
+- safe lowercase Prolog-atom variable names. Future fixtures use `a`, `b`, `c`,
+  `d`, ...; the existing `x0`, `x1`, ... convention remains supported;
 - exact-value predicates for every non-target observation;
 - target value `1` as `E+` and target value `0` as `E-`;
 - a Prolog configuration that explicitly selects brave learning;
@@ -19,6 +19,17 @@ The initial supported learner-visible regime is:
 
 Non-binary target policies and learned-rule-to-graph decoding are outside this
 initial implementation.
+
+Learner-visible names must begin with a lowercase letter and then contain only
+lowercase letters, digits, or underscores. `assumption`, `contrary`, `not`,
+`alpha`, `alpha_*`, `c_alpha`, and `c_alpha_*` are reserved for ABA or
+learner-generated symbols. A
+mathematical node (C) is therefore written internally as `c`. In a learned
+rule such as `c(A)`, lowercase `c` is the causal-variable predicate and uppercase
+`A` is the Prolog variable ranging over table-row identifiers. The learner's
+generated `alpha_1(A)` and `c_alpha_1(A)` predicates are distinct from `c(A)`.
+This convention is enforced entirely by the Python bridge; no inherited `.pl`
+file is changed.
 
 ## Configuration
 
@@ -113,6 +124,10 @@ The target-wise path does not calculate Python-Horn coverage, Prolog query
 coverage, independent per-example ASP coverage, parent-set metrics, or
 graph/CPDAG metrics. Those inherited panels remain unchanged for locked earlier
 experiment infrastructure.
+
+Body-variable diagnostics are matched against the fixture's declared variables.
+They do not rely on the legacy `xN` parser and do not classify generated
+`alpha_N` or `c_alpha_N` predicates as causal variables.
 
 ## Output hierarchy
 

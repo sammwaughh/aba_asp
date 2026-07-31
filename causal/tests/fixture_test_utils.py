@@ -7,25 +7,25 @@ ROOT_STOCHASTIC_DETERMINISTIC_AND_YAML = """\
 schema_version: 2
 id: test_root_stochastic_deterministic_and
 variables:
-  - {name: x0, states: [0, 1]}
-  - {name: x1, states: [0, 1]}
-  - {name: x2, states: [0, 1]}
+  - {name: a, states: [0, 1]}
+  - {name: b, states: [0, 1]}
+  - {name: c, states: [0, 1]}
 graph:
-  edges: [[x0, x2], [x1, x2]]
+  edges: [[a, c], [b, c]]
 mechanisms:
-  x0:
+  a:
     parents: []
     cpt: [{when: {}, probabilities: ["1/5", "4/5"]}]
-  x1:
+  b:
     parents: []
     cpt: [{when: {}, probabilities: ["3/10", "7/10"]}]
-  x2:
-    parents: [x0, x1]
+  c:
+    parents: [a, b]
     cpt:
-      - {when: {x0: 0, x1: 0}, probabilities: [1, 0]}
-      - {when: {x0: 0, x1: 1}, probabilities: [1, 0]}
-      - {when: {x0: 1, x1: 0}, probabilities: [1, 0]}
-      - {when: {x0: 1, x1: 1}, probabilities: [0, 1]}
+      - {when: {a: 0, b: 0}, probabilities: [1, 0]}
+      - {when: {a: 0, b: 1}, probabilities: [1, 0]}
+      - {when: {a: 1, b: 0}, probabilities: [1, 0]}
+      - {when: {a: 1, b: 1}, probabilities: [0, 1]}
 assumptions:
   mechanism_regime: root_stochastic_deterministic_nonroots
   causal_sufficiency:

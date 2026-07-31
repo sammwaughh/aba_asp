@@ -212,7 +212,7 @@ def test_schema2_bundle_is_accepted_by_binary_targetwise_encoder(
     assert result["faithfulness"] == "verified_exactly"
 
     bundle = load_causal_fixture_bundle(output_dir, "samples/n12_seed42.csv")
-    task = build_binary_target_task(bundle, "x2")
-    assert task.target == "x2"
-    assert task.predictor_order == ("x0", "x1")
+    task = build_binary_target_task(bundle, "c")
+    assert task.target == "c"
+    assert task.predictor_order == ("a", "b")
     assert task.n_positive + task.n_negative == 12

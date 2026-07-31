@@ -107,12 +107,12 @@ def test_deterministic_descendants_consume_no_random_draws(tmp_path: Path) -> No
     rng = np.random.Generator(np.random.PCG64(42))
     expected_roots = []
     for _ in range(8):
-        x0 = 0 if float(rng.random()) < 0.2 else 1
-        x1 = 0 if float(rng.random()) < 0.3 else 1
-        expected_roots.append([x0, x1])
+        a = 0 if float(rng.random()) < 0.2 else 1
+        b = 0 if float(rng.random()) < 0.3 else 1
+        expected_roots.append([a, b])
 
-    assert frame[["x0", "x1"]].values.tolist() == expected_roots
-    assert frame["x2"].tolist() == [x0 & x1 for x0, x1 in expected_roots]
+    assert frame[["a", "b"]].values.tolist() == expected_roots
+    assert frame["c"].tolist() == [a & b for a, b in expected_roots]
 
 
 def test_deterministic_regime_retains_nested_seed_prefixes(tmp_path: Path) -> None:
@@ -140,8 +140,8 @@ def test_deterministic_sample_manifest_records_root_only_randomness(
     assert manifest["sample"]["mechanism_regime"] == (
         "root_stochastic_deterministic_nonroots"
     )
-    assert manifest["sampler"]["stochastic_variables"] == ["x0", "x1"]
-    assert manifest["sampler"]["deterministic_variables"] == ["x2"]
+    assert manifest["sampler"]["stochastic_variables"] == ["a", "b"]
+    assert manifest["sampler"]["deterministic_variables"] == ["c"]
     assert manifest["sampler"]["randomness_confined_to_roots"] is True
     assert manifest["empirical_table_summary"][
         "deterministic_assignments_verified"

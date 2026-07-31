@@ -44,7 +44,9 @@ Proceed one causal fixture at a time:
 
 1. **Fix graph and mechanisms.** State the DAG, root distributions, deterministic
    structural functions, node roles, and graph-theoretic MEC/CPDAG. These are
-   evaluator-only.
+   evaluator-only. Use (A,B,C,\ldots) as mathematical labels and the corresponding
+   lowercase `a`, `b`, `c`, ... as learner-safe YAML/CSV/predicate identifiers; do not
+   rename existing `xN` evidence.
 2. **Derive the population.** Factorise the exact finite distribution, enumerate its
    positive-probability support and structural zeros, and verify the causal Markov
    condition and ordinary faithfulness for this fixture. Do not infer faithfulness from

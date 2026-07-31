@@ -174,6 +174,13 @@ structural zeros, conditional independences, ordinary faithfulness, and the stan
 MEC/CPDAG. `mechanism_reference.json` is evaluator-only and must not be copied into ABA
 Learning inputs.
 
+For a new target-wise fixture, use lowercase internal variable names such as `a`, `b`,
+`c`, and `d` in the YAML and CSV. Prose may display them as (A,B,C,D). Uppercase names
+must not be sent directly to Prolog, where they denote logical variables. Names in the
+`alpha`, `alpha_*`, `c_alpha`, and `c_alpha_*` learner namespaces, plus
+`assumption`, `contrary`, and `not`, are
+reserved. Existing `x0`, `x1`, ... bundles continue to validate and run unchanged.
+
 Do not rebuild the existing `m13_bucket3_binary_diamond` output directory. Its source,
 sample, and target-wise AAMAS/ECAI outputs are preserved positive-stochastic pre-pivot
 artefacts. Use a new fixture ID and empty output directory for an approved deterministic

@@ -262,11 +262,11 @@ def test_deterministic_and_population_support_and_faithfulness(
     assert certificate["population"]["structural_zero_count"] == 4
     assert certificate["population"]["full_support"] is False
     assert certificate["mechanisms"]["randomness_confined_to_roots"] is True
-    assert certificate["mechanisms"]["stochastic_variables"] == ["x0", "x1"]
-    assert certificate["mechanisms"]["deterministic_variables"] == ["x2"]
+    assert certificate["mechanisms"]["stochastic_variables"] == ["a", "b"]
+    assert certificate["mechanisms"]["deterministic_variables"] == ["c"]
     assert certificate["conditional_independence_audit"][
         "population_independences"
-    ] == [{"x": "x0", "y": "x1", "conditioning": []}]
+    ] == [{"x": "a", "y": "b", "conditioning": []}]
     assert certificate["assumptions_and_results"]["ordinary_faithfulness"][
         "faithful"
     ] is True

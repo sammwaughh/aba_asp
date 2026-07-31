@@ -60,6 +60,12 @@ frozen table. The wider 22 July dimensions remain possible but are deferred. Do 
 faithfulness from determinism, expose evaluator references to the learner, or create a
 fixture portfolio/run matrix in advance.
 
+For future target-wise fixtures, use lowercase learner identifiers `a`, `b`, `c`, ...
+and mathematical display labels (A,B,C,\ldots). Preserve existing `xN` fixtures. Do not
+use uppercase identifiers directly in Prolog, collide with `alpha_N`/`c_alpha_N`, change
+the inherited `.pl` files, or broaden the locked legacy metric parser; target-wise
+diagnostics resolve body variables from fixture metadata.
+
 **Primary working path:** `docs/research/milestone_plans/milestone1_high_level_path.md`  
 **Expanded M1.2 Approach:** `docs/research/milestone_plans/milestone1_part2/milestone1_part2_expanded_approach.md`  
 **M1.3 Approach:** `docs/research/milestone_plans/milestone1_part3/milestone1_part3_approach.md`

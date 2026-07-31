@@ -52,6 +52,10 @@ Experiments are documented under `docs/experiments/`:
   `docs/research/milestone_plans/milestone1_high_level_path.md`. M1.3 Approach (method):
   `docs/research/milestone_plans/milestone1_part3/milestone1_part3_approach.md`.
   No M1.4; Milestone 2 has not started.
+- Future target-wise fixtures use lowercase internal variable identifiers `a`, `b`,
+  `c`, ... (displayed mathematically as (A,B,C,\ldots)); existing `xN` fixtures remain
+  supported and unchanged. This is a Python-bridge convention and does not modify the
+  inherited Prolog learner.
 
 Each experiment record should capture an ID, research question, theoretical motivation,
 setup, exact command, output, interpretation, and next decision. Records are evidence

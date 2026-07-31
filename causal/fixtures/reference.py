@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-import re
 from typing import Any
 
 import pandas as pd
@@ -17,15 +16,13 @@ from causal.fixtures.artifacts import (
 )
 from causal.fixtures.io import LoadedFixture
 from causal.fixtures.model import CausalFixture, StateValue, point_mass_index
-
-
-_TARGETWISE_PREDICATE_RE = re.compile(r"^x[0-9]+$")
+from causal.predicate_naming import is_safe_learner_variable_name
 
 
 def _binary_targetwise_compatible(fixture: CausalFixture) -> bool:
     return all(
         fixture.states_of(variable) == (0, 1)
-        and _TARGETWISE_PREDICATE_RE.fullmatch(variable)
+        and is_safe_learner_variable_name(variable)
         for variable in fixture.variable_names
     )
 

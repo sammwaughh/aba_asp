@@ -8,7 +8,8 @@ from typing import Any, Mapping, Sequence
 
 import pandas as pd
 
-from causal.metrics import body_vars, target_rule_filter
+from causal.metrics import target_rule_filter
+from causal.predicate_naming import exact_value_body_variables
 from causal.targetwise.semantics import ArtifactIntegrityCheckResult
 
 
@@ -148,6 +149,7 @@ def build_targetwise_diagnostics(
     configuration_hash: str,
     sample_name: str,
     target: str,
+    variable_names: Sequence[str],
     n: int,
     seed: int,
     config_hash: str,
@@ -176,7 +178,9 @@ def build_targetwise_diagnostics(
     body_lengths: list[int] = []
     for rule in target_rules:
         literals = _split_body_literals(rule)
-        variables = sorted(body_vars(" ".join(literals)))
+        variables = sorted(
+            exact_value_body_variables(" ".join(literals), variable_names)
+        )
         all_body_variables.update(variables)
         body_lengths.append(len(literals))
         body_details.append(

@@ -23,6 +23,12 @@ after which the learned rules and traces are described against what the populati
 finite sample made available. This remains groundwork, not a proof or implementation of
 full causal discovery.
 
+Future target-wise fixtures use lowercase internal identifiers `a`, `b`, `c`, ... while
+scientific descriptions may use (A,B,C,\ldots). Existing `xN` evidence is not renamed.
+The Python bridge enforces safe Prolog atoms and keeps causal predicates distinct from
+learner-generated `alpha_N` assumptions and `c_alpha_N` contraries; the inherited Prolog
+engine is unchanged.
+
 The broader dimensions opened on 22 July — missing/partial data, larger controlled graphs,
 category counts, non-discrete data, and cross-target graph recovery — remain possible later
 Bucket 3 work but are deferred while this deterministic-mechanism foundation is developed.
@@ -71,6 +77,10 @@ At this interim stage the main empirical contribution concerns **RQ1**.
   clingo backend; supports non-deterministic (`nd`) and `greedy` folding modes.
 - **Python causal bridge** (`causal/`): data → ABA background knowledge → per-target
   learning → parent-set metrics; plus a YAML-configured grid harness (`run_grid.py`).
+- **Target-wise naming:** safe lowercase Prolog atoms are supported, including the new
+  `a`, `b`, `c`, ... convention and the preserved `x0`, `x1`, ... convention. Current
+  target-wise body diagnostics resolve variables against fixture metadata rather than
+  the locked legacy `xN` metric parser.
 - **ArgCausalDisco**: sibling repo, used only as a data-generation dependency
   (`simulate_discrete_data`, `simulate_linear_continuous_data`). The QL1–QL3 fixtures are
   purpose-built handcrafted tables, not generic ArgCausalDisco samples.
