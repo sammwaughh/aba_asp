@@ -12,182 +12,130 @@
 \emergencystretch=3em
 
 \title{M13-C3 signposted future probes\\
-(H1 support sensitivity; H2 isolated covariate)}
+(H1--H3)}
 \author{}
-\date{Approved for investigation / not tested / not claims\\
-(Samuel decision 2026-08-01)}
+\date{H1--H3 designs approved for investigation\\
+(not yet implemented / not tested / not claims)}
 
 \begin{document}
 \maketitle
 
 \noindent\textbf{Status.} Near-term probes for the M13-C3 target-wise
 investigation (\texttt{m13\_bucket3\_binary\_collider\_and}).
-Investigation status: \textbf{approved} / not yet implemented / not tested.
-\textbf{Not} approved Bucket~3 claims; \textbf{not} locked Bucket~1/2 claim
-content; \textbf{not} report-facing prose.
+H1/H2/H3: \textbf{approved} (H3: design approved) / not yet implemented /
+not tested.
+\textbf{Not} Bucket~3 claims; \textbf{not} locked Bucket~1/2 claim content;
+\textbf{not} report-facing prose.
 Markdown twin: \texttt{future\_probes.md}.
 
-\noindent\textbf{Samuel decision (2026-08-01).}
+\noindent\textbf{Samuel decisions (2026-08-01).}
 \begin{enumerate}
   \item \textbf{H1 approved:} nested-prefix / missing-\((0,0,0)\) AAMAS ablation
-    on this fixture (e.g.\ \(n{=}25\), seed~42, targets \(a,b\)) against the
-    approved \(n{=}30\) baseline.
-  \item \textbf{H2 design approved:} separate schema-2 fixture with isolated
-    \(D\sim\mathrm{Bernoulli}(1/2)\) (variables \(a,b,c,d\)).
-  \item \textbf{H2c in scope} for the first H2 write-up.
+    (e.g.\ \(n{=}25\), seed~42, targets \(a,b\)) vs \(n{=}30\) baseline.
+  \item \textbf{H2 design approved:} isolated \(D\sim\mathrm{Bernoulli}(1/2)\)
+    on \(A\to C\leftarrow B\); H2c in scope; intended id
+    \texttt{m13\_bucket3\_binary\_collider\_and\_iso\_d}.
+  \item \textbf{H3 design approved:}
+    id \texttt{m13\_bucket3\_binary\_bd\_and\_lead\_a};
+    DAG \(B\to C\leftarrow D\), isolated \(A\sim\mathrm{Bernoulli}(1/2)\);
+    \(B\sim\mathrm{Bernoulli}(4/5)\), \(D\sim\mathrm{Bernoulli}(7/10)\);
+    primary ECAI on target \(c\); \textbf{AAMAS contrast in scope};
+    planned sample \texttt{n30\_seed42}.
 \end{enumerate}
-No probe recorded here has been implemented under this record.
 
-\section{Motivation (AAMAS \(n{=}30\), seed~42)}
+\section{Motivation (AAMAS --- H1/H2; ECAI --- H3)}
 
-Configuration \texttt{aamas2025}: greedy / \texttt{mgr} /
-\texttt{folding\_space(bk)} / brave / \texttt{check\_ic}.
-Collection summary:
-\texttt{causal/outputs/aba\_learning/targetwise/m13\_bucket3\_binary\_collider\_and/aamas2025/n30\_seed42/summary.md}.
+AAMAS on \texttt{n30\_seed42}: \(c\) solved with
+\texttt{c(A) :- a\_val\_1(A), b\_val\_1(A).}; roots
+\texttt{completed\_no\_solution} via both-0 over-generalisation blocked by
+rows~26 and~30.
+ECAI on the same sample, target \(c\): first nd fold matches BK-leading
+\texttt{a\_val\_1}; delta retains \(a\) with assumption/contrary repair.
+Full artefact paths: see \texttt{future\_probes.md}.
+
+\section{Ordering and relation}
+
+\begin{enumerate}
+  \item H1 (existing three-variable fixture, AAMAS).
+  \item H2 (\texttt{...\_iso\_d}, AAMAS; trailing distractor \(D\)).
+  \item H3 (\texttt{...\_bd\_and\_lead\_a}, ECAI primary + AAMAS contrast;
+    leading distractor \(A\), parents \(B,D\)).
+\end{enumerate}
 
 \begin{center}
-\begin{tabular}{@{}lll@{}}
+\begin{tabular}{@{}lp{0.62\textwidth}@{}}
 \toprule
-Target & Outcome & Delta \\
+Probe & Focus \\
 \midrule
-\(c\) & \texttt{solved} &
-\texttt{c(A) :- a\_val\_1(A), b\_val\_1(A).} (assumption-free) \\
-\(a\) & \texttt{completed\_no\_solution} & empty \\
-\(b\) & \texttt{completed\_no\_solution} & empty \\
+H1 & AAMAS roots; missing negative witness on current fixture \\
+H2 & AAMAS \(c\); greedy maximal bodies include trailing \(D\) \\
+H3 & ECAI \(c\) first fold on leading \(A\); AAMAS contrast in scope \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-For \(c\), the delta string coincides with the evaluator-only positive-state
-reference. Record as \emph{syntactic coincidence}, not a causal verdict.
+\section{Probe family H1}
 
-Procedural path on root target \(a\) (verified in
-\texttt{cells/target-a/output/prolog.stdout}; \(b\) symmetric):
-greedy folding builds \emph{maximal co-occurrence} bodies from BK;
-the both-1 body is accepted; the both-0 body
-\texttt{a(A) :- b\_val\_0(A), c\_val\_0(A).} over-generalises;
-assumption/contrary repair fails on rows~26 and~30
-(the only sample atoms \((0,0,0)\)).
+Approved nested-prefix / missing-\((0,0,0)\) AAMAS ablation on
+\texttt{m13\_bucket3\_binary\_collider\_and}.
+Predicts spurious both-0 root rules when rows~26/30 absent; on \(n{=}30\),
+\texttt{completed\_no\_solution}. Roots have no deterministic mechanism rule.
 
-\section{Ordering}
+\section{Probe family H2}
 
-\begin{enumerate}
-  \item \textbf{H1 first:} nested-prefix / missing-\((0,0,0)\) ablation
-    on the existing fixture and AAMAS config (seed~42).
-    \emph{Investigation approved.}
-  \item \textbf{H2 second:} new schema-2 fixture with isolated \(D\).
-    \emph{Design approved;} YAML / sample / learning still to be produced after
-    locking remaining implementation parameters (exact fixture id, sample
-    \(n\)/seed).
-\end{enumerate}
-Do not expand either family into a broader run matrix without further approval.
+Design approved: \(A\to C\leftarrow B\) plus isolated \(D\sim\mathrm{Bernoulli}(1/2)\);
+intended id \texttt{m13\_bucket3\_binary\_collider\_and\_iso\_d}.
+AAMAS: greedy bodies predicted to include \texttt{d\_val\_*}; H2c in scope.
+Do not collide with H3 id.
 
-\section{Probe family H1 --- support sensitivity on AAMAS root targets}
-
-Status: approved / not yet implemented / not tested / not a claim.
-
-\subsection*{H1a --- spurious root rule under missing negative witness}
-On this fixture, AAMAS, target \(a\) (symmetrically \(b\)), seed~42: if the
-table is a nested prefix that omits all \((0,0,0)\) rows (e.g.\ \(n{=}25\)),
-learning is predicted to \emph{solve} with a delta that includes
-\[
-\texttt{a(A) :- b\_val\_0(A), c\_val\_0(A).}
-\]
-(resp.\ \(\texttt{b(A) :- a\_val\_0(A), c\_val\_0(A).}\)), which is false as a
-population implication and is blocked on approved \(n{=}30\) by \(E^-\) rows~26
-and~30.
-
-Nested-prefix fact: rows~1--25 of the approved sample contain no \((0,0,0)\)
-atom; rows~26 and~30 are the only such observations in \(n{=}30\).
-
-\subsection*{H1b --- negative witness in the unsafe cell}
-If the sample contains at least one opposite-label row in that both-0 predictor
-cell, the both-0 rule fails brave entailment under the observed AAMAS path. On
-approved \(n{=}30\) this manifested as \texttt{completed\_no\_solution}, not as
-emission of only the safe both-1 rule.
-
-\subsection*{Explicit non-claims for H1}
-\begin{itemize}
-  \item Full support does not imply AAMAS will emit a ``correct'' deterministic
-    root mechanism rule: roots have
-    \texttt{no\_observed\_parent\_deterministic\_rule}.
-  \item ``One of each population atom'' is a sufficient practical condition
-    here; the operational point is a \emph{label conflict inside the greedy
-    candidate body cell}.
-\end{itemize}
-
-\subsection*{Planned investigation (H1)}
-\textbf{Approved.} Nested-prefix / missing-\((0,0,0)\) ablation on
-\texttt{m13\_bucket3\_binary\_collider\_and}, AAMAS, seed~42
-(illustrative first cut: \(n{=}25\)); compare root-target outcomes and deltas
-to the approved \(n{=}30\) baseline.
-
-\section{Probe family H2 --- irrelevant isolated covariate on AAMAS target \(c\)}
+\section{Probe family H3 --- ECAI first-fold distraction by BK-leading \(A\)}
 
 Status: design approved / not yet implemented / not tested / not a claim.
-Requires a new schema-2 fixture before any learning run.
+Id: \texttt{m13\_bucket3\_binary\_bd\_and\_lead\_a}.
 
-\subsection*{H2a --- irrelevant covariate enters greedy bodies}
-Extend the AND collider with an isolated binary root
-\(D\sim\mathrm{Bernoulli}(1/2)\), independent of \(\{A,B,C\}\).
-Under AAMAS, when both values of \(D\) appear among \(E^+\) for \(c\), greedy
-catalogue bodies are predicted to include a \texttt{d\_val\_*} literal; the
-learner is \emph{not} expected to return the \(D\)-free evaluator-form rule
-\[
-\texttt{c(A) :- a\_val\_1(A), b\_val\_1(A).}
-\]
-even if an equivalent covering theory exists.
+\subsection*{Approved design}
+DAG: \(B\to C\leftarrow D\); no edges involving \(A\).
+\begin{align*}
+A &\sim \mathrm{Bernoulli}(1/2),\\
+B &\sim \mathrm{Bernoulli}(4/5)
+\quad (P(B{=}0)=1/5,\ P(B{=}1)=4/5),\\
+D &\sim \mathrm{Bernoulli}(7/10)
+\quad (P(D{=}0)=3/10,\ P(D{=}1)=7/10),\\
+C &= B \land D.
+\end{align*}
+Evaluator reference for \(c\):
+\texttt{c(A) :- b\_val\_1(A), d\_val\_1(A).}
+(\(a\) omitted).
+BK order for target \(c\): \(a\), then \(b\), then \(d\).
+Planned sample: \texttt{n30\_seed42}.
+Primary arm: ECAI target \(c\).
+Secondary arm: AAMAS on the same sample (\textbf{in scope}).
 
-\subsection*{H2b --- learnability vs minimality}
-On that extension, AAMAS target \(c\) \emph{may still solve}
-(e.g.\ two \(D\)-conditioned rules for \(d{=}0\) and \(d{=}1\) with \(a{=}b{=}1\),
-or an assumption repair). The failure mode under test is failure to omit an
-irrelevant predictor / recover the minimal AND form, not necessarily
-\texttt{completed\_no\_solution}.
-Do \emph{not} take ``\(c\) becomes unlearnable'' as the primary hypothesis;
-strong unlearnability wording may be refuted.
+\subsection*{Working hypotheses (not claims)}
+ECAI: first nd fold predicted to match \texttt{a\_val\_*}; repair may solve
+while retaining \(a\) in the ABA presentation.
+AAMAS: greedy \(E^+\) bodies with \(C{=}1\) predicted to include the
+co-occurring \texttt{a\_val\_*} (related to but distinct from H2).
 
-\subsection*{H2c --- sample-edge (in scope)}
-If \(E^+\) for \(c\) realise only one value of \(D\), AAMAS may emit a single
-spuriously \(D\)-conditioned conjunction that is sample-adequate but
-population-inadequate.
-\textbf{Decision:} H2c is in scope for the first H2 write-up.
-
-\subsection*{Planned investigation (H2)}
-\textbf{Design approved (2026-08-01).}
-Lock remaining parameters (fixture id; sample \(n\)/seed); author schema-2 YAML
-with variables \(a,b,c,d\) and isolated \(D\sim\mathrm{Bernoulli}(1/2)\);
-certify population and mechanism reference; run AAMAS on \(c\) (optionally
-roots) testing H2a/H2b with H2c included in the first write-up.
-
-\section{Boundary distinctions}
-
-Preserve throughout:
-\begin{itemize}
-  \item AAMAS strategy / greedy maximal co-occurrence search
-    (procedural behaviour);
-  \item finite-sample support and label conflicts in candidate body cells;
-  \item mechanism correspondence for \(c\) (evaluator-only);
-  \item absence of deterministic root mechanisms for \(a,b\);
-  \item syntactic delta--reference coincidence \(\neq\) automatic causal verdict.
-\end{itemize}
+\subsection*{Planned investigation}
+Author/certify the fixture; run ECAI (primary) and AAMAS (contrast); inspect
+target \(c\) against the evaluator reference. No expanded matrix without
+further approval.
 
 \section{Decisions recorded}
 
 \begin{center}
-\begin{tabular}{@{}llp{0.28\textwidth}@{}}
+\begin{tabular}{@{}llp{0.22\textwidth}@{}}
 \toprule
 Item & Decision & Date \\
 \midrule
 H1 nested-prefix AAMAS ablation & Approved & 2026-08-01 \\
-H2 isolated-\(D\) fixture design & Approved & 2026-08-01 \\
-H2c in first H2 write-up & In scope & 2026-08-01 \\
+H2 isolated-\(D\) design; H2c & Approved / in scope & 2026-08-01 \\
+H3 design, id, \(B\)/\(D\) odds, AAMAS contrast & Design approved & 2026-08-01 \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-Remaining before implementation: execute H1; for H2 choose exact fixture id and
-baseline sample, then author/certify/run. Still no Bucket~3 claim and no
-expanded run matrix without a further Samuel decision.
+Still no Bucket~3 claim. Implementation remains for Fixture/target-wise agents.
 
 \end{document}

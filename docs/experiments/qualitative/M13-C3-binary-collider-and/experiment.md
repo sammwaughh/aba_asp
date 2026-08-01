@@ -11,10 +11,10 @@ inspected; **ABALearn not yet run**; **no Bucket 3 claim**.
 Working mathematical dossier (not report prose):
 `docs/experiments/qualitative/M13-C3-binary-collider-and/fixture_dossier.tex`.
 
-**Future probes (approved for investigation; not claims; not yet run):**
-`future_probes.md` / `future_probes.tex` (H1 support sensitivity on AAMAS
-root targets; H2 isolated covariate on AAMAS target `c`, with H2c in scope).
-Samuel decision 2026-08-01.
+**Future probes:** `future_probes.md` / `future_probes.tex` —
+H1/H2/H3 **designs approved** for investigation (not yet run; not claims;
+H2c in scope; H3 AAMAS contrast in scope; Samuel 2026-08-01).
+H3 fixture id: `m13_bucket3_binary_bd_and_lead_a`.
 
 ## Purpose
 
@@ -345,21 +345,20 @@ Do not place this dossier under `docs/report/findings/`.
 
 ## Future probes
 
-Approved near-term hypotheses (**approved** / not yet implemented / not tested /
-**not claims**): `future_probes.md` and `future_probes.tex`.
-Order: H1 (nested-prefix ablation on this fixture) before H2 (new
-isolated-\(D\) fixture; design approved; H2c in scope).
+`future_probes.md` and `future_probes.tex`.
+H1/H2/H3: **design approved** / not yet implemented / not tested / **not claims**.
+Order: H1 → H2 (`m13_bucket3_binary_collider_and_iso_d`) → H3
+(`m13_bucket3_binary_bd_and_lead_a`; ECAI primary; AAMAS contrast in scope).
 
 ## Next decision
 
-1. **H1 (approved):** implement/run the nested-prefix / missing-\((0,0,0)\)
-   AAMAS ablation and record outcomes against the \(n=30\) baseline
-   (Fixture/target-wise agents — outside this documentation pass).
-2. **H2 (design approved):** lock remaining fixture parameters (exact id,
-   sample \(n\)/seed), author/certify the four-variable isolated-\(D\) fixture,
-   then run AAMAS with H2a/H2b/H2c in the first H2 write-up.
-3. Keep Bucket 3 free of a claim or expanded run matrix until inspected probe
+1. **H1 (approved):** implement/run the nested-prefix AAMAS ablation.
+2. **H2 (design approved):** author `m13_bucket3_binary_collider_and_iso_d`,
+   lock sample, certify, run AAMAS with H2a/H2b/H2c.
+3. **H3 (design approved):** author `m13_bucket3_binary_bd_and_lead_a`
+   (\(B\) 80/20, \(D\) 70/30, \(A\) 1/2); build planned `n30_seed42`; run
+   **ECAI** (primary) and **AAMAS** (in-scope contrast); inspect target `c`.
+4. Keep Bucket 3 free of a claim or expanded run matrix until inspected probe
    evidence warrants a separate decision.
 
-Recorded approvals: see `future_probes.md` (section “Decisions recorded”) and
-`docs/research/decisions.md` (2026-08-01).
+Recorded approvals: `future_probes.md` and `docs/research/decisions.md`.

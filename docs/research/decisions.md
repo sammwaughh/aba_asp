@@ -2,6 +2,28 @@
 
 Recorded decisions that affect experiment direction. Evidence and interpretation remain in experiment records.
 
+## 2026-08-01 — Approve M13-C3 future probe H3 design
+
+**Decision:** Approve the H3 probe design in
+`docs/experiments/qualitative/M13-C3-binary-collider-and/future_probes.md`:
+
+1. Graph/naming: \(B \rightarrow C \leftarrow D\) with isolated
+   \(A\sim\mathrm{Bernoulli}(1/2)\); BK order for target `c` is `a`, `b`, `d`.
+2. Root parameters: \(B\sim\mathrm{Bernoulli}(4/5)\) (80/20 for states 1/0);
+   \(D\sim\mathrm{Bernoulli}(7/10)\) (70/30 for states 1/0).
+3. Fixture id: **`m13_bucket3_binary_bd_and_lead_a`** (does not collide with
+   `m13_bucket3_binary_collider_and` or the intended H2 id
+   `m13_bucket3_binary_collider_and_iso_d`).
+4. Primary arm: ECAI target-wise on `c`. **AAMAS contrast on the same frozen
+   sample is in scope** (related to but distinct from H2).
+5. Planned first sample: `n30_seed42` (confirm at build).
+
+**Status:** design approved; **not yet implemented**; **not tested**; **not a
+Bucket 3 claim**. No expanded run matrix.
+
+**Documentation:** `future_probes.md` / `future_probes.tex`; cross-links in
+`experiment.md`, `fixture_dossier.tex`, and `M1.3-bucket3-claims.md`.
+
 ## 2026-08-01 — Approve M13-C3 future probes H1 and H2 (H2c in scope)
 
 **Decision:** For the active M13-C3 investigation
