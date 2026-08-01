@@ -12,9 +12,10 @@ Working mathematical dossier (not report prose):
 `docs/experiments/qualitative/M13-C3-binary-collider-and/fixture_dossier.tex`.
 
 **Future probes:** `future_probes.md` / `future_probes.tex` —
-H1/H2/H3 **designs approved** for investigation (not yet run; not claims;
-H2c in scope; H3 AAMAS contrast in scope; Samuel 2026-08-01).
-H3 fixture id: `m13_bucket3_binary_bd_and_lead_a`.
+H1–H3 **designs approved** for investigation (not yet run; not claims);
+H4 **proposed** (cautious vs brave on ECAI roots; **blocked** on target-wise
+cautious support; not a claim). H3 fixture id:
+`m13_bucket3_binary_bd_and_lead_a`.
 
 ## Purpose
 
@@ -346,19 +347,22 @@ Do not place this dossier under `docs/report/findings/`.
 ## Future probes
 
 `future_probes.md` and `future_probes.tex`.
-H1/H2/H3: **design approved** / not yet implemented / not tested / **not claims**.
-Order: H1 → H2 (`m13_bucket3_binary_collider_and_iso_d`) → H3
-(`m13_bucket3_binary_bd_and_lead_a`; ECAI primary; AAMAS contrast in scope).
+H1–H3: **design approved** / not yet implemented / not tested / **not claims**.
+H4: **proposed** / blocked on target-wise cautious support / **not a claim**.
+Order: H1 → H2 → H3 → H4 (infra then run).
 
 ## Next decision
 
 1. **H1 (approved):** implement/run the nested-prefix AAMAS ablation.
 2. **H2 (design approved):** author `m13_bucket3_binary_collider_and_iso_d`,
    lock sample, certify, run AAMAS with H2a/H2b/H2c.
-3. **H3 (design approved):** author `m13_bucket3_binary_bd_and_lead_a`
-   (\(B\) 80/20, \(D\) 70/30, \(A\) 1/2); build planned `n30_seed42`; run
-   **ECAI** (primary) and **AAMAS** (in-scope contrast); inspect target `c`.
-4. Keep Bucket 3 free of a claim or expanded run matrix until inspected probe
+3. **H3 (design approved):** author `m13_bucket3_binary_bd_and_lead_a`;
+   build planned `n30_seed42`; run ECAI (primary) and AAMAS (contrast).
+4. **H4:** do **not** decide infra/config details now. When H4 is opened,
+   resolve the deferred checklist in `future_probes.md` (cautious `.pl` name,
+   `configuration.id`, validator, audit semantics, H4a/optional `c`).
+5. Keep Bucket 3 free of a claim or expanded run matrix until inspected probe
    evidence warrants a separate decision.
 
-Recorded approvals: `future_probes.md` and `docs/research/decisions.md`.
+Recorded H1–H3 approvals: `future_probes.md` and `docs/research/decisions.md`.
+H4 remains proposed / infra-blocked; open decisions are flagged there only.
