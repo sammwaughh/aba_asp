@@ -91,7 +91,7 @@ Procedural reading of the AAMAS root-target path (verified in
 These facts from closed H0 motivate probe families H1 and H2. They do not by
 themselves approve a Bucket 3 claim.
 
-\subsection Motivation addendum (ECAI arm of closed H0 — for H3)
+### Motivation addendum: ECAI arm of closed H0 for H3
 
 On the same frozen sample `n30_seed42`, configuration `ecai2024`
 (`folding_mode(nd)`, `folding_selection(any)`, brave / `check_ic`), target `c`
@@ -387,7 +387,8 @@ c_alpha_3(A) :- alpha_2(A), b_val_0(A).
 ```
 
 Trace/fixture integration reading (for the signpost): this is a **per-row
-assumption choice gadget** — one stable model can Hold at 9 and Reject at 26
+assumption choice gadget** — one stable model can make the target hold at row 9
+and reject it at row 26
 because ground assumption atoms differ. Runner `solved` means brave coverage of
 \(E^+\)/\(E^-\), **not** recovery of a functional root mechanism
 (`no_observed_parent_deterministic_rule`).

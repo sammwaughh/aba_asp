@@ -165,7 +165,9 @@ Workflow:
 
 ## Next action
 
-**Open deferred M13-C3 probes when ready** (`future_probes.md`; any order).
+**Open a deferred M13-C3 probe consistently with `future_probes.md`:** H1
+precedes H2; H3 may be selected independently; H4 remains proposed /
+infrastructure-blocked.
 **H0 is closed**; **no Bucket 3 claim**. Do not create a claim or fixture
 portfolio in advance.
 

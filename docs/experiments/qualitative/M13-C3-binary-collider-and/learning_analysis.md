@@ -315,11 +315,13 @@ is an \(E^+\) example for \(a\) with joint values \((1,0,0)\). Row~**26** is an
 \(E^-\) example with joint values \((0,0,0)\). Both rows share the BK literals
 \(\mathtt{b\_val\_0}\) and \(\mathtt{c\_val\_0}\). No deterministic rule over
 \((B,C)\) can assign both labels. The \(\alpha_2\)/\(\alpha_3\) nest is a
-**per-row assumption choice gadget**. Different stable models may Hold at
-row~9 and Reject at row~26 because the ground assumption atoms differ across
-answer sets. Brave entailment only requires that some answer set meet the joint
-\(E^\pm\) constraints. It does **not** require a unique determination of \(a\)
-from \((b,c)\).
+**per-row assumption choice gadget**. Within one witnessing stable model, the
+ground assumption atoms for different row identifiers can take different
+statuses, permitting \(a\) to hold at row~9 while being rejected at row~26.
+Other stable models may make different choices. Brave entailment requires the
+existence of at least one stable model that meets the **joint** \(E^\pm\)
+constraints; it does not use a separate witness for each example and does
+**not** require a unique determination of \(a\) from \((b,c)\).
 
 The runner outcome `solved` therefore means that a serialized ABA framework
 passed brave entailment and that the artefact audit reported SAT. That outcome

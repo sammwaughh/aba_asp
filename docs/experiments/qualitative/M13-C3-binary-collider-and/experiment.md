@@ -14,8 +14,9 @@ investigation complete; probes H1–H4 deferred; **no Bucket 3 claim**.
 | **H0** | Closed baseline: fixture `m13_bucket3_binary_collider_and`; frozen sample `n30_seed42`; AAMAS and ECAI arms on all targets `a`, `b`, `c`; Trace + fixture integration; documented in `learning_analysis.md` / `.tex`. |
 | **H1–H4** | Deferred follow-up probes motivated by H0 (not part of H0). Designs and status in `future_probes.md` / `.tex`. |
 
-**Close means:** baseline learning analysis finished. Move on to deferred probes
-H1–H4 (any order).  
+**Close means:** baseline learning analysis finished. Move on to the deferred
+probes subject to their recorded status: H1 precedes H2, H3 may be selected
+independently, and H4 remains proposed / infrastructure-blocked.
 **Does not mean:** a Bucket 3 claim is locked, or that H1–H4 are cancelled.
 Still **no Bucket 3 claim**.
 
@@ -73,7 +74,7 @@ infrastructure for controlled interpretation of ABALearn outputs.
 ### Current `aba_asp/causal` implementation
 
 Target-wise bridge (`causal/targetwise/`): one frozen sample, every variable as
-target, binary exact-value BK, target value `1` as \(E^+\) and `0` as \(E^-\`.
+target, binary exact-value BK, target value `1` as \(E^+\) and `0` as \(E^-\).
 AAMAS and ECAI collections for this fixture are complete under
 `causal/outputs/aba_learning/targetwise/m13_bucket3_binary_collider_and/`.
 The stochastic diamond under `m13_bucket3_binary_diamond` remains pre-pivot
@@ -196,7 +197,7 @@ audit (`ordinary_faithfulness.status: verified_exactly`).
 
 ### Target variable(s)
 
-Planned all-target investigation on the same frozen table:
+Executed all-target investigation on the same frozen table:
 
 | Target | True parents | Target type | Evaluator reference status |
 |---|---|---|---|
@@ -206,14 +207,18 @@ Planned all-target investigation on the same frozen table:
 
 ### Positive / negative examples
 
-**Not yet constructed as learner arrays.** Under the planned binary exact-value
-policy (target value `1` positive, `0` negative), the frozen sample implies the
-counts in the ABA Learning section above.
+Constructed separately for each target from the same frozen table under the
+binary exact-value policy (target value `1` positive, `0` negative). The realised
+arrays are stored in each cell's `input/examples.json`; their counts are listed
+in the ABA Learning section above. Changing the target did not resample the
+table.
 
 ### Background knowledge
 
-**Not yet generated.** Planned: exact-value predicates for non-target columns
-only; graph/certificate/mechanism reference remain evaluator-only.
+Generated independently for each target in `input/bk.aba`, using exact-value
+predicates for the two non-target columns only. The graph, certificate, and
+mechanism reference remained evaluator-only and were not included in BK or the
+example arrays.
 
 ## Commands run
 
@@ -228,7 +233,18 @@ python -m causal.fixtures.cli build \
   --n 30 --seed 42
 ```
 
-ABALearn / target-wise collection: **not run**.
+The completed target-wise collections correspond to these entry points:
+
+```bash
+python -m causal.targetwise.cli run \
+  --config causal/configs/targetwise/m13_bucket3_binary_collider_and/aamas2025/n30_seed42.yaml
+
+python -m causal.targetwise.cli run \
+  --config causal/configs/targetwise/m13_bucket3_binary_collider_and/ecai2024/n30_seed42.yaml
+```
+
+The arm `run.log` and `summary.md` files record the realised execution sequence
+and outcomes. This documentation reconciliation did not rerun either collection.
 
 ## Environment
 
@@ -330,7 +346,7 @@ closed H0 baseline. Not part of the H0 six-cell result.
 
 ## Next decision
 
-1. Open deferred probes H1–H4 when ready (any order; designs in
-   `future_probes.md`).
+1. Open a deferred probe consistently with `future_probes.md`: H1 precedes H2;
+   H3 may be selected independently; H4 remains proposed / infrastructure-blocked.
 2. Keep Bucket 3 free of a claim until inspected probe evidence warrants a
    separate decision.
