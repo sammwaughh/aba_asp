@@ -11,6 +11,11 @@ inspected; **ABALearn not yet run**; **no Bucket 3 claim**.
 Working mathematical dossier (not report prose):
 `docs/experiments/qualitative/M13-C3-binary-collider-and/fixture_dossier.tex`.
 
+**Future probes (approved for investigation; not claims; not yet run):**
+`future_probes.md` / `future_probes.tex` (H1 support sensitivity on AAMAS
+root targets; H2 isolated covariate on AAMAS target `c`, with H2c in scope).
+Samuel decision 2026-08-01.
+
 ## Purpose
 
 Record the first approved Bucket 3 deterministic research fixture before any
@@ -338,23 +343,23 @@ Interim Experimentation / Progress (Milestone 1 Part 3 / Bucket 3). Working
 evidence and mathematical dossier only; **not** report-facing claim prose.
 Do not place this dossier under `docs/report/findings/`.
 
+## Future probes
+
+Approved near-term hypotheses (**approved** / not yet implemented / not tested /
+**not claims**): `future_probes.md` and `future_probes.tex`.
+Order: H1 (nested-prefix ablation on this fixture) before H2 (new
+isolated-\(D\) fixture; design approved; H2c in scope).
+
 ## Next decision
 
-1. Approve target-wise learning configuration(s) for this frozen sample
-   (published arm(s), path layout under
-   `causal/outputs/aba_learning/targetwise/m13_bucket3_binary_collider_and/`).
-2. Run ABALearn once per target on `n30_seed42` without exposing evaluator
-   artefacts to the learner.
-3. Inspect learned deltas against the evaluator reference and the
-   population/sample information distinction; only then consider whether any
-   observation is claim-worthy.
+1. **H1 (approved):** implement/run the nested-prefix / missing-\((0,0,0)\)
+   AAMAS ablation and record outcomes against the \(n=30\) baseline
+   (Fixture/target-wise agents — outside this documentation pass).
+2. **H2 (design approved):** lock remaining fixture parameters (exact id,
+   sample \(n\)/seed), author/certify the four-variable isolated-\(D\) fixture,
+   then run AAMAS with H2a/H2b/H2c in the first H2 write-up.
+3. Keep Bucket 3 free of a claim or expanded run matrix until inspected probe
+   evidence warrants a separate decision.
 
-Open before learning (research decisions, not recorder decisions):
-
-- Which published configuration(s) (e.g. AAMAS 2025 / ECAI 2024) to run first
-  on this fixture.
-- Whether one configuration or a paired comparison is required for the first
-  learning write-up.
-- How root-target predictive rules will be scored relative to
-  `no_observed_parent_deterministic_rule` without being misread as mechanism
-  recovery.
+Recorded approvals: see `future_probes.md` (section “Decisions recorded”) and
+`docs/research/decisions.md` (2026-08-01).

@@ -2,6 +2,33 @@
 
 Recorded decisions that affect experiment direction. Evidence and interpretation remain in experiment records.
 
+## 2026-08-01 — Approve M13-C3 future probes H1 and H2 (H2c in scope)
+
+**Decision:** For the active M13-C3 investigation
+(`m13_bucket3_binary_collider_and`), approve the near-term probes recorded in
+`docs/experiments/qualitative/M13-C3-binary-collider-and/future_probes.md`
+(and `future_probes.tex`):
+
+1. **H1** — nested-prefix / missing-\((0,0,0)\) AAMAS ablation on the existing
+   fixture (illustrative first cut: \(n=25\), seed 42, targets `a` and `b`)
+   against the approved \(n=30\) baseline.
+2. **H2** — design of a separate schema-2 fixture with isolated
+   \(D\sim\mathrm{Bernoulli}(1/2)\) (variables `a`,`b`,`c`,`d`), to test
+   irrelevant-covariate behaviour on AAMAS target `c`.
+3. **H2c** is **in scope** for the first H2 write-up (sample-edge where \(E^+\)
+   for `c` realises only one value of \(D\)).
+
+**Status:** probes are approved for investigation; they are **not yet
+implemented**, **not tested**, and are **not Bucket 3 claims**. No expanded run
+matrix is approved.
+
+**Sequencing:** H1 before H2. H2 still requires locking remaining implementation
+parameters (exact fixture id; sample \(n\)/seed) before YAML authorship and
+learning runs.
+
+**Documentation:** `future_probes.md` / `future_probes.tex`; cross-links in
+`experiment.md`, `fixture_dossier.tex`, and `M1.3-bucket3-claims.md`.
+
 ## 2026-07-31 — Lowercase learner identifiers for future causal fixtures
 
 **Decision:** Future target-wise causal fixtures use safe lowercase internal variable
