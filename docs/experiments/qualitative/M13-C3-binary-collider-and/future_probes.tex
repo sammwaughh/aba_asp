@@ -4,152 +4,708 @@
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath,amssymb,booktabs}
 \usepackage{enumitem}
+\usepackage{array}
+\usepackage{microtype}
+\usepackage{xurl}
 \usepackage[hidelinks]{hyperref}
 
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0.55em}
 \setlist{nosep,leftmargin=*}
 \emergencystretch=3em
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
 
-\title{M13-C3 signposted future probes\\
-(H1--H4)}
+\title{M13-C3 --- Signposted future probes (H1--H4)\\
+motivated by closed H0}
 \author{}
-\date{H1--H3 designs approved; H4 proposed / infra-blocked\\
+\date{H0 closed; H1--H3 designs approved; H4 proposed / infra-blocked\\
 (not tested / not claims)}
 
 \begin{document}
 \maketitle
 
-\noindent\textbf{Status.} Near-term probes for the M13-C3 target-wise
-investigation (\texttt{m13\_bucket3\_binary\_collider\_and}).
-H1--H3: designs \textbf{approved} / not yet implemented / not tested.
-H4: \textbf{proposed} / blocked on target-wise cautious support / not tested.
-\textbf{Not} Bucket~3 claims; \textbf{not} report-facing prose.
-Markdown twin: \texttt{future\_probes.md}.
+\section{Status}
 
-\noindent\textbf{Samuel decisions (2026-08-01) --- H1--H3.}
-H1 nested-prefix AAMAS ablation approved; H2 isolated-\(D\) design approved
-(id \texttt{m13\_bucket3\_binary\_collider\_and\_iso\_d}, H2c in scope);
-H3 design approved (id \texttt{m13\_bucket3\_binary\_bd\_and\_lead\_a};
-\(B\sim\mathrm{Bernoulli}(4/5)\), \(D\sim\mathrm{Bernoulli}(7/10)\);
-ECAI primary + AAMAS contrast).
-H4 is signposted only.
+{\raggedright
+Follow-up probes \textbf{motivated by closed baseline H0}, and \textbf{not}
+part of H0 itself.
+H0 is the completed six-cell AAMAS+ECAI investigation on fixture
+\path{m13_bucket3_binary_collider_and} / \texttt{n30\_seed42}, documented in
+\texttt{learning\_analysis.md} / \texttt{.tex} and summarised in
+\texttt{experiment.md}.
+\par}
 
-\section{Ordering and relation}
+\begin{itemize}
+  \item H0: \textbf{closed} (see \texttt{learning\_analysis.md}; not redefined here)
+  \item H1 / H2: \textbf{approved} / not yet implemented / not tested / not claims
+  \item H3: \textbf{design approved} / not yet implemented / not tested /
+    not a Bucket~3 claim (fixture YAML not yet built)
+  \item H4: \textbf{proposed} / blocked on target-wise cautious support /
+    not tested / not a Bucket~3 claim
+  \item \textbf{Not} approved Bucket~3 claims
+  \item \textbf{Not} locked Bucket~1/2 claim content
+  \item \textbf{Not} report-facing prose (\texttt{docs/report/findings/} is out of scope)
+  \item Markdown twin: \texttt{future\_probes.md}
+\end{itemize}
 
+\paragraph{Samuel decision (2026-08-01) --- H1 / H2.}
 \begin{enumerate}
-  \item H1 --- existing fixture, AAMAS roots, missing negative witness.
-  \item H2 --- trailing distractor \(D\), AAMAS maximal bodies.
-  \item H3 --- leading distractor \(A\), ECAI first fold (+ AAMAS contrast).
-  \item H4 --- same fixture/sample; ECAI roots; brave vs cautious
-    (\textbf{blocked} on target-wise cautious support).
+  \item \textbf{H1 approved} --- nested-prefix / missing-\((0,0,0)\) AAMAS
+    ablation on this fixture (e.g.\ \(n=25\), seed~42, targets \(a\) and \(b\))
+    against the approved \(n=30\) baseline.
+  \item \textbf{H2 design approved} --- separate schema-2 fixture with isolated
+    \(D\sim\mathrm{Bernoulli}(1/2)\) (variables \texttt{a},\texttt{b},\texttt{c},\texttt{d}).
+  \item \textbf{H2c in scope} for the first H2 write-up.
 \end{enumerate}
 
+\paragraph{Samuel decision (2026-08-01) --- H3.}
+\begin{enumerate}
+  \item Graph/naming sketch \textbf{approved}.
+  \item Root parameters \textbf{approved:}
+    \(B\sim\mathrm{Bernoulli}(4/5)\)
+    (\(P(B{=}1)=4/5\), \(P(B{=}0)=1/5\));
+    \(D\sim\mathrm{Bernoulli}(7/10)\)
+    (\(P(D{=}1)=7/10\), \(P(D{=}0)=3/10\));
+    \(A\sim\mathrm{Bernoulli}(1/2)\) as previously sketched.
+  \item Fixture id \textbf{locked:} \texttt{m13\_bucket3\_binary\_bd\_and\_lead\_a}
+    (AND of parents \texttt{b},\texttt{d}; BK-leading isolated \texttt{a}).
+    Distinct from \texttt{m13\_bucket3\_binary\_collider\_and} and from the
+    intended H2 id \texttt{m13\_bucket3\_binary\_collider\_and\_iso\_d}
+    (when H2 is authored).
+  \item \textbf{AAMAS contrast in scope} for the H3 write-up (secondary to
+    primary ECAI inspection of target \(c\); valuable as a related but distinct
+    check from H2).
+\end{enumerate}
+
+\paragraph{H4.}
+Signposted only; \textbf{not} approved for implementation and \textbf{blocked}
+until target-wise cautious learning is supported (see H4 section).
+
+No probe in this file has been implemented or run under this record.
+Approvals authorise investigation; they do not create a Bucket~3 claim or a run
+matrix. Planned first frozen sample for H3 (to confirm at build):
+\texttt{n30\_seed42}.
+
+\section{Motivation (verified facts from the AAMAS arm of closed H0)}
+
+{\raggedright
+On the approved frozen sample \texttt{n30\_seed42}, configuration
+\texttt{aamas2025} (greedy / \texttt{folding\_selection(mgr)} /
+\texttt{folding\_space(bk)} / brave / \texttt{check\_ic}):
+\par}
+
 \begin{center}
-\begin{tabular}{@{}lp{0.62\textwidth}@{}}
+\begin{tabular}{@{}lll@{}}
 \toprule
-Probe & Focus \\
+Target & Outcome & Delta (if any) \\
 \midrule
-H1 & AAMAS roots; missing \((0,0,0)\) witness \\
-H2 & AAMAS \(c\); greedy inclusion of trailing \(D\) \\
-H3 & ECAI \(c\); BK-leading \(A\); AAMAS contrast \\
-H4 & ECAI roots; brave\(\to\)cautious; needs infra \\
+\texttt{c} & \texttt{solved} &
+  \texttt{c(A) :- a\_val\_1(A), b\_val\_1(A).} (assumption-free) \\
+\texttt{a} & \texttt{completed\_no\_solution} & empty \\
+\texttt{b} & \texttt{completed\_no\_solution} & empty \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-\section{H1--H3 (summary)}
+Sources:
+\begin{itemize}
+  \item collection summary:
+    \path{causal/outputs/aba_learning/targetwise/m13_bucket3_binary_collider_and/aamas2025/n30_seed42/summary.md}
+  \item target \(c\) delta: \path{.../cells/target-c/output/delta.aba}
+  \item target \(a\)/\(b\) reports and \texttt{prolog.stdout} under
+    \path{.../cells/target-{a,b}/}
+\end{itemize}
 
-As previously recorded: see Markdown twin for full design tables.
-H1--H3 remain approved for investigation and not yet run.
+For target \(c\), the learned delta string coincides with the evaluator-only
+positive-state reference in
+\path{causal/outputs/causal_fixtures/m13_bucket3_binary_collider_and/mechanism_reference.json}.
+Record that as \textbf{syntactic coincidence}, not as a causal-recovery verdict.
+
+Procedural reading of the AAMAS root-target path (verified in
+\path{.../cells/target-a/output/prolog.stdout}; target \(b\) is
+symmetric):
+\begin{enumerate}
+  \item Greedy folding builds \textbf{maximal co-occurrence bodies} from BK for
+    each \(E^+\) row (not a minimal-parent search).
+  \item The both-1 co-occurrence body
+    \texttt{a(A) :- b\_val\_1(A), c\_val\_1(A)} is accepted under brave
+    entailment.
+  \item The both-0 co-occurrence body
+    \texttt{a(A) :- b\_val\_0(A), c\_val\_0(A)} over-generalises;
+    assumption/contrary repair is attempted.
+  \item Contrary rote learning cites rows~\textbf{26} and~\textbf{30} --- the
+    only sample atoms \((0,0,0)\) in \path{samples/n30_seed42.csv} --- and
+    contrary folding then fails, yielding \texttt{completed\_no\_solution}.
+\end{enumerate}
+
+These facts from closed H0 motivate probe families H1 and H2. They do not by
+themselves approve a Bucket~3 claim.
+
+\subsection{Motivation addendum (ECAI arm of closed H0 --- for H3)}
+
+{\raggedright
+On the same frozen sample \texttt{n30\_seed42}, configuration \texttt{ecai2024}
+(\texttt{folding\_mode(nd)}, \texttt{folding\_selection(any)}, brave /
+\texttt{check\_ic}), target \(c\) \textbf{solved} with delta (verified):
+\par}
+\begin{verbatim}
+c(A) :- alpha_1(A), a_val_1(A).
+c_alpha_1(A) :- b_val_0(A).
+assumption(alpha_1(A)).
+contrary(alpha_1(A),c_alpha_1(A)) :- assumption(alpha_1(A)).
+\end{verbatim}
+
+In \texttt{\ldots/ecai2024/n30\_seed42/cells/target-c/output/prolog.stdout},
+the first nd fold on an early \(E^+\) row replaces the sample id by
+\textbf{\texttt{a\_val\_1(A)}} (the first BK predictor under declared order
+\texttt{a}, \texttt{b} for that cell), then assumption repair retains \(a\) in
+the ordinary target body while the second parent enters via a contrary.
+Collection summary: \texttt{\ldots/ecai2024/n30\_seed42/summary.md}.
+
+This motivates \textbf{H3}: put an \emph{independent} distractor first in BK by
+naming, under ECAI, on a new fixture. H3 design is now approved (see Status);
+it is still \textbf{not} a Bucket~3 claim and is \textbf{not yet built}.
+
+\section{Ordering}
+
+\begin{enumerate}
+  \item \textbf{H1 first} --- nested-prefix / missing-\((0,0,0)\) ablation on
+    the existing fixture and AAMAS config (seed~42).
+    \textbf{Investigation approved.}
+  \item \textbf{H2 second} --- separate schema-2 fixture with isolated
+    covariate \(D\) on the \(A\to C\leftarrow B\) AND collider.
+    \textbf{Design approved;} intended id
+    \texttt{m13\_bucket3\_binary\_collider\_and\_iso\_d} (author when H2 is
+    built); sample \(n\)/seed still to lock at H2 authorship.
+  \item \textbf{H3} --- separate schema-2 fixture
+    \texttt{m13\_bucket3\_binary\_bd\_and\_lead\_a} with BK-leading independent
+    \(A\) and AND collider \(B\to C\leftarrow D\).
+    \textbf{Design approved;} primary ECAI target \(c\);
+    \textbf{AAMAS contrast in scope}. YAML / sample / learning not yet produced.
+  \item \textbf{H4 (proposed)} --- same fixture/\texttt{n30\_seed42}; ECAI
+    \textbf{root} targets under \textbf{cautious} vs locked brave;
+    \textbf{blocked} on target-wise cautious support. Not approved for run until
+    infra is designed and approved.
+\end{enumerate}
+
+Do not expand any family into a broader run matrix beyond these approved probes
+(and a later-approved H4) without a further Samuel decision.
+
+\subsection{Relation among probe families (keep distinct)}
+
+\begin{center}
+\begin{tabular}{@{}lL{0.72\textwidth}@{}}
+\toprule
+Probe & Focus \\
+\midrule
+H1 & AAMAS roots; missing negative witness / both-0 over-generalisation
+  on the \textbf{current} three-variable fixture \\
+H2 & AAMAS target \(c\); irrelevant covariate enters \textbf{greedy maximal}
+  co-occurrence bodies (minimality vs solvability); intended id
+  \texttt{m13\_bucket3\_binary\_collider\_and\_iso\_d} \\
+H3 & \textbf{ECAI} target \(c\) (primary); \textbf{BK order} puts independent
+  distractor \textbf{first}; nd first-fold / repair path;
+  \textbf{AAMAS contrast in scope}; id
+  \texttt{m13\_bucket3\_binary\_bd\_and\_lead\_a} \\
+\textbf{H4} & \textbf{Same fixture/sample}; ECAI \textbf{root} targets
+  \(a\)/\(b\); \textbf{brave \(\to\) cautious}; \textbf{requires target-wise
+  learning-mode support} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+H3 is not a duplicate of H2: different DAG, different distractor
+placement/name, different primary config (ECAI nd vs AAMAS greedy), and
+distinct fixture ids. The in-scope AAMAS arm on H3 still differs from H2 because
+the irrelevant variable is BK-leading \(a\) and the mechanism parents are
+\(b\),\,\(d\).
+
+H4 is not a duplicate of H1 or H3: it holds the table fixed and varies
+\textbf{entailment / learning mode} on the target-wise path for \textbf{roots}.
+
+\section{Probe family H1 --- support sensitivity on AAMAS root targets}
+
+Status: \textbf{approved} / not yet implemented / not tested / not a claim.
+
+\subsection{H1a --- spurious root rule under missing negative witness}
+
+On this fixture, AAMAS, target \(a\) (symmetrically \(b\)), seed~42: if the
+table is a nested prefix that \textbf{omits all \((0,0,0)\) rows} (e.g.\
+\(n=25\)), learning is predicted to \textbf{solve} with a delta that includes
+the both-0 co-occurrence rule
+\begin{verbatim}
+a(A) :- b_val_0(A), c_val_0(A).
+\end{verbatim}
+(respectively \texttt{b(A) :- a\_val\_0(A), c\_val\_0(A).}), which is
+\textbf{false} as a population implication and is blocked on the approved
+\(n=30\) table by \(E^-\) rows~26 and~30.
+
+Nested-prefix fact on the approved sample (seed~42): rows~1--25 contain no
+\((0,0,0)\) atom; rows~26 and~30 are the only \((0,0,0)\) observations in
+\(n=30\).
+
+\subsection{H1b --- negative witness in the unsafe cell}
+
+If the sample contains at least one opposite-label row in that both-0 predictor
+cell, the both-0 rule fails brave entailment under the observed AAMAS path. On
+approved \(n=30\) this manifested as \textbf{\texttt{completed\_no\_solution}},
+not as emission of only the safe both-1 rule.
+
+\subsection{Explicit non-claims for H1}
+
+\begin{itemize}
+  \item Full support does \textbf{not} imply AAMAS will emit a ``correct''
+    deterministic root mechanism rule: roots have
+    \texttt{no\_observed\_parent\_deterministic\_rule} in the evaluator
+    reference.
+  \item ``One of each population atom'' is a sufficient practical condition on
+    this approved sample, but the operational point is a \textbf{label conflict
+    inside the greedy candidate body cell}, not a generic demand for full joint
+    support.
+  \item H1 does not claim that omitting \((0,0,0)\) is the only way AAMAS can
+    emit a spurious root rule, nor that every seed behaves identically.
+\end{itemize}
+
+\subsection{Planned investigation (H1)}
+
+\textbf{Approved.} Nested-prefix / missing-\((0,0,0)\) ablation on the existing
+fixture \path{m13_bucket3_binary_collider_and} and AAMAS config, seed~42
+(illustrative first cut: \(n=25\)), comparing root-target outcomes and deltas to
+the approved \(n=30\) baseline. No broader matrix beyond this probe without
+further approval.
+
+\section{Probe family H2 --- irrelevant isolated covariate on AAMAS target \texorpdfstring{\(c\)}{c}}
+
+Status: \textbf{design approved} / not yet implemented / not tested / not a claim.
+Requires a \textbf{new} schema-2 fixture before any learning run.
+
+\subsection{H2a --- irrelevant covariate enters greedy bodies}
+
+Extend the AND collider with an isolated binary root
+\(D\sim\mathrm{Bernoulli}(1/2)\), independent of \(\{A,B,C\}\). Under AAMAS,
+when both values of \(D\) appear among \(E^+\) for \(c\), greedy catalogue
+bodies are predicted to \textbf{include a \texttt{d\_val\_*} literal}; the
+learner is \textbf{not} expected to return the \(D\)-free evaluator-form rule
+\begin{verbatim}
+c(A) :- a_val_1(A), b_val_1(A).
+\end{verbatim}
+even if an equivalent covering theory exists.
+
+\subsection{H2b --- learnability vs minimality}
+
+On that extension, AAMAS target \(c\) \textbf{may still solve} (e.g.\ two
+\(D\)-conditioned rules covering \(d=0\) and \(d=1\) with \(a=b=1\), or an
+assumption repair). The failure mode under test is \textbf{failure to omit an
+irrelevant predictor / recover the minimal AND form}, not necessarily
+\texttt{completed\_no\_solution}.
+
+Do \textbf{not} record the strong claim ``\(c\) becomes unlearnable'' as the
+primary hypothesis. Treat strong ``unlearnable'' wording as a probe that may be
+\textbf{refuted}.
+
+\subsection{H2c --- sample-edge (\textbf{in scope})}
+
+If \(E^+\) for \(c\) realise only one value of \(D\), AAMAS may emit a single
+spuriously \(D\)-conditioned conjunction that is sample-adequate but
+population-inadequate.
+
+\textbf{Decision:} H2c is \textbf{in scope} for the first H2 write-up (not
+deferred).
+
+\subsection{Planned investigation (H2)}
+
+\textbf{Design approved (2026-08-01).} Remaining implementation steps (not
+performed by this documentation update):
+\begin{enumerate}
+  \item Lock remaining fixture parameters as needed (sample \(n\) and seed;
+    intended id \textbf{\path{m13_bucket3_binary_collider_and_iso_d}})
+    and author a separate schema-2 YAML with variables
+    \texttt{a},\texttt{b},\texttt{c},\texttt{d} and isolated
+    \(D\sim\mathrm{Bernoulli}(1/2)\) on \(A\to C\leftarrow B\).
+    Do \textbf{not} collide with H3 id
+    \path{m13_bucket3_binary_bd_and_lead_a}.
+  \item Certify population / mechanism reference as for M13-C3.
+  \item Run AAMAS target-wise on \(c\) (and optionally roots) to test
+    \textbf{H2a/H2b}, and include \textbf{H2c} in the first H2 write-up
+    (construct or select a sample edge if it does not arise naturally).
+  \item No portfolio or multi-fixture matrix until that single extension is
+    inspected.
+\end{enumerate}
+
+\section{Probe family H3 --- ECAI first-fold distraction by BK-leading
+independent variable}
+
+Status: \textbf{design approved} / not yet implemented / not tested / not a
+Bucket~3 claim. Fixture YAML \textbf{not yet built}. Do not reuse or alter
+\texttt{m13\_bucket3\_binary\_collider\_and}.
+
+\subsection{Approved fixture design}
+
+\begin{center}
+\begin{tabular}{@{}lL{0.62\textwidth}@{}}
+\toprule
+Field & Value \\
+\midrule
+Fixture id & \texttt{m13\_bucket3\_binary\_bd\_and\_lead\_a} \\
+Internal / display & \texttt{a},\texttt{b},\texttt{c},\texttt{d} / \(A,B,C,D\) \\
+DAG & \(B \rightarrow C \leftarrow D\); \textbf{no edges} involving \(A\) \\
+\(A\) & \(\mathrm{Bernoulli}(1/2)\); independent of \(\{B,C,D\}\) \\
+\(B\) & \(\mathrm{Bernoulli}(4/5)\) --- \(P(B{=}0)=1/5\), \(P(B{=}1)=4/5\) \\
+\(D\) & \(\mathrm{Bernoulli}(7/10)\) --- \(P(D{=}0)=3/10\), \(P(D{=}1)=7/10\) \\
+\(C\) & deterministic \(C = B \land D\) \\
+Evaluator reference for \(c\) &
+  \texttt{c(A) :- b\_val\_1(A), d\_val\_1(A).} (\texttt{a} must not appear) \\
+BK order for target \(c\) & predictors \textbf{\texttt{a}, then \texttt{b}, then
+  \texttt{d}} (irrelevant first) \\
+Planned first sample & \texttt{n30\_seed42} (confirm at build) \\
+Primary learning arm & \textbf{ECAI} target \(c\) \\
+Secondary arm & \textbf{AAMAS} on the same frozen sample (\textbf{in scope}) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Naming is part of the probe: under exact-value encoding, \(a\) precedes the
+mechanism parents in BK.
+
+\subsection{Scientific question}
+
+{\raggedright
+When learning target \(c\) under \textbf{ECAI} (\texttt{folding\_mode(nd)},
+one-step folds, \texttt{folding\_selection(any)}, etc.) on a frozen sample from
+this fixture, does BK-leading independent \(a\) \textbf{distract} the first fold
+(and/or the final ABA shape) away from the mechanism-aligned \(B,D\)
+conjunction?
+\par}
+
+Secondary (in scope): on the \textbf{same} sample under \textbf{AAMAS}, does
+greedy maximal co-occurrence include \texttt{a\_val\_*} in bodies for target
+\(c\), and how does that compare to the ECAI path and to H2 (where the
+distractor is trailing \(d\) on parents \(a\),\,\(b\))?
+
+Motivated by the completed ECAI \(c\) cell on
+\texttt{m13\_bucket3\_binary\_collider\_and} (see Motivation addendum above).
+
+\subsection{Working hypothesis (signpost only; not a claim)}
+
+Under ECAI on target \(c\), the first nd fold is predicted to match an
+\texttt{a\_val\_*} literal from an early \(E^+\) row because \(a\) precedes
+\(b\) and \(d\) in BK. That one-literal body is not a valid covering rule for
+\(C=B\land D\). Subsequent assumption/contrary repair may still solve, but the
+learned framework is predicted to \textbf{retain \(a\) in the ABA presentation}
+and \textbf{not} coincide with the evaluator string
+\texttt{c :- b\_val\_1, d\_val\_1}, unless later steps drop \(a\) (to be
+observed, not assumed).
+
+Under AAMAS on the same sample, greedy bodies for \(E^+\) rows with \(C=1\)
+(hence \(B=D=1\)) are predicted to cite the co-occurring value of \(a\) as well,
+so the \(A\)-free evaluator form is not expected as the emitted delta
+(learnability vs minimality / distractor inclusion --- related to but distinct
+from H2).
+
+\subsection{Explicit non-claims for H3}
+
+\begin{itemize}
+  \item H3 does not assert that ECAI or AAMAS cannot solve, nor that \(a\) can
+    never be dropped later in the transformation sequence.
+  \item H3 does not reuse H2's intended graph (\(A\to C\leftarrow B\) with
+    isolated \(D\)); the distractor here is \textbf{\(A\)}, and parents of \(C\)
+    are \textbf{\(B,D\)}.
+  \item Completing H3 would still not by itself approve a Bucket~3 claim.
+\end{itemize}
+
+\subsection{Planned investigation (H3)}
+
+\textbf{Design approved (2026-08-01).} Remaining implementation steps (not
+performed by this documentation update):
+\begin{enumerate}
+  \item Author schema-2 YAML \texttt{m13\_bucket3\_binary\_bd\_and\_lead\_a}
+    with the parameters above; planned sample \texttt{n30\_seed42}.
+  \item Build population/certificate/mechanism reference; confirm evaluator
+    reference for \(c\) omits \(a\).
+  \item Run \textbf{ECAI} target-wise on the frozen sample with primary
+    inspection of \textbf{target \(c\)} (BK order, first fold in
+    \texttt{prolog.stdout}, \texttt{delta.aba} vs evaluator reference).
+  \item Run \textbf{AAMAS} on the same frozen sample as an \textbf{in-scope}
+    secondary contrast (distractor inclusion under greedy maximal bodies;
+    distinct from H2's trailing-\(d\) design).
+  \item No portfolio or multi-fixture matrix beyond this approved H3 package
+    without further approval.
+\end{enumerate}
 
 \section{Probe family H4 --- cautious vs brave on ECAI root targets}
 
-Status: proposed / blocked on target-wise cautious support / not tested /
+Status: \textbf{proposed} / blocked on target-wise cautious support / not tested /
 not a Bucket~3 claim.
-Fixture/sample: existing \texttt{m13\_bucket3\_binary\_collider\_and} /
-\texttt{n30\_seed42}.
 
-\subsection*{Motivation (verified)}
-ECAI brave targets \(a\) and \(b\) \texttt{solved} with assumption-rich deltas
-(11 delta rules, 3 assumptions).
-Rows~9 \((1,0,0)\) (\(E^+\)) and~26 \((0,0,0)\) (\(E^-\)) share BK literals
-\texttt{b\_val\_0}, \texttt{c\_val\_0}.
-Brave delta includes the \(\alpha_2/\alpha_3\) nest on the both-0 cell
-(\texttt{delta.aba}): a per-row assumption choice gadget can Hold at~9 and
-Reject at~26 across different stable models.
-Runner \texttt{solved} \(\neq\) root-mechanism recovery.
-In \texttt{asp\_engine.pl}, brave \texttt{entails/5} is existential under joint
-\(E^\pm\) constraints; cautious requires \(E^+\) in cautious consequences.
-The brave delta is predicted to fail cautious entailment (e.g.\ \(a(9)\) not
-true in every answer set).
+Uses the \textbf{existing} fixture and frozen sample
+\texttt{m13\_bucket3\_binary\_collider\_and} / \texttt{n30\_seed42}. Does
+\textbf{not} require a new DAG. Cannot be executed with today's target-wise
+validator as-is.
 
-\subsection*{Infrastructure prerequisite (required; not yet done)}
-Target-wise currently hard-requires brave
-(\texttt{causal/targetwise/config.py}, \texttt{\_read\_learning\_mode};
-README). Learning mode is read from the consulted \texttt{.pl}, not a free YAML
-field. H4 is \emph{not} a one-line YAML change.
+\subsection{Motivation (verified facts)}
 
-Two-stage plan:
+On ECAI \textbf{brave} (\texttt{configs/ecai2024\_config.pl}:
+\texttt{learning\_mode(brave)}), targets \(a\) and \(b\) \textbf{solved} with
+assumption-rich deltas (summary: 11 delta rules, 3 assumptions each).
+Artefacts:
+\begin{itemize}
+  \item \path{.../ecai2024/n30_seed42/cells/target-a/}\\
+    Files: \texttt{delta.aba}, \texttt{prolog.stdout}, and \texttt{bk.sol\_chk.asp}
+  \item mirror: \texttt{\ldots/cells/target-b/}
+  \item collection summary: \texttt{\ldots/ecai2024/n30\_seed42/summary.md}
+\end{itemize}
+
+Verified sample atoms (seed~42):
+
+\begin{center}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Row & \((A,B,C)\) & Role for target \(a\) \\
+\midrule
+9 & \((1,0,0)\) & \(E^+\) \\
+26 & \((0,0,0)\) & \(E^-\) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Rows~9 and~26 share identical BK literals \texttt{b\_val\_0}, \texttt{c\_val\_0}.
+No deterministic rule over \((B,C)\) assigns both labels. The brave delta for
+\(a\) includes the \(\alpha_2\)/\(\alpha_3\) nest (verified in
+\texttt{delta.aba}):
+\begin{verbatim}
+a(A) :- alpha_2(A), b_val_0(A).
+c_alpha_2(A) :- alpha_3(A), c_val_0(A).
+c_alpha_3(A) :- alpha_2(A), b_val_0(A).
+\end{verbatim}
+
+Trace/fixture integration reading (for the signpost): this is a \textbf{per-row
+assumption choice gadget} --- one stable model can Hold at~9 and Reject at~26
+because ground assumption atoms differ. Runner \texttt{solved} means brave
+coverage of \(E^+\)/\(E^-\), \textbf{not} recovery of a functional root
+mechanism (\texttt{no\_observed\_parent\_deterministic\_rule}).
+
+Engine fact (\texttt{asp\_engine.pl}, \texttt{entails/5}): brave entailment
+requires existence of a stable model under joint \(E^+\)/\(E^-\) constraints;
+cautious entailment requires \(E^+\) atoms to lie in \textbf{cautious
+consequences} (true in every answer set) and \(E^-\) atoms not to. Under that
+reading, the current brave delta should \textbf{fail} cautious entailment:
+e.g.\ \(a(9)\) is not true in every stable model of the choice gadget.
+Cautious re-check after contrary rote is invoked in \texttt{gen.pl}
+(\texttt{gen6}).
+
+\subsection{Infrastructure prerequisite
+(\textbf{required before H4 can run; not yet done})}
+
+H4 is \textbf{not} ``point YAML at a cautious \texttt{.pl} and run.'' The
+\textbf{target-wise} path currently \textbf{hard-requires brave}.
+
+Verified code fact (\texttt{causal/targetwise/config.py},
+\texttt{\_read\_learning\_mode}): the runner reads
+\texttt{set\_lopt(learning\_mode(\ldots))} from the Prolog config and
+\textbf{rejects} any mode other than \texttt{brave}, with an error that the
+current target-wise runner supports brave learning only. The target-wise README
+states that the supported regime selects brave learning. Existing configs only
+supply \texttt{learner.prolog\_config} (e.g.\ \texttt{configs/ecai2024\_config.pl});
+learning mode is \textbf{not} a free YAML field --- it is derived from the
+consulted \texttt{.pl} file and then validated.
+
+\textbf{Two-stage plan:}
 \begin{enumerate}
-  \item \textbf{Infra:} new Prolog options file (do not edit
-    \texttt{ecai2024\_config.pl} in place) with
-    \texttt{learning\_mode(cautious)}; allow cautious in the target-wise
-    validator/README/tests; new \texttt{configuration.id} / output tree;
-    clarify \texttt{check\_ic} / artefact-audit meaning under cautious mode.
-  \item \textbf{Scientific run} only after (1): cautious collection on
-    \texttt{n30\_seed42} for roots \(a,b\) (optional \(c\)).
+  \item \textbf{Infrastructure / config design (prerequisite, careful, small)}\\
+    Decide how cautious mode is exposed for target-wise without breaking
+    existing brave collections or hashes. Likely pieces (for the record; final
+    design needs Samuel/implementation approval):
+    \begin{itemize}
+      \item a \textbf{new} Prolog options file (do \textbf{not} edit
+        \path{configs/ecai2024_config.pl} in place), e.g.\ an ECAI-cautious
+        twin that keeps nd / any / all / relto / \texttt{check\_ic} but sets
+        \texttt{learning\_mode(cautious)};
+      \item {\raggedright relax or extend \path{causal/targetwise/config.py} (and
+        README/tests) so \texttt{learning\_mode(cautious)} is an
+        \textbf{explicitly allowed} target-wise mode when selected that way;\par}
+      \item a \textbf{new} \texttt{configuration.id} and output directory so
+        brave \texttt{ecai2024} artefacts remain untouched;
+      \item confirm what \texttt{check\_ic} / \texttt{.sol\_chk.asp} / the
+        post-run artefact audit mean under cautious learning (joint existential
+        SAT vs cautious consequences) so diagnostics are not misread.
+    \end{itemize}
+    Mode is coupled to Prolog consult, config hashing, manifests, and the
+    brave-only validator. Do not imply that only a YAML one-liner is required.
+  \item \textbf{Scientific run (only after the above)}\\
+    Target-wise collection on the existing fixture/\texttt{n30\_seed42} for
+    roots \(a\)/\(b\) (optional \(c\) control) under the new cautious
+    configuration.
 \end{enumerate}
 
-\subsection*{Hypotheses (not claims)}
-\textbf{H4a.} The locked brave delta does not cautiously entail \(E^\pm\)
-(both-0 \(E^+\) such as \(a(9)\) not cautious consequences).
+\subsection{Precise hypotheses (not claims)}
 
-\textbf{H4b.} Cautious re-learning on the same sample yields a different
-outcome than the brave solve (\texttt{completed\_no\_solution} or a
-qualitatively different delta); the \(\alpha_2/\alpha_3\) gadget is not
-expected unchanged.
+\paragraph{H4a (current delta is brave-specific).}
+The serialized ECAI brave delta for target \(a\) on this sample does
+\textbf{not} cautiously entail the \(E^+\)/\(E^-\) set: in particular, both-0
+\(E^+\) such as \(a(9)\) are not cautious consequences of that framework.
 
-\textbf{H4c.} Interpret against
-\texttt{no\_observed\_parent\_deterministic\_rule} and label ambiguity of
-\((B,C)=(0,0)\). H4 tests learning-mode semantics, not DAG recovery.
+\paragraph{H4b (cautious learning changes the root outcome).}
+Once target-wise cautious mode is supported, re-running target \(a\) (and
+symmetrically \(b\)) on the \textbf{same} frozen sample with ECAI-like folding
+options but \textbf{\texttt{learning\_mode(cautious)}} yields an outcome
+\textbf{different} from the brave solve: either
+\texttt{completed\_no\_solution}, or a solved delta \textbf{qualitatively
+different} from the 11-clause \(\alpha_2\)/\(\alpha_3\) choice gadget (e.g.\
+more rote residual structure on the ambiguous
+\((\textit{other},c)=(0,0)\) cell). The brave choice-gadget solution is
+\textbf{not} expected to reappear unchanged.
 
-\subsection*{Non-claims}
-Cautious is not claimed ``better''; not claimed to recover a root mechanism;
-not a general brave/cautious policy ranking; not runnable on today's validator.
+\paragraph{H4c (fixture link --- non-claim).}
+Interpret any difference against the AND-collider fact that roots have
+\textbf{no} deterministic mechanism over the other observed variables, and that
+\((B,C)=(0,0)\) (resp.\ \((A,C)=(0,0)\)) is label-ambiguous for the root target.
+H4 tests \textbf{learning-mode / entailment semantics} on the target-wise path,
+not DAG recovery.
 
-\subsection*{Planned investigation (when H4 is started)}
-Not approved now. When opened: implement cautious target-wise support; optional
-H4a pre-check; H4b cautious run; compare to locked brave ECAI cells.
-Leave brave \texttt{ecai2024} artefacts immutable.
+\subsection{Explicit non-claims for H4}
 
-\subsection*{Decisions deferred until H4 begins (flagged; not decided now)}
-Resolve only when H4 starts---not during current H1--H3 work:
+\begin{itemize}
+  \item Not claimed that cautious mode is ``better'' for causal recovery.
+  \item Not claimed that cautious mode will recover a correct root mechanism
+    rule (none exists).
+  \item Not a ranking of brave vs cautious as general ABALearn policy beyond
+    this controlled probe.
+  \item Not claimed that the probe can be executed with today's target-wise
+    validator as-is.
+\end{itemize}
+
+\subsection{Planned investigation (when H4 is started)}
+
+\textbf{Not approved now.} When Samuel opens H4, proceed in two stages after
+resolving the deferred decisions below:
 \begin{enumerate}
-  \item Cautious Prolog filename (new twin file; do not edit
-    \texttt{ecai2024\_config.pl} in place).
-  \item New target-wise \texttt{configuration.id} / output path.
-  \item Validator/README/tests allowing \texttt{learning\_mode(cautious)}.
-  \item Meaning of \texttt{check\_ic} / artefact audit under cautious mode.
-  \item Whether H4a pre-check is in scope before full re-learn.
-  \item Whether target \(c\) is included as a control.
+  \item \textbf{Infra:} implement cautious support for target-wise (new
+    \texttt{.pl} + validator/README/tests + distinct
+    \texttt{configuration.id}); leave brave \texttt{ecai2024} outputs immutable.
+  \item Optionally cheap \textbf{H4a} pre-check: cautious-consequence inspection
+    of the existing brave framework without a full re-learn.
+  \item \textbf{H4b run:} target-wise cautious collection on
+    \texttt{n30\_seed42} for \(a\)/\(b\) (optional \(c\)).
+  \item Compare outcomes, deltas, and trace entailment KO points to the locked
+    brave ECAI cells.
 \end{enumerate}
-Until then: proposed / infra-blocked / not tested / not a claim.
+
+\subsection{Decisions deferred until H4 begins (flagged; not decided now)}
+
+These must be resolved \textbf{when H4 is started}, not in the current H1--H3
+work. They are recorded here so the infra prerequisite is not forgotten:
+\begin{enumerate}
+  \item \textbf{Cautious Prolog filename} --- e.g.\ a twin such as
+    \path{configs/ecai2024_cautious_config.pl} (illustrative only); do
+    \textbf{not} edit \path{configs/ecai2024_config.pl} in place.
+  \item \textbf{New target-wise \texttt{configuration.id}} and output path so
+    brave \texttt{ecai2024} collections and hashes remain immutable.
+  \item {\raggedright \textbf{Validator change} --- approve relaxing
+    \path{causal/targetwise/config.py} (\texttt{\_read\_learning\_mode}) so
+    \texttt{learning\_mode(cautious)} is explicitly allowed when selected via
+    that \texttt{.pl}; update README/tests accordingly.\par}
+  \item \textbf{\texttt{check\_ic} / \texttt{.sol\_chk.asp} / post-run artefact
+    audit} under cautious learning --- how to interpret joint existential SAT
+    vs cautious consequences so diagnostics are not misread.
+  \item \textbf{H4a pre-check in scope?} --- optional cautious-consequence
+    inspection of the locked brave framework before a full re-learn.
+  \item \textbf{Optional target \(c\) control} on the cautious collection, or
+    roots \(a\)/\(b\) only.
+\end{enumerate}
+
+Until those are decided and infra lands, H4 remains \textbf{proposed /
+infra-blocked / not tested / not a claim}.
+
+\section{Boundary distinctions to preserve}
+
+Keep separate throughout any future probe write-up:
+
+\begin{center}
+\begin{tabular}{@{}L{0.42\textwidth}L{0.48\textwidth}@{}}
+\toprule
+Object & Role \\
+\midrule
+AAMAS strategy / greedy maximal co-occurrence search &
+  procedural learner behaviour (H1/H2) \\
+ECAI nd first-fold / BK serialisation order &
+  procedural learner behaviour (H3) \\
+Brave vs cautious entailment / learning mode &
+  procedural / semantic learner behaviour (H4) \\
+Finite-sample support and label conflicts in candidate body cells &
+  sample information \\
+Mechanism correspondence for \(c\) (AND) &
+  evaluator-only interpretation of a non-root \\
+Absence of deterministic root mechanisms &
+  evaluator reference status \\
+Syntactic delta $=$ reference string &
+  coincidence, not automatic causal verdict \\
+Runner \texttt{solved} under brave &
+  brave coverage of \(E^\pm\), not mechanism recovery \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Do not treat predictive rules for roots as mechanism recovery.
+
+\section{Cross-links}
+
+\begin{itemize}
+  \item Investigation record: \texttt{experiment.md}
+  \item Mathematical fixture dossier: \texttt{fixture\_dossier.tex}
+  \item Bucket~3 planning hub: \texttt{../M1.3-bucket3-claims.md}
+    (still \textbf{no claim})
+  \item Research decision log: \texttt{docs/research/decisions.md}
+    (2026-08-01 H1--H3 entries)
+  \item Fixture pre-run bundle:
+    \path{causal/outputs/causal_fixtures/m13_bucket3_binary_collider_and/}
+  \item AAMAS baseline:
+    \path{causal/outputs/aba_learning/targetwise/m13_bucket3_binary_collider_and/aamas2025/n30_seed42/}
+  \item ECAI baseline (H3/H4 motivation):
+    \path{causal/outputs/aba_learning/targetwise/m13_bucket3_binary_collider_and/ecai2024/n30_seed42/}
+  \item Target-wise brave-only validator: \texttt{causal/targetwise/config.py}
+  \item Entailment implementation: \texttt{asp\_engine.pl} (\texttt{entails/5})
+\end{itemize}
 
 \section{Decisions recorded}
 
 \begin{center}
-\begin{tabular}{@{}llp{0.22\textwidth}@{}}
+\small
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}L{0.47\textwidth}L{0.26\textwidth}L{0.19\textwidth}@{}}
 \toprule
 Item & Decision & Date \\
 \midrule
-H1--H3 designs & Approved & 2026-08-01 \\
-H4 cautious vs brave roots & Proposed / infra-blocked & --- \\
+H1 nested-prefix / missing-\((0,0,0)\) AAMAS ablation &
+  \textbf{Approved} & 2026-08-01 \\
+H2 four-variable isolated-\(D\) fixture design &
+  \textbf{Approved} & 2026-08-01 \\
+H2c in first H2 write-up &
+  \textbf{In scope} & 2026-08-01 \\
+H3 graph/naming; \(B\) 80/20, \(D\) 70/30; id
+  \path{m13_bucket3_binary_bd_and_lead_a}; AAMAS contrast &
+  \textbf{Design approved} & 2026-08-01 \\
+H4 cautious vs brave on ECAI roots &
+  \textbf{Proposed only} (blocked on infra) & --- \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-Still no Bucket~3 claim. H4 infra/config decisions are flagged in the H4
-section and \textbf{deferred until H4 begins}.
+\section{Remaining before implementation}
+
+\begin{itemize}
+  \item \textbf{H1:} execute the approved ablation and record outcomes.
+  \item \textbf{H2:} author \texttt{m13\_bucket3\_binary\_collider\_and\_iso\_d}
+    (or confirm that id); lock sample \((n,\mathrm{seed})\); certify; run AAMAS
+    including H2c.
+  \item \textbf{H3:} author \texttt{m13\_bucket3\_binary\_bd\_and\_lead\_a};
+    build planned \texttt{n30\_seed42}; certify; run \textbf{ECAI} (primary) and
+    \textbf{AAMAS} (in-scope contrast) with inspection of target \(c\).
+  \item \textbf{H4:} deferred until H4 is opened. Infra/config decisions are
+    \textbf{flagged} in the H4 section (``Decisions deferred until H4 begins'')
+    and are \textbf{not} to be resolved during current H1--H3 work. No cautious
+    collection until then.
+  \item Still \textbf{no} Bucket~3 claim and \textbf{no} expanded run matrix
+    without a further Samuel decision.
+\end{itemize}
 
 \end{document}

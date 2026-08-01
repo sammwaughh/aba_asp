@@ -1,0 +1,366 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=25mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,booktabs}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{microtype}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+\setlist{nosep,leftmargin=*}
+\emergencystretch=3em
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+\title{M13-C3 learning-stage analysis\\
+six-cell AAMAS + ECAI on \texttt{m13\_bucket3\_binary\_collider\_and}}
+\author{}
+\date{H0 closed / no Bucket~3 claim}
+
+\begin{document}
+\maketitle
+
+\noindent\textbf{Status.}
+This document is the \textbf{closed H0} learning-stage record for the six
+target-wise cells on frozen sample \texttt{n30\_seed42}.
+\textbf{No Bucket~3 claim} is approved.
+Markdown twin: \texttt{learning\_analysis.md}.
+Future probes H1--H4 remain in \texttt{future\_probes.md} (deferred; motivated
+by H0; not part of H0).
+Pre-run dossier: \texttt{fixture\_dossier.tex}.
+
+\section{Contract}
+
+Fixture \texttt{m13\_bucket3\_binary\_collider\_and} has DAG
+\(A\to C\leftarrow B\), with
+\(A\sim\mathrm{Bernoulli}(4/5)\) and \(B\sim\mathrm{Bernoulli}(7/10)\)
+independent, and with deterministic child \(C=A\land B\).
+The frozen sample has size \(n{=}30\) and seed~42.
+Encoding is exact-value BK with binary 1-vs-0 examples.
+Both arms use brave learning and \texttt{check\_ic}.
+The AAMAS arm is \texttt{aamas2025} (greedy / mgr / bk).
+The ECAI arm is \texttt{ecai2024} (nd / any / all).
+The evaluator-only reference for \(c\) is
+\texttt{c(A) :- a\_val\_1(A), b\_val\_1(A).}.
+Roots are marked \texttt{no\_observed\_parent\_deterministic\_rule}.
+
+Collection roots lie under
+\path{causal/outputs/aba_learning/targetwise/m13_bucket3_binary_collider_and/{aamas2025,ecai2024}/n30_seed42/}.
+Arm \texttt{summary.md} files are the authoritative outcome tables.
+
+\section{Geometry for learning}
+
+Sample counts are \((1,1,1):17\), \((1,0,0):7\), \((0,1,0):4\), and
+\((0,0,0):2\) (rows~26 and~30 only).
+The implied \(E^\pm\) sizes are \(a\) 24/6, \(b\) 21/9, and \(c\) 17/13.
+
+Under \(C=A\land B\), every positive example for \(c\) lies in the single
+predictor family \((A,B)=(1,1)\).
+Positive examples for root \(a\) split into \((B,C)=(1,1)\) and \((B,C)=(0,0)\)
+(and symmetrically for \(b\)).
+The cell \((\textit{other root},C)=(0,0)\) is label-ambiguous.
+For target \(a\), row~9 with values \((1,0,0)\) is \(E^+\), while row~26 with
+values \((0,0,0)\) is \(E^-\), yet both share the BK literals
+\texttt{b\_val\_0} and \texttt{c\_val\_0}.
+Roots have no deterministic causal rule over the other observed variables.
+A syntactic match between a delta and the evaluator reference for \(c\) is not
+automatic causal success.
+
+\section{Outcomes (verified)}
+
+\begin{center}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Arm & Target & Outcome / surface delta \\
+\midrule
+AAMAS & \(a,b\) & \texttt{completed\_no\_solution} \\
+AAMAS & \(c\) & \texttt{solved}: \texttt{c :- a\_val\_1, b\_val\_1} \\
+ECAI & \(a,b\) & \texttt{solved}: 11-clause \(\alpha\)-framework \\
+ECAI & \(c\) & \texttt{solved}:
+  \texttt{c :- $\alpha_1$, a\_val\_1} with contrary \texttt{b\_val\_0} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{AAMAS narrative}
+
+{\raggedright
+The AAMAS arm uses \texttt{configs/aamas2025\_config.pl}.
+The active options for these cells are \texttt{learning\_mode(brave)},
+\texttt{folding\_mode(greedy)}, \texttt{folding\_selection(mgr)},
+\texttt{folding\_space(bk)}, \texttt{asm\_intro(relto)}, and \texttt{check\_ic}.
+Under greedy folding with BK space, each positive example is replaced by a
+\textbf{maximal co-occurrence body} assembled from background predicates that
+hold of that row.
+The mgr selection step then keeps a most-general representative among duplicate
+bodies.
+Brave entailment is the acceptance test for each candidate extension.
+Authoritative traces are the per-cell \texttt{prolog.stdout} files under
+\path{.../aamas2025/n30_seed42/cells/target-{a,b,c}/output/}, together
+with the arm \texttt{summary.md}.
+\par}
+
+\subsection{Target \texorpdfstring{\(c\)}{c} --- solved with an assumption-free conjunction}
+
+For target \(c\), every positive example lies in the single joint cell
+\((A,B)=(1,1)\).
+There are seventeen such rows, and each therefore admits the same maximal BK
+body \(\{\mathtt{a\_val\_1},\mathtt{b\_val\_1}\}\).
+After mgr deduplication, the learner retains one live candidate:
+\begin{verbatim}
+c(A) :- a_val_1(A), b_val_1(A).
+\end{verbatim}
+Brave entailment of \(\langle E^+,E^-\rangle\) succeeds immediately.
+No negative example shares that body, so no assumption is introduced.
+The folding queue is empty, and the run terminates as \texttt{solved} with zero
+assumptions and zero contraries.
+The post-run artefact audit on \texttt{bk.sol\_chk.asp} reports SAT.
+
+The emitted delta string is identical to the evaluator-only positive-state
+reference for \(c\) in \texttt{mechanism\_reference.json}.
+That match is recorded here as a \textbf{syntactic coincidence}.
+It is not by itself a causal-recovery verdict.
+The same configuration and sample can fail on the root targets, as the next
+subsection shows.
+
+Authoritative artefacts:
+\path{.../aamas2025/n30_seed42/cells/target-c/output/{delta.aba,prolog.stdout}}
+and the arm \texttt{summary.md}.
+
+\subsection{Targets \texorpdfstring{\(a\)}{a}/\texorpdfstring{\(b\)}{b} --- \texttt{completed\_no\_solution} (symmetric)}
+
+The story for root \(a\) is verified in
+\path{.../aamas2025/n30_seed42/cells/target-a/output/prolog.stdout}.
+Target \(b\) is the same procedure with the roles of \(A\) and \(B\) swapped.
+
+Positive examples for \(a\) fall into two BK co-occurrence families.
+The first is \((B,C)=(1,1)\), which arises on every row where \(A=1\) and the
+AND child fires.
+The second is \((B,C)=(0,0)\), which arises on rows such as row~9 where \(A=1\)
+yet \(B=C=0\).
+Greedy folding therefore proposes two distinct bodies.
+
+The both-1 rule
+\begin{verbatim}
+a(A) :- b_val_1(A), c_val_1(A).
+\end{verbatim}
+is accepted under brave entailment.
+It covers the \((1,1)\) positives without touching any negative example.
+
+The both-0 rule
+\begin{verbatim}
+a(A) :- b_val_0(A), c_val_0(A).
+\end{verbatim}
+is then proposed from an early both-0 positive (the trace folds row~8).
+That body is \textbf{not} a function of the root.
+It also holds of the negative examples in rows~\textbf{26} and~\textbf{30},
+which are the only sample atoms \((0,0,0)\).
+Brave entailment therefore fails.
+The learner introduces an assumption \(\alpha_1\) relative to the offending
+body, yielding
+\begin{verbatim}
+a(A) :- alpha_1(A), b_val_0(A), c_val_0(A).
+\end{verbatim}
+Contrary rote learning then cites exactly rows~26 and~30 as grounds for
+\(\mathtt{c\_alpha\_1}\).
+Greedy folding of those contrary examples reconstructs the \textbf{same}
+both-0 body for the contrary,
+\begin{verbatim}
+c_alpha_1(A) :- b_val_0(A), c_val_0(A).
+\end{verbatim}
+Under \texttt{asm\_intro(relto)}, a further assumption cannot be introduced for
+that body because \(\alpha_1\) is already present.
+The engine reports KO and ends with \texttt{* No solution found!}.
+The cell outcome is \texttt{completed\_no\_solution}.
+No \texttt{delta.aba} and no \texttt{bk.sol.*} artefacts are emitted.
+
+This is a \textbf{search and repair dead-end} on this example geometry under
+greedy, mgr, and relto.
+It is not a runner failure.
+The folding procedure is the same as for target \(c\).
+What differs is the split of \(E^+\) across two predictor cells and the
+presence of opposite labels inside the both-0 cell.
+
+\section{ECAI narrative}
+
+{\raggedright
+The ECAI arm uses \texttt{configs/ecai2024\_config.pl}.
+The active options are \texttt{learning\_mode(brave)},
+\texttt{folding\_mode(nd)}, \texttt{folding\_selection(any)},
+\texttt{folding\_space(all)}, \texttt{asm\_intro(relto)}, and
+\texttt{check\_ic}.
+Unlike AAMAS, nd folding takes \textbf{one} predicate replacement per fold step
+and does not build a maximal co-occurrence catalogue.
+The first BK predicate that matches a selected example is typically the one
+that appears earliest in the declared predictor order.
+Authoritative traces are under
+\path{.../ecai2024/n30_seed42/cells/target-{a,b,c}/output/}.
+\par}
+
+\subsection{Target \texorpdfstring{\(c\)}{c} --- solved by under-folding and a contrary}
+
+The path is verified in
+\path{.../ecai2024/n30_seed42/cells/target-c/output/prolog.stdout}
+and in the corresponding \texttt{delta.aba}.
+
+Learning begins from rote positive rules indexed by sample id.
+The first selected positive is row~1.
+Nd folding replaces that id by \(\mathtt{a\_val\_1}\), which is the first BK
+predictor under the declared order \(a\), then \(b\).
+The resulting unary rule is
+\begin{verbatim}
+c(A) :- a_val_1(A).
+\end{verbatim}
+That body is too strong for the AND child.
+Every row with \(A=1\) and \(B=0\) is an \(E^-\) example for \(c\), yet
+satisfies \(\mathtt{a\_val\_1}\).
+Brave entailment fails, and the learner introduces \(\alpha_1\), giving
+\begin{verbatim}
+c(A) :- alpha_1(A), a_val_1(A).
+\end{verbatim}
+Contrary rote learning then records \(\mathtt{c\_alpha\_1}\) on the seven
+\((1,0,0)\) negatives that remain uncovered attacks, namely
+rows~\textbf{8, 9, 13, 14, 18, 24,} and~\textbf{25}.
+
+The first contrary fold attempt replaces row~8 by \(\mathtt{a\_val\_1}\).
+That candidate fails, and relto cannot introduce a second assumption for that
+body.
+A subsequent fold replaces the same contrary example by \(\mathtt{b\_val\_0}\).
+Brave entailment then succeeds.
+All remaining contrary rotes are subsumed, and the queue empties.
+
+The final delta is
+\begin{verbatim}
+c(A) :- alpha_1(A), a_val_1(A).
+c_alpha_1(A) :- b_val_0(A).
+assumption(alpha_1(A)).
+contrary(alpha_1(A),c_alpha_1(A)) :- assumption(alpha_1(A)).
+\end{verbatim}
+On this sample, the framework behaves extensionally like ``derive \(c\) when
+\(a=1\), unless the assumption is attacked when \(b=0\)''.
+Under brave checking of the observed \(E^\pm\), that presentation is aligned
+with \(C=A\land B\).
+The ABA \textbf{shape} is nevertheless different from the AAMAS conjunction.
+In particular, the delta string does \textbf{not} match the evaluator reference
+\texttt{c(A) :- a\_val\_1(A), b\_val\_1(A).}.
+The run reports \texttt{solved} with artefact-audit SAT.
+
+\subsection{Targets \texorpdfstring{\(a\)}{a}/\texorpdfstring{\(b\)}{b} --- solved by a brave choice gadget}
+
+The path for root \(a\) is verified in
+\path{.../ecai2024/n30_seed42/cells/target-a/output/{prolog.stdout,delta.aba}}.
+Target \(b\) is the mirror with \(a\leftrightarrow b\).
+The arm summary records eleven delta rules, three assumptions, and three
+contraries for each root, with artefact-audit SAT.
+
+Nd folding again takes one step at a time.
+From an early \((B,C)=(1,1)\) positive (row~1), the first fold yields the unary
+body \(\mathtt{b\_val\_1}\).
+That rule over-generalises onto \(E^-\) rows where \(B=1\) and \(C=0\)
+(the trace cites rows~3, 5, 15, and~19 for the first contrary).
+Assumption \(\alpha_1\) is introduced, and the contrary later folds
+successfully to \(\mathtt{c\_val\_0}\).
+The resulting block separates the safe both-1 positives from the \(B=1,C=0\)
+negatives:
+\begin{verbatim}
+a(A) :- alpha_1(A), b_val_1(A).
+c_alpha_1(A) :- c_val_0(A).
+\end{verbatim}
+
+A second ordinary target rule is then required for the remaining both-0
+positives.
+Folding an early both-0 positive (row~8) yields \(\mathtt{b\_val\_0}\).
+Brave entailment fails because the same BK literals hold of the \(E^-\) atoms
+in rows~\textbf{26} and~\textbf{30}.
+Assumption \(\alpha_2\) is introduced on that body.
+Contrary rote cites those two negatives.
+Folding the contrary first attempts \(\mathtt{b\_val\_0}\) (KO under relto
+against \(\alpha_2\)), then \(\mathtt{c\_val\_0}\).
+Even the unary \(\mathtt{c\_val\_0}\) contrary is still too strong for brave
+entailment of the joint example set, so a further assumption \(\alpha_3\)
+appears on the contrary.
+Rote learning of \(\mathtt{c\_alpha\_3}\) then cites the both-0
+\textbf{positives} (rows~8, 9, 13, 14, 18, 24, and~25).
+That contrary folds by re-using \(\alpha_2\) together with
+\(\mathtt{b\_val\_0}\).
+The resulting nest is
+\begin{verbatim}
+a(A) :- alpha_2(A), b_val_0(A).
+c_alpha_2(A) :- alpha_3(A), c_val_0(A).
+c_alpha_3(A) :- alpha_2(A), b_val_0(A).
+\end{verbatim}
+together with the corresponding \texttt{assumption} and \texttt{contrary}
+declarations.
+
+The important geometric point is the ambiguous cell \((B,C)=(0,0)\).
+Row~\textbf{9} is an \(E^+\) example for \(a\) with joint values \((1,0,0)\).
+Row~\textbf{26} is an \(E^-\) example with joint values \((0,0,0)\).
+Both rows share the BK literals \(\mathtt{b\_val\_0}\) and
+\(\mathtt{c\_val\_0}\).
+No deterministic rule over \((B,C)\) can assign both labels.
+The \(\alpha_2\)/\(\alpha_3\) nest is a \textbf{per-row assumption choice
+gadget}.
+Different stable models may Hold at row~9 and Reject at row~26 because the
+ground assumption atoms differ across answer sets.
+Brave entailment only requires that some answer set meet the joint \(E^\pm\)
+constraints.
+It does \textbf{not} require a unique determination of \(a\) from \((b,c)\).
+
+The runner outcome \texttt{solved} therefore means that a serialized ABA
+framework passed brave entailment and that the artefact audit reported SAT.
+That outcome is \textbf{misleading} if it is read as recovery of a functional
+root mechanism.
+The evaluator reference for roots remains
+\texttt{no\_observed\_parent\_deterministic\_rule}.
+
+\section{Synthesis}
+
+\begin{center}
+\begin{tabular}{@{}lL{0.36\textwidth}L{0.36\textwidth}@{}}
+\toprule
+ & Child \(c\) & Roots \(a\)/\(b\) \\
+\midrule
+AAMAS &
+  Solved with an assumption-free AND conjunction.
+  The delta string coincides with the evaluator reference. &
+  No solution.
+  The greedy both-0 body and contrary repair fail on rows~26 and~30. \\
+ECAI &
+  Solved with \(\alpha_1\) and a \texttt{b\_val\_0} contrary after under-folding
+  to \(a\). &
+  Solved with a brave choice gadget on the ambiguous \((0,0)\) cell. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+For the roots, AAMAS fails without emitting a false functional both-0 Horn
+rule, and fails entirely.
+ECAI emits a non-functional brave covering of the same ambiguous cell.
+Neither recovers a root mechanism.
+All six cells use the same frozen table.
+The differences are strategy, entailment semantics, and target geometry, not
+resampling.
+The \texttt{sol\_chk} SAT result is an artefact-integrity audit, not a separate
+coverage metric.
+
+\section{Non-claims}
+
+This write-up is not Russo-style Causal ABA, DAG recovery, or CPDAG recovery.
+It does not treat the AAMAS \(c\) string match as mechanism recovery.
+It does not treat the ECAI assumed form as ``recovered AND'' as a project claim.
+It does not parent-set score root deltas without the brave / non-functional
+caveat.
+H1--H4 are deferred signposts motivated by closed H0
+(\texttt{future\_probes.*}). They are not part of H0.
+
+\section{Next}
+
+H0 is closed.
+Deferred probes H1--H4 are recorded in \texttt{future\_probes.md}.
+They are motivated by this H0 baseline and are not part of H0.
+Still no Bucket~3 claim.
+
+\end{document}

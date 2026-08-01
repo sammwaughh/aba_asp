@@ -1,30 +1,35 @@
-# M13-C3 — Binary deterministic AND collider (Bucket 3 pre-run)
+# M13-C3 — Binary deterministic AND collider (Bucket 3)
 
 ## Status
 
 `proposed | planned | implemented | run | analysed | reported`
 
-Current status: **`implemented` (pre-run only)** — active M1.3 Bucket 3
-investigation; fixture approved and certified; frozen sample `n30_seed42`
-inspected; **ABALearn not yet run**; **no Bucket 3 claim**.
+Current status: **`H0 closed / analysed`** — M1.3 Bucket 3 baseline
+investigation complete; probes H1–H4 deferred; **no Bucket 3 claim**.
 
-Working mathematical dossier (not report prose):
-`docs/experiments/qualitative/M13-C3-binary-collider-and/fixture_dossier.tex`.
+### H0 versus H1–H4
 
-**Future probes:** `future_probes.md` / `future_probes.tex` —
-H1–H3 **designs approved** for investigation (not yet run; not claims);
-H4 **proposed** (cautious vs brave on ECAI roots; **blocked** on target-wise
-cautious support; not a claim). H3 fixture id:
-`m13_bucket3_binary_bd_and_lead_a`.
+| Label | Meaning |
+|-------|---------|
+| **H0** | Closed baseline: fixture `m13_bucket3_binary_collider_and`; frozen sample `n30_seed42`; AAMAS and ECAI arms on all targets `a`, `b`, `c`; Trace + fixture integration; documented in `learning_analysis.md` / `.tex`. |
+| **H1–H4** | Deferred follow-up probes motivated by H0 (not part of H0). Designs and status in `future_probes.md` / `.tex`. |
+
+**Close means:** baseline learning analysis finished. Move on to deferred probes
+H1–H4 (any order).  
+**Does not mean:** a Bucket 3 claim is locked, or that H1–H4 are cancelled.
+Still **no Bucket 3 claim**.
+
+Working mathematical dossier (pre-run): `fixture_dossier.tex`.  
+Closed H0 learning record: `learning_analysis.md` / `learning_analysis.tex`.  
+**Future probes (deferred, outside H0):** `future_probes.md` / `future_probes.tex`
+(H1–H3 designs approved; H4 proposed / infra-blocked).
 
 ## Purpose
 
-Record the first approved Bucket 3 deterministic research fixture before any
-ABALearn execution: generating DAG, root-stochastic / non-root-deterministic
-mechanisms, exact population certificate, evaluator-only mechanism reference,
-and one frozen IID sample. The record preserves the pre-learning boundary so
-later target-wise outputs can be interpreted against known generating structure
-without conflating evaluator metadata with learner-visible inputs.
+Record and interpret what target-wise ABALearn does on the approved binary
+AND collider under AAMAS and ECAI configurations on one frozen IID table,
+relative to the evaluator-only mechanism reference — without elevating
+observations to Bucket 3 claims.
 
 ## Research question
 
@@ -35,8 +40,14 @@ without conflating evaluator metadata with learner-visible inputs.
 > mechanism reference and to the information present in the population versus
 > the finite sample?
 
-At this documentation stage the question is **open**: only the pre-run objects
-are certified. No learning outcomes exist yet.
+**Six-cell answer (bounded; not a claim):** see `learning_analysis.md`.
+Briefly: AAMAS solves `c` with an assumption-free AND conjunction
+(syntactic coincidence with the evaluator reference) and fails on roots
+`a`/`b` via both-0 / contrary KO on rows 26–30; ECAI solves all three targets,
+with `c` via under-fold to `a` plus `b_val_0` contrary, and roots via a brave
+choice gadget on the ambiguous `(0,0)` cell. Neither arm recovers a root
+mechanism.
+
 
 ## Theoretical motivation
 
@@ -61,37 +72,36 @@ infrastructure for controlled interpretation of ABALearn outputs.
 
 ### Current `aba_asp/causal` implementation
 
-The intended next stage is the target-wise bridge
-(`causal/targetwise/`): one frozen sample, every variable as target, binary
-exact-value BK, target value `1` as \(E^+\) and `0` as \(E^-\). No target-wise
-configuration or output hierarchy yet exists for this fixture. The stochastic
-diamond under `m13_bucket3_binary_diamond` remains pre-pivot provenance only.
+Target-wise bridge (`causal/targetwise/`): one frozen sample, every variable as
+target, binary exact-value BK, target value `1` as \(E^+\) and `0` as \(E^-\`.
+AAMAS and ECAI collections for this fixture are complete under
+`causal/outputs/aba_learning/targetwise/m13_bucket3_binary_collider_and/`.
+The stochastic diamond under `m13_bucket3_binary_diamond` remains pre-pivot
+provenance only.
 
 ## Relation to ABA Learning
 
-**Not yet executed.** Planned learner-visible regime (from
-`causal/targetwise/README.md`, not yet instantiated for this fixture):
+**Executed** on frozen `n30_seed42` for all targets under both published arms:
 
-- binary variables with state order `[0, 1]`;
-- internal names `a`, `b`, `c` (display \(A,B,C\));
-- exact-value predicates for every non-target column;
-- positives = rows with target value `1`; negatives = rows with target value `0`;
-- brave learning with `check_ic` enabled in the chosen Prolog configuration.
+- AAMAS: `configs/aamas2025_config.pl` (brave, greedy, mgr, `folding_space(bk)`)
+- ECAI: `configs/ecai2024_config.pl` (brave, nd, any, all)
 
-Implied positive/negative **counts** on the frozen sample under that planned
-policy (derived from sample marginals; **not** generated example arrays; **not**
-supplied to ABALearn):
+Learner-visible regime: exact-value BK for non-targets; positives = target
+value `1`; negatives = value `0`. Realised \(E^\pm\) counts:
 
-| Target | \(E^+\) (value 1) | \(E^-\) (value 0) |
-|--------|------------------:|------------------:|
+| Target | \(E^+\) | \(E^-\) |
+|--------|--------:|--------:|
 | `a` | 24 | 6 |
 | `b` | 21 | 9 |
 | `c` | 17 | 13 |
 
+Full six-cell narrative: `learning_analysis.md`.
+
 ## Relation to Causal ABA
 
-This pre-run stage certifies an observational causal Bayesian network and its
-ordinary CI structure. It does not implement or test Russo-style Causal ABA.
+The investigation uses an observational causal Bayesian network and its
+ordinary CI structure as evaluator context. It does not implement or test
+Russo-style Causal ABA.
 
 ## Implementation scope
 
@@ -99,35 +109,29 @@ ordinary CI structure. It does not implement or test Russo-style Causal ABA.
 
 - Authoritative fixture YAML:
   `causal/fixtures/specs/m13_bucket3_binary_collider_and.yaml`
-- Fixture toolkit boundary: `causal/fixtures/README.md`
-- Target-wise boundary (next stage only): `causal/targetwise/README.md`
-- Target-wise configs for this fixture: **none yet**
-- Learning outputs for this fixture: **none yet**
+- Fixture toolkit: `causal/fixtures/README.md`
+- Target-wise: `causal/targetwise/README.md`
+- Target-wise configs:
+  `causal/configs/targetwise/m13_bucket3_binary_collider_and/{aamas2025,ecai2024}/n30_seed42.yaml`
+- Learning outputs:
+  `causal/outputs/aba_learning/targetwise/m13_bucket3_binary_collider_and/{aamas2025,ecai2024}/n30_seed42/`
 
-### Files changed for this documentation stage
+### Documentation files for this investigation
 
-- `docs/experiments/qualitative/M13-C3-binary-collider-and/experiment.md`
-- `docs/experiments/qualitative/M13-C3-binary-collider-and/fixture_dossier.tex`
-- `docs/experiments/qualitative/M1.3-bucket3-claims.md` (status only)
-- `docs/experiments/experiments_summary.md`
-- `docs/research/experiment_register.md`
-- `docs/research/research_state.md` (first-fixture language)
+- `learning_analysis.md` / `learning_analysis.tex` — **closed H0** six-cell record
+- `experiment.md` (status / outcome pointer; H0 closed)
+- `fixture_dossier.tex` (pre-run mathematical account)
+- `future_probes.md` / `.tex` (H1–H4 deferred, outside H0)
+- `M1.3-bucket3-claims.md`, `experiments_summary.md`, `experiment_register.md`,
+  `research_state.md` as needed for factual status
 
 ### Files / artefacts inspected (not modified)
 
-- `causal/fixtures/specs/m13_bucket3_binary_collider_and.yaml`
-- `causal/outputs/causal_fixtures/m13_bucket3_binary_collider_and/population.csv`
-- `causal/outputs/causal_fixtures/m13_bucket3_binary_collider_and/certificate.json`
-- `causal/outputs/causal_fixtures/m13_bucket3_binary_collider_and/mechanism_reference.json`
-- `causal/outputs/causal_fixtures/m13_bucket3_binary_collider_and/fixture_manifest.json`
-- `causal/outputs/causal_fixtures/m13_bucket3_binary_collider_and/model.bif` (interop only)
-- `causal/outputs/causal_fixtures/m13_bucket3_binary_collider_and/samples/n30_seed42.csv`
-- `causal/outputs/causal_fixtures/m13_bucket3_binary_collider_and/samples/n30_seed42.manifest.json`
-- Preserved pre-pivot diamond paths under
-  `causal/fixtures/specs/m13_bucket3_binary_diamond.yaml`,
-  `causal/outputs/causal_fixtures/m13_bucket3_binary_diamond/`,
-  and `causal/outputs/aba_learning/targetwise/m13_bucket3_binary_diamond/`
-  (not reinterpreted as deterministic claim evidence)
+Pre-run fixture bundle under
+`causal/outputs/causal_fixtures/m13_bucket3_binary_collider_and/`
+plus AAMAS/ECAI target-wise cells under
+`causal/outputs/aba_learning/targetwise/m13_bucket3_binary_collider_and/`.
+Preserved pre-pivot diamond artefacts unchanged.
 
 ## Dataset / data-generating process
 
@@ -237,132 +241,96 @@ Recorded in `n30_seed42.manifest.json` for the frozen sample:
 - Git commit at documentation write: `b534fd5` (working tree may differ after
   this documentation edit)
 
-SWI-Prolog / clingo: not invoked for this pre-run stage.
+SWI-Prolog / clingo: invoked for AAMAS and ECAI target-wise collections
+(see arm manifests / run logs under the target-wise output trees).
 
 ## Artefact paths
 
 | Artefact | Path | Notes |
 |---|---|---|
 | Spec (authoritative) | `causal/fixtures/specs/m13_bucket3_binary_collider_and.yaml` | schema v2 |
-| Population | `.../population.csv` | exact rationals |
-| Certificate | `.../certificate.json` | support, CI, faithfulness, MEC/CPDAG |
-| Mechanism reference | `.../mechanism_reference.json` | evaluator-only |
-| Fixture manifest | `.../fixture_manifest.json` | hashes + boundaries |
-| BIF | `.../model.bif` | derived interop; not authoritative |
-| Sample CSV | `.../samples/n30_seed42.csv` | target-free |
-| Sample manifest | `.../samples/n30_seed42.manifest.json` | counts + sampler metadata |
-| Working LaTeX dossier | `docs/experiments/qualitative/M13-C3-binary-collider-and/fixture_dossier.tex` | mathematical account |
-| Target-wise learning outputs | — | **none yet** |
-
-Base directory for generated pre-run artefacts:
-`causal/outputs/causal_fixtures/m13_bucket3_binary_collider_and/`.
+| Population / certificate / mechanism reference | `causal/outputs/causal_fixtures/m13_bucket3_binary_collider_and/` | evaluator-only |
+| Sample | `.../samples/n30_seed42.csv` | target-free |
+| AAMAS collection | `.../targetwise/.../aamas2025/n30_seed42/` | `summary.md` + 3 cells |
+| ECAI collection | `.../targetwise/.../ecai2024/n30_seed42/` | `summary.md` + 3 cells |
+| Pre-run LaTeX dossier | `fixture_dossier.tex` | population / certificates |
+| Learning analysis | `learning_analysis.md` / `.tex` | **closed H0** six-cell narrative |
+| Future probes | `future_probes.md` / `.tex` | H1–H4 deferred (motivated by H0) |
 
 ## Outcome summary
 
-No ABALearn outcomes. Pre-run certification facts verified against primary
-artefacts:
+### Pre-run (unchanged)
 
-| Check | Result |
-|---|---|
-| Exact population atoms | \(P(1,1,1)=14/25=0.56\); \(P(1,0,0)=6/25=0.24\); \(P(0,1,0)=7/50=0.14\); \(P(0,0,0)=3/50=0.06\) |
-| Support | size 4; 4 structural zeros; `full_support: false` |
-| Causal sufficiency | `declared_satisfied_by_fixture_design` (`mutually_independent_root_exogenous_noise`); not inferred from the joint |
-| Causal Markov condition | `verified` via CPT factorisation over the DAG |
-| Ordinary faithfulness | `verified_exactly` by exhaustive singleton-pair CI ↔ d-separation audit; not implied by determinism alone |
-| Population independences | only \(A \perp B\); dependence given \(C\); \(A\)–\(C\) and \(B\)–\(C\) dependent |
-| Edge activity | both `a→c` and `b→c` active |
-| MEC / CPDAG | MEC size 1; ordinary CI CPDAG orients `a→c`, `b→c`; deterministic-relation boundary note recorded |
-| Mechanism reference for `c` | `c(A) :- a_val_1(A), b_val_1(A).` (formal = population_supported = sample_observed) |
-| Root references | `no_observed_parent_deterministic_rule` for `a` and `b` |
-| Frozen sample joint counts | \((1,1,1):17\), \((1,0,0):7\), \((0,1,0):4\), \((0,0,0):2\); all four population atoms observed |
-| Deterministic assignment checks | 30/30 verified on the sample |
+Population support size 4; ordinary faithfulness `verified_exactly`; MEC size 1;
+evaluator ref `c(A) :- a_val_1(A), b_val_1(A).`; roots
+`no_observed_parent_deterministic_rule`; sample joints
+\((1,1,1):17\), \((1,0,0):7\), \((0,1,0):4\), \((0,0,0):2\).
+
+### Learning (H0 — six cells, closed)
+
+| Arm | `a` | `b` | `c` |
+|-----|-----|-----|-----|
+| AAMAS | `completed_no_solution` | `completed_no_solution` | `solved` — `c :- a_val_1, b_val_1` |
+| ECAI | `solved` (α-framework on `b`) | `solved` (mirror) | `solved` — `c :- α₁, a_val_1` + contrary `b_val_0` |
+
+Full narrative, geometry, and non-claims: `learning_analysis.md`.
 
 ## Quantitative results
 
-None from ABALearn. Sample marginals and implied planned \(E^\pm\) counts are
-recorded above. No body-parent F1, coverage, or solve metrics exist for this
-fixture.
+Arm summaries record outcomes, delta/assumption counts, body variables, and
+artefact-audit status. No parent-set F1 or graph decoder is applied (target-wise
+interpretation boundary).
 
 ## Qualitative learned-rule inspection
 
-Not applicable: learning not run.
-
-Evaluator-only reference for later comparison (`mechanism_reference.json`):
-
-- Target `c`: `c(A) :- a_val_1(A), b_val_1(A).`
-- Boundaries recorded in the artefact: syntactic rule equality is not an
-  automatic causal-recovery verdict; predictive rules for root targets do not
-  constitute root-mechanism recovery; formal / population-supported /
-  sample-observed configurations remain distinct.
+See `learning_analysis.md` (AAMAS `c` conjunction; AAMAS root both-0 KO;
+ECAI `c` under-fold; ECAI root brave choice gadget on rows 9 vs 26).
 
 ## Failure modes
 
-No learning failure modes yet. Pre-run distinctions to preserve when learning
-begins:
+Distinctions preserved in the learning analysis:
 
-- population properties vs finite-sample observations;
-- evaluator-only graph/certificate/reference vs learner-visible BK and \(E^\pm\);
-- predictive covering rules vs mechanism-aligned causal interpretation;
-- strategy failure vs informational / identifiability limits.
+- population vs finite sample;
+- evaluator-only metadata vs learner-visible BK/\(E^\pm\);
+- predictive covering vs mechanism-aligned interpretation;
+- strategy / entailment semantics vs informational limits;
+- AAMAS root no-solution vs ECAI brave non-functional covering of the same
+  ambiguous cell.
 
 ## Interpretation notes
 
-**Verified facts (pre-run).** The fixture is a three-variable observational
-collider with independent Bernoulli roots and deterministic AND at the sink.
-The exact population has incomplete support because \(C\) is a deterministic
-function of \((A,B)\). Ordinary faithfulness holds for this population under the
-certificate’s exhaustive singleton-pair audit. The ordinary CI CPDAG recovers
-the generating orientations; the certificate explicitly warns that deterministic
-functional constraints may change what is identifiable beyond ordinary CI, and
-no extended recovery object is asserted.
+**Pre-run facts** remain as certified in `fixture_dossier.tex`.
 
-**Accepted distinctions.** Causal sufficiency is declared by design, not read
-off the joint. Active edges are a local mechanism/minimality check, not a
-faithfulness proof. The mechanism reference for \(C\) is evaluator-only and must
-not be described as an ABALearn input. Root targets have no observed-parent
-deterministic rule in the reference.
-
-**No claim.** These pre-run facts do not establish what ABALearn will recover.
-No Bucket 3 claim is approved.
+**Learning-stage bounded reading (not a claim).** Same frozen table; AAMAS and
+ECAI differ by strategy. AAMAS recovers an assumption-free AND conjunction for
+`c` (syntactic coincidence with the evaluator reference) and fails on roots.
+ECAI solves all targets with different ABA shapes; root `solved` is brave
+coverage via a choice gadget, not functional root-mechanism recovery.
+**No Bucket 3 claim.**
 
 ## Claims supported
 
-None. Pre-run documentation only.
+None. Evidence record and bounded interpretation only.
 
 ## Claims not supported / not claimed
 
-- Any statement that ABALearn recovers the AND mechanism, parent set, or CPDAG.
-- Any reinterpretation of the preserved stochastic diamond artefacts as
-  deterministic Bucket 3 claim evidence.
-- Equating syntactic match to `c(A) :- a_val_1(A), b_val_1(A).` with automatic
-  recovery success (explicitly disclaimed by the mechanism reference).
-- Treating planned/implied \(E^\pm\) counts as already-generated learner inputs.
+As in `learning_analysis.md` non-claims section (no Russo Causal ABA; no
+mechanism recovery from string match; no ECAI-AND claim; no root parent-set
+scoring without brave caveat; H1–H4 not results of this pass).
 
 ## Report relevance
 
 Interim Experimentation / Progress (Milestone 1 Part 3 / Bucket 3). Working
-evidence and mathematical dossier only; **not** report-facing claim prose.
-Do not place this dossier under `docs/report/findings/`.
+evidence only; **not** report-facing claim prose.
 
 ## Future probes
 
-`future_probes.md` and `future_probes.tex`.
-H1–H3: **design approved** / not yet implemented / not tested / **not claims**.
-H4: **proposed** / blocked on target-wise cautious support / **not a claim**.
-Order: H1 → H2 → H3 → H4 (infra then run).
+Deferred outside H0: `future_probes.md` / `.tex` (H1–H4). Motivated by the
+closed H0 baseline. Not part of the H0 six-cell result.
 
 ## Next decision
 
-1. **H1 (approved):** implement/run the nested-prefix AAMAS ablation.
-2. **H2 (design approved):** author `m13_bucket3_binary_collider_and_iso_d`,
-   lock sample, certify, run AAMAS with H2a/H2b/H2c.
-3. **H3 (design approved):** author `m13_bucket3_binary_bd_and_lead_a`;
-   build planned `n30_seed42`; run ECAI (primary) and AAMAS (contrast).
-4. **H4:** do **not** decide infra/config details now. When H4 is opened,
-   resolve the deferred checklist in `future_probes.md` (cautious `.pl` name,
-   `configuration.id`, validator, audit semantics, H4a/optional `c`).
-5. Keep Bucket 3 free of a claim or expanded run matrix until inspected probe
-   evidence warrants a separate decision.
-
-Recorded H1–H3 approvals: `future_probes.md` and `docs/research/decisions.md`.
-H4 remains proposed / infra-blocked; open decisions are flagged there only.
+1. Open deferred probes H1–H4 when ready (any order; designs in
+   `future_probes.md`).
+2. Keep Bucket 3 free of a claim until inspected probe evidence warrants a
+   separate decision.

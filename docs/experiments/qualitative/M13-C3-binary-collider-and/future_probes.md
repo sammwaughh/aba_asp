@@ -2,9 +2,12 @@
 
 ## Status
 
-Near-term probes for the M13-C3 target-wise investigation
-(`m13_bucket3_binary_collider_and`).
+Follow-up probes **motivated by closed baseline H0**, and **not** part of H0
+itself. H0 is the completed six-cell AAMAS+ECAI investigation on fixture
+`m13_bucket3_binary_collider_and` / `n30_seed42`, documented in
+`learning_analysis.md` / `.tex` and summarised in `experiment.md`.
 
+- H0: **closed** (see `learning_analysis.md`; not redefined here)
 - H1 / H2: **`approved` / not yet implemented / not tested / not claims**
 - H3: **`design approved` / not yet implemented / not tested / not a Bucket 3 claim**
   (fixture YAML not yet built)
@@ -46,7 +49,7 @@ Planned first frozen sample for H3 (to confirm at build): `n30_seed42`.
 
 
 
-## Motivation (verified facts from the AAMAS arm)
+## Motivation (verified facts from the AAMAS arm of closed H0)
 
 On the approved frozen sample `n30_seed42`, configuration `aamas2025`
 (greedy / `folding_selection(mgr)` / `folding_space(bk)` / brave / `check_ic`):
@@ -85,10 +88,10 @@ Procedural reading of the AAMAS root-target path (verified in
    \((0,0,0)\) in `samples/n30_seed42.csv` — and contrary folding then fails,
    yielding `completed_no_solution`.
 
-These facts motivate probe families H1 and H2. They do not by themselves
-approve a Bucket 3 claim.
+These facts from closed H0 motivate probe families H1 and H2. They do not by
+themselves approve a Bucket 3 claim.
 
-### Motivation addendum (ECAI arm — for H3)
+\subsection Motivation addendum (ECAI arm of closed H0 — for H3)
 
 On the same frozen sample `n30_seed42`, configuration `ecai2024`
 (`folding_mode(nd)`, `folding_selection(any)`, brave / `check_ic`), target `c`

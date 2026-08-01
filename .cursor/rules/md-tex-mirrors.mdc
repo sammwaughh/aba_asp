@@ -1,0 +1,28 @@
+---
+description: Keep paired Markdown/LaTeX experiment docs content-mirrored
+globs:
+  - docs/experiments/**/*.md
+  - docs/experiments/**/*.tex
+alwaysApply: false
+---
+
+# Markdown / LaTeX content mirrors
+
+When an experiment folder has a **dedicated mirrored pair** (same stem, both
+extensions), treat them as **content twins**:
+
+- Examples in this repo: `future_probes.md` ↔ `future_probes.tex`,
+  `learning_analysis.md` ↔ `learning_analysis.tex`.
+- Same information must appear in both: status, decisions, hypotheses, fixture
+  parameters, non-claims, planned steps, cross-links, outcome tables.
+- Representation may differ (Markdown tables vs `booktabs`; fenced code vs
+  `verbatim`; headings vs `\section`; math in `$...$` / display).
+- Do **not** leave one twin as a stub that merely points at the other for
+  substantive content.
+- When updating either file of a declared mirror pair, update the other in the
+  same pass unless the user explicitly restricts edits to one side.
+- Prefer readable LaTeX: short paragraphs, booktabs tables, `verbatim` for
+  Prolog deltas, `\texttt` for paths/ids, explicit section structure matching
+  the Markdown outline.
+- Hub records such as `experiment.md` are not automatically TeX twins unless a
+  matching `.tex` exists by name.
