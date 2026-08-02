@@ -18,7 +18,7 @@
 \title{M13-C3 --- Probe catalogue (H1--H4)\\
 motivated by closed H0}
 \author{}
-\date{H0 closed; H1--H2 run/analysed; H3 design approved;\\
+\date{H0 closed; H1--H3 run/analysed;\\
 H4 proposed / infra-blocked (not claims)}
 
 \begin{document}
@@ -43,8 +43,10 @@ H0 is the completed six-cell AAMAS+ECAI investigation on fixture
   \item H2: \textbf{run / analysed} --- isolated-\(D\) AAMAS target \(c\) retains
     irrelevant \(d\). Record: \texttt{h2\_irrelevant\_covariate.md} /
     \texttt{.tex}. \textbf{Not a Bucket~3 claim.}
-  \item H3: \textbf{design approved} / not yet implemented / not tested /
-    not a Bucket~3 claim (fixture YAML not yet built)
+  \item H3: \textbf{run / analysed} --- BK-leading isolated \(a\) distracts
+    ECAI target \(c\) from BD AND. Record:
+    \texttt{h3\_bk\_leading\_distractor.md} / \texttt{.tex}.
+    \textbf{Not a Bucket~3 claim.}
   \item H4: \textbf{proposed} / blocked on target-wise cautious support /
     not tested / not a Bucket~3 claim
   \item \textbf{Not} approved Bucket~3 claims
@@ -86,12 +88,9 @@ H0 is the completed six-cell AAMAS+ECAI investigation on fixture
 Signposted only; \textbf{not} approved for implementation and \textbf{blocked}
 until target-wise cautious learning is supported (see H4 section).
 
-H1 and H2 have been run and analysed (\texttt{h1\_support\_ablation.md},
-\texttt{h2\_irrelevant\_covariate.md}).
-Approvals for H3 authorise investigation.
-They do not create a Bucket~3 claim or a run matrix.
-Planned first frozen sample for H3 (to confirm at build):
-\texttt{n30\_seed42}.
+H1--H3 have been run and analysed (\texttt{h1\_support\_ablation.md},
+\texttt{h2\_irrelevant\_covariate.md}, \texttt{h3\_bk\_leading\_distractor.md}).
+Approvals do not create a Bucket~3 claim or a run matrix.
 
 \section{Motivation (verified facts from the AAMAS arm of closed H0)}
 
@@ -170,8 +169,9 @@ the ordinary target body while the second parent enters via a contrary.
 Collection summary: \texttt{\ldots/ecai2024/n30\_seed42/summary.md}.
 
 This motivates \textbf{H3}: put an \emph{independent} distractor first in BK by
-naming, under ECAI, on a new fixture. H3 design is now approved (see Status);
-it is still \textbf{not} a Bucket~3 claim and is \textbf{not yet built}.
+naming, under ECAI, on a new fixture. H3 is now \textbf{run / analysed}
+(\texttt{h3\_bk\_leading\_distractor.md}); it is still \textbf{not} a Bucket~3
+claim.
 
 \section{Ordering}
 
@@ -186,8 +186,8 @@ it is still \textbf{not} a Bucket~3 claim and is \textbf{not yet built}.
   \item \textbf{H3} --- separate schema-2 fixture
     \texttt{m13\_bucket3\_binary\_bd\_and\_lead\_a} with BK-leading independent
     \(A\) and AND collider \(B\to C\leftarrow D\).
-    \textbf{Design approved;} primary ECAI target \(c\);
-    \textbf{AAMAS contrast in scope}. YAML / sample / learning not yet produced.
+    \textbf{Run / analysed} (\texttt{h3\_bk\_leading\_distractor.md}).
+    Lead: ECAI first-folds to \(a\) and retains \(a\) in the theory for \(c\).
   \item \textbf{H4 (proposed)} --- same fixture/\texttt{n30\_seed42}; ECAI
     \textbf{root} targets under \textbf{cautious} vs locked brave;
     \textbf{blocked} on target-wise cautious support. Not approved for run until
@@ -343,11 +343,20 @@ Full record: \texttt{h2\_irrelevant\_covariate.md}.
 \section{Probe family H3 --- ECAI first-fold distraction by BK-leading
 independent variable}
 
-Status: \textbf{design approved} / not yet implemented / not tested / not a
-Bucket~3 claim. Fixture YAML \textbf{not yet built}. Do not reuse or alter
-\texttt{m13\_bucket3\_binary\_collider\_and}.
+Status: \textbf{run / analysed} / not a claim.
+Evidence record: \texttt{h3\_bk\_leading\_distractor.md} /
+\texttt{h3\_bk\_leading\_distractor.tex}.
 
-\subsection{Approved fixture design}
+\textbf{Lead finding.}
+On fixture \texttt{m13\_bucket3\_binary\_bd\_and\_lead\_a} /
+\texttt{n30\_seed42}, ECAI first-folds to \texttt{a\_val\_*} and retains \(a\)
+in both target rules for \(c\).
+The emitted delta does \textbf{not} coincide with the evaluator-only BD AND
+\texttt{c(A) :- b\_val\_1(A), d\_val\_1(A).}.
+Failure mode: BK-leading distractor inclusion / first-fold distraction, not
+unlearnability.
+
+\subsection{Fixture (as run)}
 
 \begin{center}
 \begin{tabular}{@{}lL{0.62\textwidth}@{}}
@@ -365,80 +374,50 @@ Evaluator reference for \(c\) &
   \texttt{c(A) :- b\_val\_1(A), d\_val\_1(A).} (\texttt{a} must not appear) \\
 BK order for target \(c\) & predictors \textbf{\texttt{a}, then \texttt{b}, then
   \texttt{d}} (irrelevant first) \\
-Planned first sample & \texttt{n30\_seed42} (confirm at build) \\
+Frozen sample & \texttt{n30\_seed42} \\
 Primary learning arm & \textbf{ECAI} target \(c\) \\
 Secondary arm & \textbf{AAMAS} on the same frozen sample (\textbf{in scope}) \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-Naming is part of the probe: under exact-value encoding, \(a\) precedes the
-mechanism parents in BK.
-
-\subsection{Scientific question}
+\subsection{Scientific question (answered)}
 
 {\raggedright
-When learning target \(c\) under \textbf{ECAI} (\texttt{folding\_mode(nd)},
-one-step folds, \texttt{folding\_selection(any)}, etc.) on a frozen sample from
-this fixture, does BK-leading independent \(a\) \textbf{distract} the first fold
-(and/or the final ABA shape) away from the mechanism-aligned \(B,D\)
-conjunction?
+When learning target \(c\) under \textbf{ECAI} on this frozen sample, does
+BK-leading independent \(a\) \textbf{distract} the first fold and/or the final
+ABA shape away from the mechanism-aligned \(B,D\) conjunction?
 \par}
 
-Secondary (in scope): on the \textbf{same} sample under \textbf{AAMAS}, does
-greedy maximal co-occurrence include \texttt{a\_val\_*} in bodies for target
-\(c\), and how does that compare to the ECAI path and to H2 (where the
-distractor is trailing \(d\) on parents \(a\),\,\(b\))?
+\textbf{Answer (bounded):} yes --- first fold selects \texttt{a\_val\_1}; both
+target rules retain \(a\); metrics body vars \(\{a\}\).
+Secondary: AAMAS also retains \texttt{a\_val\_*} in both Horn bodies (vs H2's
+trailing-\(d\) inclusion).
 
-Motivated by the completed ECAI \(c\) cell on
-\texttt{m13\_bucket3\_binary\_collider\_and} (see Motivation addendum above).
+\subsection{Secondary finding (in scope; not the lead)}
 
-\subsection{Working hypothesis (signpost only; not a claim)}
-
-Under ECAI on target \(c\), the first nd fold is predicted to match an
-\texttt{a\_val\_*} literal from an early \(E^+\) row because \(a\) precedes
-\(b\) and \(d\) in BK. That one-literal body is not a valid covering rule for
-\(C=B\land D\). Subsequent assumption/contrary repair may still solve, but the
-learned framework is predicted to \textbf{retain \(a\) in the ABA presentation}
-and \textbf{not} coincide with the evaluator string
-\texttt{c :- b\_val\_1, d\_val\_1}, unless later steps drop \(a\) (to be
-observed, not assumed).
-
-Under AAMAS on the same sample, greedy bodies for \(E^+\) rows with \(C=1\)
-(hence \(B=D=1\)) are predicted to cite the co-occurring value of \(a\) as well,
-so the \(A\)-free evaluator form is not expected as the emitted delta
-(learnability vs minimality / distractor inclusion --- related to but distinct
-from H2).
+Brave residual / underdetermining delta on the nested \(a{=}1\) /
+\(\alpha_1\)--\(\alpha_3\) side.
+Cross-link H0 ECAI target-\(a\) rows~9 vs~26.
+Reinforces: \textbf{\texttt{solved} + audit SAT \(\neq\) mechanism-aligned}.
 
 \subsection{Explicit non-claims for H3}
 
 \begin{itemize}
-  \item H3 does not assert that ECAI or AAMAS cannot solve, nor that \(a\) can
-    never be dropped later in the transformation sequence.
-  \item H3 does not reuse H2's intended graph (\(A\to C\leftarrow B\) with
-    isolated \(D\)); the distractor here is \textbf{\(A\)}, and parents of \(C\)
-    are \textbf{\(B,D\)}.
-  \item Completing H3 would still not by itself approve a Bucket~3 claim.
+  \item Inclusion of \(a\) is \textbf{not} causal recovery of an \(A\to C\) edge.
+  \item Runner \texttt{solved} is \textbf{not} automatically correct /
+    mechanism-aligned.
+  \item H3 does not reuse H2's graph; distractor here is \textbf{\(A\)}, parents
+    \textbf{\(B,D\)}.
+  \item Completing H3 does \textbf{not} approve a Bucket~3 claim.
 \end{itemize}
 
-\subsection{Planned investigation (H3)}
+\subsection{Outcome (H3)}
 
-\textbf{Design approved (2026-08-01).} Remaining implementation steps (not
-performed by this documentation update):
-\begin{enumerate}
-  \item Author schema-2 YAML \texttt{m13\_bucket3\_binary\_bd\_and\_lead\_a}
-    with the parameters above; planned sample \texttt{n30\_seed42}.
-  \item Build population/certificate/mechanism reference; confirm evaluator
-    reference for \(c\) omits \(a\).
-  \item Run \textbf{ECAI} target-wise on the frozen sample with primary
-    inspection of \textbf{target \(c\)} (BK order, first fold in
-    \texttt{prolog.stdout}, \texttt{delta.aba} vs evaluator reference).
-  \item Run \textbf{AAMAS} on the same frozen sample as an \textbf{in-scope}
-    secondary contrast (distractor inclusion under greedy maximal bodies;
-    distinct from H2's trailing-\(d\) design).
-  \item No portfolio or multi-fixture matrix beyond this approved H3 package
-    without further approval.
-\end{enumerate}
+\textbf{Run / analysed.}
+Fixture authored and certified; ECAI \texttt{n30\_seed42} primary target \(c\)
+shows BK-leading \(a\) distraction; AAMAS contrast also retains \(a\).
+Full record: \texttt{h3\_bk\_leading\_distractor.md}.
 
 \section{Probe family H4 --- cautious vs brave on ECAI root targets}
 
@@ -691,7 +670,7 @@ H2c in first H2 write-up &
   \textbf{In scope} (run; brief note only) & 2026-08-01 / 2026-08-02 \\
 H3 graph/naming; \(B\) 80/20, \(D\) 70/30; id
   \path{m13_bucket3_binary_bd_and_lead_a}; AAMAS contrast &
-  \textbf{Design approved} & 2026-08-01 \\
+  \textbf{Design approved} then \textbf{run / analysed} & 2026-08-01 / 2026-08-02 \\
 H4 cautious vs brave on ECAI roots &
   \textbf{Proposed only} (blocked on infra) & --- \\
 \bottomrule
@@ -705,13 +684,12 @@ H4 cautious vs brave on ECAI roots &
     Not a claim.
   \item \textbf{H2:} \textbf{complete} (\texttt{h2\_irrelevant\_covariate.md}).
     Lead: AAMAS \(c\) retains irrelevant \(d\). Not a claim.
-  \item \textbf{H3:} author \texttt{m13\_bucket3\_binary\_bd\_and\_lead\_a};
-    build planned \texttt{n30\_seed42}; certify; run \textbf{ECAI} (primary) and
-    \textbf{AAMAS} (in-scope contrast) with inspection of target \(c\).
+  \item \textbf{H3:} \textbf{complete} (\texttt{h3\_bk\_leading\_distractor.md}).
+    Lead: ECAI \(c\) first-folds to / retains BK-leading \(a\) (not BD AND).
+    Not a claim.
   \item \textbf{H4:} deferred until H4 is opened. Infra/config decisions are
-    \textbf{flagged} in the H4 section (``Decisions deferred until H4 begins'')
-    and are \textbf{not} to be resolved during current H3 work. No cautious
-    collection until then.
+    \textbf{flagged} in the H4 section (``Decisions deferred until H4 begins'').
+    No cautious collection until then.
   \item Still \textbf{no} Bucket~3 claim and \textbf{no} expanded run matrix
     without a further Samuel decision.
 \end{itemize}

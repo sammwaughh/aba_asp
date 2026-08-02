@@ -175,8 +175,8 @@ Expanded Approach:
   Inspection: `M1.2-expanded-cell-inspection.md`.
 - **M1.3** — **in progress:** Bucket 1 **written / locked**; Bucket 2
   **locked / closed** with Claims 1–2 from M13-C1/C2; Bucket 3 baseline
-  **M13-C3 H0 closed**; probes **H1–H2 run / analysed** (**no claim**). Next:
-  deferred probes H3–H4 in `future_probes.md`. Method:
+  **M13-C3 H0 closed**; probes **H1–H3 run / analysed** (**no claim**). Next:
+  deferred probe H4 in `future_probes.md`. Method:
   `milestone1_part3_approach.md`. Records:
   `docs/experiments/qualitative/M1.3-bucket1-claims.md` (locked);
   `docs/experiments/qualitative/M1.3-bucket2-claims.md` (locked);
@@ -184,7 +184,8 @@ Expanded Approach:
   `docs/experiments/qualitative/M13-C3-binary-collider-and/experiment.md`;
   `docs/experiments/qualitative/M13-C3-binary-collider-and/learning_analysis.md`;
   `docs/experiments/qualitative/M13-C3-binary-collider-and/h1_support_ablation.md`;
-  `docs/experiments/qualitative/M13-C3-binary-collider-and/h2_irrelevant_covariate.md`.
+  `docs/experiments/qualitative/M13-C3-binary-collider-and/h2_irrelevant_covariate.md`;
+  `docs/experiments/qualitative/M13-C3-binary-collider-and/h3_bk_leading_distractor.md`.
 - **No M1.4** — the widened work remains M1.3. Later large-scale external evaluation
   remains deferred beyond this supervisor-driven controlled investigation.
 

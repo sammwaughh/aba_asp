@@ -10,7 +10,8 @@
   irrelevant `d`** (`d_val_0` / `d_val_1`) in the learned bodies
 - H0 and H1 remain closed / unchanged
 - **Not a Bucket 3 claim**
-- H3–H4 remain deferred (`future_probes.md`)
+- H3 is **run / analysed** (`h3_bk_leading_distractor.md`); H4 remains deferred
+  (`future_probes.md`)
 
 Companion records: `experiment.md` (hub); `future_probes.md` (probe catalogue);
 `h1_support_ablation.md` (closed H1); `learning_analysis.md` (closed H0).
@@ -136,7 +137,7 @@ relative to the main `n30` distractor-inclusion finding.
 - Covering-equivalence of the two-rule theory on the `n30` sample is a footnote
   to distractor retention, not the interesting result.
 - H0/H1 artefacts and narratives are unchanged except for cross-links.
-- H3–H4 untouched.
+- H3 analysed separately (`h3_bk_leading_distractor.md`); H4 untouched.
 
 ---
 
@@ -150,6 +151,7 @@ relative to the main `n30` distractor-inclusion finding.
 
 ## Next
 
-H2 documentation is complete. Remaining probes H3–H4 stay deferred as recorded
+H2 documentation is complete. H3 is run / analysed
+(`h3_bk_leading_distractor.md`). Remaining probe H4 stays deferred as recorded
 in `future_probes.md`. Orchestrator decides the next move. Still **no Bucket 3
 claim**.

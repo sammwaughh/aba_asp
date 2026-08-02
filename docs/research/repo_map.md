@@ -212,7 +212,7 @@ shared method and terminology live in
 - Bucket 3 planning record:
   `docs/experiments/qualitative/M1.3-bucket3-claims.md`.
   It records the supervisor-defined planning dimensions and current M13-C3 status:
-  H0–H2 complete / analysed, H3 design approved but not started, H4 proposed /
+  H0–H3 complete / analysed, H4 proposed /
   infrastructure-blocked, and no Bucket 3 claim or run matrix.
 
 ### M13-C1 probe: causal-role underdetermination
@@ -278,7 +278,7 @@ Current deterministic M13-C3 evidence:
 - H2 analysed irrelevant-covariate probe: `h2_irrelevant_covariate.md` / `.tex` on
   `m13_bucket3_binary_collider_and_iso_d`, with AAMAS collections for
   `n30_seed42` and the secondary H2c prefix `n2_seed42`;
-- remaining probe catalogue: `future_probes.md` / `.tex` (H3 design approved; H4
+- remaining probe catalogue: `future_probes.md` / `.tex` (H1–H3 complete; H4
   proposed / infrastructure-blocked).
 
 Authoritative fixture specifications and outputs for completed H0–H2:
@@ -370,7 +370,7 @@ do not create fixtures or cells merely from that list.
   - `qualitative/M1.3-bucket2-claims.md` — locked Bucket 2 claim record
     (M13-C1/C2).
   - `qualitative/M1.3-bucket3-claims.md` — Bucket 3 direction/planning record;
-    H0–H2 complete / analysed, H3 design approved but not started, H4 proposed /
+    H0–H3 complete / analysed, H4 proposed /
     infrastructure-blocked, and no claim.
   - `qualitative/M13-C3-binary-collider-and/` — M13-C3 hub plus H0, H1, H2,
     and remaining-probe records.

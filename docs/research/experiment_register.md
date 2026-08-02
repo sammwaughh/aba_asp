@@ -35,10 +35,10 @@ The earlier n=100 scaled attempt was cut and is not part of the canonical experi
 | M11 | — | m1.1 Parent-position and representation-order control | analysed (Stages 0–7; ablations + greedy comparator) |
 | M12 | — | m1.2 Published-configuration comparison (ASP-ABAlearnB / Greedy ABA Learning) | analysed (Stages 0–3: 10-cell grid + full cell inspection / failure-mode taxonomy) |
 | M12x | — | m1.2 expanded U1–U7 (ECAI/AAMAS; val-only BK; 18 cells) | closed / analysed (18/18 Stage-3) |
-| M13 | — | m1.3 capabilities and limits of unguided ABA Learning for causal recovery | in progress (Buckets 1–2 locked; M13-C3 H0 closed; H1–H2 analysed; no claim) |
+| M13 | — | m1.3 capabilities and limits of unguided ABA Learning for causal recovery | in progress (Buckets 1–2 locked; M13-C3 H0 closed; H1–H3 analysed; no claim) |
 | M13-C1 | M13 | Causal-role underdetermination under learner-input equivalence | analysed |
 | M13-C2 | M13 | Comparative sensitivity to BK feature-block order | analysed |
-| M13-C3 | M13 | Bucket 3 binary deterministic AND collider | **H0 closed**; **H1–H2 analysed** (no claim) |
+| M13-C3 | M13 | Bucket 3 binary deterministic AND collider | **H0 closed**; **H1–H3 analysed** (no claim) |
 
 ## Template
 
@@ -277,7 +277,7 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
 
 - Status: **`in progress`** — Bucket 1 **written / locked**; Bucket 2
   **locked / closed** with Claims 1–2; Bucket 3 baseline **M13-C3 H0 closed**;
-  probes **H1–H2 run / analysed** (**no claim**). Next: deferred probes H3–H4.
+  probes **H1–H3 run / analysed** (**no claim**). Next: deferred probe H4.
 - Planning docs: `docs/research/milestone_plans/milestone1_high_level_path.md`; `docs/research/milestone_plans/milestone1_part3/`.
 - Approach (method): `docs/research/milestone_plans/milestone1_part3/milestone1_part3_approach.md`.
 - Bucket 1 (locked): `docs/experiments/qualitative/M1.3-bucket1-claims.md` (TeX: `docs/report/findings/milestone1_part3_bucket1_claims.tex`).
@@ -287,7 +287,7 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
   `docs/experiments/qualitative/M13-C3-binary-collider-and/experiment.md`
   (H0: `learning_analysis.md`; H1: `h1_support_ablation.md`; H2:
   `h2_irrelevant_covariate.md`; remaining: `future_probes.md`).
-- Next: deferred probes H3–H4 when ready; still **no Bucket 3 claim**.
+- Next: deferred probe H4 when ready; still **no Bucket 3 claim**.
 
 
 #### M13-C1 — causal-role underdetermination
@@ -317,14 +317,18 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
 
 #### M13-C3 — binary deterministic AND collider (Bucket 3)
 
-- Status: **`H0 closed`; `H1–H2 run / analysed`** — H3–H4 deferred; **no Bucket 3
+- Status: **`H0 closed`; `H1–H3 run / analysed`** — H4 deferred; **no Bucket 3
   claim**.
 - Record: `docs/experiments/qualitative/M13-C3-binary-collider-and/experiment.md`.
 - H0: `.../learning_analysis.md` / `.tex`.
 - H1: `.../h1_support_ablation.md` / `.tex`.
 - H2: `.../h2_irrelevant_covariate.md` / `.tex`.
-- Remaining probes: `.../future_probes.md` / `.tex`.
+- H3: `.../h3_bk_leading_distractor.md` / `.tex`.
+- Remaining probes: `.../future_probes.md` / `.tex` (H4 only).
+- H3 lead (bounded; not a claim): ECAI on
+  `m13_bucket3_binary_bd_and_lead_a` / `n30_seed42` first-folds to / retains
+  BK-leading `a` for target `c` (not evaluator BD AND).
 - H2 lead (bounded; not a claim): AAMAS on
   `m13_bucket3_binary_collider_and_iso_d` / `n30_seed42` solves `c` with
   bodies that **include irrelevant `d_val_*`**, not the evaluator D-free AND.
-- Next: deferred H3–H4 when ready; no claim.
+- Next: deferred H4 when ready; no claim.

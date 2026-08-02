@@ -1,0 +1,134 @@
+{
+  "empirical_table_summary": {
+    "deterministic_assignment_checks": 30,
+    "deterministic_assignments_verified": true,
+    "state_counts": {
+      "a": [
+        {
+          "count": 12,
+          "state": 0
+        },
+        {
+          "count": 18,
+          "state": 1
+        }
+      ],
+      "b": [
+        {
+          "count": 7,
+          "state": 0
+        },
+        {
+          "count": 23,
+          "state": 1
+        }
+      ],
+      "c": [
+        {
+          "count": 15,
+          "state": 0
+        },
+        {
+          "count": 15,
+          "state": 1
+        }
+      ],
+      "d": [
+        {
+          "count": 10,
+          "state": 0
+        },
+        {
+          "count": 20,
+          "state": 1
+        }
+      ]
+    },
+    "unique_joint_states_observed": 7
+  },
+  "fixture": {
+    "document_hash": "sha256:a040b87266674097d1733d8f3c46b43db8a8ea503382961d9b1ec3b46d2fc133",
+    "document_hash_basis": "canonical parsed YAML document",
+    "id": "m13_bucket3_binary_bd_and_lead_a",
+    "semantic_hash": "sha256:a0f64fe54f8f7c7f44348be86f10962037d78fd30aa5a82bb1745ccca14862eb",
+    "source_hash": "sha256:c067795eec0b93b599fea115a107d9387969a3703818e725ab62f9fbd9fb9647",
+    "source_hash_basis": "exact UTF-8 source-file bytes",
+    "source_path": "/Users/samuelwaugh/Desktop/Causal ABA Learning/aba_asp/causal/fixtures/specs/m13_bucket3_binary_bd_and_lead_a.yaml"
+  },
+  "runtime": {
+    "numpy": "2.2.6",
+    "pandas": "2.3.3",
+    "python": "3.10.20"
+  },
+  "sample": {
+    "csv_columns_are_causal_variables_only": true,
+    "csv_path": "causal/outputs/causal_fixtures/m13_bucket3_binary_bd_and_lead_a/samples/n30_seed42.csv",
+    "csv_sha256": "sha256:48bd0da0df696e29fb91e16e79bf30592b55c6dc16f34ee72e74aa36cc52db05",
+    "iid_observational_rows": true,
+    "mechanism_regime": "root_stochastic_deterministic_nonroots",
+    "n": 30,
+    "row_identifier": "one-based CSV data-row number; not a causal variable",
+    "seed": 42,
+    "target": null,
+    "target_note": "target selection occurs after this table is frozen"
+  },
+  "sample_manifest_schema_version": 1,
+  "sampler": {
+    "deterministic_variables": [
+      "c"
+    ],
+    "draw_policy": "one uniform draw for each non-degenerate local distribution encountered; point-mass mechanisms consume no random draw",
+    "fixture_toolkit_version": 2,
+    "id": "row_major_ancestral_inverse_cdf",
+    "implementation_hash": "sha256:051f63707287b7a42acbeaa1cb1fe4099d5a8921738eb7b2e5ab48bf4f4dc7c4",
+    "nested_prefix_guarantee": "for the same semantic fixture, seed, sampler version, and orders, sample(n_small) equals the first n_small rows of sample(n_large)",
+    "output_column_order": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "parent_orders": {
+      "a": [],
+      "b": [],
+      "c": [
+        "b",
+        "d"
+      ],
+      "d": []
+    },
+    "randomness_confined_to_roots": true,
+    "rng": "numpy.random.PCG64",
+    "row_major": true,
+    "state_orders": {
+      "a": [
+        0,
+        1
+      ],
+      "b": [
+        0,
+        1
+      ],
+      "c": [
+        0,
+        1
+      ],
+      "d": [
+        0,
+        1
+      ]
+    },
+    "stochastic_variables": [
+      "a",
+      "b",
+      "d"
+    ],
+    "topological_order": [
+      "a",
+      "b",
+      "d",
+      "c"
+    ],
+    "version": 2
+  }
+}

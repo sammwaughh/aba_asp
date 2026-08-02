@@ -1,0 +1,30 @@
+network m13_bucket3_binary_bd_and_lead_a {
+}
+variable a {
+    type discrete [ 2 ] { 0, 1 };
+}
+variable b {
+    type discrete [ 2 ] { 0, 1 };
+}
+variable c {
+    type discrete [ 2 ] { 0, 1 };
+}
+variable d {
+    type discrete [ 2 ] { 0, 1 };
+}
+probability ( a ) {
+    table 0.5, 0.5 ;
+}
+probability ( b ) {
+    table 0.2, 0.8 ;
+}
+probability ( c | b, d ) {
+    ( 0, 0 ) 1.0, 0.0;
+    ( 0, 1 ) 1.0, 0.0;
+    ( 1, 0 ) 1.0, 0.0;
+    ( 1, 1 ) 0.0, 1.0;
+
+}
+probability ( d ) {
+    table 0.3, 0.7 ;
+}

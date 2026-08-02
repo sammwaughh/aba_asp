@@ -1,0 +1,178 @@
+{
+  "boundaries": [
+    "this artefact is evaluator-only and must not enter learner BK or examples",
+    "formal, population-supported, and finite-sample-observed configurations are distinct",
+    "canonical rules describe deterministic positive-state truth-table rows",
+    "syntactic rule equality is not an automatic causal-recovery verdict",
+    "predictive rules for root targets do not constitute root-mechanism recovery",
+    "no learned-rule-to-graph or learned-rule-to-CPDAG decoder is applied"
+  ],
+  "encoding_reference": {
+    "body_predicate_form": "<parent>_val_<state>(A)",
+    "compatible": true,
+    "name": "binary_one_vs_zero_exact_value",
+    "negative_state": 0,
+    "positive_state": 1
+  },
+  "fixture": {
+    "document_hash": "sha256:a040b87266674097d1733d8f3c46b43db8a8ea503382961d9b1ec3b46d2fc133",
+    "id": "m13_bucket3_binary_bd_and_lead_a",
+    "mechanism_regime": "root_stochastic_deterministic_nonroots",
+    "schema_version": 2,
+    "semantic_hash": "sha256:a0f64fe54f8f7c7f44348be86f10962037d78fd30aa5a82bb1745ccca14862eb",
+    "source_hash": "sha256:c067795eec0b93b599fea115a107d9387969a3703818e725ab62f9fbd9fb9647"
+  },
+  "fixture_toolkit_version": 2,
+  "generator": {
+    "implementation_hash": "sha256:af7e8f404676ac5c0f618d92deb7379a577a4ca3bdd305acbbb90e26d76494f2"
+  },
+  "mechanism_reference_schema_version": 1,
+  "sample": {
+    "available": true,
+    "n": 30,
+    "name": "n30_seed42"
+  },
+  "targets": [
+    {
+      "canonical_positive_rules": {
+        "formal": [],
+        "population_supported": [],
+        "sample_observed": []
+      },
+      "causal_parents": [],
+      "deterministic_truth_table": null,
+      "mechanism_kind": "stochastic_root",
+      "reference_note": "The generating mechanism is a root distribution, not a deterministic rule over other observed variables. Rules learned from descendants or other predictors may be predictive without representing this root mechanism.",
+      "reference_status": "no_observed_parent_deterministic_rule",
+      "root_distribution": [
+        {
+          "probability": "1/2",
+          "state": 0
+        },
+        {
+          "probability": "1/2",
+          "state": 1
+        }
+      ],
+      "target": "a"
+    },
+    {
+      "canonical_positive_rules": {
+        "formal": [],
+        "population_supported": [],
+        "sample_observed": []
+      },
+      "causal_parents": [],
+      "deterministic_truth_table": null,
+      "mechanism_kind": "stochastic_root",
+      "reference_note": "The generating mechanism is a root distribution, not a deterministic rule over other observed variables. Rules learned from descendants or other predictors may be predictive without representing this root mechanism.",
+      "reference_status": "no_observed_parent_deterministic_rule",
+      "root_distribution": [
+        {
+          "probability": "1/5",
+          "state": 0
+        },
+        {
+          "probability": "4/5",
+          "state": 1
+        }
+      ],
+      "target": "b"
+    },
+    {
+      "canonical_positive_rules": {
+        "formal": [
+          "c(A) :- b_val_1(A), d_val_1(A)."
+        ],
+        "population_supported": [
+          "c(A) :- b_val_1(A), d_val_1(A)."
+        ],
+        "sample_observed": [
+          "c(A) :- b_val_1(A), d_val_1(A)."
+        ]
+      },
+      "causal_parents": [
+        "b",
+        "d"
+      ],
+      "deterministic_truth_table": [
+        {
+          "canonical_positive_rule": null,
+          "output": 0,
+          "population_parent_assignment_probability": "3/50",
+          "population_supported": true,
+          "sample_count": 2,
+          "sample_observed": true,
+          "when": {
+            "b": 0,
+            "d": 0
+          }
+        },
+        {
+          "canonical_positive_rule": null,
+          "output": 0,
+          "population_parent_assignment_probability": "7/50",
+          "population_supported": true,
+          "sample_count": 5,
+          "sample_observed": true,
+          "when": {
+            "b": 0,
+            "d": 1
+          }
+        },
+        {
+          "canonical_positive_rule": null,
+          "output": 0,
+          "population_parent_assignment_probability": "6/25",
+          "population_supported": true,
+          "sample_count": 8,
+          "sample_observed": true,
+          "when": {
+            "b": 1,
+            "d": 0
+          }
+        },
+        {
+          "canonical_positive_rule": "c(A) :- b_val_1(A), d_val_1(A).",
+          "output": 1,
+          "population_parent_assignment_probability": "14/25",
+          "population_supported": true,
+          "sample_count": 15,
+          "sample_observed": true,
+          "when": {
+            "b": 1,
+            "d": 1
+          }
+        }
+      ],
+      "mechanism_kind": "deterministic_non_root",
+      "reference_note": "Rules are the unsimplified positive-state DNF induced by the truth table. Equivalent learned ABA frameworks need not match these strings exactly.",
+      "reference_status": "available",
+      "root_distribution": null,
+      "target": "c"
+    },
+    {
+      "canonical_positive_rules": {
+        "formal": [],
+        "population_supported": [],
+        "sample_observed": []
+      },
+      "causal_parents": [],
+      "deterministic_truth_table": null,
+      "mechanism_kind": "stochastic_root",
+      "reference_note": "The generating mechanism is a root distribution, not a deterministic rule over other observed variables. Rules learned from descendants or other predictors may be predictive without representing this root mechanism.",
+      "reference_status": "no_observed_parent_deterministic_rule",
+      "root_distribution": [
+        {
+          "probability": "3/10",
+          "state": 0
+        },
+        {
+          "probability": "7/10",
+          "state": 1
+        }
+      ],
+      "target": "d"
+    }
+  ]
+}

@@ -85,7 +85,7 @@ Key experiment records:
   Probe records: `M13-C1-causal-role-underdetermination/experiment.md`;
   `M13-C2-bk-feature-order/experiment.md`.
 - `docs/experiments/qualitative/M1.3-bucket3-claims.md` — M1.3 Bucket 3
-  (**H0–H2 complete / analysed; H3 design approved but not started; no claim**).
+  (**H0–H3 complete / analysed; H4 proposed / infra-blocked; no claim**).
   Preserve the pre-pivot positive-stochastic diamond and its runs as infrastructure
   provenance; do not reinterpret them as deterministic claim evidence. H4 remains
   proposed / infrastructure-blocked. Do not invent a claim, fixture portfolio, or run

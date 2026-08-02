@@ -1,0 +1,94 @@
+{
+  "bif_round_trip": {
+    "errors": [],
+    "implementation_hash": "sha256:4dee1de1c06da5ea32ee3b853760f54fde23654d2cb8eea034706b767f0077ed",
+    "limitations": [
+      "BIF probabilities are floating point rather than exact rationals",
+      "BIF state labels are serialized as strings",
+      "BIF does not preserve causal-sufficiency or IID-sampling declarations"
+    ],
+    "max_absolute_probability_error": 0.0,
+    "ok": true,
+    "pgmpy_version": "1.1.2",
+    "tolerance": 1e-12
+  },
+  "boundaries": [
+    "the fixture graph and certificate are evaluator-only",
+    "the mechanism reference is evaluator-only",
+    "no target is selected during fixture definition or sampling",
+    "no ABA Learning run is performed by this package",
+    "no learned-rule-to-CPDAG decoder is asserted",
+    "generated fixture artefacts are not experiment claims"
+  ],
+  "certificate_summary": {
+    "causal_markov_condition": "verified",
+    "causal_sufficiency": "declared_satisfied_by_fixture_design",
+    "ci_query_count": 24,
+    "mec_size": 1,
+    "ordinary_faithfulness": "verified_exactly"
+  },
+  "derived_artifacts": {
+    "bif": {
+      "path": "model.bif",
+      "sha256": "sha256:707c45b5e70237f5e11a72b3617292e5e29425d7a0215d7206377fdd1527defb"
+    },
+    "certificate": {
+      "path": "certificate.json",
+      "sha256": "sha256:ae69f0fb9f12fc9b5da5d4c23d81cd4cd49cd6a0703f7765527e141cfa7d5ae2"
+    },
+    "mechanism_reference": {
+      "path": "mechanism_reference.json",
+      "sha256": "sha256:d3efd5524e5254ced1649b8239d1d95424130970a18fa63cc8d2a4351e6132c5"
+    },
+    "population": {
+      "path": "population.csv",
+      "sha256": "sha256:1c4deecac742d7e6d4835bac4222d3a6d10e1304c6a014a0acf210adff1de2ce"
+    },
+    "sample_csv": {
+      "path": "samples/n30_seed42.csv",
+      "sha256": "sha256:48bd0da0df696e29fb91e16e79bf30592b55c6dc16f34ee72e74aa36cc52db05"
+    },
+    "sample_manifest": {
+      "path": "samples/n30_seed42.manifest.json",
+      "sha256": "sha256:86092c1e8f9afe311160351092c510cb6b869fa58c1d7f80af9a221cfe530026"
+    }
+  },
+  "fixture": {
+    "document_hash": "sha256:a040b87266674097d1733d8f3c46b43db8a8ea503382961d9b1ec3b46d2fc133",
+    "document_hash_basis": "canonical parsed YAML document",
+    "edges": [
+      [
+        "b",
+        "c"
+      ],
+      [
+        "d",
+        "c"
+      ]
+    ],
+    "id": "m13_bucket3_binary_bd_and_lead_a",
+    "mechanism_regime": "root_stochastic_deterministic_nonroots",
+    "model_class": "exact_finite_discrete_causal_bayesian_network",
+    "semantic_hash": "sha256:a0f64fe54f8f7c7f44348be86f10962037d78fd30aa5a82bb1745ccca14862eb",
+    "source_hash": "sha256:c067795eec0b93b599fea115a107d9387969a3703818e725ab62f9fbd9fb9647",
+    "source_hash_basis": "exact UTF-8 source-file bytes",
+    "source_path": "/Users/samuelwaugh/Desktop/Causal ABA Learning/aba_asp/causal/fixtures/specs/m13_bucket3_binary_bd_and_lead_a.yaml",
+    "source_schema_version": 2,
+    "title": "M1.3 Bucket 3 BD AND collider with BK-leading isolated A",
+    "variables": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ]
+  },
+  "fixture_manifest_schema_version": 1,
+  "fixture_toolkit_version": 2,
+  "sample": {
+    "csv_sha256": "sha256:48bd0da0df696e29fb91e16e79bf30592b55c6dc16f34ee72e74aa36cc52db05",
+    "n": 30,
+    "seed": 42,
+    "target": null,
+    "unique_joint_states_observed": 7
+  }
+}

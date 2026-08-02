@@ -1,0 +1,150 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=25mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,booktabs}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{microtype}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+\setlist{nosep,leftmargin=*}
+\emergencystretch=3em
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+\title{M13-C3 --- H3 BK-leading distractor\\
+ECAI target \(c\) retains isolated \(A\)}
+\author{}
+\date{H3 run / analysed / not a Bucket~3 claim}
+
+\begin{document}
+\maketitle
+
+\section{Status}
+
+\textbf{H3 run / analysed.}
+ECAI (primary) and AAMAS (secondary) on fixture
+\path{m13_bucket3_binary_bd_and_lead_a} / \texttt{n30\_seed42} are complete.
+Markdown twin: \texttt{h3\_bk\_leading\_distractor.md}.
+
+\textbf{Lead finding:} BK-leading isolated \(a\) is pulled into ECAI's theory
+for deterministic child \(c\) (first fold selects \texttt{a\_val\_*}; delta
+conditioned on \(a\); not the evaluator BD AND).
+\textbf{Secondary:} brave \texttt{solved} can rely on per-row assumption choice
+where BK underdetermines the target.
+H0--H2 remain closed.
+\textbf{Not a Bucket~3 claim.}
+H4 remains deferred / infra-blocked.
+
+\section{Research question}
+
+On a BD AND collider with BK-leading independent isolated root \(A\), does
+ECAI learning of target \(c\) select \(a\) in the first fold and retain \(a\)
+in the final ABA framework rather than returning the evaluator-only rule
+\texttt{c(A) :- b\_val\_1(A), d\_val\_1(A).}?
+
+\section{Main finding (lead)}
+
+On frozen sample \texttt{n30\_seed42}, ECAI \textbf{solves} target \(c\), but
+BK-leading isolated \(a\) is pulled into the learned theory.
+
+Decisive first fold:
+\begin{verbatim}
+folding result: c(A) <- [a_val_1(A)]
+\end{verbatim}
+then assumption introduction of \(\alpha_1\).
+Both ordinary target rules remain conditioned on \(a\).
+Emitted delta:
+\begin{verbatim}
+c(A) :- alpha_1(A), a_val_1(A).
+c(A) :- alpha_2(A), a_val_0(A).
+c_alpha_1(A) :- b_val_0(A).
+c_alpha_1(A) :- alpha_3(A), b_val_1(A).
+c_alpha_2(A) :- d_val_0(A).
+c_alpha_2(A) :- b_val_0(A).
+c_alpha_3(A) :- alpha_1(A), a_val_1(A).
+\end{verbatim}
+(plus \texttt{assumption}/\texttt{contrary} declarations).
+
+\begin{center}
+\begin{tabular}{@{}L{0.40\textwidth}L{0.50\textwidth}@{}}
+\toprule
+Object & Content \\
+\midrule
+Evaluator-only reference for \(c\) &
+  \texttt{c(A) :- b\_val\_1(A), d\_val\_1(A).} (\textbf{no \(a\)}) \\
+ECAI metrics body variables for \(c\) & \(\{a\}\) \\
+ECAI delta & assumption-rich; both target rules involve \(a\) \\
+Among \(C{=}1\) on \(n{=}30\) &
+  all 15 have \((b,d)=(1,1)\); both values of \(a\) (10/5) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Distractor inclusion / first-fold distraction} away from the
+mechanism-aligned \(B,D\) AND.
+\texttt{solved} + audit SAT does \textbf{not} mean the evaluator BD rule was
+recovered.
+
+\section{Secondary finding (brave residual)}
+
+ECAI brave \texttt{solved} can be sample-adequate via \textbf{per-row
+assumption choice} even when BK features do not determine the target.
+On H3 ECAI \(c\), this is concentrated in the nested \(a{=}1\) /
+\(\alpha_1\)--\(\alpha_3\) repair.
+The \(a{=}0\) / \texttt{c\_alpha\_2} side is more BK-readable.
+Clearer prior exemplar: H0 ECAI target \(a\), rows~9 vs~26
+(\path{m13_bucket3_binary_collider_and}).
+
+Bound: \textbf{\texttt{solved} + audit SAT \(\neq\) BK\(\to\)target predictor
+recovered / mechanism-aligned.}
+
+\section{Fixture / setup}
+
+Fixture \path{m13_bucket3_binary_bd_and_lead_a}:
+\(B\to C\leftarrow D\); isolated \(A\sim\mathrm{Bernoulli}(1/2)\);
+\(B\sim\mathrm{Bernoulli}(4/5)\); \(D\sim\mathrm{Bernoulli}(7/10)\);
+\(C=B\land D\).
+For target \(c\), BK predictors are \(a\), then \(b\), then \(d\) (leading
+distractor).
+Evaluator reference: \texttt{c(A) :- b\_val\_1(A), d\_val\_1(A).}.
+Primary arm ECAI; secondary AAMAS; same frozen \texttt{n30\_seed42}.
+
+\section{AAMAS contrast}
+
+Same sample. AAMAS solves \(c\) with
+\begin{verbatim}
+c(A) :- a_val_1(A), b_val_1(A), d_val_1(A).
+c(A) :- a_val_0(A), b_val_1(A), d_val_1(A).
+\end{verbatim}
+so AAMAS also retains \texttt{a\_val\_*} (distractor omission failure; different
+shape from ECAI).
+Versus H2: trailing isolated \(d\) under AAMAS retained \texttt{d\_val\_*};
+here leading isolated \(a\) is retained under both arms.
+
+\section{Secondary targets}
+
+ECAI: all of \(a,b,c,d\) \texttt{solved}.
+AAMAS: \(c\) \texttt{solved}; \(a,b,d\) \texttt{completed\_no\_solution}.
+Other targets are infrastructure retention only.
+
+\section{Boundaries / non-claims}
+
+\begin{itemize}
+  \item Not a Bucket~3 claim.
+  \item Inclusion of \(a\) is not causal recovery of an \(A\to C\) edge.
+  \item \texttt{solved} / SAT is not automatically mechanism-aligned.
+  \item ``ECAI always solves'' is not the H3 question.
+  \item H0--H2 unchanged except for cross-links. H4 untouched.
+\end{itemize}
+
+\section{Next}
+
+H3 documentation is complete.
+H4 remains proposed / blocked on target-wise cautious support.
+Still \textbf{no Bucket~3 claim}.
+
+\end{document}

@@ -3,7 +3,7 @@
 **Role:** primary working reference for finishing Milestone 1.  
 **Parent index:** [`milestone1-plan.md`](milestone1-plan.md)  
 **Status:** active (2026-08-02) — **M12x closed**; M1.3 Buckets 1–2 **locked**;
-Bucket 3 H0–H2 complete / analysed; H3 design approved; **no Bucket 3 claim**
+Bucket 3 H0–H3 complete / analysed; H4 deferred; **no Bucket 3 claim**
 
 Organising question for all of Milestone 1:
 
@@ -25,7 +25,7 @@ against any Causal-ABA-informed solution.
 | **M1.1** | Closed | Parent-position / representation-order control; ordering mechanism established |
 | **M1.2 pilot** | Analysed (historical) | 10-cell pilot; superseded as primary evidence by M12x |
 | **M1.2 expanded (M12x)** | **Closed / analysed** | Fresh 18-cell run + Stage-3 inspection **18/18** (2026-07-20); evidence package locked for M1.3 |
-| **M1.3** | **In progress** | Buckets 1–2 locked; Bucket 3 H0–H2 complete / analysed; H3 design approved; H4 proposed / infrastructure-blocked; no Bucket 3 claim |
+| **M1.3** | **In progress** | Buckets 1–2 locked; Bucket 3 H0–H3 complete / analysed; H4 proposed / infrastructure-blocked; no Bucket 3 claim |
 | **M1.4** | Does not exist | Expanded controlled investigation remains within M1.3 |
 
 **Expanded M1.2 Approach:**  
