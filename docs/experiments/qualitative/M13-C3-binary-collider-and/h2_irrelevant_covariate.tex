@@ -1,0 +1,139 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=25mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,booktabs}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{microtype}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+\setlist{nosep,leftmargin=*}
+\emergencystretch=3em
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+\title{M13-C3 --- H2 irrelevant covariate\\
+AAMAS target \(c\) retains isolated \(D\)}
+\author{}
+\date{H2 run / analysed / not a Bucket~3 claim}
+
+\begin{document}
+\maketitle
+
+\section{Status}
+
+\textbf{H2 run / analysed.}
+AAMAS probe on fixture \path{m13_bucket3_binary_collider_and_iso_d} is complete.
+Markdown twin: \texttt{h2\_irrelevant\_covariate.md}.
+
+\textbf{Lead finding:} when learning deterministic child \(c\), AAMAS
+\textbf{includes irrelevant \(d\)} (\texttt{d\_val\_0} / \texttt{d\_val\_1}) in
+the learned bodies.
+H0 and H1 remain closed / unchanged.
+\textbf{Not a Bucket~3 claim.}
+H3--H4 remain deferred.
+
+\section{Research question}
+
+On an AND collider extended with an independent isolated binary root \(D\),
+does AAMAS learning of target \(c\) retain irrelevant \texttt{d\_val\_*}
+literals in the learned bodies rather than returning the evaluator-only
+\(D\)-free rule \texttt{c(A) :- a\_val\_1(A), b\_val\_1(A).}?
+
+\section{Main finding (lead)}
+
+On frozen sample \texttt{n30\_seed42}, AAMAS \textbf{solves} target \(c\) with:
+\begin{verbatim}
+c(A) :- a_val_1(A), b_val_1(A), d_val_1(A).
+c(A) :- a_val_1(A), b_val_1(A), d_val_0(A).
+\end{verbatim}
+
+\textbf{Irrelevant \(D\) is included} in the learned representation of \(c\).
+The run is solvable, but the delta is \textbf{not} the minimal /
+mechanism-aligned \(D\)-free AND.
+
+\begin{center}
+\begin{tabular}{@{}L{0.40\textwidth}L{0.50\textwidth}@{}}
+\toprule
+Object & Content \\
+\midrule
+Evaluator-only reference for \(c\) &
+  \texttt{c(A) :- a\_val\_1(A), b\_val\_1(A).} (\textbf{no \(d\)}) \\
+AAMAS delta for \(c\) on \texttt{n30\_seed42} &
+  two rules, each body length~3, variables \(a\), \(b\), \textbf{\(d\)} \\
+Among \(C{=}1\) rows on \(n{=}30\) &
+  both \(d{=}0\) and \(d{=}1\) appear (9 each) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Brief H0 contrast: on the three-variable fixture without \(d\), AAMAS \(c\)
+emitted the \(D\)-free AND; with an extra BK block for isolated \(d\), greedy
+retains \(d\).
+
+One-line corrective on ``still solvable'': the failure mode under test is
+\textbf{distractor retention / failure of minimality}, not unlearnability of
+\(c\).
+
+Procedural one-liner: AAMAS greedy with \texttt{folding\_space(bk)} exhausts
+matching BK literals including trailing \(d\), so catalogue bodies keep
+\texttt{d\_val\_*} (see \texttt{prolog.stdout} for target \(c\)).
+
+\section{Fixture / setup}
+
+Fixture \path{m13_bucket3_binary_collider_and_iso_d} (new schema-2; not H0's
+three-variable fixture).
+DAG \(A\to C\leftarrow B\) with isolated \(D\sim\mathrm{Bernoulli}(1/2)\) and
+\(C=A\land B\).
+Variable order places \(d\) last, so target-\(c\) BK predictors are \(a\), \(b\),
+then trailing \(d\).
+Certificate: ordinary faithfulness \texttt{verified\_exactly}.
+Evaluator reference for \(c\): \texttt{c(A) :- a\_val\_1(A), b\_val\_1(A).}.
+Primary arm: AAMAS on \texttt{n30\_seed42}, primary target \(c\).
+
+Paths under
+\path{causal/outputs/causal_fixtures/m13_bucket3_binary_collider_and_iso_d/}
+and
+\path{causal/outputs/aba_learning/targetwise/m13_bucket3_binary_collider_and_iso_d/aamas2025/n30_seed42/}.
+
+\section{Secondary outcomes}
+
+On the same \texttt{n30} collection: \(a\), \(b\), and \(d\) report
+\texttt{completed\_no\_solution}.
+Those cells are infrastructure retention only and are not part of H2's research
+question.
+
+\section{H2c (also run; not the centre)}
+
+Also run: maximal nested seed-42 prefix where \(C{=}1\) realises only one value
+of \(D\), namely \(n{=}2\).
+Target \(c\) delta:
+\begin{verbatim}
+c(A) :- a_val_1(A), b_val_1(A), d_val_1(A).
+\end{verbatim}
+Extreme edge (1+/1$-$).
+\textbf{Not} the scientific centre of H2 relative to the main \(n{=}30\)
+distractor-inclusion finding.
+
+\section{Boundaries / non-claims}
+
+\begin{itemize}
+  \item Not a Bucket~3 claim.
+  \item Inclusion of \(d\) is not causal recovery of a \(D\to C\) edge.
+  \item Runner \texttt{solved} is not automatically correct / mechanism-aligned.
+  \item Keep separate: population mechanism, finite-sample adequacy, learner
+    output, and evaluator judgement.
+  \item Covering-equivalence on the sample is a footnote to distractor retention.
+  \item H0/H1 unchanged except for cross-links. H3--H4 untouched.
+\end{itemize}
+
+\section{Next}
+
+H2 documentation is complete.
+Remaining probes H3--H4 stay deferred.
+Still \textbf{no Bucket~3 claim}.
+
+\end{document}

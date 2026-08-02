@@ -4,9 +4,9 @@
 
 `proposed | planned | implemented | run | analysed | reported`
 
-Current status: **`H0 closed / analysed`; H1 run / analysed** — M1.3 Bucket 3
-baseline complete; H1 nested-prefix AAMAS ablation documented; H2–H4 deferred;
-**no Bucket 3 claim**.
+Current status: **`H0 closed / analysed`; H1 run / analysed; H2 run / analysed** —
+M1.3 Bucket 3 baseline complete; H1 and H2 AAMAS probes documented; H3–H4
+deferred; **no Bucket 3 claim**.
 
 ### H0 versus H1–H4
 
@@ -14,18 +14,20 @@ baseline complete; H1 nested-prefix AAMAS ablation documented; H2–H4 deferred;
 |-------|---------|
 | **H0** | Closed baseline: fixture `m13_bucket3_binary_collider_and`; frozen sample `n30_seed42`; AAMAS and ECAI arms on all targets `a`, `b`, `c`; Trace + fixture integration; documented in `learning_analysis.md` / `.tex`. |
 | **H1** | Nested-prefix AAMAS support ablation (`n25_seed42`). **Run / analysed.** Record: `h1_support_ablation.md` / `.tex`. **Not a claim.** |
-| **H2–H4** | Remaining deferred probes motivated by H0 (not part of H0). Designs and status in `future_probes.md` / `.tex`. |
+| **H2** | Isolated-\(D\) AND collider; AAMAS target `c` retains irrelevant `d`. **Run / analysed.** Record: `h2_irrelevant_covariate.md` / `.tex`. **Not a claim.** |
+| **H3–H4** | Remaining deferred probes. Designs and status in `future_probes.md` / `.tex`. |
 
 **H0 close means:** baseline learning analysis finished.  
-**H1 complete means:** the approved nested-prefix ablation is run and documented.
+**H1/H2 complete means:** those approved probes are run and documented.
 Move on to remaining deferred probes subject to their recorded status.
 **Does not mean:** a Bucket 3 claim is locked. Still **no Bucket 3 claim**.
 
 Working mathematical dossier (pre-run): `fixture_dossier.tex`.  
 Closed H0 learning record: `learning_analysis.md` / `learning_analysis.tex`.  
 **H1 record:** `h1_support_ablation.md` / `h1_support_ablation.tex`.  
+**H2 record:** `h2_irrelevant_covariate.md` / `h2_irrelevant_covariate.tex`.  
 **Remaining probes (deferred):** `future_probes.md` / `future_probes.tex`
-(H2–H3 designs approved; H4 proposed / infra-blocked).
+(H3 design approved; H4 proposed / infra-blocked).
 
 ## Purpose
 
@@ -125,9 +127,10 @@ Russo-style Causal ABA.
 
 - `learning_analysis.md` / `learning_analysis.tex` — **closed H0** six-cell record
 - `h1_support_ablation.md` / `h1_support_ablation.tex` — **H1** nested-prefix record
+- `h2_irrelevant_covariate.md` / `h2_irrelevant_covariate.tex` — **H2** isolated-\(D\) record
 - `experiment.md` (status / outcome pointer)
 - `fixture_dossier.tex` (pre-run mathematical account)
-- `future_probes.md` / `.tex` (probe catalogue; H1 analysed; H2–H4 deferred)
+- `future_probes.md` / `.tex` (probe catalogue; H1–H2 analysed; H3–H4 deferred)
 - `M1.3-bucket3-claims.md`, `experiments_summary.md`, `experiment_register.md`,
   `research_state.md` as needed for factual status
 
@@ -279,7 +282,8 @@ SWI-Prolog / clingo: invoked for AAMAS and ECAI target-wise collections
 | Pre-run LaTeX dossier | `fixture_dossier.tex` | population / certificates |
 | Learning analysis | `learning_analysis.md` / `.tex` | **closed H0** six-cell narrative |
 | H1 record | `h1_support_ablation.md` / `.tex` | nested-prefix AAMAS ablation |
-| Future probes | `future_probes.md` / `.tex` | H1 analysed; H2–H4 deferred |
+| H2 record | `h2_irrelevant_covariate.md` / `.tex` | isolated-\(D\) AAMAS target `c` |
+| Future probes | `future_probes.md` / `.tex` | H1–H2 analysed; H3–H4 deferred |
 
 ## Outcome summary
 
@@ -308,6 +312,12 @@ Full narrative, geometry, and non-claims: `learning_analysis.md`.
 | `c` | solved AND | solved AND | control |
 
 Full H1 record and evaluative stance: `h1_support_ablation.md`.
+
+### H2 (AAMAS isolated-\(D\) target `c`, analysed)
+
+On fixture `m13_bucket3_binary_collider_and_iso_d` / `n30_seed42`, AAMAS
+**solves** `c` with bodies that **include irrelevant `d_val_*`**, not the
+evaluator \(D\)-free AND. Full record: `h2_irrelevant_covariate.md`.
 
 ## Quantitative results
 
@@ -343,11 +353,13 @@ via a choice gadget, not functional root-mechanism recovery. Under the H1
 evaluative stance, AAMAS root `completed_no_solution` is the **correct**
 outcome for roots. See `learning_analysis.md`.
 
-**H1 bounded reading (not a claim).** On the nested prefix \(n{=}25\), AAMAS
-**incorrectly** solves roots `a`/`b` with spurious both-0 co-occurrence Horn
-rules after omitting the rare \((0,0,0)\) witness that made H0 root
-`completed_no_solution` the **correct** outcome under the H1 evaluative stance.
-See `h1_support_ablation.md`. **No Bucket 3 claim.**
+**H1 bounded reading (not a claim).** On nested prefix \(n{=}25\), AAMAS
+**incorrectly** solves roots with spurious both-0 Horn rules after omitting
+rare \((0,0,0)\). See `h1_support_ablation.md`.
+
+**H2 bounded reading (not a claim).** On the isolated-\(D\) fixture under AAMAS,
+target `c` retains irrelevant `d` in both learned rules. Distractor inclusion,
+not mechanism recovery. See `h2_irrelevant_covariate.md`. **No Bucket 3 claim.**
 
 ## Claims supported
 
@@ -355,9 +367,10 @@ None. Evidence record and bounded interpretation only.
 
 ## Claims not supported / not claimed
 
-As in `learning_analysis.md` and `h1_support_ablation.md` non-claims sections
-(no Russo Causal ABA; no mechanism recovery from string match or from H1 root
-`solved`; no “less data is better for roots”; H2–H4 untouched).
+As in `learning_analysis.md`, `h1_support_ablation.md`, and
+`h2_irrelevant_covariate.md` non-claims sections (no Russo Causal ABA; no
+mechanism recovery from string match, H1 root `solved`, or H2 `d` inclusion;
+H3–H4 untouched).
 
 ## Report relevance
 
@@ -366,14 +379,13 @@ evidence only; **not** report-facing claim prose.
 
 ## Future probes
 
-H1 is **run / analysed** (`h1_support_ablation.md`). Remaining deferred probes
-H2–H4: `future_probes.md` / `.tex`. Motivated by closed H0. Still **no Bucket 3
-claim**.
+H1 and H2 are **run / analysed** (`h1_support_ablation.md`,
+`h2_irrelevant_covariate.md`). Remaining deferred probes H3–H4:
+`future_probes.md` / `.tex`. Still **no Bucket 3 claim**.
 
 ## Next decision
 
 1. Open remaining deferred probes consistently with `future_probes.md`
-   (H2 design approved; H3 may be selected independently; H4 remains proposed /
-   infrastructure-blocked).
+   (H3 design approved; H4 remains proposed / infrastructure-blocked).
 2. Keep Bucket 3 free of a claim until inspected probe evidence warrants a
    separate decision.

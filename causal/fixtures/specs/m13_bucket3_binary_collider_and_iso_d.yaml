@@ -1,0 +1,74 @@
+schema_version: 2
+id: m13_bucket3_binary_collider_and_iso_d
+title: M1.3 Bucket 3 AND collider with isolated binary root D
+description: >-
+  Four-variable observational causal Bayesian network: A and B are mutually
+  independent non-degenerate stochastic roots of deterministic collider C = A AND B,
+  with an additional isolated independent root D ~ Bernoulli(1/2) that has no edges.
+  Internal names a, b, c, d; display (A,B,C,D). Variable order places d last so that
+  for target c the exact-value BK predictors are a, b, then d (trailing distractor).
+  Evaluator-only fixture for H2; not an ABA Learning claim.
+
+variables:
+  - name: a
+    states: [0, 1]
+  - name: b
+    states: [0, 1]
+  - name: c
+    states: [0, 1]
+  - name: d
+    states: [0, 1]
+
+graph:
+  edges:
+    - [a, c]
+    - [b, c]
+
+mechanisms:
+  a:
+    parents: []
+    cpt:
+      - when: {}
+        probabilities: ["1/5", "4/5"]
+
+  b:
+    parents: []
+    cpt:
+      - when: {}
+        probabilities: ["3/10", "7/10"]
+
+  c:
+    parents: [a, b]
+    cpt:
+      - when: {a: 0, b: 0}
+        probabilities: [1, 0]
+      - when: {a: 0, b: 1}
+        probabilities: [1, 0]
+      - when: {a: 1, b: 0}
+        probabilities: [1, 0]
+      - when: {a: 1, b: 1}
+        probabilities: [0, 1]
+
+  d:
+    parents: []
+    cpt:
+      - when: {}
+        probabilities: ["1/2", "1/2"]
+
+assumptions:
+  mechanism_regime: root_stochastic_deterministic_nonroots
+  causal_sufficiency:
+    declared: true
+    exogenous_noise: mutually_independent_root_exogenous_noise
+  observational_sampling:
+    regime: observational_iid
+
+metadata:
+  milestone: M1.3
+  bucket: 3
+  motif: collider_with_isolated_root
+  mechanism: deterministic_and
+  probe: H2
+  display_variables: [A, B, C, D]
+  target_visible_to_generator: false
+  faithfulness_is_derived_not_declared: true

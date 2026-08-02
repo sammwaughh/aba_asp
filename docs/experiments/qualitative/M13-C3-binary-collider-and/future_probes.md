@@ -10,7 +10,8 @@ itself. H0 is the completed six-cell AAMAS+ECAI investigation on fixture
 - H0: **closed** (see `learning_analysis.md`; not redefined here)
 - H1: **`run / analysed`** — nested-prefix AAMAS ablation on `n25_seed42`.
   Record: `h1_support_ablation.md` / `.tex`. **Not a Bucket 3 claim.**
-- H2: **`design approved` / not yet implemented / not tested / not a claim**
+- H2: **`run / analysed`** — isolated-\(D\) AAMAS target `c` retains irrelevant
+  `d`. Record: `h2_irrelevant_covariate.md` / `.tex`. **Not a Bucket 3 claim.**
 - H3: **`design approved` / not yet implemented / not tested / not a Bucket 3 claim**
   (fixture YAML not yet built)
 - H4: **`proposed` / blocked on target-wise cautious support / not tested / not a Bucket 3 claim**
@@ -45,8 +46,9 @@ itself. H0 is the completed six-cell AAMAS+ECAI investigation on fixture
 **H4** is signposted only; it is **not** approved for implementation and is
 **blocked** until target-wise cautious learning is supported (see H4 section).
 
-H1 has been run and analysed (`h1_support_ablation.md`). Approvals for H2–H3
-authorise investigation. They do not create a Bucket 3 claim or a run matrix.
+H1 and H2 have been run and analysed (`h1_support_ablation.md`,
+`h2_irrelevant_covariate.md`). Approvals for H3 authorise investigation.
+They do not create a Bucket 3 claim or a run matrix.
 Planned first frozen sample for H3 (to confirm at build): `n30_seed42`.
 
 
@@ -123,9 +125,8 @@ still **not** a Bucket 3 claim and is **not yet built**.
    fixture and AAMAS config (seed 42). **Run / analysed**
    (`h1_support_ablation.md`).
 2. **H2** — separate schema-2 fixture with isolated covariate \(D\) on
-   the \(A\to C\leftarrow B\) AND collider. **Design approved;** intended id
-   `m13_bucket3_binary_collider_and_iso_d` (author when H2 is built); sample
-   \(n\)/seed still to lock at H2 authorship.
+   the \(A\to C\leftarrow B\) AND collider. **Run / analysed**
+   (`h2_irrelevant_covariate.md`). Lead: AAMAS `c` retains `d_val_*`.
 3. **H3** — separate schema-2 fixture
    `m13_bucket3_binary_bd_and_lead_a` with BK-leading independent \(A\) and
    AND collider \(B\to C\leftarrow D\). **Design approved;** primary ECAI
@@ -219,58 +220,43 @@ remained AND-solved as a control. Full narrative: `h1_support_ablation.md`.
 
 ## Probe family H2 — irrelevant isolated covariate on AAMAS target `c`
 
-Status: **`design approved` / not yet implemented / not tested / not a claim**.
-Requires a **new** schema-2 fixture before any learning run.
+Status: **`run / analysed` / not a claim**.
+Evidence record: `h2_irrelevant_covariate.md` / `h2_irrelevant_covariate.tex`.
+
+**Lead finding.** On fixture `m13_bucket3_binary_collider_and_iso_d` /
+`n30_seed42`, AAMAS solves target `c` with
+
+```prolog
+c(A) :- a_val_1(A), b_val_1(A), d_val_1(A).
+c(A) :- a_val_1(A), b_val_1(A), d_val_0(A).
+```
+
+so **irrelevant \(D\) is included**. The evaluator-only reference remains the
+\(D\)-free AND `c(A) :- a_val_1(A), b_val_1(A).`. Failure mode: distractor
+retention / minimality, not unlearnability.
 
 ### H2a — irrelevant covariate enters greedy bodies
 
-Extend the AND collider with an isolated binary root
-\(D\sim\mathrm{Bernoulli}(1/2)\), independent of \(\{A,B,C\}\). Under AAMAS,
-when both values of \(D\) appear among \(E^+\) for `c`, greedy catalogue bodies
-are predicted to **include a `d_val_*` literal**; the learner is **not**
-expected to return the \(D\)-free evaluator-form rule
-
-```prolog
-c(A) :- a_val_1(A), b_val_1(A).
-```
-
-even if an equivalent covering theory exists.
+Observed as predicted: when both values of \(D\) appear among \(E^+\) for `c`
+(9 each on `n30`), greedy catalogue bodies **include `d_val_*`**.
 
 ### H2b — learnability vs minimality
 
-On that extension, AAMAS target `c` **may still solve** (e.g. two
-\(D\)-conditioned rules covering \(d=0\) and \(d=1\) with \(a=b=1\), or an
-assumption repair). The failure mode under test is **failure to omit an
-irrelevant predictor / recover the minimal AND form**, not necessarily
+`c` **still solved** (two \(D\)-conditioned rules). Confirms that the
+interesting failure is retention of an irrelevant predictor, not
 `completed_no_solution`.
 
-Do **not** record the strong claim “`c` becomes unlearnable” as the primary
-hypothesis. Treat strong “unlearnable” wording as a probe that may be
-**refuted**.
+### H2c — sample-edge (also run; not the centre)
 
-### H2c — sample-edge (**in scope**)
+Nested `n=2` prefix where \(C{=}1\) realises only \(d{=}1\): single rule
+`c :- a_val_1, b_val_1, d_val_1`. Extreme edge. Documented briefly in
+`h2_irrelevant_covariate.md`. Not the scientific centre of H2.
 
-If \(E^+\) for `c` realise only one value of \(D\), AAMAS may emit a single
-spuriously \(D\)-conditioned conjunction that is sample-adequate but
-population-inadequate.
+### Outcome (H2)
 
-**Decision:** H2c is **in scope** for the first H2 write-up (not deferred).
-
-### Planned investigation (H2)
-
-**Design approved (2026-08-01).** Remaining implementation steps (not performed
-by this documentation update):
-
-1. Lock remaining fixture parameters as needed (sample \(n\) and seed; intended
-   id **`m13_bucket3_binary_collider_and_iso_d`**) and author a separate
-   schema-2 YAML with variables `a`,`b`,`c`,`d` and isolated
-   \(D\sim\mathrm{Bernoulli}(1/2)\) on \(A\to C\leftarrow B\).
-   Do **not** collide with H3 id `m13_bucket3_binary_bd_and_lead_a`.
-2. Certify population / mechanism reference as for M13-C3.
-3. Run AAMAS target-wise on `c` (and optionally roots) to test **H2a/H2b**,
-   and include **H2c** in the first H2 write-up (construct or select a sample
-   edge if it does not arise naturally).
-4. No portfolio or multi-fixture matrix until that single extension is inspected.
+**Run / analysed.** Fixture authored and certified; AAMAS `n30_seed42` primary
+target `c` shows distractor inclusion; H2c `n2` also run. Full record:
+`h2_irrelevant_covariate.md`.
 
 ---
 
@@ -561,21 +547,21 @@ Do not treat predictive rules for roots as mechanism recovery.
 | Item | Decision | Date |
 |------|----------|------|
 | H1 nested-prefix / missing-\((0,0,0)\) AAMAS ablation | **Approved** then **run / analysed** | 2026-08-01 / 2026-08-02 |
-| H2 four-variable isolated-\(D\) fixture design | **Approved** | 2026-08-01 |
-| H2c in first H2 write-up | **In scope** | 2026-08-01 |
+| H2 four-variable isolated-\(D\) fixture + AAMAS `c` | **Approved** then **run / analysed** | 2026-08-01 / 2026-08-02 |
+| H2c in first H2 write-up | **In scope** (run; brief note only) | 2026-08-01 / 2026-08-02 |
 | H3 graph/naming; \(B\) 80/20, \(D\) 70/30; id `m13_bucket3_binary_bd_and_lead_a`; AAMAS contrast | **Design approved** | 2026-08-01 |
 | H4 cautious vs brave on ECAI roots | **Proposed only** (blocked on infra) | — |
 
 ## Remaining before implementation
 
 - **H1:** **complete** (`h1_support_ablation.md`). Not a claim.
-- **H2:** author `m13_bucket3_binary_collider_and_iso_d` (or confirm that id);
-  lock sample \((n,\mathrm{seed})\); certify; run AAMAS including H2c.
+- **H2:** **complete** (`h2_irrelevant_covariate.md`). Lead: AAMAS `c` retains
+  irrelevant `d`. Not a claim.
 - **H3:** author `m13_bucket3_binary_bd_and_lead_a`; build planned `n30_seed42`;
   certify; run **ECAI** (primary) and **AAMAS** (in-scope contrast) with
   inspection of target `c`.
 - **H4:** deferred until H4 is opened. Infra/config decisions are **flagged** in
   the H4 section (“Decisions deferred until H4 begins”) and are **not** to be
-  resolved during current H2–H3 work. No cautious collection until then.
+  resolved during current H3 work. No cautious collection until then.
 - Still **no** Bucket 3 claim and **no** expanded run matrix without a further
   Samuel decision.
