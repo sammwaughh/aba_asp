@@ -1,0 +1,244 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=25mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,booktabs}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{microtype}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+\setlist{nosep,leftmargin=*}
+\emergencystretch=3em
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+\title{M13-C3 --- H1 support ablation\\
+AAMAS nested-prefix missing \((0,0,0)\)}
+\author{}
+\date{H1 run / analysed / not a Bucket~3 claim}
+
+\begin{document}
+\maketitle
+
+\section{Status}
+
+\textbf{H1 run / analysed.}
+Nested-prefix AAMAS ablation on fixture
+\path{m13_bucket3_binary_collider_and} is complete.
+Markdown twin: \texttt{h1\_support\_ablation.md}.
+Closed H0 baseline preserved (\(n{=}30\), seed~42; see
+\texttt{learning\_analysis.md}).
+\textbf{Not a Bucket~3 claim.}
+H2--H4 remain deferred.
+
+\section{Research question}
+
+On the closed H0 AND-collider fixture under AAMAS, if a nested seed-42 prefix
+omits the only sample atoms \((0,0,0)\), do root targets flip from the H0
+outcome \texttt{completed\_no\_solution} to a \texttt{solved} delta that includes
+a spurious both-0 co-occurrence Horn rule?
+
+\section{Evaluative stance (do not invert)}
+
+For this fixture, roots \(a\) and \(b\) have \textbf{no} deterministic causal
+rule over the other observed variables.
+The evaluator-only reference records
+\texttt{no\_observed\_parent\_deterministic\_rule} for those targets.
+
+\begin{center}
+\begin{tabular}{@{}L{0.46\textwidth}L{0.44\textwidth}@{}}
+\toprule
+Outcome & Reading \\
+\midrule
+H0 AAMAS root \texttt{completed\_no\_solution} &
+  \textbf{Desired / correct} for those targets \\
+H1 AAMAS root \texttt{solved} with co-occurrence Horn rules &
+  \textbf{Incorrect / spurious} --- a finite-sample mistake, \textbf{not}
+  successful mechanism recovery \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+H1 demonstrates that \textbf{AAMAS can incorrectly return a solution for a root
+target when the sample undersamples rare joint assignments that would have
+blocked an over-general rule}, especially when that assignment has \textbf{low
+population probability}
+(\(P(A{=}0,B{=}0,C{=}0)=3/50=0.06\)) and \textbf{\(n\) is small} (here
+\(n=25\)).
+
+Do \textbf{not} frame H1 as ``AAMAS learns roots better with less data''.
+Do \textbf{not} treat root \texttt{solved} as progress.
+
+\section{Design}
+
+\subsection{Intervention}
+
+Nested seed-42 prefix \(n{=}25\) of the closed H0 sample \texttt{n30\_seed42}
+(exact first 25 rows).
+That prefix omits the only H0 \((0,0,0)\) rows (CSV rows~\textbf{26} and
+\textbf{30}).
+Fixture, encoding, AAMAS configuration, and seed sequence are otherwise
+unchanged.
+
+Verified controls:
+\begin{itemize}
+  \item \texttt{n25\_seed42.csv} is a row-for-row prefix of
+    \texttt{n30\_seed42.csv}
+  \item No \((0,0,0)\) atom appears in \(n{=}25\) (joint counts:
+    \((1,1,1):14\), \((1,0,0):7\), \((0,1,0):4\))
+  \item Same AAMAS \texttt{configuration.id} (\texttt{aamas2025}) and
+    configuration hash as H0
+    (\texttt{sha256:93ee2bb829096988ba7b84a7ef2f0247e0cfd8a069909a5146500be9d10e7407}).
+    Only the sample (\(n\), CSV hash) changes
+  \item The population still assigns positive mass to \((0,0,0)\).
+    Only the finite table omits it
+\end{itemize}
+
+\subsection{Paths}
+
+\begin{itemize}
+  \item Sample:
+    \path{causal/outputs/causal_fixtures/m13_bucket3_binary_collider_and/samples/n25_seed42.csv}
+    (+ \texttt{.manifest.json})
+  \item Config:
+    \path{causal/configs/targetwise/m13_bucket3_binary_collider_and/aamas2025/n25_seed42.yaml}
+  \item H1 collection:
+    \path{causal/outputs/aba_learning/targetwise/m13_bucket3_binary_collider_and/aamas2025/n25_seed42/}
+  \item H0 AAMAS comparison (unchanged):
+    \path{.../aamas2025/n30_seed42/}
+\end{itemize}
+
+Sample hash (H1):
+\texttt{sha256:c7ccf94c10a7862f34b7eeedb61529cf60ac0b13b932ac608beaea1a6d17fdd4}.
+
+\subsection{Command (reproducible form)}
+\begin{verbatim}
+python -m causal.targetwise.cli run \
+  --config causal/configs/targetwise/m13_bucket3_binary_collider_and/aamas2025/n25_seed42.yaml
+\end{verbatim}
+Learner options remain those of \texttt{configs/aamas2025\_config.pl}: brave,
+greedy, mgr, \texttt{folding\_space(bk)}, relto, \texttt{check\_ic}.
+
+\section{Results (AAMAS)}
+
+\begin{center}
+\begin{tabular}{@{}llll@{}}
+\toprule
+Target & H0 \(n{=}30\) & H1 \(n{=}25\) & H1 reading \\
+\midrule
+\(a\) & no-solution (\textbf{correct}) &
+  \texttt{solved} (\textbf{incorrect}) & spurious root solve \\
+\(b\) & no-solution (\textbf{correct}) &
+  \texttt{solved} (\textbf{incorrect}) & spurious root solve \\
+\(c\) & solved AND (control) & solved AND & control unchanged in kind \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+H1 \(E^\pm\): \(a\) 21/4, \(b\) 18/7, \(c\) 14/11.
+Artefact audit SAT. Zero assumptions on all three H1 deltas.
+
+Root \(\Delta\) for \(a\):
+\begin{verbatim}
+a(A) :- b_val_1(A), c_val_1(A).
+a(A) :- b_val_0(A), c_val_0(A).
+\end{verbatim}
+Target \(b\) is the mirror with \(a\)/\(c\).
+Target \(c\):
+\begin{verbatim}
+c(A) :- a_val_1(A), b_val_1(A).
+\end{verbatim}
+The both-0 root rules are \textbf{false} as population implications.
+They are sample-adequate only because the H1 table contains no opposite-label
+witness in that predictor cell.
+
+\section{Trace / fixture reading}
+
+Procedural comparison uses
+\path{.../aamas2025/n25_seed42/cells/target-a/output/prolog.stdout}
+against the closed H0 trace under \texttt{n30\_seed42}
+(target \(b\) is symmetric).
+
+Under AAMAS greedy folding, both runs build maximal co-occurrence bodies from
+BK.
+The both-1 body
+\texttt{a(A) :- b\_val\_1(A), c\_val\_1(A).}
+is accepted under brave entailment on both tables.
+
+The both-0 body
+\texttt{a(A) :- b\_val\_0(A), c\_val\_0(A).}
+is then proposed from an early both-0 positive (row~8 on both traces).
+
+\begin{itemize}
+  \item On \textbf{H1} (\(n{=}25\)): brave entailment of
+    \(\langle E^+,E^-\rangle\) \textbf{succeeds} immediately after that fold.
+    No assumption is introduced.
+    The queue empties.
+    The run terminates as \texttt{solved} with the two Horn rules above.
+  \item On \textbf{H0} (\(n{=}30\)): the same both-0 body fails brave
+    entailment because rows~\textbf{26} and~\textbf{30} are \(E^-\) examples
+    that share \(\mathtt{b\_val\_0}\) and \(\mathtt{c\_val\_0}\).
+    Assumption/contrary repair reconstructs the same both-0 body for the
+    contrary.
+    Relto cannot introduce a further assumption.
+    The engine reports KO and \texttt{* No solution found!}.
+\end{itemize}
+
+The AAMAS search procedure is therefore the same until the both-0 commit.
+What flips the outcome is the \textbf{absence versus presence of a label
+conflict inside that greedy candidate body cell}.
+The missing conflict is exactly the rare joint \((0,0,0)\), which has
+population probability \(3/50=0.06\) and appears only twice in the H0 table of
+size~30.
+
+Child target \(c\) remains a control: both H0 and H1 emit the assumption-free
+AND conjunction.
+That does not change the root evaluative stance.
+
+\section{Bounded interpretation}
+
+On this fixture and AAMAS configuration, omitting the rare conflicting joint
+from a small nested prefix converts the \textbf{correct} root outcome
+(\texttt{completed\_no\_solution}) into an \textbf{incorrect} spurious Horn
+covering of the ambiguous both-0 cell.
+That is a finite-sample / support-sensitivity effect for greedy maximal
+co-occurrence search.
+It is \textbf{not} evidence that shorter tables recover root mechanisms.
+
+Roots remain non-mechanistic under the evaluator reference.
+Predictive co-occurrence covering is not mechanism recovery.
+
+\section{Explicit non-claims}
+
+\begin{itemize}
+  \item Not a Bucket~3 claim.
+  \item Not Russo-style Causal ABA, DAG recovery, or CPDAG recovery.
+  \item Not ``AAMAS recovered the root mechanism'' on \(n{=}25\).
+  \item Not ``AAMAS learns roots better with less data''.
+  \item Not a claim that every seed or every \(n\) behaves identically.
+  \item Not a claim that omitting \((0,0,0)\) is the only way AAMAS can emit a
+    spurious root rule.
+  \item H2--H4 are untouched by this record.
+\end{itemize}
+
+\section{Cross-links}
+
+\begin{itemize}
+  \item Investigation hub: \texttt{experiment.md}
+  \item Closed H0 learning record: \texttt{learning\_analysis.md} / \texttt{.tex}
+  \item Probe catalogue: \texttt{future\_probes.md} / \texttt{.tex}
+  \item Bucket~3 planning hub: \texttt{../M1.3-bucket3-claims.md}
+    (still \textbf{no claim})
+\end{itemize}
+
+\section{Next}
+
+H1 documentation is complete.
+Remaining probes H2--H4 stay deferred as recorded in
+\texttt{future\_probes.md}.
+Still \textbf{no Bucket~3 claim}.
+
+\end{document}

@@ -35,10 +35,10 @@ The earlier n=100 scaled attempt was cut and is not part of the canonical experi
 | M11 | — | m1.1 Parent-position and representation-order control | analysed (Stages 0–7; ablations + greedy comparator) |
 | M12 | — | m1.2 Published-configuration comparison (ASP-ABAlearnB / Greedy ABA Learning) | analysed (Stages 0–3: 10-cell grid + full cell inspection / failure-mode taxonomy) |
 | M12x | — | m1.2 expanded U1–U7 (ECAI/AAMAS; val-only BK; 18 cells) | closed / analysed (18/18 Stage-3) |
-| M13 | — | m1.3 capabilities and limits of unguided ABA Learning for causal recovery | in progress (Buckets 1–2 locked; M13-C3 H0 closed; no claim) |
+| M13 | — | m1.3 capabilities and limits of unguided ABA Learning for causal recovery | in progress (Buckets 1–2 locked; M13-C3 H0 closed; H1 analysed; no claim) |
 | M13-C1 | M13 | Causal-role underdetermination under learner-input equivalence | analysed |
 | M13-C2 | M13 | Comparative sensitivity to BK feature-block order | analysed |
-| M13-C3 | M13 | Bucket 3 binary deterministic AND collider | **H0 closed** / analysed (no claim) |
+| M13-C3 | M13 | Bucket 3 binary deterministic AND collider | **H0 closed**; **H1 analysed** (no claim) |
 
 ## Template
 
@@ -276,26 +276,27 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
 ### M13 — m1.3 causal-recovery capabilities and limits
 
 - Status: **`in progress`** — Bucket 1 **written / locked**; Bucket 2
-  **locked / closed** with Claims 1–2; Bucket 3 baseline **M13-C3 H0 closed**
-  (AAMAS+ECAI on `n30_seed42`; **no claim**). Next: deferred probes H1–H4.
+  **locked / closed** with Claims 1–2; Bucket 3 baseline **M13-C3 H0 closed**;
+  probe **H1 run / analysed** (**no claim**). Next: deferred probes H2–H4.
 - Planning docs: `docs/research/milestone_plans/milestone1_high_level_path.md`; `docs/research/milestone_plans/milestone1_part3/`.
 - Approach (method): `docs/research/milestone_plans/milestone1_part3/milestone1_part3_approach.md`.
 - Bucket 1 (locked): `docs/experiments/qualitative/M1.3-bucket1-claims.md` (TeX: `docs/report/findings/milestone1_part3_bucket1_claims.tex`).
 - Bucket 2 (locked): `docs/experiments/qualitative/M1.3-bucket2-claims.md` (two claims; M13-C1/C2).
-- Bucket 3 (planning + closed H0): `docs/experiments/qualitative/M1.3-bucket3-claims.md`.
-- Closed H0 investigation: **M13-C3** —
+- Bucket 3 (planning + closed H0 + analysed H1): `docs/experiments/qualitative/M1.3-bucket3-claims.md`.
+- Investigation: **M13-C3** —
   `docs/experiments/qualitative/M13-C3-binary-collider-and/experiment.md`
-  (dossier: `fixture_dossier.tex`; H0 learning: `learning_analysis.md` / `.tex`;
-  deferred probes: `future_probes.md`).
+  (dossier: `fixture_dossier.tex`; H0: `learning_analysis.md` / `.tex`;
+  H1: `h1_support_ablation.md` / `.tex`; remaining probes: `future_probes.md`).
 - Fixture ID: `m13_bucket3_binary_collider_and`
   (\(A\rightarrow C\leftarrow B\); \(A\sim\mathrm{Bern}(0.8)\), \(B\sim\mathrm{Bern}(0.7)\);
-  \(C=A\land B\); frozen sample \(n{=}30\), seed `42`).
+  \(C=A\land B\); H0 sample \(n{=}30\), seed `42`; H1 nested prefix \(n{=}25\)).
 - Learning outputs:
-  `causal/outputs/aba_learning/targetwise/m13_bucket3_binary_collider_and/{aamas2025,ecai2024}/n30_seed42/`.
-- H0 result (bounded; not a claim): AAMAS `c` AND conjunction (string-coincides with
-  evaluator ref), roots no-solution; ECAI all solved (`c` under-fold+contrary;
-  roots brave choice gadget).
-- Next: deferred probes H1–H4 when ready; still **no Bucket 3 claim**.
+  `.../aamas2025/{n30_seed42,n25_seed42}/` and `.../ecai2024/n30_seed42/`.
+- H0 result (bounded; not a claim): AAMAS `c` AND conjunction, roots no-solution
+  (**correct** under H1 stance); ECAI all solved (roots brave choice gadget).
+- H1 result (bounded; not a claim): AAMAS roots **incorrectly** solved with
+  spurious both-0 Horn rules after omitting rare `(0,0,0)`.
+- Next: deferred probes H2–H4 when ready; still **no Bucket 3 claim**.
 
 
 #### M13-C1 — causal-role underdetermination
@@ -325,16 +326,19 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
 
 #### M13-C3 — binary deterministic AND collider (Bucket 3)
 
-- Status: **`H0 closed / analysed`** — baseline six-cell AAMAS+ECAI narrative
-  documented; probes H1–H4 deferred; **no Bucket 3 claim**.
+- Status: **`H0 closed / analysed`; `H1 run / analysed`** — baseline six-cell
+  narrative documented; H1 nested-prefix ablation documented; H2–H4 deferred;
+  **no Bucket 3 claim**.
 - Record: `docs/experiments/qualitative/M13-C3-binary-collider-and/experiment.md`.
 - H0 learning analysis: `.../learning_analysis.md` / `learning_analysis.tex`.
+- H1 record: `.../h1_support_ablation.md` / `h1_support_ablation.tex`.
 - Pre-run dossier: `.../fixture_dossier.tex`.
-- Deferred probes (motivated by H0): `.../future_probes.md` / `.tex`.
+- Remaining probes: `.../future_probes.md` / `.tex`.
 - Spec: `causal/fixtures/specs/m13_bucket3_binary_collider_and.yaml`.
 - Outputs:
-  `causal/outputs/aba_learning/targetwise/m13_bucket3_binary_collider_and/{aamas2025,ecai2024}/n30_seed42/`.
-- H0 result (bounded; not a claim): AAMAS `c` AND conjunction (string-coincides with
-  evaluator ref), roots `completed_no_solution`; ECAI all `solved` (`c`
-  under-fold+contrary; roots brave choice gadget on ambiguous `(0,0)` cell).
-- Next: deferred H1–H4 when ready; no claim.
+  `.../aamas2025/{n30_seed42,n25_seed42}/` and `.../ecai2024/n30_seed42/`.
+- H0 (bounded; not a claim): AAMAS `c` AND conjunction, roots
+  `completed_no_solution` (**correct** under H1 stance); ECAI all `solved`.
+- H1 (bounded; not a claim): AAMAS roots **incorrectly** `solved` with spurious
+  both-0 Horn rules on nested `n25` missing `(0,0,0)`.
+- Next: deferred H2–H4 when ready; no claim.

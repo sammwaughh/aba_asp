@@ -4,26 +4,28 @@
 
 `proposed | planned | implemented | run | analysed | reported`
 
-Current status: **`H0 closed / analysed`** — M1.3 Bucket 3 baseline
-investigation complete; probes H1–H4 deferred; **no Bucket 3 claim**.
+Current status: **`H0 closed / analysed`; H1 run / analysed** — M1.3 Bucket 3
+baseline complete; H1 nested-prefix AAMAS ablation documented; H2–H4 deferred;
+**no Bucket 3 claim**.
 
 ### H0 versus H1–H4
 
 | Label | Meaning |
 |-------|---------|
 | **H0** | Closed baseline: fixture `m13_bucket3_binary_collider_and`; frozen sample `n30_seed42`; AAMAS and ECAI arms on all targets `a`, `b`, `c`; Trace + fixture integration; documented in `learning_analysis.md` / `.tex`. |
-| **H1–H4** | Deferred follow-up probes motivated by H0 (not part of H0). Designs and status in `future_probes.md` / `.tex`. |
+| **H1** | Nested-prefix AAMAS support ablation (`n25_seed42`). **Run / analysed.** Record: `h1_support_ablation.md` / `.tex`. **Not a claim.** |
+| **H2–H4** | Remaining deferred probes motivated by H0 (not part of H0). Designs and status in `future_probes.md` / `.tex`. |
 
-**Close means:** baseline learning analysis finished. Move on to the deferred
-probes subject to their recorded status: H1 precedes H2, H3 may be selected
-independently, and H4 remains proposed / infrastructure-blocked.
-**Does not mean:** a Bucket 3 claim is locked, or that H1–H4 are cancelled.
-Still **no Bucket 3 claim**.
+**H0 close means:** baseline learning analysis finished.  
+**H1 complete means:** the approved nested-prefix ablation is run and documented.
+Move on to remaining deferred probes subject to their recorded status.
+**Does not mean:** a Bucket 3 claim is locked. Still **no Bucket 3 claim**.
 
 Working mathematical dossier (pre-run): `fixture_dossier.tex`.  
 Closed H0 learning record: `learning_analysis.md` / `learning_analysis.tex`.  
-**Future probes (deferred, outside H0):** `future_probes.md` / `future_probes.tex`
-(H1–H3 designs approved; H4 proposed / infra-blocked).
+**H1 record:** `h1_support_ablation.md` / `h1_support_ablation.tex`.  
+**Remaining probes (deferred):** `future_probes.md` / `future_probes.tex`
+(H2–H3 designs approved; H4 proposed / infra-blocked).
 
 ## Purpose
 
@@ -113,16 +115,19 @@ Russo-style Causal ABA.
 - Fixture toolkit: `causal/fixtures/README.md`
 - Target-wise: `causal/targetwise/README.md`
 - Target-wise configs:
-  `causal/configs/targetwise/m13_bucket3_binary_collider_and/{aamas2025,ecai2024}/n30_seed42.yaml`
+  `causal/configs/targetwise/m13_bucket3_binary_collider_and/aamas2025/{n30_seed42,n25_seed42}.yaml`
+  and `.../ecai2024/n30_seed42.yaml`
 - Learning outputs:
   `causal/outputs/aba_learning/targetwise/m13_bucket3_binary_collider_and/{aamas2025,ecai2024}/n30_seed42/`
+  and H1 AAMAS `.../aamas2025/n25_seed42/`
 
 ### Documentation files for this investigation
 
 - `learning_analysis.md` / `learning_analysis.tex` — **closed H0** six-cell record
-- `experiment.md` (status / outcome pointer; H0 closed)
+- `h1_support_ablation.md` / `h1_support_ablation.tex` — **H1** nested-prefix record
+- `experiment.md` (status / outcome pointer)
 - `fixture_dossier.tex` (pre-run mathematical account)
-- `future_probes.md` / `.tex` (H1–H4 deferred, outside H0)
+- `future_probes.md` / `.tex` (probe catalogue; H1 analysed; H2–H4 deferred)
 - `M1.3-bucket3-claims.md`, `experiments_summary.md`, `experiment_register.md`,
   `research_state.md` as needed for factual status
 
@@ -266,12 +271,15 @@ SWI-Prolog / clingo: invoked for AAMAS and ECAI target-wise collections
 |---|---|---|
 | Spec (authoritative) | `causal/fixtures/specs/m13_bucket3_binary_collider_and.yaml` | schema v2 |
 | Population / certificate / mechanism reference | `causal/outputs/causal_fixtures/m13_bucket3_binary_collider_and/` | evaluator-only |
-| Sample | `.../samples/n30_seed42.csv` | target-free |
-| AAMAS collection | `.../targetwise/.../aamas2025/n30_seed42/` | `summary.md` + 3 cells |
+| Sample (H0) | `.../samples/n30_seed42.csv` | target-free |
+| Sample (H1) | `.../samples/n25_seed42.csv` | nested prefix of H0 |
+| AAMAS H0 collection | `.../targetwise/.../aamas2025/n30_seed42/` | `summary.md` + 3 cells |
+| AAMAS H1 collection | `.../targetwise/.../aamas2025/n25_seed42/` | nested-prefix ablation |
 | ECAI collection | `.../targetwise/.../ecai2024/n30_seed42/` | `summary.md` + 3 cells |
 | Pre-run LaTeX dossier | `fixture_dossier.tex` | population / certificates |
 | Learning analysis | `learning_analysis.md` / `.tex` | **closed H0** six-cell narrative |
-| Future probes | `future_probes.md` / `.tex` | H1–H4 deferred (motivated by H0) |
+| H1 record | `h1_support_ablation.md` / `.tex` | nested-prefix AAMAS ablation |
+| Future probes | `future_probes.md` / `.tex` | H1 analysed; H2–H4 deferred |
 
 ## Outcome summary
 
@@ -290,6 +298,16 @@ evaluator ref `c(A) :- a_val_1(A), b_val_1(A).`; roots
 | ECAI | `solved` (α-framework on `b`) | `solved` (mirror) | `solved` — `c :- α₁, a_val_1` + contrary `b_val_0` |
 
 Full narrative, geometry, and non-claims: `learning_analysis.md`.
+
+### H1 (AAMAS nested prefix \(n{=}25\), analysed)
+
+| Target | H0 \(n{=}30\) | H1 \(n{=}25\) | H1 reading |
+|--------|---------------|---------------|------------|
+| `a` | no-solution (**correct**) | **solved** (**incorrect**) | spurious both-0 Horn |
+| `b` | no-solution (**correct**) | **solved** (**incorrect**) | mirror |
+| `c` | solved AND | solved AND | control |
+
+Full H1 record and evaluative stance: `h1_support_ablation.md`.
 
 ## Quantitative results
 
@@ -317,12 +335,19 @@ Distinctions preserved in the learning analysis:
 
 **Pre-run facts** remain as certified in `fixture_dossier.tex`.
 
-**Learning-stage bounded reading (not a claim).** Same frozen table; AAMAS and
-ECAI differ by strategy. AAMAS recovers an assumption-free AND conjunction for
-`c` (syntactic coincidence with the evaluator reference) and fails on roots.
-ECAI solves all targets with different ABA shapes; root `solved` is brave
-coverage via a choice gadget, not functional root-mechanism recovery.
-**No Bucket 3 claim.**
+**H0 bounded reading (not a claim).** Same frozen `n30` table; AAMAS and ECAI
+differ by strategy. AAMAS recovers an assumption-free AND conjunction for `c`
+(syntactic coincidence with the evaluator reference) and fails on roots. ECAI
+solves all targets with different ABA shapes; root `solved` is brave coverage
+via a choice gadget, not functional root-mechanism recovery. Under the H1
+evaluative stance, AAMAS root `completed_no_solution` is the **correct**
+outcome for roots. See `learning_analysis.md`.
+
+**H1 bounded reading (not a claim).** On the nested prefix \(n{=}25\), AAMAS
+**incorrectly** solves roots `a`/`b` with spurious both-0 co-occurrence Horn
+rules after omitting the rare \((0,0,0)\) witness that made H0 root
+`completed_no_solution` the **correct** outcome under the H1 evaluative stance.
+See `h1_support_ablation.md`. **No Bucket 3 claim.**
 
 ## Claims supported
 
@@ -330,9 +355,9 @@ None. Evidence record and bounded interpretation only.
 
 ## Claims not supported / not claimed
 
-As in `learning_analysis.md` non-claims section (no Russo Causal ABA; no
-mechanism recovery from string match; no ECAI-AND claim; no root parent-set
-scoring without brave caveat; H1–H4 not results of this pass).
+As in `learning_analysis.md` and `h1_support_ablation.md` non-claims sections
+(no Russo Causal ABA; no mechanism recovery from string match or from H1 root
+`solved`; no “less data is better for roots”; H2–H4 untouched).
 
 ## Report relevance
 
@@ -341,12 +366,14 @@ evidence only; **not** report-facing claim prose.
 
 ## Future probes
 
-Deferred outside H0: `future_probes.md` / `.tex` (H1–H4). Motivated by the
-closed H0 baseline. Not part of the H0 six-cell result.
+H1 is **run / analysed** (`h1_support_ablation.md`). Remaining deferred probes
+H2–H4: `future_probes.md` / `.tex`. Motivated by closed H0. Still **no Bucket 3
+claim**.
 
 ## Next decision
 
-1. Open a deferred probe consistently with `future_probes.md`: H1 precedes H2;
-   H3 may be selected independently; H4 remains proposed / infrastructure-blocked.
+1. Open remaining deferred probes consistently with `future_probes.md`
+   (H2 design approved; H3 may be selected independently; H4 remains proposed /
+   infrastructure-blocked).
 2. Keep Bucket 3 free of a claim until inspected probe evidence warrants a
    separate decision.

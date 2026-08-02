@@ -11,8 +11,8 @@ investigation **H0** on fixture `m13_bucket3_binary_collider_and`, frozen sample
 - Trace + fixture integration completed
 - Six-cell narrative documented here (Markdown) and in `learning_analysis.tex`
 - **No Bucket 3 claim approved**
-- Future probes H1–H4 remain in `future_probes.md` / `.tex` (**deferred**;
-  motivated by H0; not part of H0)
+- Follow-up probe **H1** is documented separately in `h1_support_ablation.md` /
+  `.tex` (not part of H0). Remaining probes H2–H4: `future_probes.md`
 
 Companion records: `experiment.md` (investigation hub); `fixture_dossier.tex`
 (pre-run mathematical account).
@@ -374,12 +374,11 @@ not a separate coverage metric (arm `summary.md` interpretation boundary).
 - Not parent-set scoring of root deltas without the brave / non-functional
   caveat.
 - Not that `sol_chk` SAT is a separate coverage or recovery metric.
-- H1–H4 are **signposted** in `future_probes.md` / `.tex` only; they are **not**
-  results of this six-cell analysis.
+- H1–H4 follow-ups are outside this H0 record. H1 is documented in
+  `h1_support_ablation.md`. Remaining probes: `future_probes.md`.
 
 ## Next step
 
-H0 is closed. Deferred probes H1–H4 (support ablation; irrelevant covariate;
-BK-leading distractor; cautious mode + infra) are recorded in
-`future_probes.md`. They are motivated by this H0 baseline and are not part of
-H0. Ordering and approvals are recorded there. Still **no Bucket 3 claim**.
+H0 is closed. Probe **H1** is documented in `h1_support_ablation.md`. Remaining
+deferred probes H2–H4 are recorded in `future_probes.md`. Still **no Bucket 3
+claim**.

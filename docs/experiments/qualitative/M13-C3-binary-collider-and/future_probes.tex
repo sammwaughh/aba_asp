@@ -18,8 +18,8 @@
 \title{M13-C3 --- Signposted future probes (H1--H4)\\
 motivated by closed H0}
 \author{}
-\date{H0 closed; H1--H3 designs approved; H4 proposed / infra-blocked\\
-(not tested / not claims)}
+\date{H0 closed; H1 run/analysed; H2--H3 designs approved;\\
+H4 proposed / infra-blocked (not claims)}
 
 \begin{document}
 \maketitle
@@ -37,7 +37,10 @@ H0 is the completed six-cell AAMAS+ECAI investigation on fixture
 
 \begin{itemize}
   \item H0: \textbf{closed} (see \texttt{learning\_analysis.md}; not redefined here)
-  \item H1 / H2: \textbf{approved} / not yet implemented / not tested / not claims
+  \item H1: \textbf{run / analysed} --- nested-prefix AAMAS ablation on
+    \texttt{n25\_seed42}. Record: \texttt{h1\_support\_ablation.md} /
+    \texttt{.tex}. \textbf{Not a Bucket~3 claim.}
+  \item H2: \textbf{design approved} / not yet implemented / not tested / not a claim
   \item H3: \textbf{design approved} / not yet implemented / not tested /
     not a Bucket~3 claim (fixture YAML not yet built)
   \item H4: \textbf{proposed} / blocked on target-wise cautious support /
@@ -81,9 +84,10 @@ H0 is the completed six-cell AAMAS+ECAI investigation on fixture
 Signposted only; \textbf{not} approved for implementation and \textbf{blocked}
 until target-wise cautious learning is supported (see H4 section).
 
-No probe in this file has been implemented or run under this record.
-Approvals authorise investigation; they do not create a Bucket~3 claim or a run
-matrix. Planned first frozen sample for H3 (to confirm at build):
+H1 has been run and analysed (\texttt{h1\_support\_ablation.md}).
+Approvals for H2--H3 authorise investigation.
+They do not create a Bucket~3 claim or a run matrix.
+Planned first frozen sample for H3 (to confirm at build):
 \texttt{n30\_seed42}.
 
 \section{Motivation (verified facts from the AAMAS arm of closed H0)}
@@ -169,10 +173,10 @@ it is still \textbf{not} a Bucket~3 claim and is \textbf{not yet built}.
 \section{Ordering}
 
 \begin{enumerate}
-  \item \textbf{H1 first} --- nested-prefix / missing-\((0,0,0)\) ablation on
+  \item \textbf{H1} --- nested-prefix / missing-\((0,0,0)\) ablation on
     the existing fixture and AAMAS config (seed~42).
-    \textbf{Investigation approved.}
-  \item \textbf{H2 second} --- separate schema-2 fixture with isolated
+    \textbf{Run / analysed} (\texttt{h1\_support\_ablation.md}).
+  \item \textbf{H2} --- separate schema-2 fixture with isolated
     covariate \(D\) on the \(A\to C\leftarrow B\) AND collider.
     \textbf{Design approved;} intended id
     \texttt{m13\_bucket3\_binary\_collider\_and\_iso\_d} (author when H2 is
@@ -225,31 +229,42 @@ H4 is not a duplicate of H1 or H3: it holds the table fixed and varies
 
 \section{Probe family H1 --- support sensitivity on AAMAS root targets}
 
-Status: \textbf{approved} / not yet implemented / not tested / not a claim.
+Status: \textbf{run / analysed} / not a claim.
+Evidence record: \texttt{h1\_support\_ablation.md} / \texttt{h1\_support\_ablation.tex}.
+
+\textbf{Evaluative stance (locked for H1 reading).}
+Roots have \texttt{no\_observed\_parent\_deterministic\_rule}.
+H0 AAMAS root \texttt{completed\_no\_solution} is the \textbf{desired / correct}
+outcome.
+H1 AAMAS root \texttt{solved} with co-occurrence Horn rules is an
+\textbf{incorrect / spurious} finite-sample solution.
 
 \subsection{H1a --- spurious root rule under missing negative witness}
 
-On this fixture, AAMAS, target \(a\) (symmetrically \(b\)), seed~42: if the
-table is a nested prefix that \textbf{omits all \((0,0,0)\) rows} (e.g.\
-\(n=25\)), learning is predicted to \textbf{solve} with a delta that includes
-the both-0 co-occurrence rule
+On this fixture, AAMAS, target \(a\) (symmetrically \(b\)), seed~42: the nested
+prefix \(n{=}25\) \textbf{omits all \((0,0,0)\) rows}.
+Learning \textbf{solved} with a delta that includes the both-0 co-occurrence
+rule
 \begin{verbatim}
 a(A) :- b_val_0(A), c_val_0(A).
 \end{verbatim}
 (respectively \texttt{b(A) :- a\_val\_0(A), c\_val\_0(A).}), which is
-\textbf{false} as a population implication and is blocked on the approved
-\(n=30\) table by \(E^-\) rows~26 and~30.
+\textbf{false} as a population implication and is blocked on the closed H0
+\(n{=}30\) table by \(E^-\) rows~26 and~30.
 
-Nested-prefix fact on the approved sample (seed~42): rows~1--25 contain no
-\((0,0,0)\) atom; rows~26 and~30 are the only \((0,0,0)\) observations in
-\(n=30\).
+Nested-prefix fact (seed~42): rows~1--25 contain no \((0,0,0)\) atom;
+rows~26 and~30 are the only \((0,0,0)\) observations in \(n{=}30\).
+Verified: \texttt{n25\_seed42.csv} is a row-for-row prefix of
+\texttt{n30\_seed42.csv}.
 
 \subsection{H1b --- negative witness in the unsafe cell}
 
 If the sample contains at least one opposite-label row in that both-0 predictor
 cell, the both-0 rule fails brave entailment under the observed AAMAS path. On
-approved \(n=30\) this manifested as \textbf{\texttt{completed\_no\_solution}},
-not as emission of only the safe both-1 rule.
+closed H0 \(n{=}30\) this manifested as
+\textbf{\texttt{completed\_no\_solution}}, not as emission of only the safe
+both-1 rule.
+That H0 outcome is the \textbf{correct} reading for roots under the H1 stance.
 
 \subsection{Explicit non-claims for H1}
 
@@ -264,15 +279,19 @@ not as emission of only the safe both-1 rule.
     support.
   \item H1 does not claim that omitting \((0,0,0)\) is the only way AAMAS can
     emit a spurious root rule, nor that every seed behaves identically.
+  \item H1 does \textbf{not} claim that root \texttt{solved} on \(n{=}25\) is
+    progress or mechanism recovery.
 \end{itemize}
 
-\subsection{Planned investigation (H1)}
+\subsection{Outcome (H1)}
 
-\textbf{Approved.} Nested-prefix / missing-\((0,0,0)\) ablation on the existing
-fixture \path{m13_bucket3_binary_collider_and} and AAMAS config, seed~42
-(illustrative first cut: \(n=25\)), comparing root-target outcomes and deltas to
-the approved \(n=30\) baseline. No broader matrix beyond this probe without
-further approval.
+\textbf{Run / analysed.}
+Nested-prefix ablation executed on
+\path{m13_bucket3_binary_collider_and} / AAMAS / seed~42 / \(n{=}25\).
+Roots \(a\)/\(b\) \textbf{incorrectly} solved with both-1 and both-0
+co-occurrence rules.
+Child \(c\) remained AND-solved as a control.
+Full narrative: \texttt{h1\_support\_ablation.md}.
 
 \section{Probe family H2 --- irrelevant isolated covariate on AAMAS target \texorpdfstring{\(c\)}{c}}
 
@@ -676,7 +695,7 @@ Do not treat predictive rules for roots as mechanism recovery.
 Item & Decision & Date \\
 \midrule
 H1 nested-prefix / missing-\((0,0,0)\) AAMAS ablation &
-  \textbf{Approved} & 2026-08-01 \\
+  \textbf{Approved} then \textbf{run / analysed} & 2026-08-01 / 2026-08-02 \\
 H2 four-variable isolated-\(D\) fixture design &
   \textbf{Approved} & 2026-08-01 \\
 H2c in first H2 write-up &
@@ -693,7 +712,8 @@ H4 cautious vs brave on ECAI roots &
 \section{Remaining before implementation}
 
 \begin{itemize}
-  \item \textbf{H1:} execute the approved ablation and record outcomes.
+  \item \textbf{H1:} \textbf{complete} (\texttt{h1\_support\_ablation.md}).
+    Not a claim.
   \item \textbf{H2:} author \texttt{m13\_bucket3\_binary\_collider\_and\_iso\_d}
     (or confirm that id); lock sample \((n,\mathrm{seed})\); certify; run AAMAS
     including H2c.
@@ -702,7 +722,7 @@ H4 cautious vs brave on ECAI roots &
     \textbf{AAMAS} (in-scope contrast) with inspection of target \(c\).
   \item \textbf{H4:} deferred until H4 is opened. Infra/config decisions are
     \textbf{flagged} in the H4 section (``Decisions deferred until H4 begins'')
-    and are \textbf{not} to be resolved during current H1--H3 work. No cautious
+    and are \textbf{not} to be resolved during current H2--H3 work. No cautious
     collection until then.
   \item Still \textbf{no} Bucket~3 claim and \textbf{no} expanded run matrix
     without a further Samuel decision.
