@@ -10,8 +10,8 @@
 - H1 intervention: nested seed-42 prefix `n=25` (exact first 25 rows of H0)
 - AAMAS only; all targets `a`, `b`, `c`
 - **Not a Bucket 3 claim**
-- H2 is documented in `h2_irrelevant_covariate.md`; H3–H4 remain deferred
-  (see `future_probes.md`)
+- H2 and H3 are documented in `h2_irrelevant_covariate.md` and
+  `h3_bk_leading_distractor.md`; H4 remains deferred (see `future_probes.md`)
 
 Companion records: `experiment.md` (hub); `future_probes.md` (probe catalogue);
 `learning_analysis.md` (closed H0).
@@ -223,6 +223,6 @@ co-occurrence covering is not mechanism recovery.
 
 ## Next step
 
-H1 documentation is complete. Probe **H2** is documented in
-`h2_irrelevant_covariate.md`. Remaining probes H3–H4 stay deferred as recorded
-in `future_probes.md`. Still **no Bucket 3 claim**.
+H1 documentation is complete. Probes **H2** and **H3** are documented in
+`h2_irrelevant_covariate.md` and `h3_bk_leading_distractor.md`. Remaining probe
+H4 stays deferred as recorded in `future_probes.md`. Still **no Bucket 3 claim**.

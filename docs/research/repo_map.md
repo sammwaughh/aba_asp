@@ -209,7 +209,7 @@ shared method and terminology live in
 - Bucket 2 report companion:
   `docs/report/findings/milestone1_part3_bucket2_claims.tex`
   (with generated PDF beside it).
-- Bucket 3 planning record:
+- Bucket 3 investigation and claims record:
   `docs/experiments/qualitative/M1.3-bucket3-claims.md`.
   It records the supervisor-defined planning dimensions and current M13-C3 status:
   H0–H3 complete / analysed, H4 proposed /
@@ -262,9 +262,9 @@ directory for all future M1.3 work.
 ### Bucket 3 infrastructure and current boundary
 
 Bucket 3 follows the approved one-case-at-a-time deterministic-mechanism direction.
-H0–H2 are complete / analysed; H3 has an approved design but has not started; H4 remains
-proposed / infrastructure-blocked; no Bucket 3 claim is approved. The status sources
-are its planning record, the 22 and 31 July sections of
+H0–H3 are complete / analysed; H4 remains proposed / infrastructure-blocked; no Bucket
+3 claim is approved. The status sources
+are its investigation record, the 22 and 31 July sections of
 `docs/research/supervisor_guidance.md`, `docs/research/research_state.md`, and the
 M13-C3 records below.
 
@@ -278,17 +278,22 @@ Current deterministic M13-C3 evidence:
 - H2 analysed irrelevant-covariate probe: `h2_irrelevant_covariate.md` / `.tex` on
   `m13_bucket3_binary_collider_and_iso_d`, with AAMAS collections for
   `n30_seed42` and the secondary H2c prefix `n2_seed42`;
+- H3 analysed BK-leading-distractor probe: `h3_bk_leading_distractor.md` / `.tex` on
+  `m13_bucket3_binary_bd_and_lead_a`, with ECAI-primary and AAMAS-contrast
+  `n30_seed42` collections;
 - remaining probe catalogue: `future_probes.md` / `.tex` (H1–H3 complete; H4
   proposed / infrastructure-blocked).
 
-Authoritative fixture specifications and outputs for completed H0–H2:
+Authoritative fixture specifications and outputs for completed H0–H3:
 
 - `causal/fixtures/specs/m13_bucket3_binary_collider_and.yaml` and
   `causal/outputs/causal_fixtures/m13_bucket3_binary_collider_and/`;
 - `causal/fixtures/specs/m13_bucket3_binary_collider_and_iso_d.yaml` and
   `causal/outputs/causal_fixtures/m13_bucket3_binary_collider_and_iso_d/`;
+- `causal/fixtures/specs/m13_bucket3_binary_bd_and_lead_a.yaml` and
+  `causal/outputs/causal_fixtures/m13_bucket3_binary_bd_and_lead_a/`;
 - target-wise collections under
-  `causal/outputs/aba_learning/targetwise/{m13_bucket3_binary_collider_and,m13_bucket3_binary_collider_and_iso_d}/`.
+  `causal/outputs/aba_learning/targetwise/{m13_bucket3_binary_collider_and,m13_bucket3_binary_collider_and_iso_d,m13_bucket3_binary_bd_and_lead_a}/`.
 
 The pre-learning construction and certification tooling remains reusable:
 
@@ -343,8 +348,8 @@ For each later approved fixture, add its source specification, build and inspect
 population/reference artefacts, then add the learning configuration and evidence record
 and run the target-wise collection. For a target-wise collection the generated cells
 belong under the hierarchy above; grid experiments retain
-`causal/outputs/aba_learning/grid/<experiment-id-or-arm>/`. Do not start H3 until Samuel
-explicitly opens it.
+`causal/outputs/aba_learning/grid/<experiment-id-or-arm>/`. H3 is complete. Do not begin
+H4 infrastructure or runs until Samuel explicitly opens H4.
 
 Also update `docs/experiments/experiments_summary.md` and
 `docs/research/experiment_register.md`. The wider 22 July dimensions remain deferred;
@@ -372,8 +377,8 @@ do not create fixtures or cells merely from that list.
   - `qualitative/M1.3-bucket3-claims.md` — Bucket 3 direction/planning record;
     H0–H3 complete / analysed, H4 proposed /
     infrastructure-blocked, and no claim.
-  - `qualitative/M13-C3-binary-collider-and/` — M13-C3 hub plus H0, H1, H2,
-    and remaining-probe records.
+  - `qualitative/M13-C3-binary-collider-and/` — M13-C3 hub plus H0–H3 evidence
+    records and the remaining H4 probe record.
   - `qualitative/M13-C1-causal-role-underdetermination/` and
     `qualitative/M13-C2-bk-feature-order/` — analysed Bucket 2 probe records.
   - `report/findings/` — supervisor-facing milestone findings logs (`.tex`).

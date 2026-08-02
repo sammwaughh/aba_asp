@@ -63,12 +63,12 @@ Bucket 2 (**locked / closed; two claims**): `docs/experiments/qualitative/M1.3-b
 (TeX: `docs/report/findings/milestone1_part3_bucket2_claims.tex`).  
 Probe records: `M13-C1-causal-role-underdetermination/experiment.md`;
 `M13-C2-bk-feature-order/experiment.md`.  
-Bucket 3 (**H0–H2 complete / analysed; no claim**):
+Bucket 3 (**H0–H3 complete / analysed; no claim**):
 `docs/experiments/qualitative/M1.3-bucket3-claims.md`.
 
-**Immediate next:** begin H3 only after Samuel's explicit go-ahead, using the already
-approved distinct fixture design recorded in `future_probes.md`. H4 remains proposed /
-infrastructure-blocked. The remaining 22 July dimensions are retained but deferred.
+**Immediate next decision:** whether and when Samuel authorises the bounded infrastructure
+work needed to open H4. H4 remains proposed / infrastructure-blocked. The remaining 22
+July dimensions are retained but deferred.
 No Bucket 3 claim, fixture portfolio, or run matrix is approved.
 
 ### 4. Close Milestone 1

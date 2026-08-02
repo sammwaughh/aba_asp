@@ -459,7 +459,7 @@ resolving the deferred decisions below:
 
 ### Decisions deferred until H4 begins (flagged; not decided now)
 
-These must be resolved **when H4 is started**, not in the current H1–H3 work.
+These must be resolved **when H4 is started**, not before H4 is explicitly opened.
 They are recorded here so the infra prerequisite is not forgotten:
 
 1. **Cautious Prolog filename** — e.g. a twin such as

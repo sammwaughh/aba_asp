@@ -93,7 +93,7 @@ Pilot (historical): [`milestone1_part2/milestone1_part2_config_comparison.md`](m
 
 Configs: ECAI (`configs/ecai2024_config.pl`), AAMAS (`configs/aamas2025_config.pl`).
 
-## Part 3: Causal-recovery capabilities and limits (M1.3) — **in progress** (Buckets 1–2 locked; Bucket 3 H0–H2 complete)
+## Part 3: Causal-recovery capabilities and limits (M1.3) — **in progress** (Buckets 1–2 locked; Bucket 3 H0–H3 complete)
 
 Planning folder: [`milestone1_part3/`](milestone1_part3/README.md)  
 Approach (method): [`milestone1_part3/milestone1_part3_approach.md`](milestone1_part3/milestone1_part3_approach.md)  
@@ -102,14 +102,14 @@ Bucket 1 (**locked**): `docs/experiments/qualitative/M1.3-bucket1-claims.md`
 (TeX: `docs/report/findings/milestone1_part3_bucket1_claims.tex`)  
 Bucket 2 (**locked / closed; two claims**): `docs/experiments/qualitative/M1.3-bucket2-claims.md`
 (TeX: `docs/report/findings/milestone1_part3_bucket2_claims.tex`)
-Bucket 3 (**H0–H2 complete / analysed; no claim**):
+Bucket 3 (**H0–H3 complete / analysed; no claim**):
 `docs/experiments/qualitative/M1.3-bucket3-claims.md`
 
 Buckets 1–2 turn the locked M12x inspection and M13-C1/C2 controls into six
 evidence-backed claims. Bucket 3 now follows Fabrizio's 31 July deterministic-mechanism
-direction one case at a time. Baseline H0 and probes H1–H2 are complete / analysed;
-H3 has an approved design but has not been implemented, and H4 remains proposed /
-infrastructure-blocked. No Bucket 3 claim or broader comparative design is approved.
+direction one case at a time. Baseline H0 and probes H1–H3 are complete / analysed;
+H4 remains proposed / infrastructure-blocked. No Bucket 3 claim or broader comparative
+design is approved.
 Prior provisional claim
 drafting from earlier M12x grids remains **withdrawn** (2026-07-20) and must not be
 reused.
@@ -132,6 +132,6 @@ After M1.3, consolidate findings into a Milestone 1 conclusion:
 5. which diagnosed limitations motivate Causal ABA-style guidance in Milestone 2.
 
 **Current progress:** Part 1 closed. Part 2 (M12x) **closed**. Part 3 (M1.3) **in
-progress** — Buckets 1–2 locked; Bucket 3 H0–H2 complete / analysed; H3 design
-approved but not started; H4 proposed / infrastructure-blocked; no Bucket 3 claim.
+progress** — Buckets 1–2 locked; Bucket 3 H0–H3 complete / analysed; H4 proposed /
+infrastructure-blocked; no Bucket 3 claim.
 No Part 4 / M1.4.
