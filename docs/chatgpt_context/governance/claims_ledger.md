@@ -110,9 +110,11 @@ Add claims after each experiment is analysed. Report labels: QL1 = QI-001, QL2 =
 ### M13 (m1.3 Bucket 2)
 
 Bucket 2 is **locked / closed** with the claims below. The proposed
-deterministic-target Claim 3 was parked on 22 July and has no ledger entry. Bucket 3 is
-planning-pending and must not receive claim IDs until specific investigations produce
-reviewed evidence.
+deterministic-target Claim 3 was parked on 22 July and has no ledger entry. Bucket 3
+investigation is active: H0–H2 are complete / analysed, H3 has an approved design but
+has not started, and H4 remains proposed / infrastructure-blocked. No Bucket 3 claim is
+approved; it must not receive claim IDs until a separate evidence review and Samuel's
+decision.
 
 | Claim ID | Claim | Strength | Evidence | Caveats | Report location | Status |
 |---|---|---|---|---|---|---|

@@ -12,7 +12,7 @@ Recorded decisions that affect experiment direction. Evidence and interpretation
 2. Root parameters: \(B\sim\mathrm{Bernoulli}(4/5)\) (80/20 for states 1/0);
    \(D\sim\mathrm{Bernoulli}(7/10)\) (70/30 for states 1/0).
 3. Fixture id: **`m13_bucket3_binary_bd_and_lead_a`** (does not collide with
-   `m13_bucket3_binary_collider_and` or the intended H2 id
+   `m13_bucket3_binary_collider_and` or the now-completed H2 fixture id
    `m13_bucket3_binary_collider_and_iso_d`).
 4. Primary arm: ECAI target-wise on `c`. **AAMAS contrast on the same frozen
    sample is in scope** (related to but distinct from H2).

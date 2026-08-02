@@ -1,4 +1,4 @@
-# M13-C3 — Signposted future probes (H1–H4)
+# M13-C3 — Probe catalogue (H1–H4)
 
 ## Status
 
@@ -38,8 +38,8 @@ itself. H0 is the completed six-cell AAMAS+ECAI investigation on fixture
    \(A\sim\mathrm{Bernoulli}(1/2)\) as previously sketched.
 3. Fixture id **locked:** `m13_bucket3_binary_bd_and_lead_a`
    (AND of parents `b`,`d`; BK-leading isolated `a`). Distinct from
-   `m13_bucket3_binary_collider_and` and from the intended H2 id
-   `m13_bucket3_binary_collider_and_iso_d` (when H2 is authored).
+   `m13_bucket3_binary_collider_and` and from the completed H2 fixture id
+   `m13_bucket3_binary_collider_and_iso_d`.
 4. **AAMAS contrast in scope** for the H3 write-up (secondary to primary ECAI
    inspection of target `c`; valuable as a related but distinct check from H2).
 
@@ -144,7 +144,7 @@ Do not expand any family into a broader run matrix beyond these approved probes
 | Probe | Focus |
 |-------|--------|
 | H1 | AAMAS roots; missing negative witness / both-0 over-generalisation on the **current** three-variable fixture |
-| H2 | AAMAS target `c`; irrelevant covariate enters **greedy maximal** co-occurrence bodies (minimality vs solvability); intended id `m13_bucket3_binary_collider_and_iso_d` |
+| H2 | AAMAS target `c`; irrelevant covariate enters **greedy maximal** co-occurrence bodies (minimality vs solvability); fixture id `m13_bucket3_binary_collider_and_iso_d` |
 | H3 | **ECAI** target `c` (primary); **BK order** puts independent distractor **first**; nd first-fold / repair path; **AAMAS contrast in scope**; id `m13_bucket3_binary_bd_and_lead_a` |
 | **H4** | **Same fixture/sample**; ECAI **root** targets `a`/`b`; **brave → cautious**; **requires target-wise learning-mode support** |
 
@@ -552,7 +552,7 @@ Do not treat predictive rules for roots as mechanism recovery.
 | H3 graph/naming; \(B\) 80/20, \(D\) 70/30; id `m13_bucket3_binary_bd_and_lead_a`; AAMAS contrast | **Design approved** | 2026-08-01 |
 | H4 cautious vs brave on ECAI roots | **Proposed only** (blocked on infra) | — |
 
-## Remaining before implementation
+## Current status and remaining work
 
 - **H1:** **complete** (`h1_support_ablation.md`). Not a claim.
 - **H2:** **complete** (`h2_irrelevant_covariate.md`). Lead: AAMAS `c` retains

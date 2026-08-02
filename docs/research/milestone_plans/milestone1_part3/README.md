@@ -6,10 +6,10 @@
 [`milestone1_part3_approach.md`](milestone1_part3_approach.md)
 
 **Status:** Bucket 1 **locked**. Bucket 2 **locked / closed** with Claims 1–2 from
-M13-C1/C2. Bucket 3's root-stochastic/deterministic-non-root direction is approved
-following Fabrizio's 31 July guidance; the first research fixture and claims remain
-pending. M12x and Buckets 1–2 remain fixed evidence. The proposed Bucket 2 Claim 3 was
-parked. Milestone 2 has not started.
+M13-C1/C2. In Bucket 3, H0–H2 are complete / analysed; H3 has an approved design but
+has not started; H4 remains proposed / infrastructure-blocked; no Bucket 3 claim is
+approved. M12x and Buckets 1–2 remain fixed evidence. The proposed Bucket 2 Claim 3
+was parked. Milestone 2 has not started.
 
 Buckets 1–2 answer, with evidence, when and how mechanism-aligned target rules were
 recovered in the locked categorical regime and what was recovered instead. Bucket 3 now
@@ -47,7 +47,7 @@ Pilot M1.2 (10 cells) remains optional provenance only.
 
 | Document | Purpose | Status |
 |----------|---------|--------|
-| [`M1.3-bucket3-claims.md`](../../../experiments/qualitative/M1.3-bucket3-claims.md) | Supervisor-driven scope, immediate direction, and planning guardrails | **Direction approved; first fixture pending** |
+| [`M1.3-bucket3-claims.md`](../../../experiments/qualitative/M1.3-bucket3-claims.md) | Supervisor-driven scope, investigation status, and planning guardrails | **H0–H2 complete / analysed; H3 design approved; no claim** |
 
 ## Bucket 2 probe records
 
@@ -66,6 +66,6 @@ Pilot M1.2 (10 cells) remains optional provenance only.
 
 **Parent index:** [milestone1-plan.md](../milestone1-plan.md)
 
-**Next:** choose the first deterministic graph, root distributions, and non-root
-functions; certify its population and evaluator reference before selecting a sample or
-running ABALearn. Do not define a fixture portfolio or run matrix in advance.
+**Next:** begin H3 only after Samuel's explicit go-ahead, following its approved design
+and the same certify-before-learning discipline. H4 remains infrastructure-blocked.
+Do not define a fixture portfolio or run matrix in advance.

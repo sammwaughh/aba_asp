@@ -37,11 +37,12 @@ report-facing claim prose.
   \item Exact observational population \(P\).
   \item Fixture-specific support, Markov, and ordinary-faithfulness analysis.
   \item Finite IID sample \(\mathcal{D}_{n{=}30}\).
-  \item \emph{Future} table-derived learner inputs (BK, \(E^+\), \(E^-\)).
-  \item \emph{Future} ABALearn outputs (delta / final framework).
+  \item Later table-derived learner inputs (BK, \(E^+\), \(E^-\)).
+  \item Later ABALearn outputs (delta / final framework).
   \item Evaluator-only mechanism reference and bounded interpretation.
 \end{enumerate}
-Items 1--5 and 8 are recorded here. Items 6--7 do not yet exist for this fixture.
+This pre-run dossier records items 1--5 and 8. Items 6--7 were produced later;
+see \texttt{learning\_analysis.md} / \texttt{.tex}.
 
 \section{Generating graph}
 
@@ -216,10 +217,11 @@ Observed joint counts (all four population atoms appear):
 
 Empirical marginals: \(A{=}1\) in \(24/30\); \(B{=}1\) in \(21/30\); \(C{=}1\) in \(17/30\).
 
-\section{Implied target counts under the planned binary policy}
+\section{Implied target counts under the pre-run binary policy}
 
-Planned (not yet executed) target-wise policy: target value \(1\) as \(E^+\),
-value \(0\) as \(E^-\). Counts \emph{implied} by the frozen sample marginals:
+At the pre-run stage, the planned target-wise policy used target value \(1\) as
+\(E^+\) and value \(0\) as \(E^-\). It was later executed as recorded in
+\texttt{learning\_analysis.md}. Counts implied by the frozen sample marginals:
 
 \begin{center}
 \begin{tabular}{@{}lrr@{}}
@@ -263,7 +265,8 @@ Learning-stage narrative:
 \texttt{learning\_analysis.tex} / \texttt{learning\_analysis.md}
 (investigation hub: \texttt{experiment.md}).
 \textbf{No Bucket~3 claim.}
-Deferred probes H1--H4 remain in \texttt{future\_probes.tex} /
-\texttt{future\_probes.md} and are not results of the six-cell analysis.
+Follow-up probes H1 and H2 are complete / analysed; remaining probes H3--H4 are
+recorded in \texttt{future\_probes.tex} / \texttt{future\_probes.md}. None is
+part of the closed H0 six-cell analysis.
 
 \end{document}

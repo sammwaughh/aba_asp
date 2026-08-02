@@ -2,8 +2,8 @@
 
 **Role:** primary working reference for finishing Milestone 1.  
 **Parent index:** [`milestone1-plan.md`](milestone1-plan.md)  
-**Status:** active (2026-07-31) — **M12x closed**; M1.3 Buckets 1–2 **locked**;
-Bucket 3 deterministic-mechanism direction approved; first fixture pending
+**Status:** active (2026-08-02) — **M12x closed**; M1.3 Buckets 1–2 **locked**;
+Bucket 3 H0–H2 complete / analysed; H3 design approved; **no Bucket 3 claim**
 
 Organising question for all of Milestone 1:
 
@@ -25,7 +25,7 @@ against any Causal-ABA-informed solution.
 | **M1.1** | Closed | Parent-position / representation-order control; ordering mechanism established |
 | **M1.2 pilot** | Analysed (historical) | 10-cell pilot; superseded as primary evidence by M12x |
 | **M1.2 expanded (M12x)** | **Closed / analysed** | Fresh 18-cell run + Stage-3 inspection **18/18** (2026-07-20); evidence package locked for M1.3 |
-| **M1.3** | **In progress** | Buckets 1–2 locked; Bucket 3 root-stochastic/deterministic-non-root direction approved; first fixture pending |
+| **M1.3** | **In progress** | Buckets 1–2 locked; Bucket 3 H0–H2 complete / analysed; H3 design approved; H4 proposed / infrastructure-blocked; no Bucket 3 claim |
 | **M1.4** | Does not exist | Expanded controlled investigation remains within M1.3 |
 
 **Expanded M1.2 Approach:**  
@@ -63,13 +63,13 @@ Bucket 2 (**locked / closed; two claims**): `docs/experiments/qualitative/M1.3-b
 (TeX: `docs/report/findings/milestone1_part3_bucket2_claims.tex`).  
 Probe records: `M13-C1-causal-role-underdetermination/experiment.md`;
 `M13-C2-bk-feature-order/experiment.md`.  
-Bucket 3 (**direction approved; first investigation pending**):
+Bucket 3 (**H0–H2 complete / analysed; no claim**):
 `docs/experiments/qualitative/M1.3-bucket3-claims.md`.
 
-**Immediate next:** choose and certify one deterministic mechanism case using the now
-verified generic root-stochastic/deterministic-non-root fixture support, before running
-all targets on one frozen table. The remaining 22 July dimensions are retained but
-deferred. No detailed claim list, fixture portfolio, or run matrix is approved.
+**Immediate next:** begin H3 only after Samuel's explicit go-ahead, using the already
+approved distinct fixture design recorded in `future_probes.md`. H4 remains proposed /
+infrastructure-blocked. The remaining 22 July dimensions are retained but deferred.
+No Bucket 3 claim, fixture portfolio, or run matrix is approved.
 
 ### 4. Close Milestone 1
 

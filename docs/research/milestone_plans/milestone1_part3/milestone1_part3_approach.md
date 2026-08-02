@@ -3,9 +3,10 @@
 **Role:** working reference for Milestone 1 Part 3 — investigating **claims** about how
 unguided ABA Learning behaves on the locked M1.2 regime.
 **Status:** Bucket 1 **locked**; Bucket 2 **locked / closed** with Claims 1–2;
-Bucket 3's immediate deterministic-mechanism direction is approved (2026-07-31), while
-its first research fixture and claims remain pending. M12x and Buckets 1–2 remain fixed
-evidence. The earlier method below records the completed Bucket 1/2 workflow.
+Bucket 3 H0–H2 are complete / analysed, H3 has an approved design but has not started,
+and H4 remains proposed / infrastructure-blocked. No Bucket 3 claim is approved. M12x
+and Buckets 1–2 remain fixed evidence. The earlier method below records the completed
+Bucket 1/2 workflow and the current one-case-at-a-time Bucket 3 method.
 **Primary path:** [`../milestone1_high_level_path.md`](../milestone1_high_level_path.md)
 **Parent index:** [`../milestone1-plan.md`](../milestone1-plan.md)
 

@@ -72,13 +72,15 @@ investigation must not be described as an implementation of full causal discover
   underdetermination) and M13-C2 (BK feature-block order).
 
 **22 July supervisor pivot:** Fabrizio accepted the completed analysis as a good foundation
-and asked for a wider M1.3 investigation before Milestone 2. Bucket 3 is
-**planning pending**. The supervisor-defined dimensions are target variation and
+and asked for a wider M1.3 investigation before Milestone 2. Bucket 3 is now active:
+H0–H2 are complete / analysed, H3 has an approved design but has not started, and H4
+remains proposed / infrastructure-blocked. No Bucket 3 claim is approved. The
+supervisor-defined dimensions are target variation and
 target-agnostic analysis; partial/missing tabular information; larger controlled graphs;
 explicit graph–mechanism validity; correlation, marginal/conditional independence, and
 Markov equivalence; attribution of learning-strategy failures versus information/data
 limitations; and possible category-count or non-discrete extensions. These are planning
-dimensions, not approved experiments or claims.
+dimensions, not an approved run matrix or claim list.
 
 **31 July immediate focus:** Fabrizio directed the next Bucket 3 work towards binary
 causal fixtures in which mutually independent non-degenerate root variables supply the

@@ -114,14 +114,20 @@ Russo-style Causal ABA.
 
 - Authoritative fixture YAML:
   `causal/fixtures/specs/m13_bucket3_binary_collider_and.yaml`
+- H2 fixture YAML:
+  `causal/fixtures/specs/m13_bucket3_binary_collider_and_iso_d.yaml`
 - Fixture toolkit: `causal/fixtures/README.md`
 - Target-wise: `causal/targetwise/README.md`
 - Target-wise configs:
   `causal/configs/targetwise/m13_bucket3_binary_collider_and/aamas2025/{n30_seed42,n25_seed42}.yaml`
   and `.../ecai2024/n30_seed42.yaml`
+- H2 target-wise configs:
+  `causal/configs/targetwise/m13_bucket3_binary_collider_and_iso_d/aamas2025/{n30_seed42,n2_seed42}.yaml`
 - Learning outputs:
   `causal/outputs/aba_learning/targetwise/m13_bucket3_binary_collider_and/{aamas2025,ecai2024}/n30_seed42/`
   and H1 AAMAS `.../aamas2025/n25_seed42/`
+- H2 learning outputs:
+  `causal/outputs/aba_learning/targetwise/m13_bucket3_binary_collider_and_iso_d/aamas2025/{n30_seed42,n2_seed42}/`
 
 ### Documentation files for this investigation
 
@@ -140,6 +146,9 @@ Pre-run fixture bundle under
 `causal/outputs/causal_fixtures/m13_bucket3_binary_collider_and/`
 plus AAMAS/ECAI target-wise cells under
 `causal/outputs/aba_learning/targetwise/m13_bucket3_binary_collider_and/`.
+H2 fixture bundle under
+`causal/outputs/causal_fixtures/m13_bucket3_binary_collider_and_iso_d/`
+plus its AAMAS `n30_seed42` and `n2_seed42` target-wise collections.
 Preserved pre-pivot diamond artefacts unchanged.
 
 ## Dataset / data-generating process
@@ -279,6 +288,8 @@ SWI-Prolog / clingo: invoked for AAMAS and ECAI target-wise collections
 | AAMAS H0 collection | `.../targetwise/.../aamas2025/n30_seed42/` | `summary.md` + 3 cells |
 | AAMAS H1 collection | `.../targetwise/.../aamas2025/n25_seed42/` | nested-prefix ablation |
 | ECAI collection | `.../targetwise/.../ecai2024/n30_seed42/` | `summary.md` + 3 cells |
+| H2 spec / fixture bundle | `causal/fixtures/specs/m13_bucket3_binary_collider_and_iso_d.yaml`; `causal/outputs/causal_fixtures/m13_bucket3_binary_collider_and_iso_d/` | isolated-(D) fixture |
+| H2 AAMAS collections | `.../targetwise/m13_bucket3_binary_collider_and_iso_d/aamas2025/{n30_seed42,n2_seed42}/` | main H2 + secondary H2c |
 | Pre-run LaTeX dossier | `fixture_dossier.tex` | population / certificates |
 | Learning analysis | `learning_analysis.md` / `.tex` | **closed H0** six-cell narrative |
 | H1 record | `h1_support_ablation.md` / `.tex` | nested-prefix AAMAS ablation |

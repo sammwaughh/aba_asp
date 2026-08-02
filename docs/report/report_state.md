@@ -142,8 +142,8 @@ Drafted structure:
    - state the mechanism-aligned rule reference before ABALearn, certify exact support
      and fixture-specific ordinary faithfulness, then run every target on one frozen
      sample and inspect what was learned and why;
-   - proceed one fixture at a time; the first deterministic research fixture is not yet
-     approved;
+   - proceed one fixture at a time; H0–H2 are now complete / analysed, H3 has an
+     approved design but has not started, and H4 is proposed / infrastructure-blocked;
    - preserve the positive-stochastic diamond and its target-wise outputs as pre-pivot
      exploratory/infrastructure artefacts, not claim evidence;
    - wider 22 July dimensions remain deferred rather than cancelled.
@@ -188,9 +188,9 @@ Drafted milestones (Weeks 1–13, with a Week-11 holiday):
 
 1. **Milestone 1** — report-ready account of unguided ABA Learning's capabilities and
    limitations for causal recovery. Parts 1–2 closed; M1.3 Buckets 1–2 locked;
-   Bucket 3 deterministic-mechanism direction approved under Fabrizio's 31 July
-   guidance; first bounded fixture pending. The widened scope remains M1.3 and
-   precedes Milestone 2. No M1.4. Primary path:
+   Bucket 3 H0–H2 complete / analysed under Fabrizio's 31 July direction; H3 design
+   approved but not started; H4 proposed / infrastructure-blocked; no Bucket 3 claim.
+   The widened scope remains M1.3 and precedes Milestone 2. No M1.4. Primary path:
    `milestone1_high_level_path.md`.
 2. **Milestone 2 (Weeks 3–4)** — design the bridge in which Causal ABA-style information guides ABA Learning; specify comparable outputs and metrics.
 3. **Milestone 3 (Weeks 5–6)** — implement causal-guided ABA Learning variants; compare against unguided learning; build bespoke metrics that judge whether causality (not just predictive parents) is learned.
@@ -284,6 +284,6 @@ The five report chapters are drafted under `docs/report/manuscript/`. The curren
 - report F1 in place of the clean-recovery score;
 - treat the earlier QL2 parent-position-swap action as superseded by the completed M11
   and M13-C2 order controls;
-- defer Bucket 3 report claims and project-plan detail until its theory/evidence review
-  and investigation plan are approved;
+- defer Bucket 3 report claims until a separate evidence review and Samuel's decision;
+  keep project-plan status aligned with completed H0–H2 and deferred H3–H4;
 - keep the claims ledger in step with any revised interpretations.

@@ -192,8 +192,8 @@ judgement differ.
 
 ## Milestone 1.3: claims, probes and future work
 
-M1.3 currently has two locked claim buckets and one planning bucket. Its shared method
-and terminology live in
+M1.3 currently has two locked claim buckets and one active investigation bucket. Its
+shared method and terminology live in
 `docs/research/milestone_plans/milestone1_part3/milestone1_part3_approach.md`;
 `milestone1_part3_failure_modes.md` records the failure-mode vocabulary.
 
@@ -211,8 +211,9 @@ and terminology live in
   (with generated PDF beside it).
 - Bucket 3 planning record:
   `docs/experiments/qualitative/M1.3-bucket3-claims.md`.
-  It contains supervisor-defined planning dimensions, not approved claims, fixtures,
-  configurations or a run matrix.
+  It records the supervisor-defined planning dimensions and current M13-C3 status:
+  H0–H2 complete / analysed, H3 design approved but not started, H4 proposed /
+  infrastructure-blocked, and no Bucket 3 claim or run matrix.
 
 ### M13-C1 probe: causal-role underdetermination
 
@@ -260,16 +261,36 @@ directory for all future M1.3 work.
 
 ### Bucket 3 infrastructure and current boundary
 
-Bucket 3 has an approved deterministic-mechanism direction but no approved claim or
-first deterministic research fixture. The current sources are its planning record,
-the 22 and 31 July sections of `docs/research/supervisor_guidance.md`, and
-`docs/research/research_state.md`. Work proceeds one fixture at a time: define the
-graph and mechanisms, certify the exact population and support, state the
-mechanism-aligned evaluator reference, approve the fixture, then sample and run every
-target before inspecting what ABA Learning did and why.
+Bucket 3 follows the approved one-case-at-a-time deterministic-mechanism direction.
+H0–H2 are complete / analysed; H3 has an approved design but has not started; H4 remains
+proposed / infrastructure-blocked; no Bucket 3 claim is approved. The status sources
+are its planning record, the 22 and 31 July sections of
+`docs/research/supervisor_guidance.md`, `docs/research/research_state.md`, and the
+M13-C3 records below.
 
-Samuel has approved the pre-learning construction and certification tooling for the
-first bounded fixture:
+Current deterministic M13-C3 evidence:
+
+- hub: `docs/experiments/qualitative/M13-C3-binary-collider-and/experiment.md`;
+- H0 closed baseline: `learning_analysis.md` / `.tex` on
+  `m13_bucket3_binary_collider_and` / `n30_seed42` under AAMAS and ECAI;
+- H1 analysed support ablation: `h1_support_ablation.md` / `.tex` and AAMAS
+  `n25_seed42` on the same three-variable fixture;
+- H2 analysed irrelevant-covariate probe: `h2_irrelevant_covariate.md` / `.tex` on
+  `m13_bucket3_binary_collider_and_iso_d`, with AAMAS collections for
+  `n30_seed42` and the secondary H2c prefix `n2_seed42`;
+- remaining probe catalogue: `future_probes.md` / `.tex` (H3 design approved; H4
+  proposed / infrastructure-blocked).
+
+Authoritative fixture specifications and outputs for completed H0–H2:
+
+- `causal/fixtures/specs/m13_bucket3_binary_collider_and.yaml` and
+  `causal/outputs/causal_fixtures/m13_bucket3_binary_collider_and/`;
+- `causal/fixtures/specs/m13_bucket3_binary_collider_and_iso_d.yaml` and
+  `causal/outputs/causal_fixtures/m13_bucket3_binary_collider_and_iso_d/`;
+- target-wise collections under
+  `causal/outputs/aba_learning/targetwise/{m13_bucket3_binary_collider_and,m13_bucket3_binary_collider_and_iso_d}/`.
+
+The pre-learning construction and certification tooling remains reusable:
 
 - exact fixture package and usage boundary: `causal/fixtures/` and its `README.md`;
 - authoritative binary-diamond definition:
@@ -300,7 +321,7 @@ deterministic Bucket 3 investigation:
 The fixture toolkit now also supports schema version 2 sources with non-degenerate
 stochastic roots and deterministic non-roots. It samples randomness at roots only,
 checks every deterministic assignment, records structural zeros, and emits
-`mechanism_reference.json`. For binary fixtures with `xN` variable names, that
+`mechanism_reference.json`. For supported binary fixture variable names, that
 evaluator-only reference records full truth tables, root distributions,
 formal/population-supported/sample-observed parent configurations, and canonical
 unsimplified target-value-1 rules. It is never learner-visible and exact syntax match
@@ -318,13 +339,12 @@ exactly the learned delta already recorded in its metrics. The target-wise diagn
 omit inherited coverage panels and parent/graph proxies. The summary explicitly does
 not union learned rules into a graph or assess CPDAG recovery.
 
-After Samuel approves the first deterministic fixture, add its source specification,
-build and inspect its population/reference artefacts, then add the learning config and
-evidence record and run
-the target-wise collection (or the established grid harness if the approved question
-requires that structure), and update the experiment indexes. For a target-wise
-collection the generated cells belong under the hierarchy above; grid experiments
-retain `causal/outputs/aba_learning/grid/<experiment-id-or-arm>/`.
+For each later approved fixture, add its source specification, build and inspect its
+population/reference artefacts, then add the learning configuration and evidence record
+and run the target-wise collection. For a target-wise collection the generated cells
+belong under the hierarchy above; grid experiments retain
+`causal/outputs/aba_learning/grid/<experiment-id-or-arm>/`. Do not start H3 until Samuel
+explicitly opens it.
 
 Also update `docs/experiments/experiments_summary.md` and
 `docs/research/experiment_register.md`. The wider 22 July dimensions remain deferred;
@@ -350,7 +370,10 @@ do not create fixtures or cells merely from that list.
   - `qualitative/M1.3-bucket2-claims.md` — locked Bucket 2 claim record
     (M13-C1/C2).
   - `qualitative/M1.3-bucket3-claims.md` — Bucket 3 direction/planning record;
-    deterministic method approved, first investigation and claims pending.
+    H0–H2 complete / analysed, H3 design approved but not started, H4 proposed /
+    infrastructure-blocked, and no claim.
+  - `qualitative/M13-C3-binary-collider-and/` — M13-C3 hub plus H0, H1, H2,
+    and remaining-probe records.
   - `qualitative/M13-C1-causal-role-underdetermination/` and
     `qualitative/M13-C2-bk-feature-order/` — analysed Bucket 2 probe records.
   - `report/findings/` — supervisor-facing milestone findings logs (`.tex`).
