@@ -173,8 +173,8 @@ research question.
 - “ECAI always solves” on these cells is true so far but is **not** the H3
   question.
 - H0–H2 artefacts and narratives are unchanged except for cross-links.
-- H4 analysed separately (`h4_cautious_vs_brave.md`); H5 deferred; H6/H7
-  signposted only.
+- H4 and H4b analysed separately (`h4_cautious_vs_brave.md`,
+  `h4b_cautious_split_under_a.md`); H5 deferred; H6/H7 signposted only.
 
 ---
 
@@ -184,6 +184,7 @@ research question.
 - Closed H0 / H1 / H2: `learning_analysis.md`, `h1_support_ablation.md`,
   `h2_irrelevant_covariate.md`
 - Probe catalogue: `future_probes.md` / `.tex`
+- H4b cautious split follow-up: `h4b_cautious_split_under_a.md` / `.tex`
 - Bucket 3 planning hub: `../M1.3-bucket3-claims.md` (still **no claim**)
 - H0 brave-split exemplar: ECAI `target-a` under
   `m13_bucket3_binary_collider_and` / `n30_seed42`

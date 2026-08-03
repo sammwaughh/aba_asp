@@ -288,7 +288,8 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
   `docs/experiments/qualitative/M13-C3-binary-collider-and/experiment.md`
   (H0: `learning_analysis.md`; H1: `h1_support_ablation.md`; H2:
   `h2_irrelevant_covariate.md`; H3: `h3_bk_leading_distractor.md`; H4:
-  `h4_cautious_vs_brave.md`; remaining: `future_probes.md`).
+  `h4_cautious_vs_brave.md`; H4b: `h4b_cautious_split_under_a.md`; remaining:
+  `future_probes.md`).
 - Next: Orchestrator / Samuel decide among deferred H5 and signposted H6/H7;
   still **no Bucket 3 claim**.
 
@@ -343,4 +344,8 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
   bodies that **include irrelevant `d_val_*`**, not the evaluator D-free AND.
 - H4 collection:
   `causal/outputs/aba_learning/targetwise/m13_bucket3_binary_collider_and/baseline_cautious/n30_seed42/`.
+- H4b config:
+  `causal/configs/targetwise/m13_bucket3_binary_bd_and_lead_a/baseline_cautious/n30_seed42.yaml`.
+- H4b collection:
+  `causal/outputs/aba_learning/targetwise/m13_bucket3_binary_bd_and_lead_a/baseline_cautious/n30_seed42/`.
 - Next: H5 deferred; H6/H7 signposted; no claim.

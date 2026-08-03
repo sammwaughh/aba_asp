@@ -142,7 +142,7 @@ Drafted structure:
    - state the mechanism-aligned rule reference before ABALearn, certify exact support
      and fixture-specific ordinary faithfulness, then run every target on one frozen
      sample and inspect what was learned and why;
-   - proceed one fixture at a time; H0–H4 are now complete / analysed; H5 is
+   - proceed one fixture at a time; H0–H4+H4b are now complete / analysed; H5 is
      deferred; H6/H7 are signposted only;
    - preserve the positive-stochastic diamond and its target-wise outputs as pre-pivot
      exploratory/infrastructure artefacts, not claim evidence;
@@ -188,8 +188,8 @@ Drafted milestones (Weeks 1–13, with a Week-11 holiday):
 
 1. **Milestone 1** — report-ready account of unguided ABA Learning's capabilities and
    limitations for causal recovery. Parts 1–2 closed; M1.3 Buckets 1–2 locked;
-   Bucket 3 H0–H4 complete / analysed under Fabrizio's 31 July direction; H5 deferred /
-   infrastructure-blocked; no Bucket 3 claim.
+   Bucket 3 H0–H4+H4b complete / analysed under Fabrizio's 31 July direction;
+   H5 deferred as a theory/design question; no Bucket 3 claim.
    The widened scope remains M1.3 and precedes Milestone 2. No M1.4. Primary path:
    `milestone1_high_level_path.md`.
 2. **Milestone 2 (Weeks 3–4)** — design the bridge in which Causal ABA-style information guides ABA Learning; specify comparable outputs and metrics.
@@ -285,5 +285,5 @@ The five report chapters are drafted under `docs/report/manuscript/`. The curren
 - treat the earlier QL2 parent-position-swap action as superseded by the completed M11
   and M13-C2 order controls;
 - defer Bucket 3 report claims until a separate evidence review and Samuel's decision;
-  keep project-plan status aligned with completed H0–H4 and deferred H5;
+  keep project-plan status aligned with completed H0–H4+H4b and deferred H5;
 - keep the claims ledger in step with any revised interpretations.

@@ -6,7 +6,7 @@
 [`milestone1_part3_approach.md`](milestone1_part3_approach.md)
 
 **Status:** Bucket 1 **locked**. Bucket 2 **locked / closed** with Claims 1–2 from
-M13-C1/C2. In Bucket 3, H0–H4 are complete / analysed; H5 cautious Greedy is
+M13-C1/C2. In Bucket 3, H0–H4+H4b are complete / analysed; H5 cautious Greedy is
 deferred; H6/H7 are signposted only; no Bucket 3 claim is approved. M12x and
 Buckets 1–2 remain fixed evidence. The proposed Bucket 2 Claim 3
 was parked. Milestone 2 has not started.
@@ -47,7 +47,7 @@ Pilot M1.2 (10 cells) remains optional provenance only.
 
 | Document | Purpose | Status |
 |----------|---------|--------|
-| [`M1.3-bucket3-claims.md`](../../../experiments/qualitative/M1.3-bucket3-claims.md) | Supervisor-driven scope, investigation status, and planning guardrails | **H0–H4 complete / analysed; H5 deferred; no claim** |
+| [`M1.3-bucket3-claims.md`](../../../experiments/qualitative/M1.3-bucket3-claims.md) | Supervisor-driven scope, investigation status, and planning guardrails | **H0–H4+H4b complete / analysed; H5 deferred; no claim** |
 
 ## Bucket 2 probe records
 
@@ -67,6 +67,6 @@ Pilot M1.2 (10 cells) remains optional provenance only.
 **Parent index:** [milestone1-plan.md](../milestone1-plan.md)
 
 **Next:** Orchestrator / Samuel decide among deferred H5 and signposted H6/H7.
-H4 is run / analysed; H5 remains deferred pending a cautious Greedy
+H4 and H4b are run / analysed; H5 remains deferred pending a cautious Greedy
 theory/algorithm specification.
 Do not define a fixture portfolio or run matrix in advance.

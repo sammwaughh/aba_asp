@@ -42,7 +42,7 @@ Use the same status categories as `experiment_register.md`.
 | M13 | — | m1.3 causal-recovery capabilities and limits of unguided ABA Learning | in progress | `M1.3-bucket1-claims.md` (locked); `M1.3-bucket2-claims.md` (locked); `M1.3-bucket3-claims.md` (M13-C3 H0 closed; H1–H4+H4b analysed; no claim) | — | M13-C3 **H0 closed**; **H1–H4+H4b run/analysed**; H5 deferred; H6/H7 signposted. | Interim Experimentation / Progress (Milestone 1) | Bucket 3: H0 closed; H1–H4+H4b analysed; next = H5/H6/H7; no claim yet. |
 | M13-C1 | M13 | Causal-role underdetermination under learner-input equivalence | analysed | `M13-C1-causal-role-underdetermination/experiment.md` | `M13_c1_role_equivalence_{ecai2024,aamas2025}.yaml` | `M13_c1_role_equivalence_summary.{md,json}`; 4 cell dirs | Interim Experimentation / Progress (Milestone 1) | 4/4 solved; paired inputs/delta/coverage identical. ECAI exact under \(G_0\), sibling-only under \(G_1\); AAMAS parent-plus-sibling under both. |
 | M13-C2 | M13 | Comparative sensitivity to BK feature-block order | analysed | `M13-C2-bk-feature-order/experiment.md` | `M13_c2_bk_order_{ecai2024,aamas2025}.yaml` | `M13_c2_bk_order_summary.{md,json}`; 20 cell dirs | Interim Experimentation / Progress (Milestone 1) | 20/20 solved. Every tested ECAI order produced a distinct delta within U2/U5/U7; AAMAS delta and coverage invariant per family. U5 swap restored exact ECAI parent recovery; U7 coverage depended on whether \(x_2\) was in the first two blocks. |
-| M13-C3 | M13 | Bucket 3 binary deterministic AND collider | **H0 closed**; **H1–H4+H4b analysed** (no claim) | `experiment.md`; `learning_analysis.*`; `h1_support_ablation.*`; `h2_irrelevant_covariate.*`; `h3_bk_leading_distractor.*`; `h4_cautious_vs_brave.*`; `h4b_cautious_split_under_a.*`; `future_probes.*` | H0/H1 AAMAS; H2 iso_d; H3 bd_and_lead_a; H4 `baseline_cautious/n30_seed42.yaml` | H0–H4 collections + H4b bd_and_lead_a cautious n30 | Interim Experimentation / Progress (Milestone 1) | H4 lead: cautious blocks root residual α-gadget. H4b: on H3 `c`, only α3 close changes (Layer B). No Bucket 3 claim. |
+| M13-C3 | M13 | Bucket 3 binary deterministic AND collider | **H0 closed**; **H1–H4+H4b analysed** (no claim) | `experiment.md`; `learning_analysis.*`; `h1_support_ablation.*`; `h2_irrelevant_covariate.*`; `h3_bk_leading_distractor.*`; `h4_cautious_vs_brave.*`; `h4b_cautious_split_under_a.*`; `future_probes.*` | H0/H1 AAMAS; H2 iso_d; H3 bd_and_lead_a; H4 and H4b `baseline_cautious/n30_seed42.yaml` on their respective fixtures | H0–H4 collections + H4b bd_and_lead_a cautious n30 | Interim Experimentation / Progress (Milestone 1) | H4 lead: cautious blocks root residual α-gadget. H4b: on H3 `c`, Layer A is shared with H3 and only the α3 close changes to `d_val_1` (Layer B). No Bucket 3 claim. |
 
 ## Experiment sequence to date and next
 
@@ -97,10 +97,12 @@ H1: `.../h1_support_ablation.md`
 H2: `.../h2_irrelevant_covariate.md`
 H3: `.../h3_bk_leading_distractor.md`
 H4: `.../h4_cautious_vs_brave.md`
+H4b: `.../h4b_cautious_split_under_a.md`
 
 H4 lead: repository-baseline cautious blocks the brave residual-assumption
 gadget for roots `a`/`b`, while control `c` still solves with a byte-identical
-delta to locked ECAI. No Bucket 3 claim. Remaining probes:
+delta to locked ECAI. H4b lead: on H3 target `c`, Layer A is shared with H3;
+Layer B changes only `c_alpha_3` to `d_val_1`, and both arms solve. No Bucket 3 claim. Remaining probes:
 `future_probes.md` (H5 deferred; H6/H7 signposted only).
 
 
@@ -161,7 +163,7 @@ Workflow:
 ## Current open questions (Bucket 3)
 
 - Whether / when to open H5, H6, or H7 (`future_probes.md`).
-- When (if ever) do H0–H4 observations become claim-worthy after further
+- When (if ever) do H0–H4+H4b observations become claim-worthy after further
   probes?
 - Missingness, larger graphs, parameter/category variation, and non-discrete
   data remain deferred.

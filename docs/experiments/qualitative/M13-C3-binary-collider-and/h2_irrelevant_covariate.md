@@ -10,8 +10,9 @@
   irrelevant `d`** (`d_val_0` / `d_val_1`) in the learned bodies
 - H0 and H1 remain closed / unchanged
 - **Not a Bucket 3 claim**
-- H3 is **run / analysed** (`h3_bk_leading_distractor.md`); H4 is **run /
-  analysed** (`h4_cautious_vs_brave.md`); H5 deferred; H6/H7 signposted
+- H3 is **run / analysed** (`h3_bk_leading_distractor.md`); H4 and H4b are
+  **run / analysed** (`h4_cautious_vs_brave.md`,
+  `h4b_cautious_split_under_a.md`); H5 deferred; H6/H7 signposted
   (`future_probes.md`)
 
 Companion records: `experiment.md` (hub); `future_probes.md` (probe catalogue);
@@ -138,8 +139,8 @@ relative to the main `n30` distractor-inclusion finding.
 - Covering-equivalence of the two-rule theory on the `n30` sample is a footnote
   to distractor retention, not the interesting result.
 - H0/H1 artefacts and narratives are unchanged except for cross-links.
-- H3 analysed separately (`h3_bk_leading_distractor.md`); H4 analysed
-  (`h4_cautious_vs_brave.md`); H5 deferred.
+- H3 analysed separately (`h3_bk_leading_distractor.md`); H4 and H4b analysed
+  (`h4_cautious_vs_brave.md`, `h4b_cautious_split_under_a.md`); H5 deferred.
 
 ---
 
@@ -153,6 +154,7 @@ relative to the main `n30` distractor-inclusion finding.
 
 ## Next
 
-H2 documentation is complete. H3 and H4 are run / analysed
-(`h3_bk_leading_distractor.md`, `h4_cautious_vs_brave.md`). H5 remains deferred;
+H2 documentation is complete. H3, H4 and H4b are run / analysed
+(`h3_bk_leading_distractor.md`, `h4_cautious_vs_brave.md`,
+`h4b_cautious_split_under_a.md`). H5 remains deferred;
 H6/H7 are signposted only. Still **no Bucket 3 claim**.

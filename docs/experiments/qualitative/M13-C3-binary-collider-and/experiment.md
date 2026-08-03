@@ -147,7 +147,7 @@ Russo-style Causal ABA.
 - `h4b_cautious_split_under_a.md` / `h4b_cautious_split_under_a.tex` — **H4b**
 - `experiment.md` (status / outcome pointer)
 - `fixture_dossier.tex` (pre-run mathematical account)
-- `future_probes.md` / `.tex` (probe catalogue; H1–H4 analysed; H5 deferred;
+- `future_probes.md` / `.tex` (probe catalogue; H1–H4+H4b analysed; H5 deferred;
   H6/H7 signposted only)
 - `M1.3-bucket3-claims.md`, `experiments_summary.md`, `experiment_register.md`,
   `research_state.md` as needed for factual status
@@ -301,6 +301,8 @@ SWI-Prolog / clingo: invoked for AAMAS and ECAI target-wise collections
 | AAMAS H1 collection | `.../targetwise/.../aamas2025/n25_seed42/` | nested-prefix ablation |
 | ECAI collection | `.../targetwise/.../ecai2024/n30_seed42/` | `summary.md` + 3 cells |
 | H4 cautious collection | `.../targetwise/.../baseline_cautious/n30_seed42/` | roots no-solution; `c` solved |
+| H4b cautious config | `causal/configs/targetwise/m13_bucket3_binary_bd_and_lead_a/baseline_cautious/n30_seed42.yaml` | H3 fixture; focus target `c` |
+| H4b cautious collection | `causal/outputs/aba_learning/targetwise/m13_bucket3_binary_bd_and_lead_a/baseline_cautious/n30_seed42/` | `c` solved; incidental other-target timeouts out of scope |
 | H2 spec / fixture bundle | `causal/fixtures/specs/m13_bucket3_binary_collider_and_iso_d.yaml`; `causal/outputs/causal_fixtures/m13_bucket3_binary_collider_and_iso_d/` | isolated-(D) fixture |
 | H2 AAMAS collections | `.../targetwise/m13_bucket3_binary_collider_and_iso_d/aamas2025/{n30_seed42,n2_seed42}/` | main H2 + secondary H2c |
 | Pre-run LaTeX dossier | `fixture_dossier.tex` | population / certificates |
