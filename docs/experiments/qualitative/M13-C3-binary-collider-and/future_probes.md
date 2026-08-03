@@ -1,4 +1,4 @@
-# M13-C3 — Probe catalogue (H1–H4)
+# M13-C3 — Probe catalogue (H1–H5)
 
 ## Status
 
@@ -15,7 +15,9 @@ itself. H0 is the completed six-cell AAMAS+ECAI investigation on fixture
 - H3: **`run / analysed`** — BK-leading isolated `a` distracts ECAI target `c`
   from BD AND. Record: `h3_bk_leading_distractor.md` / `.tex`. **Not a Bucket 3
   claim.**
-- H4: **`proposed` / blocked on target-wise cautious support / not tested / not a Bucket 3 claim**
+- H4: **`infrastructure ready` / not run / not analysed / not a Bucket 3 claim**
+- H5: **`deferred theory/design question` / not configured / not run / not a
+  Bucket 3 claim** — cautious Greedy ABA Learning is separate from H4.
 - **Not** approved Bucket 3 claims
 - **Not** locked Bucket 1/2 claim content
 - **Not** report-facing prose (`docs/report/findings/` is out of scope)
@@ -44,8 +46,18 @@ itself. H0 is the completed six-cell AAMAS+ECAI investigation on fixture
 4. **AAMAS contrast in scope** for the H3 write-up (secondary to primary ECAI
    inspection of target `c`; valuable as a related but distinct check from H2).
 
-**H4** is signposted only; it is **not** approved for implementation and is
-**blocked** until target-wise cautious learning is supported (see H4 section).
+**Samuel decision (2026-08-03) — H4 / H5:**
+
+1. Add a repository-baseline cautious target-wise configuration, named
+   `baseline_cautious`, which explicitly pins the existing engine defaults and
+   keeps `check_ic` for output generation.
+2. Permit explicit `brave` and `cautious` modes in the target-wise runner while
+   leaving the published ECAI and AAMAS configurations unchanged.
+3. Prepare H4 on the closed H0 fixture and sample, with all targets generated
+   automatically; roots `a`/`b` are primary and child `c` is a control.
+4. Do **not** run H4 as part of the infrastructure change.
+5. Defer any cautious Greedy ABA Learning design to **H5**. No
+   `aamas_cautious` configuration is approved.
 
 H1–H3 have been run and analysed (`h1_support_ablation.md`,
 `h2_irrelevant_covariate.md`, `h3_bk_leading_distractor.md`). Approvals do not
@@ -132,12 +144,15 @@ under ECAI, on a new fixture. H3 is now **run / analysed**
    AND collider \(B\to C\leftarrow D\). **Run / analysed**
    (`h3_bk_leading_distractor.md`). Lead: ECAI first-folds to `a` and retains
    `a` in the theory for `c`.
-4. **H4 (proposed)** — same fixture/`n30_seed42`; ECAI **root** targets under
-   **cautious** vs locked brave; **blocked** on target-wise cautious support.
-   Not approved for run until infra is designed and approved.
+4. **H4 (infrastructure ready; not run)** — same fixture/`n30_seed42`;
+   compare the locked brave ECAI collection with repository
+   `baseline_cautious`; roots `a`/`b` are primary and `c` is a control.
+5. **H5 (deferred)** — determine whether and how cautious acceptance should be
+   combined with the Greedy ABA Learning strategy. This is not treated as a
+   one-option configuration change.
 
-Do not expand any family into a broader run matrix beyond these approved probes
-(and a later-approved H4) without a further Samuel decision.
+Do not expand any family into a broader run matrix beyond these bounded probes
+without a further Samuel decision.
 
 ### Relation among probe families (keep distinct)
 
@@ -146,15 +161,18 @@ Do not expand any family into a broader run matrix beyond these approved probes
 | H1 | AAMAS roots; missing negative witness / both-0 over-generalisation on the **current** three-variable fixture |
 | H2 | AAMAS target `c`; irrelevant covariate enters **greedy maximal** co-occurrence bodies (minimality vs solvability); fixture id `m13_bucket3_binary_collider_and_iso_d` |
 | H3 | **ECAI** target `c` (primary); **BK order** puts independent distractor **first**; nd first-fold / repair path; **AAMAS contrast in scope**; id `m13_bucket3_binary_bd_and_lead_a` |
-| **H4** | **Same fixture/sample**; ECAI **root** targets `a`/`b`; **brave → cautious**; **requires target-wise learning-mode support** |
+| **H4** | **Same fixture/sample**; locked ECAI brave collection vs repository `baseline_cautious`; roots `a`/`b` primary; `c` control; infrastructure ready, not run |
+| **H5** | Deferred theory/design question: cautious acceptance with Greedy ABA Learning; no config or run approved |
 
 H3 is not a duplicate of H2: different DAG, different distractor placement/name,
 different primary config (ECAI nd vs AAMAS greedy), and distinct fixture ids.
 The in-scope AAMAS arm on H3 still differs from H2 because the irrelevant
 variable is BK-leading `a` and the mechanism parents are `b`,`d`.
 
-H4 is not a duplicate of H1 or H3: it holds the table fixed and varies
-**entailment / learning mode** on the target-wise path for **roots**.
+H4 is not a duplicate of H1 or H3: it holds the table fixed and changes the
+learning mode while retaining the engine's baseline nd/any/all/relto options.
+H5 is separate because a cautious Greedy learner needs a paper- and
+algorithm-level specification before a configuration can be interpreted.
 
 
 
@@ -319,14 +337,15 @@ Full record: `h3_bk_leading_distractor.md`.
 
 ---
 
-## Probe family H4 — cautious vs brave on ECAI root targets
+## Probe family H4 — repository-baseline cautious vs published ECAI brave
 
-Status: **`proposed` / blocked on target-wise cautious support / not tested /
-not a Bucket 3 claim**.
+Status: **`infrastructure ready` / not run / not analysed / not a Bucket 3
+claim**.
 
-Uses the **existing** fixture and frozen sample
-`m13_bucket3_binary_collider_and` / `n30_seed42`. Does **not** require a new
-DAG. Cannot be executed with today’s target-wise validator as-is.
+H4 uses the **existing** fixture and frozen sample
+`m13_bucket3_binary_collider_and` / `n30_seed42`. It does **not** require a new
+DAG or sample. The locked ECAI brave collection remains the comparison arm;
+the new `baseline_cautious` collection has not been run.
 
 ### Motivation (verified facts)
 
@@ -366,64 +385,60 @@ because ground assumption atoms differ. Runner `solved` means brave coverage of
 Engine fact (`asp_engine.pl`, `entails/5`): brave entailment requires existence
 of a stable model under joint \(E^+\)/\(E^-\) constraints; cautious entailment
 requires \(E^+\) atoms to lie in **cautious consequences** (true in every
-answer set) and \(E^-\) atoms not to. Under that reading, the current brave
-delta should **fail** cautious entailment: e.g. `a(9)` is not true in every
-stable model of the choice gadget. Cautious re-check after contrary rote is
-invoked in `gen.pl` (`gen6`).
+answer set) and \(E^-\) atoms not to. This makes the learning mode a substantive
+semantic intervention, not merely an output label. Cautious re-check after
+contrary rote is invoked in `gen.pl` (`gen6`).
 
-### Infrastructure prerequisite (**required before H4 can run; not yet done**)
+### Infrastructure now available
 
-H4 is **not** “point YAML at a cautious `.pl` and run.” The **target-wise** path
-currently **hard-requires brave**.
+The target-wise path now supports an explicit mode selected by the consulted
+Prolog configuration:
 
-Verified code fact (`causal/targetwise/config.py`, `_read_learning_mode`): the
-runner reads `set_lopt(learning_mode(...))` from the Prolog config and
-**rejects** any mode other than `brave`, with an error that the current
-target-wise runner supports brave learning only. The target-wise README states
-that the supported regime selects brave learning. Existing configs only supply
-`learner.prolog_config` (e.g. `configs/ecai2024_config.pl`); learning mode is
-**not** a free YAML field — it is derived from the consulted `.pl` file and then
-validated.
+- `configs/baseline_cautious_config.pl` explicitly pins the engine defaults:
+  cautious, nd folding, 10 folding steps, any selection, all folding space,
+  relative-to assumption introduction, and post-folding entailment testing.
+  It also enables `check_ic` to retain the standard checked ASP artefact.
+- This file is deliberately named **`baseline_cautious`**, not ECAI: the ECAI
+  2024 configuration is the published brave method and remains unchanged.
+- `causal/targetwise/config.py` accepts exactly the explicit modes `brave` and
+  `cautious`; mode is still read from the `.pl` file rather than accepted as a
+  free YAML override.
+- H4 has a distinct target-wise config at
+  `causal/configs/targetwise/m13_bucket3_binary_collider_and/baseline_cautious/n30_seed42.yaml`.
+  Its configuration id and eventual output directory are
+  `baseline_cautious`, so locked ECAI/AAMAS collections and hashes are not
+  overwritten.
+- The target-wise reports describe the `check_ic` audit according to the
+  selected mode. Under cautious learning, SAT of `.sol_chk.asp` proves only an
+  **existential joint witness**; it does **not** establish that positives are
+  cautious consequences. The audit therefore remains an artefact-integrity
+  diagnostic and is not used to determine the learner outcome.
 
-**Two-stage plan:**
+No H4 collection or learning result is created by these infrastructure changes.
 
-1. **Infrastructure / config design (prerequisite, careful, small)**  
-   Decide how cautious mode is exposed for target-wise without breaking existing
-   brave collections or hashes. Likely pieces (for the record; final design needs
-   Samuel/implementation approval):
-   - a **new** Prolog options file (do **not** edit `configs/ecai2024_config.pl`
-     in place), e.g. an ECAI-cautious twin that keeps nd / any / all / relto /
-     `check_ic` but sets `learning_mode(cautious)`;
-   - relax or extend `causal/targetwise/config.py` (and README/tests) so
-     `learning_mode(cautious)` is an **explicitly allowed** target-wise mode when
-     selected that way;
-   - a **new** `configuration.id` and output directory so brave `ecai2024`
-     artefacts remain untouched;
-   - confirm what `check_ic` / `.sol_chk.asp` / the post-run artefact audit mean
-     under cautious learning (joint existential SAT vs cautious consequences) so
-     diagnostics are not misread.  
-   Mode is coupled to Prolog consult, config hashing, manifests, and the
-   brave-only validator. Do not imply that only a YAML one-liner is required.
+Infrastructure verification (2026-08-03):
 
-2. **Scientific run (only after the above)**  
-   Target-wise collection on the existing fixture/`n30_seed42` for roots `a`/`b`
-   (optional `c` control) under the new cautious configuration.
+- `python -m pytest causal/tests/test_targetwise_collection.py -q` in the
+  canonical `aba-asp` environment: **34 passed**;
+- target-wise validation of the prepared H4 YAML: `validated: true`,
+  `learning_mode: cautious`, fixture/sample
+  `m13_bucket3_binary_collider_and` / `n30_seed42`, targets `a`, `b`, `c`.
+
+These checks establish configuration and runner readiness only.
 
 ### Precise hypotheses (not claims)
 
 **H4a (current delta is brave-specific).**  
-The serialized ECAI brave delta for target `a` on this sample does **not**
-cautiously entail the \(E^+\)/\(E^-\) set: in particular, both-0 \(E^+\) such as
-`a(9)` are not cautious consequences of that framework.
+The hypothesis is that the serialized ECAI brave delta for target `a` on this
+sample does **not** cautiously entail the \(E^+\)/\(E^-\) set: in particular,
+both-0 \(E^+\) such as `a(9)` may not be cautious consequences of that
+framework. This remains to be checked; the `check_ic` audit cannot answer it.
 
 **H4b (cautious learning changes the root outcome).**  
-Once target-wise cautious mode is supported, re-running target `a` (and
-symmetrically `b`) on the **same** frozen sample with ECAI-like folding options
-but **`learning_mode(cautious)`** yields an outcome **different** from the brave
-solve: either `completed_no_solution`, or a solved delta **qualitatively
-different** from the 11-clause `alpha_2`/`alpha_3` choice gadget (e.g. more rote
-residual structure on the ambiguous \((\textit{other},c)=(0,0)\) cell). The brave
-choice-gadget solution is **not** expected to reappear unchanged.
+Running all targets under `baseline_cautious` is expected to change the root
+learning path relative to locked ECAI brave because the brave choice witness is
+not by itself enough for cautious acceptance. The actual outcome and learned
+framework shape remain open until the run and trace inspection.
 
 **H4c (fixture link — non-claim).**  
 Interpret any difference against the AND-collider fact that roots have **no**
@@ -439,48 +454,46 @@ DAG recovery.
   (none exists).
 - Not a ranking of brave vs cautious as general ABALearn policy beyond this
   controlled probe.
-- Not claimed that the probe can be executed with today’s target-wise validator
-  as-is.
+- Infrastructure readiness is not an H4 result and does not predict whether the
+  cautious run solves any target.
 
-### Planned investigation (when H4 is started)
+### Next scientific step
 
-**Not approved now.** When Samuel opens H4, proceed in two stages after
-resolving the deferred decisions below:
+When the H4 run is explicitly started:
 
-1. **Infra:** implement cautious support for target-wise (new `.pl` +
-   validator/README/tests + distinct `configuration.id`); leave brave
-   `ecai2024` outputs immutable.
-2. Optionally cheap **H4a** pre-check: cautious-consequence inspection of the
-   existing brave framework without a full re-learn.
-3. **H4b run:** target-wise cautious collection on `n30_seed42` for `a`/`b`
-   (optional `c`).
-4. Compare outcomes, deltas, and trace entailment KO points to the locked brave
-   ECAI cells.
+1. validate and run the prepared `baseline_cautious/n30_seed42.yaml` config;
+2. retain the automatic all-target collection, treating `a`/`b` as the primary
+   cells and `c` as the within-collection control;
+3. compare outcome, learned delta, assumptions/contraries, and trace entailment
+   path with the locked ECAI brave cells on the identical table; and
+4. interpret any difference against the evaluator fact that the roots have no
+   deterministic mechanism over the other observed variables.
 
-### Decisions deferred until H4 begins (flagged; not decided now)
+Whether to perform a separate cautious-consequence re-check of the **locked
+brave** frameworks remains optional and is not part of the infrastructure
+change.
 
-These must be resolved **when H4 is started**, not before H4 is explicitly opened.
-They are recorded here so the infra prerequisite is not forgotten:
+---
 
-1. **Cautious Prolog filename** — e.g. a twin such as
-   `configs/ecai2024_cautious_config.pl` (illustrative only); do **not** edit
-   `configs/ecai2024_config.pl` in place.
-2. **New target-wise `configuration.id`** and output path so brave `ecai2024`
-   collections and hashes remain immutable.
-3. **Validator change** — approve relaxing
-   `causal/targetwise/config.py` (`_read_learning_mode`) so
-   `learning_mode(cautious)` is explicitly allowed when selected via that `.pl`;
-   update README/tests accordingly.
-4. **`check_ic` / `.sol_chk.asp` / post-run artefact audit** under cautious
-   learning — how to interpret joint existential SAT vs cautious consequences
-   so diagnostics are not misread.
-5. **H4a pre-check in scope?** — optional cautious-consequence inspection of the
-   locked brave framework before a full re-learn.
-6. **Optional target `c` control** on the cautious collection, or roots `a`/`b`
-   only.
+## Probe family H5 — cautious Greedy ABA Learning
 
-Until those are decided and infra lands, H4 remains **proposed / infra-blocked /
-not tested / not a claim**.
+Status: **`deferred theory/design question` / not configured / not run / not a
+Bucket 3 claim**.
+
+H5 is deliberately separate from H4. The AAMAS Greedy ABA Learning paper's
+coherent-case result gives a stratified learned case base with a unique stable
+model, where brave and cautious acceptance coincide. Its incoherent extension
+is formulated using brave learning. The target-wise root tasks in the AND
+collider contain identical predictor configurations with opposite target
+labels, so they are not a trivial coherent-case application.
+
+For that reason, changing only `learning_mode(brave)` to
+`learning_mode(cautious)` under the Greedy options would define an exploratory
+hybrid; it would not by itself establish a paper-backed cautious Greedy method.
+No `aamas_cautious` config or H5 run is approved. Before H5 infrastructure is
+considered, the intended learning problem, semantic recovery criterion, and
+algorithmic interpretation must be specified against the Greedy ABA Learning
+paper and engine behaviour.
 
 ---
 
@@ -493,6 +506,7 @@ Keep separate throughout any future probe write-up:
 | AAMAS strategy / greedy maximal co-occurrence search | procedural learner behaviour (H1/H2) |
 | ECAI nd first-fold / BK serialisation order | procedural learner behaviour (H3) |
 | Brave vs cautious entailment / learning mode | procedural / semantic learner behaviour (H4) |
+| Cautious Greedy specification | deferred paper/algorithm question (H5), not an implemented configuration |
 | Finite-sample support and label conflicts in candidate body cells | sample information |
 | Mechanism correspondence for `c` (AND) | evaluator-only interpretation of a non-root |
 | Absence of deterministic root mechanisms | evaluator reference status |
@@ -513,7 +527,10 @@ Do not treat predictive rules for roots as mechanism recovery.
   `causal/outputs/aba_learning/targetwise/m13_bucket3_binary_collider_and/aamas2025/n30_seed42/`
 - ECAI baseline (H3/H4 motivation):
   `causal/outputs/aba_learning/targetwise/m13_bucket3_binary_collider_and/ecai2024/n30_seed42/`
-- Target-wise brave-only validator: `causal/targetwise/config.py`
+- Repository cautious baseline: `configs/baseline_cautious_config.pl`
+- Prepared H4 config:
+  `causal/configs/targetwise/m13_bucket3_binary_collider_and/baseline_cautious/n30_seed42.yaml`
+- Target-wise explicit brave/cautious validator: `causal/targetwise/config.py`
 - Entailment implementation: `asp_engine.pl` (`entails/5`)
 
 ## Decisions recorded
@@ -524,7 +541,8 @@ Do not treat predictive rules for roots as mechanism recovery.
 | H2 four-variable isolated-\(D\) fixture + AAMAS `c` | **Approved** then **run / analysed** | 2026-08-01 / 2026-08-02 |
 | H2c in first H2 write-up | **In scope** (run; brief note only) | 2026-08-01 / 2026-08-02 |
 | H3 graph/naming; \(B\) 80/20, \(D\) 70/30; id `m13_bucket3_binary_bd_and_lead_a`; AAMAS contrast | **Design approved** then **run / analysed** | 2026-08-01 / 2026-08-02 |
-| H4 cautious vs brave on ECAI roots | **Proposed only** (blocked on infra) | — |
+| H4 repository-baseline cautious vs published ECAI brave | **Infrastructure ready; not run / analysed** | 2026-08-03 |
+| H5 cautious Greedy ABA Learning | **Deferred theory/design question; no config or run** | 2026-08-03 |
 
 ## Current status and remaining work
 
@@ -533,8 +551,10 @@ Do not treat predictive rules for roots as mechanism recovery.
   irrelevant `d`. Not a claim.
 - **H3:** **complete** (`h3_bk_leading_distractor.md`). Lead: ECAI `c`
   first-folds to / retains BK-leading `a` (not BD AND). Not a claim.
-- **H4:** deferred until H4 is opened. Infra/config decisions are **flagged** in
-  the H4 section (“Decisions deferred until H4 begins”). No cautious collection
-  until then.
+- **H4:** target-wise cautious infrastructure and the baseline config are ready;
+  no cautious collection has been run or analysed. Roots `a`/`b` are primary
+  and `c` is the planned control.
+- **H5:** cautious Greedy ABA Learning is deferred pending theory/algorithm
+  specification; no config or run exists.
 - Still **no** Bucket 3 claim and **no** expanded run matrix without a further
   Samuel decision.

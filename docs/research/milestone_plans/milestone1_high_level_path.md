@@ -2,8 +2,9 @@
 
 **Role:** primary working reference for finishing Milestone 1.  
 **Parent index:** [`milestone1-plan.md`](milestone1-plan.md)  
-**Status:** active (2026-08-02) — **M12x closed**; M1.3 Buckets 1–2 **locked**;
-Bucket 3 H0–H3 complete / analysed; H4 deferred; **no Bucket 3 claim**
+**Status:** active (2026-08-03) — **M12x closed**; M1.3 Buckets 1–2 **locked**;
+Bucket 3 H0–H3 complete / analysed; H4 cautious infrastructure ready but
+unrun; H5 cautious Greedy deferred; **no Bucket 3 claim**
 
 Organising question for all of Milestone 1:
 
@@ -25,7 +26,7 @@ against any Causal-ABA-informed solution.
 | **M1.1** | Closed | Parent-position / representation-order control; ordering mechanism established |
 | **M1.2 pilot** | Analysed (historical) | 10-cell pilot; superseded as primary evidence by M12x |
 | **M1.2 expanded (M12x)** | **Closed / analysed** | Fresh 18-cell run + Stage-3 inspection **18/18** (2026-07-20); evidence package locked for M1.3 |
-| **M1.3** | **In progress** | Buckets 1–2 locked; Bucket 3 H0–H3 complete / analysed; H4 proposed / infrastructure-blocked; no Bucket 3 claim |
+| **M1.3** | **In progress** | Buckets 1–2 locked; Bucket 3 H0–H3 complete / analysed; H4 infrastructure ready but unrun; H5 deferred; no Bucket 3 claim |
 | **M1.4** | Does not exist | Expanded controlled investigation remains within M1.3 |
 
 **Expanded M1.2 Approach:**  
@@ -66,9 +67,11 @@ Probe records: `M13-C1-causal-role-underdetermination/experiment.md`;
 Bucket 3 (**H0–H3 complete / analysed; no claim**):
 `docs/experiments/qualitative/M1.3-bucket3-claims.md`.
 
-**Immediate next decision:** whether and when Samuel authorises the bounded infrastructure
-work needed to open H4. H4 remains proposed / infrastructure-blocked. The remaining 22
-July dimensions are retained but deferred.
+**Immediate next step:** explicitly start, run, and inspect H4 when Samuel is
+ready. Its repository-baseline cautious target-wise infrastructure is prepared;
+no H4 collection exists yet. Cautious Greedy ABA Learning is a separate
+deferred H5 theory/design question. The remaining 22 July dimensions are
+retained but deferred.
 No Bucket 3 claim, fixture portfolio, or run matrix is approved.
 
 ### 4. Close Milestone 1

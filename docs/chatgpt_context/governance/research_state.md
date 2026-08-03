@@ -175,8 +175,9 @@ Expanded Approach:
   Inspection: `M1.2-expanded-cell-inspection.md`.
 - **M1.3** — **in progress:** Bucket 1 **written / locked**; Bucket 2
   **locked / closed** with Claims 1–2 from M13-C1/C2; Bucket 3 baseline
-  **M13-C3 H0 closed**; probes **H1–H3 run / analysed** (**no claim**). Next:
-  deferred probe H4 in `future_probes.md`. Method:
+  **M13-C3 H0 closed**; probes **H1–H3 run / analysed** (**no claim**). H4
+  cautious infrastructure is ready but unrun; H5 cautious Greedy is deferred
+  in `future_probes.md`. Method:
   `milestone1_part3_approach.md`. Records:
   `docs/experiments/qualitative/M1.3-bucket1-claims.md` (locked);
   `docs/experiments/qualitative/M1.3-bucket2-claims.md` (locked);

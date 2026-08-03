@@ -44,6 +44,7 @@ _LEARNING_MODE_RE = re.compile(
 )
 _CHECK_IC_RE = re.compile(r"set_lopt\s*\(\s*check_ic\s*\)")
 _CONFIGURATION_ID_RE = re.compile(r"^[A-Za-z][A-Za-z0-9_-]*$")
+_SUPPORTED_LEARNING_MODES = frozenset({"brave", "cautious"})
 
 
 def _mapping(value: Any, *, where: str) -> Mapping[str, Any]:
@@ -118,10 +119,10 @@ def _read_learning_mode(prolog_config: Path) -> str:
             f"learning_mode; found {sorted(modes)!r}"
         )
     mode = modes.pop()
-    if mode != "brave":
+    if mode not in _SUPPORTED_LEARNING_MODES:
         raise TargetwiseConfigError(
-            "the current target-wise runner supports brave "
-            f"learning only; got learning_mode({mode})"
+            "the current target-wise runner supports only brave or cautious "
+            f"learning; got learning_mode({mode})"
         )
     if not _CHECK_IC_RE.search(text):
         raise TargetwiseConfigError(

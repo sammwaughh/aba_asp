@@ -329,11 +329,12 @@ def test_configuration_hash_is_stable_across_selected_samples(
     assert first.config_hash != second.config_hash
 
 
-def test_config_rejects_non_brave_learning_mode(tmp_path: Path) -> None:
+def test_config_accepts_cautious_learning_mode(tmp_path: Path) -> None:
     fixture_directory = _write_fixture_bundle(tmp_path)
     cautious_config = tmp_path / "cautious.pl"
     cautious_config.write_text(
-        ":- set_lopt(learning_mode(cautious)).\n",
+        ":- set_lopt(learning_mode(cautious)).\n"
+        ":- set_lopt(check_ic).\n",
         encoding="utf-8",
     )
     config_path = _write_config(
@@ -342,7 +343,48 @@ def test_config_rejects_non_brave_learning_mode(tmp_path: Path) -> None:
         prolog_config=cautious_config,
     )
 
-    with pytest.raises(TargetwiseConfigError, match="supports brave"):
+    config = load_targetwise_config(config_path)
+
+    assert config.learning_mode == "cautious"
+
+
+def test_baseline_cautious_config_pins_current_engine_defaults() -> None:
+    engine = (repo_root() / "aba_asp.pl").read_text(encoding="utf-8")
+    baseline = (
+        repo_root() / "configs" / "baseline_cautious_config.pl"
+    ).read_text(encoding="utf-8")
+    expected_terms = (
+        "learning_mode(cautious)",
+        "folding_mode(nd)",
+        "folding_steps(10)",
+        "folding_selection(any)",
+        "folding_space(all)",
+        "asm_intro(relto)",
+        "post_folding_test_entailment(true)",
+    )
+
+    for term in expected_terms:
+        assert f"initialization(set_lopt({term}))" in engine
+        assert f"set_lopt({term})" in baseline
+    assert "set_lopt(check_ic)" in baseline
+    assert "learning_mode(brave)" not in baseline
+
+
+def test_config_rejects_unknown_learning_mode(tmp_path: Path) -> None:
+    fixture_directory = _write_fixture_bundle(tmp_path)
+    unknown_config = tmp_path / "unknown.pl"
+    unknown_config.write_text(
+        ":- set_lopt(learning_mode(grounded)).\n"
+        ":- set_lopt(check_ic).\n",
+        encoding="utf-8",
+    )
+    config_path = _write_config(
+        tmp_path,
+        fixture_directory,
+        prolog_config=unknown_config,
+    )
+
+    with pytest.raises(TargetwiseConfigError, match="brave or cautious"):
         load_targetwise_config(config_path)
 
 
@@ -845,6 +887,37 @@ def test_fake_runner_executes_all_targets_and_writes_inspection_bundle(
     assert len(fake.calls) == original_calls
 
 
+def test_cautious_reports_do_not_treat_joint_witness_as_cautious_check(
+    tmp_path: Path,
+) -> None:
+    pytest.importorskip("pyarrow")
+    fixture_directory = _write_fixture_bundle(tmp_path / "source")
+    cautious_prolog_config = repo_root() / "configs" / "baseline_cautious_config.pl"
+    config = load_targetwise_config(
+        _write_config(
+            tmp_path,
+            fixture_directory,
+            configuration_id="baseline_cautious",
+            prolog_config=cautious_prolog_config,
+        )
+    )
+
+    prepared = run_collection(
+        config,
+        output_root=tmp_path / "outputs",
+        runner_factory=_FakeRunner,
+        artifact_checker=_FakeArtifactChecker(),
+    )
+
+    summary = json.loads(prepared.paths.summary_json_path.read_text(encoding="utf-8"))
+    assert summary["learner"]["learning_mode"] == "cautious"
+    assert "not a cautious-consequence check" in summary["boundary"]
+    for target in _VARIABLES:
+        report = prepared.paths.cell(target).report_path.read_text(encoding="utf-8")
+        assert "It does not verify cautious acceptance" in report
+        assert "not used to determine the learner outcome" in report
+
+
 def test_lowercase_named_collection_preserves_targetwise_diagnostics(
     tmp_path: Path,
 ) -> None:
@@ -882,7 +955,10 @@ def test_lowercase_named_collection_preserves_targetwise_diagnostics(
     not SWIPL_PATH or shutil.which("clingo") is None,
     reason="SWI-Prolog and clingo are required for the lowercase-name smoke test",
 )
-@pytest.mark.parametrize("configuration", ["aamas2025", "ecai2024"])
+@pytest.mark.parametrize(
+    "configuration",
+    ["aamas2025", "ecai2024", "baseline_cautious"],
+)
 def test_lowercase_predicates_run_in_unmodified_prolog_engine(
     tmp_path: Path,
     configuration: str,

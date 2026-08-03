@@ -12,7 +12,8 @@ The initial supported learner-visible regime is:
   `d`, ...; the existing `x0`, `x1`, ... convention remains supported;
 - exact-value predicates for every non-target observation;
 - target value `1` as `E+` and target value `0` as `E-`;
-- a Prolog configuration that explicitly selects brave learning;
+- a Prolog configuration that explicitly selects either brave or cautious
+  learning;
 - a Prolog configuration that explicitly enables `set_lopt(check_ic)`, so the
   learner emits its checked final ASP artefact;
 - one serial target cell per variable.
@@ -57,6 +58,27 @@ selected CSV stem.
 The established key is retained so existing configurations and their hashes
 remain stable; it does not denote an additional coverage metric.
 
+### Learning modes
+
+The selected learning mode is derived from the consulted Prolog configuration,
+not duplicated as a YAML field. The validator accepts only an explicit
+`learning_mode(brave)` or `learning_mode(cautious)` declaration. Manifests,
+configuration hashes, reports, and output paths retain the resulting mode and
+configuration identity.
+
+`configs/baseline_cautious_config.pl` pins the learning-relevant defaults of
+`aba_asp.pl`: non-deterministic folding, ten folding steps, `any` selection,
+the full folding space, `relto` assumption introduction, post-folding
+entailment checking, and cautious learning. It also enables `check_ic` solely
+to retain the checked ASP artefact. This is the repository's cautious
+ASP-ABAlearn baseline; it is not described as an ECAI configuration because
+the ECAI 2024 configuration implements the published brave method.
+
+Published `ecai2024` and `aamas2025` configurations and their existing outputs
+remain unchanged. A cautious Greedy ABA Learning configuration is not part of
+the current target-wise support decision; its algorithmic meaning is deferred
+to H5 rather than inferred by changing the AAMAS configuration's mode.
+
 ## Commands
 
 Run from the repository root in the canonical `aba-asp` environment:
@@ -73,6 +95,17 @@ python -m causal.targetwise.cli run \
 
 python -m causal.targetwise.cli run \
   --config causal/configs/targetwise/m13_bucket3_binary_diamond/ecai2024/n50_seed42.yaml
+
+python -m causal.targetwise.cli validate \
+  --config causal/configs/targetwise/m13_bucket3_binary_collider_and/baseline_cautious/n30_seed42.yaml
+```
+
+When the H4 scientific run is explicitly started, the corresponding all-target
+command is:
+
+```bash
+python -m causal.targetwise.cli run \
+  --config causal/configs/targetwise/m13_bucket3_binary_collider_and/baseline_cautious/n30_seed42.yaml
 ```
 
 `prepare` writes all target inputs without invoking ABA Learning. `run` reuses
@@ -113,12 +146,15 @@ post-run layer invokes Clingo directly on that saved file. It does not rebuild
 the constraints around `.sol.asp`.
 
 `SAT` confirms that the final saved checked artefact has a witnessing stable
-model. Because the learner already applies the corresponding condition during
-learning, this invocation is retained only as a serialization and
-artefact-integrity audit. It is not counted as an additional coverage or
-learner-performance metric, and it is not a set of independent per-example
-checks. Other possible audit statuses are `UNSAT`, `TIMEOUT`, `ERROR`, and
-`UNAVAILABLE`.
+model. Under brave learning this is the joint `E+`/`E-` witness condition used
+by the learner, so the repeated invocation is retained only as a serialization
+and artefact-integrity audit. Under cautious learning it is not a cautious-
+consequence check: cautious acceptance instead requires every positive to hold
+in every stable model and every negative not to be a cautious consequence. The
+audit status therefore never determines the cautious learner outcome. It is
+not counted as an additional coverage or learner-performance metric, and it is
+not a set of independent per-example checks. Other possible audit statuses are
+`UNSAT`, `TIMEOUT`, `ERROR`, and `UNAVAILABLE`.
 
 The target-wise path does not calculate Python-Horn coverage, Prolog query
 coverage, independent per-example ASP coverage, parent-set metrics, or

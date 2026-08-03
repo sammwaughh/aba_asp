@@ -85,11 +85,11 @@ Key experiment records:
   Probe records: `M13-C1-causal-role-underdetermination/experiment.md`;
   `M13-C2-bk-feature-order/experiment.md`.
 - `docs/experiments/qualitative/M1.3-bucket3-claims.md` — M1.3 Bucket 3
-  (**H0–H3 complete / analysed; H4 proposed / infra-blocked; no claim**).
+  (**H0–H3 complete / analysed; H4 cautious infrastructure ready but unrun;
+  H5 cautious Greedy deferred; no claim**).
   Preserve the pre-pivot positive-stochastic diamond and its runs as infrastructure
-  provenance; do not reinterpret them as deterministic claim evidence. H4 remains
-  proposed / infrastructure-blocked. Do not invent a claim, fixture portfolio, or run
-  matrix before Samuel's approval.
+  provenance; do not reinterpret them as deterministic claim evidence. Do not invent a
+  claim, fixture portfolio, or run matrix before Samuel's approval.
   Approach: `milestone1_part3/milestone1_part3_approach.md`. There is no M1.4;
   larger controlled fixtures may be used in Bucket 3, while large-scale / bnlearn
   evaluation remains deferred.

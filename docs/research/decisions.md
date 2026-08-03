@@ -2,6 +2,38 @@
 
 Recorded decisions that affect experiment direction. Evidence and interpretation remain in experiment records.
 
+## 2026-08-03 — Prepare H4 repository-baseline cautious target-wise infrastructure; defer cautious Greedy to H5
+
+**Decision:** Permit target-wise runs to use either an explicitly selected
+`brave` or `cautious` learning mode. Add a neutral repository configuration
+named `baseline_cautious` which explicitly pins the existing ASP-ABAlearn
+defaults (nd / any / all / relto, ten folding steps, post-folding entailment
+testing) and enables `check_ic` for the standard checked output artefact.
+
+The published `ecai2024_config.pl` and `aamas2025_config.pl` files remain
+unchanged. In particular, the cautious baseline is not called ECAI because the
+ECAI 2024 method is a brave-learning method.
+
+**H4 scope:** Prepare, but do not run, an all-target
+`baseline_cautious` collection on the closed H0 fixture and frozen
+`n30_seed42` sample. Roots `a`/`b` are the primary comparison with the locked
+ECAI brave cells; child `c` is a control. Infrastructure readiness is not an
+experimental result and does not approve a Bucket 3 claim.
+
+**Diagnostic boundary:** Under cautious learning, satisfiability of the
+learner-emitted `.sol_chk.asp` file establishes an existential joint stable-model
+witness only. It does not establish cautious consequence of every positive
+example. The post-run invocation remains an artefact-integrity audit and is not
+used to determine the learner outcome.
+
+**H5 boundary:** Cautious Greedy ABA Learning is deferred as a separate
+theory/algorithm question. No `aamas_cautious` config or run is approved; a
+one-option mode flip must not be presented as a paper-backed cautious Greedy
+method.
+
+**Status:** H4 infrastructure ready and config validated; H4 not run or
+analysed; H5 deferred; still no Bucket 3 claim.
+
 ## 2026-08-01 — Approve M13-C3 future probe H3 design
 
 **Decision:** Approve the H3 probe design in

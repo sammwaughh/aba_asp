@@ -52,7 +52,7 @@ from causal.targetwise.semantics import (
 )
 
 
-TARGETWISE_RUNNER_VERSION = 3
+TARGETWISE_RUNNER_VERSION = 4
 
 
 @dataclass(frozen=True)

@@ -13,7 +13,7 @@ investigation **H0** on fixture `m13_bucket3_binary_collider_and`, frozen sample
 - **No Bucket 3 claim approved**
 - Completed follow-up probes **H1–H3** are documented separately in
   `h1_support_ablation.md`, `h2_irrelevant_covariate.md`, and
-  `h3_bk_leading_distractor.md` (not part of H0). Remaining probe H4:
+  `h3_bk_leading_distractor.md` (not part of H0). H4/H5 status:
   `future_probes.md`
 
 Companion records: `experiment.md` (investigation hub); `fixture_dossier.tex`
@@ -32,7 +32,7 @@ Same frozen table for all six cells. Encoding: exact-value BK; binary 1-vs-0
 examples. Graph, certificate, and `mechanism_reference.json` are
 **evaluator-only** (not learner-visible).
 
-Not in scope here: Russo-style Causal ABA; claim drafting; H1–H4 execution.
+Not in scope here: Russo-style Causal ABA; claim drafting; H1–H5 follow-ups.
 
 ---
 
@@ -376,7 +376,7 @@ not a separate coverage metric (arm `summary.md` interpretation boundary).
 - Not parent-set scoring of root deltas without the brave / non-functional
   caveat.
 - Not that `sol_chk` SAT is a separate coverage or recovery metric.
-- H1–H4 follow-ups are outside this H0 record. H1–H3 are documented in
+- H1–H5 follow-ups are outside this H0 record. H1–H3 are documented in
   `h1_support_ablation.md`, `h2_irrelevant_covariate.md`, and
   `h3_bk_leading_distractor.md`. Remaining probe:
   `future_probes.md`.
@@ -385,4 +385,5 @@ not a separate coverage metric (arm `summary.md` interpretation boundary).
 
 H0 is closed. Probes **H1–H3** are documented in `h1_support_ablation.md`,
 `h2_irrelevant_covariate.md`, and `h3_bk_leading_distractor.md`. Remaining
-deferred probe H4 is recorded in `future_probes.md`. Still **no Bucket 3 claim**.
+H4 infrastructure-ready/unrun and H5 deferred are recorded in
+`future_probes.md`. Still **no Bucket 3 claim**.

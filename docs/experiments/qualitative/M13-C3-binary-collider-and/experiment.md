@@ -5,9 +5,10 @@
 `proposed | planned | implemented | run | analysed | reported`
 
 Current status: **`H0 closed / analysed`; H1–H3 run / analysed** — M1.3 Bucket 3
-baseline complete; H1–H3 probes documented; H4 deferred; **no Bucket 3 claim**.
+baseline complete; H1–H3 probes documented; H4 cautious infrastructure ready
+but unrun; H5 cautious Greedy deferred; **no Bucket 3 claim**.
 
-### H0 versus H1–H4
+### H0 versus H1–H5
 
 | Label | Meaning |
 |-------|---------|
@@ -15,7 +16,8 @@ baseline complete; H1–H3 probes documented; H4 deferred; **no Bucket 3 claim**
 | **H1** | Nested-prefix AAMAS support ablation (`n25_seed42`). **Run / analysed.** Record: `h1_support_ablation.md` / `.tex`. **Not a claim.** |
 | **H2** | Isolated-\(D\) AND collider; AAMAS target `c` retains irrelevant `d`. **Run / analysed.** Record: `h2_irrelevant_covariate.md` / `.tex`. **Not a claim.** |
 | **H3** | BK-leading isolated `a` on BD AND; ECAI distracts first fold for `c`. **Run / analysed.** Record: `h3_bk_leading_distractor.md` / `.tex`. **Not a claim.** |
-| **H4** | Cautious vs brave on ECAI roots. **Proposed / infra-blocked.** |
+| **H4** | Repository-baseline cautious vs locked ECAI brave on the H0 table. **Infrastructure ready / not run.** Roots `a`/`b` primary; `c` control. |
+| **H5** | Cautious Greedy ABA Learning. **Deferred theory/design question; no config or run.** |
 
 **H0 close means:** baseline learning analysis finished.  
 **H1–H3 complete means:** those approved probes are run and documented.
@@ -26,8 +28,8 @@ Closed H0 learning record: `learning_analysis.md` / `learning_analysis.tex`.
 **H1 record:** `h1_support_ablation.md` / `h1_support_ablation.tex`.  
 **H2 record:** `h2_irrelevant_covariate.md` / `h2_irrelevant_covariate.tex`.  
 **H3 record:** `h3_bk_leading_distractor.md` / `h3_bk_leading_distractor.tex`.  
-**Remaining probe (deferred):** `future_probes.md` / `future_probes.tex`
-(H4 proposed / infra-blocked).
+**Remaining probes:** `future_probes.md` / `future_probes.tex`
+(H4 infrastructure ready/unrun; H5 deferred).
 
 ## Purpose
 
@@ -120,7 +122,8 @@ Russo-style Causal ABA.
 - Target-wise: `causal/targetwise/README.md`
 - Target-wise configs:
   `causal/configs/targetwise/m13_bucket3_binary_collider_and/aamas2025/{n30_seed42,n25_seed42}.yaml`
-  and `.../ecai2024/n30_seed42.yaml`
+  and `.../ecai2024/n30_seed42.yaml`; prepared H4:
+  `.../baseline_cautious/n30_seed42.yaml`
 - H2 target-wise configs:
   `causal/configs/targetwise/m13_bucket3_binary_collider_and_iso_d/aamas2025/{n30_seed42,n2_seed42}.yaml`
 - Learning outputs:
@@ -137,7 +140,8 @@ Russo-style Causal ABA.
 - `h3_bk_leading_distractor.md` / `h3_bk_leading_distractor.tex` — **H3** BK-leading record
 - `experiment.md` (status / outcome pointer)
 - `fixture_dossier.tex` (pre-run mathematical account)
-- `future_probes.md` / `.tex` (probe catalogue; H1–H3 analysed; H4 deferred)
+- `future_probes.md` / `.tex` (probe catalogue; H1–H3 analysed; H4 infra
+  ready/unrun; H5 deferred)
 - `M1.3-bucket3-claims.md`, `experiments_summary.md`, `experiment_register.md`,
   `research_state.md` as needed for factual status
 
@@ -296,7 +300,7 @@ SWI-Prolog / clingo: invoked for AAMAS and ECAI target-wise collections
 | H1 record | `h1_support_ablation.md` / `.tex` | nested-prefix AAMAS ablation |
 | H2 record | `h2_irrelevant_covariate.md` / `.tex` | isolated-\(D\) AAMAS target `c` |
 | H3 record | `h3_bk_leading_distractor.md` / `.tex` | BK-leading ECAI target `c` |
-| Future probes | `future_probes.md` / `.tex` | H1–H3 analysed; H4 deferred |
+| Future probes | `future_probes.md` / `.tex` | H1–H3 analysed; H4 infra ready/unrun; H5 deferred |
 
 ## Outcome summary
 
@@ -394,7 +398,7 @@ None. Evidence record and bounded interpretation only.
 
 As in `learning_analysis.md`, `h1_support_ablation.md`,
 `h2_irrelevant_covariate.md`, and `h3_bk_leading_distractor.md` non-claims
-sections. H4 untouched.
+sections. H4/H5 have no result.
 
 ## Report relevance
 
@@ -403,12 +407,12 @@ evidence only; **not** report-facing claim prose.
 
 ## Future probes
 
-H1–H3 are **run / analysed**. Remaining deferred probe H4:
-`future_probes.md` / `.tex` (proposed / infra-blocked). Still **no Bucket 3
-claim**.
+H1–H3 are **run / analysed**. H4 cautious target-wise infrastructure is ready,
+but the collection has not been run; H5 cautious Greedy is deferred:
+`future_probes.md` / `.tex`. Still **no Bucket 3 claim**.
 
 ## Next decision
 
-1. Whether / when to open H4 (requires target-wise cautious infra decisions).
+1. When to start, run, and trace the prepared H4 cautious baseline.
 2. Keep Bucket 3 free of a claim until inspected probe evidence warrants a
    separate decision.

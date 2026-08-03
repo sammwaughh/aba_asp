@@ -277,7 +277,8 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
 
 - Status: **`in progress`** — Bucket 1 **written / locked**; Bucket 2
   **locked / closed** with Claims 1–2; Bucket 3 baseline **M13-C3 H0 closed**;
-  probes **H1–H3 run / analysed** (**no claim**). Next: deferred probe H4.
+  probes **H1–H3 run / analysed** (**no claim**). H4 cautious infrastructure is
+  ready but unrun; H5 cautious Greedy is deferred.
 - Planning docs: `docs/research/milestone_plans/milestone1_high_level_path.md`; `docs/research/milestone_plans/milestone1_part3/`.
 - Approach (method): `docs/research/milestone_plans/milestone1_part3/milestone1_part3_approach.md`.
 - Bucket 1 (locked): `docs/experiments/qualitative/M1.3-bucket1-claims.md` (TeX: `docs/report/findings/milestone1_part3_bucket1_claims.tex`).
@@ -287,7 +288,8 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
   `docs/experiments/qualitative/M13-C3-binary-collider-and/experiment.md`
   (H0: `learning_analysis.md`; H1: `h1_support_ablation.md`; H2:
   `h2_irrelevant_covariate.md`; remaining: `future_probes.md`).
-- Next: deferred probe H4 when ready; still **no Bucket 3 claim**.
+- Next: run and inspect the prepared H4 cautious baseline when ready; H5
+  remains deferred; still **no Bucket 3 claim**.
 
 
 #### M13-C1 — causal-role underdetermination
@@ -317,18 +319,22 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
 
 #### M13-C3 — binary deterministic AND collider (Bucket 3)
 
-- Status: **`H0 closed`; `H1–H3 run / analysed`** — H4 deferred; **no Bucket 3
-  claim**.
+- Status: **`H0 closed`; `H1–H3 run / analysed`** — H4 cautious infrastructure
+  ready but unrun; H5 cautious Greedy deferred; **no Bucket 3 claim**.
 - Record: `docs/experiments/qualitative/M13-C3-binary-collider-and/experiment.md`.
 - H0: `.../learning_analysis.md` / `.tex`.
 - H1: `.../h1_support_ablation.md` / `.tex`.
 - H2: `.../h2_irrelevant_covariate.md` / `.tex`.
 - H3: `.../h3_bk_leading_distractor.md` / `.tex`.
-- Remaining probes: `.../future_probes.md` / `.tex` (H4 only).
+- Remaining probes: `.../future_probes.md` / `.tex` (H4 infra ready/unrun; H5
+  deferred).
 - H3 lead (bounded; not a claim): ECAI on
   `m13_bucket3_binary_bd_and_lead_a` / `n30_seed42` first-folds to / retains
   BK-leading `a` for target `c` (not evaluator BD AND).
 - H2 lead (bounded; not a claim): AAMAS on
   `m13_bucket3_binary_collider_and_iso_d` / `n30_seed42` solves `c` with
   bodies that **include irrelevant `d_val_*`**, not the evaluator D-free AND.
-- Next: deferred H4 when ready; no claim.
+- Prepared H4 config:
+  `causal/configs/targetwise/m13_bucket3_binary_collider_and/baseline_cautious/n30_seed42.yaml`.
+  No H4 collection exists yet.
+- Next: run and inspect H4 when ready; H5 remains deferred; no claim.

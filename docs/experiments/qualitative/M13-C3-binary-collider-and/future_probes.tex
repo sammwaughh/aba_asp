@@ -15,11 +15,11 @@
 \emergencystretch=3em
 \newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
 
-\title{M13-C3 --- Probe catalogue (H1--H4)\\
+\title{M13-C3 --- Probe catalogue (H1--H5)\\
 motivated by closed H0}
 \author{}
 \date{H0 closed; H1--H3 run/analysed;\\
-H4 proposed / infra-blocked (not claims)}
+H4 infrastructure ready / not run; H5 deferred (not claims)}
 
 \begin{document}
 \maketitle
@@ -47,8 +47,11 @@ H0 is the completed six-cell AAMAS+ECAI investigation on fixture
     ECAI target \(c\) from BD AND. Record:
     \texttt{h3\_bk\_leading\_distractor.md} / \texttt{.tex}.
     \textbf{Not a Bucket~3 claim.}
-  \item H4: \textbf{proposed} / blocked on target-wise cautious support /
-    not tested / not a Bucket~3 claim
+  \item H4: \textbf{infrastructure ready} / not run / not analysed /
+    not a Bucket~3 claim
+  \item H5: \textbf{deferred theory/design question} / not configured /
+    not run / not a Bucket~3 claim --- cautious Greedy ABA Learning is
+    separate from H4
   \item \textbf{Not} approved Bucket~3 claims
   \item \textbf{Not} locked Bucket~1/2 claim content
   \item \textbf{Not} report-facing prose (\texttt{docs/report/findings/} is out of scope)
@@ -84,9 +87,21 @@ H0 is the completed six-cell AAMAS+ECAI investigation on fixture
     check from H2).
 \end{enumerate}
 
-\paragraph{H4.}
-Signposted only; \textbf{not} approved for implementation and \textbf{blocked}
-until target-wise cautious learning is supported (see H4 section).
+\paragraph{Samuel decision (2026-08-03) --- H4 / H5.}
+\begin{enumerate}
+  \item Add a repository-baseline cautious target-wise configuration, named
+    \texttt{baseline\_cautious}, which explicitly pins the existing engine
+    defaults and keeps \texttt{check\_ic} for output generation.
+  \item Permit explicit \texttt{brave} and \texttt{cautious} modes in the
+    target-wise runner while leaving the published ECAI and AAMAS
+    configurations unchanged.
+  \item Prepare H4 on the closed H0 fixture and sample, with all targets
+    generated automatically; roots (a)/(b) are primary and child (c) is
+    a control.
+  \item Do \textbf{not} run H4 as part of the infrastructure change.
+  \item Defer any cautious Greedy ABA Learning design to \textbf{H5}. No
+    \texttt{aamas\_cautious} configuration is approved.
+\end{enumerate}
 
 H1--H3 have been run and analysed (\texttt{h1\_support\_ablation.md},
 \texttt{h2\_irrelevant\_covariate.md}, \texttt{h3\_bk\_leading\_distractor.md}).
@@ -188,14 +203,17 @@ claim.
     \(A\) and AND collider \(B\to C\leftarrow D\).
     \textbf{Run / analysed} (\texttt{h3\_bk\_leading\_distractor.md}).
     Lead: ECAI first-folds to \(a\) and retains \(a\) in the theory for \(c\).
-  \item \textbf{H4 (proposed)} --- same fixture/\texttt{n30\_seed42}; ECAI
-    \textbf{root} targets under \textbf{cautious} vs locked brave;
-    \textbf{blocked} on target-wise cautious support. Not approved for run until
-    infra is designed and approved.
+  \item \textbf{H4 (infrastructure ready; not run)} --- same fixture/
+    \texttt{n30\_seed42}; compare the locked brave ECAI collection with
+    repository \texttt{baseline\_cautious}; roots (a)/(b) are primary and
+    (c) is a control.
+  \item \textbf{H5 (deferred)} --- determine whether and how cautious
+    acceptance should be combined with the Greedy ABA Learning strategy. This
+    is not treated as a one-option configuration change.
 \end{enumerate}
 
-Do not expand any family into a broader run matrix beyond these approved probes
-(and a later-approved H4) without a further Samuel decision.
+Do not expand any family into a broader run matrix beyond these bounded probes
+without a further Samuel decision.
 
 \subsection{Relation among probe families (keep distinct)}
 
@@ -213,9 +231,11 @@ H3 & \textbf{ECAI} target \(c\) (primary); \textbf{BK order} puts independent
   distractor \textbf{first}; nd first-fold / repair path;
   \textbf{AAMAS contrast in scope}; id
   \texttt{m13\_bucket3\_binary\_bd\_and\_lead\_a} \\
-\textbf{H4} & \textbf{Same fixture/sample}; ECAI \textbf{root} targets
-  \(a\)/\(b\); \textbf{brave \(\to\) cautious}; \textbf{requires target-wise
-  learning-mode support} \\
+\textbf{H4} & \textbf{Same fixture/sample}; locked ECAI brave collection vs
+  repository \texttt{baseline\_cautious}; roots \(a\)/\(b\) primary; \(c\)
+  control; infrastructure ready, not run \\
+\textbf{H5} & Deferred theory/design question: cautious acceptance with Greedy
+  ABA Learning; no config or run approved \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -226,8 +246,10 @@ distinct fixture ids. The in-scope AAMAS arm on H3 still differs from H2 because
 the irrelevant variable is BK-leading \(a\) and the mechanism parents are
 \(b\),\,\(d\).
 
-H4 is not a duplicate of H1 or H3: it holds the table fixed and varies
-\textbf{entailment / learning mode} on the target-wise path for \textbf{roots}.
+H4 is not a duplicate of H1 or H3: it holds the table fixed and changes the
+learning mode while retaining the engine's baseline nd/any/all/relto options.
+H5 is separate because a cautious Greedy learner needs a paper- and
+algorithm-level specification before a configuration can be interpreted.
 
 \section{Probe family H1 --- support sensitivity on AAMAS root targets}
 
@@ -419,15 +441,16 @@ Fixture authored and certified; ECAI \texttt{n30\_seed42} primary target \(c\)
 shows BK-leading \(a\) distraction; AAMAS contrast also retains \(a\).
 Full record: \texttt{h3\_bk\_leading\_distractor.md}.
 
-\section{Probe family H4 --- cautious vs brave on ECAI root targets}
+\section{Probe family H4 --- repository-baseline cautious vs published ECAI brave}
 
-Status: \textbf{proposed} / blocked on target-wise cautious support / not tested /
-not a Bucket~3 claim.
+Status: \textbf{infrastructure ready} / not run / not analysed / not a
+Bucket~3 claim.
 
 Uses the \textbf{existing} fixture and frozen sample
 \texttt{m13\_bucket3\_binary\_collider\_and} / \texttt{n30\_seed42}. Does
-\textbf{not} require a new DAG. Cannot be executed with today's target-wise
-validator as-is.
+\textbf{not} require a new DAG or sample. The locked ECAI brave collection
+remains the comparison arm; the new \texttt{baseline\_cautious} collection has
+not been run.
 
 \subsection{Motivation (verified facts)}
 
@@ -475,72 +498,62 @@ Engine fact (\texttt{asp\_engine.pl}, \texttt{entails/5}): brave entailment
 requires existence of a stable model under joint \(E^+\)/\(E^-\) constraints;
 cautious entailment requires \(E^+\) atoms to lie in \textbf{cautious
 consequences} (true in every answer set) and \(E^-\) atoms not to. Under that
-reading, the current brave delta should \textbf{fail} cautious entailment:
-e.g.\ \(a(9)\) is not true in every stable model of the choice gadget.
-Cautious re-check after contrary rote is invoked in \texttt{gen.pl}
-(\texttt{gen6}).
+This makes the learning mode a substantive semantic intervention, not merely
+an output label. Cautious re-check after contrary rote is invoked in
+\texttt{gen.pl} (\texttt{gen6}).
 
-\subsection{Infrastructure prerequisite
-(\textbf{required before H4 can run; not yet done})}
+\subsection{Infrastructure now available}
 
-H4 is \textbf{not} ``point YAML at a cautious \texttt{.pl} and run.'' The
-\textbf{target-wise} path currently \textbf{hard-requires brave}.
+The target-wise path now supports an explicit mode selected by the consulted
+Prolog configuration:
 
-Verified code fact (\texttt{causal/targetwise/config.py},
-\texttt{\_read\_learning\_mode}): the runner reads
-\texttt{set\_lopt(learning\_mode(\ldots))} from the Prolog config and
-\textbf{rejects} any mode other than \texttt{brave}, with an error that the
-current target-wise runner supports brave learning only. The target-wise README
-states that the supported regime selects brave learning. Existing configs only
-supply \texttt{learner.prolog\_config} (e.g.\ \texttt{configs/ecai2024\_config.pl});
-learning mode is \textbf{not} a free YAML field --- it is derived from the
-consulted \texttt{.pl} file and then validated.
+\begin{itemize}
+  \item \path{configs/baseline_cautious_config.pl} explicitly pins the engine
+    defaults: cautious, nd folding, 10 folding steps, any selection, all
+    folding space, relative-to assumption introduction, and post-folding
+    entailment testing. It also enables \texttt{check\_ic} to retain the
+    standard checked ASP artefact.
+  \item This file is deliberately named \textbf{\texttt{baseline\_cautious}},
+    not ECAI: the ECAI 2024 configuration is the published brave method and
+    remains unchanged.
+  \item \path{causal/targetwise/config.py} accepts exactly the explicit modes
+    \texttt{brave} and \texttt{cautious}; mode is still read from the
+    \texttt{.pl} file rather than accepted as a free YAML override.
+  \item H4 has a distinct target-wise config at
+    \path{causal/configs/targetwise/m13_bucket3_binary_collider_and/}
+    \path{baseline_cautious/n30_seed42.yaml}. Its configuration id and eventual
+    output directory are \texttt{baseline\_cautious}, so locked ECAI/AAMAS
+    collections and hashes are not overwritten.
+  \item Target-wise reports describe the \texttt{check\_ic} audit according to
+    the selected mode. Under cautious learning, SAT of \texttt{.sol\_chk.asp}
+    proves only an \textbf{existential joint witness}; it does \textbf{not}
+    establish that positives are cautious consequences. The audit remains an
+    artefact-integrity diagnostic and is not used to determine learner outcome.
+\end{itemize}
 
-\textbf{Two-stage plan:}
-\begin{enumerate}
-  \item \textbf{Infrastructure / config design (prerequisite, careful, small)}\\
-    Decide how cautious mode is exposed for target-wise without breaking
-    existing brave collections or hashes. Likely pieces (for the record; final
-    design needs Samuel/implementation approval):
-    \begin{itemize}
-      \item a \textbf{new} Prolog options file (do \textbf{not} edit
-        \path{configs/ecai2024_config.pl} in place), e.g.\ an ECAI-cautious
-        twin that keeps nd / any / all / relto / \texttt{check\_ic} but sets
-        \texttt{learning\_mode(cautious)};
-      \item {\raggedright relax or extend \path{causal/targetwise/config.py} (and
-        README/tests) so \texttt{learning\_mode(cautious)} is an
-        \textbf{explicitly allowed} target-wise mode when selected that way;\par}
-      \item a \textbf{new} \texttt{configuration.id} and output directory so
-        brave \texttt{ecai2024} artefacts remain untouched;
-      \item confirm what \texttt{check\_ic} / \texttt{.sol\_chk.asp} / the
-        post-run artefact audit mean under cautious learning (joint existential
-        SAT vs cautious consequences) so diagnostics are not misread.
-    \end{itemize}
-    Mode is coupled to Prolog consult, config hashing, manifests, and the
-    brave-only validator. Do not imply that only a YAML one-liner is required.
-  \item \textbf{Scientific run (only after the above)}\\
-    Target-wise collection on the existing fixture/\texttt{n30\_seed42} for
-    roots \(a\)/\(b\) (optional \(c\) control) under the new cautious
-    configuration.
-\end{enumerate}
+No H4 collection or learning result is created by these infrastructure changes.
+
+\paragraph{Infrastructure verification (2026-08-03).}
+The target-wise unit suite passed (34 tests). Validation of the prepared H4 YAML
+returned \texttt{validated: true}, \texttt{learning\_mode: cautious}, fixture/
+sample \texttt{m13\_bucket3\_binary\_collider\_and} /
+\texttt{n30\_seed42}, and targets (a,b,c). These checks establish
+configuration and runner readiness only.
 
 \subsection{Precise hypotheses (not claims)}
 
 \paragraph{H4a (current delta is brave-specific).}
-The serialized ECAI brave delta for target \(a\) on this sample does
-\textbf{not} cautiously entail the \(E^+\)/\(E^-\) set: in particular, both-0
-\(E^+\) such as \(a(9)\) are not cautious consequences of that framework.
+The hypothesis is that the serialized ECAI brave delta for target \(a\) on this
+sample does \textbf{not} cautiously entail the \(E^+\)/\(E^-\) set: in
+particular, both-0 \(E^+\) such as \(a(9)\) may not be cautious consequences of
+that framework. This remains to be checked; the \texttt{check\_ic} audit cannot
+answer it.
 
 \paragraph{H4b (cautious learning changes the root outcome).}
-Once target-wise cautious mode is supported, re-running target \(a\) (and
-symmetrically \(b\)) on the \textbf{same} frozen sample with ECAI-like folding
-options but \textbf{\texttt{learning\_mode(cautious)}} yields an outcome
-\textbf{different} from the brave solve: either
-\texttt{completed\_no\_solution}, or a solved delta \textbf{qualitatively
-different} from the 11-clause \(\alpha_2\)/\(\alpha_3\) choice gadget (e.g.\
-more rote residual structure on the ambiguous
-\((\textit{other},c)=(0,0)\) cell). The brave choice-gadget solution is
-\textbf{not} expected to reappear unchanged.
+Running all targets under \texttt{baseline\_cautious} is expected to change the
+root learning path relative to locked ECAI brave because the brave choice
+witness is not by itself enough for cautious acceptance. The actual outcome and
+learned framework shape remain open until the run and trace inspection.
 
 \paragraph{H4c (fixture link --- non-claim).}
 Interpret any difference against the AND-collider fact that roots have
@@ -557,51 +570,48 @@ not DAG recovery.
     rule (none exists).
   \item Not a ranking of brave vs cautious as general ABALearn policy beyond
     this controlled probe.
-  \item Not claimed that the probe can be executed with today's target-wise
-    validator as-is.
+  \item Infrastructure readiness is not an H4 result and does not predict
+    whether the cautious run solves any target.
 \end{itemize}
 
-\subsection{Planned investigation (when H4 is started)}
+\subsection{Next scientific step}
 
-\textbf{Not approved now.} When Samuel opens H4, proceed in two stages after
-resolving the deferred decisions below:
+When the H4 run is explicitly started:
 \begin{enumerate}
-  \item \textbf{Infra:} implement cautious support for target-wise (new
-    \texttt{.pl} + validator/README/tests + distinct
-    \texttt{configuration.id}); leave brave \texttt{ecai2024} outputs immutable.
-  \item Optionally cheap \textbf{H4a} pre-check: cautious-consequence inspection
-    of the existing brave framework without a full re-learn.
-  \item \textbf{H4b run:} target-wise cautious collection on
-    \texttt{n30\_seed42} for \(a\)/\(b\) (optional \(c\)).
-  \item Compare outcomes, deltas, and trace entailment KO points to the locked
-    brave ECAI cells.
+  \item validate and run the prepared
+    \texttt{baseline\_cautious/n30\_seed42.yaml} config;
+  \item retain the automatic all-target collection, treating (a)/(b) as
+    the primary cells and (c) as the within-collection control;
+  \item compare outcome, learned delta, assumptions/contraries, and trace
+    entailment path with the locked ECAI brave cells on the identical table;
+    and
+  \item interpret any difference against the evaluator fact that the roots
+    have no deterministic mechanism over the other observed variables.
 \end{enumerate}
 
-\subsection{Decisions deferred until H4 begins (flagged; not decided now)}
+Whether to perform a separate cautious-consequence re-check of the
+\textbf{locked brave} frameworks remains optional and is not part of the
+infrastructure change.
 
-These must be resolved \textbf{when H4 is started}, not before H4 is explicitly
-opened. They are recorded here so the infra prerequisite is not forgotten:
-\begin{enumerate}
-  \item \textbf{Cautious Prolog filename} --- e.g.\ a twin such as
-    \path{configs/ecai2024_cautious_config.pl} (illustrative only); do
-    \textbf{not} edit \path{configs/ecai2024_config.pl} in place.
-  \item \textbf{New target-wise \texttt{configuration.id}} and output path so
-    brave \texttt{ecai2024} collections and hashes remain immutable.
-  \item {\raggedright \textbf{Validator change} --- approve relaxing
-    \path{causal/targetwise/config.py} (\texttt{\_read\_learning\_mode}) so
-    \texttt{learning\_mode(cautious)} is explicitly allowed when selected via
-    that \texttt{.pl}; update README/tests accordingly.\par}
-  \item \textbf{\texttt{check\_ic} / \texttt{.sol\_chk.asp} / post-run artefact
-    audit} under cautious learning --- how to interpret joint existential SAT
-    vs cautious consequences so diagnostics are not misread.
-  \item \textbf{H4a pre-check in scope?} --- optional cautious-consequence
-    inspection of the locked brave framework before a full re-learn.
-  \item \textbf{Optional target \(c\) control} on the cautious collection, or
-    roots \(a\)/\(b\) only.
-\end{enumerate}
+\section{Probe family H5 --- cautious Greedy ABA Learning}
 
-Until those are decided and infra lands, H4 remains \textbf{proposed /
-infra-blocked / not tested / not a claim}.
+Status: \textbf{deferred theory/design question} / not configured / not run /
+not a Bucket~3 claim.
+
+H5 is deliberately separate from H4. The AAMAS Greedy ABA Learning paper's
+coherent-case result gives a stratified learned case base with a unique stable
+model, where brave and cautious acceptance coincide. Its incoherent extension
+is formulated using brave learning. The target-wise root tasks in the AND
+collider contain identical predictor configurations with opposite target
+labels, so they are not a trivial coherent-case application.
+
+For that reason, changing only \texttt{learning\_mode(brave)} to
+\texttt{learning\_mode(cautious)} under the Greedy options would define an
+exploratory hybrid; it would not by itself establish a paper-backed cautious
+Greedy method. No \texttt{aamas\_cautious} config or H5 run is approved. Before
+H5 infrastructure is considered, the intended learning problem, semantic
+recovery criterion, and algorithmic interpretation must be specified against
+the Greedy ABA Learning paper and engine behaviour.
 
 \section{Boundary distinctions to preserve}
 
@@ -618,6 +628,8 @@ ECAI nd first-fold / BK serialisation order &
   procedural learner behaviour (H3) \\
 Brave vs cautious entailment / learning mode &
   procedural / semantic learner behaviour (H4) \\
+Cautious Greedy specification &
+  deferred paper/algorithm question (H5), not an implemented configuration \\
 Finite-sample support and label conflicts in candidate body cells &
   sample information \\
 Mechanism correspondence for \(c\) (AND) &
@@ -649,7 +661,13 @@ Do not treat predictive rules for roots as mechanism recovery.
     \path{causal/outputs/aba_learning/targetwise/m13_bucket3_binary_collider_and/aamas2025/n30_seed42/}
   \item ECAI baseline (H3/H4 motivation):
     \path{causal/outputs/aba_learning/targetwise/m13_bucket3_binary_collider_and/ecai2024/n30_seed42/}
-  \item Target-wise brave-only validator: \texttt{causal/targetwise/config.py}
+  \item Repository cautious baseline:
+    \path{configs/baseline_cautious_config.pl}
+  \item Prepared H4 config:
+    \path{causal/configs/targetwise/m13_bucket3_binary_collider_and/}
+    \path{baseline_cautious/n30_seed42.yaml}
+  \item Target-wise explicit brave/cautious validator:
+    \texttt{causal/targetwise/config.py}
   \item Entailment implementation: \texttt{asp\_engine.pl} (\texttt{entails/5})
 \end{itemize}
 
@@ -671,8 +689,10 @@ H2c in first H2 write-up &
 H3 graph/naming; \(B\) 80/20, \(D\) 70/30; id
   \path{m13_bucket3_binary_bd_and_lead_a}; AAMAS contrast &
   \textbf{Design approved} then \textbf{run / analysed} & 2026-08-01 / 2026-08-02 \\
-H4 cautious vs brave on ECAI roots &
-  \textbf{Proposed only} (blocked on infra) & --- \\
+H4 repository-baseline cautious vs published ECAI brave &
+  \textbf{Infrastructure ready; not run / analysed} & 2026-08-03 \\
+H5 cautious Greedy ABA Learning &
+  \textbf{Deferred theory/design question; no config or run} & 2026-08-03 \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -687,9 +707,11 @@ H4 cautious vs brave on ECAI roots &
   \item \textbf{H3:} \textbf{complete} (\texttt{h3\_bk\_leading\_distractor.md}).
     Lead: ECAI \(c\) first-folds to / retains BK-leading \(a\) (not BD AND).
     Not a claim.
-  \item \textbf{H4:} deferred until H4 is opened. Infra/config decisions are
-    \textbf{flagged} in the H4 section (``Decisions deferred until H4 begins'').
-    No cautious collection until then.
+  \item \textbf{H4:} target-wise cautious infrastructure and the baseline
+    config are ready; no cautious collection has been run or analysed. Roots
+    (a)/(b) are primary and (c) is the planned control.
+  \item \textbf{H5:} cautious Greedy ABA Learning is deferred pending
+    theory/algorithm specification; no config or run exists.
   \item Still \textbf{no} Bucket~3 claim and \textbf{no} expanded run matrix
     without a further Samuel decision.
 \end{itemize}

@@ -13,7 +13,8 @@ here (Markdown) and in `h3_bk_leading_distractor.tex`.
   where BK underdetermines the target (nested `a=1` / \(\alpha_1\)–\(\alpha_3\))
 - H0–H2 remain closed / unchanged
 - **Not a Bucket 3 claim**
-- H4 remains deferred / infra-blocked (`future_probes.md`)
+- H4 cautious infrastructure is now ready but unrun; H5 cautious Greedy is
+  deferred (`future_probes.md`)
 
 Companion records: `experiment.md` (hub); `future_probes.md` (probe catalogue);
 `h2_irrelevant_covariate.md` (closed H2); `h1_support_ablation.md`;
@@ -171,7 +172,7 @@ research question.
 - “ECAI always solves” on these cells is true so far but is **not** the H3
   question.
 - H0–H2 artefacts and narratives are unchanged except for cross-links.
-- H4 untouched (still infra-blocked).
+- H4/H5 have no result; later infrastructure changes do not alter H3.
 
 ---
 
@@ -187,6 +188,6 @@ research question.
 
 ## Next
 
-H3 documentation is complete. H4 remains proposed / blocked on target-wise
-cautious support. Orchestrator decides the next move. Still **no Bucket 3
+H3 documentation is complete. H4 cautious target-wise infrastructure is ready,
+but no H4 collection has been run; H5 remains deferred. Still **no Bucket 3
 claim**.

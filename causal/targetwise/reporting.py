@@ -13,6 +13,26 @@ from causal.targetwise.encoding import BinaryTargetTask
 from causal.targetwise.paths import TargetCellPaths, TargetwiseCollectionPaths
 
 
+def _artifact_audit_interpretation(learning_mode: str) -> str:
+    """Explain the saved ``check_ic`` artefact without conflating semantics."""
+
+    if learning_mode == "brave":
+        return (
+            "Under brave learning, SAT witnesses the joint E+/E- stable-model "
+            "condition used by the learner. The repeated invocation remains a "
+            "serialization and artefact-integrity audit, not a new coverage metric."
+        )
+    if learning_mode == "cautious":
+        return (
+            "Under cautious learning, SAT witnesses only that one stable model "
+            "simultaneously contains every E+ atom and no E- atom. It does not "
+            "verify cautious acceptance, which requires every E+ atom to be a "
+            "cautious consequence and every E- atom not to be one. The audit "
+            "status is therefore not used to determine the learner outcome."
+        )
+    raise ValueError(f"unsupported learning mode: {learning_mode!r}")
+
+
 def build_target_summary(
     *,
     bundle: LoadedCausalFixtureBundle,
@@ -49,6 +69,9 @@ def build_target_summary(
         "artifact_check_status": metrics["artifact_check_status"],
         "artifact_check_failure_reason": metrics["artifact_check_failure_reason"],
         "artifact_check_runtime_s": metrics["artifact_check_runtime_s"],
+        "artifact_check_interpretation": _artifact_audit_interpretation(
+            config.learning_mode
+        ),
         "integrity": {
             "parser_unread_lines": metrics["parser_unread_lines"],
             "solution_file_bytes": metrics["solution_file_bytes"],
@@ -82,7 +105,8 @@ def build_target_summary(
             "The artefact audit executes the learner-produced .sol_chk.asp file. "
             "That file already contains the final framework serialization and the "
             "joint E+/E- integrity constraints emitted under check_ic. The audit "
-            "checks final-file satisfiability; it is not a new coverage metric, an "
+            "checks final-file satisfiability; its semantic interpretation depends "
+            "on the recorded learning mode. It is not a new coverage metric, an "
             "independent per-example acceptance table, or a graph decoder."
         ),
     }
@@ -181,14 +205,11 @@ def write_target_report(
             f"- **Runtime:** {summary['artifact_check_runtime_s']:.6f} seconds",
             f"- **Failure reason:** {check_reason}",
             "",
-            (
-                "Clingo is run directly on the learner-produced `.sol_chk.asp`. "
-                "A `SAT` result confirms that this final serialized checked "
-                "artefact has a witnessing stable model. Because the learner "
-                "already applies the corresponding joint condition internally, "
-                "this is an artefact-integrity audit rather than an additional "
-                "learner-performance or coverage metric."
-            ),
+            "Clingo is run directly on the learner-produced `.sol_chk.asp`. "
+            "A `SAT` result confirms that this final serialized checked artefact "
+            "has a witnessing stable model.",
+            "",
+            summary["artifact_check_interpretation"],
             "",
             "## Solution integrity",
             "",
@@ -233,7 +254,7 @@ def write_collection_summary(
     """Write Markdown and JSON summaries across every target."""
 
     document = {
-        "summary_schema_version": 4,
+        "summary_schema_version": 5,
         "fixture": {
             "id": bundle.fixture_id,
             "semantic_hash": bundle.semantic_hash,
@@ -263,7 +284,9 @@ def write_collection_summary(
         "boundary": (
             "Target outputs are retained separately. The post-run Clingo invocation "
             "executes each learner-produced .sol_chk.asp only as a final-artefact "
-            "integrity audit; it is not counted as a separate coverage metric. No "
+            "integrity audit. Its interpretation is learning-mode dependent: in "
+            "cautious mode it is not a cautious-consequence check. It is not counted "
+            "as a separate coverage metric. No "
             "per-example coverage panel, parent-set score, union-of-rules graph "
             "decoder, CPDAG construction, or graph-level recovery claim is applied."
         ),

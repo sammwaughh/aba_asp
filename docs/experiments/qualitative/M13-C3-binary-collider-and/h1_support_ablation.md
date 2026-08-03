@@ -11,7 +11,8 @@
 - AAMAS only; all targets `a`, `b`, `c`
 - **Not a Bucket 3 claim**
 - H2 and H3 are documented in `h2_irrelevant_covariate.md` and
-  `h3_bk_leading_distractor.md`; H4 remains deferred (see `future_probes.md`)
+  `h3_bk_leading_distractor.md`; H4 infrastructure is ready but unrun and H5
+  is deferred (see `future_probes.md`)
 
 Companion records: `experiment.md` (hub); `future_probes.md` (probe catalogue);
 `learning_analysis.md` (closed H0).
@@ -224,5 +225,6 @@ co-occurrence covering is not mechanism recovery.
 ## Next step
 
 H1 documentation is complete. Probes **H2** and **H3** are documented in
-`h2_irrelevant_covariate.md` and `h3_bk_leading_distractor.md`. Remaining probe
-H4 stays deferred as recorded in `future_probes.md`. Still **no Bucket 3 claim**.
+`h2_irrelevant_covariate.md` and `h3_bk_leading_distractor.md`. H4
+infrastructure is ready but unrun and H5 remains deferred as recorded in
+`future_probes.md`. Still **no Bucket 3 claim**.

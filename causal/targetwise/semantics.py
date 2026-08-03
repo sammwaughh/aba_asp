@@ -97,9 +97,10 @@ def final_artifact_integrity_check(
     """Execute the final ``.sol_chk.asp`` emitted under ``check_ic``.
 
     The learner-produced file already combines the serialized final framework
-    with the joint E+/E- integrity constraints.  This invocation is therefore a
-    serialization/integrity audit, not a new coverage metric or an independent
-    reconstruction of the learner's semantic acceptance condition.
+    with joint E+/E- integrity constraints requiring one witnessing stable
+    model.  This invocation is therefore a serialization/integrity audit, not a
+    new coverage metric.  It matches the brave joint-witness condition, but it
+    is not a cautious-consequence check when the learner runs in cautious mode.
     """
 
     if solution_check_asp_path is None or not Path(solution_check_asp_path).is_file():

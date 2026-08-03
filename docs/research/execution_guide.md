@@ -132,6 +132,10 @@ invocation executes the learner-produced
 `<BK>.sol_chk.asp` directly as a final-serialization integrity audit. It does
 not reconstruct those constraints around `<BK>.sol.asp`, and the resulting
 SAT/UNSAT status is not counted as an additional coverage metric.
+For brave learning, SAT repeats the learner's joint existential witness
+condition. For cautious learning, SAT is **not** a cautious-consequence check;
+the runner outcome remains authoritative and the audit is interpreted only as
+an artefact-integrity diagnostic.
 Within each final target cell, temporary engine stems are replaced by the
 stable names `bk.sol.aba`, `bk.sol.asp`, and `bk.sol_chk.asp`. The adjacent
 `delta.aba` contains only the learned additions relative to that cell's frozen
@@ -190,6 +194,9 @@ The target-wise run follows only after the built population/reference has been
 inspected and the fixture approved. Its configuration selects one frozen sample and
 one learner configuration; the runner automatically executes every variable as target.
 See `causal/targetwise/README.md` for the validated commands and output hierarchy.
+The runner accepts explicitly configured `brave` and `cautious` modes. The
+repository cautious baseline is `configs/baseline_cautious_config.pl`; it is
+not an ECAI or cautious-Greedy configuration.
 
 ## Optional next checks (not yet validated)
 

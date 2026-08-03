@@ -10,8 +10,8 @@
   irrelevant `d`** (`d_val_0` / `d_val_1`) in the learned bodies
 - H0 and H1 remain closed / unchanged
 - **Not a Bucket 3 claim**
-- H3 is **run / analysed** (`h3_bk_leading_distractor.md`); H4 remains deferred
-  (`future_probes.md`)
+- H3 is **run / analysed** (`h3_bk_leading_distractor.md`); H4 infrastructure
+  is ready but unrun and H5 is deferred (`future_probes.md`)
 
 Companion records: `experiment.md` (hub); `future_probes.md` (probe catalogue);
 `h1_support_ablation.md` (closed H1); `learning_analysis.md` (closed H0).
@@ -152,6 +152,5 @@ relative to the main `n30` distractor-inclusion finding.
 ## Next
 
 H2 documentation is complete. H3 is run / analysed
-(`h3_bk_leading_distractor.md`). Remaining probe H4 stays deferred as recorded
-in `future_probes.md`. Orchestrator decides the next move. Still **no Bucket 3
-claim**.
+(`h3_bk_leading_distractor.md`). H4 infrastructure is ready but unrun and H5
+remains deferred as recorded in `future_probes.md`. Still **no Bucket 3 claim**.

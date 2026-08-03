@@ -59,13 +59,21 @@ python -m causal.targetwise.cli run \
 
 python -m causal.targetwise.cli run \
   --config causal/configs/targetwise/m13_bucket3_binary_diamond/ecai2024/n50_seed42.yaml
+
+python -m causal.targetwise.cli validate \
+  --config causal/configs/targetwise/m13_bucket3_binary_collider_and/baseline_cautious/n30_seed42.yaml
 ```
+
+When H4 is explicitly started, replace `validate` with `run` in the final
+command; that executes all targets `a`, `b`, and `c` on the frozen table.
 
 The two run configurations select the same frozen `n50_seed42` diamond sample
 and differ in their published brave learner configuration. Their presence is
 not an experiment result. See `causal/targetwise/README.md` for the exact
 identity rules, input/output contract, retained diagnostics, and interpretation
-boundary.
+boundary. `baseline_cautious` is the repository default-options cautious
+baseline prepared for H4; it is not an ECAI-labelled or cautious-Greedy method,
+and validation does not run the H4 collection.
 
 ## Environment & Setup
 

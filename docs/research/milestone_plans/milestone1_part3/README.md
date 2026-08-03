@@ -6,8 +6,8 @@
 [`milestone1_part3_approach.md`](milestone1_part3_approach.md)
 
 **Status:** Bucket 1 **locked**. Bucket 2 **locked / closed** with Claims 1–2 from
-M13-C1/C2. In Bucket 3, H0–H3 are complete / analysed; H4 remains proposed /
-infrastructure-blocked; no Bucket 3 claim is
+M13-C1/C2. In Bucket 3, H0–H3 are complete / analysed; H4 cautious
+infrastructure is ready but unrun; H5 cautious Greedy is deferred; no Bucket 3 claim is
 approved. M12x and Buckets 1–2 remain fixed evidence. The proposed Bucket 2 Claim 3
 was parked. Milestone 2 has not started.
 
@@ -47,7 +47,7 @@ Pilot M1.2 (10 cells) remains optional provenance only.
 
 | Document | Purpose | Status |
 |----------|---------|--------|
-| [`M1.3-bucket3-claims.md`](../../../experiments/qualitative/M1.3-bucket3-claims.md) | Supervisor-driven scope, investigation status, and planning guardrails | **H0–H3 complete / analysed; H4 deferred; no claim** |
+| [`M1.3-bucket3-claims.md`](../../../experiments/qualitative/M1.3-bucket3-claims.md) | Supervisor-driven scope, investigation status, and planning guardrails | **H0–H3 complete / analysed; H4 infra ready/unrun; H5 deferred; no claim** |
 
 ## Bucket 2 probe records
 
@@ -66,6 +66,7 @@ Pilot M1.2 (10 cells) remains optional provenance only.
 
 **Parent index:** [milestone1-plan.md](../milestone1-plan.md)
 
-**Next:** decide whether and when to unblock H4. H4 remains proposed /
-infrastructure-blocked and must not start without Samuel's explicit authorisation.
+**Next:** explicitly start, run, and inspect H4 when ready. Its cautious
+target-wise infrastructure is prepared, but it has no collection or result.
+H5 remains deferred pending a cautious Greedy theory/algorithm specification.
 Do not define a fixture portfolio or run matrix in advance.
