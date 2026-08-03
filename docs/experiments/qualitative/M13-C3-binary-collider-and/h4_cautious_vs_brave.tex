@@ -1,0 +1,159 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=25mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,booktabs}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{microtype}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+\setlist{nosep,leftmargin=*}
+\emergencystretch=3em
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+\title{M13-C3 --- H4 cautious vs brave\\
+roots \(a\)/\(b\) on the closed H0 table}
+\author{}
+\date{H4 run / analysed / not a Bucket~3 claim}
+
+\begin{document}
+\maketitle
+
+\section{Status}
+
+\textbf{H4 run / analysed.}
+Repository \texttt{baseline\_cautious} vs locked ECAI brave on fixture
+\path{m13_bucket3_binary_collider_and} / \texttt{n30\_seed42} is complete.
+Markdown twin: \texttt{h4\_cautious\_vs\_brave.md}.
+
+\textbf{Lead finding:} switching to cautious \textbf{blocks the brave
+residual-assumption gadget} that had allowed roots \(a\)/\(b\) to
+\texttt{solved}; paths coincide through early \(\alpha_1\)--\(\alpha_3\)
+setup, then brave says \textbf{OK} and finishes while cautious says
+\textbf{KO} and returns \texttt{completed\_no\_solution}.
+\textbf{Control:} child \(c\) still solves with a byte-identical delta to
+locked ECAI \(c\).
+H0--H3 remain closed.
+\textbf{Not a Bucket~3 claim.}
+H5 remains deferred; H6/H7 are signposted only.
+
+\section{Research question}
+
+On the closed H0 AND-collider table, does repository-baseline cautious
+learning change the ECAI-brave root outcomes for \(a\)/\(b\) that relied on a
+residual per-row assumption gadget (rows~9 vs~26), and what happens to
+control \(c\)?
+
+\section{Main finding (lead)}
+
+Locked ECAI brave solves roots \(a\)/\(b\) with assumption-rich
+\(\alpha\)-nests.
+Repository \texttt{baseline\_cautious} on the \textbf{same} table returns
+\texttt{completed\_no\_solution} for both roots (no \texttt{delta.aba}).
+
+\begin{center}
+\begin{tabular}{@{}lL{0.38\textwidth}L{0.42\textwidth}@{}}
+\toprule
+Target & Locked ECAI brave & \texttt{baseline\_cautious} \\
+\midrule
+\(a\) & \texttt{solved} (\(\alpha\)-nest) &
+  \texttt{completed\_no\_solution} ($\sim$70s; $\sim$5k-line stdout) \\
+\(b\) & \texttt{solved} (mirror) &
+  \texttt{completed\_no\_solution} ($\sim$66s) \\
+\(c\) (control) & \texttt{solved} &
+  \texttt{solved} (byte-identical delta; $\sim$1.3s; audit SAT) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Learning-mode / entailment semantics change the root outcome} by
+rejecting the 9-vs-26-style per-row assumption cover.
+This is \textbf{not} ``cautious never solves'' (see control \(c\)).
+
+\section{Decisive procedural fork}
+
+Both arms share the early path through \(\alpha_1\)--\(\alpha_3\).
+Table conflict: row~9 is \(E^+\) \((1,0,0)\); row~26 is \(E^-\) \((0,0,0)\) ---
+identical BK \texttt{b\_val\_0},\texttt{c\_val\_0}, opposite labels.
+
+\textbf{Brave:}
+\begin{verbatim}
+folding result: c_alpha_3(A) <- [b_val_0(A)]
+ found: alpha_2/1 ... OK, assumption introduction result:
+   c_alpha_3(A) <- [alpha_2(A),b_val_0(A)]
+\end{verbatim}
+Closing nest:
+\begin{verbatim}
+a(A) :- alpha_2(A), b_val_0(A).
+c_alpha_2(A) :- alpha_3(A), c_val_0(A).
+c_alpha_3(A) :- alpha_2(A), b_val_0(A).
+\end{verbatim}
+
+\textbf{Cautious:}
+\begin{verbatim}
+folding result: c_alpha_3(A) <- [b_val_0(A)]
+ found: alpha_2/1 ... KO, cannot introduce an assumption for [b_val_0(A)]
+\end{verbatim}
+then budget exhaustion and \texttt{* No solution found!}.
+Target \(b\) mirrors.
+Paths coincide until the brave gadget; semantics then diverge.
+
+\section{Control \(c\)}
+
+Cautious \(c\) still solves with a byte-identical delta to locked ECAI \(c\):
+\begin{verbatim}
+c(A) :- alpha_1(A), a_val_1(A).
+c_alpha_1(A) :- b_val_0(A).
+assumption(alpha_1(A)).
+contrary(alpha_1(A),c_alpha_1(A)) :- assumption(alpha_1(A)).
+\end{verbatim}
+Mode change is selective.
+String match / \texttt{solved} is not claimed as causal recovery.
+
+\section{Setup / paths}
+
+Fixture/sample: closed H0 \path{m13_bucket3_binary_collider_and} /
+\texttt{n30\_seed42}
+(sha256 \texttt{1edae465\ldots a8ca}).
+Brave arm: locked \texttt{ecai2024}.
+Cautious arm: \texttt{baseline\_cautious}
+(\texttt{configs/baseline\_cautious\_config.pl}; not ECAI/AAMAS/H5).
+Primary targets \(a\),\,\(b\); control \(c\).
+
+\section{Semantic boundary}
+
+Authoritative for acceptance: Prolog learner outcome under the selected
+\texttt{learning\_mode}.
+Under cautious learning, SAT of \texttt{bk.sol\_chk.asp} is an existential
+final-artefact integrity witness, not proof that every positive is a cautious
+consequence.
+
+\section{Boundaries / non-claims}
+
+\begin{itemize}
+  \item Not a Bucket~3 claim.
+  \item Cautious root no-solution is not mechanism recovery.
+  \item Brave root \texttt{solved} is not mechanism recovery.
+  \item Control \(c\) string match is not causal recovery.
+  \item Not a ranking of brave vs cautious as generally better.
+  \item H5 deferred; H6/H7 signposted only --- not this evidence body.
+\end{itemize}
+
+\section{Prompted follow-ups (signpost only)}
+
+H5 remains deferred (cautious Greedy).
+H6 (length drivers: \(n\), \texttt{folding\_steps} under fixed cautious) and
+H7 (brave \texttt{asm\_intro(sechk)} vs \texttt{relto} on the 9/26 conflict)
+are future probes prompted by H4 traces, not yet approved runs.
+
+\section{Next}
+
+H4 documentation is complete.
+Orchestrator / Samuel decides the next move.
+Still \textbf{no Bucket~3 claim}.
+
+\end{document}

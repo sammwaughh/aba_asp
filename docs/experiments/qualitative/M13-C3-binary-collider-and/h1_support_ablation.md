@@ -11,8 +11,8 @@
 - AAMAS only; all targets `a`, `b`, `c`
 - **Not a Bucket 3 claim**
 - H2 and H3 are documented in `h2_irrelevant_covariate.md` and
-  `h3_bk_leading_distractor.md`; H4 infrastructure is ready but unrun and H5
-  is deferred (see `future_probes.md`)
+  `h3_bk_leading_distractor.md`; H4 is run / analysed (`h4_cautious_vs_brave.md`); H5 deferred; H6/H7 signposted
+  (see `future_probes.md`)
 
 Companion records: `experiment.md` (hub); `future_probes.md` (probe catalogue);
 `learning_analysis.md` (closed H0).
@@ -211,7 +211,7 @@ co-occurrence covering is not mechanism recovery.
 - Not a claim that every seed or every \(n\) behaves identically.
 - Not a claim that omitting \((0,0,0)\) is the only way AAMAS can emit a
   spurious root rule.
-- H2–H4 are untouched by this record.
+- Later probes H2–H4 are separate records.
 
 ---
 
@@ -225,6 +225,6 @@ co-occurrence covering is not mechanism recovery.
 ## Next step
 
 H1 documentation is complete. Probes **H2** and **H3** are documented in
-`h2_irrelevant_covariate.md` and `h3_bk_leading_distractor.md`. H4
-infrastructure is ready but unrun and H5 remains deferred as recorded in
+`h2_irrelevant_covariate.md`, `h3_bk_leading_distractor.md`, and
+`h4_cautious_vs_brave.md`. H5 remains deferred as recorded in
 `future_probes.md`. Still **no Bucket 3 claim**.

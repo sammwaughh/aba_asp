@@ -108,7 +108,7 @@ Bucket 3 (**H0–H3 complete / analysed; no claim**):
 Buckets 1–2 turn the locked M12x inspection and M13-C1/C2 controls into six
 evidence-backed claims. Bucket 3 now follows Fabrizio's 31 July deterministic-mechanism
 direction one case at a time. Baseline H0 and probes H1–H3 are complete / analysed;
-H4 cautious infrastructure is ready but unrun; H5 cautious Greedy is deferred.
+H4 is run / analysed; H5 cautious Greedy is deferred; H6/H7 signposted.
 No Bucket 3 claim or broader comparative design is approved.
 Prior provisional claim
 drafting from earlier M12x grids remains **withdrawn** (2026-07-20) and must not be
@@ -133,5 +133,5 @@ After M1.3, consolidate findings into a Milestone 1 conclusion:
 
 **Current progress:** Part 1 closed. Part 2 (M12x) **closed**. Part 3 (M1.3) **in
 progress** — Buckets 1–2 locked; Bucket 3 H0–H3 complete / analysed; H4
-infrastructure ready/unrun; H5 deferred; no Bucket 3 claim.
+H1–H4 analysed; H5 deferred; H6/H7 signposted; no Bucket 3 claim.
 No Part 4 / M1.4.
