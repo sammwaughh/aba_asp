@@ -18,7 +18,8 @@ here (Markdown) and in `h4b_cautious_split_under_a.tex`.
   `h5_greedy_cautious.md`)
 - H0–H4 remain closed / unchanged
 - **Not a Bucket 3 claim**
-- H6/H7 signposted only (`future_probes.md`)
+- H6 analysed (`h6_folding_and_n_ablation.md`); H7 signposted only
+  (`future_probes.md`)
 
 Companion records: `experiment.md` (hub); `h3_bk_leading_distractor.md` (locked
 brave); `h4_cautious_vs_brave.md` (H4 roots contrast); `future_probes.md`.
@@ -167,7 +168,8 @@ stdout). Outside H4b’s scientific focus; not expanded here.
   asymmetry.”
 - Not a ranking of brave vs cautious as generally better.
 - H0–H4 artefacts unchanged except cross-links.
-- H5 analysed separately (`h5_greedy_cautious.md`); H6/H7 unchanged.
+- H5 and H6 analysed separately (`h5_greedy_cautious.md`,
+  `h6_folding_and_n_ablation.md`); H7 remains signposted.
 
 ---
 
@@ -193,4 +195,5 @@ stdout). Outside H4b’s scientific focus; not expanded here.
 ## Next
 
 H4b documentation is complete. H5 is run / analysed
-(`h5_greedy_cautious.md`). H6/H7 signposted only. Still **no Bucket 3 claim**.
+(`h5_greedy_cautious.md`). H6 is analysed (`h6_folding_and_n_ablation.md`);
+H7 is signposted only. Still **no Bucket 3 claim**.

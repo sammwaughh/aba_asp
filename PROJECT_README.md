@@ -45,10 +45,11 @@ Experiments are documented under `docs/experiments/`:
 - The at-a-glance index is `docs/experiments/experiments_summary.md`.
 - Milestone 1 Part 1 (M11 / m1.1) is **closed** (Stages 0–7, June 2026): `docs/experiments/qualitative/M1.1-parent-position.md`; supervisor findings `docs/report/findings/milestone1_part1_m11_findings.tex`.
 - Milestone 1 Part 2 (M1.2 / M12x) is **closed** (18/18 run + Stage-3, 2026-07-20).
-  **M1.3** Buckets 1–2 locked; Bucket 3 H0–H5 are complete / analysed (including
+  **M1.3** Buckets 1–2 locked; Bucket 3 H0–H6 are complete / analysed (including
   H4b) under Fabrizio's one-case-at-a-time deterministic-mechanism direction.
   H5 uses the experimental `greedy_cautious` configuration; it is not an
-  AAMAS-paper method. H6/H7 are signposted only; no Bucket 3 claim is approved.
+  AAMAS-paper method. H6 is a completed procedural search-cost probe; H7 is
+  signposted only. No Bucket 3 claim is approved.
   The wider 22 July dimensions are deferred, and M12x/Buckets 1–2
   will not be redone. Primary path:
   `docs/research/milestone_plans/milestone1_high_level_path.md`. M1.3 Approach (method):

@@ -17,7 +17,7 @@ complete and documented here (Markdown) and in `h5_greedy_cautious.tex`.
   `aamas_cautious`; **not** `baseline_cautious`
 - H0–H4b remain closed / unchanged
 - **Not a Bucket 3 claim**
-- H6/H7 signposted only (`future_probes.md`)
+- H6 analysed (`h6_folding_and_n_ablation.md`); H7 signposted only
 
 Companion records: `experiment.md`; `h4_cautious_vs_brave.md`;
 `h4b_cautious_split_under_a.md`; `future_probes.md`.
@@ -162,7 +162,7 @@ effects under the same cautious mode.
   `aamas_cautious`.
 - Do not conflate H5 with H4/H4b (different search bundles / interventions).
 - Analysis B is not a brave→cautious effect.
-- H6/H7 unchanged (signposted only).
+- H6 analysed separately; H7 signposted only.
 
 ---
 
@@ -176,5 +176,5 @@ effects under the same cautious mode.
 
 ## Next
 
-H5 documentation is complete. H6/H7 remain signposted only. Orchestrator /
-Samuel decides the next move. Still **no Bucket 3 claim**.
+H5 documentation is complete. H6 is run / analysed
+(`h6_folding_and_n_ablation.md`). H7 remains signposted only. Still **no Bucket 3 claim**.

@@ -14,8 +14,8 @@ documented here (Markdown) and in `h4_cautious_vs_brave.tex`.
   delta string to locked ECAI `c`
 - H0–H3 remain closed / unchanged
 - **Not a Bucket 3 claim**
-- H5 is **run / analysed** (`h5_greedy_cautious.md`); H6/H7 are
-  **signposted only** (`future_probes.md`)
+- H5 and H6 are **run / analysed** (`h5_greedy_cautious.md`,
+  `h6_folding_and_n_ablation.md`); H7 is **signposted only** (`future_probes.md`)
 
 Companion records: `experiment.md` (hub); `future_probes.md` (probe catalogue);
 `learning_analysis.md` (closed H0); `h3_bk_leading_distractor.md`.
@@ -158,8 +158,9 @@ Key traces: `cells/target-{a,b,c}/output/prolog.stdout`; control
 - Control `c` string match / `solved` is **not** causal recovery.
 - Not a ranking of brave vs cautious as generally better.
 - H0–H3 artefacts unchanged except cross-links.
-- H5 analysed separately (`h5_greedy_cautious.md`).
-- H6/H7 **not** part of this evidence body.
+- H5 and H6 analysed separately (`h5_greedy_cautious.md`,
+  `h6_folding_and_n_ablation.md`).
+- H6/H7 are **not** part of this H4 evidence body; H7 remains signposted only.
 
 ---
 
@@ -184,5 +185,6 @@ the H4 evidence body.
 ## Next
 
 H4 documentation is complete. H4b and H5 are run / analysed separately
-(`h4b_cautious_split_under_a.md`, `h5_greedy_cautious.md`). H6/H7 are
-signposted only. Still **no Bucket 3 claim**.
+(`h4b_cautious_split_under_a.md`, `h5_greedy_cautious.md`). H6 is analysed
+separately (`h6_folding_and_n_ablation.md`); H7 is signposted only. Still
+**no Bucket 3 claim**.

@@ -26,11 +26,9 @@ itself. H0 is the completed six-cell AAMAS+ECAI investigation on fixture
   Greedy-brave on all 18 cells (Analysis A inert under Greedy). Record:
   `h5_greedy_cautious.md` / `.tex`. **Not a Bucket 3 claim.** **Not** an
   AAMAS-paper config.
-- H6: **`run / awaiting Trace analysis`** — approved folding-step (`H6a`) and
-  nested sample-size (`H6b`) ablations under repository-baseline cautious;
-  five new collections executed; H4 `baseline_cautious/n30_seed42` reused as
-  steps-10. Full evidence narrative deferred until Trace Agent analysis.
-  **Not a Bucket 3 claim.** **H7 not started.**
+- H6: **`run / analysed`** — folding-step (`H6a`) and nested sample-size
+  (`H6b`) ablations under repository-baseline cautious. Record:
+  `h6_folding_and_n_ablation.md` / `.tex`. **Not a Bucket 3 claim.**
 - H7: **signposted only** (brave `asm_intro(sechk)` vs `relto`; not approved).
 - **Not** approved Bucket 3 claims
 - **Not** locked Bucket 1/2 claim content
@@ -73,10 +71,10 @@ itself. H0 is the completed six-cell AAMAS+ECAI investigation on fixture
 5. Defer any cautious Greedy ABA Learning design to **H5**. No
    `aamas_cautious` configuration is approved.
 
-H1–H5 have been run and analysed (`h1_support_ablation.md`,
+H1–H6 have been run and analysed (`h1_support_ablation.md`,
 `h2_irrelevant_covariate.md`, `h3_bk_leading_distractor.md`,
 `h4_cautious_vs_brave.md`, `h4b_cautious_split_under_a.md`,
-`h5_greedy_cautious.md`). Approvals do not
+`h5_greedy_cautious.md`, `h6_folding_and_n_ablation.md`). Approvals do not
 create a Bucket 3 claim or a run matrix.
 
 
@@ -172,7 +170,9 @@ under ECAI, on a new fixture. H3 is now **run / analysed**
 5. **H5** — experimental `greedy_cautious` counterparts of all completed
    AAMAS collections. **Run / analysed** (`h5_greedy_cautious.md`). Lead:
    brave→cautious under Greedy is inert on these 18 cells.
-6. **H6** — **`run / awaiting Trace`**; **H7** still signposted only.
+6. **H6** — **`run / analysed`** (`h6_folding_and_n_ablation.md`). Lead: root
+   trace length ≈ linear in `folding_steps(M)` (H6a) and in nested `n` at
+   fixed `M=2` (H6b) under cautious+nd. **H7** still signposted only.
 
 Do not expand any family into a broader run matrix beyond these bounded probes
 without a further Samuel decision.
@@ -187,7 +187,7 @@ without a further Samuel decision.
 | **H4** | **Same fixture/sample**; locked ECAI brave vs repository `baseline_cautious`; roots `a`/`b` primary; `c` control; **run / analysed** |
 | **H4b** | **H3 fixture/sample**; `baseline_cautious` on target `c`; Layer B = \(\alpha_3\) close only; Layer A shared with H3; **run / analysed**; **not H5** |
 | **H5** | Experimental `greedy_cautious` vs AAMAS brave on 18 cells; Analysis A inert; **run / analysed**; not AAMAS-paper config |
-| **H6** | **`run / awaiting Trace`** — H6a steps 1/2/5 (+ H4 steps10 reuse); H6b n30/60/90 at steps2 |
+| **H6** | Search cost under `baseline_cautious`; H6a steps 1/2/5/10; H6b n30/60/90 at steps2; **run / analysed** |
 | H7 | Signposted only; brave `asm_intro(sechk)` vs `relto` |
 
 H3 is not a duplicate of H2: different DAG, different distractor placement/name,
@@ -420,7 +420,7 @@ record: `h4_cautious_vs_brave.md`.
 ### Prompted follow-ups (signpost only; not H4 evidence)
 
 - **H5** is now **run / analysed** separately (`h5_greedy_cautious.md`).
-- **H6** is now **`run / awaiting Trace analysis`** (status block above).
+- **H6** is now **`run / analysed`** (`h6_folding_and_n_ablation.md`).
 - **H7** (brave `asm_intro(sechk)` vs `relto` on the 9/26 conflict) remains
   signposted only — not started.
 
@@ -480,6 +480,37 @@ AAMAS; do not call it `aamas_cautious`). Collections:
 
 ---
 
+## Probe family H6 — folding-steps and nested-`n` search-cost ablation
+
+Status: **`run / analysed` / not a claim**.
+Evidence record: `h6_folding_and_n_ablation.md` / `h6_folding_and_n_ablation.tex`.
+
+**Lead (H6a).** Fixed `n30_seed42`; `folding_steps(M) ∈ {1,2,5,10}` under
+`baseline_cautious`. Root (`a`/`b`) trace length ≈ linearly proportional to
+`M` because nd replays the same ~9-assumption / ~500-line failed cautious motif
+once per token budget (`NEW = 9×M`). Extra `M` is wasted headroom — no new
+theory through `M=10`. Control `c` solves inside `tokens(1)` (134 lines /
+~1.3s; identical delta) at every budget.
+
+**Lead (H6b).** Fixed `M=2`; nested `n ∈ {30,60,90}` seed 42. Root topology
+fixed (NEW=18, KO=32); trace length ≈ linearly proportional to `n` via
+per-band bookkeeping growth. Support presence already complete at n=30.
+
+**Cross.** H4’s ~5k-line / ~70s root no-sols are primarily cumulative nd
+token-budget replays (H6a), with secondary per-band `n`-scaling at fixed `M=2`
+(H6b). Not root mechanism recovery; not an `n×steps` interaction claim.
+
+Collections:
+`.../baseline_cautious_steps{1,2,5}/n30_seed42/`,
+`.../baseline_cautious_steps2/n{60,90}_seed42/`, plus reused H4
+`.../baseline_cautious/n30_seed42/` as steps-10.
+
+### Outcome (H6)
+
+**Run / analysed.** Full narrative: `h6_folding_and_n_ablation.md`.
+
+---
+
 ## Boundary distinctions to preserve
 
 Keep separate throughout any future probe write-up:
@@ -490,6 +521,7 @@ Keep separate throughout any future probe write-up:
 | ECAI nd first-fold / BK serialisation order | procedural learner behaviour (H3) |
 | Brave vs cautious entailment / learning mode | procedural / semantic learner behaviour (H4) |
 | Experimental Greedy+cautious (`greedy_cautious`) vs AAMAS brave | procedural / semantic probe (H5); not an AAMAS-paper config |
+| `folding_steps(M)` / nested `n` under cautious+nd (search cost) | procedural probe (H6); not mechanism recovery |
 | Finite-sample support and label conflicts in candidate body cells | sample information |
 | Mechanism correspondence for `c` (AND) | evaluator-only interpretation of a non-root |
 | Absence of deterministic root mechanisms | evaluator reference status |
@@ -504,7 +536,7 @@ Do not treat predictive rules for roots as mechanism recovery.
 - Mathematical fixture dossier: `fixture_dossier.tex`
 - Bucket 3 planning hub: `../M1.3-bucket3-claims.md` (still **no claim**)
 - Research decision log: `docs/research/decisions.md` (2026-08-01 H1–H3
-  entries; 2026-08-03 H4/H5 entry)
+  entries; 2026-08-03 H4–H6 entries)
 - Fixture pre-run bundle:
   `causal/outputs/causal_fixtures/m13_bucket3_binary_collider_and/`
 - AAMAS baseline:
@@ -530,7 +562,7 @@ Do not treat predictive rules for roots as mechanism recovery.
 | H4 repository-baseline cautious vs published ECAI brave | **Infrastructure ready** then **run / analysed** | 2026-08-03 |
 | H4b cautious \(\alpha_3\) close on H3 leading-`a` target `c` | **Run / analysed** (not H5) | 2026-08-03 |
 | H5 experimental `greedy_cautious` AAMAS counterparts (18 cells) | **Run / analysed** | 2026-08-03 |
-| H6 folding_steps + nested-n ablation (H4-prompted) | **Approved**; **run / awaiting Trace** | 2026-08-03 |
+| H6 folding_steps + nested-n ablation (H4-prompted) | **Approved** then **run / analysed** | 2026-08-03 |
 | H7 (H4-prompted) | **Signposted only; not started** | 2026-08-03 |
 
 ## Current status and remaining work
@@ -548,10 +580,9 @@ Do not treat predictive rules for roots as mechanism recovery.
 - **H5:** **complete** (`h5_greedy_cautious.md`). Lead: Greedy brave→cautious
   inert on 18 cells; Analysis B contrasts are search-bundle. Not a claim; not
   AAMAS-paper config.
-- **H6:** **`run / awaiting Trace analysis`**. Collections:
-  `baseline_cautious_steps{1,2,5}` and nested `n60`/`n90` under steps2;
-  H4 `baseline_cautious/n30_seed42` reused as steps-10. No full evidence
-  narrative yet. **Not a claim.**
+- **H6:** **complete** (`h6_folding_and_n_ablation.md`). Lead: root search
+  cost ≈ linear in `folding_steps(M)` (H6a) and in nested `n` at fixed `M=2`
+  (H6b) under cautious+nd; control `c` delta-stable. **Not a claim.**
 - **H7:** still signposted only; not started.
 - Still **no** Bucket 3 claim and **no** expansion of H6 into a full
   \(n\times\)steps grid without a further Samuel decision.

@@ -13,8 +13,8 @@ investigation **H0** on fixture `m13_bucket3_binary_collider_and`, frozen sample
 - **No Bucket 3 claim approved**
 - Completed follow-up probes **H1–H5** are documented separately in
   `h1_support_ablation.md`, `h2_irrelevant_covariate.md`, and
-  `h3_bk_leading_distractor.md`, with H4, H4b, and H5 in their companion
-  records (not part of H0). H6/H7 status: `future_probes.md`
+  `h3_bk_leading_distractor.md`, with H4, H4b, H5, and H6 in their companion
+  records (not part of H0). H7 status: `future_probes.md`
 
 Companion records: `experiment.md` (investigation hub); `fixture_dossier.tex`
 (pre-run mathematical account).
@@ -386,6 +386,6 @@ not a separate coverage metric (arm `summary.md` interpretation boundary).
 
 H0 is closed. Probes **H1–H5** (including H4b) are documented in `h1_support_ablation.md`,
 `h2_irrelevant_covariate.md`, `h3_bk_leading_distractor.md`, and
-`h4_cautious_vs_brave.md`, with H4b in `h4b_cautious_split_under_a.md` and H5
-in `h5_greedy_cautious.md`; H6/H7 are signposted in
+`h4_cautious_vs_brave.md`, with H4b in `h4b_cautious_split_under_a.md`, H5
+in `h5_greedy_cautious.md`, and H6 in `h6_folding_and_n_ablation.md`; H7 is signposted in
 `future_probes.md`. Still **no Bucket 3 claim**.

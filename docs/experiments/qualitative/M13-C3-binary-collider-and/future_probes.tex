@@ -19,7 +19,7 @@
 motivated by closed H0}
 \author{}
 \date{H0 closed; H1--H5 run/analysed;\\
-H6/H7 signposted only (not claims)}
+H6 run / analysed; H7 signposted only (not claims)}
 
 \begin{document}
 \maketitle
@@ -60,7 +60,8 @@ H0 is the completed six-cell AAMAS+ECAI investigation on fixture
     (Analysis~A inert under Greedy). Record: \texttt{h5\_greedy\_cautious.md}
     / \texttt{.tex}. \textbf{Not a Bucket~3 claim.} \textbf{Not} an
     AAMAS-paper config.
-  \item H6 / H7: \textbf{signposted only} (prompted by H4 traces; not
+  \item H6: \textbf{run / analysed} (\texttt{h6\_folding\_and\_n\_ablation.md})
+  \item H7: \textbf{signposted only} (prompted by H4 traces; not
     approved runs)
   \item \textbf{Not} approved Bucket~3 claims
   \item \textbf{Not} locked Bucket~1/2 claim content
@@ -225,8 +226,8 @@ claim.
     all completed AAMAS collections.
     \textbf{Run / analysed} (\texttt{h5\_greedy\_cautious.md}).
     Lead: brave$\to$cautious under Greedy is inert on these 18 cells.
-  \item \textbf{H6 / H7 (signposted only)} --- prompted by H4 traces; not
-    approved runs.
+  \item \textbf{H6 (run / analysed); H7 (signposted only)} --- H6 was prompted
+    by H4; H7 is not an approved run.
 \end{enumerate}
 
 Do not expand any family into a broader run matrix beyond these bounded probes
@@ -253,7 +254,7 @@ H3 & \textbf{ECAI} target \(c\) (primary); \textbf{BK order} puts independent
   control; \textbf{run / analysed} \\
 \textbf{H5} & Experimental \texttt{greedy\_cautious} vs AAMAS brave on 18
   cells; Analysis~A inert; \textbf{run / analysed}; not AAMAS-paper config \\
-H6 / H7 & Signposted only (H4-prompted); length drivers under cautious;
+H6 & Run / analysed; length drivers under cautious+nd (H6a/H6b);
   brave \texttt{asm\_intro(sechk)} vs \texttt{relto} \\
 \bottomrule
 \end{tabular}
@@ -529,10 +530,9 @@ Full record: \texttt{h4\_cautious\_vs\_brave.md}.
 \subsection{Prompted follow-ups (signpost only; not H4 evidence)}
 
 H5 is now \textbf{run / analysed} separately (\texttt{h5\_greedy\_cautious.md}).
-H6 (length drivers: \(n\), \texttt{folding\_steps} under fixed cautious) and
+H6 is now \textbf{run / analysed} (\texttt{h6\_folding\_and\_n\_ablation.md}).
 H7 (brave \texttt{asm\_intro(sechk)} vs \texttt{relto} on the 9/26 conflict)
-remain future probes prompted by H4 traces --- not approved runs in this
-update.
+remains a future probe prompted by H4 traces --- not started.
 
 \section{Probe family H4b --- cautious $\alpha_3$ close under H3 leading-$a$ gates}
 
@@ -593,6 +593,27 @@ published AAMAS; do not call it \texttt{aamas\_cautious}).
 \textbf{Run / analysed.}
 Full narrative: \texttt{h5\_greedy\_cautious.md}.
 
+\section{Probe family H6 --- folding-steps and nested-$n$ search-cost ablation}
+
+Status: \textbf{run / analysed} / not a claim.
+Evidence: \texttt{h6\_folding\_and\_n\_ablation.md} / \texttt{.tex}.
+
+\textbf{H6a:} fixed \texttt{n30\_seed42}; \texttt{folding\_steps}$(M)\in\{1,2,5,10\}$.
+Root trace length $\approx$ linear in $M$ via nd failed-band replays
+(\texttt{NEW}${}={}9\times M$); control $c$ solves inside \texttt{tokens}$(1)$.
+
+\textbf{H6b:} fixed $M{=}2$; nested $n\in\{30,60,90\}$. Topology fixed
+(NEW${=}18$, KO${=}32$); length $\approx$ linear in $n$ via per-band bookkeeping.
+
+\textbf{Cross:} H4's $\sim$5k-line root no-sols are primarily cumulative token-budget
+replays (H6a) with secondary $n$-scaling at fixed $M{=}2$ (H6b).
+Not a claim; not an $n\times$steps interaction result.
+
+\subsection{Outcome (H6)}
+
+\textbf{Run / analysed.}
+Full narrative: \texttt{h6\_folding\_and\_n\_ablation.md}.
+
 \section{Boundary distinctions to preserve}
 
 Keep separate throughout any future probe write-up:
@@ -634,7 +655,7 @@ Do not treat predictive rules for roots as mechanism recovery.
   \item Bucket~3 planning hub: \texttt{../M1.3-bucket3-claims.md}
     (still \textbf{no claim})
   \item Research decision log: \texttt{docs/research/decisions.md}
-    (2026-08-01 H1--H3 entries; 2026-08-03 H4/H5 entry)
+    (2026-08-01 H1--H3 entries; 2026-08-03 H4--H6 entries)
   \item Fixture pre-run bundle:
     \path{causal/outputs/causal_fixtures/m13_bucket3_binary_collider_and/}
   \item AAMAS baseline:
@@ -678,8 +699,10 @@ H4b cautious $\alpha_3$ close on H3 leading-$a$ target \(c\) &
   \textbf{Run / analysed} (not H5) & 2026-08-03 \\
 H5 experimental \texttt{greedy\_cautious} (18 cells) &
   \textbf{Run / analysed} & 2026-08-03 \\
-H6 / H7 (H4-prompted) &
-  \textbf{Signposted only; not approved runs} & 2026-08-03 \\
+H6 folding/n ablation (H4-prompted) &
+  \textbf{Approved} then \textbf{run / analysed} & 2026-08-03 \\
+H7 (H4-prompted) &
+  \textbf{Signposted only; not started} & 2026-08-03 \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -704,8 +727,10 @@ H6 / H7 (H4-prompted) &
   \item \textbf{H5:} \textbf{complete} (\texttt{h5\_greedy\_cautious.md}).
     Lead: Greedy brave$\to$cautious inert on 18 cells; Analysis~B contrasts
     are search-bundle. Not a claim; not AAMAS-paper config.
-  \item \textbf{H6 / H7:} signposted only (prompted by H4); not approved for
-    run here.
+  \item \textbf{H6:} \textbf{complete} (\texttt{h6\_folding\_and\_n\_ablation.md}).
+    Lead: root cost $\approx$ linear in \texttt{folding\_steps}$(M)$ and nested $n$
+    at $M{=}2$. Not a claim.
+  \item \textbf{H7:} signposted only; not started.
   \item Still \textbf{no} Bucket~3 claim and \textbf{no} expanded run matrix
     without a further Samuel decision.
 \end{itemize}

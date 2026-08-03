@@ -73,7 +73,7 @@ investigation must not be described as an implementation of full causal discover
 
 **22 July supervisor pivot:** Fabrizio accepted the completed analysis as a good foundation
 and asked for a wider M1.3 investigation before Milestone 2. Bucket 3 is now active:
-H0–H5 are complete / analysed (incl. H4b), and H6/H7 are
+H0–H6 are complete / analysed (incl. H4b), and H7 is
 signposted only. No
 Bucket 3 claim is approved. The
 supervisor-defined dimensions are target variation and

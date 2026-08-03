@@ -37,7 +37,7 @@ H5 experimental `greedy_cautious` was later run and analysed on the five
 completed AAMAS collections (18 cells); see
 `.../h5_greedy_cautious.md`. That config is experimental and is **not** an
 AAMAS-paper method. **H6** (folding_steps + nested-n ablation under
-`baseline_cautious`) is **approved**, **run**, and **awaiting Trace analysis**;
+`baseline_cautious`) is **run / analysed** (`h6_folding_and_n_ablation.md`);
 H7 remains signposted only; still no Bucket 3 claim.
 
 ## 2026-08-03 — Approve and run H6 folding-step / nested-n ablation
@@ -55,8 +55,11 @@ drivers under repository-baseline cautious learning on the closed H0 fixture
 - Not a Bucket 3 claim; do not start H7; do not expand to a full \(n\times\)steps
   grid without a further decision.
 
-**Status after Fixture Agent run:** five new collections executed; Trace Agent
-analysis pending; no final H6 evidence narrative yet.
+**Status after write-up:** H6 is **run / analysed**. Evidence record:
+`docs/experiments/qualitative/M13-C3-binary-collider-and/h6_folding_and_n_ablation.md`
+(+ `.tex`). Lead: root search cost ≈ linear in `folding_steps(M)` (H6a) and in
+nested `n` at fixed `M=2` (H6b) under cautious+nd; control `c` delta-stable.
+Not a Bucket 3 claim; H7 still signposted only.
 
 ## 2026-08-01 — Approve M13-C3 future probe H3 design
 

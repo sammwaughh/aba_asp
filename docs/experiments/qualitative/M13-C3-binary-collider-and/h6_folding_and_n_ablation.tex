@@ -1,0 +1,229 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=25mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,booktabs}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{microtype}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+\setlist{nosep,leftmargin=*}
+\emergencystretch=3em
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+\title{M13-C3 --- H6 folding-steps and nested-$n$ ablation\\
+(search cost under \texttt{baseline\_cautious})}
+\author{}
+\date{H6 run / analysed / not a Bucket~3 claim}
+
+\begin{document}
+\maketitle
+
+\section{Status}
+
+\textbf{H6 run / analysed.}
+Bounded procedural investigation of \textbf{search cost} under repository
+\texttt{baseline\_cautious} (cautious + nd / any / all / \texttt{relto}) on
+fixture \texttt{m13\_bucket3\_binary\_collider\_and}.
+Markdown twin: \texttt{h6\_folding\_and\_n\_ablation.md}.
+
+\textbf{H6a lead:} at fixed \texttt{n30\_seed42}, root ($a$/$b$) trace length is
+approximately linearly proportional to permitted \texttt{folding\_steps}$(M)$;
+extra budget beyond the failed motif is wasted search time.
+\textbf{H6b lead:} at fixed \texttt{folding\_steps}$(2)$, root trace length is
+approximately linearly proportional to sample size $n$ (topology fixed;
+per-band bookkeeping grows).
+Roots are procedural diagnostics (evaluator
+\texttt{no\_observed\_parent\_deterministic\_rule}); only child $c$ is a
+desirable deterministic mechanism target.
+H0--H5 closed / unchanged.
+\textbf{Not a Bucket~3 claim.}
+H7 signposted only.
+
+\section{Research question}
+
+Under repository-baseline cautious + nd on the closed H0 AND-collider table,
+how do permitted \texttt{folding\_steps}$(M)$ (H6a) and nested sample size $n$
+at fixed $M{=}2$ (H6b) drive search cost for roots without recoverable
+deterministic parent rules, and what happens to control $c$?
+
+\section{Main findings}
+
+\subsection{H6a --- folding-steps ablation}
+
+On frozen \texttt{n30\_seed42}, for roots $a$/$b$, \texttt{prolog.stdout} length
+grows roughly linearly with $M\in\{1,2,5,10\}$
+($\sim$549 $\to$ 1047 $\to$ 2541 $\to$ 5031 lines for $a$; mirrored for $b$).
+Outcome stays \texttt{completed\_no\_solution} at every $M$.
+Control $c$ solves inside \texttt{tokens}$(1)$ with identical delta and
+unchanged 134-line / $\sim$1.3s trace at all four budgets.
+
+\textbf{Why predictable.}
+\texttt{folding\_steps}$(M)$ does \emph{not} mean ``perform exactly $M$ folds.''
+Under nd, learning starts at \texttt{tokens}$(1)$.
+When a full attempt under the current token budget fails, \texttt{gen.pl} may
+print \texttt{* Increasing folding tokens to: T1} and retry while $T_1\le M$.
+On these roots, each budget replays essentially the same failed cautious motif
+($\sim$9 NEW assumptions / $\sim$500-line band).
+Higher $M$ multiplies failed-band replays:
+$\mathrm{lines}\approx C_{\mathrm{fixed}}+M\cdot C_{\mathrm{band}}$.
+There is no successful $M^*$ through $M{=}10$ --- raising $M$ does not buy a
+new theory; it only replays failure (H4 wasted headroom).
+
+\subsection{H6b --- nested sample-size ablation}
+
+At fixed \texttt{folding\_steps}$(2)$, for roots $a$/$b$, trace length grows
+roughly with $n\in\{30,60,90\}$ ($\sim$1047 $\to$ 1641 $\to$ 2241 lines for $a$).
+Search topology is fixed (NEW${=}18$, KO${=}32$; one token increase to 2).
+What grows is per-band bookkeeping (more grounded $E^\pm$ ids; larger
+rote/\texttt{ert} and subsumption sweeps; larger contrary batches).
+
+\textbf{Why predictable.}
+With motif $\times$ budget structure held fixed, cost per band should scale
+roughly with grounding / example size $\Rightarrow$ total length roughly
+$\propto n$ in this limited range.
+Support \emph{presence} of the four atoms is already complete at $n{=}30$;
+multiplicities and computational grounding size change.
+H6b is not ``pure compute with every statistical property fixed.''
+Line ratios are near-linear; runtime slightly more superlinear.
+Do not claim a universal complexity law.
+
+\subsection{Cross lead}
+
+H4's long root traces ($\sim$5k lines / $\sim$66--70s at $n30\times$steps10)
+are primarily cumulative nd token-budget replays of one cautiously failed motif
+(H6a), with a secondary per-band cost that grows with $n$ at fixed $M{=}2$
+(H6b); control $c$ stays solved and delta-stable; nothing here is root
+mechanism recovery or an $n\times$steps interaction result.
+
+\section{Setup}
+
+Fixture \texttt{m13\_bucket3\_binary\_collider\_and}.
+Bundle: cautious + nd / any / all / \texttt{relto}.
+Base Prolog \texttt{configs/baseline\_cautious\_config.pl} (steps10; unchanged);
+ablation Prolog
+\texttt{configs/baseline\_cautious\_steps\{1,2,5\}\_config.pl}.
+H6a: fixed \texttt{n30\_seed42}, $M\in\{1,2,5,10\}$ (steps10 ${=}{}$ reused H4).
+H6b: fixed $M{=}2$; nested $n30$/$n60$/$n90$ seed~42.
+n30 sha256
+\texttt{1edae465d0f6b6b662b3c4ed4863af21c1d9b0c1cf428774731dd3f43282a8ca};
+n30 $\subset$ n60 $\subset$ n90.
+Atom counts $(0,0,0)/(0,1,0)/(1,0,0)/(1,1,1)$:
+n30 2/4/7/17; n60 4/10/12/34; n90 5/17/18/50.
+
+Paths:
+\texttt{causal/outputs/aba\_learning/targetwise/m13\_bucket3\_binary\_collider\_and/<config>/<sample>/}.
+H4 reuse summary sha256
+\texttt{1e4b4199fe03a5a6208967b092450f67717d4e0dc788271f771c0d18b1ff23de}.
+
+Representative commands:
+\begin{verbatim}
+python -m causal.targetwise.cli run \
+  --config .../baseline_cautious_steps1/n30_seed42.yaml
+python -m causal.targetwise.cli run \
+  --config .../baseline_cautious_steps2/n{30,60,90}_seed42.yaml
+python -m causal.targetwise.cli run \
+  --config .../baseline_cautious_steps5/n30_seed42.yaml
+\end{verbatim}
+
+Engine gate (read-only): \texttt{gen.pl} increases \texttt{tokens}$(T)$ while
+$T{+}1\le M$ under \texttt{folding\_mode(nd)}; initialisation \texttt{tokens}$(1)$.
+
+\section{Verified outcome table}
+
+Recorder-verified against \texttt{metrics.json}
+(\texttt{aba\_learning\_runtime\_s}) and \texttt{output/prolog.stdout}.
+
+{\footnotesize
+\begin{center}
+\begin{tabular}{@{}lrrlrrrlrr@{}}
+\toprule
+sample & $M$ & $t$ & outcome & rt(s) & lines & incs & NEW & KO \\
+\midrule
+n30 & 1 & $a$ & no-sol & 6.638 & 549 & none & 9 & 16 \\
+n30 & 1 & $b$ & no-sol & 6.797 & 555 & none & 9 & 16 \\
+n30 & 1 & $c$ & solved & 1.304 & 134 & --- & 1 & 1 \\
+n30 & 2 & $a$ & no-sol & 13.117 & 1047 & to 2 & 18 & 32 \\
+n30 & 2 & $b$ & no-sol & 13.487 & 1062 & to 2 & 18 & 32 \\
+n30 & 2 & $c$ & solved & 1.279 & 134 & --- & 1 & 1 \\
+n30 & 5 & $a$ & no-sol & 32.775 & 2541 & to 2..5 & 45 & 80 \\
+n30 & 5 & $b$ & no-sol & 32.825 & 2583 & to 2..5 & 45 & 80 \\
+n30 & 5 & $c$ & solved & 1.271 & 134 & --- & 1 & 1 \\
+n30 & 10 & $a$ & no-sol & 69.952 & 5031 & to 2..10 & 90 & 160 \\
+n30 & 10 & $b$ & no-sol & 66.473 & 5118 & to 2..10 & 90 & 160 \\
+n30 & 10 & $c$ & solved & 1.288 & 134 & --- & 1 & 1 \\
+n60 & 2 & $a$ & no-sol & 22.169 & 1641 & to 2 & 18 & 32 \\
+n60 & 2 & $b$ & no-sol & 22.617 & 1659 & to 2 & 18 & 32 \\
+n60 & 2 & $c$ & solved & 2.126 & 200 & --- & 1 & 1 \\
+n90 & 2 & $a$ & no-sol & 32.291 & 2241 & to 2 & 18 & 32 \\
+n90 & 2 & $b$ & no-sol & 32.894 & 2262 & to 2 & 18 & 32 \\
+n90 & 2 & $c$ & solved & 3.033 & 266 & --- & 1 & 1 \\
+\bottomrule
+\end{tabular}
+\end{center}
+}
+
+Integrity: H6a n30 BK/examples/data identical across steps 1/2/5/10 per target;
+control $c$ \texttt{delta.aba} byte-identical on all six collections
+(sha256 \texttt{f9f75b60631b2a2a\ldots426865a}):
+\begin{verbatim}
+c(A) :- alpha_1(A), a_val_1(A).
+c_alpha_1(A) :- b_val_0(A).
+assumption(alpha_1(A)).
+contrary(alpha_1(A),c_alpha_1(A)) :- assumption(alpha_1(A)).
+\end{verbatim}
+
+\section{Analysis A (H6a)}
+
+Decisive cautious KO already inside budget-1 band:
+\begin{verbatim}
+folding result: c_alpha_3(A) <- [b_val_0(A)]
+found: alpha_2/1 ... KO, cannot introduce an assumption for [b_val_0(A)]
+\end{verbatim}
+NEW${=}9\times M$.
+Steps1 body after the \texttt{lopt(...)} dump equals steps2 band-0 for 522
+lines; then steps1 prints \texttt{* No solution found!} while steps2 prints
+\texttt{* Increasing folding tokens to: 2}.
+Rough linearity for $a$: lines$/M\approx 549,524,508,503$ across $M{=}1,2,5,10$.
+
+Control $c$: solved every $M$; 134 lines / $\sim$1.3s; no token increases.
+
+\section{Analysis B (H6b)}
+
+Fixed $M{=}2$. Topology fixed (NEW${=}18$, KO${=}32$).
+$a$ lines 1047$\to$1641$\to$2241; runtime 13.1$\to$22.2$\to$32.3s.
+$c$ same delta bytes; lines 134$\to$200$\to$266; runtime 1.28$\to$2.13$\to$3.03s.
+Support presence complete at $n{=}30$; multiplicities change.
+
+\section{Cross-analysis vs H4 / H5}
+
+H4's $\sim$5k-line / $\sim$70s root no-sols are the $M{=}10$ endpoint of H6a
+(ten failed-band replays).
+Secondary H5 pointer: \texttt{greedy\_cautious} H0 $a$ reaches the same
+no-sol in $\approx$344 lines / 0.42s via a different search bundle --- H4 cost
+is not ``cautious alone.''
+
+\section{Boundaries / non-claims}
+
+\begin{itemize}
+  \item Not a Bucket~3 claim.
+  \item Not ``cautious is better.''
+  \item Root no-solution is not mechanism recovery.
+  \item Budget-relative no-solution $\neq$ unlearnability at larger $M$.
+  \item Control $c$ solved / delta match is not automatic causal recovery.
+  \item No $n\times$\texttt{folding\_steps} interaction claim (grid not run).
+  \item Approximate linearity only in these limited slices.
+  \item H7 not started; H0--H5 readings preserved.
+\end{itemize}
+
+\section{Next}
+
+H6 documentation complete.
+H7 signposted only.
+Still \textbf{no Bucket~3 claim}.
+
+\end{document}

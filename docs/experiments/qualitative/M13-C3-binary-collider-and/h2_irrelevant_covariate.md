@@ -12,7 +12,8 @@
 - **Not a Bucket 3 claim**
 - H3 is **run / analysed** (`h3_bk_leading_distractor.md`); H4 and H4b are
   **run / analysed** (`h4_cautious_vs_brave.md`,
-  `h4b_cautious_split_under_a.md`); H5 analysed (`h5_greedy_cautious.md`); H6/H7 signposted
+  `h4b_cautious_split_under_a.md`); H5 and H6 analysed
+  (`h5_greedy_cautious.md`, `h6_folding_and_n_ablation.md`); H7 signposted
   (`future_probes.md`)
 
 Companion records: `experiment.md` (hub); `future_probes.md` (probe catalogue);
@@ -156,5 +157,6 @@ relative to the main `n30` distractor-inclusion finding.
 
 H2 documentation is complete. H3, H4 and H4b are run / analysed
 (`h3_bk_leading_distractor.md`, `h4_cautious_vs_brave.md`,
-`h4b_cautious_split_under_a.md`). H5 analysed (`h5_greedy_cautious.md`);
-H6/H7 are signposted only. Still **no Bucket 3 claim**.
+`h4b_cautious_split_under_a.md`). H5 and H6 analysed
+(`h5_greedy_cautious.md`, `h6_folding_and_n_ablation.md`); H7 is signposted only.
+Still **no Bucket 3 claim**.
