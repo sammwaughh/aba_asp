@@ -6,8 +6,9 @@
 [`milestone1_part3_approach.md`](milestone1_part3_approach.md)
 
 **Status:** Bucket 1 **locked**. Bucket 2 **locked / closed** with Claims 1–2 from
-M13-C1/C2. In Bucket 3, H0–H4+H4b are complete / analysed; H5 cautious Greedy is
-deferred; H6/H7 are signposted only; no Bucket 3 claim is approved. M12x and
+M13-C1/C2. In Bucket 3, H0–H5 are complete / analysed (including H4b); H5 uses
+experimental `greedy_cautious` and is not an AAMAS-paper method; H6/H7 are
+signposted only; no Bucket 3 claim is approved. M12x and
 Buckets 1–2 remain fixed evidence. The proposed Bucket 2 Claim 3
 was parked. Milestone 2 has not started.
 

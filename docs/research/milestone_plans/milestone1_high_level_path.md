@@ -64,16 +64,14 @@ Bucket 2 (**locked / closed; two claims**): `docs/experiments/qualitative/M1.3-b
 (TeX: `docs/report/findings/milestone1_part3_bucket2_claims.tex`).  
 Probe records: `M13-C1-causal-role-underdetermination/experiment.md`;
 `M13-C2-bk-feature-order/experiment.md`.  
-Bucket 3 (**H0–H4+H4b complete / analysed; no claim**):
+Bucket 3 (**H0–H5 complete / analysed, including H4b; no claim**):
 `docs/experiments/qualitative/M1.3-bucket3-claims.md`.
 
-**Immediate next step:** Orchestrator / Samuel decide among deferred H5 and
-signposted H6/H7. H4 is run / analysed; its repository-baseline cautious arm
-blocks the brave root residual-assumption gadget while control `c` retains the
-same delta as locked ECAI. H4b is also run / analysed: on H3 target `c`, Layer
-A remains shared with H3 and Layer B changes only the `c_alpha_3` close to
-`d_val_1`. The remaining 22 July dimensions are retained but
-deferred.
+**Immediate next step:** Orchestrator / Samuel decide whether to open either
+signposted H6/H7. H5 is run / analysed: experimental `greedy_cautious` matches
+locked AAMAS on all 18 outcomes and solved deltas, while its contrasts with
+`baseline_cautious` are search-bundle differences. H4/H4b remain closed with
+their recorded leads. The remaining 22 July dimensions are retained but deferred.
 No Bucket 3 claim, fixture portfolio, or run matrix is approved.
 
 ### 4. Close Milestone 1

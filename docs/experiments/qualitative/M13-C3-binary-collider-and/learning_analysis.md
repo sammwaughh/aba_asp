@@ -11,11 +11,10 @@ investigation **H0** on fixture `m13_bucket3_binary_collider_and`, frozen sample
 - Trace + fixture integration completed
 - Six-cell narrative documented here (Markdown) and in `learning_analysis.tex`
 - **No Bucket 3 claim approved**
-- Completed follow-up probes **H1–H3** are documented separately in
+- Completed follow-up probes **H1–H5** are documented separately in
   `h1_support_ablation.md`, `h2_irrelevant_covariate.md`, and
-  `h3_bk_leading_distractor.md` (not part of H0). H4 and H4b analysed;
-  H5/H6/H7 status:
-  `future_probes.md`
+  `h3_bk_leading_distractor.md`, with H4, H4b, and H5 in their companion
+  records (not part of H0). H6/H7 status: `future_probes.md`
 
 Companion records: `experiment.md` (investigation hub); `fixture_dossier.tex`
 (pre-run mathematical account).
@@ -377,16 +376,16 @@ not a separate coverage metric (arm `summary.md` interpretation boundary).
 - Not parent-set scoring of root deltas without the brave / non-functional
   caveat.
 - Not that `sol_chk` SAT is a separate coverage or recovery metric.
-- H1–H7 and H4b follow-ups are outside this H0 record. H1–H4+H4b are documented in
+- H1–H7 and H4b follow-ups are outside this H0 record. H1–H5 (including H4b) are documented in
   `h1_support_ablation.md`, `h2_irrelevant_covariate.md`,
   `h3_bk_leading_distractor.md`, `h4_cautious_vs_brave.md`, and
-  `h4b_cautious_split_under_a.md`. Probe
+  `h4b_cautious_split_under_a.md`, with H5 in `h5_greedy_cautious.md`. Probe
   catalogue: `future_probes.md`.
 
 ## Next step
 
-H0 is closed. Probes **H1–H4+H4b** are documented in `h1_support_ablation.md`,
+H0 is closed. Probes **H1–H5** (including H4b) are documented in `h1_support_ablation.md`,
 `h2_irrelevant_covariate.md`, `h3_bk_leading_distractor.md`, and
-`h4_cautious_vs_brave.md`, with H4b in `h4b_cautious_split_under_a.md`; H5
-deferred and H6/H7 signposted in
+`h4_cautious_vs_brave.md`, with H4b in `h4b_cautious_split_under_a.md` and H5
+in `h5_greedy_cautious.md`; H6/H7 are signposted in
 `future_probes.md`. Still **no Bucket 3 claim**.

@@ -142,8 +142,9 @@ Drafted structure:
    - state the mechanism-aligned rule reference before ABALearn, certify exact support
      and fixture-specific ordinary faithfulness, then run every target on one frozen
      sample and inspect what was learned and why;
-   - proceed one fixture at a time; H0–H4+H4b are now complete / analysed; H5 is
-     deferred; H6/H7 are signposted only;
+   - proceed one fixture at a time; H0–H5 are now complete / analysed (including
+     H4b); H5 uses experimental `greedy_cautious` and is not an AAMAS-paper
+     method; H6/H7 are signposted only;
    - preserve the positive-stochastic diamond and its target-wise outputs as pre-pivot
      exploratory/infrastructure artefacts, not claim evidence;
    - wider 22 July dimensions remain deferred rather than cancelled.
@@ -168,6 +169,8 @@ Required evidence for drafting / revision:
 - `docs/research/supervisor_guidance.md` (22 July section; guidance only);
 - `docs/research/supervisor_guidance.md` (31 July section; approved current direction);
 - `docs/experiments/qualitative/M1.3-bucket3-claims.md` (planning record; no new claim);
+- `docs/experiments/qualitative/M13-C3-binary-collider-and/h5_greedy_cautious.md`
+  (completed H5 evidence record; not a claim);
 - `docs/report/claims_ledger.md`;
 - selected figures/tables from `docs/report/figure_table_index.md`.
 
@@ -286,5 +289,6 @@ The five report chapters are drafted under `docs/report/manuscript/`. The curren
 - treat the earlier QL2 parent-position-swap action as superseded by the completed M11
   and M13-C2 order controls;
 - defer Bucket 3 report claims until a separate evidence review and Samuel's decision;
-  keep project-plan status aligned with completed H0–H4+H4b and deferred H5;
+  keep project-plan status aligned with completed H0–H5 (including H4b), with
+  H6/H7 signposted only;
 - keep the claims ledger in step with any revised interpretations.

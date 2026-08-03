@@ -132,11 +132,17 @@ Russo-style Causal ABA.
   `.../baseline_cautious/n30_seed42.yaml`
 - H2 target-wise configs:
   `causal/configs/targetwise/m13_bucket3_binary_collider_and_iso_d/aamas2025/{n30_seed42,n2_seed42}.yaml`
+- H5 target-wise configs: five YAMLs under
+  `causal/configs/targetwise/{m13_bucket3_binary_collider_and,m13_bucket3_binary_collider_and_iso_d,m13_bucket3_binary_bd_and_lead_a}/greedy_cautious/`
+  using experimental `configs/greedy_cautious_config.pl`
 - Learning outputs:
   `causal/outputs/aba_learning/targetwise/m13_bucket3_binary_collider_and/{aamas2025,ecai2024,baseline_cautious}/n30_seed42/`
   and H1 AAMAS `.../aamas2025/n25_seed42/`
 - H2 learning outputs:
   `causal/outputs/aba_learning/targetwise/m13_bucket3_binary_collider_and_iso_d/aamas2025/{n30_seed42,n2_seed42}/`
+- H5 learning outputs: five collections under
+  `causal/outputs/aba_learning/targetwise/<fixture>/greedy_cautious/<sample>/`
+  (18 target cells; paired with the preserved AAMAS collections)
 
 ### Documentation files for this investigation
 

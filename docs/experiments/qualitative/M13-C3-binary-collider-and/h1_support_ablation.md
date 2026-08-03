@@ -226,8 +226,8 @@ co-occurrence covering is not mechanism recovery.
 
 ## Next step
 
-H1 documentation is complete. Probes **H2–H4+H4b** are documented in
+H1 documentation is complete. Probes **H2–H5** (including H4b) are documented in
 `h2_irrelevant_covariate.md`, `h3_bk_leading_distractor.md`, and
-`h4_cautious_vs_brave.md`, with H4b in `h4b_cautious_split_under_a.md`. H5
-remains deferred and H6/H7 are signposted only
+`h4_cautious_vs_brave.md`, with H4b in `h4b_cautious_split_under_a.md` and H5
+in `h5_greedy_cautious.md`. H6/H7 are signposted only
 in `future_probes.md`. Still **no Bucket 3 claim**.

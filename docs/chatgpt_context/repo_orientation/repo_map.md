@@ -301,8 +301,13 @@ Current deterministic M13-C3 evidence:
   `causal/configs/targetwise/m13_bucket3_binary_bd_and_lead_a/baseline_cautious/n30_seed42.yaml`;
   collection:
   `causal/outputs/aba_learning/targetwise/m13_bucket3_binary_bd_and_lead_a/baseline_cautious/n30_seed42/`.
+- H5 Prolog config: `configs/greedy_cautious_config.pl`; five target-wise YAMLs
+  under the three fixture-specific `greedy_cautious/` config directories; five
+  collections under
+  `causal/outputs/aba_learning/targetwise/<fixture>/greedy_cautious/<sample>/`.
 
-Authoritative fixture specifications and outputs for completed H0–H4+H4b:
+Authoritative fixture specifications and target-wise outputs used through completed
+H0–H5 (including H4b):
 
 - `causal/fixtures/specs/m13_bucket3_binary_collider_and.yaml` and
   `causal/outputs/causal_fixtures/m13_bucket3_binary_collider_and/`;
