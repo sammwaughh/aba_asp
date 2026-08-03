@@ -396,6 +396,35 @@ def test_greedy_cautious_config_matches_aamas_except_mode() -> None:
     assert not (repo_root() / "configs" / "aamas_cautious_config.pl").exists()
 
 
+@pytest.mark.parametrize("steps", [1, 2, 5])
+def test_baseline_cautious_steps_configs_match_baseline_except_folding_steps(
+    steps: int,
+) -> None:
+    """H6 ablation identities: baseline_cautious except folding_steps(N)."""
+    baseline = (
+        repo_root() / "configs" / "baseline_cautious_config.pl"
+    ).read_text(encoding="utf-8")
+    ablation = (
+        repo_root() / "configs" / f"baseline_cautious_steps{steps}_config.pl"
+    ).read_text(encoding="utf-8")
+    shared = (
+        "learning_mode(cautious)",
+        "folding_mode(nd)",
+        "folding_selection(any)",
+        "folding_space(all)",
+        "asm_intro(relto)",
+        "post_folding_test_entailment(true)",
+    )
+    for term in shared:
+        assert f"set_lopt({term})" in baseline
+        assert f"set_lopt({term})" in ablation
+    assert "set_lopt(folding_steps(10))" in baseline
+    assert f"set_lopt(folding_steps({steps}))" in ablation
+    assert "set_lopt(folding_steps(10))" not in ablation
+    assert "set_lopt(check_ic)" in ablation
+    assert "learning_mode(brave)" not in ablation
+
+
 def test_config_rejects_unknown_learning_mode(tmp_path: Path) -> None:
     fixture_directory = _write_fixture_bundle(tmp_path)
     unknown_config = tmp_path / "unknown.pl"

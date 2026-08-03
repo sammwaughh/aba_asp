@@ -26,8 +26,12 @@ itself. H0 is the completed six-cell AAMAS+ECAI investigation on fixture
   Greedy-brave on all 18 cells (Analysis A inert under Greedy). Record:
   `h5_greedy_cautious.md` / `.tex`. **Not a Bucket 3 claim.** **Not** an
   AAMAS-paper config.
-- H6 / H7: **signposted only** (prompted by H4 traces; not approved runs; not
-  this catalogue’s evidence body beyond a one-line pointer).
+- H6: **`run / awaiting Trace analysis`** — approved folding-step (`H6a`) and
+  nested sample-size (`H6b`) ablations under repository-baseline cautious;
+  five new collections executed; H4 `baseline_cautious/n30_seed42` reused as
+  steps-10. Full evidence narrative deferred until Trace Agent analysis.
+  **Not a Bucket 3 claim.** **H7 not started.**
+- H7: **signposted only** (brave `asm_intro(sechk)` vs `relto`; not approved).
 - **Not** approved Bucket 3 claims
 - **Not** locked Bucket 1/2 claim content
 - **Not** report-facing prose (`docs/report/findings/` is out of scope)
@@ -168,8 +172,7 @@ under ECAI, on a new fixture. H3 is now **run / analysed**
 5. **H5** — experimental `greedy_cautious` counterparts of all completed
    AAMAS collections. **Run / analysed** (`h5_greedy_cautious.md`). Lead:
    brave→cautious under Greedy is inert on these 18 cells.
-6. **H6 / H7 (signposted only)** — prompted by H4 traces; not approved runs
-   (see short note under H4 Outcome).
+6. **H6** — **`run / awaiting Trace`**; **H7** still signposted only.
 
 Do not expand any family into a broader run matrix beyond these bounded probes
 without a further Samuel decision.
@@ -184,7 +187,8 @@ without a further Samuel decision.
 | **H4** | **Same fixture/sample**; locked ECAI brave vs repository `baseline_cautious`; roots `a`/`b` primary; `c` control; **run / analysed** |
 | **H4b** | **H3 fixture/sample**; `baseline_cautious` on target `c`; Layer B = \(\alpha_3\) close only; Layer A shared with H3; **run / analysed**; **not H5** |
 | **H5** | Experimental `greedy_cautious` vs AAMAS brave on 18 cells; Analysis A inert; **run / analysed**; not AAMAS-paper config |
-| H6 / H7 | Signposted only (H4-prompted); length drivers under cautious; brave `asm_intro(sechk)` vs `relto` |
+| **H6** | **`run / awaiting Trace`** — H6a steps 1/2/5 (+ H4 steps10 reuse); H6b n30/60/90 at steps2 |
+| H7 | Signposted only; brave `asm_intro(sechk)` vs `relto` |
 
 H3 is not a duplicate of H2: different DAG, different distractor placement/name,
 different primary config (ECAI nd vs AAMAS greedy), and distinct fixture ids.
@@ -416,9 +420,9 @@ record: `h4_cautious_vs_brave.md`.
 ### Prompted follow-ups (signpost only; not H4 evidence)
 
 - **H5** is now **run / analysed** separately (`h5_greedy_cautious.md`).
-- **H6** (length drivers: `n`, `folding_steps` under fixed cautious) and
-  **H7** (brave `asm_intro(sechk)` vs `relto` on the 9/26 conflict) are
-  future probes prompted by H4 traces — not approved runs in this update.
+- **H6** is now **`run / awaiting Trace analysis`** (status block above).
+- **H7** (brave `asm_intro(sechk)` vs `relto` on the 9/26 conflict) remains
+  signposted only — not started.
 
 ---
 
@@ -526,7 +530,8 @@ Do not treat predictive rules for roots as mechanism recovery.
 | H4 repository-baseline cautious vs published ECAI brave | **Infrastructure ready** then **run / analysed** | 2026-08-03 |
 | H4b cautious \(\alpha_3\) close on H3 leading-`a` target `c` | **Run / analysed** (not H5) | 2026-08-03 |
 | H5 experimental `greedy_cautious` AAMAS counterparts (18 cells) | **Run / analysed** | 2026-08-03 |
-| H6 / H7 (H4-prompted) | **Signposted only; not approved runs** | 2026-08-03 |
+| H6 folding_steps + nested-n ablation (H4-prompted) | **Approved**; **run / awaiting Trace** | 2026-08-03 |
+| H7 (H4-prompted) | **Signposted only; not started** | 2026-08-03 |
 
 ## Current status and remaining work
 
@@ -543,6 +548,10 @@ Do not treat predictive rules for roots as mechanism recovery.
 - **H5:** **complete** (`h5_greedy_cautious.md`). Lead: Greedy brave→cautious
   inert on 18 cells; Analysis B contrasts are search-bundle. Not a claim; not
   AAMAS-paper config.
-- **H6 / H7:** signposted only (prompted by H4); not approved for run here.
-- Still **no** Bucket 3 claim and **no** expanded run matrix without a further
-  Samuel decision.
+- **H6:** **`run / awaiting Trace analysis`**. Collections:
+  `baseline_cautious_steps{1,2,5}` and nested `n60`/`n90` under steps2;
+  H4 `baseline_cautious/n30_seed42` reused as steps-10. No full evidence
+  narrative yet. **Not a claim.**
+- **H7:** still signposted only; not started.
+- Still **no** Bucket 3 claim and **no** expansion of H6 into a full
+  \(n\times\)steps grid without a further Samuel decision.

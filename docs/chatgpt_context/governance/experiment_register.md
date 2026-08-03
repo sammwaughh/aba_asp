@@ -35,10 +35,10 @@ The earlier n=100 scaled attempt was cut and is not part of the canonical experi
 | M11 | — | m1.1 Parent-position and representation-order control | analysed (Stages 0–7; ablations + greedy comparator) |
 | M12 | — | m1.2 Published-configuration comparison (ASP-ABAlearnB / Greedy ABA Learning) | analysed (Stages 0–3: 10-cell grid + full cell inspection / failure-mode taxonomy) |
 | M12x | — | m1.2 expanded U1–U7 (ECAI/AAMAS; val-only BK; 18 cells) | closed / analysed (18/18 Stage-3) |
-| M13 | — | m1.3 capabilities and limits of unguided ABA Learning for causal recovery | in progress (Buckets 1–2 locked; M13-C3 H0 closed; H1–H5 analysed; no claim) |
+| M13 | — | m1.3 capabilities and limits of unguided ABA Learning for causal recovery | in progress (Buckets 1–2 locked; M13-C3 H0 closed; H1–H5 analysed; H6 run/awaiting Trace; no claim) |
 | M13-C1 | M13 | Causal-role underdetermination under learner-input equivalence | analysed |
 | M13-C2 | M13 | Comparative sensitivity to BK feature-block order | analysed |
-| M13-C3 | M13 | Bucket 3 binary deterministic AND collider | **H0 closed**; **H1–H5 analysed** (no claim; incl. H4b) |
+| M13-C3 | M13 | Bucket 3 binary deterministic AND collider | **H0 closed**; **H1–H5 analysed**; **H6 run / awaiting Trace** (no claim) |
 
 ## Template
 
@@ -278,8 +278,8 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
 - Status: **`in progress`** — Bucket 1 **written / locked**; Bucket 2
   **locked / closed** with Claims 1–2; Bucket 3 baseline **M13-C3 H0 closed**;
   probes **H1–H5 run / analysed** (**no claim**; includes H4b). H5 experimental
-  `greedy_cautious` is **run / analysed** (`h5_greedy_cautious.md`); H6/H7
-  signposted only.
+  `greedy_cautious` is **run / analysed** (`h5_greedy_cautious.md`); **H6 is
+  `run / awaiting Trace`**; H7 signposted only.
 - Planning docs: `docs/research/milestone_plans/milestone1_high_level_path.md`; `docs/research/milestone_plans/milestone1_part3/`.
 - Approach (method): `docs/research/milestone_plans/milestone1_part3/milestone1_part3_approach.md`.
 - Bucket 1 (locked): `docs/experiments/qualitative/M1.3-bucket1-claims.md` (TeX: `docs/report/findings/milestone1_part3_bucket1_claims.tex`).
@@ -290,9 +290,8 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
   (H0: `learning_analysis.md`; H1: `h1_support_ablation.md`; H2:
   `h2_irrelevant_covariate.md`; H3: `h3_bk_leading_distractor.md`; H4:
   `h4_cautious_vs_brave.md`; H4b: `h4b_cautious_split_under_a.md`; H5:
-  `h5_greedy_cautious.md`; remaining: `future_probes.md`).
-- Next: Orchestrator / Samuel decide among signposted H6/H7; still **no Bucket 3
-  claim**.
+  `h5_greedy_cautious.md`; H6 status: `future_probes.md`).
+- Next: Trace analysis of H6; H7 not started; still **no Bucket 3 claim**.
 
 
 #### M13-C1 — causal-role underdetermination
@@ -322,8 +321,8 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
 
 #### M13-C3 — binary deterministic AND collider (Bucket 3)
 
-- Status: **`H0 closed`; `H1–H5 run / analysed`** (incl. H4b) — H6/H7
-  signposted; **no Bucket 3 claim**.
+- Status: **`H0 closed`; `H1–H5 run / analysed`**; **`H6 run / awaiting Trace`**
+  (incl. H4b) — H7 signposted; **no Bucket 3 claim**.
 - Record: `docs/experiments/qualitative/M13-C3-binary-collider-and/experiment.md`.
 - H0: `.../learning_analysis.md` / `.tex`.
 - H1: `.../h1_support_ablation.md` / `.tex`.
@@ -332,7 +331,8 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
 - H4: `.../h4_cautious_vs_brave.md` / `.tex`.
 - H4b: `.../h4b_cautious_split_under_a.md` / `.tex`.
 - H5: `.../h5_greedy_cautious.md` / `.tex`.
-- Remaining probes: `.../future_probes.md` / `.tex` (H6/H7 signposted).
+- H6 status / catalogue: `.../future_probes.md` / `.tex` (H6 run pending Trace;
+  H7 signposted).
 - H5 lead (bounded; not a claim): under Greedy, brave→cautious matches 18/18
   outcomes and solved deltas; Analysis B contrasts vs nd `baseline_cautious`
   are search-bundle (not the mode flip). Config is experimental
@@ -356,4 +356,7 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
 - H5 collections:
   `.../targetwise/<fixture>/{aamas2025,greedy_cautious}/<sample>/` across the
   five completed AAMAS tables.
-- Next: H6/H7 signposted; no claim.
+- H6 collections (new):
+  `.../m13_bucket3_binary_collider_and/baseline_cautious_steps{1,2,5}/...`
+  plus nested `n60_seed42` / `n90_seed42` under steps2; steps-10 = reused H4.
+- Next: Trace analysis of H6; H7 not started; no claim.

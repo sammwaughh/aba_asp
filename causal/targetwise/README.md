@@ -74,6 +74,12 @@ to retain the checked ASP artefact. This is the repository's cautious
 ASP-ABAlearn baseline; it is not described as an ECAI configuration because
 the ECAI 2024 configuration implements the published brave method.
 
+H6 folding-budget ablations reuse that baseline except for `folding_steps`:
+`baseline_cautious_steps1`, `baseline_cautious_steps2`, and
+`baseline_cautious_steps5` (`configs/baseline_cautious_steps{1,2,5}_config.pl`).
+The existing `baseline_cautious` identity remains the steps-10 reference and
+must not be overwritten. These are not ECAI or AAMAS configurations.
+
 Published `ecai2024` and `aamas2025` configurations and their existing outputs
 remain unchanged. Experimental H5 uses a separate configuration identity
 `greedy_cautious` (`configs/greedy_cautious_config.pl`): the Greedy / `mgr` /

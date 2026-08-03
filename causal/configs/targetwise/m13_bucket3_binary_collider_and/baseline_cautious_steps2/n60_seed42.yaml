@@ -1,0 +1,17 @@
+description: "H6b baseline_cautious folding_steps(2) on nested n60_seed42."
+
+configuration:
+  id: baseline_cautious_steps2
+
+fixture:
+  directory: causal/outputs/causal_fixtures/m13_bucket3_binary_collider_and
+  sample: samples/n60_seed42.csv
+
+encoding:
+  type: exact_value
+  example_policy: binary_one_vs_zero
+
+learner:
+  prolog_config: configs/baseline_cautious_steps2_config.pl
+  prolog_timeout_s: 300
+  joint_check_timeout_s: 5

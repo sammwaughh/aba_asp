@@ -4,9 +4,10 @@
 
 `proposed | planned | implemented | run | analysed | reported`
 
-Current status: **`H0 closed / analysed`; H1–H5 run / analysed** — M1.3 Bucket 3
-baseline and H1–H5 probes documented; H6/H7 signposted only; **no Bucket 3
-claim**.
+Current status: **`H0 closed / analysed`; H1–H5 run / analysed; H6 run /
+awaiting Trace** — M1.3 Bucket 3 baseline and H1–H5 probes documented; H6
+collections executed pending Trace Agent analysis; H7 signposted only; **no
+Bucket 3 claim**.
 
 ### H0 versus H1–H7
 
@@ -19,11 +20,12 @@ claim**.
 | **H4** | Repository-baseline cautious vs locked ECAI brave on the H0 table. **Run / analysed.** Roots `a`/`b` primary; `c` control. Record: `h4_cautious_vs_brave.md` / `.tex`. **Not a claim.** |
 | **H4b** | Cautious on H3 fixture target `c`: Layer B = \(\alpha_3\) close only; Layer A shared with H3. **Run / analysed.** Record: `h4b_cautious_split_under_a.md` / `.tex`. **Not H5. Not a claim.** |
 | **H5** | Experimental `greedy_cautious` vs AAMAS brave on 18 cells. **Run / analysed.** Record: `h5_greedy_cautious.md` / `.tex`. Not an AAMAS-paper config. **Not a claim.** |
-| **H6** | Length-driver ablation arising from H4 traces. **Signposted only; not started.** |
-| **H7** | Brave `sechk` versus `relto` follow-up arising from H4 traces. **Signposted only; not started.** |
+| **H6** | Folding-step + nested-n ablation under `baseline_cautious`. **`Run / awaiting Trace.`** Catalogue: `future_probes.md`. **Not a claim.** |
+| **H7** | Brave `asm_intro(sechk)` vs `relto`. **Signposted only; not started.** |
 
 **H0 close means:** baseline learning analysis finished.  
 **H1–H5 complete means:** those probes are run and documented.
+**H6 pending means:** collections ran; Trace Agent analysis not yet written.
 **Does not mean:** a Bucket 3 claim is locked. Still **no Bucket 3 claim**.
 
 Working mathematical dossier (pre-run): `fixture_dossier.tex`.  
@@ -34,8 +36,8 @@ Closed H0 learning record: `learning_analysis.md` / `learning_analysis.tex`.
 **H4 record:** `h4_cautious_vs_brave.md` / `h4_cautious_vs_brave.tex`.  
 **H4b record:** `h4b_cautious_split_under_a.md` / `h4b_cautious_split_under_a.tex`.  
 **H5 record:** `h5_greedy_cautious.md` / `h5_greedy_cautious.tex`.  
-**Remaining probes:** `future_probes.md` / `future_probes.tex`
-(H6/H7 signposted only).
+**H6 / remaining:** `future_probes.md` / `future_probes.tex`
+(H6 run / awaiting Trace; H7 signposted only).
 
 ## Purpose
 
@@ -156,7 +158,7 @@ Russo-style Causal ABA.
 - `experiment.md` (status / outcome pointer)
 - `fixture_dossier.tex` (pre-run mathematical account)
 - `future_probes.md` / `.tex` (probe catalogue; H1–H5 analysed;
-  H6/H7 signposted only)
+  H6 run / awaiting Trace; H7 signposted only)
 - `M1.3-bucket3-claims.md`, `experiments_summary.md`, `experiment_register.md`,
   `research_state.md` as needed for factual status
 
@@ -321,7 +323,7 @@ SWI-Prolog / clingo: invoked for AAMAS and ECAI target-wise collections
 | H4 record | `h4_cautious_vs_brave.md` / `.tex` | cautious vs brave roots |
 | H4b record | `h4b_cautious_split_under_a.md` / `.tex` | cautious α3 close on H3 `c` |
 | H5 record | `h5_greedy_cautious.md` / `.tex` | Greedy-cautious vs AAMAS |
-| Future probes | `future_probes.md` / `.tex` | H1–H5 analysed; H6/H7 signposted |
+| Future probes | `future_probes.md` / `.tex` | H1–H5 analysed; H6 run / awaiting Trace; H7 signposted |
 
 ## Outcome summary
 
@@ -454,7 +456,8 @@ None. Evidence record and bounded interpretation only.
 As in `learning_analysis.md`, `h1_support_ablation.md`,
 `h2_irrelevant_covariate.md`, `h3_bk_leading_distractor.md`,
 `h4_cautious_vs_brave.md`, `h4b_cautious_split_under_a.md`, and
-`h5_greedy_cautious.md` non-claims sections. H6/H7 signposted only.
+`h5_greedy_cautious.md` non-claims sections. H6 run / awaiting Trace; H7
+signposted only.
 
 ## Report relevance
 
@@ -463,11 +466,11 @@ evidence only; **not** report-facing claim prose.
 
 ## Future probes
 
-H1–H5 are **run / analysed**. H6/H7 are signposted only:
-`future_probes.md` / `.tex`. Still **no Bucket 3 claim**.
+H1–H5 are **run / analysed**. H6 is **run / awaiting Trace**. H7 is signposted
+only: `future_probes.md` / `.tex`. Still **no Bucket 3 claim**.
 
 ## Next decision
 
-1. Whether / when to open H6 or H7 (Orchestrator / Samuel).
+1. Trace Agent analysis of H6; then whether / when to open H7.
 2. Keep Bucket 3 free of a claim until inspected probe evidence warrants a
    separate decision.
