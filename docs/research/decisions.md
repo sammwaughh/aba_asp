@@ -31,8 +31,9 @@ theory/algorithm question. No `aamas_cautious` config or run is approved; a
 one-option mode flip must not be presented as a paper-backed cautious Greedy
 method.
 
-**Status:** H4 infrastructure ready and config validated; H4 not run or
-analysed; H5 deferred; still no Bucket 3 claim.
+**Subsequent status:** the prepared H4 collection was later run and analysed;
+see `docs/experiments/qualitative/M13-C3-binary-collider-and/h4_cautious_vs_brave.md`.
+H5 remains deferred; H6/H7 are signposted only; still no Bucket 3 claim.
 
 ## 2026-08-01 — Approve M13-C3 future probe H3 design
 

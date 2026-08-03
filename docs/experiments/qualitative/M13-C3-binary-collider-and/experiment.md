@@ -8,7 +8,7 @@ Current status: **`H0 closed / analysed`; H1–H4 run / analysed** — M1.3 Buck
 baseline complete; H1–H4 probes documented; H5 cautious Greedy deferred;
 H6/H7 signposted only; **no Bucket 3 claim**.
 
-### H0 versus H1–H5
+### H0 versus H1–H7
 
 | Label | Meaning |
 |-------|---------|
@@ -18,6 +18,8 @@ H6/H7 signposted only; **no Bucket 3 claim**.
 | **H3** | BK-leading isolated `a` on BD AND; ECAI distracts first fold for `c`. **Run / analysed.** Record: `h3_bk_leading_distractor.md` / `.tex`. **Not a claim.** |
 | **H4** | Repository-baseline cautious vs locked ECAI brave on the H0 table. **Run / analysed.** Roots `a`/`b` primary; `c` control. Record: `h4_cautious_vs_brave.md` / `.tex`. **Not a claim.** |
 | **H5** | Cautious Greedy ABA Learning. **Deferred theory/design question; no config or run.** |
+| **H6** | Length-driver ablation arising from H4 traces. **Signposted only; not started.** |
+| **H7** | Brave `sechk` versus `relto` follow-up arising from H4 traces. **Signposted only; not started.** |
 
 **H0 close means:** baseline learning analysis finished.  
 **H1–H4 complete means:** those approved probes are run and documented.

@@ -287,9 +287,10 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
 - Investigation: **M13-C3** —
   `docs/experiments/qualitative/M13-C3-binary-collider-and/experiment.md`
   (H0: `learning_analysis.md`; H1: `h1_support_ablation.md`; H2:
-  `h2_irrelevant_covariate.md`; remaining: `future_probes.md`).
-- Next: run and inspect the prepared H4 cautious baseline when ready; H5
-  remains deferred; still **no Bucket 3 claim**.
+  `h2_irrelevant_covariate.md`; H3: `h3_bk_leading_distractor.md`; H4:
+  `h4_cautious_vs_brave.md`; remaining: `future_probes.md`).
+- Next: Orchestrator / Samuel decide among deferred H5 and signposted H6/H7;
+  still **no Bucket 3 claim**.
 
 
 #### M13-C1 — causal-role underdetermination

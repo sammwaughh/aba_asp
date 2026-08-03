@@ -95,10 +95,13 @@ Case: `docs/experiments/qualitative/M13-C3-binary-collider-and/experiment.md`
 H0: `.../learning_analysis.md`  
 H1: `.../h1_support_ablation.md`  
 H2: `.../h2_irrelevant_covariate.md`
+H3: `.../h3_bk_leading_distractor.md`
+H4: `.../h4_cautious_vs_brave.md`
 
-H2 lead: AAMAS on isolated-\(D\) fixture retains irrelevant `d_val_*` in learned
-rules for `c` (not the evaluator D-free AND). H1: AAMAS roots incorrectly
-solved on nested `n25`. No Bucket 3 claim. Remaining probes: `future_probes.md`.
+H4 lead: repository-baseline cautious blocks the brave residual-assumption
+gadget for roots `a`/`b`, while control `c` still solves with a byte-identical
+delta to locked ECAI. No Bucket 3 claim. Remaining probes:
+`future_probes.md` (H5 deferred; H6/H7 signposted only).
 
 
 ## Current metric families

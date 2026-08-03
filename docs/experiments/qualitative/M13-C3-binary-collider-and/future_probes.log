@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.7.19)  3 AUG 2026 15:37
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.7.19)  3 AUG 2026 15:52
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -336,7 +336,7 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count318
 )
-No file future_probes.aux.
+(./future_probes.aux)
 \openout1 = `future_probes.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 24.
@@ -357,6 +357,7 @@ LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 24.
 LaTeX Font Info:    ... okay on input line 24.
 LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 24.
 LaTeX Font Info:    ... okay on input line 24.
+
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -413,6 +414,8 @@ File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman
 (RS)
 )
 Package hyperref Info: Link coloring OFF on input line 24.
+
+(./future_probes.out) (./future_probes.out)
 \@outlinefile=\write3
 \openout3 = `future_probes.out'.
 
@@ -496,21 +499,14 @@ mr/m/n/10.95 (-20) = \T1/cmtt/m/n/10.95 completed_no_solution\T1/cmr/m/n/10.95
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
-
-
-Package rerunfilecheck Warning: File `future_probes.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `future_probes.out':
-(rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  2D047E9DE41E301E38E53650310375F3;7843.
+Package rerunfilecheck Info: File `future_probes.out' has not changed.
+(rerunfilecheck)             Checksum: 2D047E9DE41E301E38E53650310375F3;7843.
  ) 
 Here is how much of TeX's memory you used:
- 12245 strings out of 467525
- 189632 string characters out of 5418982
- 653058 words of memory out of 5000000
- 40796 multiletter control sequences out of 15000+600000
+ 12286 strings out of 467525
+ 190257 string characters out of 5418982
+ 655051 words of memory out of 5000000
+ 40831 multiletter control sequences out of 15000+600000
  651275 words of font info for 176 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  75i,10n,79p,1010b,615s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -531,10 +527,10 @@ e/2026/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></usr/local/texlive/
 /texmf-dist/fonts/type1/public/cm-super/sfti1095.pfb></usr/local/texlive/2026/t
 exmf-dist/fonts/type1/public/cm-super/sftt1000.pfb></usr/local/texlive/2026/tex
 mf-dist/fonts/type1/public/cm-super/sftt1095.pfb>
-Output written on future_probes.pdf (10 pages, 343337 bytes).
+Output written on future_probes.pdf (10 pages, 346162 bytes).
 PDF statistics:
- 213 PDF objects out of 1000 (max. 8388607)
- 164 compressed objects within 2 object streams
+ 311 PDF objects out of 1000 (max. 8388607)
+ 261 compressed objects within 3 object streams
  68 named destinations out of 1000 (max. 500000)
- 39937 words of extra memory for PDF output out of 42996 (max. 10000000)
+ 40193 words of extra memory for PDF output out of 42996 (max. 10000000)
 

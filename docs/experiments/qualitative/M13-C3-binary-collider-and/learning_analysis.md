@@ -32,7 +32,7 @@ Same frozen table for all six cells. Encoding: exact-value BK; binary 1-vs-0
 examples. Graph, certificate, and `mechanism_reference.json` are
 **evaluator-only** (not learner-visible).
 
-Not in scope here: Russo-style Causal ABA; claim drafting; H1–H5 follow-ups.
+Not in scope here: Russo-style Causal ABA; claim drafting; H1–H7 follow-ups.
 
 ---
 
@@ -376,14 +376,14 @@ not a separate coverage metric (arm `summary.md` interpretation boundary).
 - Not parent-set scoring of root deltas without the brave / non-functional
   caveat.
 - Not that `sol_chk` SAT is a separate coverage or recovery metric.
-- H1–H5 follow-ups are outside this H0 record. H1–H3 are documented in
-  `h1_support_ablation.md`, `h2_irrelevant_covariate.md`, and
-  `h3_bk_leading_distractor.md`. Remaining probe:
-  `future_probes.md`.
+- H1–H7 follow-ups are outside this H0 record. H1–H4 are documented in
+  `h1_support_ablation.md`, `h2_irrelevant_covariate.md`,
+  `h3_bk_leading_distractor.md`, and `h4_cautious_vs_brave.md`. Probe
+  catalogue: `future_probes.md`.
 
 ## Next step
 
-H0 is closed. Probes **H1–H3** are documented in `h1_support_ablation.md`,
-`h2_irrelevant_covariate.md`, and `h3_bk_leading_distractor.md`. Remaining
-H4 is run / analysed (`h4_cautious_vs_brave.md`); H5 deferred and H6/H7 signposted in
+H0 is closed. Probes **H1–H4** are documented in `h1_support_ablation.md`,
+`h2_irrelevant_covariate.md`, `h3_bk_leading_distractor.md`, and
+`h4_cautious_vs_brave.md`; H5 deferred and H6/H7 signposted in
 `future_probes.md`. Still **no Bucket 3 claim**.

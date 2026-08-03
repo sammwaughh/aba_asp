@@ -454,7 +454,8 @@ Do not treat predictive rules for roots as mechanism recovery.
 - Investigation record: `experiment.md`
 - Mathematical fixture dossier: `fixture_dossier.tex`
 - Bucket 3 planning hub: `../M1.3-bucket3-claims.md` (still **no claim**)
-- Research decision log: `docs/research/decisions.md` (2026-08-01 H1–H3 entries)
+- Research decision log: `docs/research/decisions.md` (2026-08-01 H1–H3
+  entries; 2026-08-03 H4/H5 entry)
 - Fixture pre-run bundle:
   `causal/outputs/causal_fixtures/m13_bucket3_binary_collider_and/`
 - AAMAS baseline:
@@ -462,8 +463,10 @@ Do not treat predictive rules for roots as mechanism recovery.
 - ECAI baseline (H3/H4 motivation):
   `causal/outputs/aba_learning/targetwise/m13_bucket3_binary_collider_and/ecai2024/n30_seed42/`
 - Repository cautious baseline: `configs/baseline_cautious_config.pl`
-- Prepared H4 config:
+- H4 config:
   `causal/configs/targetwise/m13_bucket3_binary_collider_and/baseline_cautious/n30_seed42.yaml`
+- H4 collection:
+  `causal/outputs/aba_learning/targetwise/m13_bucket3_binary_collider_and/baseline_cautious/n30_seed42/`
 - Target-wise explicit brave/cautious validator: `causal/targetwise/config.py`
 - Entailment implementation: `asp_engine.pl` (`entails/5`)
 

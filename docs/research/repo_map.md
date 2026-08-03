@@ -262,8 +262,8 @@ directory for all future M1.3 work.
 ### Bucket 3 infrastructure and current boundary
 
 Bucket 3 follows the approved one-case-at-a-time deterministic-mechanism direction.
-H0–H4 are complete / analysed; H5 is deferred; H6/H7 are signposted;
-H5 cautious Greedy is deferred; no Bucket 3 claim is approved. The status sources
+H0–H4 are complete / analysed; H5 cautious Greedy is deferred; H6/H7 are
+signposted only; no Bucket 3 claim is approved. The status sources
 are its investigation record, the 22 and 31 July sections of
 `docs/research/supervisor_guidance.md`, `docs/research/research_state.md`, and the
 M13-C3 records below.
@@ -281,13 +281,17 @@ Current deterministic M13-C3 evidence:
 - H3 analysed BK-leading-distractor probe: `h3_bk_leading_distractor.md` / `.tex` on
   `m13_bucket3_binary_bd_and_lead_a`, with ECAI-primary and AAMAS-contrast
   `n30_seed42` collections;
+- H4 analysed cautious-versus-brave probe: `h4_cautious_vs_brave.md` / `.tex` on
+  the H0 fixture and frozen `n30_seed42` sample, contrasting locked ECAI brave
+  with repository `baseline_cautious`;
 - remaining probe catalogue: `future_probes.md` / `.tex` (H1–H4 complete; H5
-  deferred; H6/H7 signposted).
-- prepared H4 config:
+  deferred; H6/H7 signposted only).
+- H4 config:
   `causal/configs/targetwise/m13_bucket3_binary_collider_and/baseline_cautious/n30_seed42.yaml`;
-  no corresponding collection exists yet.
+  collection:
+  `causal/outputs/aba_learning/targetwise/m13_bucket3_binary_collider_and/baseline_cautious/n30_seed42/`.
 
-Authoritative fixture specifications and outputs for completed H0–H3:
+Authoritative fixture specifications and outputs for completed H0–H4:
 
 - `causal/fixtures/specs/m13_bucket3_binary_collider_and.yaml` and
   `causal/outputs/causal_fixtures/m13_bucket3_binary_collider_and/`;
@@ -351,9 +355,8 @@ For each later approved fixture, add its source specification, build and inspect
 population/reference artefacts, then add the learning configuration and evidence record
 and run the target-wise collection. For a target-wise collection the generated cells
 belong under the hierarchy above; grid experiments retain
-`causal/outputs/aba_learning/grid/<experiment-id-or-arm>/`. H3 is complete. H4
-infrastructure is prepared; do not imply H4 was run until a collection is
-executed and inspected. H5 has no configuration.
+`causal/outputs/aba_learning/grid/<experiment-id-or-arm>/`. H0–H4 are complete /
+analysed. H5 has no configuration; H6/H7 are signposted only.
 
 Also update `docs/experiments/experiments_summary.md` and
 `docs/research/experiment_register.md`. The wider 22 July dimensions remain deferred;
@@ -381,8 +384,8 @@ do not create fixtures or cells merely from that list.
   - `qualitative/M1.3-bucket3-claims.md` — Bucket 3 direction/planning record;
     H0–H4 complete / analysed, H5 deferred, H6/H7 signposted,
     and no claim.
-  - `qualitative/M13-C3-binary-collider-and/` — M13-C3 hub plus H0–H3 evidence
-    records and H4/H5 planning boundaries.
+  - `qualitative/M13-C3-binary-collider-and/` — M13-C3 hub plus H0–H4 evidence
+    records and H5–H7 planning boundaries.
   - `qualitative/M13-C1-causal-role-underdetermination/` and
     `qualitative/M13-C2-bk-feature-order/` — analysed Bucket 2 probe records.
   - `report/findings/` — supervisor-facing milestone findings logs (`.tex`).

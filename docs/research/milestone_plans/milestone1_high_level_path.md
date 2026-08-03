@@ -67,11 +67,11 @@ Probe records: `M13-C1-causal-role-underdetermination/experiment.md`;
 Bucket 3 (**H0–H4 complete / analysed; no claim**):
 `docs/experiments/qualitative/M1.3-bucket3-claims.md`.
 
-**Immediate next step:** explicitly start, run, and inspect H4 when Samuel is
-ready. Its repository-baseline cautious target-wise infrastructure is prepared;
-no H4 collection exists yet. Cautious Greedy ABA Learning is a separate
-deferred H5 theory/design question. The remaining 22 July dimensions are
-retained but deferred.
+**Immediate next step:** Orchestrator / Samuel decide among deferred H5 and
+signposted H6/H7. H4 is run / analysed; its repository-baseline cautious arm
+blocks the brave root residual-assumption gadget while control `c` retains the
+same delta as locked ECAI. The remaining 22 July dimensions are retained but
+deferred.
 No Bucket 3 claim, fixture portfolio, or run matrix is approved.
 
 ### 4. Close Milestone 1

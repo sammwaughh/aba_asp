@@ -3,8 +3,8 @@
 **Role:** working reference for Milestone 1 Part 3 — investigating **claims** about how
 unguided ABA Learning behaves on the locked M1.2 regime.
 **Status:** Bucket 1 **locked**; Bucket 2 **locked / closed** with Claims 1–2;
-Bucket 3 H0–H3 are complete / analysed; H4 cautious infrastructure is ready
-but unrun; H5 cautious Greedy is deferred. No Bucket 3 claim is approved. M12x
+Bucket 3 H0–H4 are complete / analysed; H5 cautious Greedy is deferred; H6/H7
+are signposted only. No Bucket 3 claim is approved. M12x
 and Buckets 1–2 remain fixed evidence. The earlier method below records the completed
 Bucket 1/2 workflow and the current one-case-at-a-time Bucket 3 method.
 **Primary path:** [`../milestone1_high_level_path.md`](../milestone1_high_level_path.md)
