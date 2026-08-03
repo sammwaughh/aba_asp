@@ -22,8 +22,10 @@ itself. H0 is the completed six-cell AAMAS+ECAI investigation on fixture
   \(\alpha_3\) close under shared leading-`a` gates (Layer B); Layer A shared
   with H3. Record: `h4b_cautious_split_under_a.md` / `.tex`. **Not H5. Not a
   Bucket 3 claim.**
-- H5: **`deferred theory/design question` / not configured / not run / not a
-  Bucket 3 claim** — cautious Greedy ABA Learning is separate from H4/H4b.
+- H5: **`run / analysed`** — experimental `greedy_cautious` matches AAMAS
+  Greedy-brave on all 18 cells (Analysis A inert under Greedy). Record:
+  `h5_greedy_cautious.md` / `.tex`. **Not a Bucket 3 claim.** **Not** an
+  AAMAS-paper config.
 - H6 / H7: **signposted only** (prompted by H4 traces; not approved runs; not
   this catalogue’s evidence body beyond a one-line pointer).
 - **Not** approved Bucket 3 claims
@@ -67,9 +69,10 @@ itself. H0 is the completed six-cell AAMAS+ECAI investigation on fixture
 5. Defer any cautious Greedy ABA Learning design to **H5**. No
    `aamas_cautious` configuration is approved.
 
-H1–H4 and H4b have been run and analysed (`h1_support_ablation.md`,
+H1–H5 have been run and analysed (`h1_support_ablation.md`,
 `h2_irrelevant_covariate.md`, `h3_bk_leading_distractor.md`,
-`h4_cautious_vs_brave.md`, `h4b_cautious_split_under_a.md`). Approvals do not
+`h4_cautious_vs_brave.md`, `h4b_cautious_split_under_a.md`,
+`h5_greedy_cautious.md`). Approvals do not
 create a Bucket 3 claim or a run matrix.
 
 
@@ -162,9 +165,9 @@ under ECAI, on a new fixture. H3 is now **run / analysed**
    **Run / analysed** (`h4b_cautious_split_under_a.md`). Lead (Layer B): only
    `c_alpha_3` close changes (`d_val_1` vs brave residual); Layer A shared
    with H3. **Not H5.**
-5. **H5 (deferred)** — determine whether and how cautious acceptance should be
-   combined with the Greedy ABA Learning strategy. This is not treated as a
-   one-option configuration change.
+5. **H5** — experimental `greedy_cautious` counterparts of all completed
+   AAMAS collections. **Run / analysed** (`h5_greedy_cautious.md`). Lead:
+   brave→cautious under Greedy is inert on these 18 cells.
 6. **H6 / H7 (signposted only)** — prompted by H4 traces; not approved runs
    (see short note under H4 Outcome).
 
@@ -180,7 +183,7 @@ without a further Samuel decision.
 | H3 | **ECAI** target `c` (primary); **BK order** puts independent distractor **first**; nd first-fold / repair path; **AAMAS contrast in scope**; id `m13_bucket3_binary_bd_and_lead_a` |
 | **H4** | **Same fixture/sample**; locked ECAI brave vs repository `baseline_cautious`; roots `a`/`b` primary; `c` control; **run / analysed** |
 | **H4b** | **H3 fixture/sample**; `baseline_cautious` on target `c`; Layer B = \(\alpha_3\) close only; Layer A shared with H3; **run / analysed**; **not H5** |
-| **H5** | Deferred theory/design question: cautious acceptance with Greedy ABA Learning; no config or run approved |
+| **H5** | Experimental `greedy_cautious` vs AAMAS brave on 18 cells; Analysis A inert; **run / analysed**; not AAMAS-paper config |
 | H6 / H7 | Signposted only (H4-prompted); length drivers under cautious; brave `asm_intro(sechk)` vs `relto` |
 
 H3 is not a duplicate of H2: different DAG, different distractor placement/name,
@@ -411,7 +414,7 @@ record: `h4_cautious_vs_brave.md`.
 
 ### Prompted follow-ups (signpost only; not H4 evidence)
 
-- **H5** remains deferred (cautious Greedy).
+- **H5** is now **run / analysed** separately (`h5_greedy_cautious.md`).
 - **H6** (length drivers: `n`, `folding_steps` under fixed cautious) and
   **H7** (brave `asm_intro(sechk)` vs `relto` on the 9/26 conflict) are
   future probes prompted by H4 traces — not approved runs in this update.
@@ -445,25 +448,30 @@ target `c` `solved` (~2.9s; audit SAT). Incidental: `a`/`b`/`d` timed out
 
 ---
 
-## Probe family H5 — cautious Greedy ABA Learning
+## Probe family H5 — experimental Greedy + cautious (`greedy_cautious`)
 
-Status: **`deferred theory/design question` / not configured / not run / not a
-Bucket 3 claim**.
+Status: **`run / analysed` / not a claim**.
+Evidence record: `h5_greedy_cautious.md` / `h5_greedy_cautious.tex`.
 
-H5 is deliberately separate from H4. The AAMAS Greedy ABA Learning paper's
-coherent-case result gives a stratified learned case base with a unique stable
-model, where brave and cautious acceptance coincide. Its incoherent extension
-is formulated using brave learning. The target-wise root tasks in the AND
-collider contain identical predictor configurations with opposite target
-labels, so they are not a trivial coherent-case application.
+**Lead finding (Analysis A).** On all **18** paired cells across the five
+completed deterministic Bucket 3 AAMAS collections, experimental
+`greedy_cautious` matches locked `aamas2025` on every outcome and every solved
+delta (byte-identical). Traces are isomorphic aside from entailment-logging
+surface differences. Flipping brave→cautious **inside the Greedy bundle does
+not change accepted or rejected theories** on these tables. Mean runtime
+≈ 1.84× (still sub-second).
 
-For that reason, changing only `learning_mode(brave)` to
-`learning_mode(cautious)` under the Greedy options would define an exploratory
-hybrid; it would not by itself establish a paper-backed cautious Greedy method.
-No `aamas_cautious` config or H5 run is approved. Before H5 infrastructure is
-considered, the intended learning problem, semantic recovery criterion, and
-algorithmic interpretation must be specified against the Greedy ABA Learning
-paper and engine behaviour.
+**Secondary (Analysis B).** Large contrasts appear only vs repository
+`baseline_cautious` (nd bundle) on H0/H3 `n30` — **search-strategy**, not the
+brave→cautious flip. Not a single-knob `folding_mode` ablation.
+
+Config: `configs/greedy_cautious_config.pl` (experimental; **not** published
+AAMAS; do not call it `aamas_cautious`). Collections:
+`causal/outputs/aba_learning/targetwise/<fixture>/greedy_cautious/<sample>/`.
+
+### Outcome (H5)
+
+**Run / analysed.** Full narrative: `h5_greedy_cautious.md`.
 
 ---
 
@@ -476,7 +484,7 @@ Keep separate throughout any future probe write-up:
 | AAMAS strategy / greedy maximal co-occurrence search | procedural learner behaviour (H1/H2) |
 | ECAI nd first-fold / BK serialisation order | procedural learner behaviour (H3) |
 | Brave vs cautious entailment / learning mode | procedural / semantic learner behaviour (H4) |
-| Cautious Greedy specification | deferred paper/algorithm question (H5), not an implemented configuration |
+| Experimental Greedy+cautious (`greedy_cautious`) vs AAMAS brave | procedural / semantic probe (H5); not an AAMAS-paper config |
 | Finite-sample support and label conflicts in candidate body cells | sample information |
 | Mechanism correspondence for `c` (AND) | evaluator-only interpretation of a non-root |
 | Absence of deterministic root mechanisms | evaluator reference status |
@@ -516,7 +524,7 @@ Do not treat predictive rules for roots as mechanism recovery.
 | H3 graph/naming; \(B\) 80/20, \(D\) 70/30; id `m13_bucket3_binary_bd_and_lead_a`; AAMAS contrast | **Design approved** then **run / analysed** | 2026-08-01 / 2026-08-02 |
 | H4 repository-baseline cautious vs published ECAI brave | **Infrastructure ready** then **run / analysed** | 2026-08-03 |
 | H4b cautious \(\alpha_3\) close on H3 leading-`a` target `c` | **Run / analysed** (not H5) | 2026-08-03 |
-| H5 cautious Greedy ABA Learning | **Deferred theory/design question; no config or run** | 2026-08-03 |
+| H5 experimental `greedy_cautious` AAMAS counterparts (18 cells) | **Run / analysed** | 2026-08-03 |
 | H6 / H7 (H4-prompted) | **Signposted only; not approved runs** | 2026-08-03 |
 
 ## Current status and remaining work
@@ -531,8 +539,9 @@ Do not treat predictive rules for roots as mechanism recovery.
   still solves. Not a claim.
 - **H4b:** **complete** (`h4b_cautious_split_under_a.md`). Lead (Layer B):
   only `c_alpha_3` close changes under shared Layer A. Not a claim; not H5.
-- **H5:** cautious Greedy ABA Learning is deferred pending theory/algorithm
-  specification; no config or run exists.
+- **H5:** **complete** (`h5_greedy_cautious.md`). Lead: Greedy brave→cautious
+  inert on 18 cells; Analysis B contrasts are search-bundle. Not a claim; not
+  AAMAS-paper config.
 - **H6 / H7:** signposted only (prompted by H4); not approved for run here.
 - Still **no** Bucket 3 claim and **no** expanded run matrix without a further
   Samuel decision.

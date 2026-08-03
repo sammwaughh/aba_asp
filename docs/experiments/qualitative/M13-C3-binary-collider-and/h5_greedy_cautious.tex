@@ -1,0 +1,125 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=25mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,booktabs}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{microtype}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+\setlist{nosep,leftmargin=*}
+\emergencystretch=3em
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+\title{M13-C3 --- H5 Greedy-cautious vs Greedy-brave\\
+experimental \texttt{greedy\_cautious}}
+\author{}
+\date{H5 run / analysed / not a Bucket~3 claim}
+
+\begin{document}
+\maketitle
+
+\section{Status}
+
+\textbf{H5 run / analysed.}
+Experimental \texttt{greedy\_cautious} vs locked \texttt{aamas2025} on all five
+completed deterministic Bucket~3 AAMAS collections (18 cells).
+Markdown twin: \texttt{h5\_greedy\_cautious.md}.
+
+\textbf{Lead (Analysis A):} 18/18 outcome and delta match (byte-identical
+solved deltas); traces isomorphic aside from entailment-logging surface;
+mean runtime $\approx 1.84\times$ (still sub-second).
+\textbf{Secondary (Analysis B):} large contrasts only vs
+\texttt{baseline\_cautious} (nd bundle) --- \textbf{search strategy}, not the
+brave$\to$cautious flip inside Greedy.
+Config is experimental (not a published AAMAS method; not
+\texttt{aamas\_cautious}).
+H0--H4b closed. \textbf{Not a Bucket~3 claim.}
+H6/H7 signposted only.
+
+\section{Research question}
+
+Under the AAMAS Greedy search bundle on these tables, does switching from brave
+to cautious change outcomes, deltas, or search paths; and how does
+Greedy-cautious compare to repository nd-cautious where that arm exists?
+
+\section{Main finding (Analysis A --- lead)}
+
+On all \textbf{18} paired cells, \texttt{greedy\_cautious} (Greedy /
+\texttt{mgr} / \texttt{bk} / \texttt{relto} + \texttt{learning\_mode(cautious)})
+matches locked \texttt{aamas2025} on \textbf{every outcome and every solved
+delta}.
+Traces are isomorphic aside from \texttt{OPTIMUM FOUND} vs
+\texttt{checking entailment ... OK}.
+Flipping brave$\to$cautious \textbf{inside the Greedy bundle does not change
+accepted or rejected theories} on these tables.
+Runtime is the main observable cost.
+
+No-sol close (H0 \(a\); GC):
+\begin{verbatim}
+found: alpha_1/1 ... KO, cannot introduce an assumption for
+  [b_val_0(A),c_val_0(A)]
+* No solution found!
+\end{verbatim}
+\(c\) success (H0):
+\begin{verbatim}
+folding result: c(A) <- [a_val_1(A),b_val_1(A)]
+gen2: extended ABA entails <E+,E-> - using folding
+\end{verbatim}
+
+\section{Setup}
+
+Config id \texttt{greedy\_cautious}; Prolog
+\texttt{configs/greedy\_cautious\_config.pl}
+(\texttt{aamas2025\_config.pl} unchanged).
+Intervention: \texttt{learning\_mode} only.
+Pair integrity: learner-visible inputs byte-identical across AAMAS$\leftrightarrow$GC
+(16 non-skipped cells).
+Timeout 300s preserved; no GC timeouts.
+Five collections: H0/H1 collider; H2/H2c iso-\(D\); H3 BD+lead-\(a\).
+
+\section{Outcome summary}
+
+18/18 outcomes match; all solved deltas byte-identical; 0 final assumptions;
+all GC runtimes sub-second; mean ratio $\approx 1.84\times$ (range
+$\sim$1.56--2.26).
+
+\section{\(c\) and guardrails}
+
+H0/H1 \(c\): mechanism-aligned string (not automatic causal claim).
+H2/H3 \(c\): distractor-retaining predictive.
+H1 roots: spurious co-occurrence Horn.
+Only desirable deterministic target is \(c\).
+
+\section{Analysis B (secondary)}
+
+Hold cautious; compare \texttt{greedy+mgr+bk} vs \texttt{nd+any+all}
+(not a single-knob ablation); H0/H3 \(n{=}30\) only.
+
+H0 roots: both no-sol; baseline $\sim$5k lines / $\sim$70s vs GC $\sim$340 lines /
+$\sim$0.4s.
+H0/H3 \(c\): different theories (GC Horn vs baseline $\alpha$-rich) --- search
+bundle.
+H3 roots/\(d\): baseline timeout@300s; GC short no-sol.
+
+\section{Semantics vs search-strategy}
+
+GC $\equiv$ AAMAS: learning mode does not fork Greedy here.
+GC vs baseline contrasts: \textbf{search bundle}.
+
+\section{Boundaries / non-claims}
+
+Not a Bucket~3 claim; not ``cautious is better''; not mechanism recovery;
+not an AAMAS-paper cautious method; not H6/H7.
+
+\section{Next}
+
+H5 documentation is complete.
+Orchestrator / Samuel decides the next move.
+Still \textbf{no Bucket~3 claim}.
+
+\end{document}

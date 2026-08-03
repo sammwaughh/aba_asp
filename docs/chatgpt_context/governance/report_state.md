@@ -188,8 +188,9 @@ Drafted milestones (Weeks 1–13, with a Week-11 holiday):
 
 1. **Milestone 1** — report-ready account of unguided ABA Learning's capabilities and
    limitations for causal recovery. Parts 1–2 closed; M1.3 Buckets 1–2 locked;
-   Bucket 3 H0–H4+H4b complete / analysed under Fabrizio's 31 July direction;
-   H5 deferred as a theory/design question; no Bucket 3 claim.
+   Bucket 3 H0–H5 complete / analysed under Fabrizio's 31 July direction
+   (incl. H4b and experimental `greedy_cautious` H5); H6/H7 signposted; no
+   Bucket 3 claim.
    The widened scope remains M1.3 and precedes Milestone 2. No M1.4. Primary path:
    `milestone1_high_level_path.md`.
 2. **Milestone 2 (Weeks 3–4)** — design the bridge in which Causal ABA-style information guides ABA Learning; specify comparable outputs and metrics.

@@ -13,10 +13,12 @@ here (Markdown) and in `h4b_cautious_split_under_a.tex`.
 - **Shared (Layer A — not a cautious effect):** both arms still gate on
   BK-leading `a` and keep the persistent \(\alpha_1\)-nest vs \(\alpha_2\)-flat
   contrary split
-- **Not H5** (no Greedy / no `aamas_cautious`)
+- **Not H5** at the time of H4b (H4b is nd-cautious on H3 `c`; H5 is the
+  separate Greedy-cautious probe — now **run / analysed**:
+  `h5_greedy_cautious.md`)
 - H0–H4 remain closed / unchanged
 - **Not a Bucket 3 claim**
-- H5 deferred; H6/H7 signposted only (`future_probes.md`)
+- H6/H7 signposted only (`future_probes.md`)
 
 Companion records: `experiment.md` (hub); `h3_bk_leading_distractor.md` (locked
 brave); `h4_cautious_vs_brave.md` (H4 roots contrast); `future_probes.md`.
@@ -165,7 +167,7 @@ stdout). Outside H4b’s scientific focus; not expanded here.
   asymmetry.”
 - Not a ranking of brave vs cautious as generally better.
 - H0–H4 artefacts unchanged except cross-links.
-- H5/H6/H7 unchanged.
+- H5 analysed separately (`h5_greedy_cautious.md`); H6/H7 unchanged.
 
 ---
 
@@ -190,5 +192,5 @@ stdout). Outside H4b’s scientific focus; not expanded here.
 
 ## Next
 
-H4b documentation is complete. H5 remains deferred; H6/H7 signposted only.
-Orchestrator / Samuel decides the next move. Still **no Bucket 3 claim**.
+H4b documentation is complete. H5 is run / analysed
+(`h5_greedy_cautious.md`). H6/H7 signposted only. Still **no Bucket 3 claim**.

@@ -75,9 +75,12 @@ ASP-ABAlearn baseline; it is not described as an ECAI configuration because
 the ECAI 2024 configuration implements the published brave method.
 
 Published `ecai2024` and `aamas2025` configurations and their existing outputs
-remain unchanged. A cautious Greedy ABA Learning configuration is not part of
-the current target-wise support decision; its algorithmic meaning is deferred
-to H5 rather than inferred by changing the AAMAS configuration's mode.
+remain unchanged. Experimental H5 uses a separate configuration identity
+`greedy_cautious` (`configs/greedy_cautious_config.pl`): the Greedy / `mgr` /
+`folding_space(bk)` / `relto` bundle from AAMAS with `learning_mode(cautious)`.
+It is **not** a published AAMAS configuration and must not be named
+`aamas_cautious`. It is distinct from repository-baseline `baseline_cautious`
+(nd / any / all).
 
 ## Commands
 

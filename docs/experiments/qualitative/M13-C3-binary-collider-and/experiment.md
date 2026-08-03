@@ -4,9 +4,9 @@
 
 `proposed | planned | implemented | run | analysed | reported`
 
-Current status: **`H0 closed / analysed`; H1–H4 + H4b run / analysed** — M1.3
-Bucket 3 baseline complete; H1–H4 and H4b documented; H5 cautious Greedy
-deferred; H6/H7 signposted only; **no Bucket 3 claim**.
+Current status: **`H0 closed / analysed`; H1–H5 run / analysed** — M1.3 Bucket 3
+baseline and H1–H5 probes documented; H6/H7 signposted only; **no Bucket 3
+claim**.
 
 ### H0 versus H1–H7
 
@@ -18,12 +18,12 @@ deferred; H6/H7 signposted only; **no Bucket 3 claim**.
 | **H3** | BK-leading isolated `a` on BD AND; ECAI distracts first fold for `c`. **Run / analysed.** Record: `h3_bk_leading_distractor.md` / `.tex`. **Not a claim.** |
 | **H4** | Repository-baseline cautious vs locked ECAI brave on the H0 table. **Run / analysed.** Roots `a`/`b` primary; `c` control. Record: `h4_cautious_vs_brave.md` / `.tex`. **Not a claim.** |
 | **H4b** | Cautious on H3 fixture target `c`: Layer B = \(\alpha_3\) close only; Layer A shared with H3. **Run / analysed.** Record: `h4b_cautious_split_under_a.md` / `.tex`. **Not H5. Not a claim.** |
-| **H5** | Cautious Greedy ABA Learning. **Deferred theory/design question; no config or run.** |
+| **H5** | Experimental `greedy_cautious` vs AAMAS brave on 18 cells. **Run / analysed.** Record: `h5_greedy_cautious.md` / `.tex`. Not an AAMAS-paper config. **Not a claim.** |
 | **H6** | Length-driver ablation arising from H4 traces. **Signposted only; not started.** |
 | **H7** | Brave `sechk` versus `relto` follow-up arising from H4 traces. **Signposted only; not started.** |
 
 **H0 close means:** baseline learning analysis finished.  
-**H1–H4 + H4b complete means:** those probes are run and documented.
+**H1–H5 complete means:** those probes are run and documented.
 **Does not mean:** a Bucket 3 claim is locked. Still **no Bucket 3 claim**.
 
 Working mathematical dossier (pre-run): `fixture_dossier.tex`.  
@@ -33,8 +33,9 @@ Closed H0 learning record: `learning_analysis.md` / `learning_analysis.tex`.
 **H3 record:** `h3_bk_leading_distractor.md` / `h3_bk_leading_distractor.tex`.  
 **H4 record:** `h4_cautious_vs_brave.md` / `h4_cautious_vs_brave.tex`.  
 **H4b record:** `h4b_cautious_split_under_a.md` / `h4b_cautious_split_under_a.tex`.  
+**H5 record:** `h5_greedy_cautious.md` / `h5_greedy_cautious.tex`.  
 **Remaining probes:** `future_probes.md` / `future_probes.tex`
-(H5 deferred; H6/H7 signposted only).
+(H6/H7 signposted only).
 
 ## Purpose
 
@@ -145,9 +146,10 @@ Russo-style Causal ABA.
 - `h3_bk_leading_distractor.md` / `h3_bk_leading_distractor.tex` — **H3** BK-leading record
 - `h4_cautious_vs_brave.md` / `h4_cautious_vs_brave.tex` — **H4** cautious vs brave
 - `h4b_cautious_split_under_a.md` / `h4b_cautious_split_under_a.tex` — **H4b**
+- `h5_greedy_cautious.md` / `h5_greedy_cautious.tex` — **H5**
 - `experiment.md` (status / outcome pointer)
 - `fixture_dossier.tex` (pre-run mathematical account)
-- `future_probes.md` / `.tex` (probe catalogue; H1–H4+H4b analysed; H5 deferred;
+- `future_probes.md` / `.tex` (probe catalogue; H1–H5 analysed;
   H6/H7 signposted only)
 - `M1.3-bucket3-claims.md`, `experiments_summary.md`, `experiment_register.md`,
   `research_state.md` as needed for factual status
@@ -312,7 +314,8 @@ SWI-Prolog / clingo: invoked for AAMAS and ECAI target-wise collections
 | H3 record | `h3_bk_leading_distractor.md` / `.tex` | BK-leading ECAI target `c` |
 | H4 record | `h4_cautious_vs_brave.md` / `.tex` | cautious vs brave roots |
 | H4b record | `h4b_cautious_split_under_a.md` / `.tex` | cautious α3 close on H3 `c` |
-| Future probes | `future_probes.md` / `.tex` | H1–H4+H4b analysed; H5 deferred; H6/H7 signposted |
+| H5 record | `h5_greedy_cautious.md` / `.tex` | Greedy-cautious vs AAMAS |
+| Future probes | `future_probes.md` / `.tex` | H1–H5 analysed; H6/H7 signposted |
 
 ## Outcome summary
 
@@ -368,6 +371,12 @@ On the H3 fixture, `baseline_cautious` keeps leading-`a` gates and the
 \(\alpha_1\)-nest vs \(\alpha_2\)-flat split (Layer A, shared with H3); it only
 changes `c_alpha_3` to `d_val_1` (Layer B). Both arms `solved`. Full record:
 `h4b_cautious_split_under_a.md`.
+
+### H5 (Greedy-cautious vs AAMAS, analysed)
+
+On all 18 paired cells, experimental `greedy_cautious` matches locked AAMAS
+Greedy-brave on every outcome and solved delta. Analysis B contrasts vs
+`baseline_cautious` are search-bundle. Full record: `h5_greedy_cautious.md`.
 
 ## Quantitative results
 
@@ -426,6 +435,10 @@ changes only the \(\alpha_3\) close (`d_val_1`); Layer A (`a`-gating;
 \(\alpha_1\)-nest vs \(\alpha_2\)-flat) is shared with H3 and is not a cautious
 effect. See `h4b_cautious_split_under_a.md`. **No Bucket 3 claim.**
 
+**H5 bounded reading (not a claim).** Under Greedy, brave→cautious is inert on
+these 18 cells; large contrasts vs `baseline_cautious` are search-strategy.
+See `h5_greedy_cautious.md`. **No Bucket 3 claim.**
+
 ## Claims supported
 
 None. Evidence record and bounded interpretation only.
@@ -434,8 +447,8 @@ None. Evidence record and bounded interpretation only.
 
 As in `learning_analysis.md`, `h1_support_ablation.md`,
 `h2_irrelevant_covariate.md`, `h3_bk_leading_distractor.md`,
-`h4_cautious_vs_brave.md`, and `h4b_cautious_split_under_a.md` non-claims
-sections. H5 untouched; H6/H7 signposted only.
+`h4_cautious_vs_brave.md`, `h4b_cautious_split_under_a.md`, and
+`h5_greedy_cautious.md` non-claims sections. H6/H7 signposted only.
 
 ## Report relevance
 
@@ -444,11 +457,11 @@ evidence only; **not** report-facing claim prose.
 
 ## Future probes
 
-H1–H4 and H4b are **run / analysed**. H5 cautious Greedy is deferred; H6/H7 are
-signposted only: `future_probes.md` / `.tex`. Still **no Bucket 3 claim**.
+H1–H5 are **run / analysed**. H6/H7 are signposted only:
+`future_probes.md` / `.tex`. Still **no Bucket 3 claim**.
 
 ## Next decision
 
-1. Whether / when to open H5, H6, or H7 (Orchestrator / Samuel).
+1. Whether / when to open H6 or H7 (Orchestrator / Samuel).
 2. Keep Bucket 3 free of a claim until inspected probe evidence warrants a
    separate decision.

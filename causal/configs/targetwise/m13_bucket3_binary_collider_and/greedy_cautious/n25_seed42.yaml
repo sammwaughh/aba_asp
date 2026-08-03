@@ -1,0 +1,17 @@
+description: "H5 Greedy-cautious counterpart of H1 AAMAS nested-prefix n25_seed42."
+
+configuration:
+  id: greedy_cautious
+
+fixture:
+  directory: causal/outputs/causal_fixtures/m13_bucket3_binary_collider_and
+  sample: samples/n25_seed42.csv
+
+encoding:
+  type: exact_value
+  example_policy: binary_one_vs_zero
+
+learner:
+  prolog_config: configs/greedy_cautious_config.pl
+  prolog_timeout_s: 300
+  joint_check_timeout_s: 5

@@ -102,13 +102,13 @@ Bucket 1 (**locked**): `docs/experiments/qualitative/M1.3-bucket1-claims.md`
 (TeX: `docs/report/findings/milestone1_part3_bucket1_claims.tex`)  
 Bucket 2 (**locked / closed; two claims**): `docs/experiments/qualitative/M1.3-bucket2-claims.md`
 (TeX: `docs/report/findings/milestone1_part3_bucket2_claims.tex`)
-Bucket 3 (**H0–H4+H4b complete / analysed; no claim**):
+Bucket 3 (**H0–H5 complete / analysed incl. H4b; no claim**):
 `docs/experiments/qualitative/M1.3-bucket3-claims.md`
 
 Buckets 1–2 turn the locked M12x inspection and M13-C1/C2 controls into six
 evidence-backed claims. Bucket 3 now follows Fabrizio's 31 July deterministic-mechanism
-direction one case at a time. Baseline H0 and probes H1–H4+H4b are complete /
-analysed; H5 cautious Greedy is deferred; H6/H7 signposted.
+direction one case at a time. Baseline H0 and probes H1–H5 are complete /
+analysed (incl. H4b); H6/H7 signposted.
 No Bucket 3 claim or broader comparative design is approved.
 Prior provisional claim
 drafting from earlier M12x grids remains **withdrawn** (2026-07-20) and must not be

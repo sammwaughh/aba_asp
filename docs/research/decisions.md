@@ -33,7 +33,10 @@ method.
 
 **Subsequent status:** the prepared H4 collection was later run and analysed;
 see `docs/experiments/qualitative/M13-C3-binary-collider-and/h4_cautious_vs_brave.md`.
-H5 remains deferred; H6/H7 are signposted only; still no Bucket 3 claim.
+H5 experimental `greedy_cautious` was later run and analysed on the five
+completed AAMAS collections (18 cells); see
+`.../h5_greedy_cautious.md`. That config is experimental and is **not** an
+AAMAS-paper method. H6/H7 are signposted only; still no Bucket 3 claim.
 
 ## 2026-08-01 — Approve M13-C3 future probe H3 design
 

@@ -14,7 +14,7 @@ here (Markdown) and in `h3_bk_leading_distractor.tex`.
 - H0–H2 remain closed / unchanged
 - **Not a Bucket 3 claim**
 - H4 is **run / analysed** (`h4_cautious_vs_brave.md`); H4b is **run /
-  analysed** (`h4b_cautious_split_under_a.md`); H5 remains deferred;
+  analysed** (`h4b_cautious_split_under_a.md`); H5 analysed (`h5_greedy_cautious.md`);
   H6/H7 signposted only (`future_probes.md`)
 
 Companion records: `experiment.md` (hub); `future_probes.md` (probe catalogue);
@@ -174,7 +174,7 @@ research question.
   question.
 - H0–H2 artefacts and narratives are unchanged except for cross-links.
 - H4 and H4b analysed separately (`h4_cautious_vs_brave.md`,
-  `h4b_cautious_split_under_a.md`); H5 deferred; H6/H7 signposted only.
+  `h4b_cautious_split_under_a.md`); H5 analysed (`h5_greedy_cautious.md`); H6/H7 signposted only.
 
 ---
 
@@ -191,6 +191,6 @@ research question.
 
 ## Next
 
-H3 documentation is complete. H4 and H4b are run / analysed
-(`h4_cautious_vs_brave.md`, `h4b_cautious_split_under_a.md`). H5 remains
-deferred; H6/H7 are signposted only. Still **no Bucket 3 claim**.
+H3 documentation is complete. H4, H4b, and H5 are run / analysed
+(`h4_cautious_vs_brave.md`, `h4b_cautious_split_under_a.md`,
+`h5_greedy_cautious.md`). H6/H7 are signposted only. Still **no Bucket 3 claim**.

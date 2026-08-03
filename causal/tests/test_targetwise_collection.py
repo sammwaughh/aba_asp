@@ -370,6 +370,32 @@ def test_baseline_cautious_config_pins_current_engine_defaults() -> None:
     assert "learning_mode(brave)" not in baseline
 
 
+def test_greedy_cautious_config_matches_aamas_except_mode() -> None:
+    aamas = (repo_root() / "configs" / "aamas2025_config.pl").read_text(
+        encoding="utf-8"
+    )
+    greedy_cautious = (
+        repo_root() / "configs" / "greedy_cautious_config.pl"
+    ).read_text(encoding="utf-8")
+    for term in (
+        "folding_mode(greedy)",
+        "folding_selection(mgr)",
+        "folding_space(bk)",
+        "asm_intro(relto)",
+    ):
+        assert f"set_lopt({term})" in aamas
+        assert f"set_lopt({term})" in greedy_cautious
+    assert "set_lopt(learning_mode(brave))" in aamas
+    assert "set_lopt(learning_mode(cautious))" in greedy_cautious
+    assert "learning_mode(brave)" not in greedy_cautious
+    assert "set_lopt(check_ic)" in greedy_cautious
+    assert "set_lopt(post_folding_test_entailment(true))" in greedy_cautious
+    assert (
+        repo_root() / "configs" / "greedy_cautious_config.pl"
+    ).is_file()
+    assert not (repo_root() / "configs" / "aamas_cautious_config.pl").exists()
+
+
 def test_config_rejects_unknown_learning_mode(tmp_path: Path) -> None:
     fixture_directory = _write_fixture_bundle(tmp_path)
     unknown_config = tmp_path / "unknown.pl"
@@ -957,7 +983,7 @@ def test_lowercase_named_collection_preserves_targetwise_diagnostics(
 )
 @pytest.mark.parametrize(
     "configuration",
-    ["aamas2025", "ecai2024", "baseline_cautious"],
+    ["aamas2025", "ecai2024", "baseline_cautious", "greedy_cautious"],
 )
 def test_lowercase_predicates_run_in_unmodified_prolog_engine(
     tmp_path: Path,

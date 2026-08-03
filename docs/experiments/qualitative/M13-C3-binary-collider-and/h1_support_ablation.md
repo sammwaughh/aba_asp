@@ -12,7 +12,8 @@
 - **Not a Bucket 3 claim**
 - H2 and H3 are documented in `h2_irrelevant_covariate.md` and
   `h3_bk_leading_distractor.md`; H4 and H4b are run / analysed
-  (`h4_cautious_vs_brave.md`, `h4b_cautious_split_under_a.md`); H5 deferred; H6/H7 signposted
+  (`h4_cautious_vs_brave.md`, `h4b_cautious_split_under_a.md`); H5 analysed
+  (`h5_greedy_cautious.md`); H6/H7 signposted
   (see `future_probes.md`)
 
 Companion records: `experiment.md` (hub); `future_probes.md` (probe catalogue);

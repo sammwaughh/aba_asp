@@ -47,7 +47,7 @@ Pilot M1.2 (10 cells) remains optional provenance only.
 
 | Document | Purpose | Status |
 |----------|---------|--------|
-| [`M1.3-bucket3-claims.md`](../../../experiments/qualitative/M1.3-bucket3-claims.md) | Supervisor-driven scope, investigation status, and planning guardrails | **H0–H4+H4b complete / analysed; H5 deferred; no claim** |
+| [`M1.3-bucket3-claims.md`](../../../experiments/qualitative/M1.3-bucket3-claims.md) | Supervisor-driven scope, investigation status, and planning guardrails | **H0–H5 complete / analysed (incl. H4b); H6/H7 signposted; no claim** |
 
 ## Bucket 2 probe records
 
@@ -66,7 +66,6 @@ Pilot M1.2 (10 cells) remains optional provenance only.
 
 **Parent index:** [milestone1-plan.md](../milestone1-plan.md)
 
-**Next:** Orchestrator / Samuel decide among deferred H5 and signposted H6/H7.
-H4 and H4b are run / analysed; H5 remains deferred pending a cautious Greedy
-theory/algorithm specification.
+**Next:** Orchestrator / Samuel decide among signposted H6/H7.
+H1–H5 are run / analysed (incl. H4b and experimental `greedy_cautious`).
 Do not define a fixture portfolio or run matrix in advance.

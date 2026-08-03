@@ -14,8 +14,7 @@ documented here (Markdown) and in `h4_cautious_vs_brave.tex`.
   delta string to locked ECAI `c`
 - H0–H3 remain closed / unchanged
 - **Not a Bucket 3 claim**
-- H5 remains deferred (cautious Greedy); H4b is a separate analysed follow-up
-  on the H3 fixture (`h4b_cautious_split_under_a.md`); H6/H7 are
+- H5 is **run / analysed** (`h5_greedy_cautious.md`); H6/H7 are
   **signposted only** (`future_probes.md`)
 
 Companion records: `experiment.md` (hub); `future_probes.md` (probe catalogue);
@@ -159,15 +158,14 @@ Key traces: `cells/target-{a,b,c}/output/prolog.stdout`; control
 - Control `c` string match / `solved` is **not** causal recovery.
 - Not a ranking of brave vs cautious as generally better.
 - H0–H3 artefacts unchanged except cross-links.
-- H5 untouched (deferred cautious Greedy).
+- H5 analysed separately (`h5_greedy_cautious.md`).
 - H6/H7 **not** part of this evidence body.
 
 ---
 
 ## Prompted follow-ups (signpost only; not this experiment)
 
-**H5** remains deferred: cautious Greedy ABA Learning is a separate
-theory/design question (`future_probes.md`).
+**H5** is now **run / analysed** separately (`h5_greedy_cautious.md`).
 
 **H6** (length drivers: `n`, `folding_steps` under fixed cautious) and **H7**
 (brave `asm_intro(sechk)` vs `relto` on the 9/26 conflict) are **future probes
@@ -185,6 +183,6 @@ the H4 evidence body.
 
 ## Next
 
-H4 documentation is complete. H4b (H3 fixture, Layer B \(\alpha_3\) close) is
-run / analysed separately (`h4b_cautious_split_under_a.md`). H5 remains
-deferred. H6/H7 are signposted only. Still **no Bucket 3 claim**.
+H4 documentation is complete. H4b and H5 are run / analysed separately
+(`h4b_cautious_split_under_a.md`, `h5_greedy_cautious.md`). H6/H7 are
+signposted only. Still **no Bucket 3 claim**.
