@@ -14,8 +14,9 @@ documented here (Markdown) and in `h4_cautious_vs_brave.tex`.
   delta string to locked ECAI `c`
 - H0–H3 remain closed / unchanged
 - **Not a Bucket 3 claim**
-- H5 remains deferred (cautious Greedy); H6/H7 are **signposted only**
-  (`future_probes.md`)
+- H5 remains deferred (cautious Greedy); H4b is a separate analysed follow-up
+  on the H3 fixture (`h4b_cautious_split_under_a.md`); H6/H7 are
+  **signposted only** (`future_probes.md`)
 
 Companion records: `experiment.md` (hub); `future_probes.md` (probe catalogue);
 `learning_analysis.md` (closed H0); `h3_bk_leading_distractor.md`.
@@ -184,5 +185,6 @@ the H4 evidence body.
 
 ## Next
 
-H4 documentation is complete. H5 remains deferred. H6/H7 are signposted only.
-Orchestrator / Samuel decides the next move. Still **no Bucket 3 claim**.
+H4 documentation is complete. H4b (H3 fixture, Layer B \(\alpha_3\) close) is
+run / analysed separately (`h4b_cautious_split_under_a.md`). H5 remains
+deferred. H6/H7 are signposted only. Still **no Bucket 3 claim**.

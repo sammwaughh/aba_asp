@@ -13,7 +13,8 @@ here (Markdown) and in `h3_bk_leading_distractor.tex`.
   where BK underdetermines the target (nested `a=1` / \(\alpha_1\)–\(\alpha_3\))
 - H0–H2 remain closed / unchanged
 - **Not a Bucket 3 claim**
-- H4 is **run / analysed** (`h4_cautious_vs_brave.md`); H5 remains deferred;
+- H4 is **run / analysed** (`h4_cautious_vs_brave.md`); H4b is **run /
+  analysed** (`h4b_cautious_split_under_a.md`); H5 remains deferred;
   H6/H7 signposted only (`future_probes.md`)
 
 Companion records: `experiment.md` (hub); `future_probes.md` (probe catalogue);
@@ -189,6 +190,6 @@ research question.
 
 ## Next
 
-H3 documentation is complete. H4 is run / analysed
-(`h4_cautious_vs_brave.md`). H5 remains deferred; H6/H7 are signposted only.
-Still **no Bucket 3 claim**.
+H3 documentation is complete. H4 and H4b are run / analysed
+(`h4_cautious_vs_brave.md`, `h4b_cautious_split_under_a.md`). H5 remains
+deferred; H6/H7 are signposted only. Still **no Bucket 3 claim**.

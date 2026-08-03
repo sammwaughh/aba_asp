@@ -4,9 +4,9 @@
 
 `proposed | planned | implemented | run | analysed | reported`
 
-Current status: **`H0 closed / analysed`; H1–H4 run / analysed** — M1.3 Bucket 3
-baseline complete; H1–H4 probes documented; H5 cautious Greedy deferred;
-H6/H7 signposted only; **no Bucket 3 claim**.
+Current status: **`H0 closed / analysed`; H1–H4 + H4b run / analysed** — M1.3
+Bucket 3 baseline complete; H1–H4 and H4b documented; H5 cautious Greedy
+deferred; H6/H7 signposted only; **no Bucket 3 claim**.
 
 ### H0 versus H1–H7
 
@@ -17,12 +17,13 @@ H6/H7 signposted only; **no Bucket 3 claim**.
 | **H2** | Isolated-\(D\) AND collider; AAMAS target `c` retains irrelevant `d`. **Run / analysed.** Record: `h2_irrelevant_covariate.md` / `.tex`. **Not a claim.** |
 | **H3** | BK-leading isolated `a` on BD AND; ECAI distracts first fold for `c`. **Run / analysed.** Record: `h3_bk_leading_distractor.md` / `.tex`. **Not a claim.** |
 | **H4** | Repository-baseline cautious vs locked ECAI brave on the H0 table. **Run / analysed.** Roots `a`/`b` primary; `c` control. Record: `h4_cautious_vs_brave.md` / `.tex`. **Not a claim.** |
+| **H4b** | Cautious on H3 fixture target `c`: Layer B = \(\alpha_3\) close only; Layer A shared with H3. **Run / analysed.** Record: `h4b_cautious_split_under_a.md` / `.tex`. **Not H5. Not a claim.** |
 | **H5** | Cautious Greedy ABA Learning. **Deferred theory/design question; no config or run.** |
 | **H6** | Length-driver ablation arising from H4 traces. **Signposted only; not started.** |
 | **H7** | Brave `sechk` versus `relto` follow-up arising from H4 traces. **Signposted only; not started.** |
 
 **H0 close means:** baseline learning analysis finished.  
-**H1–H4 complete means:** those approved probes are run and documented.
+**H1–H4 + H4b complete means:** those probes are run and documented.
 **Does not mean:** a Bucket 3 claim is locked. Still **no Bucket 3 claim**.
 
 Working mathematical dossier (pre-run): `fixture_dossier.tex`.  
@@ -31,6 +32,7 @@ Closed H0 learning record: `learning_analysis.md` / `learning_analysis.tex`.
 **H2 record:** `h2_irrelevant_covariate.md` / `h2_irrelevant_covariate.tex`.  
 **H3 record:** `h3_bk_leading_distractor.md` / `h3_bk_leading_distractor.tex`.  
 **H4 record:** `h4_cautious_vs_brave.md` / `h4_cautious_vs_brave.tex`.  
+**H4b record:** `h4b_cautious_split_under_a.md` / `h4b_cautious_split_under_a.tex`.  
 **Remaining probes:** `future_probes.md` / `future_probes.tex`
 (H5 deferred; H6/H7 signposted only).
 
@@ -142,6 +144,7 @@ Russo-style Causal ABA.
 - `h2_irrelevant_covariate.md` / `h2_irrelevant_covariate.tex` — **H2** isolated-\(D\) record
 - `h3_bk_leading_distractor.md` / `h3_bk_leading_distractor.tex` — **H3** BK-leading record
 - `h4_cautious_vs_brave.md` / `h4_cautious_vs_brave.tex` — **H4** cautious vs brave
+- `h4b_cautious_split_under_a.md` / `h4b_cautious_split_under_a.tex` — **H4b**
 - `experiment.md` (status / outcome pointer)
 - `fixture_dossier.tex` (pre-run mathematical account)
 - `future_probes.md` / `.tex` (probe catalogue; H1–H4 analysed; H5 deferred;
@@ -306,7 +309,8 @@ SWI-Prolog / clingo: invoked for AAMAS and ECAI target-wise collections
 | H2 record | `h2_irrelevant_covariate.md` / `.tex` | isolated-\(D\) AAMAS target `c` |
 | H3 record | `h3_bk_leading_distractor.md` / `.tex` | BK-leading ECAI target `c` |
 | H4 record | `h4_cautious_vs_brave.md` / `.tex` | cautious vs brave roots |
-| Future probes | `future_probes.md` / `.tex` | H1–H4 analysed; H5 deferred; H6/H7 signposted |
+| H4b record | `h4b_cautious_split_under_a.md` / `.tex` | cautious α3 close on H3 `c` |
+| Future probes | `future_probes.md` / `.tex` | H1–H4+H4b analysed; H5 deferred; H6/H7 signposted |
 
 ## Outcome summary
 
@@ -355,6 +359,13 @@ On the closed H0 table, repository `baseline_cautious` returns
 `completed_no_solution` for roots `a`/`b` (brave residual α-gadget blocked);
 control `c` still solves with a byte-identical delta to locked ECAI `c`. Full
 record: `h4_cautious_vs_brave.md`.
+
+### H4b (cautious \(\alpha_3\) close on H3 target `c`, analysed)
+
+On the H3 fixture, `baseline_cautious` keeps leading-`a` gates and the
+\(\alpha_1\)-nest vs \(\alpha_2\)-flat split (Layer A, shared with H3); it only
+changes `c_alpha_3` to `d_val_1` (Layer B). Both arms `solved`. Full record:
+`h4b_cautious_split_under_a.md`.
 
 ## Quantitative results
 
@@ -408,6 +419,11 @@ distraction). Brave residual splits remain possible. See
 (`completed_no_solution`); control `c` still solves with an identical delta.
 See `h4_cautious_vs_brave.md`. **No Bucket 3 claim.**
 
+**H4b bounded reading (not a claim).** On the H3 fixture target `c`, cautious
+changes only the \(\alpha_3\) close (`d_val_1`); Layer A (`a`-gating;
+\(\alpha_1\)-nest vs \(\alpha_2\)-flat) is shared with H3 and is not a cautious
+effect. See `h4b_cautious_split_under_a.md`. **No Bucket 3 claim.**
+
 ## Claims supported
 
 None. Evidence record and bounded interpretation only.
@@ -415,9 +431,9 @@ None. Evidence record and bounded interpretation only.
 ## Claims not supported / not claimed
 
 As in `learning_analysis.md`, `h1_support_ablation.md`,
-`h2_irrelevant_covariate.md`, `h3_bk_leading_distractor.md`, and
-`h4_cautious_vs_brave.md` non-claims sections. H5 untouched; H6/H7
-signposted only.
+`h2_irrelevant_covariate.md`, `h3_bk_leading_distractor.md`,
+`h4_cautious_vs_brave.md`, and `h4b_cautious_split_under_a.md` non-claims
+sections. H5 untouched; H6/H7 signposted only.
 
 ## Report relevance
 
@@ -426,7 +442,7 @@ evidence only; **not** report-facing claim prose.
 
 ## Future probes
 
-H1–H4 are **run / analysed**. H5 cautious Greedy is deferred; H6/H7 are
+H1–H4 and H4b are **run / analysed**. H5 cautious Greedy is deferred; H6/H7 are
 signposted only: `future_probes.md` / `.tex`. Still **no Bucket 3 claim**.
 
 ## Next decision

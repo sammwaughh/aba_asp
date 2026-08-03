@@ -85,7 +85,7 @@ Key experiment records:
   Probe records: `M13-C1-causal-role-underdetermination/experiment.md`;
   `M13-C2-bk-feature-order/experiment.md`.
 - `docs/experiments/qualitative/M1.3-bucket3-claims.md` — M1.3 Bucket 3
-  (**H0–H4 complete / analysed; H5 cautious Greedy deferred; H6/H7
+  (**H0–H4+H4b complete / analysed; H5 cautious Greedy deferred; H6/H7
   signposted; no claim**).
   Preserve the pre-pivot positive-stochastic diamond and its runs as infrastructure
   provenance; do not reinterpret them as deterministic claim evidence. Do not invent a

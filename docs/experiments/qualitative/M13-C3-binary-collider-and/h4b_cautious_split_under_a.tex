@@ -1,0 +1,139 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=25mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,booktabs}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{microtype}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+\setlist{nosep,leftmargin=*}
+\emergencystretch=3em
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+\title{M13-C3 --- H4b cautious split under leading \(a\)\\
+target \(c\) on the H3 fixture}
+\author{}
+\date{H4b run / analysed / not a Bucket~3 claim}
+
+\begin{document}
+\maketitle
+
+\section{Status}
+
+\textbf{H4b run / analysed.}
+Bounded follow-up to H3/H4: repository \texttt{baseline\_cautious} vs locked
+H3 ECAI brave on \path{m13_bucket3_binary_bd_and_lead_a} /
+\texttt{n30\_seed42}, focus target \(c\).
+Markdown twin: \texttt{h4b\_cautious\_split\_under\_a.md}.
+
+\textbf{Lead (Layer B):} cautious \textbf{only} changes the \(\alpha_3\) close
+--- rejects brave residual \texttt{c\_alpha\_3 :- alpha\_1, a\_val\_1} and
+accepts \texttt{c\_alpha\_3 :- d\_val\_1}; both arms \texttt{solved}.
+\textbf{Shared (Layer A --- not a cautious effect):} both arms still gate on
+BK-leading \(a\) and keep the \(\alpha_1\)-nest vs \(\alpha_2\)-flat contrary
+split.
+\textbf{Not H5.} H0--H4 closed. \textbf{Not a Bucket~3 claim.}
+
+\section{Research question}
+
+On the H3 BD AND + BK-leading-\(a\) table, under otherwise shared nd/\texttt{relto}
+settings, does switching from ECAI brave to repository-baseline cautious change
+how the split beneath the \(a\) gates is closed --- in particular the attack on
+\texttt{alpha\_3} --- and what stays the same?
+
+\section{Main finding (Layer B --- lead)}
+
+Both arms \textbf{solve}.
+The string difference is \textbf{exactly one rule} --- the body of
+\texttt{c\_alpha\_3}:
+\begin{verbatim}
+% brave:    c_alpha_3(A) :- alpha_1(A), a_val_1(A).
+% cautious: c_alpha_3(A) :- d_val_1(A).
+\end{verbatim}
+
+Decisive cautious fork:
+\begin{verbatim}
+folding result: c_alpha_3(A) <- [a_val_1(A)]
+ found: alpha_1/1 ... KO, cannot introduce an assumption for [a_val_1(A)]
+ folding result: c_alpha_3(A) <- [d_val_1(A)]
+\end{verbatim}
+Locked brave at the same fold: \texttt{alpha\_1} \textbf{OK} \(\to\)
+\texttt{c\_alpha\_3 :- alpha\_1, a\_val\_1} (never folds \(d_*\) here).
+
+\textbf{Lead:} \texttt{baseline\_cautious} keeps H3's leading-\(a\) gates and
+the persistent \(\alpha_1\)-nest vs \(\alpha_2\)-flat contrary split; it
+\textbf{only} changes the \(\alpha_3\) close.
+Both arms \texttt{solved}.
+
+Versus H4: H4 blocked a brave residual gadget on \textbf{roots}
+\(\to\) \texttt{completed\_no\_solution}; H4b blocks \emph{this} residual gadget
+on \textbf{child \(c\)} \(\to\) still \texttt{solved}, with explicit
+\texttt{d\_val\_1}.
+
+\section{Shared background (Layer A --- not cautious)}
+
+Both arms still gate on BK-leading \(a\)
+(\texttt{c :- alpha\_1, a\_val\_1} / \texttt{c :- alpha\_2, a\_val\_0});
+evaluator BD AND is not recovered; body vars \(\{a\}\).
+
+Contrary skeletons (identical through \(\alpha_3\) intro):
+\begin{center}
+\begin{tabular}{@{}lL{0.62\textwidth}@{}}
+\toprule
+Gate & Contrary structure (both arms) \\
+\midrule
+\(\alpha_1\) (\(a{=}1\)) &
+  Nested: \texttt{c\_alpha\_1 :- b\_val\_0} plus
+  \texttt{c\_alpha\_1 :- alpha\_3, b\_val\_1} \\
+\(\alpha_2\) (\(a{=}0\)) &
+  Flat: \texttt{c\_alpha\_2 :- d\_val\_0} and
+  \texttt{c\_alpha\_2 :- b\_val\_0} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Procedural reason (search --- not cautious):
+\texttt{c\_alpha\_1} repaired first; under \(a{=}1\) commit \texttt{b\_val\_0}
+then mint \(\alpha_3\) on residuals; under \(a{=}0\), \texttt{relto} KO on
+existing \(\alpha_3\) forces flat \(d\)/\(b\) cover.
+Do \textbf{not} credit cautious with symmetrising / removing the nest / fixing
+the asymmetry.
+
+\section{Brave vs cautious table}
+
+Layer A objects are the same; Layer B differs only in \texttt{c\_alpha\_3}
+(\texttt{alpha\_1,a\_val\_1} vs \texttt{d\_val\_1}).
+Both outcomes \texttt{solved}.
+
+\section{Setup / paths}
+
+Same H3 fixture/sample (sha256 \texttt{48bd0da0\ldots db05}).
+Intervention: locked ECAI brave \(\to\) \texttt{baseline\_cautious}
+(not H5).
+Incidental: collection targets \(a\)/\(b\)/\(d\) timed out at 300s --- outside
+focus.
+
+\section{Semantic boundary}
+
+Authoritative: Prolog learner outcome under selected \texttt{learning\_mode}.
+Under cautious learning, SAT of \texttt{bk.sol\_chk.asp} is an existential
+integrity witness only.
+
+\section{Boundaries / non-claims}
+
+Not a Bucket~3 claim; not H5; not mechanism recovery.
+Layer A is shared with H3 and is not a cautious effect.
+H5/H6/H7 unchanged.
+
+\section{Next}
+
+H4b documentation is complete.
+Orchestrator / Samuel decides the next move.
+Still \textbf{no Bucket~3 claim}.
+
+\end{document}

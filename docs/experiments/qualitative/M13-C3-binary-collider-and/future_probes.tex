@@ -15,10 +15,10 @@
 \emergencystretch=3em
 \newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
 
-\title{M13-C3 --- Probe catalogue (H1--H7)\\
+\title{M13-C3 --- Probe catalogue (H1--H7 + H4b)\\
 motivated by closed H0}
 \author{}
-\date{H0 closed; H1--H4 run/analysed;\\
+\date{H0 closed; H1--H4 + H4b run/analysed;\\
 H5 deferred; H6/H7 signposted only (not claims)}
 
 \begin{document}
@@ -51,9 +51,13 @@ H0 is the completed six-cell AAMAS+ECAI investigation on fixture
     \texttt{baseline\_cautious} blocks brave root residual $\alpha$-gadget
     on the H0 table. Record: \texttt{h4\_cautious\_vs\_brave.md} /
     \texttt{.tex}. \textbf{Not a Bucket~3 claim.}
+  \item H4b: \textbf{run / analysed} --- on the H3 fixture, cautious changes
+    only the $\alpha_3$ close under shared leading-$a$ gates (Layer~B);
+    Layer~A shared with H3. Record: \texttt{h4b\_cautious\_split\_under\_a.md}
+    / \texttt{.tex}. \textbf{Not H5. Not a Bucket~3 claim.}
   \item H5: \textbf{deferred theory/design question} / not configured /
     not run / not a Bucket~3 claim --- cautious Greedy ABA Learning is
-    separate from H4
+    separate from H4/H4b
   \item H6 / H7: \textbf{signposted only} (prompted by H4 traces; not
     approved runs)
   \item \textbf{Not} approved Bucket~3 claims
@@ -107,9 +111,9 @@ H0 is the completed six-cell AAMAS+ECAI investigation on fixture
     \texttt{aamas\_cautious} configuration is approved.
 \end{enumerate}
 
-H1--H4 have been run and analysed (\texttt{h1\_support\_ablation.md},
+H1--H4 and H4b have been run and analysed (\texttt{h1\_support\_ablation.md},
 \texttt{h2\_irrelevant\_covariate.md}, \texttt{h3\_bk\_leading\_distractor.md},
-\texttt{h4\_cautious\_vs\_brave.md}).
+\texttt{h4\_cautious\_vs\_brave.md}, \texttt{h4b\_cautious\_split\_under\_a.md}).
 Approvals do not create a Bucket~3 claim or a run matrix.
 
 \section{Motivation (verified facts from the AAMAS arm of closed H0)}
@@ -524,6 +528,35 @@ H6 (length drivers: \(n\), \texttt{folding\_steps} under fixed cautious) and
 H7 (brave \texttt{asm\_intro(sechk)} vs \texttt{relto} on the 9/26 conflict)
 are future probes prompted by H4 traces --- not approved runs in this update.
 
+\section{Probe family H4b --- cautious $\alpha_3$ close under H3 leading-$a$ gates}
+
+Status: \textbf{run / analysed} / not a claim. \textbf{Not H5.}
+Evidence record: \texttt{h4b\_cautious\_split\_under\_a.md} /
+\texttt{h4b\_cautious\_split\_under\_a.tex}.
+
+\textbf{Lead finding (Layer B).}
+On H3 fixture \path{m13_bucket3_binary_bd_and_lead_a} / \texttt{n30\_seed42}
+target \(c\), repository \texttt{baseline\_cautious} keeps H3's leading-$a$
+gates and the persistent $\alpha_1$-nest vs $\alpha_2$-flat contrary split;
+it \textbf{only} changes the $\alpha_3$ close --- rejecting brave residual
+\texttt{c\_alpha\_3 :- alpha\_1, a\_val\_1} and accepting
+\texttt{c\_alpha\_3 :- d\_val\_1}.
+Both arms \texttt{solved}.
+
+\textbf{Layer A (shared with H3; not a cautious effect):}
+$a$-gating of target rules; nested \texttt{c\_alpha\_1} vs flat
+\texttt{c\_alpha\_2}; procedural reason is search order / \texttt{relto} /
+cover-and-repair (see the H4b record).
+
+\subsection{Outcome (H4b)}
+
+\textbf{Run / analysed.}
+Collection:
+\texttt{\ldots/m13\_bucket3\_binary\_bd\_and\_lead\_a/baseline\_cautious/n30\_seed42/};
+target \(c\) \texttt{solved} ($\sim$2.9s; audit SAT).
+Incidental: \(a\)/\(b\)/\(d\) timed out (outside focus).
+Full record: \texttt{h4b\_cautious\_split\_under\_a.md}.
+
 \section{Probe family H5 --- cautious Greedy ABA Learning}
 
 Status: \textbf{deferred theory/design question} / not configured / not run /
@@ -625,6 +658,8 @@ H3 graph/naming; \(B\) 80/20, \(D\) 70/30; id
   \textbf{Design approved} then \textbf{run / analysed} & 2026-08-01 / 2026-08-02 \\
 H4 repository-baseline cautious vs published ECAI brave &
   \textbf{Infrastructure ready} then \textbf{run / analysed} & 2026-08-03 \\
+H4b cautious $\alpha_3$ close on H3 leading-$a$ target \(c\) &
+  \textbf{Run / analysed} (not H5) & 2026-08-03 \\
 H5 cautious Greedy ABA Learning &
   \textbf{Deferred theory/design question; no config or run} & 2026-08-03 \\
 H6 / H7 (H4-prompted) &
@@ -646,6 +681,10 @@ H6 / H7 (H4-prompted) &
   \item \textbf{H4:} \textbf{complete} (\texttt{h4\_cautious\_vs\_brave.md}).
     Lead: cautious blocks brave root residual $\alpha$-gadget; roots
     \texttt{completed\_no\_solution}; control \(c\) still solves. Not a claim.
+  \item \textbf{H4b:} \textbf{complete}
+    (\texttt{h4b\_cautious\_split\_under\_a.md}).
+    Lead (Layer~B): only \texttt{c\_alpha\_3} close changes under shared
+    Layer~A. Not a claim; not H5.
   \item \textbf{H5:} cautious Greedy ABA Learning is deferred pending
     theory/algorithm specification; no config or run exists.
   \item \textbf{H6 / H7:} signposted only (prompted by H4); not approved for

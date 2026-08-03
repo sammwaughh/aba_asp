@@ -18,8 +18,12 @@ itself. H0 is the completed six-cell AAMAS+ECAI investigation on fixture
 - H4: **`run / analysed`** — repository `baseline_cautious` blocks brave root
   residual α-gadget on the H0 table. Record: `h4_cautious_vs_brave.md` /
   `.tex`. **Not a Bucket 3 claim.**
+- H4b: **`run / analysed`** — on the H3 fixture, cautious changes only the
+  \(\alpha_3\) close under shared leading-`a` gates (Layer B); Layer A shared
+  with H3. Record: `h4b_cautious_split_under_a.md` / `.tex`. **Not H5. Not a
+  Bucket 3 claim.**
 - H5: **`deferred theory/design question` / not configured / not run / not a
-  Bucket 3 claim** — cautious Greedy ABA Learning is separate from H4.
+  Bucket 3 claim** — cautious Greedy ABA Learning is separate from H4/H4b.
 - H6 / H7: **signposted only** (prompted by H4 traces; not approved runs; not
   this catalogue’s evidence body beyond a one-line pointer).
 - **Not** approved Bucket 3 claims
@@ -63,10 +67,10 @@ itself. H0 is the completed six-cell AAMAS+ECAI investigation on fixture
 5. Defer any cautious Greedy ABA Learning design to **H5**. No
    `aamas_cautious` configuration is approved.
 
-H1–H4 have been run and analysed (`h1_support_ablation.md`,
+H1–H4 and H4b have been run and analysed (`h1_support_ablation.md`,
 `h2_irrelevant_covariate.md`, `h3_bk_leading_distractor.md`,
-`h4_cautious_vs_brave.md`). Approvals do not create a Bucket 3 claim or a run
-matrix.
+`h4_cautious_vs_brave.md`, `h4b_cautious_split_under_a.md`). Approvals do not
+create a Bucket 3 claim or a run matrix.
 
 
 
@@ -154,6 +158,10 @@ under ECAI, on a new fixture. H3 is now **run / analysed**
    **Run / analysed** (`h4_cautious_vs_brave.md`). Lead: cautious KO on the
    brave residual α-reuse; roots `completed_no_solution`; control `c` still
    solves with identical delta.
+4b. **H4b** — H3 fixture/`n30_seed42`; `baseline_cautious` on target `c`.
+   **Run / analysed** (`h4b_cautious_split_under_a.md`). Lead (Layer B): only
+   `c_alpha_3` close changes (`d_val_1` vs brave residual); Layer A shared
+   with H3. **Not H5.**
 5. **H5 (deferred)** — determine whether and how cautious acceptance should be
    combined with the Greedy ABA Learning strategy. This is not treated as a
    one-option configuration change.
@@ -171,6 +179,7 @@ without a further Samuel decision.
 | H2 | AAMAS target `c`; irrelevant covariate enters **greedy maximal** co-occurrence bodies (minimality vs solvability); fixture id `m13_bucket3_binary_collider_and_iso_d` |
 | H3 | **ECAI** target `c` (primary); **BK order** puts independent distractor **first**; nd first-fold / repair path; **AAMAS contrast in scope**; id `m13_bucket3_binary_bd_and_lead_a` |
 | **H4** | **Same fixture/sample**; locked ECAI brave vs repository `baseline_cautious`; roots `a`/`b` primary; `c` control; **run / analysed** |
+| **H4b** | **H3 fixture/sample**; `baseline_cautious` on target `c`; Layer B = \(\alpha_3\) close only; Layer A shared with H3; **run / analysed**; **not H5** |
 | **H5** | Deferred theory/design question: cautious acceptance with Greedy ABA Learning; no config or run approved |
 | H6 / H7 | Signposted only (H4-prompted); length drivers under cautious; brave `asm_intro(sechk)` vs `relto` |
 
@@ -409,6 +418,33 @@ record: `h4_cautious_vs_brave.md`.
 
 ---
 
+## Probe family H4b — cautious \(\alpha_3\) close under H3 leading-`a` gates
+
+Status: **`run / analysed` / not a claim**. **Not H5.**
+Evidence record: `h4b_cautious_split_under_a.md` /
+`h4b_cautious_split_under_a.tex`.
+
+**Lead finding (Layer B).** On H3 fixture
+`m13_bucket3_binary_bd_and_lead_a` / `n30_seed42` target `c`, repository
+`baseline_cautious` keeps H3’s leading-`a` gates and the persistent
+\(\alpha_1\)-nest vs \(\alpha_2\)-flat contrary split; it **only** changes the
+\(\alpha_3\) close — rejecting brave residual
+`c_alpha_3 :- alpha_1, a_val_1` and accepting `c_alpha_3 :- d_val_1`.
+Both arms `solved`.
+
+**Layer A (shared with H3; not a cautious effect):** `a`-gating of target
+rules; nested `c_alpha_1` vs flat `c_alpha_2`; procedural reason is search
+order / `relto` / cover-and-repair (see `h4b_cautious_split_under_a.md`).
+
+### Outcome (H4b)
+
+**Run / analysed.** Collection:
+`.../m13_bucket3_binary_bd_and_lead_a/baseline_cautious/n30_seed42/`;
+target `c` `solved` (~2.9s; audit SAT). Incidental: `a`/`b`/`d` timed out
+(outside focus). Full record: `h4b_cautious_split_under_a.md`.
+
+---
+
 ## Probe family H5 — cautious Greedy ABA Learning
 
 Status: **`deferred theory/design question` / not configured / not run / not a
@@ -479,6 +515,7 @@ Do not treat predictive rules for roots as mechanism recovery.
 | H2c in first H2 write-up | **In scope** (run; brief note only) | 2026-08-01 / 2026-08-02 |
 | H3 graph/naming; \(B\) 80/20, \(D\) 70/30; id `m13_bucket3_binary_bd_and_lead_a`; AAMAS contrast | **Design approved** then **run / analysed** | 2026-08-01 / 2026-08-02 |
 | H4 repository-baseline cautious vs published ECAI brave | **Infrastructure ready** then **run / analysed** | 2026-08-03 |
+| H4b cautious \(\alpha_3\) close on H3 leading-`a` target `c` | **Run / analysed** (not H5) | 2026-08-03 |
 | H5 cautious Greedy ABA Learning | **Deferred theory/design question; no config or run** | 2026-08-03 |
 | H6 / H7 (H4-prompted) | **Signposted only; not approved runs** | 2026-08-03 |
 
@@ -492,6 +529,8 @@ Do not treat predictive rules for roots as mechanism recovery.
 - **H4:** **complete** (`h4_cautious_vs_brave.md`). Lead: cautious blocks
   brave root residual α-gadget; roots `completed_no_solution`; control `c`
   still solves. Not a claim.
+- **H4b:** **complete** (`h4b_cautious_split_under_a.md`). Lead (Layer B):
+  only `c_alpha_3` close changes under shared Layer A. Not a claim; not H5.
 - **H5:** cautious Greedy ABA Learning is deferred pending theory/algorithm
   specification; no config or run exists.
 - **H6 / H7:** signposted only (prompted by H4); not approved for run here.
