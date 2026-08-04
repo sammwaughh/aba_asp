@@ -1,0 +1,17 @@
+description: "H7b experimental cautious nd with asm_intro(sechk) on H3 n30_seed42. Comparator: baseline_cautious (relto)."
+
+configuration:
+  id: nd_cautious_sechk
+
+fixture:
+  directory: causal/outputs/causal_fixtures/m13_bucket3_binary_bd_and_lead_a
+  sample: samples/n30_seed42.csv
+
+encoding:
+  type: exact_value
+  example_policy: binary_one_vs_zero
+
+learner:
+  prolog_config: configs/nd_cautious_sechk_config.pl
+  prolog_timeout_s: 300
+  joint_check_timeout_s: 5

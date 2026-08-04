@@ -61,8 +61,23 @@ of inherited ABALearn `asm_intro` options under brave nd learning.
 **Status after write-up:** H7a is **run / analysed**. Evidence record:
 `docs/experiments/qualitative/M13-C3-binary-collider-and/h7a_relto_vs_sechk.md`
 (+ `.tex`). Lead: all 7 pairs solved with differing deltas; sechk first-BK
-latch + α-chain vs richer relto contraries. Not a Bucket 3 claim; H7b not
-started (remain agnostic).
+latch + α-chain vs richer relto contraries. Not a Bucket 3 claim.
+
+## 2026-08-04 — Approve and run H7b cautious nd `asm_intro(sechk)` vs `relto`
+
+**Decision:** Open H7b as the cautious-nd counterpart to H7a.
+
+- Comparator: existing `baseline_cautious` (`asm_intro(relto)`); do not rerun
+  or overwrite H4/H4b collections.
+- Intervention config identity: **`nd_cautious_sechk`**
+  (`configs/nd_cautious_sechk_config.pl`) — matches `baseline_cautious` except
+  `asm_intro(sechk)`. Not a published ECAI/AAMAS method.
+- Fixtures/samples: same as H7a (H0 and H3 `n30_seed42`; seven target cells).
+- Remain agnostic about whether H7a’s first-BK latch survives under cautious
+  entailment. Not a Bucket 3 claim.
+
+**Status after Fixture Agent run:** both collections executed; Trace Agent
+analysis pending; no final H7b evidence narrative yet.
 
 ## 2026-08-03 — Approve and run H6 folding-step / nested-n ablation
 

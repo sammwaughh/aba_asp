@@ -39,10 +39,10 @@ Use the same status categories as `experiment_register.md`.
 | M11 | — | m1.1 Parent-position and representation-order control | analysed | `docs/experiments/qualitative/M1.1-parent-position.md` | `causal/configs/experiments/M11_parent_position.yaml`; `M11_parent_position_greedy.yaml` | `M11_parent_position/cells/`; `M11_parent_position_greedy/`; `M11_ablations/` | Interim Experimentation / Progress (Milestone 1) | nd: 8/8 solved; binary σ/π pass; cat3 σ fails (ablation-supported). Stage 7 greedy: binary matches nd; cat3 all supersets; rule-level σ restored under greedy. |
 | M12 | — | m1.2 Published-configuration comparison (pilot) | pilot analysed | `docs/experiments/qualitative/M1.2-config-comparison.md` | `causal/configs/experiments/M12_ecai2024.yaml`; `M12_aamas2025.yaml` | `causal/outputs/aba_learning/grid/M12_{ecai2024,aamas2025}/` | Interim Experimentation / Progress (Milestone 1) | 10-cell pilot analysed (historical). Expanded as M12x (redesign). No M1.4. |
 | M12x | — | m1.2 expanded U1–U7 (ECAI/AAMAS; val-only BK; 18 cells) | closed / analysed | `M1.2-expanded.md` | `M12x_{ecai2024,aamas2025}.yaml` | `M12x_summary.md`; `M12x_cell_reports/` (18) | Interim Experimentation / Progress (Milestone 1) | Fresh 18/18 solved + Stage-3 18/18 (2026-07-20); **closed**; evidence locked for M1.3. |
-| M13 | — | m1.3 causal-recovery capabilities and limits of unguided ABA Learning | in progress | `M1.3-bucket1-claims.md` (locked); `M1.3-bucket2-claims.md` (locked); `M1.3-bucket3-claims.md` (M13-C3 H0 closed; H1–H7a analysed; no claim) | — | M13-C3 **H0 closed**; **H1–H7a run/analysed**; H7b not started. | Interim Experimentation / Progress (Milestone 1) | Bucket 3: H0–H7a analysed; next = H7b; no claim yet. |
+| M13 | — | m1.3 causal-recovery capabilities and limits of unguided ABA Learning | in progress | `M1.3-bucket1-claims.md` (locked); `M1.3-bucket2-claims.md` (locked); `M1.3-bucket3-claims.md` (M13-C3 H0 closed; H1–H7a analysed; H7b run/awaiting Trace; no claim) | — | M13-C3 **H0 closed**; **H1–H7a analysed**; **H7b run / awaiting Trace**. | Interim Experimentation / Progress (Milestone 1) | Bucket 3: H0–H7a analysed; H7b pending Trace; no claim yet. |
 | M13-C1 | M13 | Causal-role underdetermination under learner-input equivalence | analysed | `M13-C1-causal-role-underdetermination/experiment.md` | `M13_c1_role_equivalence_{ecai2024,aamas2025}.yaml` | `M13_c1_role_equivalence_summary.{md,json}`; 4 cell dirs | Interim Experimentation / Progress (Milestone 1) | 4/4 solved; paired inputs/delta/coverage identical. ECAI exact under \(G_0\), sibling-only under \(G_1\); AAMAS parent-plus-sibling under both. |
 | M13-C2 | M13 | Comparative sensitivity to BK feature-block order | analysed | `M13-C2-bk-feature-order/experiment.md` | `M13_c2_bk_order_{ecai2024,aamas2025}.yaml` | `M13_c2_bk_order_summary.{md,json}`; 20 cell dirs | Interim Experimentation / Progress (Milestone 1) | 20/20 solved. Every tested ECAI order produced a distinct delta within U2/U5/U7; AAMAS delta and coverage invariant per family. U5 swap restored exact ECAI parent recovery; U7 coverage depended on whether \(x_2\) was in the first two blocks. |
-| M13-C3 | M13 | Bucket 3 binary deterministic AND collider | **H0 closed**; **H1–H7a analysed** (no claim) | `experiment.md`; `learning_analysis.*`; `h1`–`h7a` records; `future_probes.*` | H0–H6 retained; H7a `nd_brave_sechk` on H0+H3 | H0–H7a collections | Interim Experimentation / Progress (Milestone 1) | H7a lead: brave nd relto vs sechk — 7/7 solved, all deltas differ; sechk first-BK latch. No Bucket 3 claim. |
+| M13-C3 | M13 | Bucket 3 binary deterministic AND collider | **H0 closed**; **H1–H7a analysed**; **H7b run / awaiting Trace** (no claim) | `experiment.md`; `learning_analysis.*`; `h1`–`h7a` records; `future_probes.*` | H0–H7a retained; H7b `nd_cautious_sechk` on H0+H3 | H0–H7b collections | Interim Experimentation / Progress (Milestone 1) | H7b cautious nd sechk vs baseline_cautious pending Trace. No Bucket 3 claim. |
 
 ## Experiment sequence to date and next
 
@@ -83,7 +83,7 @@ Claims 1–2 from M13-C1/C2; Bucket 3 baseline **M13-C3 H0 closed**; probes
 **H1–H7a run / analysed** (**no claim**; includes H4b). H5 experimental
 `greedy_cautious` is **run / analysed** (`h5_greedy_cautious.md`); **H6 is
 `run / analysed`** (`h6_folding_and_n_ablation.md`); **H7a is `run /
-analysed`** (`h7a_relto_vs_sechk.md`); H7b not started.
+analysed`** (`h7a_relto_vs_sechk.md`); **H7b is `run / awaiting Trace`**.
 Method: `milestone1_part3_approach.md`.
 
 **Primary path:** `docs/research/milestone_plans/milestone1_high_level_path.md`  
@@ -108,7 +108,7 @@ H5 lead: under Greedy, brave→cautious matches 18/18 outcomes and solved deltas
 Analysis B contrasts vs nd `baseline_cautious` are search-bundle (not the mode
 flip). No Bucket 3 claim. **H6** folding-step / nested-n ablations are **run /
 analysed** (`h6_folding_and_n_ablation.md`). **H7a** is **run / analysed**
-(`h7a_relto_vs_sechk.md`); H7b not started.
+(`h7a_relto_vs_sechk.md`); **H7b run / awaiting Trace**.
 
 
 ## Current metric families
@@ -167,17 +167,17 @@ Workflow:
 
 ## Current open questions (Bucket 3)
 
-- Whether / when to open H7b (`future_probes.md`; remain agnostic).
-- When (if ever) do H0–H7a observations become claim-worthy after further
+- Trace analysis of H7b (`future_probes.md`; remain agnostic pending Trace).
+- When (if ever) do H0–H7b observations become claim-worthy after further
   probes?
 - Missingness, larger graphs, parameter/category variation, and non-discrete
   data remain deferred.
 
 ## Next action
 
-**Orchestrator / Samuel decide whether / when to open H7b**
-(`future_probes.md`; remain agnostic). **H0 is closed**; **H1–H7a are
-analysed**; H7b not started; **no Bucket 3 claim**. Do not expand H6 into
+**ABALearn Trace Agent: analyse H7b** (`future_probes.md`; `nd_cautious_sechk`
+vs `baseline_cautious` on H0+H3). **H0 is closed**; **H1–H7a are analysed**;
+**H7b is run / awaiting Trace**; **no Bucket 3 claim**. Do not expand H6 into
 a full \(n\times\)steps grid without a further decision.
 
 

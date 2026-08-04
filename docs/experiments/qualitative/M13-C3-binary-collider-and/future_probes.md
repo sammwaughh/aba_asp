@@ -33,7 +33,9 @@ itself. H0 is the completed six-cell AAMAS+ECAI investigation on fixture
   `asm_intro(sechk)`) vs locked `ecai2024` (`relto`) on H0 and H3 `n30_seed42`
   (7 cells; all solved, all deltas differ; first-BK latch under sechk). Record:
   `h7a_relto_vs_sechk.md` / `.tex`. **Not a Bucket 3 claim.**
-- H7b: **not started** (cautious nd `sechk` vs `relto`; remain agnostic).
+- H7b: **`run / awaiting Trace analysis`** — experimental `nd_cautious_sechk`
+  (cautious nd + `asm_intro(sechk)`) vs `baseline_cautious` (`relto`) on H0
+  and H3 `n30_seed42` (7 cells). **Not a Bucket 3 claim.**
 - **Not** approved Bucket 3 claims
 - **Not** locked Bucket 1/2 claim content
 - **Not** report-facing prose (`docs/report/findings/` is out of scope)
@@ -193,7 +195,7 @@ without a further Samuel decision.
 | **H5** | Experimental `greedy_cautious` vs AAMAS brave on 18 cells; Analysis A inert; **run / analysed**; not AAMAS-paper config |
 | **H6** | Search cost under `baseline_cautious`; H6a steps 1/2/5/10; H6b n30/60/90 at steps2; **run / analysed** |
 | **H7a** | Brave nd `asm_intro(sechk)` vs `ecai2024`/`relto` on H0+H3; **run / analysed** (`h7a_relto_vs_sechk.md`) |
-| H7b | Cautious nd `sechk` vs `relto`; **not started** |
+| **H7b** | Cautious nd `sechk` vs `baseline_cautious`/`relto` on H0+H3; **`run / awaiting Trace`** |
 
 H3 is not a duplicate of H2: different DAG, different distractor placement/name,
 different primary config (ECAI nd vs AAMAS greedy), and distinct fixture ids.
@@ -592,7 +594,7 @@ Do not treat predictive rules for roots as mechanism recovery.
 | H5 experimental `greedy_cautious` AAMAS counterparts (18 cells) | **Run / analysed** | 2026-08-03 |
 | H6 folding_steps + nested-n ablation (H4-prompted) | **Approved** then **run / analysed** | 2026-08-03 |
 | H7a brave nd `sechk` vs `relto` (H0+H3) | **Approved** then **run / analysed** | 2026-08-04 |
-| H7b cautious nd `sechk` vs `relto` | **Not started** | 2026-08-04 |
+| H7b cautious nd `sechk` vs `relto` (H0+H3) | **Approved**; **run / awaiting Trace** | 2026-08-04 |
 
 ## Current status and remaining work
 
@@ -617,5 +619,7 @@ Do not treat predictive rules for roots as mechanism recovery.
   contraries. Collections:
   `.../{m13_bucket3_binary_collider_and,m13_bucket3_binary_bd_and_lead_a}/nd_brave_sechk/n30_seed42/`.
   Full evidence narrative: `h7a_relto_vs_sechk.md`. **Not a claim.**
-- **H7b:** not started.
+- **H7b:** **`run / awaiting Trace analysis`**. Collections:
+  `.../{collider_and,bd_and_lead_a}/nd_cautious_sechk/n30_seed42/`;
+  comparator existing `baseline_cautious`. No final narrative yet. **Not a claim.**
 - Still **no** Bucket 3 claim.

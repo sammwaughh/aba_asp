@@ -4,9 +4,9 @@
 
 `proposed | planned | implemented | run | analysed | reported`
 
-Current status: **`H0 closed / analysed`; H1–H6 and H7a run / analysed** —
-M1.3 Bucket 3 baseline and H1–H7a probes documented; H7b not started; **no
-Bucket 3 claim**.
+Current status: **`H0 closed / analysed`; H1–H6 and H7a run / analysed; H7b
+run / awaiting Trace** — M1.3 Bucket 3 baseline and H1–H7a probes documented;
+H7b collections executed pending Trace Agent analysis; **no Bucket 3 claim**.
 
 ### H0 versus H1–H7
 
@@ -21,7 +21,7 @@ Bucket 3 claim**.
 | **H5** | Experimental `greedy_cautious` vs AAMAS brave on 18 cells. **Run / analysed.** Record: `h5_greedy_cautious.md` / `.tex`. Not an AAMAS-paper config. **Not a claim.** |
 | **H6** | Folding-step + nested-n ablation under `baseline_cautious`. **Run / analysed.** Record: `h6_folding_and_n_ablation.md` / `.tex`. **Not a claim.** |
 | **H7a** | Brave nd `asm_intro(sechk)` vs `ecai2024`/`relto` on H0+H3. **Run / analysed.** Record: `h7a_relto_vs_sechk.md` / `.tex`. **Not a claim.** |
-| **H7b** | Cautious nd `sechk` vs `relto`. **Not started.** |
+| **H7b** | Cautious nd `sechk` vs `baseline_cautious`/`relto` on H0+H3. **`Run / awaiting Trace.`** Catalogue: `future_probes.md`. **Not a claim.** |
 
 **H0 close means:** baseline learning analysis finished.  
 **H1–H6 and H7a complete means:** those probes are run and documented.
@@ -37,7 +37,8 @@ Closed H0 learning record: `learning_analysis.md` / `learning_analysis.tex`.
 **H5 record:** `h5_greedy_cautious.md` / `h5_greedy_cautious.tex`.  
 **H6 record:** `h6_folding_and_n_ablation.md` / `h6_folding_and_n_ablation.tex`.
 **H7a record:** `h7a_relto_vs_sechk.md` / `h7a_relto_vs_sechk.tex`.
-**Remaining:** `future_probes.md` / `future_probes.tex` (H7b not started).
+**H7b / remaining:** `future_probes.md` / `future_probes.tex`
+(H7b run / awaiting Trace).
 
 ## Purpose
 

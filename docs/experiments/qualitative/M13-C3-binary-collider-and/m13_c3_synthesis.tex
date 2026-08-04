@@ -1,0 +1,1182 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=24mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{longtable}
+\usepackage{tabularx}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage[hidelinks]{hyperref}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+\setlist{leftmargin=*,nosep}
+\emergencystretch=3em
+\renewcommand{\arraystretch}{1.16}
+
+\definecolor{codebg}{RGB}{247,247,247}
+\definecolor{rulegrey}{RGB}{92,92,92}
+\lstset{
+  basicstyle=\ttfamily\small,
+  backgroundcolor=\color{codebg},
+  frame=single,
+  rulecolor=\color{rulegrey},
+  breaklines=true,
+  columns=fullflexible,
+  keepspaces=true,
+  showstringspaces=false,
+  aboveskip=0.7em,
+  belowskip=0.7em
+}
+
+\DeclareRobustCommand{\code}[1]{\texttt{\detokenize{#1}}}
+\newcommand{\ABALearn}{\textsc{ABALearn}}
+\newcommand{\Hprobe}[1]{\textbf{H#1}}
+\newcommand{\Epos}{E^{+}}
+\newcommand{\Eneg}{E^{-}}
+\newcommand{\notindep}{\not\!\perp\!\!\!\perp}
+\newcommand{\indep}{\perp\!\!\!\perp}
+\newcommand{\evidence}{\paragraph{Evidence.}}
+\newcommand{\boundary}{\paragraph{Boundary.}}
+\newcommand{\interpretation}{\paragraph{Interpretation.}}
+
+\title{What Target-wise ABA Learning Learns from\\
+Deterministic Causal Fixtures\\[0.35em]
+\large M1.3 Bucket 3 synthesis of H0--H7a}
+\author{Working research synthesis for discussion with Fabrizio}
+\date{4 August 2026}
+
+\begin{document}
+\maketitle
+
+\begin{center}
+\fbox{\begin{minipage}{0.92\textwidth}
+\textbf{Document status.}
+This is a supervisor-facing working synthesis of the completed H0--H7a
+evidence. It is not submitted-report prose and it does not lock a Bucket~3
+claim. H7b, the cautious-nd \code{relto}--\code{sechk} comparison, is underway
+and is deliberately excluded from the findings and candidate claims below.
+The document distinguishes direct observations, trace-supported explanations,
+bounded interpretations, and candidate claims for discussion.
+\end{minipage}}
+\end{center}
+
+\begin{abstract}
+This investigation asks what target-wise ABA Learning does when its only
+learner-visible input is a finite binary table sampled from a known causal
+fixture. The central fixture is the deterministic AND collider
+\(A\rightarrow C\leftarrow B\), with independent stochastic roots and
+\(C=A\land B\). The graph, population, finite table, learner encoding, learned
+framework, and evaluator-only mechanism reference are kept separate. The
+desirable deterministic target is \(C\); root-target runs are retained as
+diagnostics of predictive overreach and search behaviour.
+
+Across H0--H7a, \ABALearn{} sometimes emits the direct AND rule, but this
+result is not invariant to sample support, irrelevant variables, background
+predicate order, search strategy, learning semantics, folding budget, or
+assumption-introduction policy. A procedural \code{solved} outcome can denote
+a mechanism-aligned rule, a non-minimal distractor-retaining theory, or a brave
+assumption construction that does not define the target from its observed
+predictors. The experiments therefore provide a controlled account of
+\emph{how} and \emph{why} target-wise ABA Learning succeeds or departs from
+the evaluator mechanism on these fixtures; they do not yet constitute
+Russo-style Causal ABA, CPDAG recovery, or a graph decoder.
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\section*{Executive findings}
+\addcontentsline{toc}{section}{Executive findings}
+
+The completed evidence supports the following bounded synthesis.
+
+\begin{enumerate}
+  \item \textbf{Exact mechanism-rule recovery is possible but not invariant.}
+  On the baseline sample, Greedy AAMAS learning of target \(c\) emits the
+  direct conjunction:
+\begin{lstlisting}
+c(A) :- a_val_1(A), b_val_1(A).
+\end{lstlisting}
+  Nd learning solves the same target with assumption-rich representations,
+  while added irrelevant variables are retained by both Greedy and nd.
+
+  \item \textbf{\code{solved} is not a scientific correctness criterion.}
+  It records successful completion under the selected semantics. It does not
+  establish minimality, mechanism agreement, or causal graph recovery.
+  Counterexamples include brave nd root solutions and solved child theories
+  containing isolated variables.
+
+  \item \textbf{Finite support can reverse apparent root learnability.}
+  Removing the rare \((0,0,0)\) witness makes Greedy emit false both-zero
+  rules for roots \(a\) and \(b\); restoring it makes the same rules fail.
+
+  \item \textbf{Irrelevant variables and background order affect structure.}
+  Greedy maximal co-occurrence retains an isolated variable in rule bodies.
+  Nd can select a BK-leading isolated variable at the first fold and build the
+  final framework around it.
+
+  \item \textbf{Brave versus cautious effects depend on the search bundle.}
+  Under nd/\code{relto}, cautious checking blocks a brave residual-assumption
+  gadget and changes outcomes or a contrary closure. Under
+  Greedy/\code{relto}, the semantic flip is inert on all 18 tested pairs,
+  apart from runtime.
+
+  \item \textbf{Long cautious-nd failures are repeated search.}
+  Increasing \code{folding_steps} replays essentially the same failed root
+  motif; increasing \(n\) enlarges per-band grounding and bookkeeping.
+
+  \item \textbf{Assumption introduction changes retained variables.}
+  Under brave nd, changing \code{relto} to \code{sechk} changes all seven
+  paired deltas. Here \code{sechk} latches onto the first BK predictor and
+  closes with an assumption chain, while \code{relto} more often reaches later
+  covariates after failed reuse.
+\end{enumerate}
+
+These findings describe the tested fixtures and configurations. They are not
+universal properties of ABA Learning and do not yet establish a Bucket~3
+claim.
+
+\section{Aim, scope, and interpretative standard}
+
+\subsection{Research question}
+
+\begin{quote}
+Given a finite table sampled from a known deterministic causal fixture, what
+rules and ABA structures does target-wise \ABALearn{} produce, under which
+conditions do those structures correspond to the generating mechanism, and
+what explains departures from it?
+\end{quote}
+
+The investigation begins below full causal graph discovery. A frozen table is
+encoded separately for each target. Target value \(1\) supplies \(\Epos\);
+target value \(0\) supplies \(\Eneg\); exact values of all non-target variables
+form the BK predicates. The learner is not told the graph, causal roles,
+population, mechanism reference, or CPDAG.
+
+All variables are run as targets to preserve target agnosticism at execution
+level. Evaluation remains role-sensitive: deterministic child \(c\) has a
+mechanism to recover, while a stochastic root has no deterministic rule over
+the other observed variables.
+
+\subsection{Objects kept separate}
+
+\begin{enumerate}
+  \item generating DAG \(G\);
+  \item structural mechanisms;
+  \item exact observational population \(P\);
+  \item finite IID sample \(\mathcal{D}_n\sim P\);
+  \item learner-visible BK and examples derived from \(\mathcal{D}_n\);
+  \item learned ABA framework and delta;
+  \item procedural outcome under brave or cautious semantics;
+  \item evaluator-only mechanism reference; and
+  \item graph-level recovery object such as a DAG, MEC, or CPDAG.
+\end{enumerate}
+
+A rule may cover the sample without being a population implication; a
+framework may satisfy brave examples without defining a function from BK to
+target; and a rule may mention a parent without orienting a causal edge.
+
+\subsection{Evaluation vocabulary}
+
+\begin{center}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{0.24\textwidth}X}
+\toprule
+Term & Meaning in this document \\
+\midrule
+\code{solved} & Accepted serialized framework under the selected semantics; a
+procedural outcome. \\
+No solution & The recorded \code{completed_no_solution} outcome: search
+terminated without an accepted theory, relative to the configured strategy
+and budget. \\
+\code{timeout} & Wall-time limit reached; not evidence of unlearnability. \\
+Sample-adequate & Framework meets encoded
+\(\langle\Epos,\Eneg\rangle\) on observed rows under the selected semantics. \\
+Mechanism-aligned string & Learned rule is syntactically identical to the
+evaluator rule; stronger than \code{solved}, but not graph recovery. \\
+Distractor-retaining & Learned theory refers to a variable absent from the
+target mechanism. \\
+Spurious finite-sample rule & Learned implication holds in the sample but is
+false in the population. \\
+Causal or graph recovery & Conclusion about mechanism, edges, MEC, or CPDAG;
+none follows automatically from the preceding categories. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+Satisfiability of \code{bk.sol_chk.asp} is a final-artefact integrity witness,
+not an additional recovery metric and, under cautious learning, not proof that
+every positive is a cautious consequence.
+
+\subsection{Relation to Causal ABA}
+
+The current pipeline is target-wise ABA Learning over tabular data. It learns
+rules, assumptions, and contraries by transforming BK and examples. It does
+not implement the Causal ABA machinery in which assumptions encode arrows,
+no-edge statements, or conditional independences, rules encode acyclicity and
+\(d\)-separation, and stable extensions correspond to candidate DAGs. It
+therefore should not be described as full causal discovery.
+
+\section{Causal fixtures and evaluator ground truth}
+
+\subsection{Baseline deterministic AND collider}
+
+\[
+G_0:\qquad A\longrightarrow C\longleftarrow B,
+\]
+with learner identifiers \(a,b,c\), and
+\begin{align*}
+A &\sim \operatorname{Bernoulli}(4/5),&
+B &\sim \operatorname{Bernoulli}(7/10),\\
+A &\indep B,& C&=A\land B.
+\end{align*}
+
+\begin{center}
+\begin{tabular}{@{}cccc@{}}
+\toprule
+\(A\) & \(B\) & \(C\) & \(P(A,B,C)\) \\
+\midrule
+0 & 0 & 0 & \(3/50=0.06\) \\
+0 & 1 & 0 & \(7/50=0.14\) \\
+1 & 0 & 0 & \(6/25=0.24\) \\
+1 & 1 & 1 & \(14/25=0.56\) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The other four binary assignments are structural zeros. Causal sufficiency is
+declared through mutually independent root exogenous noise. The Markov
+condition is verified by
+\[
+P(a,b,c)=P(a)P(b)P(c\mid a,b).
+\]
+Ordinary faithfulness is verified exactly by an exhaustive singleton-pair
+audit. The only population independence is \(A\indep B\); in particular,
+\(A\notindep B\mid C\), and each parent is dependent on \(C\).
+
+The ordinary CI MEC has one member and its CPDAG is
+\(A\rightarrow C\leftarrow B\). This is evaluator-side population truth.
+Deterministic relations can require recovery objects beyond ordinary CI, so no
+stronger deterministic-identifiability result is asserted.
+
+\subsection{Evaluator-only mechanism reference}
+
+\begin{lstlisting}
+c(A) :- a_val_1(A), b_val_1(A).
+\end{lstlisting}
+
+Targets \(a\) and \(b\) have
+\code{no_observed_parent_deterministic_rule}: they are stochastic roots. The
+graph, certificate, and mechanism reference are never learner-visible.
+
+\subsection{Frozen baseline sample}
+
+The seed-42 IID sample with \(n=30\) has counts:
+
+\begin{center}
+\begin{tabular}{@{}lr@{}}
+\toprule
+Assignment & Count \\
+\midrule
+\((1,1,1)\) & 17 \\
+\((1,0,0)\) & 7 \\
+\((0,1,0)\) & 4 \\
+\((0,0,0)\) & 2 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+All population atoms appear. Example counts are \(a:24/6\), \(b:21/9\), and
+\(c:17/13\), written as \(|\Epos|/|\Eneg|\). The same table is used for all
+H0 targets and configurations.
+
+For \(c\), all positives share \(A=B=1\). For target \(a\), predictor cell
+\((B,C)=(0,0)\) contains both labels: row 9 is \((1,0,0)\), while row 26 is
+\((0,0,0)\). No deterministic function of \((B,C)\) distinguishes them.
+Target \(b\) has the symmetric ambiguity.
+
+\subsection{Controlled fixture extensions}
+
+\begin{center}
+\begin{tabularx}{\textwidth}{
+  >{\raggedright\arraybackslash}p{0.22\textwidth}
+  >{\raggedright\arraybackslash}p{0.25\textwidth}X}
+\toprule
+Fixture & Structure & Purpose \\
+\midrule
+Baseline & \(A\rightarrow C\leftarrow B\), \(C=A\land B\) &
+Target geometry and AAMAS/ECAI baseline. \\
+Isolated trailing \(D\) & Same collider and AND; isolated
+\(D\sim\operatorname{Bernoulli}(1/2)\) &
+Test Greedy retention of an irrelevant trailing BK block. \\
+Isolated leading \(A\) & \(B\rightarrow C\leftarrow D\), \(C=B\land D\);
+isolated \(A\sim\operatorname{Bernoulli}(1/2)\) &
+Place an irrelevant variable first in target-\(c\) BK order \((a,b,d)\). \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+Each extension has verified Markov factorisation and ordinary faithfulness.
+Evaluator rules contain only the generating parents:
+
+\begin{lstlisting}
+% Collider plus isolated D:
+c(A) :- a_val_1(A), b_val_1(A).
+% BD collider plus isolated A:
+c(A) :- b_val_1(A), d_val_1(A).
+\end{lstlisting}
+
+\section{Experimental logic and comparison strength}
+
+\subsection{Learner configurations}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{
+  >{\raggedright\arraybackslash}p{0.21\textwidth}
+  >{\raggedright\arraybackslash}p{0.10\textwidth}
+  >{\raggedright\arraybackslash}p{0.14\textwidth}
+  >{\raggedright\arraybackslash}p{0.12\textwidth}
+  >{\raggedright\arraybackslash}p{0.12\textwidth}X}
+\toprule
+Identity & Semantics & Folding & Selection & Space & Assumption introduction \\
+\midrule
+\code{aamas2025} & brave & greedy & mgr & BK & \code{relto} \\
+\code{ecai2024} & brave & nd & any & all & \code{relto} \\
+\code{baseline_cautious} & cautious & nd & any & all & \code{relto} \\
+\code{greedy_cautious} & cautious & greedy & mgr & BK & \code{relto} \\
+\code{nd_brave_sechk} & brave & nd & any & all & \code{sechk} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\code{greedy_cautious} and \code{nd_brave_sechk} are experimental, not
+published AAMAS or ECAI methods. H6 configurations match
+\code{baseline_cautious} except for \code{folding_steps}.
+
+\subsection{Probe map}
+
+\begin{longtable}{@{}p{0.075\textwidth}p{0.24\textwidth}p{0.29\textwidth}p{0.31\textwidth}@{}}
+\toprule
+Probe & Question & Intervention & Principal evidence \\
+\midrule
+\endfirsthead
+\toprule
+Probe & Question & Intervention & Principal evidence \\
+\midrule
+\endhead
+\Hprobe{0} & Baseline behaviour by target & Same fixture/table; two strategy
+bundles & Six cells and traces. \\
+\Hprobe{1} & Missing support witness & Nested \(n=25\) versus \(n=30\), same
+seed/config & Root deltas and rows 26/30. \\
+\Hprobe{2} & Trailing irrelevant covariate & Add isolated \(D\); AAMAS target
+\(c\) & Two \(D\)-split conjunctions. \\
+\Hprobe{3} & BK-leading distractor & BD AND plus isolated leading \(A\) &
+First fold, \(a\)-gated delta, AAMAS contrast. \\
+\Hprobe{4} & Brave versus cautious on roots & Semantics only under
+nd/\code{relto} & Root outcomes and residual closure. \\
+\Hprobe{4b} & Brave versus cautious on H3 \(c\) & Same H3 table and nd bundle &
+One changed \code{c_alpha_3} rule. \\
+\Hprobe{5} & Brave versus cautious in Greedy & Semantics only; 18 pairs &
+Outcomes, byte-identical deltas, traces, runtime. \\
+\Hprobe{6a} & Folding-budget cost & \(M\in\{1,2,5,10\}\), fixed \(n=30\) &
+Token replays, lines, runtime. \\
+\Hprobe{6b} & Nested-\(n\) cost & \(n\in\{30,60,90\}\), fixed \(M=2\) &
+Fixed topology, growing per-band work. \\
+\Hprobe{7a} & \code{relto} versus \code{sechk} & Assumption policy only under
+brave nd & Seven pairs and trace forks. \\
+\Hprobe{7b} & Cautious counterpart to H7a & Underway &
+\textbf{Excluded from this evidence.} \\
+\bottomrule
+\end{longtable}
+
+\subsection{Three levels of comparison}
+
+\paragraph{Level 1: exact paired option ablations.}
+H4, H4b, H5, H6a, and H7a hold fixture, sample, encoding, and relevant inputs
+fixed while changing one option. They support the strongest procedural
+attribution.
+
+\paragraph{Level 2: controlled data or fixture interventions.}
+H1, H2, H3, and H6b alter the sample or fixture. H1 changes \(n\) and observed
+support; H6b changes multiplicities and computational size; H2/H3 change the
+observed variable set and order.
+
+\paragraph{Level 3: bundle-level qualitative contrasts.}
+AAMAS versus ECAI and Greedy-cautious versus baseline cautious change several
+search settings. They show behavioural differences but cannot attribute them
+to one option.
+
+\section{Baseline behaviour: target geometry and search strategy}
+
+\subsection{Outcome overview}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{
+  >{\raggedright\arraybackslash}p{0.12\textwidth}
+  >{\raggedright\arraybackslash}p{0.10\textwidth}
+  >{\raggedright\arraybackslash}p{0.20\textwidth}X}
+\toprule
+Arm & Target & Outcome & Learned form or failure \\
+\midrule
+AAMAS & \(c\) & \code{solved} & One assumption-free AND conjunction,
+string-identical to the evaluator rule. \\
+AAMAS & \(a,b\) & no solution & Both-one rule safe;
+both-zero rule conflicts with rows 26/30 and repair dead-ends. \\
+ECAI & \(c\) & \code{solved} & Under-fold to \(a=1\), add \(\alpha_1\),
+attack it when \(b=0\). \\
+ECAI & \(a,b\) & \code{solved} & Brave per-row choice in an ambiguous
+predictor cell; no root mechanism recovered. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection{Greedy AAMAS on the child}
+
+Every target-\(c\) positive lies in \(A=B=1\). Greedy BK folding constructs
+maximal co-occurrence body
+\(\{\code{a_val_1},\code{b_val_1}\}\); mgr removes duplicates. No negative
+shares it, so no assumption is introduced:
+
+\begin{lstlisting}
+c(A) :- a_val_1(A), b_val_1(A).
+\end{lstlisting}
+
+This syntactically matches the evaluator rule. It is the strongest H0
+mechanism-alignment observation, but remains bounded to target, table,
+encoding, and configuration. It does not recover the graph or establish
+irrelevant-variable robustness.
+
+\subsection{Greedy AAMAS on the roots}
+
+For target \(a\), positives occupy \((B,C)=(1,1)\) and \((0,0)\). Greedy
+proposes:
+
+\begin{lstlisting}
+a(A) :- b_val_1(A), c_val_1(A).
+a(A) :- b_val_0(A), c_val_0(A).
+\end{lstlisting}
+
+The first is safe. The second covers negative rows 26 and 30. Assumption
+introduction creates a defeasible both-zero rule, but contrary folding
+reconstructs the same body. Since the assumption is already present,
+\code{relto} cannot introduce another; the trace ends KO and
+\code{completed_no_solution}. Target \(b\) is symmetric.
+
+This is evaluator-compatible only in that no false deterministic root rule is
+emitted. It is not root-mechanism recovery.
+
+\subsection{Nd ECAI on the child}
+
+Nd folds one predicate at a time. With order \(a,b\), the first fold yields
+\(\code{c(A) :- a_val_1(A).}\), which covers seven \(A=1,B=0\) negatives.
+Assumption introduction follows; after an unsuccessful \(a\)-based contrary
+fold, \code{relto} reaches \code{b_val_0}:
+
+\begin{lstlisting}
+c(A) :- alpha_1(A), a_val_1(A).
+c_alpha_1(A) :- b_val_0(A).
+assumption(alpha_1(A)).
+contrary(alpha_1(A),c_alpha_1(A)) :- assumption(alpha_1(A)).
+\end{lstlisting}
+
+On this binary table, the theory derives \(c\) when \(a=1\) unless \(b=0\)
+attacks the required assumption. It is brave sample-adequate and mentions both
+parents across target and contrary rules, but is not the canonical conjunction
+and is not recorded as mechanism recovery.
+
+\subsection{Nd ECAI on the roots: brave choice construction}
+
+For target \(a\), ECAI first constructs a safe \(b=1\) block guarded by an
+assumption attacked at \(c=0\). The ambiguous \((B,C)=(0,0)\) cell then
+produces:
+
+\begin{lstlisting}
+a(A) :- alpha_2(A), b_val_0(A).
+c_alpha_2(A) :- alpha_3(A), c_val_0(A).
+c_alpha_3(A) :- alpha_2(A), b_val_0(A).
+\end{lstlisting}
+
+Rows 9 and 26 have identical BK but opposite labels. The ungrounded rules do
+not define \(a\) as a function of \((b,c)\). Different ground assumptions can
+take different statuses in a witnessing stable model. Brave learning requires
+existence of a stable model satisfying the joint task, not a unique
+predictor-to-target mapping.
+
+\interpretation
+H0 exposes distinct notions of success. AAMAS \(c\) produces a
+mechanism-aligned string. ECAI roots pass the brave task despite predictor
+ambiguity. Treating both merely as \code{solved} erases that distinction.
+
+\section{Finite-sample support: H1}
+
+H1 uses the first 25 rows of the same seed-42 stream and AAMAS configuration.
+The prefix contains \((1,1,1):14\), \((1,0,0):7\), and \((0,1,0):4\), with no
+\((0,0,0)\). The population still gives that atom probability \(3/50\).
+
+\begin{center}
+\begin{tabularx}{\textwidth}{
+  >{\raggedright\arraybackslash}p{0.11\textwidth}
+  >{\raggedright\arraybackslash}p{0.19\textwidth}
+  >{\raggedright\arraybackslash}p{0.19\textwidth}X}
+\toprule
+Target & H0 \(n=30\) & H1 \(n=25\) & Evaluator reading \\
+\midrule
+\(a\) & no solution & solved, two Horn rules & H0 desired; H1 spurious. \\
+\(b\) & no solution & solved, symmetric rules & H0 desired; H1 spurious. \\
+\(c\) & solved AND & solved AND & Control unchanged in kind. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\begin{lstlisting}
+a(A) :- b_val_1(A), c_val_1(A).
+a(A) :- b_val_0(A), c_val_0(A).
+b(A) :- a_val_1(A), c_val_1(A).
+b(A) :- a_val_0(A), c_val_0(A).
+\end{lstlisting}
+
+The both-zero rules are false population implications. They survive only
+because no opposite-label witness occurs in those sample cells. H0 and H1
+traces agree until the candidate is checked: H1 accepts it; H0 encounters
+rows 26/30, attempts repair, and dead-ends.
+
+\interpretation
+This is support sensitivity, not a generic sample-size benefit. Five rows
+matter because two instantiate the rare conflict. Nested prefixes control the
+stream but are not independent replicates, so H1 gives no across-seed
+frequency law.
+
+\section{Irrelevant variables and BK order: H2 and H3}
+
+\subsection{H2: trailing distractor under Greedy}
+
+H2 adds isolated binary root \(D\) after the parents in target-\(c\) BK order.
+Among \(n=30\) positive \(c\) rows, both \(D\) values occur nine times. AAMAS
+emits:
+
+\begin{lstlisting}
+c(A) :- a_val_1(A), b_val_1(A), d_val_1(A).
+c(A) :- a_val_1(A), b_val_1(A), d_val_0(A).
+\end{lstlisting}
+
+The pair is sample-adequate and jointly equivalent to AND on observed \(D\),
+but is non-minimal and contains a causally irrelevant variable. Greedy
+\code{folding_space(bk)} exhausts matching BK literals in each co-occurrence
+body, so it retains \code{d_val_1} or \code{d_val_0}; no later cross-rule
+compression removes \(D\).
+
+The secondary \(n=2\) prefix yields only
+\(\code{c :- a_val_1,b_val_1,d_val_1}\). This extreme
+1-positive/1-negative case is not H2's centre.
+
+\subsection{H3: leading distractor under nd}
+
+\[
+B\longrightarrow C\longleftarrow D,\qquad C=B\land D,
+\]
+with isolated \(A\) first in target-\(c\) order \(a,b,d\). The evaluator rule
+is:
+
+\begin{lstlisting}
+c(A) :- b_val_1(A), d_val_1(A).
+\end{lstlisting}
+
+ECAI's first fold is:
+
+\begin{lstlisting}
+folding result: c(A) <- [a_val_1(A)]
+\end{lstlisting}
+
+and final target rules remain gated by the isolated variable:
+
+\begin{lstlisting}
+c(A) :- alpha_1(A), a_val_1(A).
+c(A) :- alpha_2(A), a_val_0(A).
+\end{lstlisting}
+
+Contraries later mention \(b,d\), but the theory remains assumption-rich,
+\(a\)-conditioned, and different from the evaluator BD conjunction. All 15
+positives have \(b=d=1\), with both isolated \(a\) values present. The
+first-fold choice reflects representation order, not causal relevance.
+
+On the same table AAMAS emits:
+
+\begin{lstlisting}
+c(A) :- a_val_1(A), b_val_1(A), d_val_1(A).
+c(A) :- a_val_0(A), b_val_1(A), d_val_1(A).
+\end{lstlisting}
+
+The mechanism appears in each body but is unnecessarily split by \(A\).
+
+\subsection{H2--H3 synthesis}
+
+\begin{itemize}
+  \item Greedy maximal co-occurrence includes matching BK literals whether the
+  isolated variable is trailing or leading.
+  \item Nd is locally order-sensitive: a BK-leading irrelevant variable can
+  become the first fold and organise later assumptions.
+\end{itemize}
+
+H2/H3 form a controlled fixture family, not a pure source-code ablation. Their
+samples and identities differ. The trace explanations are supported, but do
+not imply that every irrelevant variable is always retained.
+
+\section{Learning semantics and search strategy: H4, H4b, and H5}
+
+\subsection{H4: cautious semantics blocks the root residual gadget}
+
+H4 fixes H0 fixture, sample, nd folding, selection, space, and \code{relto},
+changing brave to repository-baseline cautious. Outcomes:
+
+\begin{center}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+Target & Brave nd/\code{relto} & Cautious nd/\code{relto} \\
+\midrule
+\(a\) & solved & no solution \\
+\(b\) & solved & no solution \\
+\(c\) & solved & solved, byte-identical delta \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Root \(a\) traces coincide through early \(\alpha_1\)--\(\alpha_3\), then
+diverge when closing \code{c_alpha_3} with \(\alpha_2,\code{b_val_0}\):
+
+\begin{lstlisting}
+% Brave:
+found: alpha_2/1 ... OK
+% Cautious:
+found: alpha_2/1 ... KO
+cannot introduce an assumption for [b_val_0(A)]
+\end{lstlisting}
+
+Brave completes the per-row gadget; cautious rejects it, explores further,
+exhausts budget, and emits no delta. Target \(b\) mirrors this. Control \(c\)
+still solves with the byte-identical ECAI delta: the semantic change rejects a
+particular reuse, not every assumption-bearing solution.
+
+\subsection{H4b: precise change on H3 target
+\texorpdfstring{\(c\)}{c}}
+
+Both brave and cautious nd/\code{relto} solve H3 \(c\). Their deltas differ in
+exactly one rule:
+
+\begin{lstlisting}
+% Brave:
+c_alpha_3(A) :- alpha_1(A), a_val_1(A).
+% Cautious:
+c_alpha_3(A) :- d_val_1(A).
+\end{lstlisting}
+
+Cautious rejects \(\alpha_1\) reuse on \code{a_val_1}, then accepts
+\code{d_val_1}. Both arms retain the isolated-\(a\) target gates, the nested
+\(\alpha_1\) contrary side, the flat \(\alpha_2\) side, and repair order through
+\(\alpha_3\). Those shared structures arise from BK order, contrary-set
+composition, and \code{relto} repair order, not cautious semantics.
+
+\subsection{H5: the semantic flip is inert inside Greedy}
+
+H5 duplicates five completed AAMAS collections with experimental
+\code{greedy_cautious}. Across 18 paired cells:
+
+\begin{itemize}
+  \item all outcomes match;
+  \item every solved delta is byte-identical;
+  \item traces are isomorphic apart from entailment logging;
+  \item there are no Greedy-cautious timeouts; and
+  \item mean runtime is about \(1.84\times\), still below one second.
+\end{itemize}
+
+This includes H0 root no-solutions, H1 spurious roots, H2/H3 distractor
+theories, and H0/H1 AND rules. Cautious semantics does not repair Greedy's
+finite-sample or non-minimal outputs here.
+
+\subsection{No isolated semantics ranking}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{
+  >{\raggedright\arraybackslash}p{0.17\textwidth}
+  >{\raggedright\arraybackslash}p{0.33\textwidth}X}
+\toprule
+Cell & Greedy-cautious & Baseline cautious nd \\
+\midrule
+H0 roots & no-solution in about \(0.4\)s & same outcome after about
+\(5{,}000\) lines and \(66\)--\(70\)s \\
+H0 \(c\) & direct Horn AND & assumption-rich \(a\)-gate, \(b=0\) contrary \\
+H3 roots & short no-solution & timeout at 300s \\
+H3 \(c\) & Horn rules split on isolated \(a\) & \(a\)-gated assumptions with
+explicit \(d=1\) close \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+This is bundle-level: Greedy/mgr/BK and nd/any/all differ together. Cautious
+semantics alone explains neither learned theory nor computational cost.
+
+\section{Search-budget and sample-size cost: H6}
+
+\subsection{H6a: folding budget}
+
+At H0 \(n=30\), cautious-nd ceiling \(M\in\{1,2,5,10\}\) gives for target \(a\):
+
+\begin{center}
+\begin{tabular}{@{}rrrrr@{}}
+\toprule
+\(M\) & Outcome & Runtime (s) & Lines & New assumptions \\
+\midrule
+1 & no solution & 6.638 & 549 & 9 \\
+2 & no solution & 13.117 & 1047 & 18 \\
+5 & no solution & 32.775 & 2541 & 45 \\
+10 & no solution & 69.952 & 5031 & 90 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Target \(b\) mirrors this. Target \(c\) solves at every \(M\) with identical
+delta, 134 lines, and about \(1.3\)s.
+
+\code{folding_steps(M)} is a token ceiling, not exactly \(M\) successful folds.
+The decisive root KO occurs in budget one; failure increments the allowance
+and replays essentially the same motif:
+\[
+\operatorname{lines}(M)\approx C_{\mathrm{fixed}}+
+M C_{\mathrm{failed\ band}}.
+\]
+There are roughly nine new assumptions and 500 lines per band. Through
+\(M=10\), extra budget buys repeated failure, not a different explanation.
+
+\subsection{H6b: nested sample size at fixed budget}
+
+\begin{center}
+\begin{tabular}{@{}rrrrr@{}}
+\toprule
+\(n\) & \(a\) lines & \(a\) runtime & \(c\) lines & \(c\) runtime \\
+\midrule
+30 & 1047 & 13.117 & 134 & 1.279 \\
+60 & 1641 & 22.169 & 200 & 2.126 \\
+90 & 2241 & 32.291 & 266 & 3.033 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+At fixed \(M=2\), root topology stays fixed: 18 new assumptions, 32 KOs, one
+token increase. More rows enlarge grounded identifiers, rote rules,
+subsumption checks, and contraries. All atoms already occur at \(n=30\);
+multiplicities change from \(2/4/7/17\) to \(4/10/12/34\) to \(5/17/18/50\)
+for \((0,0,0)/(0,1,0)/(1,0,0)/(1,1,1)\).
+
+\interpretation
+H4's long root traces are primarily repeated token bands, with secondary
+per-band growth in \(n\). This is not a universal complexity law. No
+\(n\times M\) grid or interaction result exists.
+
+\section{Assumption introduction under brave nd: H7a}
+
+\subsection{Design and roles}
+
+H7a compares locked \code{ecai2024}/\code{relto} with experimental
+\code{nd_brave_sechk}/\code{sechk}. Brave, nd, steps 10, selection, space,
+post-fold checking, fixture, sample, BK, and examples are fixed in each pair.
+H0 and H3 \(n=30\) give seven pairs.
+
+\begin{center}
+\begin{tabularx}{\textwidth}{
+  >{\raggedright\arraybackslash}p{0.16\textwidth}
+  >{\raggedright\arraybackslash}p{0.26\textwidth}X}
+\toprule
+Cell & Role & Evaluative use \\
+\midrule
+H0/H3 \(c\) & deterministic child & desirable mechanism target \\
+H0 \(a\) & parent of \(c\), root as target & root diagnostic \\
+H3 \(b\) & parent of \(c\), root as target & role-peer of H0 \(a\) \\
+H3 \(a\) & isolated root & BK-leading distractor diagnostic \\
+H0 \(b\), H3 \(d\) & other parents, roots as targets & supporting mirrors \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection{Seven-pair result}
+
+Both arms solve every cell, but every paired delta differs:
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{
+  >{\raggedright\arraybackslash}p{0.10\textwidth}
+  >{\raggedright\arraybackslash}p{0.14\textwidth}
+  >{\raggedright\arraybackslash}p{0.20\textwidth}
+  >{\raggedright\arraybackslash}p{0.20\textwidth}X}
+\toprule
+Cell & BK order & Outcome & \code{sechk} variable & Extra \code{relto} vars \\
+\midrule
+H0 \(a\) & \(b,c\) & both solved & \(b\) & \(c\) \\
+H0 \(b\) & \(a,c\) & both solved & \(a\) & \(c\) \\
+H0 \(c\) & \(a,b\) & both solved & \(a\) & \(b\) \\
+H3 \(a\) & \(b,c,d\) & both solved & \(b\) & \(c,d\) \\
+H3 \(b\) & \(a,c,d\) & both solved & \(a\) & \(c,d\) \\
+H3 \(c\) & \(a,b,d\) & both solved & \(a\) & \(b,d\) \\
+H3 \(d\) & \(a,b,c\) & both solved & \(a\) & \(b,c\) \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+For H0 \(c\):
+
+\begin{lstlisting}
+% relto
+c(A) :- alpha_1(A), a_val_1(A).
+c_alpha_1(A) :- b_val_0(A).
+% sechk
+c(A) :- alpha_1(A), a_val_1(A).
+c_alpha_1(A) :- alpha_2(A), a_val_1(A).
+c_alpha_2(A) :- alpha_1(A), a_val_1(A).
+\end{lstlisting}
+
+The outer \(a=1\) gate is shared. \code{relto} brings mechanism parent \(b\)
+into the contrary; \code{sechk} closes on \(a\) alone. On H3 \(c\),
+\code{relto} also brings \(b,d\), while \code{sechk} uses only isolated \(a\).
+
+\subsection{Trace-supported explanation}
+
+\begin{itemize}
+  \item \code{relto} searches for an assumption relative to the folded body.
+  A KO can backtrack to another fold literal, admitting later BK variables.
+  \item \code{sechk} first mints a provisional assumption. Stable-extension
+  checking may replace or retain it. Here it often closes before the
+  alternative folds reached by \code{relto}.
+\end{itemize}
+
+\begin{lstlisting}
+relto: gen2: ... looking for assumption relative to
+sechk: gen2: generating NEW assumption: alpha_1(A)
+\end{lstlisting}
+
+Every H7a \code{sechk} delta cites the first predictor block and builds an
+assumption--contrary chain on it: the bounded first-BK latch plus alpha-chain
+pattern. It is not always \(a\); target \(a\)'s first predictor is \(b\).
+
+Byte-identical H0/H3 \code{sechk} root deltas reflect a learner template, not
+shared causal role. H0 \(a\) is a parent; H3 \(a\) is isolated; H3 \(b\) is
+H0 \(a\)'s role-peer.
+
+\boundary
+H7a shows a brave-nd control-flow and theory difference. It does not rank
+\code{relto}/\code{sechk}, prove a universal first-BK law, or show mechanism
+recovery. H7b is intentionally absent.
+
+\section{Cross-cutting synthesis}
+
+\subsection{What is recoverable}
+
+The deterministic \(c\) mechanism is representable in exact-value BK. H0 shows
+Greedy can emit it when positives share one parent configuration and no
+irrelevant predictors exist. This is a positive rule-level capability.
+
+It is not robust across interventions:
+\begin{itemize}
+  \item nd/\code{relto} represents the same relation with assumption/contrary;
+  \item Greedy retains isolated variables in H2/H3;
+  \item nd makes a leading isolated variable the outer gate in H3;
+  \item brave-nd \code{sechk} drops later mechanism parents in H7a; and
+  \item no target-wise outputs are automatically aggregated into a graph.
+\end{itemize}
+The evidence supports configuration-specific mechanism-rule recovery, not
+target-agnostic graph recovery.
+
+\subsection{\code{solved} versus correctness}
+
+\begin{enumerate}
+  \item H0 AAMAS \(c\): evaluator mechanism string.
+  \item H0 ECAI \(c\): defeasible, non-canonical sample representation.
+  \item H2/H3 \(c\): irrelevant-variable dependence.
+  \item Brave roots: assumption solutions despite no deterministic mechanism.
+\end{enumerate}
+Outcome, semantic adequacy, syntactic alignment, minimality, and causal
+recovery must remain separate.
+
+\subsection{Failure attribution}
+
+\begin{center}
+\begin{tabularx}{\textwidth}{
+  >{\raggedright\arraybackslash}p{0.23\textwidth}
+  >{\raggedright\arraybackslash}p{0.25\textwidth}X}
+\toprule
+Source & Evidence & Explanation \\
+\midrule
+Finite support & H1 & Rare counterexample absent, so false root rule survives. \\
+Representation/order & H2, H3 & Isolated variables enter maximal bodies or
+the first nd fold. \\
+Target geometry & H0 & Child has one positive parent cell; roots have
+opposite labels within predictor cells. \\
+Search strategy & H0, H3, H5 & Greedy and nd build different theories and
+incur different costs. \\
+Learning semantics & H4, H4b, H5 & Brave reuse may be accepted where cautious
+rejects it; effect depends on bundle. \\
+Search budget & H6a & Larger token ceiling repeats a failed motif. \\
+Grounding size & H6b & More rows enlarge fixed-topology bookkeeping. \\
+Assumption policy & H7a & \code{relto}/\code{sechk} take different repair paths
+and retain different covariates. \\
+Evaluation objective & All & Example satisfaction does not require minimality,
+functional determination, or graph recovery. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection{Strategy failure versus observational non-identifiability}
+
+The baseline population is ordinarily faithful to a singleton-MEC collider.
+An ideal infinite-data CI oracle would identify its ordinary CPDAG. The
+target-wise learner receives no CI tests, acyclicity theory, or graph objective,
+so non-canonical rules cannot be attributed automatically to Markov
+equivalence.
+
+Root ambiguity is instead an information limitation of the encoded
+predictor-to-target task: identical BK configurations have both labels. Brave
+semantics can construct a witness, but that does not make the root a function;
+H4 shows cautious semantics can refuse the construction.
+
+\begin{itemize}
+  \item H1: finite-sample support.
+  \item H2/H3: representation and strategy.
+  \item H4/H4b/H5: semantics conditioned by search.
+  \item H6: procedural cost.
+  \item H7a: assumption-introduction control flow.
+\end{itemize}
+None is by itself a general observational non-identifiability result.
+
+\subsection{Contribution and missing machinery}
+
+ABA Learning contributes interpretable rules, assumptions, contraries, and
+traces showing how conflicts are handled. The current bridge lacks:
+
+\begin{itemize}
+  \item aggregation from target-wise frameworks to DAG/CPDAG;
+  \item causal constraints distinguishing parents, proxies, and distractors;
+  \item invariance or minimality across rule presentations;
+  \item a general semantic-equivalence test against the mechanism; and
+  \item protection against finite-sample support gaps.
+\end{itemize}
+
+Later Causal ABA machinery might constrain graph-compatible hypotheses, expose
+independence information, guide folds, or prefer simpler compatible
+frameworks. These are motivations, not H0--H7a results.
+
+\section{Candidate claims for supervisor discussion}
+
+No claim below is locked. Each is scoped to completed evidence and should be
+revisited after H7b and supervisor review.
+
+\subsection*{C1: procedural solution is insufficient}
+\textbf{Statement.} On these deterministic colliders, \code{solved} does not
+establish mechanism recovery: solved theories may be canonical,
+assumption-mediated, distractor-retaining, or non-functional under brave
+grounding.
+
+\evidence H0 contrasts child conjunction and root choice; H2/H3 solve \(c\)
+with isolated variables; H7a solves all cells with different deltas.
+
+\boundary This concerns insufficiency of the label, not uselessness of solved
+theories or impossibility of semantic equivalence.
+
+\subsection*{C2: finite support can create spurious root rules}
+\textbf{Statement.} Under H0 Greedy AAMAS, omitting rare \((0,0,0)\) from the
+\(n=25\) prefix permits false both-zero root rules; its \(n=30\) presence
+blocks them.
+
+\evidence H1 fixes fixture, seed sequence, encoding, and configuration; traces
+diverge at rows 26/30.
+
+\boundary One seed/prefix contrast; not a general sample-complexity result.
+
+\subsection*{C3: irrelevant-variable retention is strategy-specific}
+\textbf{Statement.} On tested four-variable AND fixtures, Greedy and nd retain
+an isolated predictor by different procedures: maximal co-occurrence versus
+BK-leading first-fold repair.
+
+\evidence H2 supplies trailing-\(D\) Greedy; H3 supplies leading-\(A\) nd and
+an AAMAS contrast.
+
+\boundary Bounded fixtures/encodings, not a complete permutation study.
+
+\subsection*{C4: semantic effects depend on search}
+\textbf{Statement.} Brave-to-cautious changes learned behaviour under
+nd/\code{relto} but not outcomes or solved deltas under Greedy/\code{relto} on
+the tested collections.
+
+\evidence H4 changes root outcomes; H4b changes one \(c\) contrary closure; H5
+has 18/18 outcome matches and byte-identical solved deltas.
+
+\boundary No global brave/cautious ranking; direct nd/Greedy comparison is
+multi-option.
+
+\subsection*{C5: cautious-nd root cost is replayed failure}
+\textbf{Statement.} On H0 roots, cost grows with folding-token ceiling because
+budgets replay a similar failed motif; at fixed budget, nested \(n\) enlarges
+per-band work.
+
+\evidence H6a has about nine new assumptions per budget and near-linear line
+growth; H6b fixes NEW/KO topology while lines grow for \(n=30,60,90\).
+
+\boundary Limited slices, not universal complexity or an \(n\times M\)
+interaction.
+
+\subsection*{C6: assumption policy changes covariate structure}
+\textbf{Statement.} Under brave nd on H0/H3 \(n=30\), switching
+\code{relto} to \code{sechk} changes every delta; \code{sechk} follows a
+first-BK chain while \code{relto} more often reaches later covariates.
+
+\evidence Seven exact input-matched H7a pairs; all outcomes solved, all deltas
+different, all inspected traces share the initial fork.
+
+\boundary Bounded to brave nd on two fixtures; H7b is needed before extension
+to cautious semantics. No method ranking.
+
+\section{Limitations and questions for Fabrizio}
+
+\subsection{Limitations}
+\begin{itemize}
+  \item Narrow family: binary stochastic roots and deterministic AND child.
+  \item Mostly one seed and principal \(n=30\); prefixes are not replications.
+  \item H2/H3 cover two distractor positions, not all orders/mechanisms.
+  \item Binary exact-value encoding only; no missing/non-discrete data here.
+  \item Ordinary faithfulness does not settle all deterministic identifiability.
+  \item No general semantic equivalence checker for learned theories.
+  \item No target-union to graph, MEC, or CPDAG.
+  \item H4b non-\(c\) cautious cells timed out at 300s and were out of scope.
+  \item H7b is underway and may qualify H7a.
+\end{itemize}
+
+\subsection{Questions}
+\begin{enumerate}
+  \item Should semantically equivalent defeasible theories count as mechanism
+  recovery without syntactic identity?
+  \item What minimality/invariance condition should reject H2/H3 distractors?
+  \item Is root \code{completed_no_solution} a guardrail, non-result, or both?
+  \item What graph object should a target-wise collection produce?
+  \item Which causal constraints should later become learner-visible?
+  \item Which candidate claims need another fixture or seed?
+\end{enumerate}
+
+\section{Conclusion}
+
+H0--H7a provide a controlled, trace-backed account of target-wise ABA Learning
+on deterministic causal fixtures. Greedy can recover the direct AND rule when
+the representation is minimal and relevant sample cells are present. That
+behaviour is not stable across support, irrelevant predictors, search order,
+semantics, or assumption policy.
+
+The probes locate rather than merely enumerate failures: H1 identifies
+support; H2/H3 representation/order; H4/H5 semantics versus search; H6 cost;
+H7a assumption-introduction control flow. This attribution is the principal
+contribution of the investigation.
+
+The evidence does not show causal graph discovery. It does show where unguided
+symbolic learning produces a mechanism-aligned rule, where it instead builds
+predictive or defeasible alternatives, and what later causal guidance may
+need to constrain.
+
+\appendix
+
+\section{Compact evidence index}
+
+The records below share this directory:
+
+\begin{lstlisting}
+docs/experiments/qualitative/M13-C3-binary-collider-and/
+\end{lstlisting}
+
+Learner artefacts are relative to
+\path{causal/outputs/aba_learning/targetwise/}.
+
+\begin{itemize}
+  \item \textbf{H0:} \path{learning_analysis.md}; H0 fixture collections
+  \path{aamas2025/n30_seed42} and \path{ecai2024/n30_seed42}.
+
+  \item \textbf{H1:} \path{h1_support_ablation.md}; H0 fixture collection
+  \path{aamas2025/n25_seed42}.
+
+  \item \textbf{H2:} \path{h2_irrelevant_covariate.md}; collections below
+  \path{m13_bucket3_binary_collider_and_iso_d/aamas2025/}.
+
+  \item \textbf{H3:} \path{h3_bk_leading_distractor.md}; collections below
+  \path{m13_bucket3_binary_bd_and_lead_a/} for \path{ecai2024} and
+  \path{aamas2025} at \path{n30_seed42}.
+
+  \item \textbf{H4:} \path{h4_cautious_vs_brave.md}; H0 fixture collection
+  \path{baseline_cautious/n30_seed42}.
+
+  \item \textbf{H4b:} \path{h4b_cautious_split_under_a.md}; H3 fixture
+  collection \path{baseline_cautious/n30_seed42}.
+
+  \item \textbf{H5:} \path{h5_greedy_cautious.md}; all five completed AAMAS
+  fixture/sample counterparts under \path{greedy_cautious}.
+
+  \item \textbf{H6:} \path{h6_folding_and_n_ablation.md}; H0 fixture
+  collections under \path{baseline_cautious_steps1},
+  \path{baseline_cautious_steps2}, \path{baseline_cautious_steps5}, and the
+  reused \path{baseline_cautious} steps-10 collection.
+
+  \item \textbf{H7a:} \path{h7a_relto_vs_sechk.md}; H0 and H3 fixture
+  collections under \path{nd_brave_sechk/n30_seed42}.
+\end{itemize}
+
+\section{Selected provenance}
+\begin{itemize}
+  \item H0 spec: \path{causal/fixtures/specs/m13_bucket3_binary_collider_and.yaml}.
+  \item H0 reference:
+  \path{causal/outputs/causal_fixtures/m13_bucket3_binary_collider_and/mechanism_reference.json}.
+  \item H3 reference:
+  \path{causal/outputs/causal_fixtures/m13_bucket3_binary_bd_and_lead_a/mechanism_reference.json}.
+\end{itemize}
+
+Frozen sample SHA-256 digests:
+
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize]
+H0 n30_seed42
+1edae465d0f6b6b662b3c4ed4863af21c1d9b0c1cf428774731dd3f43282a8ca
+H1 n25_seed42
+c7ccf94c10a7862f34b7eeedb61529cf60ac0b13b932ac608beaea1a6d17fdd4
+H3 n30_seed42
+48bd0da0df696e29fb91e16e79bf30592b55c6dc16f34ee72e74aa36cc52db05
+\end{lstlisting}
+
+\section{Reproducibility pattern}
+
+\begin{lstlisting}
+python -m causal.targetwise.cli validate --config <targetwise-config.yaml>
+python -m causal.targetwise.cli run --config <targetwise-config.yaml>
+\end{lstlisting}
+
+Principal per-cell evidence:
+\begin{itemize}
+  \item \path{input/data.csv}: frozen learner-visible table;
+  \item \path{input/bk.aba}: exact-value BK;
+  \item \path{input/examples.json}: target-specific examples;
+  \item \path{output/prolog.stdout}: transformation/search trace;
+  \item \path{output/delta.aba}: learned additions when solved;
+  \item \path{output/bk.sol.aba}, \path{output/bk.sol.asp}, and
+  \path{output/bk.sol_chk.asp}: serialized and checked artefacts;
+  \item \path{metrics.json}: outcome/runtime/rule diagnostics; and
+  \item \path{summary.md}: collection outcome index.
+\end{itemize}
+
+Fixture populations, certificates, and \path{mechanism_reference.json} remain
+evaluator-only and are not copied into learner BK/examples.
+
+\section{Claim-status reminder}
+
+Candidate claims are proposals for discussion with Fabrizio. The canonical
+Bucket~3 hub still records no approved claim. H7b must be integrated before
+the H7 story is closed. Later report wording must be checked against canonical
+experiment records and the claims ledger.
+
+\end{document}

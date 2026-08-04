@@ -451,6 +451,32 @@ def test_nd_brave_sechk_config_matches_ecai_except_asm_intro() -> None:
     assert not (repo_root() / "configs" / "ecai2024_sechk_config.pl").exists()
 
 
+def test_nd_cautious_sechk_config_matches_baseline_except_asm_intro() -> None:
+    """H7b identity: baseline_cautious except asm_intro(sechk)."""
+    baseline = (
+        repo_root() / "configs" / "baseline_cautious_config.pl"
+    ).read_text(encoding="utf-8")
+    sechk = (
+        repo_root() / "configs" / "nd_cautious_sechk_config.pl"
+    ).read_text(encoding="utf-8")
+    shared = (
+        "learning_mode(cautious)",
+        "folding_mode(nd)",
+        "folding_steps(10)",
+        "folding_selection(any)",
+        "folding_space(all)",
+        "post_folding_test_entailment(true)",
+    )
+    for term in shared:
+        assert f"set_lopt({term})" in baseline
+        assert f"set_lopt({term})" in sechk
+    assert "set_lopt(asm_intro(relto))" in baseline
+    assert "set_lopt(asm_intro(sechk))" in sechk
+    assert "asm_intro(relto)" not in sechk
+    assert "set_lopt(check_ic)" in sechk
+    assert "learning_mode(brave)" not in sechk
+
+
 def test_config_rejects_unknown_learning_mode(tmp_path: Path) -> None:
     fixture_directory = _write_fixture_bundle(tmp_path)
     unknown_config = tmp_path / "unknown.pl"

@@ -35,10 +35,10 @@ The earlier n=100 scaled attempt was cut and is not part of the canonical experi
 | M11 | — | m1.1 Parent-position and representation-order control | analysed (Stages 0–7; ablations + greedy comparator) |
 | M12 | — | m1.2 Published-configuration comparison (ASP-ABAlearnB / Greedy ABA Learning) | analysed (Stages 0–3: 10-cell grid + full cell inspection / failure-mode taxonomy) |
 | M12x | — | m1.2 expanded U1–U7 (ECAI/AAMAS; val-only BK; 18 cells) | closed / analysed (18/18 Stage-3) |
-| M13 | — | m1.3 capabilities and limits of unguided ABA Learning for causal recovery | in progress (Buckets 1–2 locked; M13-C3 H0 closed; H1–H7a analysed; no claim) |
+| M13 | — | m1.3 capabilities and limits of unguided ABA Learning for causal recovery | in progress (Buckets 1–2 locked; M13-C3 H0 closed; H1–H7a analysed; H7b run/awaiting Trace; no claim) |
 | M13-C1 | M13 | Causal-role underdetermination under learner-input equivalence | analysed |
 | M13-C2 | M13 | Comparative sensitivity to BK feature-block order | analysed |
-| M13-C3 | M13 | Bucket 3 binary deterministic AND collider | **H0 closed**; **H1–H7a analysed** (no claim) |
+| M13-C3 | M13 | Bucket 3 binary deterministic AND collider | **H0 closed**; **H1–H7a analysed**; **H7b run / awaiting Trace** (no claim) |
 
 ## Template
 
@@ -280,7 +280,7 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
   probes **H1–H7a run / analysed** (**no claim**; includes H4b). H5 experimental
   `greedy_cautious` is **run / analysed** (`h5_greedy_cautious.md`); **H6 is
   `run / analysed`** (`h6_folding_and_n_ablation.md`); **H7a is
-  `run / analysed`** (`h7a_relto_vs_sechk.md`); H7b not started.
+  `run / analysed`** (`h7a_relto_vs_sechk.md`); **H7b is `run / awaiting Trace`**.
 - Planning docs: `docs/research/milestone_plans/milestone1_high_level_path.md`; `docs/research/milestone_plans/milestone1_part3/`.
 - Approach (method): `docs/research/milestone_plans/milestone1_part3/milestone1_part3_approach.md`.
 - Bucket 1 (locked): `docs/experiments/qualitative/M1.3-bucket1-claims.md` (TeX: `docs/report/findings/milestone1_part3_bucket1_claims.tex`).
@@ -293,7 +293,7 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
   `h4_cautious_vs_brave.md`; H4b: `h4b_cautious_split_under_a.md`; H5:
   `h5_greedy_cautious.md`; H6: `h6_folding_and_n_ablation.md`; H7a:
   `h7a_relto_vs_sechk.md`).
-- Next: H7b not started; still **no Bucket 3 claim**.
+- Next: Trace analysis of H7b; still **no Bucket 3 claim**.
 
 
 #### M13-C1 — causal-role underdetermination
@@ -323,8 +323,8 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
 
 #### M13-C3 — binary deterministic AND collider (Bucket 3)
 
-- Status: **`H0 closed`; `H1–H7a run / analysed`** (incl. H4b) — H7b not
-  started; **no Bucket 3 claim**.
+- Status: **`H0 closed`; `H1–H7a run / analysed`**; **`H7b run / awaiting Trace`**
+  (incl. H4b) — **no Bucket 3 claim**.
 - Record: `docs/experiments/qualitative/M13-C3-binary-collider-and/experiment.md`.
 - H0: `.../learning_analysis.md` / `.tex`.
 - H1: `.../h1_support_ablation.md` / `.tex`.
@@ -335,7 +335,7 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
 - H5: `.../h5_greedy_cautious.md` / `.tex`.
 - H6: `.../h6_folding_and_n_ablation.md` / `.tex`.
 - H7a: `.../h7a_relto_vs_sechk.md` / `.tex`.
-- Remaining probes: `.../future_probes.md` / `.tex` (H7b not started).
+- Remaining probes: `.../future_probes.md` / `.tex` (H7b run pending Trace).
 - H7a lead (bounded; not a claim): under brave nd, relto vs sechk — 7/7
   solved with differing deltas; sechk first-BK latch + α-chain vs richer
   relto contraries; not a method ranking.
@@ -368,4 +368,4 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
 - H6 collections (new):
   `.../m13_bucket3_binary_collider_and/baseline_cautious_steps{1,2,5}/...`
   plus nested `n60_seed42` / `n90_seed42` under steps2; steps-10 = reused H4.
-- Next: H7b not started; no claim.
+- Next: Trace analysis of H7b; no claim.
