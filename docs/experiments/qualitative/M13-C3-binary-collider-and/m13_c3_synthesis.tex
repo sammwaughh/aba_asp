@@ -47,7 +47,7 @@
 
 \title{What Target-wise ABA Learning Learns from\\
 Deterministic Causal Fixtures\\[0.35em]
-\large M1.3 Bucket 3 synthesis of H0--H7a}
+\large M1.3 Bucket 3 synthesis of H0--H7b}
 \author{Working research synthesis for discussion with Fabrizio}
 \date{4 August 2026}
 
@@ -57,11 +57,11 @@ Deterministic Causal Fixtures\\[0.35em]
 \begin{center}
 \fbox{\begin{minipage}{0.92\textwidth}
 \textbf{Document status.}
-This is a supervisor-facing working synthesis of the completed H0--H7a
+This is a supervisor-facing working synthesis of the completed H0--H7b
 evidence. It is not submitted-report prose and it does not lock a Bucket~3
-claim. H7b, the cautious-nd \code{relto}--\code{sechk} comparison, is now run
-and analysed but is not yet integrated into the findings and candidate claims
-below.
+claim. H7a and H7b are bounded implementation-behaviour probes of assumption
+introduction under brave and cautious nd respectively; neither is a method
+ranking or a causal-recovery result.
 The document distinguishes direct observations, trace-supported explanations,
 bounded interpretations, and candidate claims for discussion.
 \end{minipage}}
@@ -77,13 +77,16 @@ framework, and evaluator-only mechanism reference are kept separate. The
 desirable deterministic target is \(C\); root-target runs are retained as
 diagnostics of predictive overreach and search behaviour.
 
-Across H0--H7a, \ABALearn{} sometimes emits the direct AND rule, but this
+Across H0--H7b, \ABALearn{} sometimes emits the direct AND rule, but this
 result is not invariant to sample support, irrelevant variables, background
 predicate order, search strategy, learning semantics, folding budget, or
 assumption-introduction policy. A procedural \code{solved} outcome can denote
 a mechanism-aligned rule, a non-minimal distractor-retaining theory, or a brave
 assumption construction that does not define the target from its observed
-predictors. The experiments therefore provide a controlled account of
+predictors. Under brave nd, \code{sechk} produces a first-BK latch that drops
+later mechanism parents on the tested child targets; under cautious nd it can
+reach those parents later through deeper assumption nests. The experiments
+therefore provide a controlled account of
 \emph{how} and \emph{why} target-wise ABA Learning succeeds or departs from
 the evaluator mechanism on these fixtures; they do not yet constitute
 Russo-style Causal ABA, CPDAG recovery, or a graph decoder.
@@ -132,11 +135,13 @@ c(A) :- a_val_1(A), b_val_1(A).
   Increasing \code{folding_steps} replays essentially the same failed root
   motif; increasing \(n\) enlarges per-band grounding and bookkeeping.
 
-  \item \textbf{Assumption introduction changes retained variables.}
+  \item \textbf{Assumption introduction interacts with learning semantics.}
   Under brave nd, changing \code{relto} to \code{sechk} changes all seven
-  paired deltas. Here \code{sechk} latches onto the first BK predictor and
-  closes with an assumption chain, while \code{relto} more often reaches later
-  covariates after failed reuse.
+  paired deltas: \code{sechk} latches onto the first BK predictor and omits
+  later covariates. Under cautious nd, the two comparable child deltas also
+  differ, but \code{sechk} reaches the mechanism parents through deeper nests
+  and incurs more search. The brave pattern therefore does not transfer
+  unchanged to cautious learning.
 \end{enumerate}
 
 These findings describe the tested fixtures and configurations. They are not
@@ -352,12 +357,14 @@ Identity & Semantics & Folding & Selection & Space & Assumption introduction \\
 \code{baseline_cautious} & cautious & nd & any & all & \code{relto} \\
 \code{greedy_cautious} & cautious & greedy & mgr & BK & \code{relto} \\
 \code{nd_brave_sechk} & brave & nd & any & all & \code{sechk} \\
+\code{nd_cautious_sechk} & cautious & nd & any & all & \code{sechk} \\
 \bottomrule
 \end{tabularx}
 \end{center}
 
-\code{greedy_cautious} and \code{nd_brave_sechk} are experimental, not
-published AAMAS or ECAI methods. H6 configurations match
+\code{greedy_cautious}, \code{nd_brave_sechk}, and
+\code{nd_cautious_sechk} are experimental, not published AAMAS or ECAI
+methods. H6 configurations match
 \code{baseline_cautious} except for \code{folding_steps}.
 
 \subsection{Probe map}
@@ -391,15 +398,15 @@ Token replays, lines, runtime. \\
 Fixed topology, growing per-band work. \\
 \Hprobe{7a} & \code{relto} versus \code{sechk} & Assumption policy only under
 brave nd & Seven pairs and trace forks. \\
-\Hprobe{7b} & Cautious counterpart to H7a & Underway &
-\textbf{Excluded from this evidence.} \\
+\Hprobe{7b} & \code{relto} versus \code{sechk} under cautious nd & Assumption
+policy only on H0/H3 & Child deltas, failed-root cost, timeout limits. \\
 \bottomrule
 \end{longtable}
 
 \subsection{Three levels of comparison}
 
 \paragraph{Level 1: exact paired option ablations.}
-H4, H4b, H5, H6a, and H7a hold fixture, sample, encoding, and relevant inputs
+H4, H4b, H5, H6a, H7a, and H7b hold fixture, sample, encoding, and relevant inputs
 fixed while changing one option. They support the strongest procedural
 attribution.
 
@@ -780,9 +787,9 @@ H4's long root traces are primarily repeated token bands, with secondary
 per-band growth in \(n\). This is not a universal complexity law. No
 \(n\times M\) grid or interaction result exists.
 
-\section{Assumption introduction under brave nd: H7a}
+\section{Assumption introduction under nd: H7a and H7b}
 
-\subsection{Design and roles}
+\subsection{H7a design and roles}
 
 H7a compares locked \code{ecai2024}/\code{relto} with experimental
 \code{nd_brave_sechk}/\code{sechk}. Brave, nd, steps 10, selection, space,
@@ -805,7 +812,7 @@ H0 \(b\), H3 \(d\) & other parents, roots as targets & supporting mirrors \\
 \end{tabularx}
 \end{center}
 
-\subsection{Seven-pair result}
+\subsection{H7a seven-pair result}
 
 Both arms solve every cell, but every paired delta differs:
 
@@ -846,7 +853,7 @@ The outer \(a=1\) gate is shared. \code{relto} brings mechanism parent \(b\)
 into the contrary; \code{sechk} closes on \(a\) alone. On H3 \(c\),
 \code{relto} also brings \(b,d\), while \code{sechk} uses only isolated \(a\).
 
-\subsection{Trace-supported explanation}
+\subsection{H7a trace-supported explanation}
 
 \begin{itemize}
   \item \code{relto} searches for an assumption relative to the folded body.
@@ -872,8 +879,152 @@ H0 \(a\)'s role-peer.
 \boundary
 H7a shows a brave-nd control-flow and theory difference. It does not rank
 \code{relto}/\code{sechk}, prove a universal first-BK law, or show mechanism
-recovery. H7b is documented separately and intentionally absent from this
-H0--H7a synthesis version.
+recovery. Its first-BK latch is a bounded brave-nd pattern, not a prediction
+about cautious learning.
+
+\subsection{H7b design: the cautious counterpart}
+
+H7b holds the H0/H3 fixtures, frozen \(n=30\) tables, exact-value encoding,
+nd folding, steps 10, selection, space, and post-fold checking fixed. It
+compares locked \code{baseline_cautious}/\code{relto} from H4/H4b with
+experimental \code{nd_cautious_sechk}/\code{sechk}. The only
+learning-relevant option changed within each pair is assumption introduction.
+The comparator is not \code{ecai2024}: both H7b arms use cautious semantics.
+
+Seven targets were run, but the scientific comparisons have unequal strength:
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{
+  >{\raggedright\arraybackslash}p{0.10\textwidth}
+  >{\raggedright\arraybackslash}p{0.19\textwidth}
+  >{\raggedright\arraybackslash}p{0.17\textwidth}X}
+\toprule
+Question & Cell & Outcome pair & Evidential use \\
+\midrule
+Q1 & H0 \(c\) & solved / solved & Comparable deltas and traces. \\
+Q2 & H3 \(c\) & solved / solved & Comparable deltas and traces. \\
+Q3 & H0 \(b\) & no solution / no solution & Failed-search cost only. \\
+Q4 & H3 \(b\) & timeout / timeout & Non-comparable: both stdout files empty. \\
+Q5 & H3 \(a\) & timeout / timeout & Non-comparable: both stdout files empty. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+Only \(c\) is a desirable deterministic mechanism target. H0 \(b\) is a
+parent/root diagnostic; H3 \(b\) is its role-peer, whereas H3 \(a\) is an
+isolated distractor. Matching timeout labels on Q4--Q5 do not establish
+matching search because no trace was serialized.
+
+\subsection{H7b Q1--Q2: cautious child theories diverge}
+
+Both cautious policies solve \(c\) on both tables, but the paired deltas are
+different. Learner-visible data, BK, and examples are byte-identical within
+each pair.
+
+For Q1, the H0 \(c\) theories are:
+
+\begin{lstlisting}
+% baseline_cautious / relto
+c(A) :- alpha_1(A), a_val_1(A).
+c_alpha_1(A) :- b_val_0(A).
+
+% nd_cautious_sechk / sechk
+c(A) :- alpha_1(A), a_val_1(A).
+c_alpha_1(A) :- alpha_2(A), a_val_1(A).
+c_alpha_2(A) :- b_val_1(A).
+\end{lstlisting}
+
+The outer \(a=1\) gate is shared. Relative introduction closes the contrary
+directly with \code{b_val_0}; \code{sechk} first inserts another assumption
+layer on \code{a_val_1}, then reaches \code{b_val_1}. It therefore does not
+ignore parent \(b\), but represents the repair at greater depth.
+
+For Q2, both H3 \(c\) theories retain the isolated-\(a\) gates and cite the
+mechanism parents \(b\) and \(d\) somewhere in the contrary layer:
+
+\begin{center}
+\begin{tabularx}{\textwidth}{
+  >{\raggedright\arraybackslash}p{0.24\textwidth}
+  >{\raggedright\arraybackslash}p{0.18\textwidth}
+  >{\raggedright\arraybackslash}p{0.17\textwidth}X}
+\toprule
+Arm & Assumptions & Trace lines & Character \\
+\midrule
+H4b \code{relto} & 3 & 257 & Lean relative-KO path to \(b,d\). \\
+H7b \code{sechk} & 5 & 899 & Deeper nests and repeated NEW/\code{gen5}/KO cycles. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+The thicker \code{sechk} theory is still distractor-retaining because its
+ordinary target rules remain gated by isolated \(a\). Retaining \(b,d\) in
+contraries is therefore not mechanism recovery.
+
+\subsection{H7b trace explanation}
+
+H7a and H7b enter the same implementation fork after failed post-fold
+entailment:
+
+\begin{lstlisting}
+relto: gen2: ... looking for assumption relative to
+sechk: gen2: generating NEW assumption: alpha_1(A)
+\end{lstlisting}
+
+Under \code{relto}, a relative assumption is tried first. Under cautious
+\code{gen3}, reuse often receives KO, permitting backtracking to another fold
+literal. Under \code{sechk}, a provisional assumption is always minted and
+tested through \code{gen5}/\code{gen6}; cautious rejection can then force
+further search and eventually expose later \(b\) or \(d\) folds. Thus the
+control-flow fork is shared with H7a, but cautious entailment changes which
+repairs survive and how far search proceeds.
+
+This explains the bounded contrast: brave \code{sechk} closes early around
+the first predictor on the two child cells, whereas cautious \code{sechk}
+retains mechanism-parent covariates through later, deeper repairs. It is not
+evidence that cautious \code{sechk} is generally better.
+
+\subsection{H7b Q3--Q5: cost and evidence limits}
+
+For H0 target \(b\), neither cautious arm emits a delta. Both traverse the
+same folding-token ladder and finish with no solution, but \code{sechk}
+produces approximately 13,818 trace lines versus 5,118 for \code{relto}, with
+many more NEW/\code{gen5} attempts. This is a failed-search cost difference,
+not a learned-theory comparison and not root mechanism recovery.
+
+For H3 targets \(b\) and \(a\), both arms time out at 300 seconds and both
+stdout files contain zero bytes. Q4--Q5 therefore say only that the configured
+processes timed out; they provide no basis for saying that the search paths or
+hypotheses matched. The H3 target \(d\) timeout is supporting collection
+context, not one of the predeclared Q1--Q5 comparisons.
+
+\subsection{H7a--H7b synthesis}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{
+  >{\raggedright\arraybackslash}p{0.24\textwidth}
+  >{\raggedright\arraybackslash}p{0.31\textwidth}X}
+\toprule
+Property & H7a: brave nd & H7b: cautious nd \\
+\midrule
+Within-mode intervention & \code{relto} versus \code{sechk}; seven comparable
+solved deltas & \code{relto} versus \code{sechk}; two comparable solved child
+deltas, one failed-cost pair, two empty-log timeout pairs \\
+Child covariates under \code{sechk} & First-BK latch; later mechanism parents
+absent & Mechanism parents retained through deeper contrary nests \\
+Search character & Early assumption-chain closure & More cautious KO,
+backtracking, nesting, and cost \\
+Scientific reading & Assumption policy changes theory structure & The effect
+of that policy is conditioned by entailment semantics \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+Together the probes show that assumption introduction is a genuine procedural
+intervention, but its observable effect is not invariant to brave versus
+cautious evaluation. This is a bounded two-fixture interaction pattern, not a
+universal law or method ranking.
 
 \section{Cross-cutting synthesis}
 
@@ -888,7 +1039,9 @@ It is not robust across interventions:
   \item nd/\code{relto} represents the same relation with assumption/contrary;
   \item Greedy retains isolated variables in H2/H3;
   \item nd makes a leading isolated variable the outer gate in H3;
-  \item brave-nd \code{sechk} drops later mechanism parents in H7a; and
+  \item brave-nd \code{sechk} drops later mechanism parents in H7a;
+  \item cautious-nd \code{sechk} retains those parents in H7b, but through
+  deeper distractor-gated theories rather than the evaluator conjunction; and
   \item no target-wise outputs are automatically aggregated into a graph.
 \end{itemize}
 The evidence supports configuration-specific mechanism-rule recovery, not
@@ -900,6 +1053,8 @@ target-agnostic graph recovery.
   \item H0 AAMAS \(c\): evaluator mechanism string.
   \item H0 ECAI \(c\): defeasible, non-canonical sample representation.
   \item H2/H3 \(c\): irrelevant-variable dependence.
+  \item H7b cautious \(c\): solved with deeper, non-canonical
+  assumption/contrary theories under \code{sechk}.
   \item Brave roots: assumption solutions despite no deterministic mechanism.
 \end{enumerate}
 Outcome, semantic adequacy, syntactic alignment, minimality, and causal
@@ -925,8 +1080,9 @@ Learning semantics & H4, H4b, H5 & Brave reuse may be accepted where cautious
 rejects it; effect depends on bundle. \\
 Search budget & H6a & Larger token ceiling repeats a failed motif. \\
 Grounding size & H6b & More rows enlarge fixed-topology bookkeeping. \\
-Assumption policy & H7a & \code{relto}/\code{sechk} take different repair paths
-and retain different covariates. \\
+Assumption policy and semantics & H7a, H7b & \code{relto}/\code{sechk} take
+different repair paths; which covariates survive and at what cost depends on
+brave versus cautious checking. \\
 Evaluation objective & All & Example satisfaction does not require minimality,
 functional determination, or graph recovery. \\
 \bottomrule
@@ -951,7 +1107,8 @@ H4 shows cautious semantics can refuse the construction.
   \item H2/H3: representation and strategy.
   \item H4/H4b/H5: semantics conditioned by search.
   \item H6: procedural cost.
-  \item H7a: assumption-introduction control flow.
+  \item H7a/H7b: assumption-introduction control flow conditioned by
+  entailment semantics, with timeout-limited comparisons on H3 roots.
 \end{itemize}
 None is by itself a general observational non-identifiability result.
 
@@ -970,12 +1127,12 @@ traces showing how conflicts are handled. The current bridge lacks:
 
 Later Causal ABA machinery might constrain graph-compatible hypotheses, expose
 independence information, guide folds, or prefer simpler compatible
-frameworks. These are motivations, not H0--H7a results.
+frameworks. These are motivations, not H0--H7b results.
 
 \section{Candidate claims for supervisor discussion}
 
 No claim below is locked. Each is scoped to completed evidence and should be
-revisited after H7b is integrated and after supervisor review.
+reviewed with Fabrizio before any claim is approved.
 
 \subsection*{C1: procedural solution is insufficient}
 \textbf{Statement.} On these deterministic colliders, \code{solved} does not
@@ -984,7 +1141,8 @@ assumption-mediated, distractor-retaining, or non-functional under brave
 grounding.
 
 \evidence H0 contrasts child conjunction and root choice; H2/H3 solve \(c\)
-with isolated variables; H7a solves all cells with different deltas.
+with isolated variables; H7a solves all cells with different deltas; H7b
+solves both child cells with further non-canonical deltas.
 
 \boundary This concerns insufficiency of the label, not uselessness of solved
 theories or impossibility of semantic equivalence.
@@ -1015,7 +1173,8 @@ nd/\code{relto} but not outcomes or solved deltas under Greedy/\code{relto} on
 the tested collections.
 
 \evidence H4 changes root outcomes; H4b changes one \(c\) contrary closure; H5
-has 18/18 outcome matches and byte-identical solved deltas.
+has 18/18 outcome matches and byte-identical solved deltas; H7a/H7b show that
+the \code{sechk} effect itself changes across brave and cautious contexts.
 
 \boundary No global brave/cautious ranking; direct nd/Greedy comparison is
 multi-option.
@@ -1032,16 +1191,21 @@ growth; H6b fixes NEW/KO topology while lines grow for \(n=30,60,90\).
 interaction.
 
 \subsection*{C6: assumption policy changes covariate structure}
-\textbf{Statement.} Under brave nd on H0/H3 \(n=30\), switching
-\code{relto} to \code{sechk} changes every delta; \code{sechk} follows a
-first-BK chain while \code{relto} more often reaches later covariates.
+\textbf{Statement.} Under nd on the tested H0/H3 tables, switching
+\code{relto} to \code{sechk} changes learned child theories, but the form of
+that change depends on entailment semantics. Brave \code{sechk} follows a
+first-BK chain and omits later mechanism parents; cautious \code{sechk} can
+reach those parents through deeper assumption nests and increased search.
 
-\evidence Seven exact input-matched H7a pairs; all outcomes solved, all deltas
-different, all inspected traces share the initial fork.
+\evidence Seven exact input-matched brave H7a pairs have different deltas;
+both exact input-matched cautious H7b child pairs also have different deltas.
+Their traces share the same initial \code{gen.pl} fork, while cautious checks
+change which repairs survive. H7b Q3 additionally shows greater failed-search
+work under \code{sechk}.
 
-\boundary Bounded to brave nd on two fixtures. H7b now supplies the cautious
-counterpart but must be integrated before any cross-semantic extension. No
-method ranking.
+\boundary Two fixtures, one seed, and only two completed cautious child-theory
+comparisons. H7b Q4--Q5 are non-comparable empty-log timeouts. No method
+ranking, universal interaction law, or mechanism-recovery conclusion.
 
 \section{Limitations and questions for Fabrizio}
 
@@ -1055,7 +1219,10 @@ method ranking.
   \item No general semantic equivalence checker for learned theories.
   \item No target-union to graph, MEC, or CPDAG.
   \item H4b non-\(c\) cautious cells timed out at 300s and were out of scope.
-  \item H7b is run / analysed but not yet integrated into this H0--H7a synthesis.
+  \item H7b Q4--Q5 timed out with empty traces, preventing comparison of the
+  H3 root search paths.
+  \item The brave/cautious assumption-policy comparison is not complete for
+  every target because cautious H3 roots did not produce inspectable traces.
 \end{itemize}
 
 \subsection{Questions}
@@ -1066,12 +1233,14 @@ method ranking.
   \item Is root \code{completed_no_solution} a guardrail, non-result, or both?
   \item What graph object should a target-wise collection produce?
   \item Which causal constraints should later become learner-visible?
-  \item Which candidate claims need another fixture or seed?
+  \item Does the semantics-conditioned \code{relto}/\code{sechk} pattern
+  persist across another mechanism, sample, or BK order?
+  \item Which candidate claims need another fixture or seed before approval?
 \end{enumerate}
 
 \section{Conclusion}
 
-H0--H7a provide a controlled, trace-backed account of target-wise ABA Learning
+H0--H7b provide a controlled, trace-backed account of target-wise ABA Learning
 on deterministic causal fixtures. Greedy can recover the direct AND rule when
 the representation is minimal and relevant sample cells are present. That
 behaviour is not stable across support, irrelevant predictors, search order,
@@ -1079,8 +1248,8 @@ semantics, or assumption policy.
 
 The probes locate rather than merely enumerate failures: H1 identifies
 support; H2/H3 representation/order; H4/H5 semantics versus search; H6 cost;
-H7a assumption-introduction control flow. This attribution is the principal
-contribution of the investigation.
+H7a/H7b assumption-introduction control flow and its dependence on entailment
+semantics. This attribution is the principal contribution of the investigation.
 
 The evidence does not show causal graph discovery. It does show where unguided
 symbolic learning produces a mechanism-aligned rule, where it instead builds
@@ -1130,6 +1299,10 @@ Learner artefacts are relative to
 
   \item \textbf{H7a:} \path{h7a_relto_vs_sechk.md}; H0 and H3 fixture
   collections under \path{nd_brave_sechk/n30_seed42}.
+
+  \item \textbf{H7b:} \path{h7b_cautious_relto_vs_sechk.md}; H0 and H3
+  fixture collections under \path{nd_cautious_sechk/n30_seed42}, compared
+  with the locked \path{baseline_cautious/n30_seed42} collections.
 \end{itemize}
 
 \section{Selected provenance}
@@ -1178,8 +1351,9 @@ evaluator-only and are not copied into learner BK/examples.
 \section{Claim-status reminder}
 
 Candidate claims are proposals for discussion with Fabrizio. The canonical
-Bucket~3 hub still records no approved claim. H7b must be integrated before
-the H7 story is closed. Later report wording must be checked against canonical
-experiment records and the claims ledger.
+Bucket~3 hub still records no approved claim. H7a and H7b are complete at the
+probe level; their cross-semantic interpretation remains bounded by the H7b
+timeouts. Later report wording must be checked against canonical experiment
+records and the claims ledger.
 
 \end{document}
