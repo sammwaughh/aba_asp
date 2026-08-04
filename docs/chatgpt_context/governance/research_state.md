@@ -175,10 +175,11 @@ Expanded Approach:
   Inspection: `M1.2-expanded-cell-inspection.md`.
 - **M1.3** — **in progress:** Bucket 1 **written / locked**; Bucket 2
   **locked / closed** with Claims 1–2 from M13-C1/C2; Bucket 3 baseline
-  **M13-C3 H0 closed**; probes **H1–H6 run / analysed** (**no claim**; includes
+  **M13-C3 H0 closed**; probes **H1–H7a run / analysed** (**no claim**; includes
   H4b). H5 experimental `greedy_cautious` is **run / analysed**
   (`h5_greedy_cautious.md`); H6 search-cost ablation is **run / analysed**
-  (`h6_folding_and_n_ablation.md`); H7 is signposted only in
+  (`h6_folding_and_n_ablation.md`); H7a relto vs sechk is **run / analysed**
+  (`h7a_relto_vs_sechk.md`); H7b is not started in
   `future_probes.md`. Method:
   `milestone1_part3_approach.md`. Records:
   `docs/experiments/qualitative/M1.3-bucket1-claims.md` (locked);

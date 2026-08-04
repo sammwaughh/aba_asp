@@ -1,0 +1,185 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=25mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,booktabs}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{microtype}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+\setlist{nosep,leftmargin=*}
+\emergencystretch=3em
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+\title{M13-C3 --- H7a \texttt{asm\_intro(relto)} vs \texttt{asm\_intro(sechk)}\\
+under brave nd}
+\author{}
+\date{H7a run / analysed / not a Bucket~3 claim}
+
+\begin{document}
+\maketitle
+
+\section{Status}
+
+\textbf{H7a run / analysed.}
+Bounded implementation-behaviour investigation of inherited ABALearn
+\texttt{asm\_intro} under brave nd on H0 and H3 \texttt{n30\_seed42}
+(7 cells).
+Markdown twin: \texttt{h7a\_relto\_vs\_sechk.md}.
+
+\textbf{Lead:} on all seven pairs both arms \texttt{solved}, but every delta
+differs --- a genuine \texttt{relto}$\leftrightarrow$\texttt{sechk} control-flow
+fork that systematically changes what is learned.
+Under sechk, deltas latch onto the first BK predictor and close with an
+$\alpha$-chain on that variable alone; under relto, later BK covariates more
+often enter the contrary layer.
+Config \texttt{nd\_brave\_sechk} is experimental (not \texttt{ecai2024\_sechk};
+not a published ECAI method).
+H0--H6 / H4b closed.
+\textbf{Not a Bucket~3 claim.}
+\textbf{H7b not started} (remain agnostic).
+
+\section{Research question}
+
+Holding fixture, frozen sample, encoding, brave semantics, nd folding, and all
+other learner options constant: how does changing \texttt{asm\_intro(relto)} to
+\texttt{asm\_intro(sechk)} affect what ABALearn learns and how search proceeds
+under brave nd?
+
+\section{Main finding --- the relto $\leftrightarrow$ sechk contrast}
+
+\subsection{They diverge}
+
+On all seven pairs (\texttt{ecai2024}/\texttt{relto} vs
+\texttt{nd\_brave\_sechk}/\texttt{sechk}): both arms \texttt{solved}; all
+deltas differ; BK/examples/data byte-identical within each pair.
+
+Especially for mechanism-relevant $c$:
+\begin{center}
+\begin{tabular}{@{}lL{0.38\textwidth}L{0.42\textwidth}@{}}
+\toprule
+Cell & Relto & Sechk \\
+\midrule
+H0 $c$ & gate $a$ + contrary \texttt{b\_val\_0} &
+  gate $a$ + $\alpha$-nest on $a$ only (no $b$) \\
+H3 $c$ & gate $a$ + contraries $b$/$d$ (+ nest) &
+  gate $a$ + $\alpha$-nest on $a$ only (no $b$/$d$) \\
+\bottomrule
+\end{tabular}
+\end{center}
+For child $c$, sechk is less covariate-informative than relto here.
+
+\subsection{Why they diverge}
+
+After failed post-fold entailment in \texttt{gen.pl}:
+\begin{itemize}
+  \item \textbf{Relto:} \texttt{exists\_assumption\_relto}; after \texttt{KO},
+    search can backtrack to another fold literal --- how later covariates enter.
+  \item \textbf{Sechk:} always mint provisional $\alpha$, then
+    \texttt{gen4}$\to$\texttt{gen5}/\texttt{gen6}; often never reaches those
+    alternative folds.
+\end{itemize}
+First fork (every pair):
+\begin{verbatim}
+relto:  looking for assumption relative to
+sechk:  generating NEW assumption: alpha_1(A)
+\end{verbatim}
+Genuine control-flow, not cosmetic logging.
+
+\subsection{Consistent pattern (7/7 sechk)}
+
+Every sechk delta: (i) exactly one observed BK predictor --- the first in that
+target's BK order; (ii) $\alpha$-chain on that variable's \texttt{*\_val\_*}
+literals; (iii) no later BK covariates in the contrary layer.
+Phrase: first-BK latch + $\alpha$-chain under sechk vs richer contrary
+covariates under relto (not ``always gate on $a$'': sechk target $a$ uses only
+$b$).
+
+Cross-fixture: H0 sechk $a$ byte-identical to H3 sechk $a$; H0 sechk $b$ to
+H3 sechk $b$ --- shared template, \emph{not} shared causal role of $a$.
+
+\section{Setup}
+
+Relto: \texttt{configs/ecai2024\_config.pl}.
+Sechk: \texttt{configs/nd\_brave\_sechk\_config.pl} (experimental).
+Intervention: only \texttt{asm\_intro}.
+Held fixed: brave, nd, steps~10, any, all, \texttt{check\_ic}.
+Fixtures: H0 \texttt{m13\_bucket3\_binary\_collider\_and}; H3
+\texttt{m13\_bucket3\_binary\_bd\_and\_lead\_a}; sample \texttt{n30\_seed42}.
+
+Role discipline: only $c$ is a desirable det.\ mechanism target; H0 $a$ is a
+parent of $c$ but exogenous as learning target; H3 $a$ is \emph{isolated};
+role-peer of H0 $a$ is H3 $b$.
+\texttt{solved}${}\neq{}$ mechanism recovery.
+
+Paths:
+\texttt{.../<fixture>/\{ecai2024,nd\_brave\_sechk\}/n30\_seed42/}.
+
+\section{Seven-cell paired summary}
+
+{\footnotesize
+\begin{center}
+\begin{tabular}{@{}lllcll@{}}
+\toprule
+Cell & BK order & out & $\Delta{=}$? & sechk sole & relto also \\
+\midrule
+H0 $a$ & $b,c$ & both sol. & no & $b$ & $b{+}c$ \\
+H0 $b$ & $a,c$ & both sol. & no & $a$ & $a{+}c$ \\
+H0 $c$ & $a,b$ & both sol. & no & $a$ & $a{+}\mathbf{b}$ \\
+H3 $a$ & $b,c,d$ & both sol. & no & $b$ & $b{+}c/d$ \\
+H3 $b$ & $a,c,d$ & both sol. & no & $a$ & $a{+}c/d$ \\
+H3 $c$ & $a,b,d$ & both sol. & no & $a$ & $a{+}\mathbf{b/d}$ \\
+H3 $d$ & $a,b,c$ & both sol. & no & $a$ & $a{+}b/c$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+}
+
+\section{Primary contrast excerpts}
+
+H0 $c$ relto:
+\begin{verbatim}
+c(A) :- alpha_1(A), a_val_1(A).
+c_alpha_1(A) :- b_val_0(A).
+\end{verbatim}
+H0 $c$ sechk:
+\begin{verbatim}
+c(A) :- alpha_1(A), a_val_1(A).
+c_alpha_1(A) :- alpha_2(A), a_val_1(A).
+c_alpha_2(A) :- alpha_1(A), a_val_1(A).
+\end{verbatim}
+H3 $c$: relto retains $b$/$d$ in contraries; sechk $\alpha$-nest on $a$ only.
+H3 $a$ (isolated) vs H3 $b$ (parent): sechk sole vars $b$ vs $a$; H0/H3 sechk
+$a$ (resp.\ $b$) deltas byte-identical --- not shared causal role of $a$.
+
+\section{What changed / did not / left open}
+
+Changed: repair path; every delta; contrary covariates (esp.\ loss of $b$/$d$
+on $c$ under sechk).
+Unchanged: brave+nd bundle otherwise; inputs within pairs; \texttt{solved}
+outcomes here.
+Open: H7b cautious nd --- remain agnostic.
+
+\section{Boundaries / non-claims}
+
+\begin{itemize}
+  \item Not a Bucket~3 claim.
+  \item \texttt{solved} $\neq$ causal / mechanism recovery.
+  \item Not a ranking of sechk vs relto as generally better.
+  \item Pattern on these tables $\neq$ universal law.
+  \item Do not conflate H3 $a$ (isolated) with H0 $a$ (parent).
+  \item Do not call \texttt{nd\_brave\_sechk} an ECAI-paper config.
+  \item H7b not started; H0--H6 / H4b readings preserved.
+\end{itemize}
+
+\section{Next}
+
+H7a documentation complete.
+H7b not started (remain agnostic).
+Still \textbf{no Bucket~3 claim}.
+
+\end{document}

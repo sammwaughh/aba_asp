@@ -102,13 +102,13 @@ Bucket 1 (**locked**): `docs/experiments/qualitative/M1.3-bucket1-claims.md`
 (TeX: `docs/report/findings/milestone1_part3_bucket1_claims.tex`)  
 Bucket 2 (**locked / closed; two claims**): `docs/experiments/qualitative/M1.3-bucket2-claims.md`
 (TeX: `docs/report/findings/milestone1_part3_bucket2_claims.tex`)
-Bucket 3 (**H0–H6 complete / analysed incl. H4b; no claim**):
+Bucket 3 (**H0–H7a complete / analysed incl. H4b; no claim**):
 `docs/experiments/qualitative/M1.3-bucket3-claims.md`
 
 Buckets 1–2 turn the locked M12x inspection and M13-C1/C2 controls into six
 evidence-backed claims. Bucket 3 now follows Fabrizio's 31 July deterministic-mechanism
-direction one case at a time. Baseline H0 and probes H1–H6 are complete /
-analysed (incl. H4b); H7 signposted.
+direction one case at a time. Baseline H0 and probes H1–H7a are complete /
+analysed (incl. H4b); H7b not started.
 No Bucket 3 claim or broader comparative design is approved.
 Prior provisional claim
 drafting from earlier M12x grids remains **withdrawn** (2026-07-20) and must not be
@@ -132,7 +132,8 @@ After M1.3, consolidate findings into a Milestone 1 conclusion:
 5. which diagnosed limitations motivate Causal ABA-style guidance in Milestone 2.
 
 **Current progress:** Part 1 closed. Part 2 (M12x) **closed**. Part 3 (M1.3) **in
-progress** — Buckets 1–2 locked; Bucket 3 H0–H6 complete / analysed (including
+progress** — Buckets 1–2 locked; Bucket 3 H0–H7a complete / analysed (including
 H4b); H5 uses experimental `greedy_cautious` and is not an AAMAS-paper method;
-H6 is a procedural search-cost probe; H7 is signposted; no Bucket 3 claim.
+H6 is a procedural search-cost probe; H7a is a brave-nd
+implementation-behaviour probe; H7b is not started; no Bucket 3 claim.
 No Part 4 / M1.4.

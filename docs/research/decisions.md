@@ -38,7 +38,8 @@ completed AAMAS collections (18 cells); see
 `.../h5_greedy_cautious.md`. That config is experimental and is **not** an
 AAMAS-paper method. **H6** (folding_steps + nested-n ablation under
 `baseline_cautious`) is **run / analysed** (`h6_folding_and_n_ablation.md`);
-**H7a** (brave nd `sechk` vs `relto`) is **run / awaiting Trace**; H7b not
+**H7a** (brave nd `sechk` vs `relto`) is **run / analysed**
+(`h7a_relto_vs_sechk.md`); H7b not
 started; still no Bucket 3 claim.
 
 ## 2026-08-04 — Approve and run H7a brave nd `asm_intro(sechk)` vs `relto`
@@ -57,8 +58,11 @@ of inherited ABALearn `asm_intro` options under brave nd learning.
   H3 `d`. Preserve distinct roles of H0 `a` (cause of `c`) vs H3 `a` (isolated).
 - H7b (cautious nd) deferred. Not a Bucket 3 claim.
 
-**Status after Fixture Agent run:** both collections executed (7 cells); Trace
-Agent analysis pending; no final H7a evidence narrative yet.
+**Status after write-up:** H7a is **run / analysed**. Evidence record:
+`docs/experiments/qualitative/M13-C3-binary-collider-and/h7a_relto_vs_sechk.md`
+(+ `.tex`). Lead: all 7 pairs solved with differing deltas; sechk first-BK
+latch + α-chain vs richer relto contraries. Not a Bucket 3 claim; H7b not
+started (remain agnostic).
 
 ## 2026-08-03 — Approve and run H6 folding-step / nested-n ablation
 

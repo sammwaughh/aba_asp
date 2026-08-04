@@ -18,7 +18,7 @@ repository `baseline_cautious` (cautious + nd / any / all / `relto`) on fixture
   deterministic mechanism target
 - H0–H5 remain closed / unchanged (cross-linked only)
 - **Not a Bucket 3 claim**
-- H7 signposted only (`future_probes.md`)
+- H7a analysed (`h7a_relto_vs_sechk.md`); H7b not started
 
 Companion records: `experiment.md`; `h4_cautious_vs_brave.md` (long-root cost
 being explained); `h5_greedy_cautious.md` (secondary cheaper no-sol via a
@@ -279,7 +279,7 @@ single-knob `folding_mode` ablation (same framing as H5 Analysis B).
   grid was not run).
 - Approximate / rough linearity only in these limited slices — not a universal
   complexity law.
-- H7 not started; H0–H5 scientific readings preserved.
+- H7b not started; H0–H5 scientific readings preserved.
 
 ---
 
@@ -294,5 +294,5 @@ single-knob `folding_mode` ablation (same framing as H5 Analysis B).
 
 ## Next
 
-H6 documentation is complete. H7 remains **signposted only**. Orchestrator /
-Samuel decides the next move. Still **no Bucket 3 claim**.
+H6 documentation is complete. H7a is run / analysed
+(`h7a_relto_vs_sechk.md`). H7b remains not started. Still **no Bucket 3 claim**.

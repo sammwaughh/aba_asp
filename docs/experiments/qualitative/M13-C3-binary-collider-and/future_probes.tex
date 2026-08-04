@@ -19,7 +19,7 @@
 motivated by closed H0}
 \author{}
 \date{H0 closed; H1--H5 run/analysed;\\
-H6 run / analysed; H7 signposted only (not claims)}
+H6--H7a run / analysed; H7b not started (not claims)}
 
 \begin{document}
 \maketitle
@@ -61,7 +61,8 @@ H0 is the completed six-cell AAMAS+ECAI investigation on fixture
     / \texttt{.tex}. \textbf{Not a Bucket~3 claim.} \textbf{Not} an
     AAMAS-paper config.
   \item H6: \textbf{run / analysed} (\texttt{h6\_folding\_and\_n\_ablation.md})
-  \item H7: \textbf{signposted only} (prompted by H4 traces; not
+  \item H7a: \textbf{run / analysed} (\texttt{h7a\_relto\_vs\_sechk.md})
+  \item H7b: \textbf{not started} (cautious nd; remain agnostic); not
     approved runs)
   \item \textbf{Not} approved Bucket~3 claims
   \item \textbf{Not} locked Bucket~1/2 claim content
@@ -226,8 +227,8 @@ claim.
     all completed AAMAS collections.
     \textbf{Run / analysed} (\texttt{h5\_greedy\_cautious.md}).
     Lead: brave$\to$cautious under Greedy is inert on these 18 cells.
-  \item \textbf{H6 (run / analysed); H7 (signposted only)} --- H6 was prompted
-    by H4; H7 is not an approved run.
+  \item \textbf{H6 and H7a (run / analysed); H7b not started} --- H6 and H7a
+    were prompted by H4 and are recorded separately from H4.
 \end{enumerate}
 
 Do not expand any family into a broader run matrix beyond these bounded probes
@@ -254,7 +255,9 @@ H3 & \textbf{ECAI} target \(c\) (primary); \textbf{BK order} puts independent
   control; \textbf{run / analysed} \\
 \textbf{H5} & Experimental \texttt{greedy\_cautious} vs AAMAS brave on 18
   cells; Analysis~A inert; \textbf{run / analysed}; not AAMAS-paper config \\
-H6 & Run / analysed; length drivers under cautious+nd (H6a/H6b);
+H6 & Run / analysed; length drivers under cautious+nd (H6a/H6b);\\
+H7a & Run / analysed; brave nd relto vs sechk;\\
+H7b & Not started;
   brave \texttt{asm\_intro(sechk)} vs \texttt{relto} \\
 \bottomrule
 \end{tabular}
@@ -531,8 +534,8 @@ Full record: \texttt{h4\_cautious\_vs\_brave.md}.
 
 H5 is now \textbf{run / analysed} separately (\texttt{h5\_greedy\_cautious.md}).
 H6 is now \textbf{run / analysed} (\texttt{h6\_folding\_and\_n\_ablation.md}).
-H7 (brave \texttt{asm\_intro(sechk)} vs \texttt{relto} on the 9/26 conflict)
-remains a future probe prompted by H4 traces --- not started.
+H7a is now \textbf{run / analysed} (\texttt{h7a\_relto\_vs\_sechk.md}).
+H7b (cautious nd counterpart) remains not started.
 
 \section{Probe family H4b --- cautious $\alpha_3$ close under H3 leading-$a$ gates}
 
@@ -613,6 +616,23 @@ Not a claim; not an $n\times$steps interaction result.
 
 \textbf{Run / analysed.}
 Full narrative: \texttt{h6\_folding\_and\_n\_ablation.md}.
+
+
+\section{Probe family H7a --- brave nd \texttt{relto} vs \texttt{sechk}}
+
+Status: \textbf{run / analysed} / not a claim. H7b not started.
+Evidence: \texttt{h7a\_relto\_vs\_sechk.md} / \texttt{.tex}.
+
+\textbf{Lead (contrast).}
+On all seven H0+H3 pairs, both arms \texttt{solved} but every delta differs.
+Relto tries relative reuse first and often \texttt{KO}s into later fold
+literals; sechk always mints a provisional $\alpha$ then \texttt{gen5}-checks,
+often never taking those later-covariate folds.
+Under sechk: first-BK latch + $\alpha$-chain; under relto: richer contrary
+covariates (esp.\ for $c$).
+
+\subsection{Outcome (H7a)}
+\textbf{Run / analysed.} Full narrative: \texttt{h7a\_relto\_vs\_sechk.md}.
 
 \section{Boundary distinctions to preserve}
 
@@ -701,8 +721,10 @@ H5 experimental \texttt{greedy\_cautious} (18 cells) &
   \textbf{Run / analysed} & 2026-08-03 \\
 H6 folding/n ablation (H4-prompted) &
   \textbf{Approved} then \textbf{run / analysed} & 2026-08-03 \\
-H7 (H4-prompted) &
-  \textbf{Signposted only; not started} & 2026-08-03 \\
+H7a brave nd \texttt{sechk} vs \texttt{relto} &
+  \textbf{Approved} then \textbf{run / analysed} & 2026-08-04 \\
+H7b cautious nd \texttt{sechk} vs \texttt{relto} &
+  \textbf{Not started} & 2026-08-04 \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -730,7 +752,10 @@ H7 (H4-prompted) &
   \item \textbf{H6:} \textbf{complete} (\texttt{h6\_folding\_and\_n\_ablation.md}).
     Lead: root cost $\approx$ linear in \texttt{folding\_steps}$(M)$ and nested $n$
     at $M{=}2$. Not a claim.
-  \item \textbf{H7:} signposted only; not started.
+  \item \textbf{H7a:} \textbf{complete} (\texttt{h7a\_relto\_vs\_sechk.md}).
+    Lead: 7/7 solved with differing deltas; sechk first-BK latch vs richer
+    relto contraries. Not a claim.
+  \item \textbf{H7b:} not started (remain agnostic).
   \item Still \textbf{no} Bucket~3 claim and \textbf{no} expanded run matrix
     without a further Samuel decision.
 \end{itemize}

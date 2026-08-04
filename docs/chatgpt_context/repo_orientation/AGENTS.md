@@ -85,11 +85,13 @@ Key experiment records:
   Probe records: `M13-C1-causal-role-underdetermination/experiment.md`;
   `M13-C2-bk-feature-order/experiment.md`.
 - `docs/experiments/qualitative/M1.3-bucket3-claims.md` — M1.3 Bucket 3
-  (**H0–H6 complete / analysed incl. H4b; H7 signposted; no claim**).
+  (**H0–H7a complete / analysed incl. H4b; H7b not started; no claim**).
   H5 experimental `greedy_cautious` is documented in
   `M13-C3-binary-collider-and/h5_greedy_cautious.md` (not an AAMAS-paper
   config). H6 search-cost ablation:
-  `M13-C3-binary-collider-and/h6_folding_and_n_ablation.md`. Preserve the pre-pivot positive-stochastic diamond and its runs as
+  `M13-C3-binary-collider-and/h6_folding_and_n_ablation.md`.
+  H7a relto vs sechk:
+  `M13-C3-binary-collider-and/h7a_relto_vs_sechk.md`. Preserve the pre-pivot positive-stochastic diamond and its runs as
   infrastructure provenance; do not reinterpret them as deterministic claim
   evidence. Do not invent a claim, fixture portfolio, or run matrix before
   Samuel's approval.

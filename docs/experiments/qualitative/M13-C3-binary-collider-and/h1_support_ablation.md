@@ -13,8 +13,8 @@
 - H2 and H3 are documented in `h2_irrelevant_covariate.md` and
   `h3_bk_leading_distractor.md`; H4 and H4b are run / analysed
   (`h4_cautious_vs_brave.md`, `h4b_cautious_split_under_a.md`); H5 and H6 analysed
-  (`h5_greedy_cautious.md`, `h6_folding_and_n_ablation.md`); H7 signposted
-  (see `future_probes.md`)
+  (`h5_greedy_cautious.md`, `h6_folding_and_n_ablation.md`); H7a analysed
+  (`h7a_relto_vs_sechk.md`); H7b not started
 
 Companion records: `experiment.md` (hub); `future_probes.md` (probe catalogue);
 `learning_analysis.md` (closed H0).
@@ -229,5 +229,5 @@ co-occurrence covering is not mechanism recovery.
 H1 documentation is complete. Probes **H2–H5** (including H4b) are documented in
 `h2_irrelevant_covariate.md`, `h3_bk_leading_distractor.md`, and
 `h4_cautious_vs_brave.md`, with H4b in `h4b_cautious_split_under_a.md`, H5
-in `h5_greedy_cautious.md`, and H6 in `h6_folding_and_n_ablation.md`. H7 is signposted only
-in `future_probes.md`. Still **no Bucket 3 claim**.
+in `h5_greedy_cautious.md`, H6 in `h6_folding_and_n_ablation.md`, and H7a in
+`h7a_relto_vs_sechk.md`. H7b is not started. Still **no Bucket 3 claim**.

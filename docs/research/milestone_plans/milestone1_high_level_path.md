@@ -3,8 +3,8 @@
 **Role:** primary working reference for finishing Milestone 1.  
 **Parent index:** [`milestone1-plan.md`](milestone1-plan.md)  
 **Status:** active (2026-08-03) — **M12x closed**; M1.3 Buckets 1–2 **locked**;
-Bucket 3 H0–H6 complete / analysed (incl. H4b); H7
-signposted; **no Bucket 3 claim**
+Bucket 3 H0–H7a complete / analysed (incl. H4b); H7b
+not started; **no Bucket 3 claim**
 
 Organising question for all of Milestone 1:
 
@@ -26,7 +26,7 @@ against any Causal-ABA-informed solution.
 | **M1.1** | Closed | Parent-position / representation-order control; ordering mechanism established |
 | **M1.2 pilot** | Analysed (historical) | 10-cell pilot; superseded as primary evidence by M12x |
 | **M1.2 expanded (M12x)** | **Closed / analysed** | Fresh 18-cell run + Stage-3 inspection **18/18** (2026-07-20); evidence package locked for M1.3 |
-| **M1.3** | **In progress** | Buckets 1–2 locked; Bucket 3 H0–H6 complete / analysed (incl. H4b); H7 signposted; no Bucket 3 claim |
+| **M1.3** | **In progress** | Buckets 1–2 locked; Bucket 3 H0–H7a complete / analysed (incl. H4b); H7b not started; no Bucket 3 claim |
 | **M1.4** | Does not exist | Expanded controlled investigation remains within M1.3 |
 
 **Expanded M1.2 Approach:**  
@@ -64,11 +64,13 @@ Bucket 2 (**locked / closed; two claims**): `docs/experiments/qualitative/M1.3-b
 (TeX: `docs/report/findings/milestone1_part3_bucket2_claims.tex`).  
 Probe records: `M13-C1-causal-role-underdetermination/experiment.md`;
 `M13-C2-bk-feature-order/experiment.md`.  
-Bucket 3 (**H0–H6 complete / analysed, including H4b; no claim**):
+Bucket 3 (**H0–H7a complete / analysed, including H4b; no claim**):
 `docs/experiments/qualitative/M1.3-bucket3-claims.md`.
 
-**Immediate next step:** Orchestrator / Samuel decide whether to open signposted
-H7. H6 is run / analysed: under cautious+nd, the long H4 root traces are driven
+**Immediate next step:** Orchestrator / Samuel decide whether / when to open H7b.
+H7a is run / analysed: under brave nd, `relto` and `sechk` solved all seven
+paired cells with differing deltas. H6 is run / analysed: under cautious+nd,
+the long H4 root traces are driven
 primarily by cumulative folding-token-budget replay, with secondary per-band
 growth as nested sample size increases at fixed `folding_steps(2)`. H0–H5 remain
 closed with their recorded leads. The remaining 22 July dimensions are retained
