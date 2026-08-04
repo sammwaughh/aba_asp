@@ -88,6 +88,11 @@ It is **not** a published AAMAS configuration and must not be named
 `aamas_cautious`. It is distinct from repository-baseline `baseline_cautious`
 (nd / any / all).
 
+Experimental H7a uses `nd_brave_sechk` (`configs/nd_brave_sechk_config.pl`):
+the published ECAI brave nd / any / all / steps-10 bundle with
+`asm_intro(sechk)` instead of `relto`. It is **not** a published ECAI
+configuration and must not be named `ecai2024_sechk`.
+
 ## Commands
 
 Run from the repository root in the canonical `aba-asp` environment:

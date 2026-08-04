@@ -1,0 +1,17 @@
+description: "H7a experimental brave nd with asm_intro(sechk) on H3 n30_seed42. Comparator: ecai2024 (relto)."
+
+configuration:
+  id: nd_brave_sechk
+
+fixture:
+  directory: causal/outputs/causal_fixtures/m13_bucket3_binary_bd_and_lead_a
+  sample: samples/n30_seed42.csv
+
+encoding:
+  type: exact_value
+  example_policy: binary_one_vs_zero
+
+learner:
+  prolog_config: configs/nd_brave_sechk_config.pl
+  prolog_timeout_s: 300
+  joint_check_timeout_s: 5

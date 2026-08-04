@@ -425,6 +425,32 @@ def test_baseline_cautious_steps_configs_match_baseline_except_folding_steps(
     assert "learning_mode(brave)" not in ablation
 
 
+def test_nd_brave_sechk_config_matches_ecai_except_asm_intro() -> None:
+    """H7a identity: ecai2024 except asm_intro(sechk); not a published ECAI config."""
+    ecai = (repo_root() / "configs" / "ecai2024_config.pl").read_text(
+        encoding="utf-8"
+    )
+    sechk = (
+        repo_root() / "configs" / "nd_brave_sechk_config.pl"
+    ).read_text(encoding="utf-8")
+    shared = (
+        "learning_mode(brave)",
+        "folding_mode(nd)",
+        "folding_steps(10)",
+        "folding_selection(any)",
+        "folding_space(all)",
+    )
+    for term in shared:
+        assert f"set_lopt({term})" in ecai
+        assert f"set_lopt({term})" in sechk
+    assert "set_lopt(asm_intro(relto))" in ecai
+    assert "set_lopt(asm_intro(sechk))" in sechk
+    assert "asm_intro(relto)" not in sechk
+    assert "set_lopt(check_ic)" in sechk
+    assert "learning_mode(cautious)" not in sechk
+    assert not (repo_root() / "configs" / "ecai2024_sechk_config.pl").exists()
+
+
 def test_config_rejects_unknown_learning_mode(tmp_path: Path) -> None:
     fixture_directory = _write_fixture_bundle(tmp_path)
     unknown_config = tmp_path / "unknown.pl"

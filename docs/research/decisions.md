@@ -38,7 +38,27 @@ completed AAMAS collections (18 cells); see
 `.../h5_greedy_cautious.md`. That config is experimental and is **not** an
 AAMAS-paper method. **H6** (folding_steps + nested-n ablation under
 `baseline_cautious`) is **run / analysed** (`h6_folding_and_n_ablation.md`);
-H7 remains signposted only; still no Bucket 3 claim.
+**H7a** (brave nd `sechk` vs `relto`) is **run / awaiting Trace**; H7b not
+started; still no Bucket 3 claim.
+
+## 2026-08-04 — Approve and run H7a brave nd `asm_intro(sechk)` vs `relto`
+
+**Decision:** Open H7a as a controlled implementation-behaviour investigation
+of inherited ABALearn `asm_intro` options under brave nd learning.
+
+- Comparator: locked `ecai2024` (`asm_intro(relto)`).
+- Intervention config identity: **`nd_brave_sechk`**
+  (`configs/nd_brave_sechk_config.pl`) — matches ECAI except `asm_intro(sechk)`.
+  Do **not** call it `ecai2024_sechk`.
+- Fixtures/samples: H0 `m13_bucket3_binary_collider_and` / `n30_seed42` (targets
+  `a`,`b`,`c`) and H3 `m13_bucket3_binary_bd_and_lead_a` / `n30_seed42`
+  (`a`,`b`,`c`,`d`).
+- Primary scientific objects: H0 `c`,`a`; H3 `c`,`a`,`b`. Supporting: H0 `b`,
+  H3 `d`. Preserve distinct roles of H0 `a` (cause of `c`) vs H3 `a` (isolated).
+- H7b (cautious nd) deferred. Not a Bucket 3 claim.
+
+**Status after Fixture Agent run:** both collections executed (7 cells); Trace
+Agent analysis pending; no final H7a evidence narrative yet.
 
 ## 2026-08-03 — Approve and run H6 folding-step / nested-n ablation
 

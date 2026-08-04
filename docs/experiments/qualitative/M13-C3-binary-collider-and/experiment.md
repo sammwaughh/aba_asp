@@ -4,8 +4,10 @@
 
 `proposed | planned | implemented | run | analysed | reported`
 
-Current status: **`H0 closed / analysed`; H1–H6 run / analysed** — M1.3 Bucket 3
-baseline and H1–H6 probes documented; H7 signposted only; **no Bucket 3 claim**.
+Current status: **`H0 closed / analysed`; H1–H6 run / analysed; H7a run /
+awaiting Trace** — M1.3 Bucket 3 baseline and H1–H6 probes documented; H7a
+collections executed pending Trace Agent analysis; H7b not started; **no
+Bucket 3 claim**.
 
 ### H0 versus H1–H7
 
@@ -19,7 +21,8 @@ baseline and H1–H6 probes documented; H7 signposted only; **no Bucket 3 claim*
 | **H4b** | Cautious on H3 fixture target `c`: Layer B = \(\alpha_3\) close only; Layer A shared with H3. **Run / analysed.** Record: `h4b_cautious_split_under_a.md` / `.tex`. **Not H5. Not a claim.** |
 | **H5** | Experimental `greedy_cautious` vs AAMAS brave on 18 cells. **Run / analysed.** Record: `h5_greedy_cautious.md` / `.tex`. Not an AAMAS-paper config. **Not a claim.** |
 | **H6** | Folding-step + nested-n ablation under `baseline_cautious`. **Run / analysed.** Record: `h6_folding_and_n_ablation.md` / `.tex`. **Not a claim.** |
-| **H7** | Brave `asm_intro(sechk)` vs `relto`. **Signposted only; not started.** |
+| **H7a** | Brave nd `asm_intro(sechk)` vs `ecai2024`/`relto` on H0+H3. **`Run / awaiting Trace.`** Catalogue: `future_probes.md`. **Not a claim.** |
+| **H7b** | Cautious nd `sechk` vs `relto`. **Not started.** |
 
 **H0 close means:** baseline learning analysis finished.  
 **H1–H6 complete means:** those probes are run and documented.
@@ -34,8 +37,8 @@ Closed H0 learning record: `learning_analysis.md` / `learning_analysis.tex`.
 **H4b record:** `h4b_cautious_split_under_a.md` / `h4b_cautious_split_under_a.tex`.  
 **H5 record:** `h5_greedy_cautious.md` / `h5_greedy_cautious.tex`.  
 **H6 record:** `h6_folding_and_n_ablation.md` / `h6_folding_and_n_ablation.tex`.
-**Remaining probes:** `future_probes.md` / `future_probes.tex`
-(H7 signposted only).
+**H7a / remaining:** `future_probes.md` / `future_probes.tex`
+(H7a run / awaiting Trace; H7b not started).
 
 ## Purpose
 
