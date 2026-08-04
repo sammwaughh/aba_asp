@@ -6,10 +6,10 @@
 [`milestone1_part3_approach.md`](milestone1_part3_approach.md)
 
 **Status:** Bucket 1 **locked**. Bucket 2 **locked / closed** with Claims 1–2 from
-M13-C1/C2. In Bucket 3, H0–H7a are complete / analysed (including H4b); H5 uses
+M13-C1/C2. In Bucket 3, H0–H7b are complete / analysed (including H4b); H5 uses
 experimental `greedy_cautious` and is not an AAMAS-paper method; H6 is a
 procedural search-cost probe; H7a is a brave-nd implementation-behaviour probe;
-H7b is not started; no Bucket 3 claim is
+H7b is its cautious-nd counterpart; no Bucket 3 claim is
 approved. M12x and
 Buckets 1–2 remain fixed evidence. The proposed Bucket 2 Claim 3
 was parked. Milestone 2 has not started.
@@ -50,7 +50,7 @@ Pilot M1.2 (10 cells) remains optional provenance only.
 
 | Document | Purpose | Status |
 |----------|---------|--------|
-| [`M1.3-bucket3-claims.md`](../../../experiments/qualitative/M1.3-bucket3-claims.md) | Supervisor-driven scope, investigation status, and planning guardrails | **H0–H7a complete / analysed (incl. H4b); H7b not started; no claim** |
+| [`M1.3-bucket3-claims.md`](../../../experiments/qualitative/M1.3-bucket3-claims.md) | Supervisor-driven scope, investigation status, and planning guardrails | **H0–H7b complete / analysed (incl. H4b); no claim** |
 
 ## Bucket 2 probe records
 
@@ -69,6 +69,6 @@ Pilot M1.2 (10 cells) remains optional provenance only.
 
 **Parent index:** [milestone1-plan.md](../milestone1-plan.md)
 
-**Next:** Orchestrator / Samuel decide whether / when to open H7b.
-H1–H7a are run / analysed.
+**Next:** Orchestrator / Samuel decide whether any further Bucket 3 work is needed.
+H1–H7b are run / analysed.
 Do not define a fixture portfolio or run matrix in advance.

@@ -16,7 +16,7 @@ here (Markdown) and in `h3_bk_leading_distractor.tex`.
 - H4 is **run / analysed** (`h4_cautious_vs_brave.md`); H4b is **run /
   analysed** (`h4b_cautious_split_under_a.md`); H5 and H6 analysed
   (`h5_greedy_cautious.md`, `h6_folding_and_n_ablation.md`); H7a analysed
-  (`h7a_relto_vs_sechk.md`); H7b not started
+  (`h7a_relto_vs_sechk.md`, `h7b_cautious_relto_vs_sechk.md`)
 
 Companion records: `experiment.md` (hub); `future_probes.md` (probe catalogue);
 `h2_irrelevant_covariate.md` (closed H2); `h1_support_ablation.md`;
@@ -177,7 +177,7 @@ research question.
 - H4 and H4b analysed separately (`h4_cautious_vs_brave.md`,
   `h4b_cautious_split_under_a.md`); H5 and H6 analysed
   (`h5_greedy_cautious.md`, `h6_folding_and_n_ablation.md`); H7a analysed
-  (`h7a_relto_vs_sechk.md`); H7b not started.
+  (`h7a_relto_vs_sechk.md`, `h7b_cautious_relto_vs_sechk.md`).
 
 ---
 
@@ -197,5 +197,5 @@ research question.
 H3 documentation is complete. H4, H4b, and H5 are run / analysed
 (`h4_cautious_vs_brave.md`, `h4b_cautious_split_under_a.md`,
 `h5_greedy_cautious.md`). H6 is analysed (`h6_folding_and_n_ablation.md`);
-H7a is analysed (`h7a_relto_vs_sechk.md`); H7b is not started. Still **no
-Bucket 3 claim**.
+H7a is analysed (`h7a_relto_vs_sechk.md`); H7b is analysed separately
+(`h7b_cautious_relto_vs_sechk.md`). Still **no Bucket 3 claim**.

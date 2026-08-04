@@ -3,7 +3,7 @@
 **Role:** working reference for Milestone 1 Part 3 — investigating **claims** about how
 unguided ABA Learning behaves on the locked M1.2 regime.
 **Status:** Bucket 1 **locked**; Bucket 2 **locked / closed** with Claims 1–2;
-Bucket 3 H0–H7a are complete / analysed (incl. H4b); H7b is not started.
+Bucket 3 H0–H7b are complete / analysed (incl. H4b).
 No Bucket 3 claim is approved. M12x
 and Buckets 1–2 remain fixed evidence. The earlier method below records the completed
 Bucket 1/2 workflow and the current one-case-at-a-time Bucket 3 method.

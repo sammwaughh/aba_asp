@@ -16,7 +16,8 @@ documented here (Markdown) and in `h4_cautious_vs_brave.tex`.
 - **Not a Bucket 3 claim**
 - H5 and H6 are **run / analysed** (`h5_greedy_cautious.md`,
   `h6_folding_and_n_ablation.md`); H7a is **run / analysed**
-  (`h7a_relto_vs_sechk.md`); H7b is not started
+  (`h7a_relto_vs_sechk.md`); H7b is **run / analysed** separately
+  (`h7b_cautious_relto_vs_sechk.md`)
 
 Companion records: `experiment.md` (hub); `future_probes.md` (probe catalogue);
 `learning_analysis.md` (closed H0); `h3_bk_leading_distractor.md`.
@@ -162,7 +163,7 @@ Key traces: `cells/target-{a,b,c}/output/prolog.stdout`; control
 - H5 and H6 analysed separately (`h5_greedy_cautious.md`,
   `h6_folding_and_n_ablation.md`).
 - H6/H7a are **not** part of this H4 evidence body; both are analysed separately.
-  H7b is not started.
+  H7b is also analysed separately and is not part of this H4 evidence body.
 
 ---
 
@@ -188,5 +189,6 @@ body. H7b, the cautious nd counterpart, is not started.
 
 H4 documentation is complete. H4b, H5, H6, and H7a are run / analysed
 separately (`h4b_cautious_split_under_a.md`, `h5_greedy_cautious.md`,
-`h6_folding_and_n_ablation.md`, `h7a_relto_vs_sechk.md`). H7b is not started.
+`h6_folding_and_n_ablation.md`, `h7a_relto_vs_sechk.md`). H7b is analysed
+separately in `h7b_cautious_relto_vs_sechk.md`.
 Still **no Bucket 3 claim**.

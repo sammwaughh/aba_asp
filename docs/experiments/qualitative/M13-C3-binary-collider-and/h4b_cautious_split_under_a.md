@@ -19,7 +19,7 @@ here (Markdown) and in `h4b_cautious_split_under_a.tex`.
 - H0–H4 remain closed / unchanged
 - **Not a Bucket 3 claim**
 - H6 analysed (`h6_folding_and_n_ablation.md`); H7a analysed
-  (`h7a_relto_vs_sechk.md`); H7b not started
+  (`h7a_relto_vs_sechk.md`, `h7b_cautious_relto_vs_sechk.md`)
 
 Companion records: `experiment.md` (hub); `h3_bk_leading_distractor.md` (locked
 brave); `h4_cautious_vs_brave.md` (H4 roots contrast); `future_probes.md`.
@@ -170,7 +170,7 @@ stdout). Outside H4b’s scientific focus; not expanded here.
 - H0–H4 artefacts unchanged except cross-links.
 - H5 and H6 analysed separately (`h5_greedy_cautious.md`,
   `h6_folding_and_n_ablation.md`); H7a analysed separately
-  (`h7a_relto_vs_sechk.md`); H7b not started.
+  (`h7a_relto_vs_sechk.md`, `h7b_cautious_relto_vs_sechk.md`).
 
 ---
 
@@ -197,5 +197,5 @@ stdout). Outside H4b’s scientific focus; not expanded here.
 
 H4b documentation is complete. H5 is run / analysed
 (`h5_greedy_cautious.md`). H6 is analysed (`h6_folding_and_n_ablation.md`);
-H7a is analysed (`h7a_relto_vs_sechk.md`); H7b is not started. Still **no
-Bucket 3 claim**.
+H7a is analysed (`h7a_relto_vs_sechk.md`); H7b is analysed separately
+(`h7b_cautious_relto_vs_sechk.md`). Still **no Bucket 3 claim**.

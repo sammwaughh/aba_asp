@@ -18,7 +18,7 @@ inherited ABALearn `asm_intro` under **brave nd** on fixtures
   a published ECAI method
 - H0–H6 / H4b remain closed / unchanged (cross-linked only)
 - **Not a Bucket 3 claim**
-- **H7b not started** (cautious nd counterpart; remain agnostic)
+- H7b **run / analysed** separately (`h7b_cautious_relto_vs_sechk.md`; cautious nd)
 
 Companion records: `experiment.md`; `h3_bk_leading_distractor.md`;
 `h4_cautious_vs_brave.md`; `h4b_cautious_split_under_a.md`;
@@ -107,7 +107,8 @@ parent of `c` vs H3 isolated).
 nd, switching to `sechk` is expected to produce theories that attach to the
 first BK predictor and close with α-structure on that variable alone, in
 contrast to `relto` theories that more often cite later BK variables after
-`KO`. H7b (cautious nd) may differ; remain agnostic.
+`KO`. H7b analyses the cautious-nd counterpart separately; this H7a statement
+remains bounded to brave nd.
 
 ---
 
@@ -252,9 +253,9 @@ content of contrary layers (especially loss of `b`/`d` on `c` under sechk).
 **Did not change:** brave+nd+steps10+any+all+check_ic; learner-visible inputs
 within pairs; `solved` outcomes on these seven cells.
 
-**Left open:** H7b cautious nd (`sechk` vs `relto`) — remain **agnostic** about
-whether the first-BK latch survives under cautious entailment; whether
-outcomes diverge; whether `c` theories regain mechanism parents.
+**Resolved separately, not inside H7a:** H7b cautious nd (`sechk` vs `relto`)
+is run / analysed in `h7b_cautious_relto_vs_sechk.md`. This H7a record remains
+brave-only and does not absorb H7b's cautious finding.
 
 ---
 
@@ -267,7 +268,7 @@ outcomes diverge; whether `c` theories regain mechanism parents.
 - Do **not** conflate H3 `a` (isolated) with H0 `a` (parent); role-peer of
   H0 `a` is H3 `b`.
 - Do **not** call `nd_brave_sechk` an ECAI-paper config.
-- H7b not started; H0–H6 / H4b scientific readings preserved.
+- H7b analysed separately; H0–H6 / H4b scientific readings preserved.
 
 ---
 
@@ -284,6 +285,5 @@ outcomes diverge; whether `c` theories regain mechanism parents.
 
 ## Next
 
-H7a documentation is complete. **H7b** (cautious nd `sechk` vs `relto`)
-remains **not started** — remain agnostic about cautious outcomes.
-Orchestrator / Samuel decides the next move. Still **no Bucket 3 claim**.
+H7a documentation is complete. H7b is run / analysed
+(`h7b_cautious_relto_vs_sechk.md`). Still **no Bucket 3 claim**.

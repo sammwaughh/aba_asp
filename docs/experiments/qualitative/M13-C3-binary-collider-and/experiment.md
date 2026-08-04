@@ -4,9 +4,8 @@
 
 `proposed | planned | implemented | run | analysed | reported`
 
-Current status: **`H0 closed / analysed`; H1–H6 and H7a run / analysed; H7b
-run / awaiting Trace** — M1.3 Bucket 3 baseline and H1–H7a probes documented;
-H7b collections executed pending Trace Agent analysis; **no Bucket 3 claim**.
+Current status: **`H0 closed / analysed`; H1–H7b run / analysed** — M1.3
+Bucket 3 baseline and H1–H7b probes documented; **no Bucket 3 claim**.
 
 ### H0 versus H1–H7
 
@@ -21,10 +20,10 @@ H7b collections executed pending Trace Agent analysis; **no Bucket 3 claim**.
 | **H5** | Experimental `greedy_cautious` vs AAMAS brave on 18 cells. **Run / analysed.** Record: `h5_greedy_cautious.md` / `.tex`. Not an AAMAS-paper config. **Not a claim.** |
 | **H6** | Folding-step + nested-n ablation under `baseline_cautious`. **Run / analysed.** Record: `h6_folding_and_n_ablation.md` / `.tex`. **Not a claim.** |
 | **H7a** | Brave nd `asm_intro(sechk)` vs `ecai2024`/`relto` on H0+H3. **Run / analysed.** Record: `h7a_relto_vs_sechk.md` / `.tex`. **Not a claim.** |
-| **H7b** | Cautious nd `sechk` vs `baseline_cautious`/`relto` on H0+H3. **`Run / awaiting Trace.`** Catalogue: `future_probes.md`. **Not a claim.** |
+| **H7b** | Cautious nd `sechk` vs `baseline_cautious`/`relto` on H0+H3. **Run / analysed.** Record: `h7b_cautious_relto_vs_sechk.md` / `.tex`. **Not a claim.** |
 
 **H0 close means:** baseline learning analysis finished.  
-**H1–H6 and H7a complete means:** those probes are run and documented.
+**H1–H7b complete means:** those probes are run and documented.
 **Does not mean:** a Bucket 3 claim is locked. Still **no Bucket 3 claim**.
 
 Working mathematical dossier (pre-run): `fixture_dossier.tex`.  
@@ -37,8 +36,8 @@ Closed H0 learning record: `learning_analysis.md` / `learning_analysis.tex`.
 **H5 record:** `h5_greedy_cautious.md` / `h5_greedy_cautious.tex`.  
 **H6 record:** `h6_folding_and_n_ablation.md` / `h6_folding_and_n_ablation.tex`.
 **H7a record:** `h7a_relto_vs_sechk.md` / `h7a_relto_vs_sechk.tex`.
-**H7b / remaining:** `future_probes.md` / `future_probes.tex`
-(H7b run / awaiting Trace).
+**H7b record:** `h7b_cautious_relto_vs_sechk.md` / `h7b_cautious_relto_vs_sechk.tex`.
+**Catalogue:** `future_probes.md` / `future_probes.tex`.
 
 ## Purpose
 
@@ -157,10 +156,11 @@ Russo-style Causal ABA.
 - `h4b_cautious_split_under_a.md` / `h4b_cautious_split_under_a.tex` — **H4b**
 - `h5_greedy_cautious.md` / `h5_greedy_cautious.tex` — **H5**
 - `h6_folding_and_n_ablation.md` / `h6_folding_and_n_ablation.tex` — **H6**
+- `h7a_relto_vs_sechk.md` / `h7a_relto_vs_sechk.tex` — **H7a**
+- `h7b_cautious_relto_vs_sechk.md` / `h7b_cautious_relto_vs_sechk.tex` — **H7b**
 - `experiment.md` (status / outcome pointer)
 - `fixture_dossier.tex` (pre-run mathematical account)
-- `future_probes.md` / `.tex` (probe catalogue; H1–H7a analysed;
-  H7b not started)
+- `future_probes.md` / `.tex` (probe catalogue; H1–H7b analysed)
 - `M1.3-bucket3-claims.md`, `experiments_summary.md`, `experiment_register.md`,
   `research_state.md` as needed for factual status
 
@@ -325,7 +325,7 @@ SWI-Prolog / clingo: invoked for AAMAS and ECAI target-wise collections
 | H4 record | `h4_cautious_vs_brave.md` / `.tex` | cautious vs brave roots |
 | H4b record | `h4b_cautious_split_under_a.md` / `.tex` | cautious α3 close on H3 `c` |
 | H5 record | `h5_greedy_cautious.md` / `.tex` | Greedy-cautious vs AAMAS |
-| Future probes | `future_probes.md` / `.tex` | H1–H7a analysed; H7b not started |
+| Future probes | `future_probes.md` / `.tex` | H1–H7b analysed |
 
 ## Outcome summary
 
@@ -400,6 +400,12 @@ On all seven H0+H3 pairs, both arms `solved` but every delta differs; sechk
 first-BK latch + α-chain vs richer relto contraries. Full record:
 `h7a_relto_vs_sechk.md`.
 
+### H7b (cautious relto vs sechk, analysed)
+
+On child `c`, both arms `solved` but deltas differ (Q1–Q2); cautious sechk
+retains `b`/`d` (unlike brave H7a). Q4–Q5 non-comparable. Full record:
+`h7b_cautious_relto_vs_sechk.md`.
+
 ## Quantitative results
 
 Arm summaries record outcomes, delta/assumption counts, body variables, and
@@ -471,6 +477,11 @@ changes every learned delta (first-BK latch under sechk vs richer contraries
 under relto); not a method ranking; not mechanism recovery. See
 `h7a_relto_vs_sechk.md`. **No Bucket 3 claim.**
 
+**H7b bounded reading (not a claim).** Under cautious nd, `relto` vs `sechk`
+changes `c` deltas (extra nest / thicker theory) while retaining mechanism
+parents under sechk; Q4–Q5 empty-stdout timeouts are non-comparisons. See
+`h7b_cautious_relto_vs_sechk.md`. **No Bucket 3 claim.**
+
 ## Claims supported
 
 None. Evidence record and bounded interpretation only.
@@ -480,8 +491,8 @@ None. Evidence record and bounded interpretation only.
 As in `learning_analysis.md`, `h1_support_ablation.md`,
 `h2_irrelevant_covariate.md`, `h3_bk_leading_distractor.md`,
 `h4_cautious_vs_brave.md`, `h4b_cautious_split_under_a.md`,
-`h5_greedy_cautious.md`, `h6_folding_and_n_ablation.md`, and
-`h7a_relto_vs_sechk.md` non-claims sections. H7b not started.
+`h5_greedy_cautious.md`, `h6_folding_and_n_ablation.md`, `h7a_relto_vs_sechk.md`, and
+`h7b_cautious_relto_vs_sechk.md` non-claims sections.
 
 ## Report relevance
 
@@ -490,11 +501,11 @@ evidence only; **not** report-facing claim prose.
 
 ## Future probes
 
-H1–H6 and H7a are **run / analysed**. H7b is not started:
+H1–H7b are **run / analysed**:
 `future_probes.md` / `.tex`. Still **no Bucket 3 claim**.
 
 ## Next decision
 
-1. Whether / when to open H7b (Orchestrator / Samuel; remain agnostic).
+1. Whether any further H7 / Bucket 3 work is needed (Orchestrator / Samuel).
 2. Keep Bucket 3 free of a claim until inspected probe evidence warrants a
    separate decision.

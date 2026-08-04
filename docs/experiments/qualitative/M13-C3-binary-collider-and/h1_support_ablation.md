@@ -14,7 +14,7 @@
   `h3_bk_leading_distractor.md`; H4 and H4b are run / analysed
   (`h4_cautious_vs_brave.md`, `h4b_cautious_split_under_a.md`); H5 and H6 analysed
   (`h5_greedy_cautious.md`, `h6_folding_and_n_ablation.md`); H7a analysed
-  (`h7a_relto_vs_sechk.md`); H7b not started
+  (`h7a_relto_vs_sechk.md`, `h7b_cautious_relto_vs_sechk.md`)
 
 Companion records: `experiment.md` (hub); `future_probes.md` (probe catalogue);
 `learning_analysis.md` (closed H0).
@@ -230,4 +230,5 @@ H1 documentation is complete. Probes **H2–H5** (including H4b) are documented 
 `h2_irrelevant_covariate.md`, `h3_bk_leading_distractor.md`, and
 `h4_cautious_vs_brave.md`, with H4b in `h4b_cautious_split_under_a.md`, H5
 in `h5_greedy_cautious.md`, H6 in `h6_folding_and_n_ablation.md`, and H7a in
-`h7a_relto_vs_sechk.md`. H7b is not started. Still **no Bucket 3 claim**.
+`h7a_relto_vs_sechk.md`. H7b is analysed separately in
+`h7b_cautious_relto_vs_sechk.md`. Still **no Bucket 3 claim**.

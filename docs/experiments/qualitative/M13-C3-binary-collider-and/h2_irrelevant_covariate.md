@@ -14,7 +14,7 @@
   **run / analysed** (`h4_cautious_vs_brave.md`,
   `h4b_cautious_split_under_a.md`); H5 and H6 analysed
   (`h5_greedy_cautious.md`, `h6_folding_and_n_ablation.md`); H7a analysed
-  (`h7a_relto_vs_sechk.md`); H7b not started
+  (`h7a_relto_vs_sechk.md`, `h7b_cautious_relto_vs_sechk.md`)
 
 Companion records: `experiment.md` (hub); `future_probes.md` (probe catalogue);
 `h1_support_ablation.md` (closed H1); `learning_analysis.md` (closed H0).
@@ -159,5 +159,5 @@ H2 documentation is complete. H3, H4 and H4b are run / analysed
 (`h3_bk_leading_distractor.md`, `h4_cautious_vs_brave.md`,
 `h4b_cautious_split_under_a.md`). H5 and H6 analysed
 (`h5_greedy_cautious.md`, `h6_folding_and_n_ablation.md`); H7a analysed
-(`h7a_relto_vs_sechk.md`); H7b not started.
+(`h7a_relto_vs_sechk.md`, `h7b_cautious_relto_vs_sechk.md`).
 Still **no Bucket 3 claim**.

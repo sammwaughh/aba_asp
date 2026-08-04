@@ -76,8 +76,9 @@ latch + α-chain vs richer relto contraries. Not a Bucket 3 claim.
 - Remain agnostic about whether H7a’s first-BK latch survives under cautious
   entailment. Not a Bucket 3 claim.
 
-**Status after Fixture Agent run:** both collections executed; Trace Agent
-analysis pending; no final H7b evidence narrative yet.
+**Status after write-up:** H7b is **run / analysed**. Evidence:
+`.../h7b_cautious_relto_vs_sechk.md`. Lead: Q1–Q2 `c` deltas differ under
+cautious nd; Q4–Q5 non-comparable. Not a Bucket 3 claim.
 
 ## 2026-08-03 — Approve and run H6 folding-step / nested-n ablation
 

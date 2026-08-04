@@ -1,0 +1,161 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=25mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,booktabs}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{microtype}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+\setlist{nosep,leftmargin=*}
+\emergencystretch=3em
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+\title{M13-C3 --- H7b cautious \texttt{asm\_intro(relto)} vs
+\texttt{asm\_intro(sechk)}}
+\author{}
+\date{H7b run / analysed / not a Bucket~3 claim}
+
+\begin{document}
+\maketitle
+
+\section{Status}
+
+\textbf{H7b run / analysed.}
+Bounded implementation-behaviour investigation of inherited ABALearn
+\texttt{asm\_intro} under \textbf{cautious nd} on H0 and H3
+\texttt{n30\_seed42}.
+Markdown twin: \texttt{h7b\_cautious\_relto\_vs\_sechk.md}.
+
+\textbf{Lead (Q1--Q2):} on mechanism-relevant child $c$, both arms
+\texttt{solved} but deltas differ --- same \texttt{gen.pl} fork as H7a, under
+cautious semantics.
+Cautious sechk on $c$ \emph{retains} mechanism parents $b$/$d$ (unlike brave
+H7a sechk) --- bounded observation, not a claim.
+Comparator is locked \texttt{baseline\_cautious} (H4/H4b), not
+\texttt{ecai2024}.
+Config \texttt{nd\_cautious\_sechk} is experimental.
+H0--H6 / H4 / H4b / H7a closed.
+\textbf{Not a Bucket~3 claim.}
+
+\section{Research question}
+
+Holding fixture, frozen sample, encoding, \textbf{cautious} semantics, nd
+folding, and all other learner options constant: how does changing
+\texttt{asm\_intro(relto)} to \texttt{asm\_intro(sechk)} affect what ABALearn
+learns and how search proceeds under cautious nd?
+
+\section{Main finding --- contrast on child $c$}
+
+\subsection{They diverge}
+
+Fixture~1 $c$ and Fixture~2 $c$: both arms \texttt{solved}; deltas differ;
+inputs byte-identical within pairs.
+
+\subsection{Why}
+
+After failed post-fold entailment:
+\begin{itemize}
+  \item \textbf{Relto:} relative-first; often \texttt{KO} under cautious
+    \texttt{gen3}; backtrack to another fold literal.
+  \item \textbf{Sechk:} always mint provisional $\alpha$; \texttt{gen5}/stable
+    extension; often still reaches $b$/$d$, but later / via deeper nests.
+\end{itemize}
+First fork:
+\begin{verbatim}
+relto:  looking for assumption relative to
+sechk:  generating NEW assumption: alpha_1(A)
+\end{verbatim}
+H7a's brave first-BK latch does \emph{not} describe these cautious-$c$ sechk
+deltas.
+
+\subsection{What it looks like}
+
+\textbf{Q1:} same $a$-gate; sechk inserts $\alpha_2$ nest then closes with
+\texttt{b\_val\_1} (relto closes with \texttt{b\_val\_0}).
+\textbf{Q2:} both cite $a,b,d$; sechk thicker (5 vs 3 asms; $\sim$899 vs
+$\sim$257 lines).
+
+\section{Setup}
+
+Relto: \texttt{configs/baseline\_cautious\_config.pl}.
+Sechk: \texttt{configs/nd\_cautious\_sechk\_config.pl} (experimental).
+Intervention: only \texttt{asm\_intro}.
+Held fixed: cautious, nd, steps~10, any, all, \texttt{check\_ic},
+\texttt{post\_folding\_test\_entailment(true)}.
+Paths:
+\texttt{.../<fixture>/\{baseline\_cautious,nd\_cautious\_sechk\}/n30\_seed42/}.
+
+Role discipline: only $c$ is a desirable det.\ mechanism target; H0 $a$ is a
+parent; H3 $a$ is isolated; H3 $b$ is role-peer of H0 $a$.
+
+\section{Outcome scaffold (secondary)}
+
+{\footnotesize
+\begin{center}
+\begin{tabular}{@{}llll@{}}
+\toprule
+Cell & Relto & Sechk & Comparable? \\
+\midrule
+Collider $c$ & solved & solved & yes --- deltas $\neq$ (Q1) \\
+Collider $a$,$b$ & no-sol & no-sol & cost only (Q3 uses $b$) \\
+H3 $c$ & solved & solved & yes --- deltas $\neq$ (Q2) \\
+H3 $a$,$b$,$d$ & timeout & timeout & no --- empty stdout (Q4--Q5) \\
+\bottomrule
+\end{tabular}
+\end{center}
+}
+
+\section{Q1 --- Fixture 1 $c$}
+
+\begin{verbatim}
+% relto (~134 lines)
+c(A) :- alpha_1(A), a_val_1(A).
+c_alpha_1(A) :- b_val_0(A).
+
+% sechk (~200 lines)
+c(A) :- alpha_1(A), a_val_1(A).
+c_alpha_1(A) :- alpha_2(A), a_val_1(A).
+c_alpha_2(A) :- b_val_1(A).
+\end{verbatim}
+Sechk is not ``ignoring $b$'': extra assumption layer on the leading feature,
+then \texttt{b\_val\_1} rather than \texttt{b\_val\_0}.
+Vs H7a brave sechk on same $c$: brave dropped $b$; cautious retains it
+(bounded).
+
+\section{Q2 --- Fixture 2 $c$}
+
+Both solve; both cite $a,b,d$.
+H4b relto lean (3 asms, 257 lines); sechk thicker (5 asms including
+$\alpha_{31},\alpha_{38},\alpha_{39}$; 899 lines).
+Same fork as Q1, amplified by the harder H3 table.
+
+\section{Q3 / Q4--Q5}
+
+\textbf{Q3} Fixture~1 $b$: no delta either side; same token ladder 2$\ldots$10;
+sechk stdout 13818 vs 5118 lines --- failed-search cost only.
+
+\textbf{Q4--Q5} Fixture~2 $b$ and $a$: timeout@300s both arms; stdout 0 bytes
+--- non-comparison; not ``matched search''.
+
+\section{Boundaries / non-claims}
+
+\begin{itemize}
+  \item Not a Bucket~3 claim.
+  \item Not a ranking of relto vs sechk.
+  \item \texttt{solved} $\neq$ mechanism recovery.
+  \item Empty-log timeouts $\neq$ matching-search evidence.
+  \item H7a brave latch does not carry over unchanged.
+  \item H4 / H4b / H7a readings preserved.
+\end{itemize}
+
+\section{Next}
+
+H7b documentation complete.
+Still \textbf{no Bucket~3 claim}.
+
+\end{document}

@@ -18,7 +18,7 @@ complete and documented here (Markdown) and in `h5_greedy_cautious.tex`.
 - H0–H4b remain closed / unchanged
 - **Not a Bucket 3 claim**
 - H6 analysed (`h6_folding_and_n_ablation.md`); H7a analysed
-  (`h7a_relto_vs_sechk.md`); H7b not started
+  (`h7a_relto_vs_sechk.md`, `h7b_cautious_relto_vs_sechk.md`)
 
 Companion records: `experiment.md`; `h4_cautious_vs_brave.md`;
 `h4b_cautious_split_under_a.md`; `future_probes.md`.
@@ -163,7 +163,8 @@ effects under the same cautious mode.
   `aamas_cautious`.
 - Do not conflate H5 with H4/H4b (different search bundles / interventions).
 - Analysis B is not a brave→cautious effect.
-- H6 and H7a analysed separately; H7b not started.
+- H6, H7a, and H7b analysed separately; H7b record:
+  `h7b_cautious_relto_vs_sechk.md`.
 
 ---
 
@@ -179,4 +180,5 @@ effects under the same cautious mode.
 
 H5 documentation is complete. H6 is run / analysed
 (`h6_folding_and_n_ablation.md`). H7a is analysed (`h7a_relto_vs_sechk.md`);
-H7b is not started. Still **no Bucket 3 claim**.
+H7b is analysed separately (`h7b_cautious_relto_vs_sechk.md`). Still **no
+Bucket 3 claim**.

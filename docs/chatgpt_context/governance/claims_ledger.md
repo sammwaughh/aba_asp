@@ -111,10 +111,10 @@ Add claims after each experiment is analysed. Report labels: QL1 = QI-001, QL2 =
 
 Bucket 2 is **locked / closed** with the claims below. The proposed
 deterministic-target Claim 3 was parked on 22 July and has no ledger entry. Bucket 3
-investigation is active: H0–H7a are complete / analysed (including H4b); H5 uses
+investigation is active: H0–H7b are complete / analysed (including H4b); H5 uses
 experimental `greedy_cautious` and is not an AAMAS-paper method; H6 is a
 procedural search-cost probe; H7a is a brave-nd implementation-behaviour probe;
-H7b is not started. No Bucket 3 claim is
+H7b is the separately analysed cautious-nd counterpart. No Bucket 3 claim is
 approved; it must not receive claim IDs until a separate evidence review and Samuel's
 decision.
 

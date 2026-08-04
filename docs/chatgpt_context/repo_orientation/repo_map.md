@@ -212,7 +212,7 @@ shared method and terminology live in
 - Bucket 3 investigation and claims record:
   `docs/experiments/qualitative/M1.3-bucket3-claims.md`.
   It records the supervisor-defined planning dimensions and current M13-C3 status:
-  H0–H7a complete / analysed (incl. H4b), H7b not started, and no Bucket 3 claim
+  H0–H7b complete / analysed (incl. H4b), and no Bucket 3 claim
   or run matrix.
 
 ### M13-C1 probe: causal-role underdetermination
@@ -262,8 +262,7 @@ directory for all future M1.3 work.
 ### Bucket 3 infrastructure and current boundary
 
 Bucket 3 follows the approved one-case-at-a-time deterministic-mechanism direction.
-H0–H7a are complete / analysed (incl. H4b); H7b is
-signposted only; no Bucket 3 claim is approved. The status sources
+H0–H7b are complete / analysed (incl. H4b); no Bucket 3 claim is approved. The status sources
 are its investigation record, the 22 and 31 July sections of
 `docs/research/supervisor_guidance.md`, `docs/research/research_state.md`, and the
 M13-C3 records below.
@@ -292,7 +291,7 @@ Current deterministic M13-C3 evidence:
   (experimental `greedy_cautious` vs locked AAMAS on 18 cells; Analysis A inert;
   Analysis B vs `baseline_cautious` is search-bundle);
 - H6 analysed folding/n search-cost probe: `h6_folding_and_n_ablation.md` / `.tex`;
-- remaining probe catalogue: `future_probes.md` / `.tex` (H1–H7a complete; H7b not started).
+- remaining probe catalogue: `future_probes.md` / `.tex` (H1–H7b complete).
 - H4 config:
   `causal/configs/targetwise/m13_bucket3_binary_collider_and/baseline_cautious/n30_seed42.yaml`;
   collection:
@@ -372,7 +371,7 @@ population/reference artefacts, then add the learning configuration and evidence
 and run the target-wise collection. For a target-wise collection the generated cells
 belong under the hierarchy above; grid experiments retain
 `causal/outputs/aba_learning/grid/<experiment-id-or-arm>/`. H0–H5 are
-complete / analysed (incl. H4b). H7b is not started.
+complete / analysed (incl. H4b).
 
 Also update `docs/experiments/experiments_summary.md` and
 `docs/research/experiment_register.md`. The wider 22 July dimensions remain deferred;
@@ -398,10 +397,10 @@ do not create fixtures or cells merely from that list.
   - `qualitative/M1.3-bucket2-claims.md` — locked Bucket 2 claim record
     (M13-C1/C2).
   - `qualitative/M1.3-bucket3-claims.md` — Bucket 3 direction/planning record;
-    H0–H7a complete / analysed (incl. H4b), H7b not started,
+    H0–H7b complete / analysed (incl. H4b),
     and no claim.
   - `qualitative/M13-C3-binary-collider-and/` — M13-C3 hub plus H0–H5 evidence
-    records and H7b planning boundary.
+    records through H7b.
   - `qualitative/M13-C1-causal-role-underdetermination/` and
     `qualitative/M13-C2-bk-feature-order/` — analysed Bucket 2 probe records.
   - `report/findings/` — supervisor-facing milestone findings logs (`.tex`).

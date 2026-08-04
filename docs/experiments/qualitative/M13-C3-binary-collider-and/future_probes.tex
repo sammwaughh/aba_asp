@@ -19,7 +19,7 @@
 motivated by closed H0}
 \author{}
 \date{H0 closed; H1--H5 run/analysed;\\
-H6--H7a run / analysed; H7b not started (not claims)}
+H6--H7b run / analysed (not claims)}
 
 \begin{document}
 \maketitle
@@ -62,7 +62,7 @@ H0 is the completed six-cell AAMAS+ECAI investigation on fixture
     AAMAS-paper config.
   \item H6: \textbf{run / analysed} (\texttt{h6\_folding\_and\_n\_ablation.md})
   \item H7a: \textbf{run / analysed} (\texttt{h7a\_relto\_vs\_sechk.md})
-  \item H7b: \textbf{not started} (cautious nd; remain agnostic); not
+  \item H7b: \textbf{run / analysed} (\texttt{h7b\_cautious\_relto\_vs\_sechk.md}); not
     approved runs)
   \item \textbf{Not} approved Bucket~3 claims
   \item \textbf{Not} locked Bucket~1/2 claim content
@@ -227,7 +227,7 @@ claim.
     all completed AAMAS collections.
     \textbf{Run / analysed} (\texttt{h5\_greedy\_cautious.md}).
     Lead: brave$\to$cautious under Greedy is inert on these 18 cells.
-  \item \textbf{H6 and H7a (run / analysed); H7b not started} --- H6 and H7a
+  \item \textbf{H6--H7b (run / analysed)} --- H6 and H7
     were prompted by H4 and are recorded separately from H4.
 \end{enumerate}
 
@@ -257,8 +257,8 @@ H3 & \textbf{ECAI} target \(c\) (primary); \textbf{BK order} puts independent
   cells; Analysis~A inert; \textbf{run / analysed}; not AAMAS-paper config \\
 H6 & Run / analysed; length drivers under cautious+nd (H6a/H6b);\\
 H7a & Run / analysed; brave nd relto vs sechk;\\
-H7b & Not started;
-  brave \texttt{asm\_intro(sechk)} vs \texttt{relto} \\
+H7b & Run / analysed;
+  cautious nd \texttt{asm\_intro(sechk)} vs \texttt{relto} \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -535,7 +535,8 @@ Full record: \texttt{h4\_cautious\_vs\_brave.md}.
 H5 is now \textbf{run / analysed} separately (\texttt{h5\_greedy\_cautious.md}).
 H6 is now \textbf{run / analysed} (\texttt{h6\_folding\_and\_n\_ablation.md}).
 H7a is now \textbf{run / analysed} (\texttt{h7a\_relto\_vs\_sechk.md}).
-H7b (cautious nd counterpart) remains not started.
+H7b is \textbf{run / analysed} separately
+(\texttt{h7b\_cautious\_relto\_vs\_sechk.md}).
 
 \section{Probe family H4b --- cautious $\alpha_3$ close under H3 leading-$a$ gates}
 
@@ -620,7 +621,8 @@ Full narrative: \texttt{h6\_folding\_and\_n\_ablation.md}.
 
 \section{Probe family H7a --- brave nd \texttt{relto} vs \texttt{sechk}}
 
-Status: \textbf{run / analysed} / not a claim. H7b not started.
+Status: \textbf{run / analysed} / not a claim. H7b analysed separately
+(\texttt{h7b\_cautious\_relto\_vs\_sechk.md}).
 Evidence: \texttt{h7a\_relto\_vs\_sechk.md} / \texttt{.tex}.
 
 \textbf{Lead (contrast).}
@@ -633,6 +635,20 @@ covariates (esp.\ for $c$).
 
 \subsection{Outcome (H7a)}
 \textbf{Run / analysed.} Full narrative: \texttt{h7a\_relto\_vs\_sechk.md}.
+
+
+\section{Probe family H7b --- cautious nd \texttt{relto} vs \texttt{sechk}}
+
+Status: \textbf{run / analysed} / not a claim.
+Evidence: \texttt{h7b\_cautious\_relto\_vs\_sechk.md} / \texttt{.tex}.
+
+\textbf{Lead (Q1--Q2).}
+On child $c$, both arms \texttt{solved} but deltas differ under cautious nd.
+Same \texttt{gen.pl} fork as H7a; cautious sechk retains $b$/$d$ on $c$
+(unlike brave H7a). Q4--Q5 empty-stdout timeouts are non-comparable.
+
+\subsection{Outcome (H7b)}
+\textbf{Run / analysed.} Full narrative: \texttt{h7b\_cautious\_relto\_vs\_sechk.md}.
 
 \section{Boundary distinctions to preserve}
 
@@ -724,7 +740,7 @@ H6 folding/n ablation (H4-prompted) &
 H7a brave nd \texttt{sechk} vs \texttt{relto} &
   \textbf{Approved} then \textbf{run / analysed} & 2026-08-04 \\
 H7b cautious nd \texttt{sechk} vs \texttt{relto} &
-  \textbf{Not started} & 2026-08-04 \\
+  \textbf{Approved} then \textbf{run / analysed} & 2026-08-04 \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -755,7 +771,8 @@ H7b cautious nd \texttt{sechk} vs \texttt{relto} &
   \item \textbf{H7a:} \textbf{complete} (\texttt{h7a\_relto\_vs\_sechk.md}).
     Lead: 7/7 solved with differing deltas; sechk first-BK latch vs richer
     relto contraries. Not a claim.
-  \item \textbf{H7b:} not started (remain agnostic).
+  \item \textbf{H7b:} \textbf{complete} (\texttt{h7b\_cautious\_relto\_vs\_sechk.md}).
+    Lead: Q1--Q2 $c$ deltas differ; Q4--Q5 non-comparable. Not a claim.
   \item Still \textbf{no} Bucket~3 claim and \textbf{no} expanded run matrix
     without a further Samuel decision.
 \end{itemize}

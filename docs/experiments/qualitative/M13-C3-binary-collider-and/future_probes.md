@@ -33,9 +33,10 @@ itself. H0 is the completed six-cell AAMAS+ECAI investigation on fixture
   `asm_intro(sechk)`) vs locked `ecai2024` (`relto`) on H0 and H3 `n30_seed42`
   (7 cells; all solved, all deltas differ; first-BK latch under sechk). Record:
   `h7a_relto_vs_sechk.md` / `.tex`. **Not a Bucket 3 claim.**
-- H7b: **`run / awaiting Trace analysis`** — experimental `nd_cautious_sechk`
+- H7b: **`run / analysed`** — experimental `nd_cautious_sechk`
   (cautious nd + `asm_intro(sechk)`) vs `baseline_cautious` (`relto`) on H0
-  and H3 `n30_seed42` (7 cells). **Not a Bucket 3 claim.**
+  and H3 `n30_seed42`. Lead: Q1–Q2 `c` deltas differ; Q4–Q5 non-comparable.
+  Record: `h7b_cautious_relto_vs_sechk.md` / `.tex`. **Not a Bucket 3 claim.**
 - **Not** approved Bucket 3 claims
 - **Not** locked Bucket 1/2 claim content
 - **Not** report-facing prose (`docs/report/findings/` is out of scope)
@@ -178,7 +179,7 @@ under ECAI, on a new fixture. H3 is now **run / analysed**
    brave→cautious under Greedy is inert on these 18 cells.
 6. **H6** — **`run / analysed`** (`h6_folding_and_n_ablation.md`). Lead: root
    trace length ≈ linear in `folding_steps(M)` (H6a) and in nested `n` at
-   fixed `M=2` (H6b) under cautious+nd. **H7a** run / analysed; **H7b** not started.
+   fixed `M=2` (H6b) under cautious+nd. **H7a** and **H7b** run / analysed.
 
 Do not expand any family into a broader run matrix beyond these bounded probes
 without a further Samuel decision.
@@ -195,7 +196,7 @@ without a further Samuel decision.
 | **H5** | Experimental `greedy_cautious` vs AAMAS brave on 18 cells; Analysis A inert; **run / analysed**; not AAMAS-paper config |
 | **H6** | Search cost under `baseline_cautious`; H6a steps 1/2/5/10; H6b n30/60/90 at steps2; **run / analysed** |
 | **H7a** | Brave nd `asm_intro(sechk)` vs `ecai2024`/`relto` on H0+H3; **run / analysed** (`h7a_relto_vs_sechk.md`) |
-| **H7b** | Cautious nd `sechk` vs `baseline_cautious`/`relto` on H0+H3; **`run / awaiting Trace`** |
+| **H7b** | Cautious nd `sechk` vs `baseline_cautious`/`relto` on H0+H3; **run / analysed** (`h7b_cautious_relto_vs_sechk.md`) |
 
 H3 is not a duplicate of H2: different DAG, different distractor placement/name,
 different primary config (ECAI nd vs AAMAS greedy), and distinct fixture ids.
@@ -429,7 +430,7 @@ record: `h4_cautious_vs_brave.md`.
 - **H5** is now **run / analysed** separately (`h5_greedy_cautious.md`).
 - **H6** is now **`run / analysed`** (`h6_folding_and_n_ablation.md`).
 - **H7a** is now **`run / analysed`** (`h7a_relto_vs_sechk.md`).
-- **H7b** (cautious nd counterpart) remains not started.
+- **H7b** is now **`run / analysed`** (`h7b_cautious_relto_vs_sechk.md`).
 
 ---
 
@@ -521,7 +522,8 @@ Collections:
 
 ## Probe family H7a — brave nd `asm_intro(relto)` vs `asm_intro(sechk)`
 
-Status: **`run / analysed` / not a claim**. **H7b not started.**
+Status: **`run / analysed` / not a claim**. H7b analysed separately
+(`h7b_cautious_relto_vs_sechk.md`).
 Evidence record: `h7a_relto_vs_sechk.md` / `h7a_relto_vs_sechk.tex`.
 
 **Lead (contrast).** On all seven H0+H3 pairs, both arms `solved` but every
@@ -540,6 +542,27 @@ Config: `configs/nd_brave_sechk_config.pl` (experimental; not
 **Run / analysed.** Full narrative: `h7a_relto_vs_sechk.md`.
 
 ---
+
+## Probe family H7b — cautious nd `asm_intro(relto)` vs `asm_intro(sechk)`
+
+Status: **`run / analysed` / not a claim**.
+Evidence record: `h7b_cautious_relto_vs_sechk.md` /
+`h7b_cautious_relto_vs_sechk.tex`.
+
+**Lead (Q1–Q2).** On mechanism-relevant `c`, both arms `solved` but deltas
+differ. Same `gen.pl` fork as H7a under cautious: relto relative-first often
+`KO`s into later fold literals; sechk always mints then `gen5`. Cautious sechk
+still retains `b`/`d` on `c` (unlike brave H7a). Q3: Fixture 1 `b` failed-search
+cost only. Q4–Q5: empty stdout timeouts — non-comparable.
+
+Comparator: locked `baseline_cautious` (not `ecai2024`). Config:
+`configs/nd_cautious_sechk_config.pl` (experimental).
+
+### Outcome (H7b)
+
+**Run / analysed.** Full narrative: `h7b_cautious_relto_vs_sechk.md`.
+
+---
 ## Boundary distinctions to preserve
 
 Keep separate throughout any future probe write-up:
@@ -552,6 +575,7 @@ Keep separate throughout any future probe write-up:
 | Experimental Greedy+cautious (`greedy_cautious`) vs AAMAS brave | procedural / semantic probe (H5); not an AAMAS-paper config |
 | `folding_steps(M)` / nested `n` under cautious+nd (search cost) | procedural probe (H6); not mechanism recovery |
 | Brave nd `asm_intro(relto)` vs `asm_intro(sechk)` | procedural / implementation probe (H7a); not a ranking |
+| Cautious nd `asm_intro(relto)` vs `asm_intro(sechk)` | procedural / implementation probe (H7b); not a ranking |
 | Finite-sample support and label conflicts in candidate body cells | sample information |
 | Mechanism correspondence for `c` (AND) | evaluator-only interpretation of a non-root |
 | Absence of deterministic root mechanisms | evaluator reference status |
@@ -594,7 +618,7 @@ Do not treat predictive rules for roots as mechanism recovery.
 | H5 experimental `greedy_cautious` AAMAS counterparts (18 cells) | **Run / analysed** | 2026-08-03 |
 | H6 folding_steps + nested-n ablation (H4-prompted) | **Approved** then **run / analysed** | 2026-08-03 |
 | H7a brave nd `sechk` vs `relto` (H0+H3) | **Approved** then **run / analysed** | 2026-08-04 |
-| H7b cautious nd `sechk` vs `relto` (H0+H3) | **Approved**; **run / awaiting Trace** | 2026-08-04 |
+| H7b cautious nd `sechk` vs `relto` (H0+H3) | **Approved** then **run / analysed** | 2026-08-04 |
 
 ## Current status and remaining work
 
@@ -619,7 +643,8 @@ Do not treat predictive rules for roots as mechanism recovery.
   contraries. Collections:
   `.../{m13_bucket3_binary_collider_and,m13_bucket3_binary_bd_and_lead_a}/nd_brave_sechk/n30_seed42/`.
   Full evidence narrative: `h7a_relto_vs_sechk.md`. **Not a claim.**
-- **H7b:** **`run / awaiting Trace analysis`**. Collections:
-  `.../{collider_and,bd_and_lead_a}/nd_cautious_sechk/n30_seed42/`;
-  comparator existing `baseline_cautious`. No final narrative yet. **Not a claim.**
+- **H7b:** **complete** (`h7b_cautious_relto_vs_sechk.md`). Lead: on child
+  `c`, cautious relto vs sechk both solve with differing deltas (Q1–Q2);
+  Q4–Q5 empty-stdout timeouts non-comparable. **Not a claim.**
+
 - Still **no** Bucket 3 claim.
