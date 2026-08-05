@@ -859,50 +859,68 @@ wall-time limit. \\
 
 \section{Experimental sequence: H0--H7b}
 
-\subsection{H0: establish baseline behaviour by target and strategy}
+\subsection{H0: baseline on the principal AND collider}
 
 \question
-H0 asked what Greedy AAMAS and nd ECAI learn from the same complete-support
-\(n=30\) H0 table when each of \(a,b,c\) is used as the target. This established
-the first mechanism-aligned child result and exposed the different problem
-geometry of deterministic child and stochastic root targets.
+On the principal fixture \(A\rightarrow C\leftarrow B\) with \(C=A\land B\),
+frozen sample \(n=30\) seed~42, and exact-value encoding, what ABA frameworks
+do the Greedy bundle (\code{aamas2025}) and the nd bundle (\code{ecai2024})
+emit when each of \code{a}, \code{b}, and \code{c} is the learning target?
 
 \comparison
-The fixture, table, exact-value encoding, and target-specific examples were
-fixed. The two arms changed the full learner bundle:
-\code{aamas2025} used brave Greedy/\code{mgr}/BK folding, whereas
-\code{ecai2024} used brave nd/\code{any}/\code{all}. This is therefore a
-strategy-bundle contrast, not a folding-mode-only ablation.
+The fixture, table, encoding, and target-specific examples were held fixed.
+The two arms differ as full configuration bundles: \code{aamas2025} uses brave
+learning with Greedy / \code{mgr} / BK folding and \code{relto};
+\code{ecai2024} uses brave learning with nd / \code{any} / \code{all} folding
+and \code{relto}. The contrast is therefore bundle-level.
 
 \begin{center}
 \small
 \begin{tabularx}{\textwidth}{
   >{\raggedright\arraybackslash}p{0.12\textwidth}
   >{\raggedright\arraybackslash}p{0.10\textwidth}
-  >{\raggedright\arraybackslash}p{0.18\textwidth}X}
+  >{\raggedright\arraybackslash}p{0.22\textwidth}X}
 \toprule
 Arm & Target & Outcome & Emphasised result \\
 \midrule
-AAMAS & \(c\) & solved & Direct assumption-free AND conjunction. \\
-AAMAS & \(a,b\) & no solution & Both-zero candidates conflict with observed
-opposite-label rows and repair dead-ends. \\
-ECAI & \(c\) & solved & Unary \(a=1\) gate plus an assumption attacked by
-\(b=0\). \\
-ECAI & \(a,b\) & solved & Brave assumption-choice construction on ambiguous
-predictor cells; no root mechanism recovered. \\
+AAMAS & \code{c} & \code{solved} &
+Assumption-free rule
+\code{c(A) :- a_val_1(A), b_val_1(A).},
+string-identical to the evaluator mechanism. \\
+AAMAS & \code{a},\code{b} & \code{completed_no_solution} &
+Both-zero co-occurrence candidates cover opposite-label rows; contrary repair
+dead-ends under \code{relto}. \\
+ECAI & \code{c} & \code{solved} &
+First-BK under-fold to \code{a_val_1}, repaired by an assumption attacked when
+\code{b_val_0}. \\
+ECAI & \code{a},\code{b} & \code{solved} &
+Brave per-row assumption construction on the ambiguous predictor cell;
+\(A\) (resp.\ \(B\)) remains underdetermined by the other observed variables. \\
 \bottomrule
 \end{tabularx}
 \end{center}
 
+\subsubsection*{Child target \code{c}}
+
 \observation
-Greedy target \(c\) emits:
+Under AAMAS, every positive example for \code{c} has \((A,B)=(1,1)\). Greedy
+folding with BK space therefore builds the single maximal co-occurrence body
+\(\{\mathtt{a\_val\_1},\mathtt{b\_val\_1}\}\). After mgr deduplication the
+emitted delta is
 
 \begin{lstlisting}
 c(A) :- a_val_1(A), b_val_1(A).
 \end{lstlisting}
 
-This is string-identical to the evaluator mechanism. Nd target \(c\), however,
-emits:
+Brave entailment succeeds immediately: no negative example shares that body,
+so no assumption is introduced. The string coincides with the evaluator
+mechanism reference for \(C\).
+
+Under ECAI, nd folding takes one BK predicate at a time. From an early
+positive, the first fold replaces the example identifier by
+\code{a_val_1}, the first predictor in BK order, yielding the unary rule
+\code{c(A) :- a_val_1(A)}. That body also holds of every negative with
+\(A=1,B=0\). Assumption introduction produces
 
 \begin{lstlisting}
 c(A) :- alpha_1(A), a_val_1(A).
@@ -911,42 +929,157 @@ assumption(alpha_1(A)).
 contrary(alpha_1(A),c_alpha_1(A)) :- assumption(alpha_1(A)).
 \end{lstlisting}
 
-It represents \(c\) defeasibly: \(a=1\) supports \(c\) unless \(b=0\) attacks
-the required assumption. The theory is sample-adequate and cites both parents
-across its target and contrary rules, but it is not the canonical conjunction.
+\explanation
+The ECAI theory is sample-adequate under brave checking: \(c\) is derived when
+\(a=1\), unless the assumption is attacked when \(b=0\). Across the target rule
+and the contrary it cites both parents of \(C\). Its ABA shape is nevertheless
+different from the AAMAS conjunction: the first fold latched onto the leading
+BK predictor, and the second parent enters only through contrary learning.
 
-For target \(a\), Greedy attempts the strict rules
+\subsubsection*{Root targets \code{a} and \code{b}}
+
+\observation
+For target \code{a}, positives fall into two predictor cells,
+\((B,C)=(1,1)\) and \((B,C)=(0,0)\). The cell \((B,C)=(0,0)\) also contains
+negatives: row~9 is positive with joint values \((1,0,0)\), while rows~26 and~30
+are negative with \((0,0,0)\), yet all share the BK literals \code{b_val_0} and
+\code{c_val_0}. Target \code{b} is the symmetric case with the roles of \(A\)
+and \(B\) swapped.
+
+Under AAMAS, greedy folding proposes the two Horn candidates
 
 \begin{lstlisting}
 a(A) :- b_val_1(A), c_val_1(A).
 a(A) :- b_val_0(A), c_val_0(A).
 \end{lstlisting}
 
-The first is safe, while the second covers negative rows 26 and 30. Contrary
-learning reconstructs the same both-zero body, cannot introduce a further
-relative assumption, and returns no solution. Nd instead emits an
-assumption-rich theory containing:
+The both-one rule is accepted. The both-zero rule covers the negative rows~26
+and~30, so brave entailment fails. The learner introduces an assumption on that
+body; contrary rote learning then cites those negatives, and greedy folding of
+the contrary reconstructs the same both-zero body. Under \code{asm_intro(relto)}
+a further relative assumption cannot be added for that body, the engine reports
+KO, and the cell ends as \code{completed_no_solution} with no emitted delta.
+Target \code{b} mirrors this path.
+
+Under ECAI, nd folding again proceeds one predicate at a time. The learner
+first builds a safe block for the both-one positives,
+\begin{lstlisting}
+a(A) :- alpha_1(A), b_val_1(A).
+c_alpha_1(A) :- c_val_0(A).
+\end{lstlisting}
+That block covers positives with \((B,C)=(1,1)\) and excludes negatives with
+\(B=1\) and \(C=0\). The both-zero positives remain uncovered, so a second
+ordinary target rule is still required.
+
+Folding an early both-zero positive (row~8) produces the candidate
+\code{a(A) :- b_val_0(A)}. Brave entailment fails on that candidate. The same
+BK literals also hold of the negative examples in rows~26 and~30. The learner
+therefore introduces an assumption \(\alpha_2\) on the body, giving
+\code{a(A) :- alpha_2(A), b_val_0(A)}. Contrary rote learning cites rows~26
+and~30 as grounds for \(\mathtt{c\_alpha\_2}\).
+
+Folding that contrary first tries \code{b_val_0}. Under \code{relto} this
+returns KO against the already present \(\alpha_2\). The next fold tries
+\code{c_val_0}, yielding \code{c_alpha_2(A) :- c_val_0(A)}. Even that unary
+contrary remains too strong for the joint example set. The learner therefore
+introduces a further assumption \(\alpha_3\) on the contrary. Rote learning of
+\(\mathtt{c\_alpha\_3}\) then cites the both-zero positives, including
+row~9. Folding that contrary re-uses \(\alpha_2\) together with
+\code{b_val_0}. The trace records this close as
+\code{found: alpha_2/1 ... OK}. The final delta for target \code{a} is
 
 \begin{lstlisting}
+a(A) :- alpha_1(A), b_val_1(A).
 a(A) :- alpha_2(A), b_val_0(A).
+c_alpha_1(A) :- c_val_0(A).
 c_alpha_2(A) :- alpha_3(A), c_val_0(A).
 c_alpha_3(A) :- alpha_2(A), b_val_0(A).
+assumption(alpha_1(A)).
+assumption(alpha_2(A)).
+assumption(alpha_3(A)).
+contrary(alpha_1(A),c_alpha_1(A)) :- assumption(alpha_1(A)).
+contrary(alpha_2(A),c_alpha_2(A)) :- assumption(alpha_2(A)).
+contrary(alpha_3(A),c_alpha_3(A)) :- assumption(alpha_3(A)).
 \end{lstlisting}
 
+Target \code{b} is the mirror obtained by swapping the roles of \(A\) and
+\(B\).
+
 \explanation
-Rows 9 and 26 have identical predictor values \((B,C)=(0,0)\) but opposite
-target-\(a\) labels. No deterministic predictor-to-target rule can distinguish
-them. Brave learning nevertheless needs only one stable extension that jointly
-satisfies the labelled examples. Its ground assumptions may take different
-statuses for different row identifiers, allowing the recursive
-\(\alpha_2/\alpha_3\) construction to accept the positive and reject the
-negative. The resulting ungrounded theory does not define \(A\) as a function
-of \((B,C)\).
+The decisive geometry is the predictor cell \((B,C)=(0,0)\). Row~9 is a
+positive example for target \code{a}. Its joint values are
+\((A,B,C)=(1,0,0)\). Row~26 is a negative example. Its joint values are
+\((0,0,0)\). Both rows carry the BK facts \code{b_val_0} and \code{c_val_0}.
+Any Horn rule that uses only those predictors therefore treats the two rows
+alike. It would derive \code{a} at both identifiers, or at neither.
+
+The emitted \(\alpha_2/\alpha_3\) nest works because assumptions are
+grounded per row identifier. At a fixed row \(i\), the relevant instances are
+\(\alpha_2(i)\) and \(\alpha_3(i)\), with contraries
+\(\mathtt{c\_alpha\_2}(i)\) and \(\mathtt{c\_alpha\_3}(i)\). The local rules
+are
+\begin{lstlisting}
+a(i) :- alpha_2(i), b_val_0(i).
+c_alpha_2(i) :- alpha_3(i), c_val_0(i).
+c_alpha_3(i) :- alpha_2(i), b_val_0(i).
+\end{lstlisting}
+On every both-zero row, both \code{b_val_0(i)} and \code{c_val_0(i)} hold.
+Accepting \(\alpha_2(i)\) therefore derives \(\mathtt{c\_alpha\_3}(i)\) and
+attacks \(\alpha_3(i)\). Accepting \(\alpha_3(i)\) derives
+\(\mathtt{c\_alpha\_2}(i)\) and attacks \(\alpha_2(i)\). The two assumptions
+cannot both be accepted at the same row.
+
+This leaves two locally stable choices at each both-zero identifier. If
+\(\alpha_2(i)\) is accepted and \(\alpha_3(i)\) is rejected, then
+\code{a(i)} is derived. If \(\alpha_3(i)\) is accepted and \(\alpha_2(i)\) is
+rejected, then \code{a(i)} is blocked.
+
+Brave learning asks for one witnessing stable extension \(\Delta\) of the
+whole grounded framework. That extension must cover every positive example and
+exclude every negative example at once. Such a witness exists. On row~9 it
+accepts \(\alpha_2(9)\) and rejects \(\alpha_3(9)\). The rule
+\code{a(9) :- alpha_2(9), b_val_0(9)} then derives the positive example
+\((1,0,0)\). On row~26 it accepts \(\alpha_3(26)\) and rejects
+\(\alpha_2(26)\). The same BK facts are present, but without \(\alpha_2(26)\)
+the rule for \code{a} does not fire, so the negative example \((0,0,0)\) is
+excluded. The two rows are therefore separated by their ground assumption
+atoms, even though their BK predictors are identical.
+
+\begin{center}
+\small
+\begin{tabular}{@{}llll@{}}
+\toprule
+Row & Joint \((A,B,C)\) & Choice in \(\Delta\) & Effect \\
+\midrule
+9 & \((1,0,0)\) (positive) &
+\(\alpha_2(9)\) in, \(\alpha_3(9)\) out &
+\code{a(9)} derived \\
+26 & \((0,0,0)\) (negative) &
+\(\alpha_2(26)\) out, \(\alpha_3(26)\) in &
+\code{a(26)} blocked \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Other stable extensions may reverse those local choices. Brave entailment
+requires only that at least one joint witness exists. The framework therefore
+passes brave checking on the finite sample.
+
+For this mechanism, target \code{a} should have no learned solution:
+\(A\) is generated stochastically, and there is no underlying deterministic
+rule from the other observed variables. A solution was nevertheless found.
+Brave entailment permits one stable extension to assign opposite statuses to
+the ground assumptions \(\alpha_2(i)\) and \(\alpha_3(i)\) at different row
+identifiers. That per-row split covers the positive example \((1,0,0)\) and
+excludes the negative example \((0,0,0)\) even though the two rows share the
+same BK predictors. The ECAI \code{solved} outcome records that brave
+covering. It does not record recovery of a deterministic rule for \(A\).
 
 \boundary
-H0 establishes that procedural \code{solved} can mean very different things.
-It does not show that Greedy is generally causally correct or that nd is
-generally misleading. The AAMAS/ECAI comparison changes a strategy bundle.
+H0 is the establishing bundle contrast on one complete-support table. Procedural
+\code{solved} covers both the AAMAS mechanism-string match for \code{c} and the
+ECAI assumption-rich theories for \code{c} and the roots. Attribution of the
+arm difference is to the full AAMAS versus ECAI option bundle.
 
 \record{docs/experiments/qualitative/M13-C3-binary-collider-and/learning_analysis.md}
 

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.7.19)  5 AUG 2026 22:43
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.7.19)  5 AUG 2026 23:11
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -841,57 +841,83 @@ Overfull \hbox (1.66145pt too wide) in paragraph at lines 727--727
  []
 
 [10]
-ignored: Infinite glue shrinkage found in box being split [11] [12] [13] [14] [15] [
-16] [17] [18] [19]
-Underfull \hbox (badness 7238) in paragraph at lines 1427--1427
+ignored: Infinite glue shrinkage found in box being split [11]
+Underfull \hbox (badness 10000) in paragraph at lines 900--900
+[]|\T1/cmr/m/n/10 Assumption-free rule \T1/cmtt/m/n/10 c(A) :- a_val_1(A),
+ []
+
+
+Overfull \hbox (7.56497pt too wide) in paragraph at lines 900--900
+[]|\T1/cmtt/m/n/10 completed_no_solution|  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 900--900
+[]|\T1/cmr/m/n/10 Both-zero co-occurrence can-di-dates cover
+ []
+
+
+Underfull \hbox (badness 2181) in paragraph at lines 906--910
+\T1/cmr/m/n/10.95 Greedy fold-ing with BK space there-fore builds the sin-gle m
+ax-i-mal co-occurrence body
+ []
+
+[12] [13] [14] [15] [16] [17] [18] [19] [20]
+Underfull \hbox (badness 7238) in paragraph at lines 1560--1560
 []|\T1/cmr/m/n/10 Additional \T1/cmtt/m/n/10 relto \T1/cmr/m/n/10 vari-
  []
 
-[20]
-Underfull \hbox (badness 3000) in paragraph at lines 1536--1536
+[21] [22]
+Underfull \hbox (badness 3000) in paragraph at lines 1669--1669
 []|\T1/cmr/m/n/10.95 Deeper nests and re-peated
  []
 
-[21] [22] (./findings_for_fabrizio.aux)
+[23] [24] (./findings_for_fabrizio.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
 Package rerunfilecheck Info: File `findings_for_fabrizio.out' has not changed.
-(rerunfilecheck)             Checksum: 55DF4F18C2B2A0102749885F74ED7791;9738.
+(rerunfilecheck)             Checksum: B5A345FDBD48454F6714DE47F8FF6AA8;9670.
  ) 
 Here is how much of TeX's memory you used:
- 24525 strings out of 467525
- 446253 string characters out of 5418982
- 937662 words of memory out of 5000000
- 52833 multiletter control sequences out of 15000+600000
- 645201 words of font info for 87 fonts, out of 8000000 for 9000
+ 24558 strings out of 467525
+ 446677 string characters out of 5418982
+ 998662 words of memory out of 5000000
+ 52841 multiletter control sequences out of 15000+600000
+ 647739 words of font info for 95 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 102i,10n,107p,536b,1967s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 102i,10n,107p,536b,1079s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb
 ></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb>
 </usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></
 usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></us
-r/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/l
-ocal/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/lo
-cal/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/loca
-l/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfbx1000.pfb></usr/local/
-texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb></usr/local/te
-xlive/2026/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/local/texl
-ive/2026/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/local/texliv
-e/2026/texmf-dist/fonts/type1/public/cm-super/sfcc1095.pfb></usr/local/texlive/
-2026/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/local/texlive/20
-26/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></usr/local/texlive/2026
-/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2026/t
-exmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb></usr/local/texlive/2026/tex
-mf-dist/fonts/type1/public/cm-super/sfti1095.pfb></usr/local/texlive/2026/texmf
--dist/fonts/type1/public/cm-super/sftt1000.pfb></usr/local/texlive/2026/texmf-d
-ist/fonts/type1/public/cm-super/sftt1095.pfb></usr/local/texlive/2026/texmf-dis
-t/fonts/type1/public/cm-super/sftt1200.pfb>
-Output written on findings_for_fabrizio.pdf (22 pages, 443174 bytes).
+r/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/l
+ocal/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/loca
+l/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local
+/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/t
+exlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/te
+xlive/2026/texmf-dist/fonts/type1/public/cm-super/sfbx1000.pfb></usr/local/texl
+ive/2026/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb></usr/local/texliv
+e/2026/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/local/texlive/
+2026/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/local/texlive/20
+26/texmf-dist/fonts/type1/public/cm-super/sfcc1095.pfb></usr/local/texlive/2026
+/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/local/texlive/2026/t
+exmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></usr/local/texlive/2026/tex
+mf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2026/texmf
+-dist/fonts/type1/public/cm-super/sfrm1728.pfb></usr/local/texlive/2026/texmf-d
+ist/fonts/type1/public/cm-super/sfti1095.pfb></usr/local/texlive/2026/texmf-dis
+t/fonts/type1/public/cm-super/sftt1000.pfb></usr/local/texlive/2026/texmf-dist/
+fonts/type1/public/cm-super/sftt1095.pfb></usr/local/texlive/2026/texmf-dist/fo
+nts/type1/public/cm-super/sftt1200.pfb>
+Output written on findings_for_fabrizio.pdf (24 pages, 470434 bytes).
 PDF statistics:
- 599 PDF objects out of 1000 (max. 8388607)
- 528 compressed objects within 6 object streams
- 213 named destinations out of 1000 (max. 500000)
+ 642 PDF objects out of 1000 (max. 8388607)
+ 565 compressed objects within 6 object streams
+ 234 named destinations out of 1000 (max. 500000)
  317 words of extra memory for PDF output out of 10000 (max. 10000000)
 
