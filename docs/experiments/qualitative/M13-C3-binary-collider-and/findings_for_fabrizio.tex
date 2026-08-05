@@ -697,95 +697,163 @@ graph, certificates, and mechanism references are withheld from the learner.
 
 \section{Experimental design and comparison logic}
 
+This section records the learner configurations used in the probes, how
+strongly each designed contrast supports attribution to a single change, and
+the ordered probe map. Detailed outcomes appear in the experimental sequence
+that follows.
+
 \subsection{Learner configurations}
 
 \begin{center}
 \small
 \begin{tabularx}{\textwidth}{
-  >{\raggedright\arraybackslash}p{0.21\textwidth}
-  >{\raggedright\arraybackslash}p{0.10\textwidth}
-  >{\raggedright\arraybackslash}p{0.13\textwidth}
-  >{\raggedright\arraybackslash}p{0.12\textwidth}
-  >{\raggedright\arraybackslash}p{0.12\textwidth}X}
+  >{\raggedright\arraybackslash}p{0.20\textwidth}
+  >{\raggedright\arraybackslash}p{0.09\textwidth}
+  >{\raggedright\arraybackslash}p{0.11\textwidth}
+  >{\raggedright\arraybackslash}p{0.08\textwidth}
+  >{\raggedright\arraybackslash}p{0.07\textwidth}
+  >{\raggedright\arraybackslash}p{0.10\textwidth}X}
 \toprule
-Identity & Semantics & Folding & Selection & Space & Assumption introduction \\
+Identity & Semantics & Folding & Sel. & Space & Steps &
+\code{asm_intro} \\
 \midrule
-\code{aamas2025} & brave & greedy & mgr & BK & \code{relto} \\
-\code{ecai2024} & brave & nd & any & all & \code{relto} \\
-\code{baseline_cautious} & cautious & nd & any & all & \code{relto} \\
-\code{greedy_cautious} & cautious & greedy & mgr & BK & \code{relto} \\
-\code{nd_brave_sechk} & brave & nd & any & all & \code{sechk} \\
-\code{nd_cautious_sechk} & cautious & nd & any & all & \code{sechk} \\
+\code{aamas2025} & brave & greedy & mgr & BK & --- & \code{relto} \\
+\code{ecai2024} & brave & nd & any & all & 10 & \code{relto} \\
+\code{baseline_cautious} & cautious & nd & any & all & 10 & \code{relto} \\
+\code{greedy_cautious} & cautious & greedy & mgr & BK & --- & \code{relto} \\
+\code{nd_brave_sechk} & brave & nd & any & all & 10 & \code{sechk} \\
+\code{nd_cautious_sechk} & cautious & nd & any & all & 10 & \code{sechk} \\
 \bottomrule
 \end{tabularx}
 \end{center}
 
-\code{aamas2025} and \code{ecai2024} reproduce the relevant repository
-configurations associated with the corresponding published approaches.
-\code{baseline_cautious}, \code{greedy_cautious},
-\code{nd_brave_sechk}, and \code{nd_cautious_sechk} are experimental
-identities used for controlled comparison. In particular,
-\code{greedy_cautious} is not a published \emph{AAMAS cautious} method.
+Here ``Steps'' is \code{folding_steps}, which bounds the non-deterministic
+folding-token budget; it is unused under greedy folding. All six identities
+also enable the post-learning checked-ASP artefact (\code{check_ic}). The
+cautious nd identities additionally pin
+\code{post_folding_test_entailment(true)}, which is likewise the effective
+default under the brave arms used here.
 
-The H6 configurations match \code{baseline_cautious} except for
-\code{folding_steps}. H7a matches \code{ecai2024} except for
-\code{asm_intro}; H7b matches \code{baseline_cautious} except for
-\code{asm_intro}.
+\code{aamas2025} and \code{ecai2024} are the repository presets corresponding
+to the AAMAS~2025 and ECAI~2024 learning-option bundles used in this work.
+\code{baseline_cautious}, \code{greedy_cautious}, \code{nd_brave_sechk}, and
+\code{nd_cautious_sechk} are experimental identities for controlled comparison.
+In particular, \code{greedy_cautious} matches \code{aamas2025} except for
+\code{learning_mode(cautious)}; it is an experimental cautious Greedy preset,
+not a published AAMAS method.
+
+The H6a arms match \code{baseline_cautious} except for \code{folding_steps},
+with \(M\in\{1,2,5,10\}\). H7a matches \code{ecai2024} except
+\code{asm_intro(sechk)}. H7b matches \code{baseline_cautious} except
+\code{asm_intro(sechk)}.
 
 \subsection{Strength of comparisons}
 
-Three levels of evidence are distinguished.
+Each probe is read at one of three attribution strengths.
 
 \begin{itemize}
-  \item \textbf{Exact paired option ablation.} Fixture, sample, encoding, and all
-  relevant learner settings are fixed except one option. H4, H4b, H5, H6a,
-  H7a, and H7b provide this form of comparison.
-  \item \textbf{Controlled data or fixture intervention.} One designed property of the
-  sample or fixture changes. H1, H2, H3, and H6b provide this form.
-  \item \textbf{Bundle-level contrast.} Several learner settings change together.
-  AAMAS versus ECAI, or Greedy-cautious versus baseline cautious nd, can reveal
-  behavioural differences but cannot attribute them to one setting.
+  \item \textbf{Exact paired option ablation.}
+  Fixture, sample, encoding, and the remaining learner options are held fixed;
+  one learning option changes.
+  Probes H4 and H4b change \code{learning_mode} under otherwise fixed nd /
+  \code{relto} settings;
+  H5 changes \code{learning_mode} under the fixed Greedy / \code{mgr} / BK /
+  \code{relto} bundle;
+  H6a changes \code{folding_steps};
+  H7a and H7b change only \code{asm_intro}.
+  \item \textbf{Controlled data or fixture intervention.}
+  The learner configuration is held fixed (or compared only within one arm);
+  one designed property of the sample or fixture changes.
+  H1 uses a nested seed-42 prefix \(n=25\) of the principal table under AAMAS;
+  H2 adds a trailing isolated \(D\) under AAMAS;
+  H3 uses the BK-leading isolated-\(A\) fixture under ECAI (with AAMAS as
+  secondary);
+  H6b varies nested sample size \(n\in\{30,60,90\}\) at fixed
+  \code{folding_steps(2)} under \code{baseline_cautious}.
+  \item \textbf{Bundle-level contrast.}
+  Several learner settings change together, so a behavioural difference is
+  attributed to the configuration bundle rather than to one option.
+  H0 compares \code{aamas2025} with \code{ecai2024} on the principal table.
+  Where both exist, contrasts between \code{greedy_cautious} and
+  \code{baseline_cautious} are likewise bundle-level (Greedy versus nd), as
+  used secondarily in H5.
 \end{itemize}
 
-This hierarchy prevents a useful qualitative contrast from being
-misrepresented as a single-option causal result.
+The strength level states how far a difference among outcomes, deltas, or
+traces can be attributed to the designed intervention of that probe.
 
 \subsection{Probe sequence}
 
-\begin{longtable}{@{}p{0.075\textwidth}p{0.27\textwidth}p{0.29\textwidth}p{0.28\textwidth}@{}}
+\begin{longtable}{@{}
+  >{\raggedright\arraybackslash}p{0.07\textwidth}
+  >{\raggedright\arraybackslash}p{0.30\textwidth}
+  >{\raggedright\arraybackslash}p{0.30\textwidth}
+  >{\raggedright\arraybackslash}p{0.25\textwidth}@{}}
 \toprule
-Probe & Question & Controlled intervention & Principal observable \\
+Probe & Question & Controlled intervention & What is inspected \\
 \midrule
 \endfirsthead
 \toprule
-Probe & Question & Controlled intervention & Principal observable \\
+Probe & Question & Controlled intervention & What is inspected \\
 \midrule
 \endhead
-\Hprobe{0} & What does the baseline learner do for the child and roots? &
-One H0 table; AAMAS and ECAI; all targets & Outcomes, deltas, and traces. \\
-\Hprobe{1} & Does a rare support witness prevent a false root rule? &
-Nested \(n=25\) versus \(n=30\), same stream and AAMAS & Root rules and
-counterexample rows. \\
-\Hprobe{2} & Does Greedy omit an irrelevant trailing covariate? &
-Add isolated \(D\) after the H0 parents & Target-\(c\) rule bodies. \\
-\Hprobe{3} & What happens when an isolated covariate is first in BK? &
-H3 fixture with BK order \([a,b,d]\) & First nd fold and final child theory. \\
-\Hprobe{4} & Does cautious nd block the brave root construction? &
-Brave to cautious under fixed nd/\code{relto} & Root outcomes and control
-child delta. \\
-\Hprobe{4b} & How does cautious checking change the H3 child repair? &
-Same H3 target \(c\), semantics only & Exact contrary-rule difference. \\
-\Hprobe{5} & Is brave-to-cautious behaviour different inside Greedy? &
-Full 18-cell Greedy replication, semantics only & Outcomes, deltas, traces,
-and runtime. \\
-\Hprobe{6a} & Why are cautious-nd no-solution traces long? &
-\(M\in\{1,2,5,10\}\), fixed H0 \(n=30\) & Token bands, trace length, runtime. \\
-\Hprobe{6b} & How does grounded sample size affect the same search? &
-\(n\in\{30,60,90\}\), fixed \(M=2\) & Search topology and per-band growth. \\
-\Hprobe{7a} & How does \code{sechk} differ from \code{relto} under brave nd? &
-Assumption option only; H0 and H3 & Seven paired deltas and trace forks. \\
-\Hprobe{7b} & Does the same difference persist under cautious nd? &
-Assumption option only; H0 and H3 & Child deltas, root cost, timeout limits. \\
+\Hprobe{0} &
+What do the Greedy and nd bundles learn for each target on the principal AND
+collider? &
+Principal fixture, frozen \(n=30\) seed~42; \code{aamas2025} and
+\code{ecai2024}; targets \code{a},\code{b},\code{c} &
+Exit status, deltas, and traces by target and arm. \\
+\Hprobe{1} &
+How does omitting the rare \((0,0,0)\) atom affect AAMAS root learning? &
+Nested seed-42 prefix \(n=25\) versus \(n=30\); AAMAS; same stream &
+Root deltas and the presence or absence of opposite-label witness rows. \\
+\Hprobe{2} &
+What does Greedy do with an irrelevant trailing covariate on the child? &
+Principal AND collider plus isolated \(D\); AAMAS; target \code{c} &
+Whether \code{d} appears in the learned bodies relative to the \(D\)-free
+evaluator rule. \\
+\Hprobe{3} &
+What does nd learning do when an isolated covariate is first in BK? &
+BD AND collider with BK-leading isolated \(A\); order \([a,b,d]\); ECAI
+primary on target \code{c} &
+First fold, retained BK literals, and the final child theory. \\
+\Hprobe{4} &
+How does switching brave nd to cautious nd affect root targets on the
+principal table? &
+Learning mode only, under fixed nd / \code{relto}; targets \code{a},\code{b}
+with control \code{c} &
+Root exit status and the control child delta. \\
+\Hprobe{4b} &
+How does the same brave-to-cautious switch affect the child repair on the
+BK-leading fixture? &
+Learning mode only on H3 target \code{c}; nd / \code{relto} fixed &
+Shared structure versus the contrary-rule close under \code{alpha_3}. \\
+\Hprobe{5} &
+How does brave-to-cautious behave inside the Greedy bundle? &
+\code{learning_mode} only under Greedy / \code{mgr} / BK / \code{relto}; 18
+paired cells across the completed AAMAS collections &
+Paired outcomes, deltas, traces, and runtime; secondary contrast to nd
+cautious where available. \\
+\Hprobe{6a} &
+How does the folding-token ceiling affect cautious-nd search cost on roots? &
+\code{folding_steps} \(M\in\{1,2,5,10\}\); principal table \(n=30\);
+\code{baseline_cautious} &
+Trace length, runtime, token bands, and control child behaviour. \\
+\Hprobe{6b} &
+How does grounded sample size affect the same cautious-nd search? &
+Nested \(n\in\{30,60,90\}\) at fixed \(M=2\); principal fixture;
+\code{baseline_cautious} &
+Search topology and per-band growth with \(n\). \\
+\Hprobe{7a} &
+How do \code{relto} and \code{sechk} differ under brave nd? &
+\code{asm_intro} only; principal and BK-leading fixtures; seven target pairs &
+Paired deltas and the assumption-introduction control-flow fork. \\
+\Hprobe{7b} &
+How do \code{relto} and \code{sechk} differ under cautious nd? &
+\code{asm_intro} only; same two fixtures; \code{baseline_cautious} versus
+\code{nd_cautious_sechk} &
+Child deltas, root search cost, and whether runs complete within the
+wall-time limit. \\
 \bottomrule
 \end{longtable}
 

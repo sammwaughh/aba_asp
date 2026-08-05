@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.7.19)  5 AUG 2026 22:38
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.7.19)  5 AUG 2026 22:43
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -836,78 +836,19 @@ n/10.95 folding_steps\T1/cmr/m/n/10.95 ),
 LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <12> not available
 (Font)              Font shape `T1/cmtt/m/n' tried instead on input line 419.
 [6] [7] [8] [9]
-Underfull \hbox (badness 10000) in paragraph at lines 720--720
-[]|\T1/cmr/m/n/10 Assumption in-
+Overfull \hbox (1.66145pt too wide) in paragraph at lines 727--727
+[]|\T1/cmr/m/n/10 Semantics|  
  []
 
-
-Underfull \hbox (badness 1917) in paragraph at lines 764--764
-[]|\T1/cmr/m/n/10.95 What does the base-line
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 765--766
-[]|\T1/cmr/m/n/10.95 Outcomes, deltas, and
- []
-
-
-Underfull \hbox (badness 1308) in paragraph at lines 771--771
-[]|\T1/cmr/m/n/10.95 What hap-pens when an
- []
-
-
-Underfull \hbox (badness 5563) in paragraph at lines 774--774
-[]|\T1/cmr/m/n/10.95 Brave to cau-tious un-der
- []
-
-
-Underfull \hbox (badness 5331) in paragraph at lines 778--778
-[]|\T1/cmr/m/n/10.95 Is brave-to-cautious be-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 778--778
-\T1/cmr/m/n/10.95 haviour dif-fer-ent in-side
- []
-
-
-Underfull \hbox (badness 1546) in paragraph at lines 779--781
-[]|\T1/cmr/m/n/10.95 Outcomes, deltas, traces,
- []
-
-
-Underfull \hbox (badness 1082) in paragraph at lines 783--783
-\T1/cmr/m/n/10.95 ple size af-fect the same
- []
-
-
-Underfull \hbox (badness 5119) in paragraph at lines 785--785
-[]|\T1/cmr/m/n/10.95 How does \T1/cmtt/m/n/10.95 sechk \T1/cmr/m/n/10.95 dif-fe
-r
- []
-
-
-Underfull \hbox (badness 1019) in paragraph at lines 785--785
-\T1/cmr/m/n/10.95 from \T1/cmtt/m/n/10.95 relto \T1/cmr/m/n/10.95 un-der brave
- []
-
-
-Underfull \hbox (badness 3302) in paragraph at lines 786--787
-[]|\T1/cmr/m/n/10.95 Seven paired deltas and
- []
-
-
-Underfull \hbox (badness 4739) in paragraph at lines 788--789
-[]|\T1/cmr/m/n/10.95 Child deltas, root cost,
- []
-
-[10] [11] [12] [13] [14] [15] [16] [17] [18]
-Underfull \hbox (badness 7238) in paragraph at lines 1359--1359
+[10]
+ignored: Infinite glue shrinkage found in box being split [11] [12] [13] [14] [15] [
+16] [17] [18] [19]
+Underfull \hbox (badness 7238) in paragraph at lines 1427--1427
 []|\T1/cmr/m/n/10 Additional \T1/cmtt/m/n/10 relto \T1/cmr/m/n/10 vari-
  []
 
-[19] [20]
-Underfull \hbox (badness 3000) in paragraph at lines 1468--1468
+[20]
+Underfull \hbox (badness 3000) in paragraph at lines 1536--1536
 []|\T1/cmr/m/n/10.95 Deeper nests and re-peated
  []
 
@@ -922,11 +863,11 @@ Package rerunfilecheck Info: File `findings_for_fabrizio.out' has not changed.
 Here is how much of TeX's memory you used:
  24525 strings out of 467525
  446253 string characters out of 5418982
- 960662 words of memory out of 5000000
+ 937662 words of memory out of 5000000
  52833 multiletter control sequences out of 15000+600000
  645201 words of font info for 87 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 102i,10n,107p,536b,1079s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 102i,10n,107p,536b,1967s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb
 ></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb>
 </usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></
@@ -947,7 +888,7 @@ mf-dist/fonts/type1/public/cm-super/sfti1095.pfb></usr/local/texlive/2026/texmf
 -dist/fonts/type1/public/cm-super/sftt1000.pfb></usr/local/texlive/2026/texmf-d
 ist/fonts/type1/public/cm-super/sftt1095.pfb></usr/local/texlive/2026/texmf-dis
 t/fonts/type1/public/cm-super/sftt1200.pfb>
-Output written on findings_for_fabrizio.pdf (22 pages, 441867 bytes).
+Output written on findings_for_fabrizio.pdf (22 pages, 443174 bytes).
 PDF statistics:
  599 PDF objects out of 1000 (max. 8388607)
  528 compressed objects within 6 object streams
