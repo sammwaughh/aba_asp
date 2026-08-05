@@ -1191,65 +1191,77 @@ primary signal is the balanced \(n=30\) distractor split on target \code{c}.
 
 \record{docs/experiments/qualitative/M13-C3-binary-collider-and/h2_irrelevant_covariate.md}
 
-\subsection{H3: put an irrelevant covariate first in BK}
+\subsection{H3: BK-leading isolated covariate under nd}
 
 \question
-H3 asked how nd learning behaves when an isolated variable precedes the two
-mechanism parents in target-\(c\) BK order. It was designed to expose whether
-the first folding opportunity becomes structural scaffolding for the learned
-theory.
+On a BD AND collider with an isolated root placed first in BK order, does ECAI
+learning of the deterministic child \code{c} select that isolated variable in
+the first fold and retain it in the final theory, or does it return the
+evaluator rule \code{c(A) :- b_val_1(A), d_val_1(A).}?
 
 \comparison
-H3 uses \(B\rightarrow C\leftarrow D\), \(C=B\land D\), and an isolated root
-\(A\). The target-\(c\) order is \([a,b,d]\). The ECAI brave-nd run is primary;
-an AAMAS run on the identical table supplies a bundle-level contrast.
+The fixture is \(B\rightarrow C\leftarrow D\) with \(C=B\land D\) and an
+independent isolated root \(A\sim\operatorname{Bernoulli}(1/2)\). Variable
+order places \code{a} first, so for target \code{c} the BK predictors are
+\([a,b,d]\). The primary run is ECAI brave nd on the frozen \(n=30\) seed-42
+sample. An AAMAS run on the same table supplies a bundle-level contrast.
+Among the fifteen positive \code{c} rows, every row has \((B,D)=(1,1)\), while
+both values of \(A\) occur.
 
 \observation
-The ECAI trace begins:
-
+The ECAI trace opens with the first fold
 \begin{lstlisting}
 folding result: c(A) <- [a_val_1(A)]
 \end{lstlisting}
-
-and the final ordinary target rules retain the isolated variable as two outer
-gates:
-
+Assumption introduction follows immediately. The full emitted delta for
+target \code{c} is:
 \begin{lstlisting}
 c(A) :- alpha_1(A), a_val_1(A).
 c(A) :- alpha_2(A), a_val_0(A).
+c_alpha_1(A) :- b_val_0(A).
+c_alpha_1(A) :- alpha_3(A), b_val_1(A).
+c_alpha_2(A) :- d_val_0(A).
+c_alpha_2(A) :- b_val_0(A).
+c_alpha_3(A) :- alpha_1(A), a_val_1(A).
+assumption(alpha_1(A)).
+assumption(alpha_2(A)).
+assumption(alpha_3(A)).
+contrary(alpha_1(A),c_alpha_1(A)) :- assumption(alpha_1(A)).
+contrary(alpha_2(A),c_alpha_2(A)) :- assumption(alpha_2(A)).
+contrary(alpha_3(A),c_alpha_3(A)) :- assumption(alpha_3(A)).
 \end{lstlisting}
+The two ordinary target rules are gated only on the isolated variable \(A\).
+Mechanism parents enter through the contrary layer: \(\mathtt{c\_alpha\_1}\)
+and \(\mathtt{c\_alpha\_2}\) cite \(b\) and \(d\), with a further nested
+assumption \(\alpha_3\) under the \(a{=}1\) branch. The theory is therefore
+organised around \(A\), with \(B\) and \(D\) used to repair that scaffolding.
+It does not match the evaluator BD AND \code{c(A) :- b_val_1(A), d_val_1(A).}.
 
-Later contrary rules cite \(b\) and \(d\), but the emitted delta does not
-coincide with:
-
-\begin{lstlisting}
-c(A) :- b_val_1(A), d_val_1(A).
-\end{lstlisting}
-
-On the same sample, AAMAS emits:
-
+On the same sample, AAMAS also solves \code{c} while retaining \code{a}:
 \begin{lstlisting}
 c(A) :- a_val_1(A), b_val_1(A), d_val_1(A).
 c(A) :- a_val_0(A), b_val_1(A), d_val_1(A).
 \end{lstlisting}
 
-Thus both learner bundles solve \(c\) while unnecessarily organising the
-theory around isolated \(A\).
-
 \explanation
-Nd starts with one folding token and \code{any} selection. In the serialized
-BK, an \(a\)-value literal is the first admissible fold, so the first
-generalisation is based on \(A\) rather than the mechanism parents. When the
-unary fold over-generalises, the learner introduces an assumption and learns
-contraries around that rule. Later predicates can repair the theory, but the
-initial \(a\)-gate remains in the ordinary target rule. Greedy reaches a
-different but related failure through maximal co-occurrence: it keeps every
-matching literal and splits the AND rule by the two values of \(A\).
+Under nd folding with \code{any} selection, the first admissible BK predicate
+becomes the first generalising fold. Here that predicate is an \code{a}-value
+literal, because \code{a} leads the serialised BK. The unary fold
+over-generalises, so the learner introduces \(\alpha_1\) (then \(\alpha_2\))
+and learns contraries around those \(A\)-gated rules. Later folds place \(b\)
+and \(d\) in \(\mathtt{c\_alpha\_1}\) and \(\mathtt{c\_alpha\_2}\), but the
+ordinary target rules keep the initial \(a\)-gates. The AAMAS contrast reaches
+distractor retention by a different route: greedy maximal co-occurrence keeps
+every matching literal, including leading \code{a}, and splits the AND across
+the two values of \(A\).
+
+In both cases the child is solved, and in both cases the isolated leading
+variable is retained. The failure mode is distractor inclusion driven by BK
+order, not failure to solve \code{c}.
 
 \boundary
-H3 establishes a representation-order effect on this fixture. It does not
-show that the first BK variable must appear in every possible nd solution, or
-that any particular statistical ordering would be causally correct.
+H3 is a controlled fixture intervention. The primary signal is ECAI first-fold
+retention of BK-leading isolated \(A\) on target \code{c}.
 
 \record{docs/experiments/qualitative/M13-C3-binary-collider-and/h3_bk_leading_distractor.md}
 
