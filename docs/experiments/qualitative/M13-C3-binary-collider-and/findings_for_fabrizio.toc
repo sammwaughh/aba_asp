@@ -1,0 +1,103 @@
+\contentsline {section}{\numberline {1}Purpose, scope, and organising question}{3}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Research question}{3}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Scope}{3}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}Object of study}{3}{subsection.1.3}%
+\contentsline {section}{\numberline {2}Conceptual framework and notation}{4}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Seven objects kept separate}{4}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}ABA framework}{4}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}ABA Learning task}{5}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Exact-value target-wise encoding}{5}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.5}Brave and cautious learning}{5}{subsection.2.5}%
+\contentsline {subsection}{\numberline {2.6}Greedy and non-deterministic folding}{6}{subsection.2.6}%
+\contentsline {paragraph}{\code {folding_mode(greedy)}.}{6}{section*.2}%
+\contentsline {paragraph}{\code {folding_mode(nd)}.}{6}{section*.3}%
+\contentsline {subsection}{\numberline {2.7}Assumption introduction: \code {relto} and \code {sechk}}{6}{subsection.2.7}%
+\contentsline {paragraph}{\code {asm_intro(relto)}.}{6}{section*.4}%
+\contentsline {paragraph}{\code {asm_intro(sechk)}.}{7}{section*.5}%
+\contentsline {section}{\numberline {3}Causal fixtures and evaluator ground truth}{7}{section.3}%
+\contentsline {subsection}{\numberline {3.1}H0 baseline: binary AND collider}{7}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Evaluator-only mechanism reference}{8}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Frozen H0 sample}{8}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}H2 and H3 controlled extensions}{9}{subsection.3.4}%
+\contentsline {section}{\numberline {4}Experimental design and comparison logic}{9}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Learner configurations}{9}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Strength of comparisons}{10}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Probe sequence}{10}{subsection.4.3}%
+\contentsline {section}{\numberline {5}Experimental sequence: H0--H7b}{11}{section.5}%
+\contentsline {subsection}{\numberline {5.1}H0: establish baseline behaviour by target and strategy}{11}{subsection.5.1}%
+\contentsline {paragraph}{Question and purpose.}{11}{section*.6}%
+\contentsline {paragraph}{Controlled comparison.}{11}{section*.7}%
+\contentsline {paragraph}{Emphasised observation.}{11}{section*.8}%
+\contentsline {paragraph}{Trace-supported explanation.}{12}{section*.9}%
+\contentsline {paragraph}{Evidential boundary.}{12}{section*.10}%
+\contentsline {subsection}{\numberline {5.2}H1: remove a rare support witness}{12}{subsection.5.2}%
+\contentsline {paragraph}{Question and purpose.}{12}{section*.11}%
+\contentsline {paragraph}{Controlled comparison.}{12}{section*.12}%
+\contentsline {paragraph}{Emphasised observation.}{12}{section*.13}%
+\contentsline {paragraph}{Trace-supported explanation.}{12}{section*.14}%
+\contentsline {paragraph}{Evidential boundary.}{13}{section*.15}%
+\contentsline {subsection}{\numberline {5.3}H2: add an irrelevant trailing covariate}{13}{subsection.5.3}%
+\contentsline {paragraph}{Question and purpose.}{13}{section*.16}%
+\contentsline {paragraph}{Controlled comparison.}{13}{section*.17}%
+\contentsline {paragraph}{Emphasised observation.}{13}{section*.18}%
+\contentsline {paragraph}{Trace-supported explanation.}{13}{section*.19}%
+\contentsline {paragraph}{Evidential boundary.}{13}{section*.20}%
+\contentsline {subsection}{\numberline {5.4}H3: put an irrelevant covariate first in BK}{13}{subsection.5.4}%
+\contentsline {paragraph}{Question and purpose.}{13}{section*.21}%
+\contentsline {paragraph}{Controlled comparison.}{13}{section*.22}%
+\contentsline {paragraph}{Emphasised observation.}{14}{section*.23}%
+\contentsline {paragraph}{Trace-supported explanation.}{14}{section*.24}%
+\contentsline {paragraph}{Evidential boundary.}{14}{section*.25}%
+\contentsline {subsection}{\numberline {5.5}H4: change brave nd to cautious nd}{14}{subsection.5.5}%
+\contentsline {subsubsection}{\numberline {5.5.1}H4: roots on the H0 table}{14}{subsubsection.5.5.1}%
+\contentsline {paragraph}{Question and purpose.}{14}{section*.26}%
+\contentsline {paragraph}{Controlled comparison.}{14}{section*.27}%
+\contentsline {paragraph}{Emphasised observation.}{15}{section*.28}%
+\contentsline {paragraph}{Trace-supported explanation.}{15}{section*.29}%
+\contentsline {paragraph}{Evidential boundary.}{15}{section*.30}%
+\contentsline {subsubsection}{\numberline {5.5.2}H4b: child \(c\) on the H3 table}{15}{subsubsection.5.5.2}%
+\contentsline {paragraph}{Question and purpose.}{15}{section*.31}%
+\contentsline {paragraph}{Controlled comparison.}{15}{section*.32}%
+\contentsline {paragraph}{Emphasised observation.}{15}{section*.33}%
+\contentsline {paragraph}{Trace-supported explanation.}{15}{section*.34}%
+\contentsline {paragraph}{Evidential boundary.}{15}{section*.35}%
+\contentsline {subsection}{\numberline {5.6}H5: duplicate all Greedy runs under cautious learning}{16}{subsection.5.6}%
+\contentsline {paragraph}{Question and purpose.}{16}{section*.36}%
+\contentsline {paragraph}{Controlled comparison.}{16}{section*.37}%
+\contentsline {paragraph}{Emphasised observation.}{16}{section*.38}%
+\contentsline {paragraph}{Trace-supported explanation.}{16}{section*.39}%
+\contentsline {paragraph}{Evidential boundary.}{16}{section*.40}%
+\contentsline {subsection}{\numberline {5.7}H6: explain cautious-nd search cost}{16}{subsection.5.7}%
+\contentsline {subsubsection}{\numberline {5.7.1}H6a: folding-token ceiling}{16}{subsubsection.5.7.1}%
+\contentsline {paragraph}{Question and purpose.}{16}{section*.41}%
+\contentsline {paragraph}{Controlled comparison.}{16}{section*.42}%
+\contentsline {paragraph}{Emphasised observation.}{17}{section*.43}%
+\contentsline {paragraph}{Trace-supported explanation.}{17}{section*.44}%
+\contentsline {paragraph}{Evidential boundary.}{17}{section*.45}%
+\contentsline {subsubsection}{\numberline {5.7.2}H6b: nested sample size}{17}{subsubsection.5.7.2}%
+\contentsline {paragraph}{Question and purpose.}{17}{section*.46}%
+\contentsline {paragraph}{Controlled comparison.}{17}{section*.47}%
+\contentsline {paragraph}{Emphasised observation.}{18}{section*.48}%
+\contentsline {paragraph}{Trace-supported explanation.}{18}{section*.49}%
+\contentsline {paragraph}{Evidential boundary.}{18}{section*.50}%
+\contentsline {subsection}{\numberline {5.8}H7: change assumption introduction from \code {relto} to \code {sechk}}{18}{subsection.5.8}%
+\contentsline {subsubsection}{\numberline {5.8.1}H7a: brave nd}{18}{subsubsection.5.8.1}%
+\contentsline {paragraph}{Question and purpose.}{18}{section*.51}%
+\contentsline {paragraph}{Controlled comparison.}{18}{section*.52}%
+\contentsline {paragraph}{Emphasised observation.}{18}{section*.53}%
+\contentsline {paragraph}{Trace-supported explanation.}{19}{section*.54}%
+\contentsline {paragraph}{Evidential boundary.}{19}{section*.55}%
+\contentsline {subsubsection}{\numberline {5.8.2}H7b: cautious nd}{19}{subsubsection.5.8.2}%
+\contentsline {paragraph}{Question and purpose.}{19}{section*.56}%
+\contentsline {paragraph}{Controlled comparison.}{19}{section*.57}%
+\contentsline {paragraph}{Emphasised observation.}{20}{section*.58}%
+\contentsline {paragraph}{Trace-supported explanation.}{20}{section*.59}%
+\contentsline {paragraph}{Evidential boundary.}{20}{section*.60}%
+\contentsline {section}{\numberline {6}Findings}{21}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Finding 1: Greedy solutions retain all represented BK predictors}{21}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Finding 2: nd solutions are organised around the first BK predictor}{21}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}Finding 3: brave nd can solve predictor-ambiguous root targets}{21}{subsection.6.3}%
+\contentsline {subsection}{\numberline {6.4}Finding 4: cautious-nd failed-search cost grows with the folding-token ceiling}{21}{subsection.6.4}%
+\contentsline {subsection}{\numberline {6.5}Finding 5: cautious-nd trace size grows with grounded sample size}{21}{subsection.6.5}%
+\contentsline {subsection}{\numberline {6.6}Finding 6: \code {relto} and \code {sechk} produce different assumption-introduction paths}{21}{subsection.6.6}%
+\contentsline {section}{\numberline {7}Implications}{21}{section.7}%
