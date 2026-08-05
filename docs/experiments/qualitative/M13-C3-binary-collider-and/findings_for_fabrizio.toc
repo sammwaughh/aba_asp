@@ -34,69 +34,69 @@
 \contentsline {paragraph}{Emphasised observation.}{13}{section*.14}%
 \contentsline {paragraph}{Trace-supported explanation.}{14}{section*.15}%
 \contentsline {paragraph}{Evidential boundary.}{15}{section*.16}%
-\contentsline {subsection}{\numberline {5.2}H1: remove a rare support witness}{15}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.2}H1: nested prefix omitting the rare \((0,0,0)\) atom}{15}{subsection.5.2}%
 \contentsline {paragraph}{Question and purpose.}{15}{section*.17}%
 \contentsline {paragraph}{Controlled comparison.}{15}{section*.18}%
 \contentsline {paragraph}{Emphasised observation.}{15}{section*.19}%
-\contentsline {paragraph}{Trace-supported explanation.}{15}{section*.20}%
+\contentsline {paragraph}{Trace-supported explanation.}{16}{section*.20}%
 \contentsline {paragraph}{Evidential boundary.}{16}{section*.21}%
 \contentsline {subsection}{\numberline {5.3}H2: add an irrelevant trailing covariate}{16}{subsection.5.3}%
 \contentsline {paragraph}{Question and purpose.}{16}{section*.22}%
 \contentsline {paragraph}{Controlled comparison.}{16}{section*.23}%
 \contentsline {paragraph}{Emphasised observation.}{16}{section*.24}%
-\contentsline {paragraph}{Trace-supported explanation.}{16}{section*.25}%
-\contentsline {paragraph}{Evidential boundary.}{16}{section*.26}%
-\contentsline {subsection}{\numberline {5.4}H3: put an irrelevant covariate first in BK}{16}{subsection.5.4}%
-\contentsline {paragraph}{Question and purpose.}{16}{section*.27}%
-\contentsline {paragraph}{Controlled comparison.}{16}{section*.28}%
+\contentsline {paragraph}{Trace-supported explanation.}{17}{section*.25}%
+\contentsline {paragraph}{Evidential boundary.}{17}{section*.26}%
+\contentsline {subsection}{\numberline {5.4}H3: put an irrelevant covariate first in BK}{17}{subsection.5.4}%
+\contentsline {paragraph}{Question and purpose.}{17}{section*.27}%
+\contentsline {paragraph}{Controlled comparison.}{17}{section*.28}%
 \contentsline {paragraph}{Emphasised observation.}{17}{section*.29}%
-\contentsline {paragraph}{Trace-supported explanation.}{17}{section*.30}%
-\contentsline {paragraph}{Evidential boundary.}{17}{section*.31}%
-\contentsline {subsection}{\numberline {5.5}H4: change brave nd to cautious nd}{17}{subsection.5.5}%
-\contentsline {subsubsection}{\numberline {5.5.1}H4: roots on the H0 table}{17}{subsubsection.5.5.1}%
-\contentsline {paragraph}{Question and purpose.}{17}{section*.32}%
-\contentsline {paragraph}{Controlled comparison.}{17}{section*.33}%
+\contentsline {paragraph}{Trace-supported explanation.}{18}{section*.30}%
+\contentsline {paragraph}{Evidential boundary.}{18}{section*.31}%
+\contentsline {subsection}{\numberline {5.5}H4: change brave nd to cautious nd}{18}{subsection.5.5}%
+\contentsline {subsubsection}{\numberline {5.5.1}H4: roots on the H0 table}{18}{subsubsection.5.5.1}%
+\contentsline {paragraph}{Question and purpose.}{18}{section*.32}%
+\contentsline {paragraph}{Controlled comparison.}{18}{section*.33}%
 \contentsline {paragraph}{Emphasised observation.}{18}{section*.34}%
 \contentsline {paragraph}{Trace-supported explanation.}{18}{section*.35}%
-\contentsline {paragraph}{Evidential boundary.}{18}{section*.36}%
-\contentsline {subsubsection}{\numberline {5.5.2}H4b: child \(c\) on the H3 table}{18}{subsubsection.5.5.2}%
-\contentsline {paragraph}{Question and purpose.}{18}{section*.37}%
-\contentsline {paragraph}{Controlled comparison.}{18}{section*.38}%
-\contentsline {paragraph}{Emphasised observation.}{18}{section*.39}%
-\contentsline {paragraph}{Trace-supported explanation.}{18}{section*.40}%
-\contentsline {paragraph}{Evidential boundary.}{18}{section*.41}%
+\contentsline {paragraph}{Evidential boundary.}{19}{section*.36}%
+\contentsline {subsubsection}{\numberline {5.5.2}H4b: child \(c\) on the H3 table}{19}{subsubsection.5.5.2}%
+\contentsline {paragraph}{Question and purpose.}{19}{section*.37}%
+\contentsline {paragraph}{Controlled comparison.}{19}{section*.38}%
+\contentsline {paragraph}{Emphasised observation.}{19}{section*.39}%
+\contentsline {paragraph}{Trace-supported explanation.}{19}{section*.40}%
+\contentsline {paragraph}{Evidential boundary.}{19}{section*.41}%
 \contentsline {subsection}{\numberline {5.6}H5: duplicate all Greedy runs under cautious learning}{19}{subsection.5.6}%
 \contentsline {paragraph}{Question and purpose.}{19}{section*.42}%
 \contentsline {paragraph}{Controlled comparison.}{19}{section*.43}%
 \contentsline {paragraph}{Emphasised observation.}{19}{section*.44}%
-\contentsline {paragraph}{Trace-supported explanation.}{19}{section*.45}%
-\contentsline {paragraph}{Evidential boundary.}{19}{section*.46}%
-\contentsline {subsection}{\numberline {5.7}H6: explain cautious-nd search cost}{19}{subsection.5.7}%
-\contentsline {subsubsection}{\numberline {5.7.1}H6a: folding-token ceiling}{19}{subsubsection.5.7.1}%
-\contentsline {paragraph}{Question and purpose.}{19}{section*.47}%
-\contentsline {paragraph}{Controlled comparison.}{19}{section*.48}%
+\contentsline {paragraph}{Trace-supported explanation.}{20}{section*.45}%
+\contentsline {paragraph}{Evidential boundary.}{20}{section*.46}%
+\contentsline {subsection}{\numberline {5.7}H6: explain cautious-nd search cost}{20}{subsection.5.7}%
+\contentsline {subsubsection}{\numberline {5.7.1}H6a: folding-token ceiling}{20}{subsubsection.5.7.1}%
+\contentsline {paragraph}{Question and purpose.}{20}{section*.47}%
+\contentsline {paragraph}{Controlled comparison.}{20}{section*.48}%
 \contentsline {paragraph}{Emphasised observation.}{20}{section*.49}%
-\contentsline {paragraph}{Trace-supported explanation.}{20}{section*.50}%
-\contentsline {paragraph}{Evidential boundary.}{20}{section*.51}%
-\contentsline {subsubsection}{\numberline {5.7.2}H6b: nested sample size}{20}{subsubsection.5.7.2}%
-\contentsline {paragraph}{Question and purpose.}{20}{section*.52}%
-\contentsline {paragraph}{Controlled comparison.}{20}{section*.53}%
+\contentsline {paragraph}{Trace-supported explanation.}{21}{section*.50}%
+\contentsline {paragraph}{Evidential boundary.}{21}{section*.51}%
+\contentsline {subsubsection}{\numberline {5.7.2}H6b: nested sample size}{21}{subsubsection.5.7.2}%
+\contentsline {paragraph}{Question and purpose.}{21}{section*.52}%
+\contentsline {paragraph}{Controlled comparison.}{21}{section*.53}%
 \contentsline {paragraph}{Emphasised observation.}{21}{section*.54}%
 \contentsline {paragraph}{Trace-supported explanation.}{21}{section*.55}%
 \contentsline {paragraph}{Evidential boundary.}{21}{section*.56}%
-\contentsline {subsection}{\numberline {5.8}H7: change assumption introduction from \code {relto} to \code {sechk}}{21}{subsection.5.8}%
-\contentsline {subsubsection}{\numberline {5.8.1}H7a: brave nd}{21}{subsubsection.5.8.1}%
-\contentsline {paragraph}{Question and purpose.}{21}{section*.57}%
-\contentsline {paragraph}{Controlled comparison.}{21}{section*.58}%
-\contentsline {paragraph}{Emphasised observation.}{21}{section*.59}%
-\contentsline {paragraph}{Trace-supported explanation.}{22}{section*.60}%
-\contentsline {paragraph}{Evidential boundary.}{22}{section*.61}%
-\contentsline {subsubsection}{\numberline {5.8.2}H7b: cautious nd}{22}{subsubsection.5.8.2}%
-\contentsline {paragraph}{Question and purpose.}{22}{section*.62}%
-\contentsline {paragraph}{Controlled comparison.}{22}{section*.63}%
+\contentsline {subsection}{\numberline {5.8}H7: change assumption introduction from \code {relto} to \code {sechk}}{22}{subsection.5.8}%
+\contentsline {subsubsection}{\numberline {5.8.1}H7a: brave nd}{22}{subsubsection.5.8.1}%
+\contentsline {paragraph}{Question and purpose.}{22}{section*.57}%
+\contentsline {paragraph}{Controlled comparison.}{22}{section*.58}%
+\contentsline {paragraph}{Emphasised observation.}{22}{section*.59}%
+\contentsline {paragraph}{Trace-supported explanation.}{23}{section*.60}%
+\contentsline {paragraph}{Evidential boundary.}{23}{section*.61}%
+\contentsline {subsubsection}{\numberline {5.8.2}H7b: cautious nd}{23}{subsubsection.5.8.2}%
+\contentsline {paragraph}{Question and purpose.}{23}{section*.62}%
+\contentsline {paragraph}{Controlled comparison.}{23}{section*.63}%
 \contentsline {paragraph}{Emphasised observation.}{23}{section*.64}%
-\contentsline {paragraph}{Trace-supported explanation.}{23}{section*.65}%
-\contentsline {paragraph}{Evidential boundary.}{23}{section*.66}%
+\contentsline {paragraph}{Trace-supported explanation.}{24}{section*.65}%
+\contentsline {paragraph}{Evidential boundary.}{24}{section*.66}%
 \contentsline {section}{\numberline {6}Findings}{24}{section.6}%
 \contentsline {subsection}{\numberline {6.1}Finding 1: Greedy solutions retain all represented BK predictors}{24}{subsection.6.1}%
 \contentsline {subsection}{\numberline {6.2}Finding 2: nd solutions are organised around the first BK predictor}{24}{subsection.6.2}%

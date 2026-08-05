@@ -1083,64 +1083,119 @@ arm difference is to the full AAMAS versus ECAI option bundle.
 
 \record{docs/experiments/qualitative/M13-C3-binary-collider-and/learning_analysis.md}
 
-\subsection{H1: remove a rare support witness}
+\subsection{H1: nested prefix omitting the rare \((0,0,0)\) atom}
 
 \question
-H1 asked whether AAMAS root no-solution depended on observing the rare
-\((0,0,0)\) population atom which contradicts the apparent both-zero root
-rule.
+On the principal AND collider under the fixed AAMAS bundle, what happens to
+root learning when the frozen seed-42 table is shortened to its first \(25\)
+rows, thereby omitting the only sample atoms \((0,0,0)\)?
 
 \comparison
-The fixture, population, seed sequence, AAMAS configuration, and encoding were
-fixed. H1 used the first \(25\) rows of the H0 seed-42 stream. H0 used the
-first \(30\). Thus \(n=25\) is an exact nested prefix, not an independent
-sample.
+The fixture, population, seed sequence, AAMAS configuration, encoding, and
+target-wise protocol were held fixed. The sole designed change is the sample:
+H0 uses the first \(30\) rows of the seed-42 stream, while H1 uses the exact
+nested prefix of the first \(25\) rows. The shorter table is therefore a
+controlled support ablation of the longer one.
 
-The H1 prefix contains \((1,1,1):14\), \((1,0,0):7\), and
-\((0,1,0):4\), but no \((0,0,0)\) row. The omitted atom has population
-probability \(0.06\).
+The H1 prefix has joint counts
+\((1,1,1):14\), \((1,0,0):7\), and \((0,1,0):4\). It contains no
+\((0,0,0)\) row. Those omitted rows are CSV rows~26 and~30 of the H0 table.
+The population still assigns mass \(P^\ast(0,0,0)=3/50=0.06\) to that atom.
+Only the finite sample omits it.
+
+Under the binary exact-value encoding, the H1 example counts are
+\(a:21^+/4^-\), \(b:18^+/7^-\), and \(c:14^+/11^-\).
 
 \begin{center}
+\small
 \begin{tabularx}{\textwidth}{
   >{\raggedright\arraybackslash}p{0.10\textwidth}
-  >{\raggedright\arraybackslash}p{0.20\textwidth}
-  >{\raggedright\arraybackslash}p{0.20\textwidth}X}
+  >{\raggedright\arraybackslash}p{0.28\textwidth}
+  >{\raggedright\arraybackslash}p{0.28\textwidth}X}
 \toprule
-Target & H0 \(n=30\) & H1 \(n=25\) & Evaluator reading \\
+Target & H0 (\(n=30\)) & H1 (\(n=25\)) & Evaluator reading \\
 \midrule
-\(a\) & no solution & solved with two Horn rules & H0 desired; H1 spurious. \\
-\(b\) & no solution & solved with mirror Horn rules & H0 desired; H1 spurious. \\
-\(c\) & solved AND & solved AND & Control unchanged in kind. \\
+\code{a} &
+\code{completed_no_solution} &
+\code{solved}, two Horn rules &
+H0 matches the intended root reading.
+H1 is a spurious finite-sample solve. \\
+\code{b} &
+\code{completed_no_solution} &
+\code{solved}, mirror Horn rules &
+Same reading as for \code{a}. \\
+\code{c} &
+\code{solved}, AND string &
+\code{solved}, AND string &
+Control unchanged in kind. \\
 \bottomrule
 \end{tabularx}
 \end{center}
 
 \observation
-Without the conflicting atom, AAMAS accepts:
+On the H1 table, AAMAS emits the root deltas
 
 \begin{lstlisting}
 a(A) :- b_val_1(A), c_val_1(A).
 a(A) :- b_val_0(A), c_val_0(A).
+\end{lstlisting}
+and
+\begin{lstlisting}
 b(A) :- a_val_1(A), c_val_1(A).
 b(A) :- a_val_0(A), c_val_0(A).
 \end{lstlisting}
+with zero assumptions. The child control remains
+\begin{lstlisting}
+c(A) :- a_val_1(A), b_val_1(A).
+\end{lstlisting}
 
-The both-zero rules are false population implications. The roots \(A\) and
-\(B\) remain stochastically generated: no underlying deterministic rule from
-the other observed variables should be learned for either target.
+The both-zero root rules are false as population implications. They hold on
+the H1 sample only because that sample contains no opposite-label witness in
+the relevant predictor cell.
 
 \explanation
-H0 and H1 traces follow the same Greedy route until candidate checking. H1 has
-no opposite-label witness in the relevant predictor cell, so the both-zero
-rule is accepted. H0 contains rows 26 and 30, so the rule covers negatives;
-assumption repair is attempted and then dead-ends. The outcome reversal is
-therefore attributable to observed support, not a change in the population
-mechanism or learner.
+The H0 and H1 AAMAS traces for target \code{a} follow the same greedy route up
+to the both-zero candidate. In both runs, greedy folding first accepts the
+safe rule
+\begin{lstlisting}
+a(A) :- b_val_1(A), c_val_1(A).
+\end{lstlisting}
+It then proposes the both-zero body
+\begin{lstlisting}
+a(A) :- b_val_0(A), c_val_0(A).
+\end{lstlisting}
+from an early both-zero positive (row~8 on both traces).
+
+On the H1 prefix, brave entailment accepts that both-zero body immediately.
+No assumption is introduced. The folding queue empties. The run terminates as
+\code{solved}. The reason is support geometry: every remaining H1 row with
+\code{b_val_0} and \code{c_val_0} is a positive example for \code{a}. There is
+no negative example in that cell.
+
+On the H0 table, the same both-zero body fails brave entailment. Rows~26
+and~30 are negatives that share those BK literals. Assumption introduction and
+contrary learning then reconstruct the same both-zero body for the contrary.
+Under \code{relto}, a further relative assumption cannot be added. The engine
+reports KO and ends as \code{completed_no_solution}.
+
+The learner configuration is unchanged. The population mechanism is unchanged.
+What flips the root outcome is the absence versus presence of a label conflict
+inside the greedy both-zero candidate cell. That missing conflict is exactly
+the rare joint \((0,0,0)\).
+
+For these stochastic roots, the intended reading is that no deterministic rule
+from the other observed variables should be learned. The H0 AAMAS root outcome
+\code{completed_no_solution} matches that reading. The H1 AAMAS root
+\code{solved} outcome is a spurious finite-sample covering created by omitting
+the rare blocking atom. Target \code{b} mirrors the same pattern. Child
+\code{c} continues to emit the evaluator AND string on both prefixes and
+serves only as a control.
 
 \boundary
-H1 is a support ablation, not evidence that \(n=30\) is generally sufficient
-or that larger \(n\) monotonically improves recovery. The two prefixes are
-not independent replicates.
+H1 is a nested-prefix support ablation under fixed AAMAS settings. It shows
+that greedy maximal co-occurrence search on this fixture is sensitive to whether
+a rare opposite-label witness appears in the table. The two prefixes are linked
+draws from one seed stream.
 
 \record{docs/experiments/qualitative/M13-C3-binary-collider-and/h1_support_ablation.md}
 
