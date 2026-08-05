@@ -79,7 +79,7 @@
 
 \title{What Target-wise ABA Learning Does on\\
 Deterministic Causal Fixtures\\[0.35em]
-\large Evidence from M1.3 Bucket 3, H0--H7b}
+\large Evidence from controlled probes H0--H7b}
 \author{Working synthesis for discussion with Fabrizio}
 \date{4 August 2026}
 
@@ -91,9 +91,11 @@ Deterministic Causal Fixtures\\[0.35em]
 \textbf{Status and purpose.}
 This is a supervisor-facing working document. It introduces the causal
 fixture, learner input, terminology, configurations, and experimental sequence
-before stating any cross-cutting findings. H0--H7b are complete and analysed,
-but Bucket~3 still has no approved claim. The six Findings headings and the
-Implications heading at the end are intentionally empty placeholders for
+before stating any cross-cutting findings. The controlled probes labelled
+H0--H7b are complete and analysed; the labels are internal shorthand only and
+each probe is described in the text by its scientific question and design.
+No cross-cutting conclusions are asserted yet. The six Findings headings and
+the Implications heading at the end are intentionally empty placeholders for
 subsequent drafting and review.
 \end{minipage}}
 \end{center}
@@ -101,19 +103,23 @@ subsequent drafting and review.
 \begin{abstract}
 The investigation asks what target-wise ABA Learning does when given only a
 finite binary table sampled from a known causal data-generating process. The
-principal process has independent stochastic roots and a deterministic AND
-child. The graph, mechanisms, population distribution, finite sample,
+principal process is a binary collider \(A\rightarrow C\leftarrow B\) with
+independent stochastic roots and a deterministic AND child \(C=A\land B\).
+The graph, mechanisms, population distribution, finite sample,
 learner-visible encoding, learned ABA framework, and evaluator-only reference
 are kept separate throughout.
 
-The experimental sequence begins with a baseline comparison across targets and
-then introduces one controlled question at a time: sample support, irrelevant
-variables, background-knowledge order, brave versus cautious learning,
-folding-token budget, grounded sample size, and the \code{relto} versus
-\code{sechk} assumption-introduction options. This document records what each
-probe was intended to reveal, its principal signal, and the procedural
-explanation supported by the generated deltas and Prolog traces. It does not
-describe the current pipeline as full Causal ABA or full causal discovery.
+The experimental sequence is recorded under labels H0--H7b for reference.
+It begins with a baseline comparison of the published Greedy and
+non-deterministic configurations across all targets on one frozen table
+(H0), then introduces one controlled question at a time: finite-sample
+support (H1); an irrelevant trailing covariate (H2); background-knowledge
+order with a leading distractor (H3); brave versus cautious learning
+(H4--H5); folding-token budget and grounded sample size (H6); and the
+\code{relto} versus \code{sechk} assumption-introduction options (H7).
+This document records what each probe was intended to reveal, its principal
+signal, and the procedural explanation supported by the generated deltas and
+Prolog traces.
 \end{abstract}
 
 \tableofcontents
