@@ -1083,7 +1083,7 @@ arm difference is to the full AAMAS versus ECAI option bundle.
 
 \record{docs/experiments/qualitative/M13-C3-binary-collider-and/learning_analysis.md}
 
-\subsection{H1: nested prefix omitting the rare \((0,0,0)\) atom}
+\subsection{H1: nested prefix omitting the rare \texorpdfstring{\((0,0,0)\)}{(0,0,0)} atom}
 
 \question
 Under the fixed AAMAS bundle on the principal AND collider, what happens to
@@ -1143,47 +1143,51 @@ H1 is a nested-prefix support ablation under fixed AAMAS settings.
 
 \record{docs/experiments/qualitative/M13-C3-binary-collider-and/h1_support_ablation.md}
 
-\subsection{H2: add an irrelevant trailing covariate}
+\subsection{H2: trailing isolated covariate under Greedy}
 
 \question
-H2 asked whether Greedy would omit a variable which is statistically and
-causally irrelevant to the deterministic child once both of its values occur
-among positive examples.
+On the principal AND collider extended by an independent isolated root \(D\),
+does AAMAS learning of the deterministic child \code{c} retain irrelevant
+\code{d} literals, or does it return the evaluator \(D\)-free rule
+\code{c(A) :- a_val_1(A), b_val_1(A).}?
 
 \comparison
-The H0 collider and AND mechanism were preserved. An independent isolated
-binary root \(D\) was appended after \(A,B\) in target-\(c\) BK order. The
-main run used \(n=30\), seed 42, under AAMAS. Among the positive \(c\) rows,
-both \(D=1\) and \(D=0\) occur nine times.
+The H0 collider, root laws, and mechanism \(C=A\land B\) are preserved. An
+isolated root \(D\sim\operatorname{Bernoulli}(1/2)\) is added with no edges.
+Variable order places \code{d} last, so for target \code{c} the BK predictors
+are \([a,b,d]\). The run uses AAMAS on the frozen \(n=30\) seed-42 sample.
+Among the eighteen positive \code{c} rows, both \(D=1\) and \(D=0\) occur nine
+times.
 
 \observation
-AAMAS solves target \(c\), but emits two \(D\)-specific rules:
-
+AAMAS solves target \code{c} and emits
 \begin{lstlisting}
 c(A) :- a_val_1(A), b_val_1(A), d_val_1(A).
 c(A) :- a_val_1(A), b_val_1(A), d_val_0(A).
 \end{lstlisting}
-
-The pair covers the sample and jointly behaves like AND across the observed
-values of \(D\). It is nevertheless non-minimal and fails to coincide with the
-\(D\)-free evaluator mechanism.
-
-\explanation
-Greedy BK folding exhausts matching exact-value BK literals within each
-positive co-occurrence body. A \(D=1\) row therefore retains
-\code{d_val_1}; a \(D=0\) row retains \code{d_val_0}. Subsumption can remove
-a specialised rule only when a suitable more general rule already exists.
-There is no later cross-rule anti-unification or literal-deletion phase that
-combines the complementary rules into:
-
+Irrelevant \(D\) is retained. The two rules are sample-adequate and jointly
+cover the observed values of \(D\), but they are non-minimal relative to the
+evaluator mechanism
 \begin{lstlisting}
 c(A) :- a_val_1(A), b_val_1(A).
 \end{lstlisting}
+On the three-variable H0 table without \(D\), the same AAMAS bundle emitted
+exactly that \(D\)-free string.
+
+\explanation
+Under greedy folding with \code{folding_space(bk)}, each positive example is
+folded into a maximal co-occurrence body from the BK literals that hold of that
+row. A positive with \(D=1\) therefore keeps \code{d_val_1}. A positive with
+\(D=0\) keeps \code{d_val_0}. The trace shows this explicitly: after
+\code{a_val_1} and \code{b_val_1}, the next fold attaches the matching
+\code{d_val_*} literal. Mgr selection then keeps the resulting bodies. There
+is no later step that merges the complementary pair by deleting the
+\code{d} literal. The failure mode under test is therefore distractor
+retention on a solved child, not failure to solve \code{c}.
 
 \boundary
-The secondary \(n=2\) prefix was recorded only as supporting context. H2's
-scientific signal is the balanced \(n=30\) distractor split. One fixture does
-not prove retention for every possible encoding or Greedy problem.
+H2 is a controlled fixture intervention under fixed AAMAS settings. The
+primary signal is the balanced \(n=30\) distractor split on target \code{c}.
 
 \record{docs/experiments/qualitative/M13-C3-binary-collider-and/h2_irrelevant_covariate.md}
 
