@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.7.19)  5 AUG 2026 22:22
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.7.19)  5 AUG 2026 22:38
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -825,108 +825,104 @@ in-clud-ing time-out or \T1/cmtt/m/n/10.95 completed_no_solution\T1/cmr/m/n/10.
 [3{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc
 }] [4] [5]
 LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <10.95> not available
-(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 403.
+(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 404.
 
-Overfull \hbox (7.86095pt too wide) in paragraph at lines 409--413
+Overfull \hbox (7.86095pt too wide) in paragraph at lines 410--414
  []\T1/cmtt/m/n/10.95 folding_mode(nd)\T1/cmr/bx/n/10.95 .[] \T1/cmr/m/n/10.95 
 Fold-ing pro-ceeds in-cre-men-tally un-der a folding-token bud-get (\T1/cmtt/m/
 n/10.95 folding_steps\T1/cmr/m/n/10.95 ),
  []
 
 LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <12> not available
-(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 418.
-[6] [7] [8]
-Underfull \hbox (badness 10000) in paragraph at lines 681--681
+(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 419.
+[6] [7] [8] [9]
+Underfull \hbox (badness 10000) in paragraph at lines 720--720
 []|\T1/cmr/m/n/10 Assumption in-
  []
 
-[9]
-Underfull \hbox (badness 1917) in paragraph at lines 725--725
+
+Underfull \hbox (badness 1917) in paragraph at lines 764--764
 []|\T1/cmr/m/n/10.95 What does the base-line
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 726--727
+Underfull \hbox (badness 10000) in paragraph at lines 765--766
 []|\T1/cmr/m/n/10.95 Outcomes, deltas, and
  []
 
 
-Underfull \hbox (badness 1308) in paragraph at lines 732--732
+Underfull \hbox (badness 1308) in paragraph at lines 771--771
 []|\T1/cmr/m/n/10.95 What hap-pens when an
  []
 
 
-Underfull \hbox (badness 5563) in paragraph at lines 735--735
+Underfull \hbox (badness 5563) in paragraph at lines 774--774
 []|\T1/cmr/m/n/10.95 Brave to cau-tious un-der
  []
 
 
-Underfull \hbox (badness 5331) in paragraph at lines 739--739
+Underfull \hbox (badness 5331) in paragraph at lines 778--778
 []|\T1/cmr/m/n/10.95 Is brave-to-cautious be-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 739--739
+Underfull \hbox (badness 10000) in paragraph at lines 778--778
 \T1/cmr/m/n/10.95 haviour dif-fer-ent in-side
  []
 
 
-Underfull \hbox (badness 1546) in paragraph at lines 740--742
+Underfull \hbox (badness 1546) in paragraph at lines 779--781
 []|\T1/cmr/m/n/10.95 Outcomes, deltas, traces,
  []
 
 
-Underfull \hbox (badness 1082) in paragraph at lines 744--744
+Underfull \hbox (badness 1082) in paragraph at lines 783--783
 \T1/cmr/m/n/10.95 ple size af-fect the same
  []
 
 
-Underfull \hbox (badness 5119) in paragraph at lines 746--746
+Underfull \hbox (badness 5119) in paragraph at lines 785--785
 []|\T1/cmr/m/n/10.95 How does \T1/cmtt/m/n/10.95 sechk \T1/cmr/m/n/10.95 dif-fe
 r
  []
 
 
-Underfull \hbox (badness 1019) in paragraph at lines 746--746
+Underfull \hbox (badness 1019) in paragraph at lines 785--785
 \T1/cmr/m/n/10.95 from \T1/cmtt/m/n/10.95 relto \T1/cmr/m/n/10.95 un-der brave
  []
 
 
-Underfull \hbox (badness 3302) in paragraph at lines 747--748
+Underfull \hbox (badness 3302) in paragraph at lines 786--787
 []|\T1/cmr/m/n/10.95 Seven paired deltas and
  []
 
 
-Underfull \hbox (badness 4739) in paragraph at lines 749--750
+Underfull \hbox (badness 4739) in paragraph at lines 788--789
 []|\T1/cmr/m/n/10.95 Child deltas, root cost,
  []
 
-[10] [11] [12] [13] [14] [15] [16] [17]
-Underfull \hbox (badness 7238) in paragraph at lines 1320--1320
+[10] [11] [12] [13] [14] [15] [16] [17] [18]
+Underfull \hbox (badness 7238) in paragraph at lines 1359--1359
 []|\T1/cmr/m/n/10 Additional \T1/cmtt/m/n/10 relto \T1/cmr/m/n/10 vari-
  []
 
-[18] [19]
-Underfull \hbox (badness 3000) in paragraph at lines 1429--1429
+[19] [20]
+Underfull \hbox (badness 3000) in paragraph at lines 1468--1468
 []|\T1/cmr/m/n/10.95 Deeper nests and re-peated
  []
 
-[20] [21] (./findings_for_fabrizio.aux)
+[21] [22] (./findings_for_fabrizio.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
 Package rerunfilecheck Info: File `findings_for_fabrizio.out' has not changed.
-(rerunfilecheck)             Checksum: FB59B72D735D26B7B84E5A888C54D675;9370.
+(rerunfilecheck)             Checksum: 55DF4F18C2B2A0102749885F74ED7791;9738.
  ) 
 Here is how much of TeX's memory you used:
- 24522 strings out of 467525
- 446224 string characters out of 5418982
- 961730 words of memory out of 5000000
+ 24525 strings out of 467525
+ 446253 string characters out of 5418982
+ 960662 words of memory out of 5000000
  52833 multiletter control sequences out of 15000+600000
  645201 words of font info for 87 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -951,10 +947,10 @@ mf-dist/fonts/type1/public/cm-super/sfti1095.pfb></usr/local/texlive/2026/texmf
 -dist/fonts/type1/public/cm-super/sftt1000.pfb></usr/local/texlive/2026/texmf-d
 ist/fonts/type1/public/cm-super/sftt1095.pfb></usr/local/texlive/2026/texmf-dis
 t/fonts/type1/public/cm-super/sftt1200.pfb>
-Output written on findings_for_fabrizio.pdf (21 pages, 437269 bytes).
+Output written on findings_for_fabrizio.pdf (22 pages, 441867 bytes).
 PDF statistics:
- 592 PDF objects out of 1000 (max. 8388607)
- 522 compressed objects within 6 object streams
- 210 named destinations out of 1000 (max. 500000)
+ 599 PDF objects out of 1000 (max. 8388607)
+ 528 compressed objects within 6 object streams
+ 213 named destinations out of 1000 (max. 500000)
  317 words of extra memory for PDF output out of 10000 (max. 10000000)
 
