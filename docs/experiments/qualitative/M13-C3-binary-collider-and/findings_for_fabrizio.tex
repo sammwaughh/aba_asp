@@ -1259,9 +1259,57 @@ In both cases the child is solved, and in both cases the isolated leading
 variable is retained. The failure mode is distractor inclusion driven by BK
 order, not failure to solve \code{c}.
 
+\paragraph{Contrary-structure divergence under the two \(A\) gates.}
+The ECAI delta is asymmetric under the two leading-\(a\) gates. That
+asymmetry is part of the H3 theory and deserves a separate reading.
+
+Under \(a{=}1\) (\(\alpha_1\)), the contrary of \(\alpha_1\) is
+\emph{nested}:
+\begin{lstlisting}
+c_alpha_1(A) :- b_val_0(A).
+c_alpha_1(A) :- alpha_3(A), b_val_1(A).
+c_alpha_3(A) :- alpha_1(A), a_val_1(A).
+\end{lstlisting}
+Under \(a{=}0\) (\(\alpha_2\)), the contrary of \(\alpha_2\) is
+\emph{flat} and cites the mechanism parents directly:
+\begin{lstlisting}
+c_alpha_2(A) :- d_val_0(A).
+c_alpha_2(A) :- b_val_0(A).
+\end{lstlisting}
+So one gate is repaired by a further assumption \(\alpha_3\), while the other
+is repaired by ordinary \(b\)/\(d\) literals alone.
+
+The divergence is a search-order effect under nd folding with \code{any}
+selection, \(b\)-before-\(d\) BK order after leading \code{a}, cover-and-repair,
+and \code{asm_intro(relto)}. It is not a difference in the underlying mechanism
+of \(C\), and it is not caused by the brave/cautious learning-mode choice ---
+the same \(\alpha_1\)-nested / \(\alpha_2\)-flat skeleton appears under both
+H3 brave and H4b cautious. Concretely:
+
+\begin{enumerate}
+  \item Contrary repair for \(\mathtt{c\_alpha\_1}\) occurs first, because the
+  first positive example has \(a{=}1\).
+  \item Under that gate, the first contrary seed has \((b,d)=(0,1)\), so search
+  commits to \code{b_val_0}. The remaining contrary residuals have
+  \((b,d)=(1,0)\).
+  \item Folding those residuals with \code{b_val_1} over-generalises. Instead
+  of backtracking to a flat cover \(\{\code{b_val_0},\code{d_val_0}\}\),
+  cover-and-repair introduces \(\alpha_3\) on the \code{b_val_1} body.
+  \item When search later repairs \(\mathtt{c\_alpha\_2}\) under \(a{=}0\), a
+  fold that would reuse \code{b_val_1} meets the already declared
+  \(\alpha_3\) under \code{relto} and is rejected. Search then falls through
+  to \code{d_val_0} and \code{b_val_0}, yielding the flat contrary.
+\end{enumerate}
+
+Thus the nested \(\alpha_1\) side and the flat \(\alpha_2\) side are two
+stages of one sequential repair path. The second gate inherits the assumption
+minted while repairing the first.
+
 \boundary
 H3 is a controlled fixture intervention. The primary signal is ECAI first-fold
-retention of BK-leading isolated \(A\) on target \code{c}.
+retention of BK-leading isolated \(A\) on target \code{c}. The
+\(\alpha_1\)-nested versus \(\alpha_2\)-flat contrary split is a secondary
+procedural feature of that same theory.
 
 \record{docs/experiments/qualitative/M13-C3-binary-collider-and/h3_bk_leading_distractor.md}
 
