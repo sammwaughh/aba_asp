@@ -732,7 +732,7 @@ folding-token budget; it is unused under greedy folding. All six identities
 also enable the post-learning checked-ASP artefact (\code{check_ic}). The
 cautious nd identities additionally pin
 \code{post_folding_test_entailment(true)}, which is likewise the effective
-default under the brave arms used here.
+default under the brave configurations used here.
 
 \code{aamas2025} and \code{ecai2024} are the repository presets corresponding
 to the AAMAS~2025 and ECAI~2024 learning-option bundles used in this work.
@@ -742,9 +742,9 @@ In particular, \code{greedy_cautious} matches \code{aamas2025} except for
 \code{learning_mode(cautious)}; it is an experimental cautious Greedy preset,
 not a published AAMAS method.
 
-The H6a arms match \code{baseline_cautious} except for \code{folding_steps},
-with \(M\in\{1,2,5,10\}\). H7a matches \code{ecai2024} except
-\code{asm_intro(sechk)}. H7b matches \code{baseline_cautious} except
+The H6a configurations match \code{baseline_cautious} except for
+\code{folding_steps}, with \(M\in\{1,2,5,10\}\). H7a matches \code{ecai2024}
+except \code{asm_intro(sechk)}. H7b matches \code{baseline_cautious} except
 \code{asm_intro(sechk)}.
 
 \subsection{Strength of comparisons}
@@ -762,7 +762,8 @@ Each probe is read at one of three attribution strengths.
   H6a changes \code{folding_steps};
   H7a and H7b change only \code{asm_intro}.
   \item \textbf{Controlled data or fixture intervention.}
-  The learner configuration is held fixed (or compared only within one arm);
+  The learner configuration is held fixed (or compared only within one
+  configuration);
   one designed property of the sample or fixture changes.
   H1 uses a nested seed-42 prefix \(n=25\) of the principal table under AAMAS;
   H2 adds a trailing isolated \(D\) under AAMAS;
@@ -1699,54 +1700,84 @@ options.
 \subsubsection{H6a: folding-token ceiling}
 
 \question
-H6a asked why H4's cautious root no-solution traces contained roughly 5,000
-lines and took about one minute, and whether the configured
-\code{folding_steps(10)} ceiling was driving repeated work.
+On the H0 table under \code{baseline_cautious}, how do root no-solution
+trace length and runtime scale with the folding-token ceiling
+\(M=\code{folding_steps}\)?
 
 \comparison
-The H0 \(n=30\) sample and \code{baseline_cautious} bundle were fixed.
-\code{folding_steps} varied over \(M\in\{1,2,5,10\}\); the \(M=10\) collection
-was the existing H4 run and was not regenerated.
+The H0 fixture, frozen \(n=30\) seed-42 sample, target-specific examples, BK,
+\code{learning_mode(cautious)}, nd folding, \code{folding_selection(any)},
+\code{folding_space(all)}, and \code{asm_intro(relto)} were held fixed. The
+single varied option was \code{folding_steps(M)} for
+\(M\in\{1,2,5,10\}\). Configurations \code{baseline_cautious_steps1},
+\code{baseline_cautious_steps2}, and \code{baseline_cautious_steps5} match
+\code{baseline_cautious} except for \(M\). The \(M=10\) collection reuses the
+locked H4 run under \code{baseline_cautious}. Roots \code{a} and \code{b} are
+the intended no-solution targets (stochastic; no desired deterministic rule
+from the other observed variables). Child \code{c} is the control.
 
 \begin{center}
 \begin{tabular}{@{}rrrrrr@{}}
 \toprule
 \(M\) & Target & Outcome & Runtime (s) & Trace lines & New assumptions \\
 \midrule
-1 & \(a\) & no solution & 6.638 & 549 & 9 \\
-2 & \(a\) & no solution & 13.117 & 1047 & 18 \\
-5 & \(a\) & no solution & 32.775 & 2541 & 45 \\
-10 & \(a\) & no solution & 69.952 & 5031 & 90 \\
+1 & \(a\) & \code{completed_no_solution} & 6.638 & 549 & 9 \\
+2 & \(a\) & \code{completed_no_solution} & 13.117 & 1047 & 18 \\
+5 & \(a\) & \code{completed_no_solution} & 32.775 & 2541 & 45 \\
+10 & \(a\) & \code{completed_no_solution} & 69.952 & 5031 & 90 \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-Target \(b\) mirrors this. Target \(c\) solves at every ceiling within
-\code{tokens(1)}, with the same 134-line trace, approximately 1.3-second
-runtime, and byte-identical delta.
+Target \(b\) mirrors these figures. Control \code{c} solves at every \(M\)
+inside \code{tokens(1)}: 134-line trace, about \(1.3\)\,s, and a
+byte-identical delta across all four ceilings.
 
 \observation
-For the no-solution roots, trace length and runtime grow approximately
-linearly with \(M\) across the tested values. Each permitted token band adds
-about nine new assumptions and roughly 500 trace lines without producing a
-different accepted theory.
+For roots \code{a} and \code{b} the outcome is
+\code{completed_no_solution} at every tested \(M\): no covering theory is
+accepted. Each run is a stack of \(M\) failed bands. The \(M=1\) trace has
+549 lines and nine events
+\code{generating NEW assumption: alpha_k(A)}. Each extra allowance adds
+498 lines and nine further new assumptions. At \(M=10\) the trace prints nine
+restarts
+\begin{lstlisting}
+* Increasing folding tokens to: 2
+...
+* Increasing folding tokens to: 10
+\end{lstlisting}
+and ends with \code{* No solution found!}. The counts fit
+\[
+\operatorname{lines}(M)=549+498(M-1)=51+498\,M,
+\qquad
+\#\{\text{new assumptions}\}(M)=9M.
+\]
+Runtime grows in the same way. Raising \(M\) multiplies failed bands; it does
+not produce a root solution. The long H4 root traces are the \(M=10\)
+endpoint of this ladder.
 
 \explanation
-\code{folding_steps(M)} acts as a token-budget ceiling, not as a literal count
-of successful folds. The decisive root KO already occurs in the first band.
-When budget remains, the nd controller increments the token allowance and
-replays essentially the same failed assumption-introduction motif:
-\[
-\operatorname{lines}(M)
-\approx C_{\mathrm{fixed}}+M\,C_{\mathrm{failed\ band}}.
-\]
-Through \(M=10\), the additional budget buys repeated failed search rather
-than a new explanation.
+A failed band is one complete cautious search at fixed token allowance \(T\)
+that exhausts without writing a delta. On these roots the H4 residual
+assumption reuse already returns KO inside the first allowance, so that first
+band fails.
+
+Under nd folding, \code{folding_steps(M)} is the ceiling on how many such
+attempts may run. Search starts at \code{tokens(1)}. When the attempt at
+allowance \(T\) fails completely and \(T+1\le M\), the controller prints
+\code{* Increasing folding tokens to: \(T{+}1\)} and restarts the same
+learning problem on the same rules and the same \(\Epos,\Eneg\). The target
+still admits no cautiously acceptable cover, so each restart fails in the same
+way. \(M\) allowances therefore contribute \(M\) copies of the same failed
+band, which is why trace length and new-assumption counts are linear in \(M\).
+
+Control \code{c} solves under \code{tokens(1)}, never enters the restart
+ladder, and is therefore invariant in \(M\).
 
 \boundary
-The experiment does not show that \(M=1\) is always sufficient. Other
-learnable tasks may require more tokens. It explains the tested root cost but
-does not yet provide a general stopping rule.
+H6a is a single-option ablation of \code{folding_steps} under
+\code{baseline_cautious} on the locked H0 \(n=30\) table, for these intended
+no-solution roots over \(M\in\{1,2,5,10\}\).
 
 \subsubsection{H6b: nested sample size}
 

@@ -80,25 +80,25 @@
 \contentsline {paragraph}{Controlled comparison.}{24}{section*.51}%
 \contentsline {paragraph}{Emphasised observation.}{24}{section*.52}%
 \contentsline {paragraph}{Trace-supported explanation.}{24}{section*.53}%
-\contentsline {paragraph}{Evidential boundary.}{24}{section*.54}%
-\contentsline {subsubsection}{\numberline {5.7.2}H6b: nested sample size}{24}{subsubsection.5.7.2}%
-\contentsline {paragraph}{Question and purpose.}{24}{section*.55}%
-\contentsline {paragraph}{Controlled comparison.}{24}{section*.56}%
+\contentsline {paragraph}{Evidential boundary.}{25}{section*.54}%
+\contentsline {subsubsection}{\numberline {5.7.2}H6b: nested sample size}{25}{subsubsection.5.7.2}%
+\contentsline {paragraph}{Question and purpose.}{25}{section*.55}%
+\contentsline {paragraph}{Controlled comparison.}{25}{section*.56}%
 \contentsline {paragraph}{Emphasised observation.}{25}{section*.57}%
 \contentsline {paragraph}{Trace-supported explanation.}{25}{section*.58}%
 \contentsline {paragraph}{Evidential boundary.}{25}{section*.59}%
 \contentsline {subsection}{\numberline {5.8}H7: change assumption introduction from \code {relto} to \code {sechk}}{25}{subsection.5.8}%
 \contentsline {subsubsection}{\numberline {5.8.1}H7a: brave nd}{25}{subsubsection.5.8.1}%
 \contentsline {paragraph}{Question and purpose.}{25}{section*.60}%
-\contentsline {paragraph}{Controlled comparison.}{25}{section*.61}%
+\contentsline {paragraph}{Controlled comparison.}{26}{section*.61}%
 \contentsline {paragraph}{Emphasised observation.}{26}{section*.62}%
 \contentsline {paragraph}{Trace-supported explanation.}{26}{section*.63}%
-\contentsline {paragraph}{Evidential boundary.}{26}{section*.64}%
+\contentsline {paragraph}{Evidential boundary.}{27}{section*.64}%
 \contentsline {subsubsection}{\numberline {5.8.2}H7b: cautious nd}{27}{subsubsection.5.8.2}%
 \contentsline {paragraph}{Question and purpose.}{27}{section*.65}%
 \contentsline {paragraph}{Controlled comparison.}{27}{section*.66}%
 \contentsline {paragraph}{Emphasised observation.}{27}{section*.67}%
-\contentsline {paragraph}{Trace-supported explanation.}{27}{section*.68}%
+\contentsline {paragraph}{Trace-supported explanation.}{28}{section*.68}%
 \contentsline {paragraph}{Evidential boundary.}{28}{section*.69}%
 \contentsline {section}{\numberline {6}Findings}{28}{section.6}%
 \contentsline {subsection}{\numberline {6.1}Finding 1: Greedy solutions retain all represented BK predictors}{28}{subsection.6.1}%
