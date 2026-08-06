@@ -1652,48 +1652,45 @@ the body of \(\mathtt{c\_alpha\_3}\).
 
 \record{docs/experiments/qualitative/M13-C3-binary-collider-and/h4b_cautious_split_under_a.md}
 
-\subsection{H5: duplicate all Greedy runs under cautious learning}
+\subsection{H5: Greedy under cautious versus brave learning}
 
 \question
-H5 asked whether the brave-to-cautious change that mattered under nd would
-alter any completed Greedy result or trace, and whether Greedy-cautious
-no-solution searches incur the long replays seen under cautious nd.
+Under otherwise fixed Greedy options, does changing
+\code{learning_mode(brave)} to \code{learning_mode(cautious)} alter the
+accepted or rejected theories on the completed Greedy collections from
+H0--H3?
 
 \comparison
-Five completed deterministic Bucket~3 AAMAS collections were duplicated under
-experimental \code{greedy_cautious}: H0 \(n=30\), H1 \(n=25\), H2 \(n=30\),
-H2c \(n=2\), and H3 \(n=30\). This gave 18 exact target-wise pairs.
-\code{folding_mode(greedy)}, \code{mgr}, BK space, \code{relto}, data, BK, and
-examples were fixed; only the learning mode changed.
+The locked \code{aamas2025} collections for H0 (\(n=30\)), H1 (\(n=25\)),
+H2 (\(n=30\)), the extreme H2 edge (\(n=2\)), and H3 (\(n=30\)) were re-run
+under the experimental configuration \code{greedy_cautious}. That
+configuration matches \code{aamas2025} on Greedy folding,
+\code{folding_selection(mgr)}, \code{folding_space(bk)},
+\code{asm_intro(relto)}, and \code{check_ic}, and differs only by setting
+\code{learning_mode(cautious)}. This gives eighteen target-wise pairs on
+shared tables, BK, and examples. Configuration \code{greedy_cautious} is an
+experimental preset for this contrast; it is not a published AAMAS method.
 
 \observation
-Across all 18 pairs:
-
-\begin{itemize}
-  \item every outcome matches;
-  \item every solved delta is byte-identical;
-  \item the traces are isomorphic apart from entailment-logging surfaces;
-  \item no new assumption or contrary structure appears; and
-  \item cautious runtime is approximately \(1.6\)--\(2.3\times\) brave runtime,
-  with mean ratio about \(1.84\), while remaining below one second.
-\end{itemize}
-
-The invariance includes the desirable H0/H1 child conjunctions, the H1
-spurious root rules, the H2/H3 distractor-retaining child rules, and the H0
-root no-solutions.
+On all eighteen pairs, \code{greedy_cautious} matches \code{aamas2025} on
+every outcome, and every solved delta is byte-identical. The only systematic
+difference is runtime: cautious runs take approximately \(1.6\)--\(2.3\) times
+as long as the corresponding brave runs (mean ratio about \(1.84\)), while
+remaining below one second.
 
 \explanation
-The inspected Greedy paths either accept strict Horn rules or fail before an
-assumption-bearing solution is produced. Consequently, changing how stable
-extensions are quantified does not change the emitted deltas on these cells.
-Greedy also terminates without the nd folding-token replay loop, explaining
-why its cautious root no-solutions remain short.
+The learning-mode change does not alter the accepted or rejected Greedy
+theories on these cells. The runtime increase comes from the entailment
+checks performed along the shared search path. Brave checks ask whether some
+answer set satisfies the joint example constraints. Cautious checks ask
+Clingo for cautious consequences (\code{--enum-mode=cautious}) --- atoms true
+in every answer set --- and then test \(\Epos\) and \(\Eneg\) against that
+intersection. The same sequence of checks is therefore more expensive under
+cautious learning.
 
 \boundary
-H5 establishes semantic inertness only across this completed 18-pair set. The
-large difference between Greedy-cautious and baseline cautious nd is a
-search-bundle difference, not an isolated consequence of
-\code{folding_mode}.
+H5 is restricted to these eighteen Greedy pairs under matched non-mode
+options.
 
 \record{docs/experiments/qualitative/M13-C3-binary-collider-and/h5_greedy_cautious.md}
 
