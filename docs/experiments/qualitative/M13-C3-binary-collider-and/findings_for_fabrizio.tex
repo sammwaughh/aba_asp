@@ -1719,7 +1719,7 @@ from the other observed variables). Child \code{c} is the control.
 \begin{center}
 \begin{tabular}{@{}rrrrrr@{}}
 \toprule
-\(M\) & Target & Outcome & Runtime (s) & Trace lines & New assumptions \\
+\(M\) & Target & Outcome & Runtime (s) & Trace lines & \(N_{\mathrm{asm}}\) \\
 \midrule
 1 & \(a\) & \code{completed_no_solution} & 6.638 & 549 & 9 \\
 2 & \(a\) & \code{completed_no_solution} & 13.117 & 1047 & 18 \\
@@ -1729,6 +1729,12 @@ from the other observed variables). Child \code{c} is the control.
 \end{tabular}
 \end{center}
 
+Here \(N_{\mathrm{asm}}\) is the number of stdout lines matching
+\code{generating NEW assumption:}~\ldots\ in one target-wise Prolog trace
+(the literal engine message; ``NEW'' is part of that string). It counts
+assumption-\emph{introduction events}, not the number of assumptions that
+remain in an accepted delta.
+
 Target \(b\) mirrors these figures. Control \code{c} solves at every \(M\)
 inside \code{tokens(1)}: 134-line trace, about \(1.3\)\,s, and a
 byte-identical delta across all four ceilings.
@@ -1737,10 +1743,8 @@ byte-identical delta across all four ceilings.
 For roots \code{a} and \code{b} the outcome is
 \code{completed_no_solution} at every tested \(M\): no covering theory is
 accepted. Each run is a stack of \(M\) failed bands. The \(M=1\) trace has
-549 lines and nine events
-\code{generating NEW assumption: alpha_k(A)}. Each extra allowance adds
-498 lines and nine further new assumptions. At \(M=10\) the trace prints nine
-restarts
+549 lines and \(N_{\mathrm{asm}}=9\). Each extra allowance adds 498 lines and
+nine further such events. At \(M=10\) the trace prints nine restarts
 \begin{lstlisting}
 * Increasing folding tokens to: 2
 ...
@@ -1750,7 +1754,7 @@ and ends with \code{* No solution found!}. The counts fit
 \[
 \operatorname{lines}(M)=549+498(M-1)=51+498\,M,
 \qquad
-\#\{\text{new assumptions}\}(M)=9M.
+N_{\mathrm{asm}}(M)=9M.
 \]
 Runtime grows in the same way. Raising \(M\) multiplies failed bands; it does
 not produce a root solution. The long H4 root traces are the \(M=10\)
@@ -1759,8 +1763,9 @@ endpoint of this ladder.
 \explanation
 A failed band is one complete cautious search at fixed token allowance \(T\)
 that exhausts without writing a delta. On these roots the H4 residual
-assumption reuse already returns KO inside the first allowance, so that first
-band fails.
+assumption reuse already returns the engine message
+\code{KO, cannot introduce an assumption for}~\ldots\ inside the first
+allowance, so that first band fails.
 
 Under nd folding, \code{folding_steps(M)} is the ceiling on how many such
 attempts may run. Search starts at \code{tokens(1)}. When the attempt at
@@ -1769,7 +1774,7 @@ allowance \(T\) fails completely and \(T+1\le M\), the controller prints
 learning problem on the same rules and the same \(\Epos,\Eneg\). The target
 still admits no cautiously acceptable cover, so each restart fails in the same
 way. \(M\) allowances therefore contribute \(M\) copies of the same failed
-band, which is why trace length and new-assumption counts are linear in \(M\).
+band, which is why trace length and \(N_{\mathrm{asm}}\) are linear in \(M\).
 
 Control \code{c} solves under \code{tokens(1)}, never enters the restart
 ladder, and is therefore invariant in \(M\).
@@ -1782,28 +1787,51 @@ no-solution roots over \(M\in\{1,2,5,10\}\).
 \subsubsection{H6b: nested sample size}
 
 \question
-H6b asked how cautious-nd trace size changes when the folding-token topology is
-held fixed but more grounded IID rows are supplied.
+On the H0 table under \code{baseline_cautious} with folding-token ceiling
+fixed at \(M=2\), how do root no-solution trace length and runtime scale when
+the frozen seed-42 sample is enlarged by nested prefixes
+\(n\in\{30,60,90\}\)?
 
 \comparison
-The H0 population, seed 42, \code{baseline_cautious} bundle, and \(M=2\) were
-fixed. Nested prefixes used \(n\in\{30,60,90\}\).
+The H0 fixture, seed~42, target-specific encoding, and learner configuration
+\code{baseline_cautious_steps2} were held fixed:
+\code{learning_mode(cautious)}, nd folding, \code{folding_selection(any)},
+\code{folding_space(all)}, \code{asm_intro(relto)}, and
+\code{folding_steps(2)}. The single varied factor was sample size: nested
+prefixes \(n=30\subset n=60\subset n=90\) of the same seed-42 draw. Roots
+\code{a} and \code{b} are the intended no-solution targets; child \code{c}
+is the control. The \(n=30\) cell reuses the H6a \(M=2\) collection.
 
 \begin{center}
-\begin{tabular}{@{}rrrrrr@{}}
+\begin{tabular}{@{}rrrrrrr@{}}
 \toprule
-\(n\) & \(a\) lines & \(a\) runtime (s) & NEW & KO & \(c\) lines \\
+\(n\) & Target & Outcome & Runtime (s) & Trace lines &
+\(N_{\mathrm{asm}}\) & \(N_{\mathrm{KO}}\) \\
 \midrule
-30 & 1047 & 13.117 & 18 & 32 & 134 \\
-60 & 1641 & 22.169 & 18 & 32 & 200 \\
-90 & 2241 & 32.291 & 18 & 32 & 266 \\
+30 & \(a\) & \code{completed_no_solution} & 13.117 & 1047 & 18 & 32 \\
+60 & \(a\) & \code{completed_no_solution} & 22.169 & 1641 & 18 & 32 \\
+90 & \(a\) & \code{completed_no_solution} & 32.291 & 2241 & 18 & 32 \\
 \bottomrule
 \end{tabular}
 \end{center}
 
+Here \(N_{\mathrm{asm}}\) is as in H6a: the count of stdout lines
+\code{generating NEW assumption:}~\ldots.
+\(N_{\mathrm{KO}}\) is the count of stdout lines
+\code{KO, cannot introduce an assumption for}~\ldots.
+Both are event counts from one target-wise Prolog trace. They are included as
+a check that the \emph{sequence of assumption-introduction and failed residual
+reuse events} is the same at every \(n\), while trace length and runtime may
+still grow.
+
+Target \(b\) mirrors these figures. Every root run prints a single restart
+to \code{tokens(2)}. Control \code{c} solves at every \(n\) with a
+byte-identical delta; its trace grows only from 134 to 200 to 266 lines
+(about \(1.3\)--\(3.0\)\,s).
+
 All four H0 population atoms are already present at \(n=30\). Their
 multiplicities, ordered as
-\((0,0,0),(0,1,0),(1,0,0),(1,1,1)\), are:
+\((0,0,0),(0,1,0),(1,0,0),(1,1,1)\), are
 \[
 \begin{aligned}
 n=30 &: (2,4,7,17),\\
@@ -1813,24 +1841,38 @@ n=90 &: (5,17,18,50).
 \]
 
 \observation
-The root search topology stays fixed at 18 new assumptions and 32 KOs, while
-target-\(a\) trace length increases by 594 and 600 lines for each additional
-30 rows. Target \(b\) mirrors this. Target \(c\) retains the same delta but its
-trace grows by 66 lines per 30 rows.
+Root outcomes are invariant in \(n\): always
+\code{completed_no_solution}. The assumption-event counts are likewise
+invariant: \(N_{\mathrm{asm}}=18\) and \(N_{\mathrm{KO}}=32\) at every
+tested \(n\), with one increase to \code{tokens(2)}. That matches H6a at
+\(M=2\), where each failed band contributes nine
+\code{generating NEW assumption} events, so two bands contribute
+\(N_{\mathrm{asm}}=9M=18\). What grows is how much text each band
+prints: target-\(a\) trace length rises by 594 then 600 lines for each
+additional 30 rows, and runtime rises somewhat faster than lines. Control
+\code{c} keeps the same accepted theory while its short trace lengthens
+mildly with \(n\).
 
 \explanation
-Additional rows create more grounded example identifiers, rote rules,
-entailment checks, subsumption work, and contrary batches inside each fixed
-search band. They do not introduce a new supported value pattern in this
-comparison. The approximately linear line growth therefore comes from
-per-row grounding and bookkeeping while the procedural topology remains
-unchanged.
+H6a varies how many failed bands may run. H6b holds that band count fixed at
+two allowances and varies how much grounded work sits inside each band.
+The fixed \(N_{\mathrm{asm}}\) and \(N_{\mathrm{KO}}\) show that the learner
+still takes the same pattern of assumption-introduction events and failed
+residual reuses; only the volume of grounding work between those events
+changes. Additional
+IID rows add example identifiers, rote facts, entailment and subsumption
+checks, and contrary batches, but they do not add a new supported value
+pattern on this table: support presence is already complete at \(n=30\), and
+only multiplicities change. The near-linear growth in trace length is
+therefore per-row grounding and bookkeeping cost. Runtime grows a little
+faster because ASP consequence checks scale with that larger grounding.
 
 \boundary
-H6b is a nested-\(n\) experiment, not a direct deduplication ablation.
-Multiplicities still carry empirical frequency information, and removing
-duplicate rows can alter row order and learner behaviour. The result is local
-to \(n=30,60,90\), not a universal complexity law.
+H6b is a nested-\(n\) ablation at fixed \(M=2\) under
+\code{baseline_cautious} on the locked H0 seed-42 prefixes
+\(n\in\{30,60,90\}\). It measures cost when multiplicities change while
+assumption-event counts \(N_{\mathrm{asm}}\) and \(N_{\mathrm{KO}}\) stay
+fixed. No \(n\times M\) interaction was run.
 
 \record{docs/experiments/qualitative/M13-C3-binary-collider-and/h6_folding_and_n_ablation.md}
 
@@ -1997,9 +2039,10 @@ parents \(b,d\) somewhere in their contrary structures. The
 \toprule
 Arm & Assumptions & Trace lines & Trace character \\
 \midrule
-\code{relto} & 3 & 257 & Relative KO then a lean path to \(b,d\). \\
-\code{sechk} & 5 & 899 & Deeper nests and repeated NEW/\code{gen5}/KO
-cycles. \\
+\code{relto} & 3 & 257 & Relative residual KO then a lean path to \(b,d\). \\
+\code{sechk} & 5 & 899 & Deeper nests; many
+\code{generating NEW assumption} / \code{gen5} /
+\code{KO, cannot introduce}~\ldots\ cycles. \\
 \bottomrule
 \end{tabularx}
 \end{center}
