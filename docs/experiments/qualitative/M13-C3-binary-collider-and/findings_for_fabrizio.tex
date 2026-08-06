@@ -1509,50 +1509,81 @@ an accepted covering theory in that setting.
 \subsubsection{H4b: child \texorpdfstring{\(c\)}{c} on the H3 table}
 
 \question
-On the H3 BD AND table with BK-leading isolated \(A\), does switching from
-ECAI brave to repository-baseline cautious change how the split beneath the
-\(a\) gates is closed --- in particular the attack on \(\alpha_3\) --- and
-what stays the same?
+On the H3 BD AND table with BK-leading isolated \(A\), under matched nd and
+\code{relto} settings, does changing \code{learning_mode(brave)} to
+\code{learning_mode(cautious)} alter how the contrary of \(\alpha_3\) is
+closed when learning target \code{c}, and what of the H3 theory remains
+unchanged?
 
 \comparison
-The H3 fixture, frozen sample, target \code{c}, BK order \([a,b,d]\), nd
-folding, \code{any} selection, \code{all} space, and \code{relto} were fixed.
-Only \code{learning_mode(brave)} versus \code{learning_mode(cautious)} changed.
-The brave comparator is the locked H3 ECAI cell. The cautious arm is again
-\code{baseline_cautious}. This is an nd-cautious probe on H3's child, not the
-separate Greedy-cautious probe H5.
+The H3 fixture \code{m13_bucket3_binary_bd_and_lead_a}, frozen \(n=30\)
+seed-42 sample, target \code{c}, and BK order \([a,b,d]\) were held fixed.
+The two learner configurations compared are \code{ecai2024} and
+\code{baseline_cautious}. Both use nd folding with
+\code{folding_selection(any)}, \code{folding_space(all)},
+\code{asm_intro(relto)}, and \code{folding_steps(10)}. They differ in
+learning mode: \code{ecai2024} sets \code{learning_mode(brave)};
+\code{baseline_cautious} sets \code{learning_mode(cautious)}. The locked
+H3 \code{ecai2024} cell for target \code{c} is the brave comparator. This
+probe concerns nd folding under cautious learning; it is distinct from the
+later Greedy probe H5.
+
+\begin{center}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+Object & \code{ecai2024} & \code{baseline_cautious} \\
+\midrule
+Outcome for \code{c} & \code{solved} & \code{solved} \\
+Target gates &
+\(\alpha_1,a{=}1\) / \(\alpha_2,a{=}0\) &
+same \\
+\(\mathtt{c\_alpha\_1}\) &
+\(b{=}0\); nest \(\alpha_3,b{=}1\) &
+same \\
+\(\mathtt{c\_alpha\_2}\) &
+\(d{=}0\); \(b{=}0\) &
+same \\
+\(\mathtt{c\_alpha\_3}\) &
+\(\alpha_1,a{=}1\) &
+\(d{=}1\) \\
+\bottomrule
+\end{tabular}
+\end{center}
 
 \observation
-Both arms solve. Through \(\alpha_3\) introduction the theories share Layer~A
-from H3: target rules gated on leading \(a\), nested
-\(\mathtt{c\_alpha\_1}\) under \(a{=}1\), and flat \(\mathtt{c\_alpha\_2}\)
-under \(a{=}0\). Exactly one closing rule differs (Layer~B):
-
+Both configurations solve target \code{c}. Through the introduction of
+\(\alpha_3\), their theories coincide with the H3 skeleton already recorded:
+ordinary target rules gated on leading \(a\), a nested contrary under
+\(a{=}1\), and a flat \(b\)/\(d\) contrary under \(a{=}0\). Exactly one
+closing rule differs. Under \code{ecai2024}:
 \begin{lstlisting}
-% H3 ECAI brave:
 c_alpha_3(A) :- alpha_1(A), a_val_1(A).
-
-% H4b cautious:
+\end{lstlisting}
+Under \code{baseline_cautious}:
+\begin{lstlisting}
 c_alpha_3(A) :- d_val_1(A).
 \end{lstlisting}
 
-The decisive fork is again an assumption-reuse check on the \(\alpha_3\)
-close:
+The traces diverge at the assumption-introduction check on that close. After
 \begin{lstlisting}
-% Brave:
 folding result: c_alpha_3(A) <- [a_val_1(A)]
+\end{lstlisting}
+\code{ecai2024} re-uses \(\alpha_1\) and stops:
+\begin{lstlisting}
  found: alpha_1/1 ... OK, assumption introduction result:
    c_alpha_3(A) <- [alpha_1(A),a_val_1(A)]
-
-% Cautious:
-folding result: c_alpha_3(A) <- [a_val_1(A)]
+\end{lstlisting}
+\code{baseline_cautious} rejects that reuse, rejects a subsequent attempt to
+re-use \(\alpha_3\) on \code{b_val_1}, and then accepts an ordinary
+\code{d_val_1} fold:
+\begin{lstlisting}
  found: alpha_1/1 ... KO, cannot introduce an assumption for [a_val_1(A)]
+ folding result: c_alpha_3(A) <- [b_val_1(A)]
+ found: alpha_3/1 ... KO, cannot introduce an assumption for [b_val_1(A)]
  folding result: c_alpha_3(A) <- [d_val_1(A)]
 \end{lstlisting}
-Brave accepts residual reuse of \(\alpha_1\) and never folds a \(d\)-literal
-on this close. Cautious rejects that reuse and continues until
-\code{d_val_1} is accepted. The full cautious delta retains the shared H3
-skeleton with that single close replaced:
+The full \code{baseline_cautious} delta is therefore the shared H3 skeleton
+with that single close replaced:
 \begin{lstlisting}
 c(A) :- alpha_1(A), a_val_1(A).
 c(A) :- alpha_2(A), a_val_0(A).
@@ -1570,27 +1601,54 @@ contrary(alpha_3(A),c_alpha_3(A)) :- assumption(alpha_3(A)).
 \end{lstlisting}
 
 \explanation
-Cautious checking again rejects a residual assumption reuse that brave accepts.
-Here the rejected body is \code{alpha_1},\code{a_val_1} on
-\(\mathtt{c\_alpha\_3}\). Because search can continue, an explicit parent
-literal \code{d_val_1} closes the nest, and the child remains solved.
+The shared prefix is the H3 theory under leading \(a\). As recorded in H3,
+that prefix is produced by nd folding with \code{any} selection,
+\(b\)-before-\(d\) BK order, cover-and-repair, and \code{asm_intro(relto)}.
+It is reproduced under both learning modes through \(\alpha_3\) introduction.
+The \(\alpha_1\)-nested versus \(\alpha_2\)-flat contrary split is therefore
+already present before the learning-mode contrast takes effect.
 
-What cautious does \emph{not} change is Layer~A. The leading-\(a\) gates and
-the \(\alpha_1\)-nested versus \(\alpha_2\)-flat contrary split are already
-present in H3 brave; their procedural cause is the sequential search path
-recorded there. H4b therefore locates the learning-mode effect in the
-\(\alpha_3\) closure alone.
+The learning-mode contrast is confined to the attack on \(\alpha_3\). Under
+\code{ecai2024}, the learner closes that attack by residual reuse of
+\(\alpha_1\):
+\begin{lstlisting}
+c_alpha_3(A) :- alpha_1(A), a_val_1(A).
+\end{lstlisting}
+This clause couples the contrary of \(\alpha_3\) to the same assumption that
+gates the ordinary target rule under \(a{=}1\). Brave entailment asks only for
+some witnessing stable extension of the candidate framework that covers
+\(\Epos\) and excludes \(\Eneg\). That residual reuse passes the brave
+assumption-introduction check, so \code{ecai2024} accepts it and never folds a
+\(d\)-literal on \(\mathtt{c\_alpha\_3}\).
 
-Relative to H4: on roots, rejecting the residual gadget yields no solution;
-on this child, rejecting the residual gadget yields a repaired but still
-\(A\)-gated solved theory.
+Under \code{baseline_cautious}, the entailment condition is universal:
+every positive must be a cautious consequence, and every negative must be
+excluded as a cautious consequence. The residual reuse of \(\alpha_1\) on
+\(\mathtt{c\_alpha\_3}\) fails that test, exactly as the residual reuse of
+\(\alpha_2\) failed under H4: acceptance of the proposed extension depends on
+assumption choices that need not hold in every stable extension. The
+introduction check therefore returns KO. Unlike H4 on the roots, search here
+still has an ordinary BK alternative. Folding the contrary examples of
+\(\alpha_3\) with \code{d_val_1} satisfies the cautious entailment condition
+on \(\langle\Epos,\Eneg\rangle\), so the learner accepts
+\begin{lstlisting}
+c_alpha_3(A) :- d_val_1(A).
+\end{lstlisting}
+and finishes with \code{solved}.
+
+Relative to H4, the same learning-mode change therefore has the same local
+effect---rejection of a residual assumption reuse---but a different global
+outcome. On the H0 roots, no accepted covering theory remained within
+\code{folding_steps(10)}. On this H3 child cell, an ordinary parent literal
+closes the nest, while the leading-\(a\) gates and the asymmetric contrary
+skeleton from H3 remain in place.
 
 \boundary
-H4b is a single-factor learning-mode intervention on the locked H3 child cell.
-Neither delta recovers the evaluator BD AND
-\code{c(A) :- b_val_1(A), d_val_1(A).}. Both retain isolated \(A\). Do not read
-H4b as symmetrising the \(\alpha_1/\alpha_2\) split or removing the leading
-distractor.
+H4b compares \code{ecai2024} and \code{baseline_cautious} on the locked H3
+target-\code{c} cell, with matched nd folding options and
+\code{asm_intro(relto)}. The emitted theories retain BK-leading isolated
+\(A\) in the ordinary target rules. The learning-mode effect isolated here is
+the body of \(\mathtt{c\_alpha\_3}\).
 
 \record{docs/experiments/qualitative/M13-C3-binary-collider-and/h4b_cautious_split_under_a.md}
 
