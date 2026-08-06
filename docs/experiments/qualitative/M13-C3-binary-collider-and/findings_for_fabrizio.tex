@@ -1318,90 +1318,191 @@ procedural feature of that same theory.
 \subsubsection{H4: roots on the H0 table}
 
 \question
-On the principal AND-collider table of H0, does switching from brave to
-cautious learning change the ECAI root outcomes for \code{a} and \code{b}
-that relied on a residual per-row assumption gadget (rows~9 versus~26), and
-what happens to control target \code{c}?
+On the principal AND-collider table of H0, does changing
+\code{learning_mode(brave)} to \code{learning_mode(cautious)} alter the
+outcomes for root targets \code{a} and \code{b} that, under
+\code{ecai2024}, relied on a residual per-row assumption construction
+separating rows~9 and~26, and what happens to control target \code{c}?
 
 \comparison
-The H0 fixture, frozen \(n=30\) seed-42 table, target-specific examples, BK,
-nd folding, \code{any} selection, \code{all} space, \code{relto}, and folding
-ceiling \(M=10\) were fixed. The only learning-relevant change was
-\code{learning_mode(brave)} to \code{learning_mode(cautious)}. The brave
-comparator is the locked ECAI collection. The cautious arm is repository
-\code{baseline_cautious}, not an ECAI bundle.
+The H0 fixture, frozen \(n=30\) seed-42 table, target-specific examples, and
+BK were held fixed. The two learner configurations compared are
+\code{ecai2024} and \code{baseline_cautious}. Both use nd folding with
+\code{folding_selection(any)}, \code{folding_space(all)},
+\code{asm_intro(relto)}, and \code{folding_steps(10)}. They differ in
+learning mode: \code{ecai2024} sets \code{learning_mode(brave)};
+\code{baseline_cautious} sets \code{learning_mode(cautious)}. The locked
+\code{ecai2024} outputs are the brave comparator.
 
 \begin{center}
 \begin{tabular}{@{}lcc@{}}
 \toprule
-Target & Brave nd/\code{relto} & Cautious nd/\code{relto} \\
+Target & \code{ecai2024} & \code{baseline_cautious} \\
 \midrule
-\(a\) & solved & no solution \\
-\(b\) & solved & no solution \\
-\(c\) & solved & solved, byte-identical delta \\
+\(a\) & \code{solved} & \code{completed_no_solution} \\
+\(b\) & \code{solved} & \code{completed_no_solution} \\
+\(c\) & \code{solved} & \code{solved}, byte-identical delta \\
 \bottomrule
 \end{tabular}
 \end{center}
 
 \observation
-For root \code{a}, the brave and cautious traces coincide through the early
-\(\alpha_1,\alpha_2,\alpha_3\) construction from H0. They diverge at the
-attempted closure of \(\mathtt{c\_alpha\_3}\) by re-using \(\alpha_2\):
+For target \code{a}, the \code{ecai2024} and \code{baseline_cautious} traces
+coincide through the early \(\alpha_1,\alpha_2,\alpha_3\) construction from
+H0. They diverge at one assumption-introduction step. After
+\begin{lstlisting}
+folding result: c_alpha_3(A) <- [b_val_0(A)]
+\end{lstlisting}
+the learner proposes to re-use the already declared assumption \(\alpha_2\)
+in that body:
+\begin{lstlisting}
+c_alpha_3(A) :- alpha_2(A), b_val_0(A).
+\end{lstlisting}
+Under \code{ecai2024} the proposal is accepted; under
+\code{baseline_cautious} it is rejected:
 
 \begin{lstlisting}
-% Brave:
-folding result: c_alpha_3(A) <- [b_val_0(A)]
+% ecai2024:
  found: alpha_2/1 ... OK, assumption introduction result:
    c_alpha_3(A) <- [alpha_2(A),b_val_0(A)]
 
-% Cautious:
-folding result: c_alpha_3(A) <- [b_val_0(A)]
+% baseline_cautious:
  found: alpha_2/1 ... KO, cannot introduce an assumption for [b_val_0(A)]
 \end{lstlisting}
 
-Brave accepts the reuse, writes the H0 nest, and solves. Cautious rejects the
-reuse, exhausts the configured folding budget, and emits no delta
-(\code{completed_no_solution}). Target \code{b} mirrors this with the roles of
-\(A\) and \(B\) swapped.
+Under \code{ecai2024}, that OK closes the both-zero nest from H0 and the
+learner writes a solution. Under \code{baseline_cautious}, the KO is followed
+by further failed folds, exhaustion of \code{folding_steps(10)}, and
+\code{completed_no_solution} with no emitted delta. Target \code{b} exhibits
+the same divergence with the roles of \(A\) and \(B\) swapped.
 
-Control target \code{c} still solves under cautious. Its delta is
-byte-identical to the locked ECAI child theory:
+Under \code{baseline_cautious}, control target \code{c} remains
+\code{solved}. Its delta is byte-identical to the locked \code{ecai2024}
+delta for \code{c}:
 \begin{lstlisting}
 c(A) :- alpha_1(A), a_val_1(A).
 c_alpha_1(A) :- b_val_0(A).
 assumption(alpha_1(A)).
 contrary(alpha_1(A),c_alpha_1(A)) :- assumption(alpha_1(A)).
 \end{lstlisting}
+Thus \code{learning_mode(cautious)} still admits an assumption-bearing theory
+for the child on this table, while rejecting the residual \(\alpha_2\) reuse
+for the roots.
 
 \explanation
-H0 already showed why the brave root theory can solve: at the ambiguous
-both-zero BK cell, rows~9 and~26 carry identical predictors
-\code{b_val_0},\code{c_val_0} but opposite labels, and the
-\(\alpha_2/\alpha_3\) nest separates those row identifiers by opposite ground
-assumption choices inside one witnessing stable extension.
+Under both configurations the search builds toward the same both-zero nest:
+\begin{lstlisting}
+a(A) :- alpha_2(A), b_val_0(A).
+c_alpha_2(A) :- alpha_3(A), c_val_0(A).
+c_alpha_3(A) :- alpha_2(A), b_val_0(A).
+\end{lstlisting}
+Write \(\mathcal{F}_{\mathrm{nest}}\) for a framework containing this nest.
+The decisive conflict is observational. Row~9 contributes
+\(a(9)\in\Epos\) with joint values \((A,B,C)=(1,0,0)\). Row~26 contributes
+\(a(26)\in\Eneg\) with joint values \((0,0,0)\). Relative to BK the two rows
+are indistinguishable: both carry \code{b_val_0} and \code{c_val_0}. No Horn
+body over those predictors alone can accept one row and reject the other.
 
-Cautious learning changes the acceptance test. A candidate rule is accepted
-only if the required consequences hold in every stable extension of the
-framework. Brave acceptance required only that some witnessing extension
-cover the examples. The decisive residual reuse
+The nest does not separate the rows by BK. It separates them by ground
+assumption membership. At any both-zero row identifier \(i\), the assumptions
+\(\alpha_2(i)\) and \(\alpha_3(i)\) attack each other through the contrary
+layer, so a stable extension can take only one of the two local choices:
+\begin{center}
+\small
+\begin{tabular}{@{}lll@{}}
+\toprule
+Choice at row \(i\) & Acceptance of \(a(i)\) & Derived contrary \\
+\midrule
+\(\alpha_2(i)\in\Delta\), \(\alpha_3(i)\notin\Delta\) &
+\(\mathcal{F}_{\mathrm{nest}}\models_{\Delta}a(i)\) &
+\(\mathtt{c\_alpha\_3}(i)\) \\
+\(\alpha_2(i)\notin\Delta\), \(\alpha_3(i)\in\Delta\) &
+\(\mathcal{F}_{\mathrm{nest}}\not\models_{\Delta}a(i)\) &
+\(\mathtt{c\_alpha\_2}(i)\) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\paragraph{Brave entailment.}
+Under \code{learning_mode(brave)}, a learned framework \(\mathcal{F}'\) is
+accepted when there exists one witnessing stable extension covering the
+examples:
+\[
+\exists\Delta\in\operatorname{Stab}(\mathcal{F}')
+\;\bigl[
+\forall e\in\Epos,\ \mathcal{F}'\models_{\Delta}e
+\;\land\;
+\forall e\in\Eneg,\ \mathcal{F}'\not\models_{\Delta}e
+\bigr].
+\]
+For \(\mathcal{F}_{\mathrm{nest}}\) such a witness exists. On row~9 it chooses
+\(\alpha_2(9)\) in and \(\alpha_3(9)\) out, so
+\begin{lstlisting}
+a(9) :- alpha_2(9), b_val_0(9)
+\end{lstlisting}
+yields \(\mathcal{F}_{\mathrm{nest}}\models_{\Delta}a(9)\). On row~26 it
+chooses \(\alpha_2(26)\) out and \(\alpha_3(26)\) in, so
+\(\mathcal{F}_{\mathrm{nest}}\not\models_{\Delta}a(26)\). The closing rule
 \begin{lstlisting}
 c_alpha_3(A) :- alpha_2(A), b_val_0(A).
 \end{lstlisting}
-fails the cautious test: the opposite local choices that make the brave cover
-work are exactly what prevent the residual from surviving every extension.
-Paths therefore coincide until the gadget, then cautious rejects it and finds
-no alternative covering theory within \(M=10\).
+is part of making those local choices coherent: whenever \(\alpha_2(i)\) is
+accepted, \(\mathtt{c\_alpha\_3}(i)\) is derived and attacks \(\alpha_3(i)\).
 
-The unchanged child control shows that the mode change is selective. Cautious
-nd still accepts an assumption-bearing theory for \code{c} on this table. What
-it blocks is this particular ambiguous root construction, not every solve.
+Thus \(\mathcal{F}_{\mathrm{nest}}\) passes brave entailment because coverage
+may depend on different ground assumption choices at different row identifiers
+inside a single witness. The assumption-introduction check that proposes
+re-using \(\alpha_2\) on \code{c_alpha_3(A) <- [b_val_0(A)]} therefore returns
+OK, and \code{ecai2024} finishes with \code{solved}.
+
+\paragraph{Failure under cautious entailment.}
+Under \code{learning_mode(cautious)}, the same framework must satisfy the
+stronger condition
+\[
+\forall e\in\Epos,\ \mathcal{F}'\models_{\mathrm{caut}}e,
+\qquad
+\forall e\in\Eneg,\ \mathcal{F}'\not\models_{\mathrm{caut}}e,
+\]
+where \(\mathcal{F}'\models_{\mathrm{caut}}s\) means that \(s\) is accepted
+with respect to every stable extension of \(\mathcal{F}'\).
+
+Apply that test to \(\mathcal{F}_{\mathrm{nest}}\) at row~9. The choice that
+covers the positive is \(\alpha_2(9)\in\Delta\). The opposite choice,
+\(\alpha_3(9)\in\Delta\) and \(\alpha_2(9)\notin\Delta\), also belongs to
+\(\operatorname{Stab}(\mathcal{F}_{\mathrm{nest}})\). In any extension
+\(\Delta'\) that takes the opposite choice,
+\(\mathcal{F}_{\mathrm{nest}}\not\models_{\Delta'}a(9)\). Therefore
+\(a(9)\) fails \(\mathcal{F}_{\mathrm{nest}}\models_{\mathrm{caut}}a(9)\):
+it is not a cautious consequence. The brave cover of the positive exists, but
+it is only an existential cover. Cautious entailment requires universal cover,
+and this nest cannot provide it on an underdetermined BK cell.
+
+That is why, under \code{baseline_cautious}, the same proposal returns
+\begin{lstlisting}
+found: alpha_2/1 ... KO, cannot introduce an assumption for [b_val_0(A)]
+\end{lstlisting}
+The learner never accepts the clause that would close the brave construction.
+Search then exhausts \code{folding_steps(10)} and returns
+\code{completed_no_solution}.
+
+In short: \code{ecai2024} succeeds because brave entailment needs only some
+stable extension that assigns opposite \(\alpha_2/\alpha_3\) statuses to
+rows~9 and~26; \code{baseline_cautious} fails because \(a(9)\) is not accepted
+in every stable extension of that same nest, so the residual \(\alpha_2\) reuse
+cannot pass the cautious entailment check.
+
+The control on target \code{c} is consistent with these semantics. Its
+contrary folds to the ordinary body \code{b_val_0}, which does not require
+opposite assumption membership across rows that share the same BK literals.
+The cautious entailment checks therefore succeed, and the emitted delta
+matches the \code{ecai2024} delta for \code{c}.
 
 \boundary
-H4 is a single-factor learning-mode intervention on the locked H0 table under
-nd/\code{relto} with ceiling \(M=10\). Cautious root no-solution is the absence
-of an accepted covering theory in that configuration. It is not recovery of a
-deterministic root rule from other observed variables, and it does not prove
-that no cautious theory exists under every search strategy or budget.
+H4 compares learner configurations \code{ecai2024} and
+\code{baseline_cautious} on the locked H0 table, with matched nd folding
+options, matched \code{asm_intro(relto)}, and \code{folding_steps(10)}. Root
+\code{completed_no_solution} under \code{baseline_cautious} is the absence of
+an accepted covering theory in that setting.
 
 \record{docs/experiments/qualitative/M13-C3-binary-collider-and/h4_cautious_vs_brave.md}
 
