@@ -219,6 +219,57 @@ multi-literal fold bodies in these bands.
 Rough linearity for target `a`: lines/M ≈ 549, 524, 508, 503 across M=1,2,5,10
 — consistent with `C_fixed + M · C_band` and a ~500-line failed band.
 
+### Cross-run trace audit (added 2026-08-07, no new learner runs)
+
+The "same failed search" reading above was checked exactly across every
+recorded nd trace, not only the H6a cells. Audit script:
+`docs/experiments/qualitative/M13-C3-binary-collider-and/band_replay_audit.py`.
+
+```bash
+python docs/experiments/qualitative/M13-C3-binary-collider-and/band_replay_audit.py
+```
+
+Output summary:
+
+```text
+nd traces audited: 49
+every folding call consumed exactly one token: True
+total token-exhaustion failures across all nd traces: 0
+total multi-atom to-be-folded lists: 0
+traces that raised the token allowance: 14
+  of those, every search attempt identical after normalisation: 14
+  per-attempt size range: 497..9747 lines
+```
+
+Two facts recorded from this:
+
+1. **Token saturation.** `fold_nd_wtc/7` prints ` C: folding …` before each step
+   and ` C: DONE` on completion. In all 49 nd traces the DONE counter is exactly
+   one below the folding counter, every to-be-folded list printed has a single
+   atom, and the ` 0: FAIL - No more folding tokens left` diagnostic appears
+   nowhere. Under the exact-value encoding the rote rule body is one row-id
+   equality (`ert: a(A) <- [A=1]`) and each BK rule is `b_val_1(A) :- A=1`, so
+   one step empties the fold list. `folding_steps(M)` therefore never widens the
+   reachable fold space in these runs; it only permits restarts.
+2. **Attempt identity.** Splitting each trace at `* Increasing folding tokens
+   to:` and normalising `alpha_N`, `_N`, and the printed token counter, all M
+   attempts within a trace are identical for all 14 cells that raised the
+   allowance. For `baseline_cautious` target `a` at M=10: 5031 lines = 51-line
+   preamble + 10×497-line attempts + 9 restart lines + 1 closing line
+   (target `b`: 506-line attempts). Same holds under `nd_cautious_sechk`
+   (1367 / 1376-line attempts) and on the H3 fixture (9467 / 9747-line
+   attempts), so the multiplication is independent of per-attempt cost.
+
+Outcome breakdown over the 49 nd cells: 30 `solved`, all inside `tokens(1)`;
+19 `completed_no_solution`, of which 14 raised the allowance and 5 are
+`folding_steps(1)` configurations where no restart is possible.
+
+This audit supports Finding 4 of
+`docs/experiments/qualitative/M13-C3-binary-collider-and/findings_for_fabrizio.tex`.
+It is an audit of the recorded runs, not a proof about `fold_nd_wtc/7` for
+arbitrary BK: BK rules with multi-atom bodies would leave atoms to fold after
+the first step.
+
 ### Control `c` (H6a)
 
 Solved every `M`; same delta (`α1` + `a_val_1`; contrary `b_val_0`); **134 lines
