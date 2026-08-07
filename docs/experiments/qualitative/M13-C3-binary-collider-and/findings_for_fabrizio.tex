@@ -2130,7 +2130,70 @@ observed variables do not determine, and that solution would be the positive row
 restated as rules. Whether a target receives a theory at all would depend on how
 many irrelevant variables happen to be measured.
 
-\subsection{Finding 2: nd solutions are organised around the first BK predictor}
+\subsection{Finding 2: nd latches onto the first background-knowledge predictor}
+
+Every completed nd solution latches onto the predictor whose block comes first in
+target-specific background knowledge. The ordinary rules for the target cite that
+one observed variable and no other, with one rule for each value it takes among
+the positive rows, and each rule pairs the value literal with a single assumption.
+The remaining variables enter through the assumptions and their contraries, which
+is how nd represents what it has learned, so a delta is read as a whole and not
+through its base rules alone. What background-knowledge order fixes is the
+variable the base rules latch onto.
+
+The latch forms on the first fold. Background knowledge is serialised one
+predictor block per column, nd folding begins with a single folding token, and
+\code{folding_selection(any)} accepts the first admissible fold, so the leading
+predictor is folded first and one token admits one value literal:
+
+\begin{lstlisting}
+ folding result: c(A) <- [a_val_1(A)]
+gen2: extended ABA does not entail <E+,E-> - looking for assumption relative to
+gen2: generating NEW assumption: alpha_1(A)
+\end{lstlisting}
+
+The body \(c\leftarrow a_1\) covers negative examples, and the learner responds by
+minting an assumption to block them. The predicate chosen for the fold is never
+reconsidered. Because the repair machinery can rescue whichever fold was attempted
+first, the enumeration has no occasion to advance to the second predictor, and the
+learned structure accumulates in the contrary of the new assumption instead. The
+same sequence repeats for \(a_0\) and yields the second target rule with
+\(\alpha_2\).
+
+Initial folding follows background-knowledge position and takes no account of
+mechanistic relevance, so an isolated variable is latched onto whenever it is placed
+ahead of the mechanism parents. In H3 the child mechanism is \(B\land D\), the
+isolated \(A\) leads the target-\(c\) order, and the solution latches onto \(a\).
+In H0 the child mechanism is \(A\land B\) with order \([a,b]\), and the solution
+latches onto \(a\), which is a parent. The same position delivers an isolated
+variable in one fixture and a parent in the other. H0 is a clear case, because
+\(A\) and \(B\) enter its mechanism symmetrically as conjuncts and the latch breaks
+that symmetry in the direction background knowledge supplies. The single target
+rule
+
+\begin{lstlisting}
+c(A) :- alpha_1(A), a_val_1(A).
+\end{lstlisting}
+
+is identical in all nine cells that solve this target, across seven configurations
+and three sample sizes.
+
+What varies across those nine cells is the repair beneath the initial folding. Under
+\code{relto} the contrary is \code{c_alpha_1(A) :- b_val_0(A).}, which brings the
+second parent back into the theory one level down. Under cautious \code{sechk} the
+parent enters one level deeper again, through \code{c_alpha_2(A) :- b_val_1(A).}
+Under brave \code{sechk} the variable \(b\) appears nowhere in the delta. The
+composition of the repair chain therefore responds to the configuration. 
+
+\beyond
+The first admissible fold is determined by the order in which
+predictor blocks are serialised, and the repair machinery rescues that fold instead
+of rejecting it, so whichever predictor is placed first should be the one a
+completed solution latches onto. The same data presented under different orders should yield
+theories latched onto different variables. A causal reading has to account for this, because a theory latched onto
+an isolated variable and a theory latched onto a parent are indistinguishable by
+outcome, and the difference between them is settled by column order before any
+mechanism variable is examined.
 
 \subsection{Finding 3: brave nd can solve predictor-ambiguous root targets}
 

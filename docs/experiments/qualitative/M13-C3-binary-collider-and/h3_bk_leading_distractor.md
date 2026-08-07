@@ -181,6 +181,82 @@ research question.
 
 ---
 
+## Cross-probe nd audit (added 2026-08-07, no new learner runs)
+
+First-predictor inclusion generalises to a statement about the whole shape of an
+nd target theory, checked across every solved cell run under `folding_mode(nd)`
+(cross-probe: H0/H3 plus the H4/H4b/H6/H7 ablation collections and the earlier
+diamond, not H3-only). Audit script:
+`docs/experiments/qualitative/M13-C3-binary-collider-and/nd_first_predictor_audit.py`.
+
+```bash
+python docs/experiments/qualitative/M13-C3-binary-collider-and/nd_first_predictor_audit.py
+```
+
+Output summary:
+
+```text
+solved nd cells audited: 30
+  target rules cite exactly the first BK predictor:  30/30
+  exactly one observed value literal per rule:       30/30
+  cited values == values of first among positives:   30/30
+  rule count == that number of values:              30/30
+  target-rule count distribution: {2: 21, 1: 9}
+  cells whose target rules cover every observed value of the first
+    predictor, and so constrain it not at all: 21/30
+```
+
+Facts recorded:
+
+1. **What the base rules latch onto.** The ordinary target rules cite exactly one
+   observed variable, the first `% Predictor block:` in `input/bk.aba`, one rule
+   per value that predictor takes among the positive rows, each paired with one
+   assumption. All other observed variables appear only in contrary definitions.
+   Holds 30/30. Note on framing: assumptions and contraries carrying learned
+   content is the normal nd representation, so a delta is read as a whole. The
+   recorded fact is that the base rules latch onto the first BK predictor.
+2. **Configuration invariance.** The 30 cells span `learning_mode(brave)` and
+   `learning_mode(cautious)`, `asm_intro(relto)` and `asm_intro(sechk)`,
+   `folding_steps` 1/2/5/10, `n` = 30/60/90, and three fixtures
+   (`collider_and`, `bd_and_lead_a`, `diamond`). No setting tested changes which
+   variable is cited. `collider_and_iso_d` has no nd collection.
+3. **Position drives the latch, relevance does not.** H3 target `c` (mechanism
+   `B AND D`, BK order `a,b,d`) latches onto isolated `a` and confines both
+   parents to contraries. H0 target `c` (mechanism `A AND B`, BK order `a,b`)
+   latches onto `a`, a parent. Same position, different causal status. An isolated
+   variable is latched whenever placed ahead of the mechanism parents.
+4. **Symmetry breaking on H0 `c`.** `A` and `B` are symmetric conjuncts, and the
+   target rule `c(A) :- alpha_1(A), a_val_1(A).` is byte-identical in all 9 cells
+   solving this target (7 collections, `n` = 30/60/90). Only the repair beneath the
+   latch varies: under `relto` it is `c_alpha_1(A) :- b_val_0(A).`; under
+   `nd_cautious_sechk` the parent enters one level deeper, via
+   `c_alpha_1(A) :- alpha_2(A), a_val_1(A).` with `c_alpha_2(A) :- b_val_1(A).`;
+   under `nd_brave_sechk` no `b_val` literal occurs anywhere in the delta
+   (verified 0 occurrences). Repair composition responds to configuration, the
+   latch responds only to order.
+5. **Base rules can leave the latched variable unconstrained.** In 21/30 cells the
+   latched predictor takes both values among positives, so the two base rules admit
+   both and the discrimination is carried by the assumptions and contraries. This
+   is recorded as structure, not as a defect.
+
+Filter note: `prolog.stdout` prints default options, which include
+`folding_mode(nd)`, before the configuration is applied. The script partitions on
+`Current learning options:` and tests only the effective block. Without this,
+Greedy cells are wrongly admitted (observed: 46 cells instead of 30).
+
+Interpretation carried into Finding 2, marked **tentative and untested**: because
+the repair machinery rescues the first fold instead of rejecting it, which is a
+property of the transformation sequence, any BK permutation should yield a solution
+latched onto whichever predictor it places first. Strong form: the base rules of an
+nd solution are predictable before the learner runs, from column order plus the
+values the leading predictor takes among the positive examples. Consequence claimed
+tentatively: BK order is a modelling decision of the same standing as the encoding,
+since orders yielding latches onto different variables all complete and are
+indistinguishable by outcome. **No permutation experiment has been run.** Do not
+treat a BK-reordering probe as approved.
+
+---
+
 ## Cross-links
 
 - Investigation hub: `experiment.md`
