@@ -299,6 +299,57 @@ Preserve: support **presence** already at n=30; multiplicities change
 (2/4/7/17 → 4/10/12/34 → 5/17/18/50). H6b measures grounding/bookkeeping
 growth under fixed topology, not a new information regime that flips outcomes.
 
+### Cross-n trace audit (added 2026-08-07, no new learner runs)
+
+"Topology unchanged" was sharpened from matching event counts to an exact
+ordered comparison. Audit script:
+`docs/experiments/qualitative/M13-C3-binary-collider-and/support_vs_multiplicity_audit.py`.
+
+```bash
+python docs/experiments/qualitative/M13-C3-binary-collider-and/support_vs_multiplicity_audit.py
+```
+
+Output:
+
+```text
+Decision-sequence identity across nested sample sizes
+ target                    decisions  identical
+      a              [238, 238, 238]        yes
+      b              [238, 238, 238]        yes
+      c                 [14, 14, 14]        yes
+
+Target a: total trace lines [1047, 1641, 2241]
+  constant categories:  39, holding [513, 513, 513] lines
+  growing categories:    5, holding [534, 1128, 1728] lines
+       [192, 432, 672]  * subsumed: deleted!
+       [166, 342, 518]  evaluating subsumption of a(A) <- [A=_]
+        [96, 188, 286]  ert: c_alpha_N(A) <- [A=_]
+        [56, 120, 184]  evaluating subsumption of c_alpha_N(A) <- [A=_]
+          [24, 46, 68]  ert: a(A) <- [A=_]
+```
+
+Facts recorded:
+
+1. **Decision identity.** The ordered sequence of `gen1`–`gen6` steps, folding
+   results, assumption introductions, entailment checks, and token increases is
+   *identical* at n=30/60/90 after normalising `_N` and `A=<row>`: 238 decisions
+   for `a`, 238 for `b`, 14 for `c`. This is stronger than the NEW=18 / KO=32
+   count match already recorded above.
+2. **Where cost goes.** Lines split into 39 constant categories (exactly 513
+   lines at every n, for both `a` and `b`; 63 for `c`) and 5 growing categories,
+   all rote-rule creation and subsumption bookkeeping. `ert:` counts equal the
+   positive-example multiplicities: `a` 24/46/68, `b` 21/44/67, `c` 17/34/50.
+
+Caveat for target `c`: the audit also lists three singleton "Writing solution
+no. # to targetwise_<hash>.sol.aba" categories. Those are per-run artefact
+filenames, not growth.
+
+This audit supports Finding 5 of
+`docs/experiments/qualitative/M13-C3-binary-collider-and/findings_for_fabrizio.tex`.
+It does **not** establish that deduplication is safe: H6b varies nested `n`, and
+a support-compressed table would also renumber rows, which can interact with
+`folding_selection(any)`. That remains an untested probe.
+
 ---
 
 ## Cross-analysis vs H4 and secondary H5

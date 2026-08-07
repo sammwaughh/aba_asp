@@ -2142,7 +2142,78 @@ governs whether such a probe measures folding depth alone or also enlarges the
 hypothesis space available to the learner, and the two readings would support
 different conclusions.
 
-\subsection{Finding 5: cautious-nd trace size grows with grounded sample size}
+\subsection{Finding 5: the search is fixed by the sample's distinct value
+patterns}
+
+What determines the learner's search is the set of distinct joint value patterns
+present in the sample. The multiplicity of those patterns fixes how much
+grounded bookkeeping that search performs. Enlarging a sample that already
+exhibits every pattern therefore leaves the search path and the learned theory
+exactly as they were, and raises only cost.
+
+H6b holds the folding ceiling at \(M=2\) and enlarges the H0 sample through
+nested seed-42 prefixes \(n\in\{30,60,90\}\). All four population atoms are
+present already at \(n=30\), so the prefixes change multiplicities alone, from
+\((2,4,7,17)\) to \((5,17,18,50)\) over the assignments
+\((0,0,0),(0,1,0),(1,0,0),(1,1,1)\).
+
+Across those three samples the learner takes an identical sequence of decisions.
+Collecting every \code{gen1}--\code{gen6} step, folding result, assumption
+introduction, entailment check, and token increase in the order printed, and
+normalising Prolog variable numbers and row identifiers, root target \code{a}
+takes the same 238 decisions at \(n=30\), \(n=60\), and \(n=90\). Target
+\code{b} likewise takes 238 and child \code{c} takes 14. Summed over every line
+category whose count is invariant, the trace holds exactly 513 lines for each
+root and 63 for the child at all three sample sizes.
+
+Growth is confined to five categories, all of them rote-rule creation and
+subsumption bookkeeping. Counting target-\code{a} lines after replacing
+assumption indices by \code{N} and row identifiers by \code{_}:
+
+\begin{lstlisting}
+                                                 n=30  n=60  n=90
+* subsumed: deleted!                              192   432   672
+evaluating subsumption of a(A) <- [A=_]           166   342   518
+ert: c_alpha_N(A) <- [A=_]                         96   188   286
+evaluating subsumption of c_alpha_N(A) <- [A=_]    56   120   184
+ert: a(A) <- [A=_]                                 24    46    68
+\end{lstlisting}
+
+The last row is the clearest case. Rote learning creates one rule per positive
+row, so its count is the multiplicity of the positive assignments: 24, 46, and 68
+at the three sample sizes. Child \code{c} shows the same correspondence, where
+\code{ert: c(A) <- [A=_]} appears 17, 34, and 50 times, exactly the multiplicity
+of \((1,1,1)\). Each duplicate row therefore contributes a rote rule, the
+subsumption evaluations that dispose of it, and the grounded entailment work
+attached to it, while contributing nothing to the decisions the learner takes.
+Trace length for target \code{a} rises by 594 and then 600 lines per additional
+30 rows, and runtime rises from \(13.1\) to \(22.2\) to \(32.3\) seconds,
+somewhat faster than line count because the ASP consequence checks scale with
+the size of the grounding.
+
+The same encoding is acutely sensitive to which patterns occur. Under the Greedy
+bundle, H1 removes the only two rows carrying \((0,0,0)\) from this stream, and
+the root outcome moves from \code{completed_no_solution} to \code{solved} with a
+population-false rule, because the predictor cell \((B,C)=(0,0)\) then holds
+positives alone. Deleting one pattern changes the learned theory. Adding sixty
+rows that repeat existing patterns changes none of it.
+
+\beyond
+The finding suggests that a table compressed to one row per distinct joint value
+pattern carries everything this learner uses. On the H0 fixture that would
+replace 30 rows with 4 while preserving the decisive structure, because the
+positive \((1,0,0)\) and the negative \((0,0,0)\) that leave root \code{a}
+underdetermined are two distinct patterns and both survive compression.
+
+The conjecture is that a support-compressed table yields the same emitted delta
+and the same normalised decision sequence as the full table, with trace length
+falling towards the invariant component measured above. A probe would compare a
+frozen table against its compressed counterpart under fixed configurations.
+
+What compression discards is frequency. Any component that estimates conditional
+independence requires those counts, so the full and compressed tables serve
+different purposes, and whether a pipeline should carry both is a design
+decision that has not been taken but is discussed later.
 
 \subsection{Finding 6: \code{relto} and \code{sechk} produce different assumption-introduction paths}
 
