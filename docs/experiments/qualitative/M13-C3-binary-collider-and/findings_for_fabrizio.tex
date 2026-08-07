@@ -74,8 +74,7 @@
 \newcommand{\observation}{\paragraph{Emphasised observation.}}
 \newcommand{\explanation}{\paragraph{Trace-supported explanation.}}
 \newcommand{\boundary}{\paragraph{Evidential boundary.}}
-\newcommand{\statement}{\paragraph{Statement.}}
-\newcommand{\support}{\paragraph{Supporting evidence.}}
+\newcommand{\beyond}{\paragraph{Beyond this finding.}}
 \newcommand{\record}[1]{\par\smallskip\noindent\textit{Primary evidence record: }
   \path{#1}\par}
 
@@ -321,7 +320,6 @@ The transformations relevant here are:
 \end{itemize}
 
 \subsection{Exact-value target-wise encoding}
-\label{sec:encoding}
 
 In this investigation the learning task is instantiated from a tabular sample.
 For each row identifier \(i\), every non-target variable is represented by
@@ -706,7 +704,6 @@ the ordered probe map. Detailed outcomes appear in the experimental sequence
 that follows.
 
 \subsection{Learner configurations}
-\label{sec:configs}
 
 \begin{center}
 \small
@@ -2071,149 +2068,79 @@ locked H0 and H3 child-\code{c} cells, with \code{baseline_cautious} as the
 
 \subsection{Finding 4: the folding-token ceiling repeats one search attempt}
 
-\statement
-Under nd folding, \code{folding_steps(M)} bounds how many times the learner
-restarts the whole learning problem. Search begins at \code{tokens(1)}. When the
-attempt at token allowance \(T\) exhausts without an accepted theory and
-\(T+1\le M\), the learner raises the allowance to \(T+1\) and restarts on the
-same rules and the same \(\langle\Epos,\Eneg\rangle\). H6a calls one such
-attempt a failed band.
+Under the exact-value target-wise encoding, every folding call completes after a
+single folding step. The option \code{folding_steps(M)} therefore controls how
+many times the learner restarts the same learning problem after a failed
+attempt, and it leaves the set of folded rules the learner can reach unchanged.
+Targets consequently divide in two. A target that receives an accepted theory
+receives it under \code{tokens(1)}, and \(M\) leaves its delta, trace, and
+runtime unchanged. A target that receives no accepted theory produces \(M\)
+identical search attempts, so \(M\) multiplies the cost of establishing the same
+\code{completed_no_solution} outcome.
 
-Under the exact-value target-wise encoding of Section~\ref{sec:encoding}, every
-folding call completes after one folding step. An allowance of one is therefore
-sufficient at every point of the search, the set of folded rules reachable at
-allowance \(T+1\) coincides with the set reachable at allowance \(T\), and each
-restart repeats its predecessor. Two consequences hold for every target under
-this encoding.
-
-\begin{enumerate}
-  \item A target that receives an accepted theory receives it inside the first
-  allowance. Raising \code{folding_steps} leaves the emitted delta, the trace,
-  and the runtime unchanged.
-  \item A target that receives no accepted theory produces \(M\) copies of one
-  search attempt. Trace length and runtime are affine in \(M\), and the outcome
-  is \code{completed_no_solution} at every \(M\).
-\end{enumerate}
-
-The property that limits each folding call to one step belongs to the encoding,
-so the statement holds for both learning modes, for both \code{asm_intro}
-options, and for all fixtures encoded this way.
-
-\support
-H6a measured the second consequence on the H0 roots under
-\code{baseline_cautious} at \(M\in\{1,2,5,10\}\), where
-\(\operatorname{lines}(M)=51+498M\) and \(N_{\mathrm{asm}}(M)=9M\) hold exactly
-at all four ceilings, and where control \code{c} is invariant in \(M\).
-
-Generality rests on an audit of the Prolog traces already recorded for this
-investigation, performed by
-\path{docs/experiments/qualitative/M13-C3-binary-collider-and/band_replay_audit.py}.
-No new learner runs were required. The audit covers every target-wise trace
-whose effective options include \code{folding_mode(nd)}. That is 49 cells: the
-45 cells of the two fixtures described here, together with four earlier
-diamond-fixture runs retained as infrastructure provenance and used only as
-evidence about engine behaviour. The 49 cells span the four nd configurations
-of Section~\ref{sec:configs} and the three H6a \code{folding_steps} variants,
-brave and cautious learning, \code{relto} and \code{sechk}, and
-\(n\in\{30,50,60,90\}\).
-
-\begin{center}
-\small
-\begin{tabularx}{\textwidth}{Xr}
-\toprule
-Audited property of the recorded nd traces & Count \\
-\midrule
-Target-wise traces with effective \code{folding_mode(nd)} & 49 \\
-Atom lists offered to a folding call containing more than one atom & 0 \\
-Folding calls that spent more than one folding token & 0 \\
-Traces printing the token-exhaustion message & 0 \\
-\code{solved} cells that raised the token allowance & 0 of 30 \\
-\code{completed_no_solution} cells that raised the allowance & 14 of 19 \\
-Cells whose search attempts are all identical after normalisation &
-14 of 14 \\
-\bottomrule
-\end{tabularx}
-\end{center}
-
-The five \code{completed_no_solution} cells that raised no allowance are the
-\code{folding_steps(1)} configurations, for which \(M\) permits no restart.
-Attempt identity was checked by dividing each trace at its
-\code{* Increasing folding tokens to:} lines and comparing the resulting
-attempts after normalising the three quantities that legitimately change
-between them: generated assumption indices, internal Prolog variable numbers,
-and the printed token counter. For \code{baseline_cautious} target \code{a} at
-\(M=10\), the trace of 5031 lines divides into a 51-line preamble, ten attempts
-of 497 lines each, the nine restart announcements, and the closing
-\code{* No solution found!} line. All ten attempts are identical under that
-normalisation. Target \code{b} gives ten identical attempts of 506 lines.
-
-The restart count multiplies whatever one attempt costs. Under
-\code{nd_cautious_sechk}, which differs from \code{baseline_cautious} only in
-\code{asm_intro(sechk)}, the H0 roots also perform ten identical attempts, of
-1367 lines each for target \code{a} and 1376 lines each for target \code{b},
-with runtimes of \(167.6\)\,s and \(172.9\)\,s. H7b records the same sequence
-of restarts from \code{tokens(2)} to \code{tokens(10)} on those cells and
-reports the resulting cost divergence. Across all 14 cells that raised the
-allowance, the size of one attempt ranges from 497 to 9747 lines, and attempt
-identity holds in every one of them.
-
-For the first consequence, every accepted theory recorded in this investigation
-was accepted inside the first token allowance. All 30 solved nd cells therefore
-carry the deltas reported in H0, H3, H4, H4b, H7a, and H7b at
-\code{folding_steps(1)} as well.
-
-\explanation
-The folding-token counter bounds folding steps inside a single folding call.
-One step replaces one atom of the body being folded by the head of a matching
-rule, and the call completes as soon as the list of atoms to be folded is
-empty.
-
-Under the exact-value encoding both sides of that step carry a single atom. The
-rules offered to folding are rote rules over row identifiers, written in the
-trace as \code{ert: a(A) <- [A=1]}, and each background rule has the form
-\code{b_val_1(A) :- A=1}. Folding the single row-identifier equality of a rote
-rule against such a background rule leaves nothing further to fold, so the call
-completes after one step. Every recorded nd trace shows the corresponding pair
-of lines, here at allowance \(T=2\):
+The mechanism is legible in two consecutive trace lines. The folding predicate
+prints the tokens remaining before each step, and prints \code{DONE} once no
+atom is left to be folded:
 
 \begin{lstlisting}
  2: folding [A=1] with b_val_1(_7934): b_val_1(A) <- [A=1]
  1: DONE
 \end{lstlisting}
 
-The step is printed at the current allowance and completion is printed one
-below it, leaving \(T-1\) tokens unspent. The engine reaches its
-token-exhaustion diagnostic only when the counter is zero while atoms remain to
-be folded, and that combination arises in no recorded trace.
+Completion at \(1\) after a step begun at \(2\) records one token spent out of
+two available. The shape of the encoded input is what forces this. A rote rule
+offered to folding carries one row-identifier equality in its body,
+\code{a(A) <- [A=1]}, and the background rule used to fold it carries the same
+single equality, \code{b_val_1(A) :- A=1}. The step consumes that equality and
+contributes no further atom to be folded, so the call completes having spent one
+token whatever the allowance was.
 
-Because the reachable folded rules are the same at every allowance, a restarted
-search repeats its predecessor. The counter that names new assumptions is
-global and continues across restarts, so the same assumption-introduction
-events reappear under higher indices. That is the source of
-\(N_{\mathrm{asm}}(M)=9M\) in H6a.
+This is a property of the encoding, so it holds across targets, fixtures, and
+learner options. Auditing every nd trace recorded in this investigation
+(49 target-wise cells, brave and cautious learning, \code{relto} and
+\code{sechk}, \(n\in\{30,50,60,90\}\)) shows every folding call spending exactly
+one token, every list of atoms offered to folding holding exactly one atom, and
+no occurrence of the engine's token-exhaustion diagnostic.
 
-\boundary
-The condition under which the ceiling repeats a search is the exact-value
-encoding. Background knowledge containing a rule whose body has more than one
-atom would leave atoms to be folded after the first step, and a higher
-allowance would then admit folded bodies that a lower allowance cannot reach.
-The finding therefore concerns \code{folding_steps} together with this
-encoding.
+Because folding behaves identically at every allowance, a restart reproduces its
+predecessor exactly. H6a shows this on the H0 roots, where trace length follows
+\(51+498M\) at all of \(M\in\{1,2,5,10\}\) and the control child \code{c}
+is unchanged. The \(M=10\) trace for target \code{a} is a 51-line preamble
+followed by ten attempts of 497 lines each, and those ten attempts are identical
+once generated assumption indices, Prolog variable numbers, and the printed token
+counter are normalised. The same identity holds in all fourteen recorded traces
+that raised the allowance, where one attempt ranges from 497 to 9747 lines, so
+the repetition is indifferent to what a single attempt costs.
 
-The audit establishes the one-step property for the runs performed here. A
-proof about the folding predicate for arbitrary background knowledge was not
-attempted.
+The other half of the dichotomy is equally uniform. All 30 solved nd cells
+finished inside \code{tokens(1)}, so \code{folding_steps(1)} would have produced
+every accepted theory reported in this document.
 
-Trace length is exactly affine in \(M\) on the H0 roots. Runtime is affine to
-within measurement variation: per-attempt runtime for target \code{a} lies
-between \(6.56\) and \(7.00\)\,s, giving an \(M=10\) to \(M=1\) runtime ratio
-of \(10.54\).
+\beyond
+The finding is conditional on the encoding, which raises the question of when a
+budget above one is operative at all. A second token is required exactly when a
+folding step leaves atoms still to be folded. In \code{fold_nd_wtc/7} that
+arises when the rule used for folding carries body atoms beyond the atom being
+folded, because the unmatched remainder is appended to the atoms still to be
+folded. The exact-value encoding supplies only rules of the form
+\code{b_val_1(A) :- A=1}, which carry no such remainder.
 
-The root outcome \code{completed_no_solution} under cautious learning records
-the absence of a cautiously acceptable covering theory, as established in H4.
-Finding 4 concerns the cost of reaching that outcome.
+The conjecture is therefore that \code{folding_steps(2)} and
+\code{folding_steps(3)} become operative, in the sense that they change which
+theories the learner can reach, as soon as the background knowledge contains
+rules whose bodies conjoin more than one atom. A probe would hold the causal
+fixture, the frozen sample, and the learner options fixed, extend the background
+knowledge with defined predicates of that shape, and compare \(M=1,2,3\). Two
+observables would decide it. The diagnostic
+\code{0: FAIL - No more folding tokens left}, absent from every run recorded
+here, should appear at \(M=1\). Folded bodies accepted at \(M=2\) or \(M=3\)
+should be unreachable at \(M=1\), which would make the ceiling a genuine bound
+on folding depth for the first time.
 
-\record{docs/experiments/qualitative/M13-C3-binary-collider-and/h6_folding_and_n_ablation.md}
+Which defined predicates to add is a design decision that has not been taken. It
+governs whether such a probe measures folding depth alone or also enlarges the
+hypothesis space available to the learner, and the two readings would support
+different conclusions.
 
 \subsection{Finding 5: cautious-nd trace size grows with grounded sample size}
 
