@@ -90,14 +90,15 @@ Deterministic Causal Fixtures\\[0.35em]
 \begin{center}
 \fbox{\begin{minipage}{0.93\textwidth}
 \textbf{Status and purpose.}
-This is a supervisor-facing working document. It introduces the causal
-fixture, learner input, terminology, configurations, and experimental sequence
-before stating any cross-cutting findings. The controlled probes labelled
-H0--H7b are complete and analysed. The labels are internal shorthand only, and
-each probe is described in the text by its scientific question and design.
-No cross-cutting conclusions are asserted in the body of the probe sequence.
-The Findings and Implications sections at the end are working drafts for
-discussion with Fabrizio.
+The parts to read are the six findings, the four implications, and the conclusion. 
+Everything before them is reference
+material supporting those findings, and it reads as a chronological account of
+what I tested and why: the causal fixtures, the learner input and encoding, the
+terminology, the configurations, and then the controlled probes. Those probes
+are labelled H0--H7b as internal shorthand, each is described in the text by its
+question and design, and all of them are complete and analysed. They state no
+cross-cutting conclusions, which are collected in the findings instead. I will
+look at the Causal ABA code and paper closely this weekend.
 \end{minipage}}
 \end{center}
 
@@ -110,17 +111,31 @@ The graph, mechanisms, population distribution, finite sample,
 learner-visible encoding, learned ABA framework, and evaluator-only reference
 are kept separate throughout.
 
-The experimental sequence is recorded under labels H0--H7b for reference.
-It begins with a baseline comparison of the published Greedy and
+The supporting evidence is a sequence of controlled probes recorded under the
+labels H0--H7b. It begins with a baseline comparison of the published Greedy and
 non-deterministic configurations across all targets on one frozen table
 (H0). Later probes each introduce one controlled question: finite-sample
 support (H1), an irrelevant trailing variable (H2), background-knowledge
 order with a leading distractor (H3), brave versus cautious learning
 (H4--H5), folding-token budget and grounded sample size (H6), and the
-\code{relto} versus \code{sechk} assumption-introduction options (H7).
-This document records what each probe was intended to reveal, its principal
-signal, and the procedural explanation supported by the generated deltas and
-Prolog traces.
+\code{relto} versus \code{sechk} assumption-introduction options (H7). For each
+probe the document records what it was intended to reveal, its principal signal,
+and the procedural explanation supported by the generated deltas and Prolog
+traces.
+
+Six findings are drawn from that evidence. A completed Greedy solution
+enumerates the distinct positive value patterns, so every measured predictor
+present on a positive row is retained. Nd folding latches onto the first
+background-knowledge predictor. Brave nd accepts theories for targets that have
+no mechanism, and cautious nd refuses them. The folding-token ceiling repeats one
+search attempt under the exact-value encoding. The search is fixed by the
+sample's distinct value patterns, and multiplicity affects only runtime cost.
+The \code{sechk} option confines a brave solution to one variable and makes a
+cautious search longer. Four design implications follow, covering the folding
+strategy, the entailment mode, the table representation, and the folding-token
+ceiling. The conclusion records cautious nd folding with \code{relto} assumption
+introduction as the working default configuration, and identifies inspection of
+the existing Causal ABA implementation as the next step.
 \end{abstract}
 
 \tableofcontents
@@ -2568,8 +2583,9 @@ once richer background predicates make larger allowances operative.
 
 \section{Conclusion}
 
-The working recommendation from this investigation is to treat cautious nd learningwith relto assumptions introduction as the default configuration for accepting target-wise theories under
-the exact-value encoding studied here. Nd folding avoids the all-predictor
+The working recommendation from this investigation is to treat cautious nd
+learning with \code{relto} assumption introduction as the default configuration
+for accepting target-wise theories under the exact-value encoding studied here. Nd folding avoids the all-predictor
 retention that Finding~1 attributes to Greedy. Cautious entailment blocks the
 brave root solutions recorded under H0 and H4 and collected as Finding~3. 
 Together they give the configuration already used as \code{baseline_cautious},
