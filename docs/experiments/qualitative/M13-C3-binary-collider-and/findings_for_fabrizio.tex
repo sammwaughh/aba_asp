@@ -113,7 +113,7 @@ The experimental sequence is recorded under labels H0--H7b for reference.
 It begins with a baseline comparison of the published Greedy and
 non-deterministic configurations across all targets on one frozen table
 (H0), then introduces one controlled question at a time: finite-sample
-support (H1); an irrelevant trailing covariate (H2); background-knowledge
+support (H1); an irrelevant trailing variable (H2); background-knowledge
 order with a leading distractor (H3); brave versus cautious learning
 (H4--H5); folding-token budget and grounded sample size (H6); and the
 \code{relto} versus \code{sechk} assumption-introduction options (H7).
@@ -803,18 +803,18 @@ What do the Greedy and nd bundles learn for each target on the principal AND
 collider? &
 Principal fixture, frozen \(n=30\) seed~42; \code{aamas2025} and
 \code{ecai2024}; targets \code{a},\code{b},\code{c} &
-Exit status, deltas, and traces by target and arm. \\
+Exit status, deltas, and traces by target and configuration. \\
 \Hprobe{1} &
 How does omitting the rare \((0,0,0)\) atom affect AAMAS root learning? &
 Nested seed-42 prefix \(n=25\) versus \(n=30\); AAMAS; same stream &
 Root deltas and the presence or absence of opposite-label witness rows. \\
 \Hprobe{2} &
-What does Greedy do with an irrelevant trailing covariate on the child? &
+What does Greedy do with an irrelevant trailing variable on the child? &
 Principal AND collider plus isolated \(D\); AAMAS; target \code{c} &
 Whether \code{d} appears in the learned bodies relative to the \(D\)-free
 evaluator rule. \\
 \Hprobe{3} &
-What does nd learning do when an isolated covariate is first in BK? &
+What does nd learning do when an isolated variable is first in BK? &
 BD AND collider with BK-leading isolated \(A\); order \([a,b,d]\); ECAI
 primary on target \code{c} &
 First fold, retained BK literals, and the final child theory. \\
@@ -870,7 +870,7 @@ emit when each of \code{a}, \code{b}, and \code{c} is the learning target?
 
 \comparison
 The fixture, table, encoding, and target-specific examples were held fixed.
-The two arms differ as full configuration bundles: \code{aamas2025} uses brave
+The two configurations differ as full bundles: \code{aamas2025} uses brave
 learning with Greedy / \code{mgr} / BK folding and \code{relto};
 \code{ecai2024} uses brave learning with nd / \code{any} / \code{all} folding
 and \code{relto}. The contrast is therefore bundle-level.
@@ -882,7 +882,7 @@ and \code{relto}. The contrast is therefore bundle-level.
   >{\raggedright\arraybackslash}p{0.10\textwidth}
   >{\raggedright\arraybackslash}p{0.22\textwidth}X}
 \toprule
-Arm & Target & Outcome & Emphasised result \\
+Configuration & Target & Outcome & Emphasised result \\
 \midrule
 AAMAS & \code{c} & \code{solved} &
 Assumption-free rule
@@ -892,7 +892,7 @@ AAMAS & \code{a},\code{b} & \code{completed_no_solution} &
 Both-zero co-occurrence candidates cover opposite-label rows; contrary repair
 dead-ends under \code{relto}. \\
 ECAI & \code{c} & \code{solved} &
-First-BK under-fold to \code{a_val_1}, repaired by an assumption attacked when
+First fold uses BK-leading \code{a_val_1}, repaired by an assumption attacked when
 \code{b_val_0}. \\
 ECAI & \code{a},\code{b} & \code{solved} &
 Brave per-row assumption construction on the ambiguous predictor cell;
@@ -934,7 +934,7 @@ contrary(alpha_1(A),c_alpha_1(A)) :- assumption(alpha_1(A)).
 The ECAI theory is sample-adequate under brave checking: \(c\) is derived when
 \(a=1\), unless the assumption is attacked when \(b=0\). Across the target rule
 and the contrary it cites both parents of \(C\). Its ABA shape is nevertheless
-different from the AAMAS conjunction: the first fold latched onto the leading
+different from the AAMAS conjunction: the first fold used the leading
 BK predictor, and the second parent enters only through contrary learning.
 
 \subsubsection*{Root targets \code{a} and \code{b}}
@@ -1014,7 +1014,7 @@ positive example for target \code{a}. Its joint values are
 Any Horn rule that uses only those predictors therefore treats the two rows
 alike. It would derive \code{a} at both identifiers, or at neither.
 
-The emitted \(\alpha_2/\alpha_3\) nest works because assumptions are
+The emitted \(\alpha_2/\alpha_3\) fragment works because assumptions are
 grounded per row identifier. At a fixed row \(i\), the relevant instances are
 \(\alpha_2(i)\) and \(\alpha_3(i)\), with contraries
 \(\mathtt{c\_alpha\_2}(i)\) and \(\mathtt{c\_alpha\_3}(i)\). The local rules
@@ -1080,7 +1080,7 @@ covering. It does not record recovery of a deterministic rule for \(A\).
 H0 is the establishing bundle contrast on one complete-support table. Procedural
 \code{solved} covers both the AAMAS mechanism-string match for \code{c} and the
 ECAI assumption-rich theories for \code{c} and the roots. Attribution of the
-arm difference is to the full AAMAS versus ECAI option bundle.
+configuration difference is to the full AAMAS versus ECAI option bundle.
 
 \record{docs/experiments/qualitative/M13-C3-binary-collider-and/learning_analysis.md}
 
@@ -1144,7 +1144,7 @@ H1 is a nested-prefix support ablation under fixed AAMAS settings.
 
 \record{docs/experiments/qualitative/M13-C3-binary-collider-and/h1_support_ablation.md}
 
-\subsection{H2: trailing isolated covariate under Greedy}
+\subsection{H2: trailing isolated variable under Greedy}
 
 \question
 On the principal AND collider extended by an independent isolated root \(D\),
@@ -1192,7 +1192,7 @@ primary signal is the balanced \(n=30\) distractor split on target \code{c}.
 
 \record{docs/experiments/qualitative/M13-C3-binary-collider-and/h2_irrelevant_covariate.md}
 
-\subsection{H3: BK-leading isolated covariate under nd}
+\subsection{H3: BK-leading isolated variable under nd}
 
 \question
 On a BD AND collider with an isolated root placed first in BK order, does ECAI
@@ -1231,12 +1231,15 @@ contrary(alpha_1(A),c_alpha_1(A)) :- assumption(alpha_1(A)).
 contrary(alpha_2(A),c_alpha_2(A)) :- assumption(alpha_2(A)).
 contrary(alpha_3(A),c_alpha_3(A)) :- assumption(alpha_3(A)).
 \end{lstlisting}
-The two ordinary target rules are gated only on the isolated variable \(A\).
-Mechanism parents enter through the contrary layer: \(\mathtt{c\_alpha\_1}\)
-and \(\mathtt{c\_alpha\_2}\) cite \(b\) and \(d\), with a further nested
-assumption \(\alpha_3\) under the \(a{=}1\) branch. The theory is therefore
-organised around \(A\), with \(B\) and \(D\) used to repair that scaffolding.
-It does not match the evaluator BD AND \code{c(A) :- b_val_1(A), d_val_1(A).}.
+The two ordinary target rules are conditioned only on value literals of the
+isolated variable \(A\) (together with assumptions \(\alpha_1\) and
+\(\alpha_2\)). Mechanism parents enter through contrary rules:
+\(\mathtt{c\_alpha\_1}\) and \(\mathtt{c\_alpha\_2}\) cite \(b\) and \(d\),
+and under the \(a{=}1\) branch one contrary rule of \(\alpha_1\) contains a
+further assumption \(\alpha_3\). The theory is therefore organised around
+\(A\), with \(B\) and \(D\) used to repair over-general \(A\)-conditioned
+target rules. It does not match the evaluator BD AND
+\code{c(A) :- b_val_1(A), d_val_1(A).}.
 
 On the same sample, AAMAS also solves \code{c} while retaining \code{a}:
 \begin{lstlisting}
@@ -1249,68 +1252,75 @@ Under nd folding with \code{any} selection, the first admissible BK predicate
 becomes the first generalising fold. Here that predicate is an \code{a}-value
 literal, because \code{a} leads the serialised BK. The unary fold
 over-generalises, so the learner introduces \(\alpha_1\) (then \(\alpha_2\))
-and learns contraries around those \(A\)-gated rules. Later folds place \(b\)
-and \(d\) in \(\mathtt{c\_alpha\_1}\) and \(\mathtt{c\_alpha\_2}\), but the
-ordinary target rules keep the initial \(a\)-gates. The AAMAS contrast reaches
-distractor retention by a different route: greedy maximal co-occurrence keeps
-every matching literal, including leading \code{a}, and splits the AND across
-the two values of \(A\).
+and learns contraries for those \(A\)-conditioned target rules. Later folds
+place \(b\) and \(d\) in \(\mathtt{c\_alpha\_1}\) and \(\mathtt{c\_alpha\_2}\),
+but the ordinary target rules keep the initial \(a\)-value literals. The AAMAS
+contrast reaches distractor retention by a different route: greedy maximal
+co-occurrence keeps every matching literal, including leading \code{a}, and
+splits the AND across the two values of \(A\).
 
 In both cases the child is solved, and in both cases the isolated leading
 variable is retained. The failure mode is distractor inclusion driven by BK
 order, not failure to solve \code{c}.
 
-\paragraph{Contrary-structure divergence under the two \(A\) gates.}
-The ECAI delta is asymmetric under the two leading-\(a\) gates. That
-asymmetry is part of the H3 theory and deserves a separate reading.
+\paragraph{Contrary-structure divergence under the two \(A\)-conditioned
+target rules.}
+The ECAI delta is asymmetric under the two ordinary target rules conditioned
+on \(a{=}1\) and \(a{=}0\). That asymmetry is part of the H3 theory and
+deserves a separate reading.
 
 Under \(a{=}1\) (\(\alpha_1\)), the contrary of \(\alpha_1\) is
-\emph{nested}:
+\emph{assumption-bearing}: one contrary rule contains a further assumption
+\(\alpha_3\):
 \begin{lstlisting}
 c_alpha_1(A) :- b_val_0(A).
 c_alpha_1(A) :- alpha_3(A), b_val_1(A).
 c_alpha_3(A) :- alpha_1(A), a_val_1(A).
 \end{lstlisting}
 Under \(a{=}0\) (\(\alpha_2\)), the contrary of \(\alpha_2\) is
-\emph{flat} and cites the mechanism parents directly:
+\emph{ordinary}: every contrary rule uses only BK literals, citing the
+mechanism parents directly:
 \begin{lstlisting}
 c_alpha_2(A) :- d_val_0(A).
 c_alpha_2(A) :- b_val_0(A).
 \end{lstlisting}
-So one gate is repaired by a further assumption \(\alpha_3\), while the other
-is repaired by ordinary \(b\)/\(d\) literals alone.
+So the \(a{=}1\) side is repaired by a further assumption \(\alpha_3\), while
+the \(a{=}0\) side is repaired by ordinary \(b\)/\(d\) literals alone.
 
 The divergence is a search-order effect under nd folding with \code{any}
 selection, \(b\)-before-\(d\) BK order after leading \code{a}, cover-and-repair,
 and \code{asm_intro(relto)}. It is not a difference in the underlying mechanism
 of \(C\), and it is not caused by the brave/cautious learning-mode choice ---
-the same \(\alpha_1\)-nested / \(\alpha_2\)-flat skeleton appears under both
-H3 brave and H4b cautious. Concretely:
+the same assumption-bearing \(\alpha_1\) contrary and ordinary \(\alpha_2\)
+contrary appear under both H3 brave and H4b cautious. Concretely:
 
 \begin{enumerate}
   \item Contrary repair for \(\mathtt{c\_alpha\_1}\) occurs first, because the
   first positive example has \(a{=}1\).
-  \item Under that gate, the first contrary seed has \((b,d)=(0,1)\), so search
-  commits to \code{b_val_0}. The remaining contrary residuals have
-  \((b,d)=(1,0)\).
+  \item While repairing that contrary, the first contrary seed has
+  \((b,d)=(0,1)\), so search commits to \code{b_val_0}. The remaining contrary
+  residuals have \((b,d)=(1,0)\).
   \item Folding those residuals with \code{b_val_1} over-generalises. Instead
-  of backtracking to a flat cover \(\{\code{b_val_0},\code{d_val_0}\}\),
-  cover-and-repair introduces \(\alpha_3\) on the \code{b_val_1} body.
+  of backtracking to an ordinary cover
+  \(\{\code{b_val_0},\code{d_val_0}\}\), cover-and-repair introduces
+  \(\alpha_3\) on the \code{b_val_1} body.
   \item When search later repairs \(\mathtt{c\_alpha\_2}\) under \(a{=}0\), a
   fold that would reuse \code{b_val_1} meets the already declared
   \(\alpha_3\) under \code{relto} and is rejected. Search then falls through
-  to \code{d_val_0} and \code{b_val_0}, yielding the flat contrary.
+  to \code{d_val_0} and \code{b_val_0}, yielding the ordinary BK-only
+  contrary.
 \end{enumerate}
 
-Thus the nested \(\alpha_1\) side and the flat \(\alpha_2\) side are two
-stages of one sequential repair path. The second gate inherits the assumption
-minted while repairing the first.
+Thus the assumption-bearing \(\alpha_1\) contrary and the ordinary
+\(\alpha_2\) contrary are two stages of one sequential repair path. The
+\(a{=}0\) side inherits the assumption minted while repairing the \(a{=}1\)
+side.
 
 \boundary
 H3 is a controlled fixture intervention. The primary signal is ECAI first-fold
 retention of BK-leading isolated \(A\) on target \code{c}. The
-\(\alpha_1\)-nested versus \(\alpha_2\)-flat contrary split is a secondary
-procedural feature of that same theory.
+assumption-bearing versus ordinary contrary split under \(\alpha_1\) and
+\(\alpha_2\) is a secondary procedural feature of that same theory.
 
 \record{docs/experiments/qualitative/M13-C3-binary-collider-and/h3_bk_leading_distractor.md}
 
@@ -1342,7 +1352,7 @@ Target & \code{ecai2024} & \code{baseline_cautious} \\
 \midrule
 \(a\) & \code{solved} & \code{completed_no_solution} \\
 \(b\) & \code{solved} & \code{completed_no_solution} \\
-\(c\) & \code{solved} & \code{solved}, byte-identical delta \\
+\(c\) & \code{solved} & \code{solved}, identical delta \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -1371,14 +1381,15 @@ Under \code{ecai2024} the proposal is accepted; under
  found: alpha_2/1 ... KO, cannot introduce an assumption for [b_val_0(A)]
 \end{lstlisting}
 
-Under \code{ecai2024}, that OK closes the both-zero nest from H0 and the
+Under \code{ecai2024}, that OK completes the both-zero assumption–contrary
+fragment from H0 and the
 learner writes a solution. Under \code{baseline_cautious}, the KO is followed
 by further failed folds, exhaustion of \code{folding_steps(10)}, and
 \code{completed_no_solution} with no emitted delta. Target \code{b} exhibits
 the same divergence with the roles of \(A\) and \(B\) swapped.
 
 Under \code{baseline_cautious}, control target \code{c} remains
-\code{solved}. Its delta is byte-identical to the locked \code{ecai2024}
+\code{solved}. Its delta is identical to the locked \code{ecai2024}
 delta for \code{c}:
 \begin{lstlisting}
 c(A) :- alpha_1(A), a_val_1(A).
@@ -1391,23 +1402,24 @@ for the child on this table, while rejecting the residual \(\alpha_2\) reuse
 for the roots.
 
 \explanation
-Under both configurations the search builds toward the same both-zero nest:
+Under both configurations the search builds toward the same both-zero
+assumption–contrary fragment:
 \begin{lstlisting}
 a(A) :- alpha_2(A), b_val_0(A).
 c_alpha_2(A) :- alpha_3(A), c_val_0(A).
 c_alpha_3(A) :- alpha_2(A), b_val_0(A).
 \end{lstlisting}
-Write \(\mathcal{F}_{\mathrm{nest}}\) for a framework containing this nest.
+Write \(\mathcal{F}_{\mathrm{bz}}\) for a framework containing this fragment.
 The decisive conflict is observational. Row~9 contributes
 \(a(9)\in\Epos\) with joint values \((A,B,C)=(1,0,0)\). Row~26 contributes
 \(a(26)\in\Eneg\) with joint values \((0,0,0)\). Relative to BK the two rows
 are indistinguishable: both carry \code{b_val_0} and \code{c_val_0}. No Horn
 body over those predictors alone can accept one row and reject the other.
 
-The nest does not separate the rows by BK. It separates them by ground
+The fragment does not separate the rows by BK. It separates them by ground
 assumption membership. At any both-zero row identifier \(i\), the assumptions
-\(\alpha_2(i)\) and \(\alpha_3(i)\) attack each other through the contrary
-layer, so a stable extension can take only one of the two local choices:
+\(\alpha_2(i)\) and \(\alpha_3(i)\) attack each other through their contrary
+rules, so a stable extension can take only one of the two local choices:
 \begin{center}
 \small
 \begin{tabular}{@{}lll@{}}
@@ -1415,10 +1427,10 @@ layer, so a stable extension can take only one of the two local choices:
 Choice at row \(i\) & Acceptance of \(a(i)\) & Derived contrary \\
 \midrule
 \(\alpha_2(i)\in\Delta\), \(\alpha_3(i)\notin\Delta\) &
-\(\mathcal{F}_{\mathrm{nest}}\models_{\Delta}a(i)\) &
+\(\mathcal{F}_{\mathrm{bz}}\models_{\Delta}a(i)\) &
 \(\mathtt{c\_alpha\_3}(i)\) \\
 \(\alpha_2(i)\notin\Delta\), \(\alpha_3(i)\in\Delta\) &
-\(\mathcal{F}_{\mathrm{nest}}\not\models_{\Delta}a(i)\) &
+\(\mathcal{F}_{\mathrm{bz}}\not\models_{\Delta}a(i)\) &
 \(\mathtt{c\_alpha\_2}(i)\) \\
 \bottomrule
 \end{tabular}
@@ -1436,21 +1448,21 @@ examples:
 \forall e\in\Eneg,\ \mathcal{F}'\not\models_{\Delta}e
 \bigr].
 \]
-For \(\mathcal{F}_{\mathrm{nest}}\) such a witness exists. On row~9 it chooses
+For \(\mathcal{F}_{\mathrm{bz}}\) such a witness exists. On row~9 it chooses
 \(\alpha_2(9)\) in and \(\alpha_3(9)\) out, so
 \begin{lstlisting}
 a(9) :- alpha_2(9), b_val_0(9)
 \end{lstlisting}
-yields \(\mathcal{F}_{\mathrm{nest}}\models_{\Delta}a(9)\). On row~26 it
+yields \(\mathcal{F}_{\mathrm{bz}}\models_{\Delta}a(9)\). On row~26 it
 chooses \(\alpha_2(26)\) out and \(\alpha_3(26)\) in, so
-\(\mathcal{F}_{\mathrm{nest}}\not\models_{\Delta}a(26)\). The closing rule
+\(\mathcal{F}_{\mathrm{bz}}\not\models_{\Delta}a(26)\). The closing rule
 \begin{lstlisting}
 c_alpha_3(A) :- alpha_2(A), b_val_0(A).
 \end{lstlisting}
 is part of making those local choices coherent: whenever \(\alpha_2(i)\) is
 accepted, \(\mathtt{c\_alpha\_3}(i)\) is derived and attacks \(\alpha_3(i)\).
 
-Thus \(\mathcal{F}_{\mathrm{nest}}\) passes brave entailment because coverage
+Thus \(\mathcal{F}_{\mathrm{bz}}\) passes brave entailment because coverage
 may depend on different ground assumption choices at different row identifiers
 inside a single witness. The assumption-introduction check that proposes
 re-using \(\alpha_2\) on \code{c_alpha_3(A) <- [b_val_0(A)]} therefore returns
@@ -1467,16 +1479,16 @@ stronger condition
 where \(\mathcal{F}'\models_{\mathrm{caut}}s\) means that \(s\) is accepted
 with respect to every stable extension of \(\mathcal{F}'\).
 
-Apply that test to \(\mathcal{F}_{\mathrm{nest}}\) at row~9. The choice that
+Apply that test to \(\mathcal{F}_{\mathrm{bz}}\) at row~9. The choice that
 covers the positive is \(\alpha_2(9)\in\Delta\). The opposite choice,
 \(\alpha_3(9)\in\Delta\) and \(\alpha_2(9)\notin\Delta\), also belongs to
-\(\operatorname{Stab}(\mathcal{F}_{\mathrm{nest}})\). In any extension
+\(\operatorname{Stab}(\mathcal{F}_{\mathrm{bz}})\). In any extension
 \(\Delta'\) that takes the opposite choice,
-\(\mathcal{F}_{\mathrm{nest}}\not\models_{\Delta'}a(9)\). Therefore
-\(a(9)\) fails \(\mathcal{F}_{\mathrm{nest}}\models_{\mathrm{caut}}a(9)\):
+\(\mathcal{F}_{\mathrm{bz}}\not\models_{\Delta'}a(9)\). Therefore
+\(a(9)\) fails \(\mathcal{F}_{\mathrm{bz}}\models_{\mathrm{caut}}a(9)\):
 it is not a cautious consequence. The brave cover of the positive exists, but
 it is only an existential cover. Cautious entailment requires universal cover,
-and this nest cannot provide it on an underdetermined BK cell.
+and \(\mathcal{F}_{\mathrm{bz}}\) cannot provide it on an underdetermined BK cell.
 
 That is why, under \code{baseline_cautious}, the same proposal returns
 \begin{lstlisting}
@@ -1489,7 +1501,7 @@ Search then exhausts \code{folding_steps(10)} and returns
 In short: \code{ecai2024} succeeds because brave entailment needs only some
 stable extension that assigns opposite \(\alpha_2/\alpha_3\) statuses to
 rows~9 and~26; \code{baseline_cautious} fails because \(a(9)\) is not accepted
-in every stable extension of that same nest, so the residual \(\alpha_2\) reuse
+in every stable extension of \(\mathcal{F}_{\mathrm{bz}}\), so the residual \(\alpha_2\) reuse
 cannot pass the cautious entailment check.
 
 The control on target \code{c} is consistent with these semantics. Its
@@ -1535,11 +1547,11 @@ later Greedy probe H5.
 Object & \code{ecai2024} & \code{baseline_cautious} \\
 \midrule
 Outcome for \code{c} & \code{solved} & \code{solved} \\
-Target gates &
+Ordinary target rules &
 \(\alpha_1,a{=}1\) / \(\alpha_2,a{=}0\) &
 same \\
 \(\mathtt{c\_alpha\_1}\) &
-\(b{=}0\); nest \(\alpha_3,b{=}1\) &
+\(b{=}0\); also \(\alpha_3,b{=}1\) &
 same \\
 \(\mathtt{c\_alpha\_2}\) &
 \(d{=}0\); \(b{=}0\) &
@@ -1553,9 +1565,10 @@ same \\
 
 \observation
 Both configurations solve target \code{c}. Through the introduction of
-\(\alpha_3\), their theories coincide with the H3 skeleton already recorded:
-ordinary target rules gated on leading \(a\), a nested contrary under
-\(a{=}1\), and a flat \(b\)/\(d\) contrary under \(a{=}0\). Exactly one
+\(\alpha_3\), their theories coincide with the H3 theory already recorded:
+ordinary target rules conditioned on leading \(a\), an assumption-bearing
+contrary under \(a{=}1\), and an ordinary \(b\)/\(d\) contrary under
+\(a{=}0\). Exactly one
 closing rule differs. Under \code{ecai2024}:
 \begin{lstlisting}
 c_alpha_3(A) :- alpha_1(A), a_val_1(A).
@@ -1583,7 +1596,7 @@ re-use \(\alpha_3\) on \code{b_val_1}, and then accepts an ordinary
  found: alpha_3/1 ... KO, cannot introduce an assumption for [b_val_1(A)]
  folding result: c_alpha_3(A) <- [d_val_1(A)]
 \end{lstlisting}
-The full \code{baseline_cautious} delta is therefore the shared H3 skeleton
+The full \code{baseline_cautious} delta is therefore the shared H3 theory
 with that single close replaced:
 \begin{lstlisting}
 c(A) :- alpha_1(A), a_val_1(A).
@@ -1606,8 +1619,9 @@ The shared prefix is the H3 theory under leading \(a\). As recorded in H3,
 that prefix is produced by nd folding with \code{any} selection,
 \(b\)-before-\(d\) BK order, cover-and-repair, and \code{asm_intro(relto)}.
 It is reproduced under both learning modes through \(\alpha_3\) introduction.
-The \(\alpha_1\)-nested versus \(\alpha_2\)-flat contrary split is therefore
-already present before the learning-mode contrast takes effect.
+The assumption-bearing versus ordinary contrary split under \(\alpha_1\) and
+\(\alpha_2\) is therefore already present before the learning-mode contrast
+takes effect.
 
 The learning-mode contrast is confined to the attack on \(\alpha_3\). Under
 \code{ecai2024}, the learner closes that attack by residual reuse of
@@ -1616,7 +1630,7 @@ The learning-mode contrast is confined to the attack on \(\alpha_3\). Under
 c_alpha_3(A) :- alpha_1(A), a_val_1(A).
 \end{lstlisting}
 This clause couples the contrary of \(\alpha_3\) to the same assumption that
-gates the ordinary target rule under \(a{=}1\). Brave entailment asks only for
+appears in the ordinary target rule under \(a{=}1\). Brave entailment asks only for
 some witnessing stable extension of the candidate framework that covers
 \(\Epos\) and excludes \(\Eneg\). That residual reuse passes the brave
 assumption-introduction check, so \code{ecai2024} accepts it and never folds a
@@ -1641,8 +1655,9 @@ Relative to H4, the same learning-mode change therefore has the same local
 effect---rejection of a residual assumption reuse---but a different global
 outcome. On the H0 roots, no accepted covering theory remained within
 \code{folding_steps(10)}. On this H3 child cell, an ordinary parent literal
-closes the nest, while the leading-\(a\) gates and the asymmetric contrary
-skeleton from H3 remain in place.
+closes the contrary of \(\alpha_3\), while the ordinary target rules
+conditioned on leading \(a\) and the asymmetric contrary structure from H3
+remain in place.
 
 \boundary
 H4b compares \code{ecai2024} and \code{baseline_cautious} on the locked H3
@@ -1674,7 +1689,7 @@ experimental preset for this contrast; it is not a published AAMAS method.
 
 \observation
 On all eighteen pairs, \code{greedy_cautious} matches \code{aamas2025} on
-every outcome, and every solved delta is byte-identical. The only systematic
+every outcome, and every solved delta is identical. The only systematic
 difference is runtime: cautious runs take approximately \(1.6\)--\(2.3\) times
 as long as the corresponding brave runs (mean ratio about \(1.84\)), while
 remaining below one second.
@@ -1737,7 +1752,7 @@ remain in an accepted delta.
 
 Target \(b\) mirrors these figures. Control \code{c} solves at every \(M\)
 inside \code{tokens(1)}: 134-line trace, about \(1.3\)\,s, and a
-byte-identical delta across all four ceilings.
+identical delta across all four ceilings.
 
 \observation
 For roots \code{a} and \code{b} the outcome is
@@ -1826,7 +1841,7 @@ still grow.
 
 Target \(b\) mirrors these figures. Every root run prints a single restart
 to \code{tokens(2)}. Control \code{c} solves at every \(n\) with a
-byte-identical delta; its trace grows only from 134 to 200 to 266 lines
+identical delta; its trace grows only from 134 to 200 to 266 lines
 (about \(1.3\)--\(3.0\)\,s).
 
 All four H0 population atoms are already present at \(n=30\). Their
@@ -1879,138 +1894,173 @@ fixed. No \(n\times M\) interaction was run.
 \subsection{H7: change assumption introduction from \code{relto} to
 \code{sechk}}
 
+H7 holds the nd folding bundle fixed and changes only
+\code{asm_intro}. H7a uses brave learning; H7b uses cautious learning.
+The two probes therefore isolate the same control-flow fork under the two
+entailment modes already contrasted in H4/H4b.
+
 \subsubsection{H7a: brave nd}
 
 \question
-H7a asked whether the learned rules and trace path change when the
-assumption-introduction option is changed inside the brave nd bundle. It also
-asked whether any difference follows a consistent relationship to serialized
-BK order and causal role.
+Under brave nd folding on the locked H0 and H3 \(n=30\) tables, how does
+changing only \code{asm_intro(relto)} to \code{asm_intro(sechk)} change the
+accepted deltas and the assumption-repair path?
 
 \comparison
-Within each pair, H0 or H3 fixture, \(n=30\) sample, target, examples, BK,
-brave semantics, nd folding, \code{any} selection, \code{all} space,
-folding ceiling, and other settings were fixed. The locked
-\code{ecai2024}/\code{relto} collection was compared with experimental
-\code{nd_brave_sechk}/\code{sechk}. There were seven target-wise pairs.
-
-The target roles must be kept explicit:
-
-\begin{center}
-\begin{tabularx}{\textwidth}{
-  >{\raggedright\arraybackslash}p{0.17\textwidth}
-  >{\raggedright\arraybackslash}p{0.28\textwidth}X}
-\toprule
-Cell & Causal role & Evaluative use \\
-\midrule
-H0/H3 \(c\) & deterministic child & desirable mechanism target \\
-H0 \(a\) & parent of \(c\), root as target & root diagnostic \\
-H3 \(b\) & parent of \(c\), root as target & role-peer of H0 \(a\) \\
-H3 \(a\) & isolated root & leading-distractor diagnostic \\
-H0 \(b\), H3 \(d\) & other parent roots & supporting mirrors \\
-\bottomrule
-\end{tabularx}
-\end{center}
+Within each pair, the fixture, frozen seed-42 sample, target, examples, BK,
+\code{learning_mode(brave)}, nd folding, \code{folding_selection(any)},
+\code{folding_space(all)}, \code{folding_steps(10)}, and \code{check_ic} were
+held fixed. The locked configuration \code{ecai2024} uses
+\code{asm_intro(relto)}. The experimental configuration
+\code{nd_brave_sechk} matches it except for \code{asm_intro(sechk)}; it is
+not a published ECAI method. Seven target-wise pairs were compared: H0
+targets \code{a}, \code{b}, \code{c} and H3 targets \code{a}, \code{b},
+\code{c}, \code{d}. Child \code{c} is the desirable deterministic mechanism
+target on each fixture; the other targets are stochastic roots (on H3,
+\code{a} is the BK-leading isolated variable).
 
 \observation
-Both arms solve all seven cells, but every paired \code{delta.aba} differs:
+Both configurations solve all seven cells, and every paired
+\code{delta.aba} is distinct. Across all seven \code{sechk} deltas, the
+only observed BK predictor that appears is the \emph{first} predictor in that
+target's BK order; later predictors are absent. The matched \code{relto}
+deltas cite that first predictor and also later BK predictors in the contrary
+layer:
 
 \begin{center}
 \small
 \begin{tabularx}{\textwidth}{
   >{\raggedright\arraybackslash}p{0.10\textwidth}
   >{\raggedright\arraybackslash}p{0.14\textwidth}
-  >{\raggedright\arraybackslash}p{0.20\textwidth}
-  >{\raggedright\arraybackslash}p{0.19\textwidth}X}
+  >{\raggedright\arraybackslash}p{0.28\textwidth}
+  >{\raggedright\arraybackslash}X}
 \toprule
-Cell & BK order & Outcome & \code{sechk} variables & Additional
-\code{relto} variables \\
+Cell & BK order & Predictors in \code{sechk} delta &
+Extra predictors in \code{relto} delta \\
 \midrule
-H0 \(a\) & \(b,c\) & solved / solved & \(b\) & \(c\) \\
-H0 \(b\) & \(a,c\) & solved / solved & \(a\) & \(c\) \\
-H0 \(c\) & \(a,b\) & solved / solved & \(a\) & \(b\) \\
-H3 \(a\) & \(b,c,d\) & solved / solved & \(b\) & \(c,d\) \\
-H3 \(b\) & \(a,c,d\) & solved / solved & \(a\) & \(c,d\) \\
-H3 \(c\) & \(a,b,d\) & solved / solved & \(a\) & \(b,d\) \\
-H3 \(d\) & \(a,b,c\) & solved / solved & \(a\) & \(b,c\) \\
+H0 \(a\) & \(b,c\) & \(b\) & \(c\) \\
+H0 \(b\) & \(a,c\) & \(a\) & \(c\) \\
+H0 \(c\) & \(a,b\) & \(a\) & \(b\) \\
+H3 \(a\) & \(b,c,d\) & \(b\) & \(c,d\) \\
+H3 \(b\) & \(a,c,d\) & \(a\) & \(c,d\) \\
+H3 \(c\) & \(a,b,d\) & \(a\) & \(b,d\) \\
+H3 \(d\) & \(a,b,c\) & \(a\) & \(b,c\) \\
 \bottomrule
 \end{tabularx}
 \end{center}
 
-For H0 child \(c\):
+For H0 child \code{c}:
 
 \begin{lstlisting}
-% relto
+% ecai2024 / relto
 c(A) :- alpha_1(A), a_val_1(A).
 c_alpha_1(A) :- b_val_0(A).
 
-% sechk
+% nd_brave_sechk / sechk
 c(A) :- alpha_1(A), a_val_1(A).
 c_alpha_1(A) :- alpha_2(A), a_val_1(A).
 c_alpha_2(A) :- alpha_1(A), a_val_1(A).
 \end{lstlisting}
 
-Both theories use the first \(a\)-predicate as the outer gate.
-\code{relto} later reaches mechanism parent \(b\), whereas \code{sechk}
-closes an assumption chain around \(a\). On H3 child \(c\),
-\code{relto} reaches \(b,d\), while \code{sechk} uses only the first,
-isolated variable \(a\).
+Both theories share the ordinary target rule
+\code{c(A) :- alpha_1(A), a_val_1(A)}, so the target is derived only when
+\(\alpha_1\) is accepted and \code{a_val_1} holds. Under \code{relto}, the
+contrary of \(\alpha_1\) is the ordinary BK literal \code{b_val_0}. Under
+\code{sechk}, the contrary of \(\alpha_1\) itself contains a further
+assumption \(\alpha_2\) whose body again uses only \(a\)-value literals, and
+no \(b\)-predicate appears anywhere in the delta. On H3 child \code{c}, the
+same contrast appears: \code{relto} places parents \(b,d\) in contrary rules,
+while every BK literal in the \code{sechk} delta is an \(a\)-value literal of
+the BK-leading isolated variable.
+
+The H0 and H3 \code{sechk} deltas for target \code{a} are identical, as
+are those for target \code{b}. Those identities follow the shared first BK
+predictor in each target's BK order (\(b\) for target \code{a}; \(a\) for
+target \code{b}), not a shared causal role of those variables across
+fixtures.
 
 \explanation
-After the failed post-fold entailment check, \code{relto} first searches for a
-relative assumption. A KO can return control to folding and admit later BK
-literals. \code{sechk} instead generates a provisional assumption and enters
-\code{gen5}/\code{gen6}. Under brave semantics on these cells, the resulting
-assumption chain closes before the later folds reached by \code{relto}.
+After a folded candidate fails the post-folding entailment check, the two
+options take different repair paths in \code{gen.pl}.
 
-Every H7a \code{sechk} delta therefore cites only its first BK predictor block.
-This is not always variable \(a\): for target \(a\), the first predictor is
-\(b\). Byte-identical H0/H3 \code{sechk} root deltas consequently reflect a
-shared learner template, not a shared causal role.
+Under \code{asm_intro(relto)}, the learner first searches for an existing
+assumption relative to the folded body. The first substantive fork on these
+traces is
+\begin{lstlisting}
+gen2: extended ABA does not entail <E+,E-> - looking for assumption relative to
+\end{lstlisting}
+A failed residual reuse prints
+\code{KO, cannot introduce an assumption for}~\ldots\ and can return control
+to folding, so a later BK literal (for example \code{b_val_0} on H0
+\code{c}) may be tried next. That backtrack is how later predictors enter the
+\code{relto} deltas above.
+
+Under \code{asm_intro(sechk)}, the learner instead mints a provisional
+assumption immediately. The matching fork is
+\begin{lstlisting}
+gen2: generating NEW assumption: alpha_1(A)
+\end{lstlisting}
+Search then continues through \code{gen5}/\code{gen6}. On these brave cells,
+the accepted theory is completed using only value literals of the first BK
+predictor, before the later folds that \code{relto} reaches after residual
+KO. Hence every H7a \code{sechk} delta cites exactly one observed BK
+predictor: the first in that target's BK order.
 
 \boundary
-H7a does not establish that \code{sechk} is worse than \code{relto}, or that
-first-BK closure is universal. It records a bounded brave-nd interaction on
-seven exact input-matched pairs.
+H7a is a single-option ablation of \code{asm_intro} under brave nd on seven
+exact input-matched H0/H3 pairs. Under \code{sechk}, every accepted delta
+uses only the first BK predictor; under \code{relto}, contrary rules also
+cite later BK predictors. The cautious counterpart is H7b.
 
 \record{docs/experiments/qualitative/M13-C3-binary-collider-and/h7a_relto_vs_sechk.md}
 
 \subsubsection{H7b: cautious nd}
 
 \question
-H7b asked whether the H7a \code{relto}/\code{sechk} difference transfers
-unchanged when both arms use cautious rather than brave learning.
+Under cautious nd folding on the locked H0 and H3 \(n=30\) tables, how does
+changing only \code{asm_intro(relto)} to \code{asm_intro(sechk)} change the
+accepted deltas and the assumption-repair path, and do the brave H7a
+\code{sechk} deltas---which cite only the first BK predictor---recur under
+cautious learning?
 
 \comparison
-H0 and H3 fixtures, frozen \(n=30\) tables, targets, examples, BK, nd folding,
-\code{any} selection, \code{all} space, and folding ceiling were fixed.
-Locked \code{baseline_cautious}/\code{relto} was compared with experimental
-\code{nd_cautious_sechk}/\code{sechk}. The comparator was not ECAI: both
-arms used cautious semantics.
-
-Seven targets were run, but the evidence has unequal strength:
+Within each pair, the fixture, frozen seed-42 sample, target, examples, BK,
+\code{learning_mode(cautious)}, nd folding, \code{folding_selection(any)},
+\code{folding_space(all)}, \code{folding_steps(10)},
+\code{post_folding_test_entailment(true)}, and \code{check_ic} were held
+fixed. The locked configuration \code{baseline_cautious} uses
+\code{asm_intro(relto)} (the H4/H4b cautious comparator, not
+\code{ecai2024}). The experimental configuration \code{nd_cautious_sechk}
+matches it except for \code{asm_intro(sechk)}; it is not a published method.
+The same seven target cells as H7a were run. Evidence strength is unequal:
 
 \begin{center}
 \small
 \begin{tabularx}{\textwidth}{
-  >{\raggedright\arraybackslash}p{0.10\textwidth}
-  >{\raggedright\arraybackslash}p{0.19\textwidth}
-  >{\raggedright\arraybackslash}p{0.19\textwidth}X}
+  >{\raggedright\arraybackslash}p{0.12\textwidth}
+  >{\raggedright\arraybackslash}p{0.34\textwidth}X}
 \toprule
-Question & Cell & Outcome pair & Evidential use \\
+Cell & Status under both configurations \\
 \midrule
-Q1 & H0 \(c\) & solved / solved & Comparable deltas and traces. \\
-Q2 & H3 \(c\) & solved / solved & Comparable deltas and traces. \\
-Q3 & H0 \(b\) & no solution / no solution & Comparable failed-search cost. \\
-Q4 & H3 \(b\) & timeout / timeout & Non-comparable: both logs empty. \\
-Q5 & H3 \(a\) & timeout / timeout & Non-comparable: both logs empty. \\
+H0 \(c\), H3 \(c\) &
+both \code{solved}; deltas comparable and distinct \\
+H0 \(b\) &
+both \code{completed_no_solution}; cost comparable \\
+H3 \(a\), H3 \(b\) &
+both timeout at 300\,s with empty stdout; non-comparable \\
 \bottomrule
 \end{tabularx}
 \end{center}
 
+H0 \(a\) and H3 \(d\) likewise end as matched no-solution or timeout cells
+and are not used as lead comparisons.
+
 \observation
-Both cautious policies solve child \(c\) on both tables, but their paired
-deltas differ. For H0 \(c\):
+On both child-\code{c} cells, both configurations solve and the paired
+deltas differ. Unlike brave H7a, the cautious \code{sechk} deltas still cite
+mechanism parents.
+
+For H0 \code{c}:
 
 \begin{lstlisting}
 % baseline_cautious / relto
@@ -2023,52 +2073,82 @@ c_alpha_1(A) :- alpha_2(A), a_val_1(A).
 c_alpha_2(A) :- b_val_1(A).
 \end{lstlisting}
 
-\code{sechk} still inserts a new assumption layer around the first
-\(a\)-predicate, but cautious checking prevents the brave early closure and
-search eventually reaches \(b\).
+Both theories share the ordinary target rule
+\code{c(A) :- alpha_1(A), a_val_1(A)}. Under \code{relto}, the contrary of
+\(\alpha_1\) is the ordinary BK literal \code{b_val_0}. Under \code{sechk},
+the contrary of \(\alpha_1\) contains a further assumption \(\alpha_2\)
+conditioned on \code{a_val_1}, and the contrary of \(\alpha_2\) is
+\code{b_val_1}. So \code{sechk} still uses parent \(b\); it does not omit
+\(b\) as brave \code{sechk} did in H7a. The two policies also close on
+different \(b\)-literals (\code{b_val_0} versus \code{b_val_1}).
 
-For H3 \(c\), both policies retain the isolated-\(a\) gates and cite mechanism
-parents \(b,d\) somewhere in their contrary structures. The
-\code{sechk} theory is thicker:
+For H3 \code{c}, both deltas retain ordinary target rules conditioned on
+BK-leading isolated-\(a\) literals and cite mechanism parents \(b,d\) in
+some contrary rules. The \code{sechk} delta contains more assumptions, and
+its search is longer:
 
 \begin{center}
 \begin{tabularx}{\textwidth}{
-  >{\raggedright\arraybackslash}p{0.25\textwidth}
-  >{\raggedright\arraybackslash}p{0.17\textwidth}
-  >{\raggedright\arraybackslash}p{0.17\textwidth}X}
+  >{\raggedright\arraybackslash}p{0.28\textwidth}
+  >{\raggedright\arraybackslash}p{0.18\textwidth}
+  >{\raggedright\arraybackslash}p{0.16\textwidth}X}
 \toprule
-Arm & Assumptions & Trace lines & Trace character \\
+Configuration & Assumptions in delta & Trace lines & Character \\
 \midrule
-\code{relto} & 3 & 257 & Relative residual KO then a lean path to \(b,d\). \\
-\code{sechk} & 5 & 899 & Deeper nests; many
+\code{baseline_cautious} & 3 & 257 &
+relative residual KO, then contrary rules using \(b,d\) \\
+\code{nd_cautious_sechk} & 5 & 899 &
+more assumption-bearing contrary rules; many
 \code{generating NEW assumption} / \code{gen5} /
-\code{KO, cannot introduce}~\ldots\ cycles. \\
+\code{KO, cannot introduce}~\ldots\ cycles \\
 \bottomrule
 \end{tabularx}
 \end{center}
 
-For H0 root \(b\), neither cautious arm emits a delta. The
-\code{sechk} trace has approximately 13,818 lines, compared with 5,118 for
-\code{relto}, because it makes many more provisional-assumption and
-\code{gen5} attempts. H3 targets \(a\) and \(b\) time out in both arms with
-empty stdout files; those matched timeout labels reveal no trace-level
-similarity.
+For H0 root \code{b}, neither configuration emits a delta. Both increase
+the folding-token allowance up to \(M=10\) and end
+\code{* No solution found!}. The \code{sechk} trace is much longer (about
+13{,}818 lines versus 5{,}118), with far denser provisional-assumption and
+\code{gen5} attempts inside the same allowance
+(\(N_{\mathrm{asm}}=620\) versus \(90\)). This is a failed-search cost
+difference, not a theory difference.
+
+H3 targets \code{a} and \code{b} time out under both configurations with
+empty stdout. Matched timeout labels alone do not show that the searches
+followed the same path.
 
 \explanation
-The same procedural fork as H7a occurs after failed post-fold entailment, but
-cautious semantics changes which provisional repairs survive. Relative reuse
-often receives a cautious KO and can expose another fold. The
-\code{sechk} path first adds a provisional assumption; when cautious checking
-rejects an early closure, further nesting and backtracking can eventually
-reach later \(b\) or \(d\) predicates. Thus H7b retains the H7a
-assumption-policy intervention while demonstrating that its observable effect
-is conditioned by brave versus cautious entailment.
+The first substantive fork is the same as in H7a. After a fold fails
+post-folding entailment,
+\begin{lstlisting}
+relto:  gen2: ... looking for assumption relative to
+sechk:  gen2: generating NEW assumption: alpha_1(A)
+\end{lstlisting}
+Under cautious learning, residual reuses more often receive
+\code{KO, cannot introduce an assumption for}~\ldots\ in \code{gen3}. On the
+\code{relto} path, that KO returns control to folding and can expose a later
+BK literal quickly (as with \code{b_val_0} on H0 \code{c}). On the
+\code{sechk} path, the learner first installs a provisional assumption and
+continues through \code{gen5}/\code{gen6}; when an early closure that uses
+only \(a\)-literals fails cautious checking, further assumption introduction
+and backtracking can still reach later \(b\) or \(d\) predicates. That is why
+cautious \code{sechk} on child \code{c} still places mechanism parents in
+contrary rules, while brave \code{sechk} in H7a completed the delta using
+only the first BK predictor.
+
+The same mint-first path also explains why the H3-\code{c} \code{sechk}
+delta has more assumptions, and why the H0-\code{b} no-solution trace is
+longer: \code{sechk} performs many provisional repairs before later folds are
+tried, inside the same token ceiling.
 
 \boundary
-The child theories remain non-canonical and, on H3, distractor-retaining.
-Mechanism-parent occurrence in a contrary is not mechanism recovery. The
-failed-root comparison concerns cost, and the empty-log H3 timeouts are
-non-comparable.
+H7b is a single-option ablation of \code{asm_intro} under cautious nd, using
+\code{baseline_cautious} as the \code{relto} comparator. Lead evidence is the
+two solved child-\code{c} pairs and the H0-\code{b} cost contrast. Empty-log
+H3 timeouts are non-comparable. Presence of \(b\) or \(d\) in a contrary rule
+is still predictive cover on these tables, not mechanism recovery. The brave
+H7a pattern---\code{sechk} deltas that cite only the first BK
+predictor---does not describe these cautious-\code{c} \code{sechk} deltas.
 
 \record{docs/experiments/qualitative/M13-C3-binary-collider-and/h7b_cautious_relto_vs_sechk.md}
 
