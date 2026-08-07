@@ -145,6 +145,74 @@ relative to the main `n30` distractor-inclusion finding.
 
 ---
 
+## Cross-probe Greedy audit (added 2026-08-07, no new learner runs)
+
+Distractor retention here generalises to a stronger statement about what a
+completed Greedy delta *is*, checked across every recorded `aamas2025` cell (so
+this section is cross-probe, spanning H0–H3, not H2-only). Audit script:
+`docs/experiments/qualitative/M13-C3-binary-collider-and/greedy_pattern_law_audit.py`.
+
+```bash
+python docs/experiments/qualitative/M13-C3-binary-collider-and/greedy_pattern_law_audit.py
+```
+
+Define the **value pattern** of a row as the conjunction of every non-target
+column at that row's value. Output summary:
+
+```text
+cells by outcome: {'completed_no_solution': 12, 'solved': 8, 'skipped': 2}
+
+solved cells: 8
+  delta equals the distinct positive pattern set:   8/8
+  every rule body cites every predictor column:     8/8
+  deltas containing an assumption or contrary line: 0/8
+  positive and negative pattern sets disjoint:      8/8
+
+completed_no_solution cells: 12
+  sharing at least one pattern between labels:      12/12
+```
+
+Facts recorded:
+
+1. **What a solved Greedy delta is.** In all 8 solved cells the rule-body set of
+   `delta.aba` equals the set of distinct positive value patterns computed from
+   that cell's own `input/data.csv`. Every body cites every predictor column, and
+   no solved delta contains an assumption or contrary. Mechanism: rote learning
+   gives one rule per positive row (body = row id), greedy folding with
+   `folding_space(bk)` accumulates every matching BK head, exact-value BK offers
+   exactly one value predicate per column per row, and `mgr` / subsumption delete
+   whole rules only. No transformation deletes a body literal.
+2. **What predicts the solved / no-solution split.** A full-pattern body is
+   satisfied by exactly the rows carrying that pattern, so it covers a negative
+   example iff a negative row repeats a positive row's pattern. Observed: all 8
+   solved cells have disjoint positive/negative pattern sets, all 12
+   `completed_no_solution` cells share ≥1 pattern. 20/20 over cells where the
+   learner ran.
+3. **Skipped cells.** The two `n=2` cells (`collider_and_iso_d` targets `a`, `d`)
+   have `n_negative = 0`, outcome `skipped`, 0.0s runtime and empty stdout. The
+   learner never ran, so they are outside the biconditional above.
+
+Counting consequence, and the base of an untested prediction: the H0 child needs
+1 rule; adding isolated `d` (this record's fixture) gives 2, one per observed `d`
+value. This is the `k=1` case of a `2^k` conjecture for `k` isolated binary
+predictors.
+
+Interpretation carried into Finding 1, marked **tentative and untested**: because
+disjointness of the positive/negative pattern sets is what admits a solution, and
+extra columns can only refine patterns and so reduce sharing, a wide enough table
+should let Greedy return a completed solution for a target the other observed
+variables do not determine, with the delta amounting to the positive rows
+restated. On that reading Greedy is unsuitable for causal recovery under this
+encoding. No run yet exhibits this. At `k=1` the H2 root target `a` still shares
+the pattern `(b=0, c=0, d=1)` across labels (3 positive rows, 2 negative rows).
+Do not turn either conjecture into a probe until Samuel approves one.
+
+This audit supports Finding 1 of `findings_for_fabrizio.tex`. The 22 audited
+cells include 4 from the earlier positive-stochastic diamond fixture, used here
+as evidence about learner behaviour only.
+
+---
+
 ## Cross-links
 
 - Investigation hub: `experiment.md`

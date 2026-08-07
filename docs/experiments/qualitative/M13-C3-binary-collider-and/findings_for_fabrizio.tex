@@ -2060,7 +2060,75 @@ locked H0 and H3 child-\code{c} cells, with \code{baseline_cautious} as the
 
 \section{Findings}
 
-\subsection{Finding 1: Greedy solutions retain all represented BK predictors}
+\subsection{Finding 1: a completed Greedy solution enumerates the distinct
+positive value patterns}
+
+Call the \emph{value pattern} of a row the conjunction listing every non-target
+column at the value that row takes. Under the exact-value encoding, a completed
+Greedy solution is exactly the set of distinct value patterns of the positive
+rows, one rule for each, with no assumptions and no contraries. Every learned
+rule therefore cites every predictor available in the background knowledge,
+including predictors the evaluator knows to be isolated from the target.
+
+The transformations force this result. Rote
+learning creates one rule per positive row whose body is that row's identifier.
+Greedy folding under \code{folding_space(bk)} walks that body and accumulates
+every background head matching the row, and the encoding supplies exactly one
+value predicate per non-target column per row, so the folded body is the row's
+complete value pattern. Greedy folding is deterministic, so the body is a
+function of the row. Selection under \code{folding_selection(mgr)} and
+subsumption then discard whole rules that repeat a pattern, and the
+transformation set available to the learner contains no step that deletes a
+literal from a body, so the surviving rules are the distinct positive patterns
+and nothing smaller.
+
+Checking this against every recorded Greedy cell confirms it. Of the 22 cells,
+which include four from an earlier fixture, the learner ran in 20 and solved 8.
+In all 8, the set of rule bodies in
+\code{delta.aba} equals the set of distinct positive value patterns computed from
+that cell's own \code{data.csv}, every body cites every predictor column, and no
+delta contains an assumption or a contrary.
+
+The same mechanism decides whether a solution exists at all. A rule whose body is
+a full value pattern is satisfied by exactly the rows carrying that pattern, so it
+covers a negative example precisely when some negative row repeats a positive
+row's pattern. Greedy therefore needs no assumption when the positive and negative
+pattern sets are disjoint, and it has no sound rule available when they intersect.
+The recorded outcomes divide on exactly that line. All 8 solved cells have
+disjoint pattern sets. All 12 \code{completed_no_solution} cells share at least
+one pattern between the two labels. The two remaining cells are the \(n=2\)
+tables, which contain no negative example and were skipped before learning.
+
+The consequence for causal reading is that an irrelevant column is retained
+whenever it is observed, and it multiplies the theory. H2 places an isolated
+\(D\) last in background-knowledge order and H3 places an isolated \(A\) first,
+and each solves its child while retaining that variable, so order is immaterial
+here. The H0 child needs the single rule
+\code{c(A) :- a_val_1(A), b_val_1(A).}, which coincides with its evaluator
+mechanism. The H2 fixture attaches an isolated \(D\) to that same child
+mechanism, and its child theory is the two rules recorded under H2, one for each
+observed value of \(D\). The positive rows there carry two distinct value
+patterns where H0's carry one, and the delta reports both.
+
+\beyond
+The counting is what should generalise. With \(k\) isolated binary predictors,
+each observed at both values among the positive rows, the distinct positive
+patterns of a deterministic child multiply by \(2^k\), so the Greedy delta should
+hold \(2^k\) rules while the mechanism it describes stays fixed. H2 is the
+\(k=1\) case, where one rule became two. The size of the learned theory therefore
+tracks the width of the table, and the number of value combinations available to
+be memorised grows exponentially in the columns that the mechanism ignores.
+
+We take this tentatively to make Greedy unsuitable for causal recovery under the
+exact-value encoding. Adding columns refines value patterns, which can only reduce
+the chance that a positive and a negative row share one. Once the number of
+combinations is large relative to the sample size, almost every positive row
+carries a pattern of its own, no negative row repeats it, and the disjointness
+condition above is met for reasons that have nothing to do with the mechanism.
+Greedy would then return a completed solution for a target whose value the other
+observed variables do not determine, and that solution would be the positive rows
+restated as rules. Whether a target receives a theory at all would depend on how
+many irrelevant variables happen to be measured.
 
 \subsection{Finding 2: nd solutions are organised around the first BK predictor}
 
