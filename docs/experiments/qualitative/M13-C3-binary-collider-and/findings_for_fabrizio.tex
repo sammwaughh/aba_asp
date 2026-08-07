@@ -2245,11 +2245,12 @@ too, so the positive examples there fail the check. The two runs diverge at the
 step that closes the mutual attack. The brave run accepts the reuse that produces
 \code{c_alpha_3(A) :- alpha_2(A), b_val_0(A).}, the cautious run rejects it with
 \code{KO, cannot introduce an assumption}, and both H0 roots end as
-\code{completed_no_solution}. Cautious learning is selective rather than silent.
-On the same collections it continues to accept the child target, whose value is a
-function of its predictors, and emits a delta byte-identical to the brave one.
+\code{completed_no_solution}. Cautious learning remains able to accept a theory
+where one is warranted. On the same collections it accepts the child target, whose
+value is a function of its predictors, and emits a delta byte-identical to the
+brave one.
 
-The pattern holds across every run recorded rather than in one cell. Brave nd
+The pattern holds across every run recorded. Brave nd
 reported \code{solved} for all 14 target-wise cells whose target carries rows of
 this kind, spanning three fixtures, both \code{relto} and \code{sechk} assumption
 introduction, and conflicting-row counts from 4 to 48. Cautious nd accepted none
