@@ -95,9 +95,9 @@ fixture, learner input, terminology, configurations, and experimental sequence
 before stating any cross-cutting findings. The controlled probes labelled
 H0--H7b are complete and analysed. The labels are internal shorthand only, and
 each probe is described in the text by its scientific question and design.
-No cross-cutting conclusions are asserted yet. The six Findings headings and
-the Implications heading at the end are intentionally empty placeholders for
-subsequent drafting and review.
+No cross-cutting conclusions are asserted in the body of the probe sequence.
+The Findings and Implications sections at the end are working drafts for
+discussion with Fabrizio.
 \end{minipage}}
 \end{center}
 
@@ -2195,7 +2195,76 @@ an isolated variable and a theory latched onto a parent are indistinguishable by
 outcome, and the difference between them is settled by column order before any
 mechanism variable is examined.
 
-\subsection{Finding 3: brave nd can solve predictor-ambiguous root targets}
+\subsection{Finding 3: brave nd accepts theories for targets that have no
+mechanism, and cautious nd refuses them}
+
+Brave nd reports \code{solved} for targets whose values no function of the
+observed predictors can reproduce. The theory it accepts separates rows carrying
+identical predictor values by giving ground assumptions opposite statuses at those
+rows. Brave acceptance requires one stable extension that covers the sample, and
+such an extension is available whenever the conflicting rows can be assigned
+different assumption statuses. The \code{solved} outcome therefore records that a
+covering was found, and it carries no information about whether the target depends
+on the observed predictors.
+
+H0 target \(a\) is the clearest instance. The learner receives \(b\) and \(c\) as
+predictors, and nine rows of the sample carry \(b{=}0, c{=}0\), of which seven are
+labelled positive and two negative. No function of \(b\) and \(c\) reproduces both
+labels. This is the pattern overlap of Finding 1, and Greedy returns
+\code{completed_no_solution} on this table for that reason. Brave nd returns
+\code{solved}.
+
+The decisive part of the delta is a pair of assumptions whose contraries refer to
+each other:
+
+\begin{lstlisting}
+a(A) :- alpha_2(A), b_val_0(A).
+c_alpha_2(A) :- alpha_3(A), c_val_0(A).
+c_alpha_3(A) :- alpha_2(A), b_val_0(A).
+\end{lstlisting}
+
+In the ASP form the learner checks, an assumption holds when its contrary fails:
+
+\begin{lstlisting}
+alpha_2(A) :- not c_alpha_2(A), b_val_0(A).
+alpha_3(A) :- not c_alpha_3(A), c_val_0(A).
+\end{lstlisting}
+
+At a row where \(b{=}0\) and \(c{=}0\), both contrary rules are live, so
+\(\alpha_2\) holds when \(\alpha_3\) fails and \(\alpha_3\) holds when \(\alpha_2\)
+fails. The two assumptions attack each other at that row, which admits two stable
+states, one placing \(a\) in the extension and one leaving it out. Every literal is
+indexed by the row identifier \(A\), so the choice is made independently at each
+conflicting row, and one extension can derive \(a\) at the seven positive rows and
+leave it underived at the two negative rows despite their identical predictor
+values.
+
+Cautious learning refuses this construction. It requires each example to hold in
+every stable extension, and the opposite assignment at a conflicting row is stable
+too, so the positive examples there fail the check. The two runs diverge at the
+step that closes the mutual attack. The brave run accepts the reuse that produces
+\code{c_alpha_3(A) :- alpha_2(A), b_val_0(A).}, the cautious run rejects it with
+\code{KO, cannot introduce an assumption}, and both H0 roots end as
+\code{completed_no_solution}. Cautious learning is selective rather than silent.
+On the same collections it continues to accept the child target, whose value is a
+function of its predictors, and emits a delta byte-identical to the brave one.
+
+The pattern holds across every run recorded rather than in one cell. Brave nd
+reported \code{solved} for all 14 target-wise cells whose target carries rows of
+this kind, spanning three fixtures, both \code{relto} and \code{sechk} assumption
+introduction, and conflicting-row counts from 4 to 48. Cautious nd accepted none
+of the 10 it attempted, returning \code{completed_no_solution} on the H0 roots and
+reaching \code{timeout} on the wider fixture. Across those runs cautious learning
+withheld a theory for every target with no mechanism over the observed variables
+and left the target that has one unchanged.
+
+This is a failure mode of brave learning under nd. A brave \code{solved} outcome
+cannot be read as evidence that a mechanism over the observed variables exists,
+because the assumption machinery supplies a covering either way, and the
+non-functional root theories of H0 are reported in the same form as the child
+theory that matches its evaluator mechanism. Cautious learning is the setting that
+separates the two cases, and its cost on the present fixtures is that it reached no
+verdict at all on the wider one.
 
 \subsection{Finding 4: the folding-token ceiling repeats one search attempt}
 
@@ -2349,5 +2418,120 @@ decision that has not been taken but is discussed later.
 \subsection{Finding 6: \code{relto} and \code{sechk} produce different assumption-introduction paths}
 
 \section{Implications}
+
+The implications below are design recommendations for subsequent work. They are
+drawn from Findings~1--5 and from the H0--H7b probe evidence.
+
+\subsection{Prefer nd folding over Greedy for mechanism-oriented learning}
+
+Finding~1 shows that, under the exact-value encoding, Greedy retains every
+observed predictor that is present on a positive row. An isolated variable is
+therefore written into the child theory whenever it is measured, and the number
+of emitted rules tracks the number of distinct positive value patterns rather
+than the mechanism.
+
+That same mechanism produces spurious solutions for targets that have no
+deterministic rule from the other variables. Finding~1 shows that Greedy
+returns \code{solved} exactly when no negative row repeats a positive row's
+full BK value pattern, and that each accepted rule is one such positive
+pattern. A pattern lists every non-target column. Adding further binary
+columns therefore makes each pattern more specific: two rows that agreed on
+the previous columns can disagree on a new one and cease to share a pattern.
+As the number of columns grows relative to the sample size, the chance that
+any negative row matches any positive pattern falls. In the limit almost every
+positive row carries a unique pattern, positive and negative pattern sets are
+disjoint for that reason alone, and Greedy accepts one rule per positive row.
+The outcome is \code{solved}, and the delta is the positive examples restated
+as rules, even though the predictors do not determine the target. Spurious
+completion is therefore expected whenever enough irrelevant columns are
+measured relative to \(n\).
+
+Nd folding has a structural advantage for mechanism recovery. A completed nd
+delta need not cite every observed column. Ordinary target rules and contrary
+repair can be confined to a subset of the predictors, so an irrelevant variable
+can remain absent from the theory. Greedy has no such option under this
+encoding: co-presence on a positive row forces inclusion.
+
+The design implication is therefore to prefer nd folding for mechanism recovery.
+Greedy is inappropriate for that goal because it must
+retain every co-present predictor and, as the table widens with irrelevant
+columns, can complete by restating positive rows as rules. Nd is preferable
+because its solutions have the potential to omit irrelevant variables.
+Background-knowledge order still affects which predictors nd cites first.
+
+\subsection{Prefer cautious entailment under nd}
+
+Brave nd can return \code{solved} for stochastic root targets that the
+evaluator reference treats as having no deterministic rule from the other
+observed variables. Under H0 and H4, root \code{a} is solved by a
+construction that separates rows sharing identical BK literals by assigning
+opposite ground assumption statuses in a single witnessing stable extension.
+Finding~3 is the cross-cutting statement of that pattern. Cautious entailment
+rejects that residual reuse on the same tables, and the roots end as
+\code{completed_no_solution}. The design implication is to run nd learning under
+\code{learning_mode(cautious)}.
+
+\subsection{Compress the ABALearn table to distinct value patterns}
+
+Finding~5 shows that the learner's decision sequence is fixed by the set of
+distinct joint value patterns in the sample. Multiplicities of those patterns
+add rote facts, subsumption work, and grounded entailment checks, and they
+leave the emitted theory and the normalised search path unchanged. For
+no-solution roots under cautious nd, that bookkeeping cost grows approximately
+linearly with sample size at fixed folding ceiling.
+
+A natural pipeline therefore separates two uses of the sample. Population-level
+quantities that Causal ABA-style reasoning would consume, such as estimates of
+dependence, independence, and related association structure, are computed from
+the full IID table, where frequencies matter. Once those quantities have been
+extracted, the table passed to target-wise ABALearn should retain one row per
+distinct joint value pattern.
+
+\subsection{Cap the folding-token ceiling}
+
+Finding~4 shows that, under the exact-value encoding used throughout this
+investigation, every folding call spends exactly one token. For targets that
+receive an accepted theory, that theory is already reached under
+\code{tokens(1)}, so raising \code{folding_steps(M)} leaves the delta
+unchanged. For targets that receive no accepted theory, each increment of \(M\)
+replays the same failed attempt, and cost grows linearly with \(M\).
+
+The immediate design implication for the present encoding is therefore to set
+the ceiling at the smallest value that preserves reachability of the theories
+already obtained. On the recorded evidence that value is \(M=1\).
+
+Looking ahead, a bound is still needed when background knowledge admits
+multi-atom fold bodies and a second token can change which theories are
+reachable. A working proposal for discussion is to cap \(M\) at the number of
+background-knowledge predictors available to the target, that is \(V-1\) when
+there are \(V\) observed variables and one is the learning target. That
+proposal assumes a sufficient folding depth for unary and shallow multi-literal
+repairs. Finding~4 establishes the exact-value case, where only \(M=1\)
+affects reachability. The \(V-1\) cap is offered as a concrete default to test
+once richer background predicates make larger allowances operative.
+
+\section{Conclusion}
+
+The working recommendation from this investigation is to treat cautious nd
+learning as the default configuration for accepting target-wise theories under
+the exact-value encoding studied here. Nd folding avoids the all-predictor
+retention that Finding~1 attributes to Greedy. Cautious entailment blocks the
+brave root solutions recorded under H0 and H4 and collected as Finding~3.
+Together they give the configuration already used as \code{baseline_cautious},
+with the folding ceiling and table representation tightened as above.
+
+Two further controls should sit in front of that learner. First, dependence
+and related association structure extracted by Causal ABA-style methods can be
+used to order columns and rows and to derive the background knowledge whose
+first predictor nd will place in the ordinary target rules. Finding~2 makes
+that ordering consequential. Second, after those population-level quantities
+have been read from the full sample, ABALearn should run on the
+support-compressed table and under a folding-token ceiling no larger than
+needed. On the present encoding that ceiling is \(M=1\). Under richer
+background knowledge the working proposal is a cap of \(V-1\).
+
+The next step is to inspect what the existing Causal ABA implementation
+actually computes, and then to design how its intermediate or final outputs can supply ordering,
+background knowledge, and related constraints to target-wise ABALearn.
 
 \end{document}

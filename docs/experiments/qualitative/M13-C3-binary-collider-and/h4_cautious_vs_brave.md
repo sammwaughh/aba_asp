@@ -178,6 +178,91 @@ body. H7b, the cautious nd counterpart, is not started.
 
 ---
 
+## Stable-extension audit of emitted frameworks (added 2026-08-07)
+
+Semantic verification of already-emitted `output/asp.clingo` artefacts with clingo
+5.8.0. **No learner runs.** Cross-probe: covers all 30 solved nd cells, so it spans
+H0/H3 plus the H4/H4b/H6/H7 ablation collections and the earlier diamond. Script:
+`docs/experiments/qualitative/M13-C3-binary-collider-and/brave_witness_audit.py`
+(runtime ~341 s, 30 s clingo timeout per query).
+
+```bash
+python docs/experiments/qualitative/M13-C3-binary-collider-and/brave_witness_audit.py
+```
+
+Method: `asp.clingo` holds the learned framework plus one integrity constraint per
+example. The script separates the two, counts stable extensions of the framework
+alone and with the example constraints, and locates rows where the target holds in
+some extension and fails in another (brave minus cautious consequences). These are
+compared against **ambiguous rows**: rows sharing a full predictor pattern with a
+row of the opposite label.
+
+Exemplar, H0 `collider_and/ecai2024/n30/target-a` (predictors `b,c`):
+
+| quantity | value |
+| --- | --- |
+| rows with `b=0,c=0` | 9 (positive 8,9,13,14,18,24,25; negative 26,30) |
+| undetermined rows | exactly those 9; other 21 settled |
+| framework extensions | 512 = 2^9 |
+| extensions surviving the 30 example constraints | 1 |
+
+Mechanism: `c_alpha_2(A) :- alpha_3(A), c_val_0(A).` with
+`c_alpha_3(A) :- alpha_2(A), b_val_0(A).` makes `alpha_2` and `alpha_3` attack each
+other at any row with `b=0` and `c=0`. All literals are indexed by row identifier
+`A`, so the mutual attack is independent per row and each ambiguous row contributes
+one free binary choice. Target `b`: 6 ambiguous rows, 64 = 2^6, 1 witness. Target
+`c`: 0 ambiguous rows, 1 extension, brave/cautious deltas byte-identical.
+
+Cycle-closing reuse `c_alpha_3(A) <- [alpha_2(A),b_val_0(A)]`: brave trace records
+1 acceptance, cautious trace records 0 and returns `completed_no_solution`.
+
+Mode separation over every ambiguous target recorded:
+
+```text
+brave nd    (ecai2024, nd_brave_sechk):     14/14 solved, ambiguity 4..48 rows,
+                                            3 fixtures, relto and sechk
+cautious nd (baseline_cautious, sechk):     0/10 solved
+                                            4 completed_no_solution (collider_and)
+                                            6 timeout (bd_and_lead_a)
+```
+
+Aggregate over the 30 solved nd cells:
+
+```text
+undetermined rows == ambiguous rows: 15/30
+extensions == 2^(ambiguous rows):    15/19 counted
+exactly one extension survives:      19/19 counted
+```
+
+Composition of the 15 matches: 12 cautious cells (both counts zero, so satisfied
+trivially) plus the 3 H0 `collider_and/ecai2024` cells under brave `relto`
+(ambiguity 9, 6, 0). The substantive confirmations are those 3. All 7 brave `sechk`
+cells fail the match, as do the 4 `bd_and_lead_a` and 4 `diamond` brave `relto`
+cells.
+
+**Limits found, recorded against overclaiming.** The undetermined/ambiguous
+correspondence is *not* general. Under brave `sechk` the framework leaves the
+target undetermined at all 30 rows, since its contrary chains are grounded on
+assumptions rather than observed values. A target that *is* a function of its
+predictors can still receive many extensions: H3 child 2^14 under `relto`, H0 child
+2^24 under brave `sechk`. So per-row assumption freedom is not confined to
+ambiguous rows. 11 cells could not be counted within the timeout (`-` in output).
+
+Interpretation carried into Finding 3, marked **tentative**: the brave outcome
+carries no information about whether the target is a function of its predictors,
+since per-row assumption freedom is always available. Supported by 14/14. **No
+purpose-built ambiguity-controlled fixture has been run.** Do not treat one as
+approved.
+
+Presentation decision (Samuel, 2026-08-07): Finding 3 states this as a **failure
+mode of brave nd** with cautious nd as the setting that avoids it. The extension
+counts above stay in this record as evidence and are deliberately **not** carried
+into the finding, which cites the per-row assumption freedom, the cautious refusal,
+the child control, and the 14/14 vs 0/10 separation instead. Do not reintroduce
+extension counts or witness ratios into the finding text.
+
+---
+
 ## Cross-links
 
 - Investigation hub: `experiment.md`
