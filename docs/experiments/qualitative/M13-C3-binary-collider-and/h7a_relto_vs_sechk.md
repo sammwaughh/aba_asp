@@ -110,6 +110,36 @@ contrast to `relto` theories that more often cite later BK variables after
 `KO`. H7b analyses the cautious-nd counterpart separately; this H7a statement
 remains bounded to brave nd.
 
+### 4. Whole-delta variable audit (added 2026-08-07)
+
+Item 1 above was re-checked as a count over the **entire** `delta.aba`, so the
+count includes ordinary target rules, contrary rules, and `assumption(...)` /
+`contrary(...)` declarations rather than target rules alone. Distinct observed
+variables were taken as the distinct `X` in every `X_val_*` literal in the
+file, and BK order was read from `% Predictor block:` comments in
+`input/bk.aba`.
+
+| Arm | Cells | Distinct observed variables per delta | First BK predictor cited |
+|-----|------:|--------------------------------------|--------------------------|
+| `ecai2024` (relto) | 7/7 solved | 2 of 2 available (H0), 3 of 3 (H3) | 7/7 |
+| `nd_brave_sechk` | 7/7 solved | **exactly 1** in all seven | 7/7 |
+
+Per-cell (`BK order → variables in whole delta`):
+
+```
+collider_and  ecai2024        a: b,c   b: a,c   c: a,b
+collider_and  nd_brave_sechk  a: b     b: a     c: a
+bd_and_lead_a ecai2024        a: b,c,d b: a,c,d c: a,b,d d: a,b,c
+bd_and_lead_a nd_brave_sechk  a: b     b: a     c: a     d: a
+```
+
+Consequence recorded for write-up use: a brave `sechk` delta is confined to
+one variable, so on the collider child (mechanism `A ∧ B`) the accepted theory
+has no literal naming parent `b` anywhere, including its contrary layer. Under
+`relto` the same target rule appears and `c_alpha_1(A) :- b_val_0(A).` brings
+`b` in. This is the H7a fact used in Finding 6 of
+`findings_for_fabrizio.tex`, alongside the Finding 2 latch.
+
 ---
 
 ## Setup
