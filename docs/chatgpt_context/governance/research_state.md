@@ -6,12 +6,11 @@ updated as milestones change. Does not duplicate `repo_map.md`, `execution_guide
 
 ## Current goal
 
-Learn causal relationships from data in an **argumentative** form by combining **ABA Learning**
-and **Causal ABA**. Milestone 2 will determine the exact integration architecture. The broad
-direction is that Causal ABA information or machinery should guide, constrain, prioritise,
-interpret, or otherwise interact with ABA Learning; no particular interface has yet been
-selected. The existing manuscript introduction and project plan predate this milestone-opening
-decision and must not be treated as an approved implementation design.
+Learn causal relationships from data in an **argumentative** form by investigating how
+**ABA Learning** and **argumentative causal discovery** might be combined. The form of that
+integration is deliberately undecided. The existing manuscript introduction and project
+plan predate this milestone-opening decision and must not be treated as an approved
+implementation design.
 
 The current empirical implementation remains a **target-wise ABA Learning** pipeline that
 converts a data table into ABA background predicates and learns a framework for a chosen
@@ -33,10 +32,10 @@ cross-target graph recovery — were not required for closure. They remain possi
 questions, but they are not unfinished Bucket-3 obligations and are not automatically part
 of Milestone 2.
 
-Milestone 2 is **open at the orientation stage**. The immediate work is to read the Causal
-ABA paper and inspect the exact implementation closely, then formulate integration designs
-from verified theory/code facts, and only then implement and test Samuel-approved ideas.
-No M2 integration design, prototype, experiment, or run matrix is yet approved or run. See
+Milestone 2 is **open**. Its current priority is an intimate understanding of the
+argumentative causal discovery paper and ArgCausalDisco code. Some forms of integration
+with ABA Learning will then be tried and tested. No further procedure or architecture is
+fixed by the milestone approach. See
 `docs/research/milestone_plans/milestone2/README.md`.
 
 ## Research questions
@@ -45,10 +44,10 @@ No M2 integration design, prototype, experiment, or run matrix is yet approved o
   and learning strategies can unguided ABA Learning recover mechanism-aligned local rules
   or support recovery of causal structure; what does it recover instead; and which failures
   are strategic versus observationally non-identifiable?
-- **RQ2** — Can Causal ABA-style evidence and graph constraints guide ABA Learning towards
-  rules/frameworks that are more causally meaningful, interpretable, robust or efficient?
-- **RQ3** — How does the resulting causally guided ABA Learning bridge compare with
-  representative causal-discovery methods on controlled canonical examples?
+- **RQ2** — How, if at all, can argumentative causal discovery and ABA Learning be
+  integrated usefully?
+- **RQ3** — How should any integration that is actually developed be understood and
+  evaluated relative to its intended purpose?
 
 Milestone 1 closes the project's current empirical account of **RQ1**. Milestone 2 now
 opens **RQ2**; RQ3 remains later evaluation work.
@@ -156,7 +155,7 @@ expensive cautious profile than `relto` on the tested cells. Canonical source:
 - Result interpretation must distinguish **empirical parent recovery** from
   **causal-argumentative discovery** (stable extensions ↔ compatible DAGs). The former does not
   establish the latter.
-- M2 designs must continue to distinguish a learning-strategy failure from an
+- Any later integration analysis must distinguish a learning-strategy failure from an
   **identifiability/information limitation**. Markov-equivalent or otherwise
   observationally indistinguishable structures cannot be separated merely by changing
   the learner.
@@ -191,14 +190,8 @@ are strategic, representational, data-driven, or informational.
   created.
 - **M1.4** — does not exist.
 
-**Milestone 2 is the active milestone.** Its ordered scope is:
-
-1. read and understand the Causal ABA paper and exact implementation;
-2. formulate proper integration designs from that verified understanding and the closed
-   M1 findings;
-3. implement and test approved designs through bounded experiments.
-
-The first concrete deliverable is a theory/implementation map. The exact Causal ABA code
-location and version must be established: this `aba_asp` checkout does not currently
-contain a verified Russo-style `arr`/`noe`/`indep`, d-separation, stable-extension-as-DAG
-implementation. Primary path: `docs/research/milestone_plans/milestone2/README.md`.
+**Milestone 2 is the active milestone.** The present task is to understand the
+argumentative causal discovery paper and ArgCausalDisco intimately. Possible integrations
+with ABA Learning will then be tried and tested. The milestone does not currently specify
+an architecture, deliverable sequence, experimental method, or number of investigations.
+Primary path: `docs/research/milestone_plans/milestone2/README.md`.

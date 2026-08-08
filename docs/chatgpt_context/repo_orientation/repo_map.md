@@ -383,20 +383,17 @@ Also update `docs/experiments/experiments_summary.md` and
 `docs/research/experiment_register.md`. The wider 22 July dimensions are deferred beyond
 M1; do not create fixtures or cells merely from that historical list.
 
-## Milestone 2 starting point
+## Milestone 2 context
 
-Milestone 2 is open at theory/code orientation. Primary path:
+Milestone 2 is open. Primary path:
 `docs/research/milestone_plans/milestone2/README.md`.
 
-The first task is to read the Causal ABA paper and inspect the exact implementation and
-version. This checkout currently provides the inherited ABALearn engine and the
-project-specific target-wise `causal/` bridge. Repository-wide inspection has not located
-a Russo-style implementation of `arr`/`noe`/`indep`, d-separation/collider-tree rules,
-acyclicity attacks, and stable-extension-to-DAG extraction inside `aba_asp`.
-
-Consequently, the Causal ABA code location is an explicit M2 prerequisite. Do not map
-paper constructs to code until that implementation is available and inspected. Root
-`first-ideas.md` is historical brainstorming, not an approved integration design.
+Its current priority is an intimate understanding of the argumentative causal discovery
+paper and the corresponding ArgCausalDisco code. This checkout provides the inherited
+ABALearn engine and the project-specific target-wise `causal/` bridge; neither should be
+conflated with ArgCausalDisco. Possible integrations will later be tried and tested, but
+their form and sequence are not fixed. Root `first-ideas.md` is historical brainstorming,
+not an approved integration design.
 
 ## Documentation / theory files (`docs/`)
 
@@ -479,9 +476,9 @@ from reviewed records.
   arrow/no-edge assumptions (`arr_xy`, `noe_xy`), independence assumptions, d-separation /
   collider-trees, acyclicity-as-attacks, and the stable-extension ↔ DAG correspondence. These
   objects currently appear in `docs/theory/` (and some words also occur in DGP/test names,
-  where they describe a data-generating graph rather than an ABA encoding). Milestone 2 must
-  locate and inspect the exact Causal ABA codebase and version; do not assume this checkout
-  computes graph-compatible stable extensions.
+  where they describe a data-generating graph rather than an ABA encoding). M2 study of
+  ArgCausalDisco must not assume that this checkout computes graph-compatible stable
+  extensions.
 
 Keep the distinction explicit: **implemented = parent-set recovery via ABA Learning**;
 **not present in the verified `aba_asp` paths = Russo-style Causal ABA representation**.

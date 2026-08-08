@@ -178,10 +178,10 @@ evidence-qualified; no headline-driven framing.
 
 Buckets 1–2 provide non-overlapping insight into the locked categorical target-wise
 regime. Bucket 3 provides the mechanism-by-mechanism and trace-level account consolidated
-in `findings_for_fabrizio.tex`. Milestone 2 is now open. Its first stage is to understand
-the Causal ABA paper and exact implementation before choosing an integration. Any guidance
-must be motivated by diagnosed learner behaviour and explicit information/identifiability
-limits rather than by the fixed M12x regime alone. See
+in `findings_for_fabrizio.tex`. Milestone 2 is now open. Its current priority is to
+understand the argumentative causal discovery paper and ArgCausalDisco intimately.
+Possible integrations with ABA Learning will then be tried and tested, without this
+hand-off fixing their form or sequence. See
 [`../milestone2/README.md`](../milestone2/README.md).
 
 ---

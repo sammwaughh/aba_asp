@@ -6,6 +6,14 @@
 > inline LaTeX, `\cite{key}` is rendered as `[cite: key]` (references not resolved), and the LaTeX
 > schedule table is rendered as a Markdown table with all cell values preserved.
 
+> **Live-status note (8 August 2026):** this chapter is an earlier project-plan draft, not
+> the current Milestone 2 approach. Its bridge architecture, staged milestones, outputs,
+> comparisons, and week allocations are historical proposals. The live M2 approach commits
+> only to intimate study of the argumentative causal discovery paper and ArgCausalDisco
+> code, followed by trying and testing possible integrations with ABA Learning; their form
+> and sequence remain open. See
+> `docs/research/milestone_plans/milestone2/README.md`.
+
 ## Purpose and Strategy
 
 The remaining project investigates how ABA Learning and Causal ABA can be combined to learn causal relationships from data in an argumentative form. The experimentation so far provides a useful starting point: the current `aba_asp/causal` pipeline can learn target-wise ABA rules from controlled synthetic data, and the variables appearing in learnt rule bodies can be compared with known parent sets. However, those experiments only measure a proxy for causality. Learnt rules may recover a direct parent, but they may also recover an ancestor, a correlated proxy, a partial parent set, or no usable rule at all.

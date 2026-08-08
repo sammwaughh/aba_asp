@@ -130,8 +130,9 @@ The closure synthesis consolidates the evidence around:
    or CPDAG recovery;
 4. which failures are strategic, representational, data-driven, or
    identifiability-limited;
-5. which diagnosed limitations motivate Causal ABA-style guidance in Milestone 2.
+5. which diagnosed limitations may be relevant when possible integrations are considered
+   in Milestone 2.
 
 **Final status:** Part 1 closed. Part 2 (M12x) closed. Part 3 (M1.3) closed.
-No Part 4 / M1.4. Milestone 2 is open at paper/code orientation; see
+No Part 4 / M1.4. Milestone 2 is open under its deliberately agnostic approach; see
 [`milestone2/README.md`](milestone2/README.md).

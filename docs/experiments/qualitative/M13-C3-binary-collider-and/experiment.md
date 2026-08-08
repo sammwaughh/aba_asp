@@ -522,6 +522,7 @@ H1–H7b are **run / analysed** and the catalogue is closed:
 
 ## Successor
 
-M1.3 is closed. Milestone 2 begins with Causal ABA paper/code orientation before any
-integration design or experiment is approved. See
+M1.3 is closed. Milestone 2 begins with intimate study of the argumentative causal
+discovery paper and ArgCausalDisco code; the later integration and testing approach remains
+open. See
 `docs/research/milestone_plans/milestone2/README.md`.

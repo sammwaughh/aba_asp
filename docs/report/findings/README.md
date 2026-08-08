@@ -15,4 +15,4 @@ Compile with `pdflatex milestone1_part1_m11_findings.tex` from this directory, o
 2026-07-20); M1.3 Buckets 1–2 retain their locked claims; Bucket 3 H0–H7b are
 complete / analysed and consolidated into six cross-cutting findings. The individual
 H-probes remain bounded evidence records and no separate locked Bucket-3 claim list was
-created. Milestone 2 is now open at Causal ABA paper/code orientation.
+created. Milestone 2 is now open under its deliberately agnostic approach.

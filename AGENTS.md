@@ -55,16 +55,14 @@ standalone claims. There is no M1.4, and closed Milestone-1 experiments must not
 redesigned merely because the project has moved on.
 
 The active milestone is **Milestone 2: Causal ABA and ABA Learning integration**. Its
-current stage is theory and implementation orientation. Read the Causal ABA paper, locate
-and inspect the exact implementation and version, and produce a paper/code capability map
-before proposing integration designs. After Samuel reviews that map, formulate integration
-options; implement and test only an approved option, one bounded investigation at a time.
-Primary path: `docs/research/milestone_plans/milestone2/README.md`.
+current priority is to develop an intimate understanding of the argumentative causal
+discovery paper and the corresponding ArgCausalDisco code. Possible integrations with ABA
+Learning will then be tried and tested. No particular architecture, procedure, experiment
+sequence, or form of integration is fixed in advance. Primary path:
+`docs/research/milestone_plans/milestone2/README.md`.
 
-At milestone opening, no verified Russo-style Causal ABA source implementation has been
-located inside this `aba_asp` checkout. Do not infer code behaviour from the paper, from
-ArgCausalDisco, or from the target-wise `causal/` package. No M2 integration design,
-prototype, experiment, metric, fixture, or run matrix is approved yet.
+ArgCausalDisco is separate from the target-wise `causal/` package in this checkout. Do not
+infer code behaviour from the paper or conflate either implementation with the other.
 
 For future target-wise fixtures, use lowercase learner identifiers `a`, `b`, `c`, ...
 and mathematical display labels (A,B,C,\ldots). Preserve existing `xN` fixtures. Do not
@@ -109,8 +107,9 @@ Key experiment records:
   infrastructure provenance; do not reinterpret them as deterministic claim
   evidence. Approach/closure record:
   `milestone1_part3/milestone1_part3_approach.md`.
-- `docs/research/milestone_plans/milestone2/README.md` — active M2 path:
-  Causal ABA paper/code orientation, then approved integration design, then bounded tests.
+- `docs/research/milestone_plans/milestone2/README.md` — intentionally agnostic active M2
+  approach: understand the paper and ArgCausalDisco closely, then try and test possible
+  integrations.
 
 ## Experiment documentation rule
 

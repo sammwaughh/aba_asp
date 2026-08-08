@@ -74,21 +74,23 @@ open Bucket-3 work.
 ### 4. Close Milestone 1 — **done (2026-08-08)**
 
 The Milestone-1 synthesis answers the organising question at the level supported by the
-completed evidence and records which learner behaviours motivate investigation of Causal
-ABA guidance in Milestone 2.
+completed evidence and records which learner behaviours may be relevant to investigation
+of possible integrations in Milestone 2.
 
 Canonical synthesis:
 `docs/experiments/qualitative/M13-C3-binary-collider-and/findings_for_fabrizio.tex`.
 
 ## Successor
 
-Milestone 2 is open at the paper/code orientation stage. No integration design or M2
-experiment is approved yet. See [`milestone2/README.md`](milestone2/README.md).
+Milestone 2 is open. Its deliberately agnostic approach begins with intimate study of the
+argumentative causal discovery paper and ArgCausalDisco code, after which possible
+integrations with ABA Learning will be tried and tested. See
+[`milestone2/README.md`](milestone2/README.md).
 
 ---
 
 ## One-line discipline
 
 **M12x + Buckets 1–2 locked** → **certified deterministic Bucket-3 probes H0–H7b**
-→ **six-finding Milestone-1 synthesis** → **M2 Causal ABA paper/code orientation**
-→ approved integration design and bounded testing.
+→ **six-finding Milestone-1 synthesis** → **M2 paper/ArgCausalDisco understanding**
+→ possible integrations tried and tested, with the form left open.

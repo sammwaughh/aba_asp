@@ -52,13 +52,13 @@ Experiments are documented under `docs/experiments/`:
   The individual H-probes remain bounded evidence records; there is no separate locked
   Bucket-3 claim list. Closure path:
   `docs/research/milestone_plans/milestone1_high_level_path.md`. There is no M1.4.
-- **Milestone 2 is open.** The current task is to read the Causal ABA paper and inspect
-  the exact Causal ABA implementation closely, then use that verified understanding to
-  formulate integration designs, and finally test Samuel-approved designs through small
-  controlled investigations. No M2 integration design or experiment is approved or run
-  yet. Primary path: `docs/research/milestone_plans/milestone2/README.md`.
-- No Russo-style Causal ABA implementation has yet been verified inside this checkout.
-  The implementation location and version are an explicit M2 Stage-1 prerequisite.
+- **Milestone 2 is open.** Its current priority is an intimate understanding of the
+  argumentative causal discovery paper and ArgCausalDisco code. Possible integrations
+  with ABA Learning will subsequently be tried and tested, without fixing the form or
+  sequence of that work in advance. Primary path:
+  `docs/research/milestone_plans/milestone2/README.md`.
+- ArgCausalDisco is a separate codebase from this checkout's target-wise `causal/` bridge;
+  their behaviour and roles must not be conflated.
 - Future target-wise fixtures use lowercase internal variable identifiers `a`, `b`,
   `c`, ... (displayed mathematically as (A,B,C,\ldots)); existing `xN` fixtures remain
   supported and unchanged. This is a Python-bridge convention and does not modify the

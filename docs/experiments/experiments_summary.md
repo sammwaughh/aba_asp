@@ -43,7 +43,7 @@ Use the same status categories as `experiment_register.md`.
 | M13-C1 | M13 | Causal-role underdetermination under learner-input equivalence | analysed | `M13-C1-causal-role-underdetermination/experiment.md` | `M13_c1_role_equivalence_{ecai2024,aamas2025}.yaml` | `M13_c1_role_equivalence_summary.{md,json}`; 4 cell dirs | Interim Experimentation / Progress (Milestone 1) | 4/4 solved; paired inputs/delta/coverage identical. ECAI exact under \(G_0\), sibling-only under \(G_1\); AAMAS parent-plus-sibling under both. |
 | M13-C2 | M13 | Comparative sensitivity to BK feature-block order | analysed | `M13-C2-bk-feature-order/experiment.md` | `M13_c2_bk_order_{ecai2024,aamas2025}.yaml` | `M13_c2_bk_order_summary.{md,json}`; 20 cell dirs | Interim Experimentation / Progress (Milestone 1) | 20/20 solved. Every tested ECAI order produced a distinct delta within U2/U5/U7; AAMAS delta and coverage invariant per family. U5 swap restored exact ECAI parent recovery; U7 coverage depended on whether \(x_2\) was in the first two blocks. |
 | M13-C3 | M13 | Bucket 3 binary deterministic AND collider | **closed / analysed** | `experiment.md`; `h1`–`h7b` records; `future_probes.*`; `findings_for_fabrizio.tex` | H0–H7b configurations | H0–H7b collections | Milestone 1 closure / report evidence | Six cross-cutting findings consolidate Greedy, nd-order, semantics, folding-budget, multiplicity, and assumption-introduction behaviour; see the synthesis for exact scope and caveats. |
-| M2 | — | Causal ABA and ABA Learning integration | **opened; orientation active** | `docs/research/milestone_plans/milestone2/README.md` | none yet | none yet | Milestone 2 | Read paper and inspect exact Causal ABA implementation first; no integration design or experiment approved. |
+| M2 | — | Causal ABA and ABA Learning integration | **open** | `docs/research/milestone_plans/milestone2/README.md` | none yet | none yet | Milestone 2 | Understand the argumentative causal discovery paper and ArgCausalDisco intimately; then try and test possible integrations without fixing the approach in advance. |
 
 ## Experiment sequence to date and next
 
@@ -179,11 +179,11 @@ Workflow:
 - Missingness, larger graphs, parameter/category variation, and non-discrete data were
   not required for closure and are not automatically M2 work.
 
-## Next action
+## Current direction
 
-**Milestone 2 Stage 1:** read the Causal ABA paper and inspect the exact implementation
-and version. Produce a theory/code capability map before proposing integration designs.
-No M2 experiment has been approved or run.
+Milestone 2 begins with intimate study of the argumentative causal discovery paper and
+ArgCausalDisco code. Possible integrations with ABA Learning will then be tried and tested.
+No more specific process is fixed by the milestone approach.
 
 
 Completed so far in Milestone 1:
@@ -196,4 +196,4 @@ Completed so far in Milestone 1:
 
 6. **M1.3 Bucket 3** — closed after H0–H7b and six-finding synthesis.
 
-Milestone 1 is closed. No M1.4. Milestone 2 is open at paper/code orientation.
+Milestone 1 is closed. No M1.4. Milestone 2 is open.

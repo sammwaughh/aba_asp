@@ -12,10 +12,11 @@ Chronological notes on experiment progress, decisions, and milestones. Detailed 
   implications. No separate locked Bucket-3 claim list was created.
 - **Preserved:** all M1 evidence, configurations, generated outputs, and detailed H-probe
   records remain unchanged unless a later correction is explicitly authorised. No M1.4.
-- **Opened:** Milestone 2, beginning with close reading of the Causal ABA paper and
-  inspection of the exact Causal ABA implementation/version.
-- **Boundary:** no M2 integration design, prototype, or experiment is approved or run.
-  No Russo-style Causal ABA implementation has yet been verified inside this checkout.
+- **Opened:** Milestone 2, beginning with an intimate understanding of the argumentative
+  causal discovery paper and ArgCausalDisco code; possible integrations with ABA Learning
+  will subsequently be tried and tested.
+- **Boundary:** no particular architecture, procedure, deliverable sequence, or
+  experiment portfolio is fixed in advance.
 - **Primary path:** `docs/research/milestone_plans/milestone2/README.md`.
 
 ## 2026-07-31 — Fabrizio review; deterministic-mechanism Bucket 3 focus

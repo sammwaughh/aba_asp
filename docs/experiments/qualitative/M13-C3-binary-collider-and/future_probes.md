@@ -654,4 +654,4 @@ Do not treat predictive rules for roots as mechanism recovery.
 
 - No individual probe is a standalone claim. Six cross-cutting findings are stated with
   their joint evidence and caveats in `findings_for_fabrizio.tex`.
-- M1.3 is closed; the successor is Milestone 2 paper/code orientation.
+- M1.3 is closed; Milestone 2 is open under its deliberately agnostic approach.

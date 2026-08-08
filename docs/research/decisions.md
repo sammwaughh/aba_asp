@@ -2,7 +2,7 @@
 
 Recorded decisions that affect experiment direction. Evidence and interpretation remain in experiment records.
 
-## 2026-08-08 — Close M1.3 and Milestone 1; open Milestone 2 at theory/code orientation
+## 2026-08-08 — Close M1.3 and Milestone 1; open Milestone 2
 
 **Decision:** Milestone 1 is closed. M1.1 and M12x remain closed; M1.3 Bucket 1
 retains four locked claims; Bucket 2 retains two locked claims; Bucket 3 closes after
@@ -15,16 +15,14 @@ are not retroactively labelled as standalone claims. The completed synthesis sta
 cross-cutting findings with their combined evidence, explanations, and caveats. No
 separate locked Bucket-3 claim list was created.
 
-**M2 opening:** Milestone 2 is the active milestone, beginning with a close reading of
-the Causal ABA paper and a repository-grounded inspection of the exact Causal ABA
-implementation and version. Only after that map is reviewed will integration ideas be
-formulated; only Samuel-approved ideas will then be implemented and tested through
-bounded investigations.
+**M2 opening:** Milestone 2 is the active milestone. Its initial priority is an intimate
+understanding of the argumentative causal discovery paper and corresponding
+ArgCausalDisco code. Some forms of integration with ABA Learning will subsequently be
+tried and tested.
 
-**Opening boundary:** no M2 integration design, learning object, prototype, experiment,
-metric, fixture, or run matrix is yet approved or run. No Russo-style Causal ABA
-implementation has been verified inside the current `aba_asp` checkout, so locating the
-code is a Stage-1 prerequisite. Historical `first-ideas.md` is not an approved M2 plan.
+**Opening boundary:** the milestone does not prescribe an integration architecture,
+procedure, deliverable sequence, experiment portfolio, or number/order of investigations.
+Historical `first-ideas.md` is not an approved M2 plan.
 
 **Primary path:** `docs/research/milestone_plans/milestone2/README.md`.
 

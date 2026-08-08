@@ -11,8 +11,8 @@ Scope reminder: what runs today is **target-wise ABA Learning over tabular data*
 learned-rule inspection and, in older grid infrastructure, parent-set diagnostics.
 No Russo-style Causal ABA path
 (`arr_xy`/`noe_xy`/independence/d-separation) has been located or verified in this
-checkout — see [`repo_map.md`](repo_map.md). Milestone 2 must locate and inspect the exact
-Causal ABA implementation before any separate codebase is described.
+checkout — see [`repo_map.md`](repo_map.md). Milestone 2 should study ArgCausalDisco
+separately rather than attributing its behaviour to this checkout.
 
 ## Preconditions
 

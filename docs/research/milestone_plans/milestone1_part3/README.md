@@ -9,8 +9,7 @@
 retains two locked claims from M13-C1/C2; proposed Claim 3 remains parked. Bucket 3
 H0–H7b are complete / analysed (including H4b) and consolidated into six cross-cutting
 findings in `M13-C3-binary-collider-and/findings_for_fabrizio.tex`. No separate locked
-Bucket-3 claim list was created. M12x remains fixed evidence. Milestone 2 is open at
-paper/code orientation.
+Bucket-3 claim list was created. M12x remains fixed evidence. Milestone 2 is open.
 
 Buckets 1–2 answer, with evidence, when and how mechanism-aligned target rules were
 recovered in the locked categorical regime and what was recovered instead. Bucket 3 used
@@ -68,5 +67,6 @@ Pilot M1.2 (10 cells) remains optional provenance only.
 
 **Parent index:** [milestone1-plan.md](../milestone1-plan.md)
 
-**Next:** Milestone 2 Stage 1 — read the Causal ABA paper and inspect the exact
-implementation. See [`../milestone2/README.md`](../milestone2/README.md).
+**Successor:** Milestone 2 — understand the argumentative causal discovery paper and
+ArgCausalDisco intimately, then try and test possible integrations without fixing the
+approach in advance. See [`../milestone2/README.md`](../milestone2/README.md).

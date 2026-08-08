@@ -89,9 +89,9 @@ This is **our** current reading of Fabrizio's specification, not part of the ori
 - Milestone 1 has now completed the modest, controlled investigation of the existing
   target-wise ABA Learning bridge. Its closure synthesis is
   `docs/experiments/qualitative/M13-C3-binary-collider-and/findings_for_fabrizio.tex`.
-- Milestone 2 begins by understanding the Causal ABA paper and exact implementation before
-  choosing how the two directions should be integrated. No integration design is assumed
-  by this working interpretation.
+- Milestone 2 begins by understanding the argumentative causal discovery paper and
+  ArgCausalDisco code intimately. Possible integrations with ABA Learning will then be
+  tried and tested, but no form or sequence is assumed by this working interpretation.
 
 ## Implications for project planning
 

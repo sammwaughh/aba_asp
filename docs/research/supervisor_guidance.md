@@ -3,7 +3,9 @@
 > **Current status (8 August 2026):** this file is a chronological record of supervisor
 > guidance. Historical statements below that M1.3 was active or Milestone 2 had not started
 > remain accurate for their meeting dates. Samuel has now closed M1.3 and Milestone 1 and
-> opened Milestone 2 at Causal ABA paper/code orientation. See
+> opened Milestone 2 under a deliberately agnostic approach: understand the argumentative
+> causal discovery paper and ArgCausalDisco intimately, then try and test possible
+> integrations with ABA Learning. See
 > `docs/research/decisions.md` and
 > `docs/research/milestone_plans/milestone2/README.md`.
 

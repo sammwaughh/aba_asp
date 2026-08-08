@@ -57,10 +57,9 @@ and may be adapted for M2.
 
 ## Current project direction
 
-The project direction remains **Causal ABA guides or interacts with ABA Learning**: causal
-information may constrain, prioritise, interpret, or otherwise structure ABA Learning, but
-the precise integration is deliberately undecided until the Causal ABA implementation is
-understood.
+Milestone 2 investigates how argumentative causal discovery and ABA Learning might be
+integrated. The direction of influence, architecture, and procedure are deliberately
+undecided.
 
 **Milestone 1 is closed** (8 August 2026):
 
@@ -81,32 +80,29 @@ not automatically become M2 experiments. The positive-stochastic diamond remains
 pre-pivot infrastructure provenance, not deterministic Bucket-3 evidence. M12x and M1.3
 remain closed; there is no M1.4.
 
-**Milestone 2 is open at Stage 1.** The ordered scope is:
-
-1. read the Causal ABA paper and inspect the exact implementation and version;
-2. formulate proper integration ideas from verified theory/code facts and M1 evidence;
-3. implement and test only Samuel-approved ideas, one bounded investigation at a time.
-
-No M2 integration architecture, learning object, experiment, metric, fixture, or run matrix
-is approved yet. No verified Russo-style Causal ABA source implementation has been located
-inside this `aba_asp` checkout, so locating the code is an explicit prerequisite. Primary
-path: `docs/research/milestone_plans/milestone2/README.md`.
+**Milestone 2 is open.** Its current priority is an intimate understanding of the
+argumentative causal discovery paper and ArgCausalDisco code. Possible integrations with
+ABA Learning will subsequently be tried and tested. No more specific approach is fixed.
+Primary path: `docs/research/milestone_plans/milestone2/README.md`.
 
 ## Immediate ChatGPT Project task
 
-Help Samuel complete M2 Stage 1 before designing an integration:
+Help Samuel develop a close, repository-grounded understanding of argumentative causal
+discovery:
 
 - read the canonical Causal ABA paper and project theory carefully;
-- locate and inspect the exact Causal ABA code rather than assuming it is present here;
+- inspect the corresponding ArgCausalDisco code rather than assuming its behaviour from
+  the paper;
 - map formal objects to implementation objects, entry points, inputs, solver steps, outputs,
   graph extraction, and limitations;
 - distinguish abstract Causal ABA from ABA-PC and from this repo's `causal/` bridge;
-- identify open questions and implementation facts required before any integration choice;
+- identify open theory/code questions without turning them into a prescribed integration
+  workflow;
 - keep M1.3's six findings available as motivation without treating them as proof that a
   particular integration will work.
 
-Only after Samuel reviews this map should the project formulate integration alternatives.
-ChatGPT must not present its proposed plan as independent research validation.
+The later form of integration and testing remains open. ChatGPT must not present a proposed
+plan as independent research validation.
 
 ## Source priority
 

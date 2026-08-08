@@ -11,9 +11,10 @@ polished report prose.
 > **Project transition (8 August 2026):** Milestone 1, including M1.3, is closed.
 > Bucket 3 H0–H7b are consolidated in
 > `docs/experiments/qualitative/M13-C3-binary-collider-and/findings_for_fabrizio.tex`.
-> Milestone 2 is open at Causal ABA paper/code orientation. The manuscript project-plan
-> chapter predates this transition and now requires a status/schedule revision before final
-> use.
+> Milestone 2 is open. Its approach is deliberately agnostic beyond intimate study of the
+> argumentative causal discovery paper and ArgCausalDisco code, followed by trying and
+> testing possible integrations with ABA Learning. The manuscript project-plan chapter
+> predates this transition and is not the live M2 approach.
 
 ## Current interim report status
 
@@ -21,7 +22,7 @@ polished report prose.
 |---|---|---|---|---|
 | Literature Review | drafted | `docs/report/manuscript/literature_review.md`; `.tex` in `docs/report/manuscript/` | Samuel-authored report draft | Reusable for final report. Theory canon also in `docs/theory/literature_review.tex`. |
 | Background | drafted | `docs/report/manuscript/background.md`; `.tex` in `docs/report/manuscript/` | Samuel-authored report draft | Reusable for final report. Theory canon also in `docs/theory/background.tex`. |
-| Introduction | drafted | `docs/report/manuscript/introduction.md`; `.tex` in `docs/report/manuscript/` | Samuel-authored report draft | States RQ1/RQ2/RQ3; its specific "Causal ABA guides ABA Learning" wording predates M2 orientation and should be revised only after the integration architecture is chosen. |
+| Introduction | drafted | `docs/report/manuscript/introduction.md`; `.tex` in `docs/report/manuscript/` | Samuel-authored report draft | States RQ1/RQ2/RQ3; its specific "Causal ABA guides ABA Learning" wording predates the deliberately agnostic M2 approach. |
 | Experimentation / Progress | drafted | `docs/report/manuscript/experimentation.md`; QI-001/QI-002/QI-004 records under `docs/experiments/` | Samuel-authored draft from experiment records | Covers QL1/QL2/QL3 (= QI-001/QI-002/QI-004). Needs the audit corrections (expected-vs-actual reasoning, conclusions per result). |
 | Project Plan | drafted | `docs/report/manuscript/project_plan.md`; supervisor guidance; experiment interpretations | Samuel-authored draft | Milestones 1–6 and the 14-week schedule. |
 | GenAI / authorship declaration | pending | `docs/report/genai_use_log.md`; Samuel notes | Samuel final declaration | Should remain factual and transparent. |
@@ -192,7 +193,7 @@ Required evidence for drafting / revision:
 
 ### 5. Project Plan
 
-Status: `drafted`; revision required for the closed-M1 / opened-M2 transition
+Status: `historical draft`; not the live M2 approach
 
 Current source:
 
@@ -208,22 +209,19 @@ Drafted milestones (Weeks 1–13, with a Week-11 holiday):
 1. **Milestone 1 — closed.** M1.1 and M12x closed; M1.3 Buckets 1–2 locked;
    Bucket 3 H0–H7b complete / analysed and consolidated into six cross-cutting findings.
    No M1.4. Closure path: `milestone1_high_level_path.md`.
-2. **Milestone 2 — opened.** First read the Causal ABA paper and inspect the exact
-   implementation; then formulate integration designs; then implement and test approved
-   designs through bounded investigations. Primary path:
+2. **Milestone 2 — open.** Understand the argumentative causal discovery paper and
+   ArgCausalDisco intimately; subsequently try and test possible integrations with ABA
+   Learning. The form and sequence remain open. Primary path:
    `docs/research/milestone_plans/milestone2/README.md`.
-3. **Later implementation/evaluation staging** — revise the older Milestone-3 boundary
-   after the first M2 integration design is chosen; do not assume the prior week allocation
-   still describes the live project.
+3. **Later implementation/evaluation staging** — the older milestone and week structure
+   is historical and does not prescribe the live project.
 4. **Milestone 4 (Weeks 7–8)** — scale beyond three-node motifs; set up representative external comparators and a frozen evaluation protocol.
 5. **Milestone 5 (Weeks 9–10)** — evaluation, ablations, and a supervisor-reviewable full draft before the break.
 6. **Milestone 6 (Weeks 12–13)** — supervisor-feedback edits, final polish, and presentation preparation.
 
-The core direction remains "Causal ABA guides or interacts with ABA Learning". The
-project-plan chapter must now record that M1 is closed and M2 is open. It must not imply
-that a particular bridge has already been selected, or that the Causal ABA implementation
-has already been inspected. The schedule should be revised after M2 Stage 1 establishes
-the actual implementation and feasible interfaces.
+The project-plan chapter must record that M1 is closed and M2 is open. It must not imply
+that a particular direction of influence, bridge, sequence, interface, or evaluation plan
+has already been selected. The live approach is the deliberately agnostic M2 document.
 
 Required evidence for drafting / revision:
 

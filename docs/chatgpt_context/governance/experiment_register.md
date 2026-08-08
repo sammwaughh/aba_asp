@@ -39,7 +39,7 @@ The earlier n=100 scaled attempt was cut and is not part of the canonical experi
 | M13-C1 | M13 | Causal-role underdetermination under learner-input equivalence | analysed |
 | M13-C2 | M13 | Comparative sensitivity to BK feature-block order | analysed |
 | M13-C3 | M13 | Bucket 3 binary deterministic AND collider | **closed / analysed**; six cross-cutting findings; no separate locked claim list |
-| M2 | — | Causal ABA and ABA Learning integration | **opened; theory/code orientation active**; no experiment approved |
+| M2 | — | Causal ABA and ABA Learning integration | **open**; approach intentionally provisional |
 
 ## Template
 
@@ -410,15 +410,11 @@ includes the closed Bucket-3 record, active M2 approach, and completed
 
 ### M2 — Causal ABA and ABA Learning integration
 
-- Status: **opened; theory/code orientation active** (2026-08-08). No M2 experiment,
-  integration design, or prototype is approved or run.
+- Status: **open** (2026-08-08); approach intentionally provisional.
 - Primary path: `docs/research/milestone_plans/milestone2/README.md`.
-- Current question: what exactly do the Causal ABA paper and implementation represent,
-  compute, accept as inputs, and emit as graph/argumentation outputs, and which verified
-  objects could coherently interface with ABA Learning?
-- First deliverable: a paper/code capability map with exact source paths and a clear
-  distinction between abstract Causal ABA, ABA-PC, the external implementation, and this
-  repo's target-wise `causal/` bridge.
-- Repository boundary: no Russo-style Causal ABA implementation has yet been verified
-  inside this checkout; locate the exact code and version before code-level conclusions.
-- Next: complete orientation, then let Samuel select integration designs for bounded tests.
+- Current direction: understand the argumentative causal discovery paper and
+  ArgCausalDisco code intimately, then try and test possible integrations with ABA
+  Learning.
+- Boundary: no architecture, deliverable sequence, experiment portfolio, or
+  investigation order is fixed in advance. ArgCausalDisco and this checkout's target-wise
+  `causal/` bridge remain distinct implementations.
