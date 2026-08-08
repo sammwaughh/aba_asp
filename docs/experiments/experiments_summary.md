@@ -39,10 +39,11 @@ Use the same status categories as `experiment_register.md`.
 | M11 | — | m1.1 Parent-position and representation-order control | analysed | `docs/experiments/qualitative/M1.1-parent-position.md` | `causal/configs/experiments/M11_parent_position.yaml`; `M11_parent_position_greedy.yaml` | `M11_parent_position/cells/`; `M11_parent_position_greedy/`; `M11_ablations/` | Interim Experimentation / Progress (Milestone 1) | nd: 8/8 solved; binary σ/π pass; cat3 σ fails (ablation-supported). Stage 7 greedy: binary matches nd; cat3 all supersets; rule-level σ restored under greedy. |
 | M12 | — | m1.2 Published-configuration comparison (pilot) | pilot analysed | `docs/experiments/qualitative/M1.2-config-comparison.md` | `causal/configs/experiments/M12_ecai2024.yaml`; `M12_aamas2025.yaml` | `causal/outputs/aba_learning/grid/M12_{ecai2024,aamas2025}/` | Interim Experimentation / Progress (Milestone 1) | 10-cell pilot analysed (historical). Expanded as M12x (redesign). No M1.4. |
 | M12x | — | m1.2 expanded U1–U7 (ECAI/AAMAS; val-only BK; 18 cells) | closed / analysed | `M1.2-expanded.md` | `M12x_{ecai2024,aamas2025}.yaml` | `M12x_summary.md`; `M12x_cell_reports/` (18) | Interim Experimentation / Progress (Milestone 1) | Fresh 18/18 solved + Stage-3 18/18 (2026-07-20); **closed**; evidence locked for M1.3. |
-| M13 | — | m1.3 causal-recovery capabilities and limits of unguided ABA Learning | in progress | `M1.3-bucket1-claims.md` (locked); `M1.3-bucket2-claims.md` (locked); `M1.3-bucket3-claims.md` (M13-C3 H0 closed; H1–H7b analysed; no claim) | — | M13-C3 **H0 closed**; **H1–H7b run/analysed**. | Interim Experimentation / Progress (Milestone 1) | Bucket 3: H0–H7b analysed; no claim yet. |
+| M13 | — | m1.3 causal-recovery capabilities and limits of unguided ABA Learning | **closed / analysed** | `M1.3-bucket1-claims.md` (locked); `M1.3-bucket2-claims.md` (locked); `M1.3-bucket3-claims.md` (closed) | — | M13-C3 H0–H7b; `findings_for_fabrizio.tex` | Milestone 1 closure / report evidence | Buckets 1–2 retain six locked claims; Bucket 3 closes with six cross-cutting findings and no separate locked claim list. |
 | M13-C1 | M13 | Causal-role underdetermination under learner-input equivalence | analysed | `M13-C1-causal-role-underdetermination/experiment.md` | `M13_c1_role_equivalence_{ecai2024,aamas2025}.yaml` | `M13_c1_role_equivalence_summary.{md,json}`; 4 cell dirs | Interim Experimentation / Progress (Milestone 1) | 4/4 solved; paired inputs/delta/coverage identical. ECAI exact under \(G_0\), sibling-only under \(G_1\); AAMAS parent-plus-sibling under both. |
 | M13-C2 | M13 | Comparative sensitivity to BK feature-block order | analysed | `M13-C2-bk-feature-order/experiment.md` | `M13_c2_bk_order_{ecai2024,aamas2025}.yaml` | `M13_c2_bk_order_summary.{md,json}`; 20 cell dirs | Interim Experimentation / Progress (Milestone 1) | 20/20 solved. Every tested ECAI order produced a distinct delta within U2/U5/U7; AAMAS delta and coverage invariant per family. U5 swap restored exact ECAI parent recovery; U7 coverage depended on whether \(x_2\) was in the first two blocks. |
-| M13-C3 | M13 | Bucket 3 binary deterministic AND collider | **H0 closed**; **H1–H7b analysed** (no claim) | `experiment.md`; `h1`–`h7b` records; `future_probes.*` | H0–H7a as before; H7b `nd_cautious_sechk` vs `baseline_cautious` | H0–H7b collections | Interim Experimentation / Progress (Milestone 1) | H7b lead: cautious relto vs sechk — `c` deltas differ (Q1–Q2); Q4–Q5 non-comparable. No Bucket 3 claim. |
+| M13-C3 | M13 | Bucket 3 binary deterministic AND collider | **closed / analysed** | `experiment.md`; `h1`–`h7b` records; `future_probes.*`; `findings_for_fabrizio.tex` | H0–H7b configurations | H0–H7b collections | Milestone 1 closure / report evidence | Six cross-cutting findings consolidate Greedy, nd-order, semantics, folding-budget, multiplicity, and assumption-introduction behaviour; see the synthesis for exact scope and caveats. |
+| M2 | — | Causal ABA and ABA Learning integration | **opened; orientation active** | `docs/research/milestone_plans/milestone2/README.md` | none yet | none yet | Milestone 2 | Read paper and inspect exact Causal ABA implementation first; no integration design or experiment approved. |
 
 ## Experiment sequence to date and next
 
@@ -76,22 +77,23 @@ Inspection: `docs/experiments/qualitative/M1.2-expanded-cell-inspection.md`
 Matrix: `causal/outputs/aba_learning/grid/M12x_summary.md`  
 Pilot (historical): `docs/experiments/qualitative/M1.2-config-comparison.md`
 
-### Current: Milestone 1 Part 3 — causal-recovery capabilities and limits (M1.3)
+### Closed: Milestone 1 Part 3 — causal-recovery capabilities and limits (M1.3)
 
-Status: **`in progress`** — Bucket 1 **locked**; Bucket 2 **locked / closed** with
-Claims 1–2 from M13-C1/C2; Bucket 3 baseline **M13-C3 H0 closed**; probes
-**H1–H7b run / analysed** (**no claim**; includes H4b). H5 experimental
+Status: **`closed / analysed`** — Bucket 1 **locked**; Bucket 2 **locked / closed** with
+Claims 1–2 from M13-C1/C2; Bucket 3 **H0–H7b run / analysed** (includes H4b).
+H5 experimental
 `greedy_cautious` is **run / analysed** (`h5_greedy_cautious.md`); **H6 is
 `run / analysed`** (`h6_folding_and_n_ablation.md`); **H7a is `run /
 analysed`** (`h7a_relto_vs_sechk.md`); **H7b is `run / analysed`** (`h7b_cautious_relto_vs_sechk.md`).
-Method: `milestone1_part3_approach.md`.
+Method: `milestone1_part3_approach.md`. Cross-cutting closure synthesis:
+`M13-C3-binary-collider-and/findings_for_fabrizio.tex`.
 
 **Primary path:** `docs/research/milestone_plans/milestone1_high_level_path.md`  
 Detail: `docs/research/milestone_plans/milestone1_part3/`  
 Bucket 1 (locked): `docs/experiments/qualitative/M1.3-bucket1-claims.md`  
 Bucket 2 (locked): `docs/experiments/qualitative/M1.3-bucket2-claims.md`
 
-Bucket 3 (M13-C3 **H0 closed**; **H1–H7b analysed**; no claim):
+Bucket 3 (M13-C3 **closed; H0–H7b analysed**; no separate locked claim list):
 `docs/experiments/qualitative/M1.3-bucket3-claims.md`
 Case: `docs/experiments/qualitative/M13-C3-binary-collider-and/experiment.md`
 H0: `.../learning_analysis.md`  
@@ -161,26 +163,27 @@ Experiment records are evidence records, not polished report prose.
 
 Workflow:
 
-1. Cursor records facts, commands, artefacts, and bounded interpretation notes.
+1. The responsible implementation or evidence agent records facts, commands, artefacts,
+   and bounded interpretation notes.
 2. Samuel reviews and corrects the record.
-3. ChatGPT drafts candidate report prose from the reviewed record.
+3. The Orchestrator or a named writing agent drafts candidate report prose from the
+   reviewed record when Samuel requests it.
 4. Samuel verifies, edits, and integrates into the report.
 5. Claims are checked against `docs/report/claims_ledger.md`.
 
-## Current open questions (Bucket 3)
+## Milestone 1 closure boundary
 
-- Whether any further H7 / Bucket 3 work is needed (`future_probes.md`).
-- When (if ever) do H0–H7b observations become claim-worthy after further
-  probes?
-- Missingness, larger graphs, parameter/category variation, and non-discrete
-  data remain deferred.
+- No further H7 / Bucket-3 probe is pending.
+- The six cross-cutting Bucket-3 findings are recorded in `findings_for_fabrizio.tex`;
+  individual H-probes remain bounded evidence rather than standalone claims.
+- Missingness, larger graphs, parameter/category variation, and non-discrete data were
+  not required for closure and are not automatically M2 work.
 
 ## Next action
 
-**Orchestrator / Samuel decide whether any further Bucket 3 work is needed**
-(`future_probes.md`). **H0 is closed**; **H1–H7b are analysed**; **no Bucket 3
-claim**. Do not expand H6 into a full \(n\times\)steps grid without a further
-decision.
+**Milestone 2 Stage 1:** read the Causal ABA paper and inspect the exact implementation
+and version. Produce a theory/code capability map before proposing integration designs.
+No M2 experiment has been approved or run.
 
 
 Completed so far in Milestone 1:
@@ -191,5 +194,6 @@ Completed so far in Milestone 1:
 4. **M1.3 Bucket 1** — locked (4 claims).
 5. **M1.3 Bucket 2** — locked (2 claims; M13-C1/C2).
 
-Remaining: M1.3 Bucket 3 planning/investigation → Milestone 1 synthesis. No M1.4;
-Milestone 2 follows the expanded M1.3.
+6. **M1.3 Bucket 3** — closed after H0–H7b and six-finding synthesis.
+
+Milestone 1 is closed. No M1.4. Milestone 2 is open at paper/code orientation.

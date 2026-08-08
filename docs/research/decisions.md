@@ -2,6 +2,32 @@
 
 Recorded decisions that affect experiment direction. Evidence and interpretation remain in experiment records.
 
+## 2026-08-08 — Close M1.3 and Milestone 1; open Milestone 2 at theory/code orientation
+
+**Decision:** Milestone 1 is closed. M1.1 and M12x remain closed; M1.3 Bucket 1
+retains four locked claims; Bucket 2 retains two locked claims; Bucket 3 closes after
+H0–H7b (including H4b) and the completed synthesis
+`docs/experiments/qualitative/M13-C3-binary-collider-and/findings_for_fabrizio.tex`.
+There is no M1.4.
+
+**Bucket-3 closure form:** the individual H-probes remain bounded evidence records and
+are not retroactively labelled as standalone claims. The completed synthesis states six
+cross-cutting findings with their combined evidence, explanations, and caveats. No
+separate locked Bucket-3 claim list was created.
+
+**M2 opening:** Milestone 2 is the active milestone, beginning with a close reading of
+the Causal ABA paper and a repository-grounded inspection of the exact Causal ABA
+implementation and version. Only after that map is reviewed will integration ideas be
+formulated; only Samuel-approved ideas will then be implemented and tested through
+bounded investigations.
+
+**Opening boundary:** no M2 integration design, learning object, prototype, experiment,
+metric, fixture, or run matrix is yet approved or run. No Russo-style Causal ABA
+implementation has been verified inside the current `aba_asp` checkout, so locating the
+code is a Stage-1 prerequisite. Historical `first-ideas.md` is not an approved M2 plan.
+
+**Primary path:** `docs/research/milestone_plans/milestone2/README.md`.
+
 ## 2026-08-03 — Prepare H4 repository-baseline cautious target-wise infrastructure; defer cautious Greedy to H5
 
 **Decision:** Permit target-wise runs to use either an explicitly selected
@@ -39,8 +65,9 @@ completed AAMAS collections (18 cells); see
 AAMAS-paper method. **H6** (folding_steps + nested-n ablation under
 `baseline_cautious`) is **run / analysed** (`h6_folding_and_n_ablation.md`);
 **H7a** (brave nd `sechk` vs `relto`) is **run / analysed**
-(`h7a_relto_vs_sechk.md`); H7b not
-started; still no Bucket 3 claim.
+(`h7a_relto_vs_sechk.md`); **H7b** is also **run / analysed**
+(`h7b_cautious_relto_vs_sechk.md`). M1.3 later closed on 8 August 2026; see the
+decision above.
 
 ## 2026-08-04 — Approve and run H7a brave nd `asm_intro(sechk)` vs `relto`
 

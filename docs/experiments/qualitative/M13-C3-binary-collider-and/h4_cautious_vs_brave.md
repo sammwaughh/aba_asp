@@ -174,7 +174,8 @@ Key traces: `cells/target-{a,b,c}/output/prolog.stdout`; control
 **H6** (length drivers: `n`, `folding_steps` under fixed cautious) and **H7a**
 (brave nd `asm_intro(sechk)` vs `relto`) were prompted by H4 traces and are now
 **run / analysed** in their own records. They are **not** part of the H4 evidence
-body. H7b, the cautious nd counterpart, is not started.
+body. H7b, the cautious nd counterpart, is also **run / analysed** in
+`h7b_cautious_relto_vs_sechk.md`; it remains separate from H4.
 
 ---
 

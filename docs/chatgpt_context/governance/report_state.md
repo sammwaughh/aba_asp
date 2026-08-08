@@ -4,7 +4,16 @@
 
 This file maps the interim report sections to available evidence, missing evidence, and planned writing steps.
 
-It is a repo-side planning document. It should help Samuel, Cursor, and ChatGPT coordinate report writing without confusing raw artefacts, experiment records, and polished report prose.
+It is a repo-side planning document. It should help Samuel and the active AI agents
+coordinate report writing without confusing raw artefacts, experiment records, and
+polished report prose.
+
+> **Project transition (8 August 2026):** Milestone 1, including M1.3, is closed.
+> Bucket 3 H0–H7b are consolidated in
+> `docs/experiments/qualitative/M13-C3-binary-collider-and/findings_for_fabrizio.tex`.
+> Milestone 2 is open at Causal ABA paper/code orientation. The manuscript project-plan
+> chapter predates this transition and now requires a status/schedule revision before final
+> use.
 
 ## Current interim report status
 
@@ -12,7 +21,7 @@ It is a repo-side planning document. It should help Samuel, Cursor, and ChatGPT 
 |---|---|---|---|---|
 | Literature Review | drafted | `docs/report/manuscript/literature_review.md`; `.tex` in `docs/report/manuscript/` | Samuel-authored report draft | Reusable for final report. Theory canon also in `docs/theory/literature_review.tex`. |
 | Background | drafted | `docs/report/manuscript/background.md`; `.tex` in `docs/report/manuscript/` | Samuel-authored report draft | Reusable for final report. Theory canon also in `docs/theory/background.tex`. |
-| Introduction | drafted | `docs/report/manuscript/introduction.md`; `.tex` in `docs/report/manuscript/` | Samuel-authored report draft | States RQ1/RQ2/RQ3 and the settled "Causal ABA guides ABA Learning" direction. |
+| Introduction | drafted | `docs/report/manuscript/introduction.md`; `.tex` in `docs/report/manuscript/` | Samuel-authored report draft | States RQ1/RQ2/RQ3; its specific "Causal ABA guides ABA Learning" wording predates M2 orientation and should be revised only after the integration architecture is chosen. |
 | Experimentation / Progress | drafted | `docs/report/manuscript/experimentation.md`; QI-001/QI-002/QI-004 records under `docs/experiments/` | Samuel-authored draft from experiment records | Covers QL1/QL2/QL3 (= QI-001/QI-002/QI-004). Needs the audit corrections (expected-vs-actual reasoning, conclusions per result). |
 | Project Plan | drafted | `docs/report/manuscript/project_plan.md`; supervisor guidance; experiment interpretations | Samuel-authored draft | Milestones 1–6 and the 14-week schedule. |
 | GenAI / authorship declaration | pending | `docs/report/genai_use_log.md`; Samuel notes | Samuel final declaration | Should remain factual and transparent. |
@@ -43,7 +52,8 @@ Purpose:
 - introduce the project problem;
 - motivate the interaction between causal discovery and ABA Learning;
 - state the interim-stage focus (RQ1 groundwork);
-- preview contributions/progress and the settled direction (Causal ABA guides ABA Learning).
+- preview contributions/progress and the broad Causal ABA/ABA Learning integration
+  direction without implying that an interface has already been selected.
 
 Use in interim report:
 
@@ -128,16 +138,19 @@ Drafted structure:
    - Bucket 1: four claims locked.
    - Bucket 2: two claims locked from M13-C1 causal-role underdetermination and M13-C2
      BK feature-block-order controls.
-   - These records remain evidence and will not be redone during the new scope.
+   - Bucket 3: H0–H7b complete / analysed and consolidated into six cross-cutting
+     findings in `findings_for_fabrizio.tex`; no separate locked claim list.
+   - Milestone 1 is closed; these records remain evidence and will not be redone merely
+     because M2 begins.
 
-8. **22 July supervisor expansion (planning, not results)**
-   - M1.3 continues through Bucket 3 before Milestone 2;
+8. **22 July supervisor expansion (historical planning context)**
+   - M1.3 continued through Bucket 3 before Milestone 2;
    - planning dimensions: target variation, partial data, larger controlled graphs,
      explicit independence/Markov-equivalence analysis, graph–mechanism validity, and
      strategy-versus-information attribution;
-   - no Bucket 3 claim or experiment matrix approved.
+   - these dimensions were not all required for M1 closure.
 
-9. **31 July Bucket 3 direction (approved method, not results)**
+9. **31 July Bucket 3 direction (completed method)**
    - start with non-degenerate stochastic roots and deterministic non-root mechanisms;
    - state the mechanism-aligned rule reference before ABALearn, certify exact support
      and fixture-specific ordinary faithfulness, then run every target on one frozen
@@ -148,7 +161,7 @@ Drafted structure:
      implementation-behaviour probe; H7b is its cautious-nd counterpart;
    - preserve the positive-stochastic diamond and its target-wise outputs as pre-pivot
      exploratory/infrastructure artefacts, not claim evidence;
-   - wider 22 July dimensions remain deferred rather than cancelled.
+   - wider 22 July dimensions remain possible later questions, not unfinished M1.3 work.
 
 10. **Interim interpretation and limitations**
    - bounded conclusion: parent recovery works in selected idealised cases but is not robust across motifs/encodings/noise;
@@ -169,7 +182,9 @@ Required evidence for drafting / revision:
 - `docs/experiments/qualitative/M13-C2-bk-feature-order/experiment.md`;
 - `docs/research/supervisor_guidance.md` (22 July section; guidance only);
 - `docs/research/supervisor_guidance.md` (31 July section; approved current direction);
-- `docs/experiments/qualitative/M1.3-bucket3-claims.md` (planning record; no new claim);
+- `docs/experiments/qualitative/M1.3-bucket3-claims.md` (closed investigation record);
+- `docs/experiments/qualitative/M13-C3-binary-collider-and/findings_for_fabrizio.tex`
+  (canonical six-finding Milestone-1 closure synthesis);
 - `docs/experiments/qualitative/M13-C3-binary-collider-and/h5_greedy_cautious.md`
   (completed H5 evidence record; not a claim);
 - `docs/report/claims_ledger.md`;
@@ -177,7 +192,7 @@ Required evidence for drafting / revision:
 
 ### 5. Project Plan
 
-Status: `drafted`; revision required as Bucket 3 evidence develops
+Status: `drafted`; revision required for the closed-M1 / opened-M2 transition
 
 Current source:
 
@@ -190,24 +205,25 @@ Explain what will happen after the interim report, following from the QL1/QL2/QL
 
 Drafted milestones (Weeks 1–13, with a Week-11 holiday):
 
-1. **Milestone 1** — report-ready account of unguided ABA Learning's capabilities and
-   limitations for causal recovery. Parts 1–2 closed; M1.3 Buckets 1–2 locked;
-   Bucket 3 H0–H7b complete / analysed under Fabrizio's 31 July direction
-   (incl. H4b, H5–H7b); no Bucket 3 claim.
-   The widened scope remains M1.3 and precedes Milestone 2. No M1.4. Primary path:
-   `milestone1_high_level_path.md`.
-2. **Milestone 2 (Weeks 3–4)** — design the bridge in which Causal ABA-style information guides ABA Learning; specify comparable outputs and metrics.
-3. **Milestone 3 (Weeks 5–6)** — implement causal-guided ABA Learning variants; compare against unguided learning; build bespoke metrics that judge whether causality (not just predictive parents) is learned.
+1. **Milestone 1 — closed.** M1.1 and M12x closed; M1.3 Buckets 1–2 locked;
+   Bucket 3 H0–H7b complete / analysed and consolidated into six cross-cutting findings.
+   No M1.4. Closure path: `milestone1_high_level_path.md`.
+2. **Milestone 2 — opened.** First read the Causal ABA paper and inspect the exact
+   implementation; then formulate integration designs; then implement and test approved
+   designs through bounded investigations. Primary path:
+   `docs/research/milestone_plans/milestone2/README.md`.
+3. **Later implementation/evaluation staging** — revise the older Milestone-3 boundary
+   after the first M2 integration design is chosen; do not assume the prior week allocation
+   still describes the live project.
 4. **Milestone 4 (Weeks 7–8)** — scale beyond three-node motifs; set up representative external comparators and a frozen evaluation protocol.
 5. **Milestone 5 (Weeks 9–10)** — evaluation, ablations, and a supervisor-reviewable full draft before the break.
 6. **Milestone 6 (Weeks 12–13)** — supervisor-feedback edits, final polish, and presentation preparation.
 
-The core direction remains "Causal ABA guides ABA Learning", but the current project-plan
-chapter must not imply that Milestone 2 begins immediately after the fixed-target
-categorical study. Bucket 3 first broadens the diagnosis of targets, data availability,
-larger controlled structures, and observational identifiability. The immediate
-one-fixture-at-a-time deterministic investigation now precedes those deferred dimensions;
-the milestone schedule should be revised only when evidence justifies it.
+The core direction remains "Causal ABA guides or interacts with ABA Learning". The
+project-plan chapter must now record that M1 is closed and M2 is open. It must not imply
+that a particular bridge has already been selected, or that the Causal ABA implementation
+has already been inspected. The schedule should be revised after M2 Stage 1 establishes
+the actual implementation and feasible interfaces.
 
 Required evidence for drafting / revision:
 
@@ -222,7 +238,8 @@ Status: `pending`
 
 Purpose:
 
-Transparently record use of ChatGPT and Cursor while preserving Samuel’s authorship.
+Transparently record use of AI agents while preserving Samuel’s authorship and final
+responsibility for the submitted work.
 
 Evidence source:
 
@@ -231,8 +248,9 @@ Evidence source:
 
 Must include:
 
-- ChatGPT used for planning, theory alignment, drafting assistance, and critical review;
-- Cursor used for implementation assistance, repo inspection, tests, diffs, and artefact collection;
+- the Orchestrator Agent used for planning, theory alignment, repository work, drafting
+  assistance, and critical review;
+- specialist agents used for bounded fixture, trace, documentation, and synthesis work;
 - Samuel reviewed, verified, edited, and authored the submitted work.
 
 ## Evidence-to-section map
@@ -256,9 +274,11 @@ Must include:
 
 ## Writing workflow
 
-1. Cursor records experiment evidence in `docs/experiments/<ID>.md`.
+1. The responsible implementation or evidence agent records experiment evidence in
+   `docs/experiments/<ID>.md`.
 2. Samuel reviews and corrects the experiment record.
-3. ChatGPT drafts candidate report prose from the reviewed record.
+3. The Orchestrator or a named writing agent drafts candidate report prose from the
+   reviewed record when Samuel requests it.
 4. Samuel edits, verifies, and integrates the prose into the report.
 5. Claims used in the report are added to or checked against `docs/report/claims_ledger.md`.
 
@@ -280,7 +300,9 @@ Avoid unsupported claims such as:
 
 ## Current next writing milestone
 
-The five report chapters are drafted under `docs/report/manuscript/`. The current writing focus is to revise the Experimentation chapter to apply the audit corrections and supervisor guidance:
+The five report chapters are drafted under `docs/report/manuscript/`. The immediate
+documentation source for M1 closure is `findings_for_fabrizio.tex`. Before final-report
+integration:
 
 - give each presented result an explicit interpretation and conclusion;
 - reason about the discrepancy between the handcrafted DGP's expected outputs and the actual learned rules;
@@ -288,6 +310,7 @@ The five report chapters are drafted under `docs/report/manuscript/`. The curren
 - report F1 in place of the clean-recovery score;
 - treat the earlier QL2 parent-position-swap action as superseded by the completed M11
   and M13-C2 order controls;
-- defer Bucket 3 report claims until a separate evidence review and Samuel's decision;
-  keep project-plan status aligned with completed H0–H7b (including H4b);
+- use the six bounded M13-C3 closure findings from the claims ledger with their stated
+  caveats; do not turn individual H-probes into standalone general claims;
+- revise the project-plan status from active M1.3 to closed M1 / opened M2;
 - keep the claims ledger in step with any revised interpretations.

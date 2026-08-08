@@ -6,7 +6,8 @@ This file records which report claims are supported by which project evidence.
 
 It exists to prevent overclaiming and to make report writing auditable. It should be updated whenever an experiment is analysed, a figure/table is selected for the report, or a substantive interpretation is proposed.
 
-Cursor may update factual evidence fields. Samuel must review any claim before it is used in submitted report prose.
+An assigned evidence or documentation agent may update factual evidence fields. Samuel
+must review any claim before it is used in submitted report prose.
 
 ## Claim strength categories
 
@@ -53,7 +54,7 @@ Do not claim full Causal ABA unless the implementation uses, at minimum:
 | C-003 | The current bridge evaluates whether learned target-rule bodies recover known parent sets in generated data. | safe | `METRICS.md` summary; `metrics.py`; experiment records | Parent-set recovery is not full causal discovery. | Experimentation / Progress | active |
 | C-004 | The infrastructure supports YAML-configured experiment grids with per-cell artefacts and summary metrics. | safe | `INFRA.md` summary; `run_grid.py`; output artefacts once produced | Must cite exact config/output when used. | Experimentation / Progress | active |
 | C-005 | On some simple motifs and encodings, the current target-wise ABA Learning bridge recovers the true direct parents of x2 in learned rule bodies. | bounded | `docs/report/manuscript/experimentation.md`; QI-001/QI-002/QI-004 records; `command_output`/`metric` in `causal/outputs/aba_learning/grid/` | Holds only in selected idealised cases (e.g. binary chain/fork, some colliders). Recovery is not robust across motifs, encodings or modest noisy scaling; it is target-wise parent-set recovery, not causal discovery. | Experimentation / Progress | active |
-| C-006 | On these controlled tasks, greedy folding is faster than and at least as good as non-deterministic folding at parent-set recovery. | bounded | `docs/experiments/qualitative/greedy_vs_nd_qualitative_handoff.md` (QI-001/QI-002/QI-004 greedy reruns); m1.1 Stage 7 anchor | Faster (~120x at QL3 scale), solve rate >= nd on QI fixtures; m1.1 cat3 greedy supersets (Stage 7). No strategy-default decision is supported; M1.2 compares the scoped ECAI and AAMAS configurations instead. | Experimentation / Progress | active |
+| C-006 | On the QI-001/QI-002/QI-004 parent-set-proxy tasks, greedy folding is faster than and at least as good as non-deterministic folding on the recorded aggregate recovery measures. | bounded | `docs/experiments/qualitative/greedy_vs_nd_qualitative_handoff.md`; m1.1 Stage 7 anchor | Faster (~120x at QL3 scale), solve rate >= nd on those QI fixtures. This is not a strategy-default recommendation: M13-C3 shows that Greedy exact-value solutions enumerate positive patterns and retain irrelevant predictors, making them unsuitable for the mechanism-oriented reading studied there. | Experimentation / Progress | active |
 | C-007 | Noise in generated data is represented by ABA Learning as exceptions. | tentative | Theoretical expectation; weak indicative evidence in the one solved QL3 cell (learned rule `x2(A) <- alpha_1(A), x0(A)` alongside `x2(A) <- x1(A)`) | Requires systematic inspection of learned assumptions/contraries across cells; a single cell is not sufficient. | TBD | blocked |
 | C-008 | The current implementation performs Russo-style Causal ABA. | false_or_misleading | `research_state.md`; `repo_map.md` | Must not claim unless implementation changes substantially. | None | forbidden |
 | C-009 | The current implementation recovers full causal DAGs. | unsupported | Current metrics are target-rule/body-level, not full DAG-level | Reserved skeleton/direction metrics are not computed. | None | forbidden |
@@ -110,19 +111,30 @@ Add claims after each experiment is analysed. Report labels: QL1 = QI-001, QL2 =
 ### M13 (m1.3 Bucket 2)
 
 Bucket 2 is **locked / closed** with the claims below. The proposed
-deterministic-target Claim 3 was parked on 22 July and has no ledger entry. Bucket 3
-investigation is active: H0–H7b are complete / analysed (including H4b); H5 uses
-experimental `greedy_cautious` and is not an AAMAS-paper method; H6 is a
-procedural search-cost probe; H7a is a brave-nd implementation-behaviour probe;
-H7b is the separately analysed cautious-nd counterpart. No Bucket 3 claim is
-approved; it must not receive claim IDs until a separate evidence review and Samuel's
-decision.
+deterministic-target Claim 3 was parked on 22 July and has no ledger entry. Bucket 3 is
+now closed separately below. The locked Bucket-2 claims remain unchanged.
 
 | Claim ID | Claim | Strength | Evidence | Caveats | Report location | Status |
 |---|---|---|---|---|---|---|
 | M13-C1-C-001 | For the input-equivalent M13-C1 pair, changing only the valid external causal graph left data, BK, examples, normalised learned delta, and ASP coverage unchanged within each configuration, while graph-relative parent recovery changed. ECAI's same \(x_0\)-rules were exact under \(G_0\) and sibling-only under \(G_1\); AAMAS retained parent plus sibling under both. | bounded | `M13-C1-causal-role-underdetermination/experiment.md`; `M13_c1_role_equivalence_summary.{md,json}`; 4 cell artefacts | Minimal perfect-copy construction; demonstrates underdetermination when graph role is absent from learner input, not prevalence in arbitrary data or causal discovery. | Experimentation / Progress; M1.3 Bucket 2 | active |
 | M13-C2-C-001 | Under complete BK feature-block permutations on U2, U5, and U7, every tested order yielded a distinct ECAI normalised delta within its family, while AAMAS preserved one normalised delta and one coverage result per family. | bounded | `M13-C2-bk-feature-order/experiment.md`; `M13_c2_bk_order_summary.{md,json}`; 20 cell traces/solutions | Published ECAI/AAMAS configs and exact-value handcrafted fixtures only; not general greedy order-invariance. | Experimentation / Progress; M1.3 Bucket 2 | active |
 | M13-C2-C-002 | On U5, putting parent \(x_1\) before ancestor \(x_0\) changed ECAI from a fully covering non-parent assumption framework to exact assumption-free parent recovery. On U7, ECAI rejected \(0/3\) negatives exactly when required parent \(x_2\) was third; all four orders placing \(x_2\) in the first two blocks rejected \(3/3\). | bounded | M13-C2 record and summary; U5/U7 `prolog.stdout`, `bk.sol.aba`, and `metrics.json` | Representation-order intervention; does not show that order is the only cause of all ECAI failures. | Experimentation / Progress; M1.3 Bucket 2 | active |
+
+### M13 (m1.3 Bucket 3 closure findings)
+
+Bucket 3 closed on 8 August 2026 after H0–H7b and the cross-probe synthesis
+`docs/experiments/qualitative/M13-C3-binary-collider-and/findings_for_fabrizio.tex`.
+The entries below are the six bounded synthesis findings. They are not claims of full
+causal discovery, universal algorithm laws, or Russo-style Causal ABA.
+
+| Claim ID | Claim | Strength | Evidence | Caveats | Report location | Status |
+|---|---|---|---|---|---|---|
+| M13-C3-C-001 | Under the audited M13 target-wise Greedy runs with symmetric exact-value encoding, each completed solution contains one assumption-free target rule per distinct positive predictor-value pattern, and every such rule cites every non-target predictor column. | bounded | `findings_for_fabrizio.tex`, Finding 1; H0/H1/H2/H2c/H3 Greedy collections; `greedy_pattern_law_audit.py` | Exact-value encoding and recorded Greedy configurations/fixtures only. Pattern overlap can instead produce no-solution; two no-negative H2c cells were skipped. Not a universal statement about every possible Greedy BK language. | M1 closure / Experimentation | active |
+| M13-C3-C-002 | In every completed nd solution audited in M13-C3, the ordinary target rules latch onto the first target-specific BK predictor; later predictors, when present, enter through assumptions and contraries. | bounded | `findings_for_fabrizio.tex`, Finding 2; H0–H7b nd deltas/traces; `nd_first_predictor_audit.py` | Recorded exact-value BK serialisation and nd options only. It does not establish that first-predictor latching is unavoidable under every BK language or selection policy. | M1 closure / Experimentation | active |
+| M13-C3-C-003 | On the tested non-functional root targets, brave nd can report solved by assigning row-ground assumptions different stable statuses for identical predictor patterns, whereas cautious nd rejects that residual-choice construction on the terminating matched tables. | bounded | `findings_for_fabrizio.tex`, Finding 3; H0/H4 records; `brave_witness_audit.py`; matched brave/cautious deltas and traces | Cautious timeouts on wider H3 root cells are not no-solution evidence. This is a semantic/sample-covering result, not proof that cautious nd always identifies mechanism existence. | M1 closure / Experimentation | active |
+| M13-C3-C-004 | Under the current unary exact-value BK encoding, every audited nd folding call spends one token; accepted theories are reached at `tokens(1)`, while raising `folding_steps(M)` repeats the failed attempt for the recorded no-solution roots and increases cost approximately linearly in \(M\). | bounded | `findings_for_fabrizio.tex`, Finding 4; H6a record; `band_replay_audit.py`; 49 audited nd cells | Encoding-specific. Multi-atom BK bodies may make additional tokens operative and have not yet been tested. | M1 closure / Experimentation | active |
+| M13-C3-C-005 | In the H6b nested samples after complete support is already present, the set of distinct joint value patterns fixes the normalised learner decision path and learned theory, while repeated rows add rote, subsumption, grounding, and runtime cost without adding a new decision. | bounded | `findings_for_fabrizio.tex`, Finding 5; H6b record; `support_vs_multiplicity_audit.py`; n=30/60/90 traces | One fixture, seed, target-wise encoding, and fixed `folding_steps(2)`. Support compression is a design recommendation only after frequency-sensitive quantities have been extracted; it is not yet validated inside a Causal ABA integration. | M1 closure / Experimentation | active |
+| M13-C3-C-006 | On the H7 cells, brave nd with `sechk` confines each learned delta to the first BK variable, while cautious nd with `sechk` returns the same recorded outcomes and variable sets as cautious `relto` on terminating pairs but through deeper, more expensive assumption search. | bounded | `findings_for_fabrizio.tex`, Finding 6; H7a/H7b records and deltas/traces | H0/H3 fixtures only; H7b timeout pairs with empty logs are non-comparable. This supports the bounded working preference for cautious nd + `relto`, not a universal method ranking. | M1 closure / Experimentation | active |
 
 ## Claims not to make
 
@@ -135,6 +147,11 @@ These claims should not appear in report prose unless later evidence explicitly 
 - Reserved skeleton/direction metrics have been computed.
 - Noise is definitely represented as exceptions without inspecting learned assumptions, contraries, and rules.
 - Greedy is better than non-deterministic ABA Learning without a controlled comparison.
+- A `solved` target-wise framework is necessarily mechanism-aligned or causal.
+- Cautious semantics, `relto`, support compression, or `folding_steps(1)` are universally
+  optimal outside the exact-value regimes actually tested.
+- The current checkout already contains or executes the Russo-style Causal ABA
+  implementation; its exact source and version must first be located and inspected.
 
 ## Procedure for adding a claim
 

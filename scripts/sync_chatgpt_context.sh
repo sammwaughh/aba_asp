@@ -21,6 +21,8 @@ governance=(
   "docs/report/report_state.md=report_state.md"
   "docs/experiments/experiments_summary.md=experiments_summary.md"
   "docs/experiments/qualitative/M1.3-bucket3-claims.md=M1.3-bucket3-claims.md"
+  "docs/research/milestone_plans/milestone2/README.md=milestone2_approach.md"
+  "docs/experiments/qualitative/M13-C3-binary-collider-and/findings_for_fabrizio.tex=findings_for_fabrizio.tex"
 )
 
 # repo_orientation/ : "<source>=<dest-name>"

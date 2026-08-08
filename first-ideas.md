@@ -1,5 +1,13 @@
 # First ideas — guiding ABA Learning toward mechanism-aligned rules
 
+> **Historical brainstorming — not the Milestone-2 plan.** This file predates the
+> completed M1.3 Bucket-3 investigation and the 8 August 2026 opening of Milestone 2.
+> None of the proposals below is approved, validated, or scheduled. Several use oracle
+> graphs or assumed Causal ABA outputs and therefore cannot be treated as discovery
+> designs without a new justification. M2 begins by reading the Causal ABA paper and
+> inspecting the exact implementation; only then will Samuel choose integration ideas.
+> See `docs/research/milestone_plans/milestone2/README.md`.
+
 Grounded proposals for configuring ABA Learning (or making limited algorithm / pipeline
 changes) so that the locked mechanism-aligned rules on the M1.2 fixtures are actually
 learned. Each idea is tied to a concrete M1.2 failure mode and to something that can be

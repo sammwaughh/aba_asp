@@ -1,12 +1,13 @@
 # Approach — M1.3
 
-**Role:** working reference for Milestone 1 Part 3 — investigating **claims** about how
-unguided ABA Learning behaves on the locked M1.2 regime.
-**Status:** Bucket 1 **locked**; Bucket 2 **locked / closed** with Claims 1–2;
-Bucket 3 H0–H7b are complete / analysed (incl. H4b).
-No Bucket 3 claim is approved. M12x
-and Buckets 1–2 remain fixed evidence. The earlier method below records the completed
-Bucket 1/2 workflow and the current one-case-at-a-time Bucket 3 method.
+**Role:** historical method and closure reference for Milestone 1 Part 3.
+**Status:** **closed** (8 August 2026). Bucket 1 retains four locked claims; Bucket 2
+retains two locked claims; Bucket 3 H0–H7b are complete / analysed (incl. H4b) and
+consolidated into six cross-cutting findings in
+`docs/experiments/qualitative/M13-C3-binary-collider-and/findings_for_fabrizio.tex`.
+No separate locked Bucket-3 claim list was created. M12x and Buckets 1–3 remain fixed
+evidence. The method below records the completed Bucket 1/2 workflow and the completed
+one-case-at-a-time Bucket-3 method.
 **Primary path:** [`../milestone1_high_level_path.md`](../milestone1_high_level_path.md)
 **Parent index:** [`../milestone1-plan.md`](../milestone1-plan.md)
 
@@ -22,8 +23,8 @@ Bucket 1/2 workflow and the current one-case-at-a-time Bucket 3 method.
 
 ## 22 July 2026 scope expansion
 
-Following Fabrizio's review, M1.3 now continues beyond the fixed M12x regime through a
-new Bucket 3. The supervisor-defined planning dimensions are: target variation and
+Following Fabrizio's review, M1.3 continued beyond the fixed M12x regime through
+Bucket 3. The supervisor-defined planning dimensions were: target variation and
 target-agnostic analysis; partial data availability; larger controlled graphs;
 graph–mechanism validity; explicit correlation, marginal/conditional independence, and
 Markov equivalence; attribution of strategy failures versus information/data
@@ -76,7 +77,7 @@ than assumed.
 
 The existing positive-stochastic diamond and its target-wise runs are retained as
 pre-pivot exploratory/infrastructure artefacts. They are not part of the deterministic
-case sequence and do not yet support a Bucket 3 claim.
+case sequence and were not used as support for the six Bucket-3 closure findings.
 
 ---
 
@@ -173,14 +174,15 @@ evidence-qualified; no headline-driven framing.
 
 ---
 
-## M2-readiness
+## M2 hand-off
 
 Buckets 1–2 provide non-overlapping insight into the locked categorical target-wise
-regime. Under Fabrizio's 31 July direction, Bucket 3 first needs a mechanism-by-mechanism
-account of deterministic non-root causal models before the broader 22 July dimensions or
-Causal ABA integration are pursued. Any Milestone 2 guidance must be motivated by
-diagnosed learner behaviour and explicit information/identifiability limits rather than
-by the fixed M12x regime alone.
+regime. Bucket 3 provides the mechanism-by-mechanism and trace-level account consolidated
+in `findings_for_fabrizio.tex`. Milestone 2 is now open. Its first stage is to understand
+the Causal ABA paper and exact implementation before choosing an integration. Any guidance
+must be motivated by diagnosed learner behaviour and explicit information/identifiability
+limits rather than by the fixed M12x regime alone. See
+[`../milestone2/README.md`](../milestone2/README.md).
 
 ---
 
@@ -196,5 +198,6 @@ by the fixed M12x regime alone.
 | `docs/report/findings/milestone1_part3_bucket1_claims.tex` | TeX companion for Bucket 1 |
 | `docs/experiments/qualitative/M1.3-bucket2-claims.md` | Bucket 2 claims (**locked**) |
 | `docs/report/findings/milestone1_part3_bucket2_claims.tex` | TeX companion for Bucket 2 |
-| `docs/experiments/qualitative/M1.3-bucket3-claims.md` | Bucket 3 scope / planning record |
+| `docs/experiments/qualitative/M1.3-bucket3-claims.md` | Bucket 3 scope / investigation / closure record |
+| `docs/experiments/qualitative/M13-C3-binary-collider-and/findings_for_fabrizio.tex` | Canonical Bucket-3 closure synthesis |
 | M12x Stage-3 inspection | Observational base for the initial claim list |

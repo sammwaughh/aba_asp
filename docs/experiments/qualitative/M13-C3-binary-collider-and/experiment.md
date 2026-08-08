@@ -4,8 +4,10 @@
 
 `proposed | planned | implemented | run | analysed | reported`
 
-Current status: **`H0 closed / analysed`; H1–H7b run / analysed** — M1.3
-Bucket 3 baseline and H1–H7b probes documented; **no Bucket 3 claim**.
+Current status: **closed / analysed** — H0 and H1–H7b are documented and the
+cross-probe evidence is consolidated into six bounded findings in
+`findings_for_fabrizio.tex`. The individual probes are not standalone claims, and no
+separate locked Bucket-3 claim list was created.
 
 ### H0 versus H1–H7
 
@@ -24,7 +26,8 @@ Bucket 3 baseline and H1–H7b probes documented; **no Bucket 3 claim**.
 
 **H0 close means:** baseline learning analysis finished.  
 **H1–H7b complete means:** those probes are run and documented.
-**Does not mean:** a Bucket 3 claim is locked. Still **no Bucket 3 claim**.
+**Does not mean:** each probe independently establishes a general claim, full causal
+discovery, or Russo-style Causal ABA.
 
 Working mathematical dossier (pre-run): `fixture_dossier.tex`.  
 Closed H0 learning record: `learning_analysis.md` / `learning_analysis.tex`.  
@@ -451,40 +454,53 @@ AND. See `h2_irrelevant_covariate.md`.
 **H3 bounded reading (not a claim).** On the BD AND fixture with BK-leading
 isolated `a`, ECAI pulls `a` into the learned theory for `c` (first-fold
 distraction). Brave residual splits remain possible. See
-`h3_bk_leading_distractor.md`. **No Bucket 3 claim.**
+`h3_bk_leading_distractor.md`. **Not a standalone claim.**
 
 **H4 bounded reading (not a claim).** On the closed H0 table, repository
 `baseline_cautious` blocks the brave residual α-gadget for roots `a`/`b`
 (`completed_no_solution`); control `c` still solves with an identical delta.
-See `h4_cautious_vs_brave.md`. **No Bucket 3 claim.**
+See `h4_cautious_vs_brave.md`. **Not a standalone claim.**
 
 **H4b bounded reading (not a claim).** On the H3 fixture target `c`, cautious
 changes only the \(\alpha_3\) close (`d_val_1`); Layer A (`a`-gating;
 \(\alpha_1\)-nest vs \(\alpha_2\)-flat) is shared with H3 and is not a cautious
-effect. See `h4b_cautious_split_under_a.md`. **No Bucket 3 claim.**
+effect. See `h4b_cautious_split_under_a.md`. **Not a standalone claim.**
 
 **H5 bounded reading (not a claim).** Under Greedy, brave→cautious is inert on
 these 18 cells; large contrasts vs `baseline_cautious` are search-strategy.
-See `h5_greedy_cautious.md`. **No Bucket 3 claim.**
+See `h5_greedy_cautious.md`. **Not a standalone claim.**
 
 **H6 bounded reading (not a claim).** Root search cost under cautious+nd is
 ≈ linear in `folding_steps(M)` (failed-band replays) and in nested `n` at
 fixed `M=2` (per-band bookkeeping); not mechanism recovery. See
-`h6_folding_and_n_ablation.md`. **No Bucket 3 claim.**
+`h6_folding_and_n_ablation.md`. **Not a standalone claim.**
 
 **H7a bounded reading (not a claim).** Under brave nd, `relto` vs `sechk`
 changes every learned delta (first-BK latch under sechk vs richer contraries
 under relto); not a method ranking; not mechanism recovery. See
-`h7a_relto_vs_sechk.md`. **No Bucket 3 claim.**
+`h7a_relto_vs_sechk.md`. **Not a standalone claim.**
 
 **H7b bounded reading (not a claim).** Under cautious nd, `relto` vs `sechk`
 changes `c` deltas (extra nest / thicker theory) while retaining mechanism
 parents under sechk; Q4–Q5 empty-stdout timeouts are non-comparisons. See
-`h7b_cautious_relto_vs_sechk.md`. **No Bucket 3 claim.**
+`h7b_cautious_relto_vs_sechk.md`. **Not a standalone claim.**
 
-## Claims supported
+## Cross-cutting findings supported at closure
 
-None. Evidence record and bounded interpretation only.
+The individual H0–H7b records remain bounded evidence and do not establish standalone
+claims. Their controlled comparisons and trace audits jointly support the six
+Milestone-1 closure findings stated and qualified in `findings_for_fabrizio.tex`:
+
+1. Greedy positive-pattern enumeration and all-predictor retention;
+2. nd first-BK-predictor latching;
+3. brave nd's ground-assumption covering of non-functional targets versus cautious
+   rejection on the tested tables;
+4. folding-token replay under the current unary exact-value encoding;
+5. support-pattern-controlled search with multiplicity-driven cost;
+6. the recorded brave/cautious `relto`–`sechk` differences.
+
+Use the synthesis, not this hub alone, for the exact statements, evidence counts,
+procedural explanations, and caveats.
 
 ## Claims not supported / not claimed
 
@@ -496,16 +512,16 @@ As in `learning_analysis.md`, `h1_support_ablation.md`,
 
 ## Report relevance
 
-Interim Experimentation / Progress (Milestone 1 Part 3 / Bucket 3). Working
-evidence only; **not** report-facing claim prose.
+Milestone 1 Part 3 / Bucket 3 evidence. The completed supervisor-facing synthesis is
+`findings_for_fabrizio.tex`; this hub remains the underlying experiment record.
 
-## Future probes
+## Probe catalogue
 
-H1–H7b are **run / analysed**:
-`future_probes.md` / `.tex`. Still **no Bucket 3 claim**.
+H1–H7b are **run / analysed** and the catalogue is closed:
+`future_probes.md` / `.tex`. No further M1.3 probe is pending.
 
-## Next decision
+## Successor
 
-1. Whether any further H7 / Bucket 3 work is needed (Orchestrator / Samuel).
-2. Keep Bucket 3 free of a claim until inspected probe evidence warrants a
-   separate decision.
+M1.3 is closed. Milestone 2 begins with Causal ABA paper/code orientation before any
+integration design or experiment is approved. See
+`docs/research/milestone_plans/milestone2/README.md`.

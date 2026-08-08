@@ -3,22 +3,24 @@
 **Primary working path:** [`milestone1_high_level_path.md`](milestone1_high_level_path.md)  
 **Expanded M1.2 Approach:** [`milestone1_part2/milestone1_part2_expanded_approach.md`](milestone1_part2/milestone1_part2_expanded_approach.md)  
 
-Use the high-level path for order of work, and the Approach while locking graphs/mechanisms. This file is the milestone index and part summaries.
+Milestone 1 is closed. Use the high-level path as its closure/navigation record and the
+part approaches as historical method records. Active successor:
+[`milestone2/README.md`](milestone2/README.md).
 
 ## Purpose
 
-Milestone 1 produces a **report-ready account of what causal structure unguided ABA
+Milestone 1 produced a **report-ready account of what causal structure unguided ABA
 Learning can recover from controlled tabular data, under which targets,
 data-availability conditions, graph/mechanism structures, and learning strategies —
 and which limitations are informational rather than strategic**. "Unguided" means the
 inherited ABALearn engine as published, with no Causal ABA integrations (those are
 Milestone 2 and beyond).
 
-The completed M1.1/M1.2 and M1.3 Buckets 1–2 answer this first for selected targets in
-small categorical fixtures. Fabrizio's 22 July review expanded M1.3; his 31 July review
-set the immediate method as one root-stochastic, deterministic-non-root binary mechanism
-case at a time, with expected mechanism rules fixed before ABALearn. The other expanded
-dimensions remain possible later work.
+M1.1, M1.2, and M1.3 are complete. Fabrizio's 22 July review expanded M1.3; his
+31 July review set the method as one root-stochastic, deterministic-non-root binary
+mechanism case at a time, with expected mechanism rules fixed before ABALearn. H0–H7b
+implemented that bounded investigation, and the cross-probe findings were consolidated
+before closure on 8 August 2026.
 
 Framing rules for the whole milestone:
 
@@ -35,36 +37,34 @@ Framing rules for the whole milestone:
 - Claims must separate failures of a specified learning strategy from cases where the
   available observations do not identify the causal structure.
 
-### Current scope and guardrails
+### Closed scope and guardrails
 
-- M12x and Buckets 1–2 remain locked; the new work is Bucket 3 within M1.3.
-- Categorical \(K=3\) remains the completed baseline. Additional category counts and
-  non-discrete data are possible Bucket 3 dimensions, not yet committed experiments.
-- Larger **controlled** DAGs are in scope. Random graphs and bnlearn-scale evaluation
-  remain outside the immediate Bucket 3 planning.
-- ECAI and AAMAS are the completed comparison arms. Any Bucket 3 strategy set must be
-  decided during planning.
-- Future fixtures must document graph–mechanism validity, support, expected outputs,
+- M12x and M1.3 Buckets 1–3 are closed and remain preserved.
+- Categorical \(K=3\) remains a completed baseline. Additional category counts,
+  non-discrete data, larger DAGs, and bnlearn-scale evaluation were not required for M1
+  closure; any later use requires a new decision.
+- ECAI and AAMAS are completed M1 comparison arms.
+- Any later causal fixture must document graph–mechanism validity, support, expected outputs,
   and relevant marginal/conditional-independence and Markov-equivalence properties.
-- The immediate fixture regime uses mutually independent non-degenerate stochastic roots
+- The completed Bucket-3 fixture regime used mutually independent non-degenerate stochastic roots
   and deterministic non-root functions. Each fixture needs a full truth table, exact
   support/faithfulness certificate, and evaluator-only canonical rule reference before a
   sample or learning run is selected.
 - New target-wise fixtures use lowercase internal identifiers `a`, `b`, `c`, ... and
   corresponding mathematical labels (A,B,C,\ldots); existing `xN` evidence is preserved.
-- There is **no M1.4**; this supervisor-driven expansion remains M1.3.
+- There is **no M1.4**; the supervisor-driven expansion closed within M1.3.
 
-## Working Method
+## Working method used
 
-For each part:
+For each part, the project:
 
-1. Write or update a bespoke planning document defining goal, graphs/mechanisms, DGP(s),
+1. wrote or updated a bespoke planning document defining the goal, graphs/mechanisms, DGP(s),
    intended learned rules, and the smallest experiment that answers the question.
-2. Use Cursor to implement and run the agreed experiment.
-3. Compare actual learned rules with pre-specified intentions; inspect raw artefacts.
-4. Draw bounded, evidence-supported conclusions. Prefer plain-English pattern descriptions
+2. used the active implementation agent to implement and run the agreed experiment;
+3. compared actual learned rules with pre-specified intentions and inspected raw artefacts;
+4. drew bounded, evidence-supported conclusions, preferring plain-English pattern descriptions
    over invented taxonomies.
-5. Write a concise `.tex` findings document when the evidence for that part is ready.
+5. wrote a concise `.tex` findings document when the evidence for that part was ready.
 
 ## Part 1: Parent-Position and Representation-Order Control — **closed**
 
@@ -93,7 +93,7 @@ Pilot (historical): [`milestone1_part2/milestone1_part2_config_comparison.md`](m
 
 Configs: ECAI (`configs/ecai2024_config.pl`), AAMAS (`configs/aamas2025_config.pl`).
 
-## Part 3: Causal-recovery capabilities and limits (M1.3) — **in progress** (Buckets 1–2 locked; Bucket 3 H0–H6 complete, including H4b)
+## Part 3: Causal-recovery capabilities and limits (M1.3) — **closed**
 
 Planning folder: [`milestone1_part3/`](milestone1_part3/README.md)  
 Approach (method): [`milestone1_part3/milestone1_part3_approach.md`](milestone1_part3/milestone1_part3_approach.md)  
@@ -102,38 +102,36 @@ Bucket 1 (**locked**): `docs/experiments/qualitative/M1.3-bucket1-claims.md`
 (TeX: `docs/report/findings/milestone1_part3_bucket1_claims.tex`)  
 Bucket 2 (**locked / closed; two claims**): `docs/experiments/qualitative/M1.3-bucket2-claims.md`
 (TeX: `docs/report/findings/milestone1_part3_bucket2_claims.tex`)
-Bucket 3 (**H0–H7b complete / analysed incl. H4b; no claim**):
+Bucket 3 (**closed; H0–H7b complete / analysed incl. H4b**):
 `docs/experiments/qualitative/M1.3-bucket3-claims.md`
 
 Buckets 1–2 turn the locked M12x inspection and M13-C1/C2 controls into six
-evidence-backed claims. Bucket 3 now follows Fabrizio's 31 July deterministic-mechanism
-direction one case at a time. Baseline H0 and probes H1–H7b are complete /
-analysed (incl. H4b).
-No Bucket 3 claim or broader comparative design is approved.
+evidence-backed locked claims. Bucket 3 followed Fabrizio's 31 July
+deterministic-mechanism direction through H0–H7b. Its six cross-cutting closure findings
+are recorded in
+`docs/experiments/qualitative/M13-C3-binary-collider-and/findings_for_fabrizio.tex`.
+No separate locked Bucket-3 claim list was created.
 Prior provisional claim
 drafting from earlier M12x grids remains **withdrawn** (2026-07-20) and must not be
 reused.
 
-M1.3 finishes when we can state what causal structure unguided ABA Learning can recover
-under the approved controlled variations, why it succeeds or fails, and which limits
-motivate Milestone 2 rather than merely reflecting observational non-identifiability.
+M1.3 closed after the synthesis stated what the tested unguided ABA Learning strategies
+did, why the recorded outcomes arose, and which learner behaviours motivate Milestone 2.
 See [`milestone1_high_level_path.md`](milestone1_high_level_path.md).
 
-## Milestone Closure
+## Milestone closure — **complete**
 
-After M1.3, consolidate findings into a Milestone 1 conclusion:
+The closure synthesis consolidates the evidence around:
 
-1. when target-wise ABA Learning recovers mechanism-aligned rules;
+1. when the tested target-wise ABA Learning configurations recover mechanism-aligned rules;
 2. how target choice, data availability, graph/mechanism structure, and strategy affect
    recovery;
-3. when collections of target-wise outputs support graph recovery;
+3. why the current collections of target-wise outputs do not themselves constitute graph
+   or CPDAG recovery;
 4. which failures are strategic, representational, data-driven, or
    identifiability-limited;
 5. which diagnosed limitations motivate Causal ABA-style guidance in Milestone 2.
 
-**Current progress:** Part 1 closed. Part 2 (M12x) **closed**. Part 3 (M1.3) **in
-progress** — Buckets 1–2 locked; Bucket 3 H0–H7b complete / analysed (including
-H4b); H5 uses experimental `greedy_cautious` and is not an AAMAS-paper method;
-H6 is a procedural search-cost probe; H7a is a brave-nd
-implementation-behaviour probe; H7b is its cautious-nd counterpart; no Bucket 3 claim.
-No Part 4 / M1.4.
+**Final status:** Part 1 closed. Part 2 (M12x) closed. Part 3 (M1.3) closed.
+No Part 4 / M1.4. Milestone 2 is open at paper/code orientation; see
+[`milestone2/README.md`](milestone2/README.md).

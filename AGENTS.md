@@ -44,21 +44,27 @@ Preserve this distinction in all code comments, documentation, experiment record
 
 Do not describe the current implementation as full Russo-style Causal ABA unless direct code evidence shows that it implements the relevant `arr`/`noe`/`indep`, d-separation, and stable-extension-as-DAG machinery.
 
-## Experimental priority
+## Current milestone and experimental priority
 
-The current experimental priority is the supervisor-expanded Milestone 1 / M1.3:
-characterise what causal structure unguided ABA Learning can recover across controlled
-targets, data-availability conditions, graph/mechanism structures, and strategies, and
-separate strategy failures from information/identifiability limits. This remains
-groundwork for the Causal-ABA-guided bridge (Milestone 2), which has not started.
+Milestone 1 is **closed** (8 August 2026). M1.1 and M12x remain closed; M1.3
+Buckets 1–2 retain their locked claims; Bucket 3 closes with H0–H7b analysed and six
+cross-cutting findings synthesised in
+`docs/experiments/qualitative/M13-C3-binary-collider-and/findings_for_fabrizio.tex`.
+The individual H-probes remain bounded evidence records rather than retroactively becoming
+standalone claims. There is no M1.4, and closed Milestone-1 experiments must not be rerun or
+redesigned merely because the project has moved on.
 
-Fabrizio's 31 July guidance sets the immediate Bucket 3 method: investigate one binary
-root-stochastic, non-root-deterministic causal fixture at a time. Fix the graph, root
-distributions, deterministic truth tables, population support, exact ordinary-faithfulness
-audit, and evaluator-only canonical rule reference before running all targets on one
-frozen table. The wider 22 July dimensions remain possible but are deferred. Do not infer
-faithfulness from determinism, expose evaluator references to the learner, or create a
-fixture portfolio/run matrix in advance.
+The active milestone is **Milestone 2: Causal ABA and ABA Learning integration**. Its
+current stage is theory and implementation orientation. Read the Causal ABA paper, locate
+and inspect the exact implementation and version, and produce a paper/code capability map
+before proposing integration designs. After Samuel reviews that map, formulate integration
+options; implement and test only an approved option, one bounded investigation at a time.
+Primary path: `docs/research/milestone_plans/milestone2/README.md`.
+
+At milestone opening, no verified Russo-style Causal ABA source implementation has been
+located inside this `aba_asp` checkout. Do not infer code behaviour from the paper, from
+ArgCausalDisco, or from the target-wise `causal/` package. No M2 integration design,
+prototype, experiment, metric, fixture, or run matrix is approved yet.
 
 For future target-wise fixtures, use lowercase learner identifiers `a`, `b`, `c`, ...
 and mathematical display labels (A,B,C,\ldots). Preserve existing `xN` fixtures. Do not
@@ -66,9 +72,13 @@ use uppercase identifiers directly in Prolog, collide with `alpha_N`/`c_alpha_N`
 the inherited `.pl` files, or broaden the locked legacy metric parser; target-wise
 diagnostics resolve body variables from fixture metadata.
 
-**Primary working path:** `docs/research/milestone_plans/milestone1_high_level_path.md`  
-**Expanded M1.2 Approach:** `docs/research/milestone_plans/milestone1_part2/milestone1_part2_expanded_approach.md`  
-**M1.3 Approach:** `docs/research/milestone_plans/milestone1_part3/milestone1_part3_approach.md`
+**Active working path:** `docs/research/milestone_plans/milestone2/README.md`
+
+Closed Milestone-1 navigation and method records:
+
+- `docs/research/milestone_plans/milestone1_high_level_path.md`
+- `docs/research/milestone_plans/milestone1_part2/milestone1_part2_expanded_approach.md`
+- `docs/research/milestone_plans/milestone1_part3/milestone1_part3_approach.md`
 
 Key experiment records:
 
@@ -85,7 +95,9 @@ Key experiment records:
   Probe records: `M13-C1-causal-role-underdetermination/experiment.md`;
   `M13-C2-bk-feature-order/experiment.md`.
 - `docs/experiments/qualitative/M1.3-bucket3-claims.md` — M1.3 Bucket 3
-  (**H0–H7b complete / analysed incl. H4b; no claim**).
+  (**closed**; H0–H7b complete / analysed incl. H4b; no separate locked
+  Bucket-3 claim list). Closure synthesis:
+  `M13-C3-binary-collider-and/findings_for_fabrizio.tex`.
   H5 experimental `greedy_cautious` is documented in
   `M13-C3-binary-collider-and/h5_greedy_cautious.md` (not an AAMAS-paper
   config). H6 search-cost ablation:
@@ -95,11 +107,10 @@ Key experiment records:
   H7b cautious relto vs sechk:
   `M13-C3-binary-collider-and/h7b_cautious_relto_vs_sechk.md`. Preserve the pre-pivot positive-stochastic diamond and its runs as
   infrastructure provenance; do not reinterpret them as deterministic claim
-  evidence. Do not invent a claim, fixture portfolio, or run matrix before
-  Samuel's approval.
-  Approach: `milestone1_part3/milestone1_part3_approach.md`. There is no M1.4;
-  larger controlled fixtures may be used in Bucket 3, while large-scale / bnlearn
-  evaluation remains deferred.
+  evidence. Approach/closure record:
+  `milestone1_part3/milestone1_part3_approach.md`.
+- `docs/research/milestone_plans/milestone2/README.md` — active M2 path:
+  Causal ABA paper/code orientation, then approved integration design, then bounded tests.
 
 ## Experiment documentation rule
 
@@ -134,15 +145,19 @@ They should record:
 
 ## Report-writing rule
 
-Cursor should not write polished report prose unless explicitly asked.
+Agents should not write polished report prose unless explicitly asked.
 
-For report support, Cursor should record facts, commands, artefacts, diffs, and bounded interpretation notes. Samuel and ChatGPT will use these records for report drafting and review.
+For report support, the agent responsible for an investigation should record facts,
+commands, artefacts, diffs, and bounded interpretation notes. Samuel and the Orchestrator
+Agent may then use reviewed records for drafting and critical review.
 
 The report-writing workflow is:
 
-1. Cursor records experiment evidence in `docs/experiments/<ID>.md`.
+1. The responsible implementation or evidence agent records experiment evidence in
+   `docs/experiments/<ID>.md`.
 2. Samuel reviews and corrects the experiment record.
-3. ChatGPT drafts candidate report prose from reviewed records.
+3. The Orchestrator or a named writing agent drafts candidate report prose from reviewed
+   records when Samuel requests it.
 4. Samuel verifies, edits, and authors the final submitted report.
 5. Claims are checked against `docs/report/claims_ledger.md`.
 
@@ -155,7 +170,7 @@ Use these files for report-writing support:
 - `docs/report/claims_ledger.md` — evidence-to-claim guardrail.
 - `docs/report/report_state.md` — interim report section/evidence plan.
 - `docs/report/figure_table_index.md` — figure/table provenance.
-- `docs/report/genai_use_log.md` — factual log of ChatGPT/Cursor assistance.
+- `docs/report/genai_use_log.md` — factual log of AI-agent assistance.
 
 ## Files to treat carefully
 

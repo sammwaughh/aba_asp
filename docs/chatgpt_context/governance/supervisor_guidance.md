@@ -1,5 +1,12 @@
 # Supervisor Guidance
 
+> **Current status (8 August 2026):** this file is a chronological record of supervisor
+> guidance. Historical statements below that M1.3 was active or Milestone 2 had not started
+> remain accurate for their meeting dates. Samuel has now closed M1.3 and Milestone 1 and
+> opened Milestone 2 at Causal ABA paper/code orientation. See
+> `docs/research/decisions.md` and
+> `docs/research/milestone_plans/milestone2/README.md`.
+
 Structured record of supervisor guidance for the Causal ABA Learning project. This is the repo
 source mirrored into `docs/chatgpt_context/governance/supervisor_guidance.md` for the ChatGPT
 Project. It records guidance as received; it is not experiment evidence and not report prose.

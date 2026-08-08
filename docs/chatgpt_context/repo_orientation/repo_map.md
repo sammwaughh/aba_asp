@@ -1,6 +1,6 @@
 # Repository map
 
-Operational map of this repository for future experimentation and future Cursor sessions.
+Operational map of this repository for future experimentation and agent sessions.
 Canonical theory lives in `docs/theory/`; this file is orientation only, not theory.
 
 ## Purpose
@@ -22,8 +22,9 @@ The repo contains two distinct codebases that must not be conflated.
 
 2. **Project-specific causal bridge (Python), `causal/`.**
    The MSc work. Turns tabular data into ABA background knowledge, drives the Prolog engine
-   per target variable, and measures whether the learned rule body recovers the target's
-   true parent set. This is the layer to extend.
+   per target variable, and supports learned-rule inspection plus legacy parent-set
+   diagnostics against evaluator-only graph metadata. It is one implementation layer that
+   M2 must understand; whether and how it should connect to Causal ABA remains undecided.
 
 ## Top-level structure
 
@@ -190,10 +191,10 @@ record and cell-inspection document explain which artefacts are authoritative an
 runner `solved`, ASP coverage, exact \(\mathcal H_t^\star\) match, and semantic
 judgement differ.
 
-## Milestone 1.3: claims, probes and future work
+## Milestone 1.3: closed claims, probes, and synthesis
 
-M1.3 currently has two locked claim buckets and one active investigation bucket. Its
-shared method and terminology live in
+M1.3 is closed. It has two locked claim buckets and one completed investigation bucket.
+Its shared method and terminology live in
 `docs/research/milestone_plans/milestone1_part3/milestone1_part3_approach.md`;
 `milestone1_part3_failure_modes.md` records the failure-mode vocabulary.
 
@@ -211,9 +212,12 @@ shared method and terminology live in
   (with generated PDF beside it).
 - Bucket 3 investigation and claims record:
   `docs/experiments/qualitative/M1.3-bucket3-claims.md`.
-  It records the supervisor-defined planning dimensions and current M13-C3 status:
-  H0–H7b complete / analysed (incl. H4b), and no Bucket 3 claim
-  or run matrix.
+  It records the supervisor-defined planning dimensions, completed M13-C3 status, and
+  closure boundary. H0–H7b are complete / analysed (incl. H4b); the individual probes
+  remain bounded evidence and no separate locked Bucket-3 claim list was created.
+- Bucket 3 / Milestone-1 closure synthesis:
+  `docs/experiments/qualitative/M13-C3-binary-collider-and/findings_for_fabrizio.tex`
+  (six cross-cutting findings and four implications).
 
 ### M13-C1 probe: causal-role underdetermination
 
@@ -257,13 +261,14 @@ shared method and terminology live in
   `causal/outputs/aba_learning/grid/M13_c2_bk_order_summary.md` and `.json`.
 
 M13-C1 and M13-C2 are completed evidence for locked Bucket 2. They are not a generic
-directory for all future M1.3 work.
+directory for later work.
 
-### Bucket 3 infrastructure and current boundary
+### Bucket 3 infrastructure and closure boundary
 
-Bucket 3 follows the approved one-case-at-a-time deterministic-mechanism direction.
-H0–H7b are complete / analysed (incl. H4b); no Bucket 3 claim is approved. The status sources
-are its investigation record, the 22 and 31 July sections of
+Bucket 3 followed the approved one-case-at-a-time deterministic-mechanism direction.
+H0–H7b are complete / analysed (incl. H4b), and their six cross-cutting findings are
+consolidated in `findings_for_fabrizio.tex`. The status sources are its investigation and
+closure records, the 22 and 31 July sections of
 `docs/research/supervisor_guidance.md`, `docs/research/research_state.md`, and the
 M13-C3 records below.
 
@@ -291,7 +296,7 @@ Current deterministic M13-C3 evidence:
   (experimental `greedy_cautious` vs locked AAMAS on 18 cells; Analysis A inert;
   Analysis B vs `baseline_cautious` is search-bundle);
 - H6 analysed folding/n search-cost probe: `h6_folding_and_n_ablation.md` / `.tex`;
-- remaining probe catalogue: `future_probes.md` / `.tex` (H1–H7b complete).
+- closed probe catalogue: `future_probes.md` / `.tex` (H1–H7b complete).
 - H4 config:
   `causal/configs/targetwise/m13_bucket3_binary_collider_and/baseline_cautious/n30_seed42.yaml`;
   collection:
@@ -306,7 +311,7 @@ Current deterministic M13-C3 evidence:
   `causal/outputs/aba_learning/targetwise/<fixture>/greedy_cautious/<sample>/`.
 
 Authoritative fixture specifications and target-wise outputs used through completed
-H0–H5 (including H4b):
+H0–H7b (including H4b):
 
 - `causal/fixtures/specs/m13_bucket3_binary_collider_and.yaml` and
   `causal/outputs/causal_fixtures/m13_bucket3_binary_collider_and/`;
@@ -366,16 +371,32 @@ exactly the learned delta already recorded in its metrics. The target-wise diagn
 omit inherited coverage panels and parent/graph proxies. The summary explicitly does
 not union learned rules into a graph or assess CPDAG recovery.
 
-For each later approved fixture, add its source specification, build and inspect its
-population/reference artefacts, then add the learning configuration and evidence record
-and run the target-wise collection. For a target-wise collection the generated cells
-belong under the hierarchy above; grid experiments retain
-`causal/outputs/aba_learning/grid/<experiment-id-or-arm>/`. H0–H5 are
-complete / analysed (incl. H4b).
+The fixture and target-wise infrastructure remains reusable in later milestones, but no
+new fixture follows automatically from M1.3 closure. For any later approved fixture, add
+its source specification, inspect its population/reference artefacts, then add the
+learning configuration and evidence record before running the collection. Generated
+target-wise cells belong under the hierarchy above; grid experiments retain
+`causal/outputs/aba_learning/grid/<experiment-id-or-arm>/`. H0–H7b are complete /
+analysed (incl. H4b).
 
 Also update `docs/experiments/experiments_summary.md` and
-`docs/research/experiment_register.md`. The wider 22 July dimensions remain deferred;
-do not create fixtures or cells merely from that list.
+`docs/research/experiment_register.md`. The wider 22 July dimensions are deferred beyond
+M1; do not create fixtures or cells merely from that historical list.
+
+## Milestone 2 starting point
+
+Milestone 2 is open at theory/code orientation. Primary path:
+`docs/research/milestone_plans/milestone2/README.md`.
+
+The first task is to read the Causal ABA paper and inspect the exact implementation and
+version. This checkout currently provides the inherited ABALearn engine and the
+project-specific target-wise `causal/` bridge. Repository-wide inspection has not located
+a Russo-style implementation of `arr`/`noe`/`indep`, d-separation/collider-tree rules,
+acyclicity attacks, and stable-extension-to-DAG extraction inside `aba_asp`.
+
+Consequently, the Causal ABA code location is an explicit M2 prerequisite. Do not map
+paper constructs to code until that implementation is available and inspected. Root
+`first-ideas.md` is historical brainstorming, not an approved integration design.
 
 ## Documentation / theory files (`docs/`)
 
@@ -396,11 +417,10 @@ do not create fixtures or cells merely from that list.
   - `qualitative/M1.3-bucket1-claims.md` — locked Bucket 1 claim record.
   - `qualitative/M1.3-bucket2-claims.md` — locked Bucket 2 claim record
     (M13-C1/C2).
-  - `qualitative/M1.3-bucket3-claims.md` — Bucket 3 direction/planning record;
-    H0–H7b complete / analysed (incl. H4b),
-    and no claim.
-  - `qualitative/M13-C3-binary-collider-and/` — M13-C3 hub plus H0–H5 evidence
-    records through H7b.
+  - `qualitative/M1.3-bucket3-claims.md` — closed Bucket 3 direction,
+    investigation, and closure record; H0–H7b complete / analysed.
+  - `qualitative/M13-C3-binary-collider-and/` — M13-C3 hub, H0–H7b evidence,
+    audits, and `findings_for_fabrizio.tex` closure synthesis.
   - `qualitative/M13-C1-causal-role-underdetermination/` and
     `qualitative/M13-C2-bk-feature-order/` — analysed Bucket 2 probe records.
   - `report/findings/` — supervisor-facing milestone findings logs (`.tex`).
@@ -412,26 +432,27 @@ do not create fixtures or cells merely from that list.
   - `claims_ledger.md` — evidence-to-claim guardrail.
   - `report_state.md` — interim report section/evidence plan.
   - `figure_table_index.md` — figure/table provenance.
-  - `genai_use_log.md` — factual log of ChatGPT/Cursor assistance.
+  - `genai_use_log.md` — factual log of AI-agent assistance.
 - `docs/research/` — research record: `ideas.md`, `decisions.md`, `research_log.md`,
   `supervisor_guidance.md` (supervisor meeting guidance), `experiment_register.md` (lightweight
   register mirroring the experiments summary), plus this `repo_map.md` and
-  `execution_guide.md`.
+  `execution_guide.md`. Active M2 path: `milestone_plans/milestone2/README.md`.
 - `docs/chatgpt_context/` — upload-staging mirror of the governance and repo-orientation
   docs (canonical matching filenames) for the ChatGPT Project; see its `README.md`.
 
 ## Experiment/report documentation workflow
 
 Experiment records under `docs/experiments/` are **evidence records, not polished report
-prose**. Polished prose is written separately (by Samuel/ChatGPT) from these records.
+prose**. Polished prose is written separately by Samuel with requested agent assistance
+from reviewed records.
 
 1. Design the experiment conceptually before implementation.
-2. Use Cursor plan-only inspection where the implementation path is uncertain.
+2. Use read-only inspection where the implementation path is uncertain.
 3. Record detailed evidence in `docs/experiments/<ID>.md` using `docs/experiments/TEMPLATE.md`.
 4. Update `docs/experiments/experiments_summary.md` and `docs/research/experiment_register.md`.
 5. Track candidate figures/tables in `docs/report/figure_table_index.md`.
 6. Check claims against `docs/report/claims_ledger.md`.
-7. Record meaningful ChatGPT/Cursor assistance in `docs/report/genai_use_log.md`.
+7. Record meaningful AI-agent assistance in `docs/report/genai_use_log.md`.
 
 ## Where examples and generated outputs live
 
@@ -454,15 +475,16 @@ prose**. Polished prose is written separately (by Samuel/ChatGPT) from these rec
   and measures **parent-set recovery** (does the learned rule body for target `xk` match
   `xk`'s true parents). This is the current operationalisation of "apply ABA Learning to
   causal discovery".
-- **Theory-only (NOT implemented in code):** Russo-style **Causal ABA** — arrow/no-edge
-  assumptions (`arr_xy`, `noe_xy`), independence assumptions, d-separation / collider-trees,
-  acyclicity-as-attacks, and the stable-extension ↔ DAG correspondence. These appear only in
-  `docs/theory/` (and as substrings in DGP/test names such as "collider", which refer to the
-  data-generating graph, not to an ABA encoding). Do not assume the repo computes
-  graph-compatible stable extensions.
+- **Not located in this checkout's verified executable paths:** Russo-style **Causal ABA** —
+  arrow/no-edge assumptions (`arr_xy`, `noe_xy`), independence assumptions, d-separation /
+  collider-trees, acyclicity-as-attacks, and the stable-extension ↔ DAG correspondence. These
+  objects currently appear in `docs/theory/` (and some words also occur in DGP/test names,
+  where they describe a data-generating graph rather than an ABA encoding). Milestone 2 must
+  locate and inspect the exact Causal ABA codebase and version; do not assume this checkout
+  computes graph-compatible stable extensions.
 
 Keep the distinction explicit: **implemented = parent-set recovery via ABA Learning**;
-**not yet implemented = Russo-style Causal ABA representation**.
+**not present in the verified `aba_asp` paths = Russo-style Causal ABA representation**.
 
 ## Files that should not be modified casually
 

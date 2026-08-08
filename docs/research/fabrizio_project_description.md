@@ -86,10 +86,12 @@ This is **our** current reading of Fabrizio's specification, not part of the ori
   Russo-style Causal ABA unless it implements the relevant `arr`/`noe`/`indep` assumptions,
   d-separation reasoning, and the stable-extension-as-DAG machinery (see
   `docs/research/repo_map.md`).
-- The first likely novel experiment, **QL-001**, should therefore be framed **modestly** —
-  validating the existing ABA Learning bridge (parent-set recovery) before claiming a full
-  Causal ABA contribution (see `docs/research/research_state.md` and
-  `docs/research/experiment_register.md`).
+- Milestone 1 has now completed the modest, controlled investigation of the existing
+  target-wise ABA Learning bridge. Its closure synthesis is
+  `docs/experiments/qualitative/M13-C3-binary-collider-and/findings_for_fabrizio.tex`.
+- Milestone 2 begins by understanding the Causal ABA paper and exact implementation before
+  choosing how the two directions should be integrated. No integration design is assumed
+  by this working interpretation.
 
 ## Implications for project planning
 
@@ -98,8 +100,9 @@ This is **our** current reading of Fabrizio's specification, not part of the ori
 - Report writing must clearly distinguish **ABA Learning**, **Causal ABA**, and the **current
   implementation**; do not conflate empirical parent-set recovery with full causal-
   argumentative discovery.
-- **Cursor** owns implementation; **ChatGPT** helps check whether proposed experiments stay
-  aligned with this specification and the two stated directions.
+- **Samuel** owns research decisions and validation. The Orchestrator Agent may inspect,
+  implement, test, document, and coordinate specialist tasks when asked, while keeping
+  proposals separate from evidence and supervisor-approved direction.
 - Future work should log, per experiment, which of the two project directions it supports
   (track alongside `docs/research/experiment_register.md`).
 

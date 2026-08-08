@@ -6,7 +6,7 @@ filenames so the repo and the ChatGPT Project use the same names 1:1.
 
 ## How to use
 
-1. Cursor edits the **repo originals** (the source-of-truth column below), never the copies here.
+1. Edit the **repo originals** (the source-of-truth column below), never the copies here.
 2. Before re-uploading to ChatGPT, re-copy the originals into this folder (run
    `scripts/sync_chatgpt_context.sh`, or copy manually).
 3. Upload everything in `governance/` and `repo_orientation/` to the ChatGPT Project,
@@ -18,7 +18,7 @@ Do not edit files in this folder by hand; edits will be overwritten on the next 
 
 ## Manifest
 
-### governance/ (8)
+### governance/ (10)
 
 | Mirror file | Repo source (source of truth) |
 |---|---|
@@ -30,6 +30,8 @@ Do not edit files in this folder by hand; edits will be overwritten on the next 
 | `governance/report_state.md` | `docs/report/report_state.md` |
 | `governance/experiments_summary.md` | `docs/experiments/experiments_summary.md` |
 | `governance/M1.3-bucket3-claims.md` | `docs/experiments/qualitative/M1.3-bucket3-claims.md` |
+| `governance/milestone2_approach.md` | `docs/research/milestone_plans/milestone2/README.md` |
+| `governance/findings_for_fabrizio.tex` | `docs/experiments/qualitative/M13-C3-binary-collider-and/findings_for_fabrizio.tex` |
 
 ### repo_orientation/ (7)
 

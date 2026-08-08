@@ -7,21 +7,19 @@ updated as milestones change. Does not duplicate `repo_map.md`, `execution_guide
 ## Current goal
 
 Learn causal relationships from data in an **argumentative** form by combining **ABA Learning**
-and **Causal ABA**. The settled project direction is that **Causal ABA guides ABA Learning**:
-causal information (candidate arrows, no-edge claims, conditional-independence evidence,
-acyclicity, d-separation) is used as argumentative background knowledge to constrain, prioritise
-or interpret ABA Learning transformations. See `docs/report/manuscript/introduction.md` and
-`docs/report/manuscript/project_plan.md`.
+and **Causal ABA**. Milestone 2 will determine the exact integration architecture. The broad
+direction is that Causal ABA information or machinery should guide, constrain, prioritise,
+interpret, or otherwise interact with ABA Learning; no particular interface has yet been
+selected. The existing manuscript introduction and project plan predate this milestone-opening
+decision and must not be treated as an approved implementation design.
 
 The current empirical implementation remains a **target-wise ABA Learning** pipeline that
-converts a data table into ABA background predicates and learns a framework for a chosen target.
-The completed work used parent-set and expected-rule comparisons as diagnostic proxies. Under
-Fabrizio's 31 July guidance, the immediate RQ1 investigation now studies binary causal
-fixtures with non-degenerate stochastic roots and deterministic non-root mechanisms. For
-each bounded case, the mechanism/rule reference is fixed before all-target ABALearn runs,
-after which the learned rules and traces are described against what the population and
-finite sample made available. This remains groundwork, not a proof or implementation of
-full causal discovery.
+converts a data table into ABA background predicates and learns a framework for a chosen
+target. Milestone 1 used parent-set and expected-rule comparisons as diagnostic proxies and
+then closed with a trace-backed account of what the learner does on controlled fixtures.
+Its final Bucket-3 synthesis is
+`docs/experiments/qualitative/M13-C3-binary-collider-and/findings_for_fabrizio.tex`.
+This evidence remains groundwork, not a proof or implementation of full causal discovery.
 
 Future target-wise fixtures use lowercase internal identifiers `a`, `b`, `c`, ... while
 scientific descriptions may use (A,B,C,\ldots). Existing `xN` evidence is not renamed.
@@ -29,9 +27,17 @@ The Python bridge enforces safe Prolog atoms and keeps causal predicates distinc
 learner-generated `alpha_N` assumptions and `c_alpha_N` contraries; the inherited Prolog
 engine is unchanged.
 
-The broader dimensions opened on 22 July — missing/partial data, larger controlled graphs,
-category counts, non-discrete data, and cross-target graph recovery — remain possible later
-Bucket 3 work but are deferred while this deterministic-mechanism foundation is developed.
+Milestone 1 is now **closed** (8 August 2026). The broader dimensions opened on 22 July —
+missing/partial data, larger controlled graphs, category counts, non-discrete data, and
+cross-target graph recovery — were not required for closure. They remain possible later
+questions, but they are not unfinished Bucket-3 obligations and are not automatically part
+of Milestone 2.
+
+Milestone 2 is **open at the orientation stage**. The immediate work is to read the Causal
+ABA paper and inspect the exact implementation closely, then formulate integration designs
+from verified theory/code facts, and only then implement and test Samuel-approved ideas.
+No M2 integration design, prototype, experiment, or run matrix is yet approved or run. See
+`docs/research/milestone_plans/milestone2/README.md`.
 
 ## Research questions
 
@@ -44,7 +50,8 @@ Bucket 3 work but are deferred while this deterministic-mechanism foundation is 
 - **RQ3** — How does the resulting causally guided ABA Learning bridge compare with
   representative causal-discovery methods on controlled canonical examples?
 
-At this interim stage the main empirical contribution concerns **RQ1**.
+Milestone 1 closes the project's current empirical account of **RQ1**. Milestone 2 now
+opens **RQ2**; RQ3 remains later evaluation work.
 
 ## Report / literature / background status
 
@@ -53,8 +60,10 @@ At this interim stage the main empirical contribution concerns **RQ1**.
   `project_plan`.
 - Literature Review and Background are drafted and reusable; the theory canon remains in
   `docs/theory/background.tex` and `docs/theory/literature_review.tex`.
-- Experimentation is drafted from the QL1/QL2/QL3 records; Project Plan sets out Milestones 1–6
-  and a 14-calendar-week schedule.
+- Experimentation is drafted from the QL1/QL2/QL3 records; the completed M1.3 synthesis is
+  additional supervisor-facing evidence. The existing Project Plan's Milestones 1–6 and
+  14-calendar-week schedule predate the M1 closure/M2 opening and require revision before
+  final use.
 - Paper summaries exist under `docs/theory/paper_summaries/` (Russo et al. 2024; Proietti & Toni
   2024; De Angelis et al. 2023/2024/2025; Toni 2014). Canonical theory source:
   `docs/theory/theory_primer.md`.
@@ -88,7 +97,7 @@ At this interim stage the main empirical contribution concerns **RQ1**.
   clingo 5.8.0) — see `environment_setup.md`.
 - **Docs**: `repo_map.md`, `execution_guide.md`, `environment_setup.md` created.
 
-## Experiment status (groundwork / RQ1)
+## Milestone 1 experiment status (closed RQ1 groundwork)
 
 Report labels map to repo ids: **QL1 = QI-001, QL2 = QI-002, QL3 = QI-004**. (The earlier
 n=100 scaled attempt was cut; only the reduced n=20 study is canonical and is now QL3.)
@@ -124,6 +133,16 @@ cat3 σ-invariance fails under default nd pipeline but is **accounted for** by B
 characterises what unguided ABA Learning does before causal guidance is added; it does not
 establish causal discovery.
 
+**M1.3 Bucket-3 closure.** H0–H7b are complete and analysed. The cross-probe synthesis
+records six bounded findings: Greedy enumerates positive value patterns and retains all
+measured predictors; nd latches onto the first BK predictor; brave nd can accept
+non-functional targets through ground assumption choices whereas cautious nd blocks the
+tested construction; the current unary exact-value encoding makes larger folding-token
+ceilings replay failed searches; distinct value patterns fix the recorded search while row
+multiplicity adds cost; and `sechk` produces a first-predictor-only brave profile and a more
+expensive cautious profile than `relto` on the tested cells. Canonical source:
+`findings_for_fabrizio.tex`. These are bounded findings, not full causal-discovery results.
+
 ## Open conceptual risks
 
 - The current bridge is **target-wise parent-set recovery via ABA Learning**, not full Causal
@@ -137,7 +156,7 @@ establish causal discovery.
 - Result interpretation must distinguish **empirical parent recovery** from
   **causal-argumentative discovery** (stable extensions ↔ compatible DAGs). The former does not
   establish the latter.
-- The expanded M1.3 must distinguish a learning-strategy failure from an
+- M2 designs must continue to distinguish a learning-strategy failure from an
   **identifiability/information limitation**. Markov-equivalent or otherwise
   observationally indistinguishable structures cannot be separated merely by changing
   the learner.
@@ -157,43 +176,29 @@ establish causal discovery.
 - “Missing data” is not yet operationalised; missing rows, cell values, variables, and
   combinations are distinct interventions.
 
-## Next milestone
+## Current milestone
 
-Milestone 1's goal is a **report-ready account of what causal structure unguided ABA
-Learning can recover from controlled tabular data, under which targets, data-availability
-conditions, graph/mechanism structures, and learning strategies — and which limitations
-are informational rather than strategic**. The completed categorical target-wise work
-remains the foundation; the new scope does not yet imply a full causal-discovery
-implementation. Primary working path:
-`docs/research/milestone_plans/milestone1_high_level_path.md`.  
-Expanded Approach:
-`docs/research/milestone_plans/milestone1_part2/milestone1_part2_expanded_approach.md`.
+**Milestone 1 is closed.** Its goal was a report-ready account of what causal structure
+unguided ABA Learning can recover from controlled tabular data and which observed limits
+are strategic, representational, data-driven, or informational.
 
 - **M1.1** — closed.
-- **M1.2 expanded (M12x)** — **closed / analysed:** fresh 18-cell run + Stage-3
-  inspection **18/18** (2026-07-20). Record: `docs/experiments/qualitative/M1.2-expanded.md`.
-  Inspection: `M1.2-expanded-cell-inspection.md`.
-- **M1.3** — **in progress:** Bucket 1 **written / locked**; Bucket 2
-  **locked / closed** with Claims 1–2 from M13-C1/C2; Bucket 3 baseline
-  **M13-C3 H0 closed**; probes **H1–H7b run / analysed** (**no claim**; includes
-  H4b). H5 experimental `greedy_cautious` is **run / analysed**
-  (`h5_greedy_cautious.md`); H6 search-cost ablation is **run / analysed**
-  (`h6_folding_and_n_ablation.md`); H7a/H7b relto vs sechk are **run / analysed**
-  (`h7a_relto_vs_sechk.md`, `h7b_cautious_relto_vs_sechk.md`). Method:
-  `milestone1_part3_approach.md`. Records:
-  `docs/experiments/qualitative/M1.3-bucket1-claims.md` (locked);
-  `docs/experiments/qualitative/M1.3-bucket2-claims.md` (locked);
-  `docs/experiments/qualitative/M1.3-bucket3-claims.md`;
-  `docs/experiments/qualitative/M13-C3-binary-collider-and/experiment.md`;
-  `docs/experiments/qualitative/M13-C3-binary-collider-and/learning_analysis.md`;
-  `docs/experiments/qualitative/M13-C3-binary-collider-and/h1_support_ablation.md`;
-  `docs/experiments/qualitative/M13-C3-binary-collider-and/h2_irrelevant_covariate.md`;
-  `docs/experiments/qualitative/M13-C3-binary-collider-and/h3_bk_leading_distractor.md`;
-  `docs/experiments/qualitative/M13-C3-binary-collider-and/h4_cautious_vs_brave.md`;
-  `docs/experiments/qualitative/M13-C3-binary-collider-and/h4b_cautious_split_under_a.md`;
-  `docs/experiments/qualitative/M13-C3-binary-collider-and/h5_greedy_cautious.md`.
-- **No M1.4** — the widened work remains M1.3. Later large-scale external evaluation
-  remains deferred beyond this supervisor-driven controlled investigation.
+- **M1.2 expanded (M12x)** — closed / analysed; fresh 18-cell run and Stage-3
+  inspection 18/18.
+- **M1.3** — closed. Bucket 1 has four locked claims; Bucket 2 has two locked claims;
+  Bucket 3 H0–H7b are complete / analysed and consolidated into six cross-cutting
+  findings in `findings_for_fabrizio.tex`. No separate locked Bucket-3 claim list was
+  created.
+- **M1.4** — does not exist.
 
-Then **Milestone 2** (Causal-ABA-guided ABA Learning bridge), informed by the expanded
-M1.3. Milestone 2 has not started.
+**Milestone 2 is the active milestone.** Its ordered scope is:
+
+1. read and understand the Causal ABA paper and exact implementation;
+2. formulate proper integration designs from that verified understanding and the closed
+   M1 findings;
+3. implement and test approved designs through bounded experiments.
+
+The first concrete deliverable is a theory/implementation map. The exact Causal ABA code
+location and version must be established: this `aba_asp` checkout does not currently
+contain a verified Russo-style `arr`/`noe`/`indep`, d-separation, stable-extension-as-DAG
+implementation. Primary path: `docs/research/milestone_plans/milestone2/README.md`.

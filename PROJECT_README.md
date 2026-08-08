@@ -45,16 +45,20 @@ Experiments are documented under `docs/experiments/`:
 - The at-a-glance index is `docs/experiments/experiments_summary.md`.
 - Milestone 1 Part 1 (M11 / m1.1) is **closed** (Stages 0–7, June 2026): `docs/experiments/qualitative/M1.1-parent-position.md`; supervisor findings `docs/report/findings/milestone1_part1_m11_findings.tex`.
 - Milestone 1 Part 2 (M1.2 / M12x) is **closed** (18/18 run + Stage-3, 2026-07-20).
-  **M1.3** Buckets 1–2 locked; Bucket 3 H0–H6 are complete / analysed (including
-  H4b) under Fabrizio's one-case-at-a-time deterministic-mechanism direction.
-  H5 uses the experimental `greedy_cautious` configuration; it is not an
-  AAMAS-paper method. H6 is a completed procedural search-cost probe; H7 is
-  signposted only. No Bucket 3 claim is approved.
-  The wider 22 July dimensions are deferred, and M12x/Buckets 1–2
-  will not be redone. Primary path:
-  `docs/research/milestone_plans/milestone1_high_level_path.md`. M1.3 Approach (method):
-  `docs/research/milestone_plans/milestone1_part3/milestone1_part3_approach.md`.
-  No M1.4; Milestone 2 has not started.
+- **Milestone 1 is closed** (8 August 2026). M1.3 Buckets 1–2 retain their locked
+  claims; Bucket 3 H0–H7b are complete / analysed (including H4b). The six
+  cross-cutting Bucket-3 findings and resulting working recommendations are synthesised in
+  `docs/experiments/qualitative/M13-C3-binary-collider-and/findings_for_fabrizio.tex`.
+  The individual H-probes remain bounded evidence records; there is no separate locked
+  Bucket-3 claim list. Closure path:
+  `docs/research/milestone_plans/milestone1_high_level_path.md`. There is no M1.4.
+- **Milestone 2 is open.** The current task is to read the Causal ABA paper and inspect
+  the exact Causal ABA implementation closely, then use that verified understanding to
+  formulate integration designs, and finally test Samuel-approved designs through small
+  controlled investigations. No M2 integration design or experiment is approved or run
+  yet. Primary path: `docs/research/milestone_plans/milestone2/README.md`.
+- No Russo-style Causal ABA implementation has yet been verified inside this checkout.
+  The implementation location and version are an explicit M2 Stage-1 prerequisite.
 - Future target-wise fixtures use lowercase internal variable identifiers `a`, `b`,
   `c`, ... (displayed mathematically as (A,B,C,\ldots)); existing `xN` fixtures remain
   supported and unchanged. This is a Python-bridge convention and does not modify the
@@ -71,4 +75,4 @@ Report-supporting docs live under `docs/report/`:
 - `docs/report/claims_ledger.md` — evidence-to-claim guardrail.
 - `docs/report/report_state.md` — interim report section/evidence plan.
 - `docs/report/figure_table_index.md` — figure/table provenance.
-- `docs/report/genai_use_log.md` — factual log of ChatGPT/Cursor assistance.
+- `docs/report/genai_use_log.md` — factual log of AI-agent assistance.

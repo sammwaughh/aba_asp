@@ -9,9 +9,10 @@ guide covers verified execution workflows only; it does not duplicate environmen
 
 Scope reminder: what runs today is **target-wise ABA Learning over tabular data**, with
 learned-rule inspection and, in older grid infrastructure, parent-set diagnostics.
-Russo-style Causal ABA
-(`arr_xy`/`noe_xy`/independence/d-separation) is **not implemented** — see
-[`repo_map.md`](repo_map.md).
+No Russo-style Causal ABA path
+(`arr_xy`/`noe_xy`/independence/d-separation) has been located or verified in this
+checkout — see [`repo_map.md`](repo_map.md). Milestone 2 must locate and inspect the exact
+Causal ABA implementation before any separate codebase is described.
 
 ## Preconditions
 
@@ -263,9 +264,11 @@ python -m causal.experiments.run_grid \
 ## Relationship to future experiments
 
 This guide documents only verified execution of the existing system. New experiment design —
-including QL-001 — should be planned separately, after this guide is committed, and recorded
-under `docs/experiments/` per the research-logging rule. Do not add experiment hypotheses or
-proposed Causal ABA encodings here.
+including Milestone-2 integration tests — must be planned separately and recorded under
+`docs/experiments/` per the research-logging rule. The Causal ABA implementation has not yet
+been verified inside this checkout, so this guide contains no Causal ABA execution command.
+Add such commands only after the exact code/version is located and successfully inspected or
+run. Do not add speculative integration hypotheses or proposed Causal ABA encodings here.
 
 ## Related docs
 

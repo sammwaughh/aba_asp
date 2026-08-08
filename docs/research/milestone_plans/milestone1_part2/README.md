@@ -20,5 +20,5 @@
 **Accepted unit set (U1–U7):**  
 [`milestone1_part2_expanded_unit_set.md`](milestone1_part2_expanded_unit_set.md)
 
-**Next:** none for Part 2 — M1.3 in progress (Buckets 1–2 locked; Bucket 3 planning
-pending). M12x remains fixed evidence and will not be redone.
+**Next:** none for Part 2. M1.3 and Milestone 1 are closed; M12x remains fixed evidence
+and will not be redone. Active successor: [`../milestone2/README.md`](../milestone2/README.md).

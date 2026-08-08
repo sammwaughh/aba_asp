@@ -16,7 +16,7 @@ The earlier n=100 scaled attempt was cut and is not part of the canonical experi
 
 - proposed — idea noted; not yet designed in full.
 - planned — design agreed (question, setup, metrics, interpretation rule).
-- implemented — code in place (by Cursor); not yet run.
+- implemented — code in place; not yet run.
 - run — executed; raw artefacts produced.
 - analysed — results interpreted against the interpretation rule.
 - reported — written into an interim/final report section.
@@ -35,16 +35,35 @@ The earlier n=100 scaled attempt was cut and is not part of the canonical experi
 | M11 | — | m1.1 Parent-position and representation-order control | analysed (Stages 0–7; ablations + greedy comparator) |
 | M12 | — | m1.2 Published-configuration comparison (ASP-ABAlearnB / Greedy ABA Learning) | analysed (Stages 0–3: 10-cell grid + full cell inspection / failure-mode taxonomy) |
 | M12x | — | m1.2 expanded U1–U7 (ECAI/AAMAS; val-only BK; 18 cells) | closed / analysed (18/18 Stage-3) |
-| M13 | — | m1.3 capabilities and limits of unguided ABA Learning for causal recovery | in progress (Buckets 1–2 locked; M13-C3 H0 closed; H1–H7b analysed; no claim) |
+| M13 | — | m1.3 capabilities and limits of unguided ABA Learning for causal recovery | **closed / analysed** (Buckets 1–2 locked; Bucket 3 H0–H7b synthesised) |
 | M13-C1 | M13 | Causal-role underdetermination under learner-input equivalence | analysed |
 | M13-C2 | M13 | Comparative sensitivity to BK feature-block order | analysed |
-| M13-C3 | M13 | Bucket 3 binary deterministic AND collider | **H0 closed**; **H1–H7b analysed** (no claim) |
+| M13-C3 | M13 | Bucket 3 binary deterministic AND collider | **closed / analysed**; six cross-cutting findings; no separate locked claim list |
+| M2 | — | Causal ABA and ABA Learning integration | **opened; theory/code orientation active**; no experiment approved |
 
 ## Template
 
 Copy this block per experiment.
 
-text ### <ID> — <short title> - Status: proposed | planned | implemented | run | analysed | reported - Research question: - Theoretical motivation: - Relation to ABA Learning: - Relation to Causal ABA: - Code path: - Dataset / DGP: - Target variable(s): - Metrics: - Baseline / comparator: - Expected result: - Interpretation rule:        # what each outcome would and would NOT show - Failure modes: - Cursor implementation plan / prompt:   # link or prompt text - Commit hash / run artifact path: - Report relevance: 
+```text
+### <ID> — <short title>
+- Status: proposed | planned | implemented | run | analysed | reported
+- Research question:
+- Theoretical motivation:
+- Relation to ABA Learning:
+- Relation to Causal ABA:
+- Code path:
+- Dataset / DGP:
+- Target variable(s):
+- Metrics:
+- Baseline / comparator:
+- Expected result:
+- Interpretation rule:        # what each outcome would and would NOT show
+- Failure modes:
+- Implementation plan / agent hand-off:   # link or prompt text
+- Commit hash / run artefact path:
+- Report relevance:
+```
 
 ## Documentation workflow
 
@@ -67,9 +86,11 @@ Experiment records are evidence records, not polished report prose. They should 
 
 Report-writing workflow:
 
-1. Cursor records facts and artefacts in docs/experiments/<ID>.md.
+1. The responsible implementation or evidence agent records facts and artefacts in
+   docs/experiments/<ID>.md.
 2. Samuel reviews and corrects the experiment record.
-3. ChatGPT drafts candidate report prose from the reviewed record.
+3. The Orchestrator or a named writing agent drafts candidate report prose from the
+   reviewed record when Samuel requests it.
 4. Samuel verifies, edits, and authors the final report text.
 5. Claims are checked against docs/report/claims_ledger.md.
 
@@ -80,9 +101,16 @@ Current report-supporting files:
 - docs/report/report_state.md;
 - docs/report/figure_table_index.md;
 - docs/report/genai_use_log.md;
+- docs/experiments/qualitative/M13-C3-binary-collider-and/findings_for_fabrizio.tex
+  (Milestone-1 closure synthesis);
+- docs/research/milestone_plans/milestone2/README.md (active M2 path);
 - docs/report/manuscript/ — the five drafted report chapters (`.tex` authoritative + `.md` ChatGPT mirrors): introduction, literature_review, background, experimentation, project_plan.
 
-ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of the governance and repo-orientation docs, using canonical (matching) filenames. The governance set there is research_state.md, experiment_register.md, chatgpt_project_brief.md, supervisor_guidance.md, claims_ledger.md, report_state.md, experiments_summary.md. Cursor edits the repo originals; the mirror is re-copied before upload (see docs/chatgpt_context/README.md).
+ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of the
+governance and repo-orientation docs, using canonical filenames. The governance set also
+includes the closed Bucket-3 record, active M2 approach, and completed
+`findings_for_fabrizio.tex`. Edit repo originals; re-copy the mirror before upload (see
+`docs/chatgpt_context/README.md`).
 
 ## Entries
 
@@ -238,7 +266,9 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
 
 ### M12 — m1.2 Published-configuration comparison
 
-- Status: pilot analysed (Stages 0–3). Expanded work continues as **M12x** (analysed). Pilot grid: 10/10 `solved`; exact-match 2/10; ASP coverage 10/10; cell inspection 2026-07-13. No M1.4.
+- Status: pilot analysed (Stages 0–3). The completed successor **M12x** is closed /
+  analysed. Pilot grid: 10/10 `solved`; exact-match 2/10; ASP coverage 10/10; cell
+  inspection 2026-07-13. No M1.4.
 - Planning docs: `docs/research/milestone_plans/milestone1_high_level_path.md`; **Approach** `docs/research/milestone_plans/milestone1_part2/milestone1_part2_expanded_approach.md`; `docs/research/milestone_plans/milestone1_part2/`.
 - Record: docs/experiments/qualitative/M1.2-config-comparison.md; Stage-3 inspection: docs/experiments/qualitative/M1.2-config-comparison-cell-inspection.md.
 - Stage-0 artefacts: causal/experiments/handcrafted_m12.py (fixtures m12_sep / m12_conj / m12_disj / m12_fork / m12_chain); causal/tests/test_m12_fixtures.py (validation checks); registration in causal/experiments/handcrafted.py.
@@ -275,9 +305,9 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
 
 ### M13 — m1.3 causal-recovery capabilities and limits
 
-- Status: **`in progress`** — Bucket 1 **written / locked**; Bucket 2
-  **locked / closed** with Claims 1–2; Bucket 3 baseline **M13-C3 H0 closed**;
-  probes **H1–H7b run / analysed** (**no claim**; includes H4b). H5 experimental
+- Status: **`closed / analysed`** (2026-08-08) — Bucket 1 **written / locked**;
+  Bucket 2 **locked / closed** with Claims 1–2; Bucket 3 **H0–H7b run /
+  analysed** (includes H4b). H5 experimental
   `greedy_cautious` is **run / analysed** (`h5_greedy_cautious.md`); **H6 is
   `run / analysed`** (`h6_folding_and_n_ablation.md`); **H7a is
   `run / analysed`** (`h7a_relto_vs_sechk.md`); **H7b is `run / analysed`** (`h7b_cautious_relto_vs_sechk.md`).
@@ -293,7 +323,10 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
   `h4_cautious_vs_brave.md`; H4b: `h4b_cautious_split_under_a.md`; H5:
   `h5_greedy_cautious.md`; H6: `h6_folding_and_n_ablation.md`; H7a:
   `h7a_relto_vs_sechk.md`; H7b: `h7b_cautious_relto_vs_sechk.md`).
-- Next: still **no Bucket 3 claim**.
+- Closure synthesis:
+  `docs/experiments/qualitative/M13-C3-binary-collider-and/findings_for_fabrizio.tex`.
+  It records six cross-cutting findings. No separate locked Bucket-3 claim list was
+  created.
 
 
 #### M13-C1 — causal-role underdetermination
@@ -323,8 +356,8 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
 
 #### M13-C3 — binary deterministic AND collider (Bucket 3)
 
-- Status: **`H0 closed`; `H1–H7b run / analysed`**
-  (incl. H4b) — **no Bucket 3 claim**.
+- Status: **`closed / analysed`** — H0–H7b complete (incl. H4b); six
+  cross-cutting findings consolidated; no separate locked Bucket-3 claim list.
 - Record: `docs/experiments/qualitative/M13-C3-binary-collider-and/experiment.md`.
 - H0: `.../learning_analysis.md` / `.tex`.
 - H1: `.../h1_support_ablation.md` / `.tex`.
@@ -372,4 +405,20 @@ ChatGPT context mirror: `docs/chatgpt_context/` is the upload-staging copy of th
 - H6 collections (new):
   `.../m13_bucket3_binary_collider_and/baseline_cautious_steps{1,2,5}/...`
   plus nested `n60_seed42` / `n90_seed42` under steps2; steps-10 = reused H4.
-- Next: no Bucket 3 claim pending further Samuel decision.
+- Closure: `findings_for_fabrizio.tex` is the canonical cross-probe synthesis. No
+  further M1.3 probe is pending.
+
+### M2 — Causal ABA and ABA Learning integration
+
+- Status: **opened; theory/code orientation active** (2026-08-08). No M2 experiment,
+  integration design, or prototype is approved or run.
+- Primary path: `docs/research/milestone_plans/milestone2/README.md`.
+- Current question: what exactly do the Causal ABA paper and implementation represent,
+  compute, accept as inputs, and emit as graph/argumentation outputs, and which verified
+  objects could coherently interface with ABA Learning?
+- First deliverable: a paper/code capability map with exact source paths and a clear
+  distinction between abstract Causal ABA, ABA-PC, the external implementation, and this
+  repo's target-wise `causal/` bridge.
+- Repository boundary: no Russo-style Causal ABA implementation has yet been verified
+  inside this checkout; locate the exact code and version before code-level conclusions.
+- Next: complete orientation, then let Samuel select integration designs for bounded tests.

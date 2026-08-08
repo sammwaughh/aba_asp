@@ -2,6 +2,11 @@
 
 ## Status
 
+**Catalogue closed (8 August 2026).** H1–H7b are complete / analysed. Their
+cross-cutting findings are consolidated in `findings_for_fabrizio.tex`; no further M1.3
+probe is pending. The descriptions below are retained as the chronological design and
+evidence catalogue.
+
 Follow-up probes **motivated by closed baseline H0**, and **not** part of H0
 itself. H0 is the completed six-cell AAMAS+ECAI investigation on fixture
 `m13_bucket3_binary_collider_and` / `n30_seed42`, documented in
@@ -620,7 +625,7 @@ Do not treat predictive rules for roots as mechanism recovery.
 | H7a brave nd `sechk` vs `relto` (H0+H3) | **Approved** then **run / analysed** | 2026-08-04 |
 | H7b cautious nd `sechk` vs `relto` (H0+H3) | **Approved** then **run / analysed** | 2026-08-04 |
 
-## Current status and remaining work
+## Final probe status
 
 - **H1:** **complete** (`h1_support_ablation.md`). Not a claim.
 - **H2:** **complete** (`h2_irrelevant_covariate.md`). Lead: AAMAS `c` retains
@@ -647,4 +652,6 @@ Do not treat predictive rules for roots as mechanism recovery.
   `c`, cautious relto vs sechk both solve with differing deltas (Q1–Q2);
   Q4–Q5 empty-stdout timeouts non-comparable. **Not a claim.**
 
-- Still **no** Bucket 3 claim.
+- No individual probe is a standalone claim. Six cross-cutting findings are stated with
+  their joint evidence and caveats in `findings_for_fabrizio.tex`.
+- M1.3 is closed; the successor is Milestone 2 paper/code orientation.

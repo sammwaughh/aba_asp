@@ -2,7 +2,8 @@
 
 ## Purpose
 
-This file records factual use of ChatGPT and Cursor during the Causal ABA Learning project.
+This file records factual use of ChatGPT/Codex, Cursor, and named specialist agents during
+the Causal ABA Learning project.
 
 It supports transparent authorship and future AI-use declarations. It is not itself polished declaration text.
 
@@ -21,6 +22,10 @@ Record:
 Do not record private chain-of-thought or irrelevant chat detail.
 
 ## Tool roles
+
+The role descriptions below include both historical and current workflows. The current
+main task is the **Orchestrator Agent**, which has live repository access; older entries
+that separate ChatGPT from Cursor remain historically accurate.
 
 ### Samuel
 
@@ -52,6 +57,20 @@ Not responsible for:
 - live repo execution;
 - final submitted wording.
 
+### Orchestrator Agent (current)
+
+Permitted uses when Samuel requests them:
+
+- live repository and project-context inspection;
+- theory/code/evidence comparison;
+- approved code and documentation edits;
+- tests and consistency checks;
+- research planning and drafting assistance;
+- coordination of focused specialist agents.
+
+Not responsible for research ownership, independent validation, final authorship, or
+unapproved experiments and semantic changes.
+
 ### Cursor
 
 Permitted uses:
@@ -75,6 +94,8 @@ Not responsible for:
 
 | Date | Tool | Task | Output / artefact | Used in report? | Samuel verification / edits | Notes |
 |---|---|---|---|---|---|---|
+| 2026-08-08 | Orchestrator Agent | Close M1.3/Milestone 1 in repository documentation and open M2 context | canonical status docs, milestone plans, experiment indexes, claims ledger, M2 orientation plan, refreshed ChatGPT mirrors | indirect; report planning and supervisor hand-off | Samuel explicitly directed the milestone transition and will review/commit | No experiment or learner code changed; no M2 integration idea or result invented. |
+| 2026-08-04–2026-08-08 | Orchestrator + specialist documentation/trace agents | Analyse and synthesise H0–H7b; support the supervisor-facing M1.3 document | H-probe evidence records and `findings_for_fabrizio.tex` | supervisor-facing evidence synthesis; not automatically submitted prose | Samuel directed the findings, reviewed sections, and completed the document | Six bounded findings; explicit ABA Learning/Causal ABA boundary preserved. |
 | 2026-07-22 | Cursor | Record Fabrizio scope review; close Bucket 2; open Bucket 3; refresh ChatGPT context | supervisor guidance; research state/decisions/log; milestone plans; Bucket 3 planning stub; regenerated `docs/chatgpt_context/` | no (planning context) | Samuel supplied meeting notes and directed pivot | No Bucket 3 claims or experiments generated; mirrors prepared for manual re-upload. |
 | 2026-07-21 | Cursor | M1.3 Bucket 2 targeted controls and Markdown claim records | M13-C1 (4 cells), M13-C2 (20 cells), experiment records/summaries; Bucket 2 Claims 1–2 | evidence candidate | Samuel reviewed claim direction and requested implementation | Current bridge described as unguided target-wise ABA Learning; no full Causal ABA claim. |
 | 2026-07-20 | Cursor | Delete prior M12x outputs; reset status docs | deleted M12x_* grid trees/summary/cell-inspection; status → implemented awaiting fresh run | no | Samuel directed | Clean slate before locked 18-cell run; prior grids not evidence. |

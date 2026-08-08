@@ -176,9 +176,9 @@ Cells: `(max_collider, x2, ECAI)`, `(max_collider, x2, AAMAS)`.
 | Summary matrix + cell reports | **Done** — `M12x_summary.md`; `M12x_cell_reports/` (18) |
 | Stage-3 inspection | **Done** — 18/18 written; M12x closed |
 
-## Next step
+## Closure and successor
 
-**M12x closed and preserved as fixed evidence.** M1.3 Buckets 1–2 are locked; Bucket 3
-planning follows Fabrizio's 22 July expanded-scope guidance. M12x will not be redone.
-Separation-contract Stage-0 checks across U1–U6 remain optional provenance work (not
-blocking).
+**M12x is closed and preserved as fixed evidence.** M1.3 Buckets 1–2 remain locked;
+Bucket 3 and Milestone 1 are also closed. M12x will not be redone merely because Milestone
+2 has opened. Separation-contract Stage-0 checks across U1–U6 remain optional provenance
+work rather than unfinished milestone work.

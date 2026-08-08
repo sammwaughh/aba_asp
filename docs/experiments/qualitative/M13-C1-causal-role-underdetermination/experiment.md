@@ -359,7 +359,8 @@ causally privileged.
 ## Next decision
 
 None for M13-C1. Its evidence is incorporated into locked Bucket 2 Claim 1. Preserve
-the record unchanged while Bucket 3 planning proceeds.
+the record unchanged. Bucket 3 and M1.3 are now closed; this remains locked Bucket-2
+evidence carried into Milestone 2.
 
 ## Samuel review checklist
 

@@ -1,8 +1,8 @@
 # Milestone 1, Part 3 (M1.3) — Recovery patterns and limits
 
-**Status:** historical Bucket 1/2 detail plan. Bucket 1 and Bucket 2 are now
-**locked**; Bucket 3's current direction is the 31 July root-stochastic,
-deterministic-non-root approach recorded in `milestone1_part3_approach.md`.
+**Status:** historical detail plan; M1.3 is **closed**. Bucket 1 and Bucket 2 are
+locked; Bucket 3 H0–H7b are complete / analysed and consolidated in
+`docs/experiments/qualitative/M13-C3-binary-collider-and/findings_for_fabrizio.tex`.
 **Primary path:** [`../milestone1_high_level_path.md`](../milestone1_high_level_path.md)  
 **Parent index:** [`../milestone1-plan.md`](../milestone1-plan.md)  
 **Approach (method):** [`milestone1_part3_approach.md`](milestone1_part3_approach.md)  
@@ -12,10 +12,9 @@ deterministic-non-root approach recorded in `milestone1_part3_approach.md`.
 Filename retained for continuity; the work is **not** required to use a fixed “failure
 mode” taxonomy. Prefer plain-English descriptions of recovery patterns and limits.
 
-The method below describes the completed M12x-centred Bucket 1/2 phase. It is not the
-current method for Bucket 3. See
-`docs/experiments/qualitative/M1.3-bucket3-claims.md` and the current part-3
-`README.md` before using this file as a next-step guide.
+The method below describes the completed M12x-centred Bucket 1/2 phase. It is not a
+next-step guide. See `docs/experiments/qualitative/M1.3-bucket3-claims.md` and the
+part-3 `README.md` for closure; active work is in Milestone 2.
 
 ## 1. Goal and research question
 
@@ -30,10 +29,11 @@ output informs Milestone 2 (Causal ABA integration).
 
 ## 2. Inputs
 
-- **M12x (required, after fresh run):** Stage-3 inspection (to be written);
+- **M12x (completed input):** Stage-3 inspection (18/18);
   summary matrix (`M12x_summary.md`); cell reports; runner cells under
   `causal/outputs/aba_learning/grid/M12x_{ecai2024,aamas2025}/`.
-  Prior M12x outputs were deleted (2026-07-20).
+  Prior superseded M12x outputs were deleted (2026-07-20); the fresh locked package
+  replaced them.
 - Pilot M1.2 inspection (optional provenance).
 - M1.1 record: BK/representation ordering as one established limit under nd.
 - Backing papers: ECAI 2024 (ASP-ABAlearnB), AAMAS 2025 (Greedy ABA Learning), and
@@ -67,12 +67,12 @@ must not redefine success as coverage alone.
 - Bucket 2 claims (**locked**):
   `docs/experiments/qualitative/M1.3-bucket2-claims.md` and
   `docs/report/findings/milestone1_part3_bucket2_claims.tex`.
-- Bucket 3 planning:
-  `docs/experiments/qualitative/M1.3-bucket3-claims.md`.
+- Bucket 3 investigation/closure:
+  `docs/experiments/qualitative/M1.3-bucket3-claims.md` and
+  `docs/experiments/qualitative/M13-C3-binary-collider-and/findings_for_fabrizio.tex`.
 - Registers and claims ledger synced.
 
-M1.3 is done when Milestone 1 can answer succinctly: what unguided ABA Learning does on
-these graphs/DGPs, why (with evidence), and what remains open for Milestone 2.
+M1.3 met this closure condition on 8 August 2026.
 
 ## 5. Artefact layout
 
@@ -82,7 +82,8 @@ these graphs/DGPs, why (with evidence), and what remains open for Milestone 2.
 | Bucket 1 claims (TeX) | `docs/report/findings/milestone1_part3_bucket1_claims.tex` |
 | Bucket 2 claims (MD) | `docs/experiments/qualitative/M1.3-bucket2-claims.md` |
 | Bucket 2 claims (TeX) | `docs/report/findings/milestone1_part3_bucket2_claims.tex` |
-| Bucket 3 planning (MD) | `docs/experiments/qualitative/M1.3-bucket3-claims.md` |
+| Bucket 3 closure (MD) | `docs/experiments/qualitative/M1.3-bucket3-claims.md` |
+| Bucket 3 synthesis (TeX) | `docs/experiments/qualitative/M13-C3-binary-collider-and/findings_for_fabrizio.tex` |
 | Ablation artefacts (if any) | `causal/outputs/aba_learning/grid/M13_<ablation-id>/` |
 | Findings (Bucket 1 TeX) | `docs/report/findings/milestone1_part3_bucket1_claims.tex` |
 | Registers | `docs/experiments/experiments_summary.md`, `docs/research/experiment_register.md`, `docs/report/claims_ledger.md` |

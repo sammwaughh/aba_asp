@@ -364,4 +364,5 @@ whereas AAMAS's normalised learned framework and coverage did not.
 
 None for M13-C2. Its evidence is incorporated into locked Bucket 2 Claim 2. The proposed
 support-mediated Bucket 2 Claim 3 was parked on 22 July; preserve the U7 evidence for
-possible use only after Bucket 3 planning identifies an approved investigation.
+possible use in Milestone 2 only after paper/code orientation and an approved integration
+design. Bucket 3 and M1.3 are now closed.

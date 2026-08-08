@@ -5,20 +5,18 @@
 **M1.3 Approach (method):**
 [`milestone1_part3_approach.md`](milestone1_part3_approach.md)
 
-**Status:** Bucket 1 **locked**. Bucket 2 **locked / closed** with Claims 1–2 from
-M13-C1/C2. In Bucket 3, H0–H7b are complete / analysed (including H4b); H5 uses
-experimental `greedy_cautious` and is not an AAMAS-paper method; H6 is a
-procedural search-cost probe; H7a is a brave-nd implementation-behaviour probe;
-H7b is its cautious-nd counterpart; no Bucket 3 claim is
-approved. M12x and
-Buckets 1–2 remain fixed evidence. The proposed Bucket 2 Claim 3
-was parked. Milestone 2 has not started.
+**Status:** **closed** (8 August 2026). Bucket 1 retains four locked claims. Bucket 2
+retains two locked claims from M13-C1/C2; proposed Claim 3 remains parked. Bucket 3
+H0–H7b are complete / analysed (including H4b) and consolidated into six cross-cutting
+findings in `M13-C3-binary-collider-and/findings_for_fabrizio.tex`. No separate locked
+Bucket-3 claim list was created. M12x remains fixed evidence. Milestone 2 is open at
+paper/code orientation.
 
 Buckets 1–2 answer, with evidence, when and how mechanism-aligned target rules were
-recovered in the locked categorical regime and what was recovered instead. Bucket 3 now
-begins with one certified deterministic-mechanism fixture at a time, using stochastic
-roots, all-target runs on one table, and a pre-run evaluator reference. Wider
-data-availability, graph-size, and data-type dimensions remain deferred.
+recovered in the locked categorical regime and what was recovered instead. Bucket 3 used
+certified deterministic-mechanism fixtures with stochastic roots, all-target runs on frozen
+tables, and pre-run evaluator references. Wider data-availability, graph-size, and data-type
+dimensions were not required for closure.
 
 ## Primary inputs (M12x Stage-3 locked)
 
@@ -50,7 +48,8 @@ Pilot M1.2 (10 cells) remains optional provenance only.
 
 | Document | Purpose | Status |
 |----------|---------|--------|
-| [`M1.3-bucket3-claims.md`](../../../experiments/qualitative/M1.3-bucket3-claims.md) | Supervisor-driven scope, investigation status, and planning guardrails | **H0–H7b complete / analysed (incl. H4b); no claim** |
+| [`M1.3-bucket3-claims.md`](../../../experiments/qualitative/M1.3-bucket3-claims.md) | Supervisor-driven scope, investigation history, and closure record | **Closed; H0–H7b complete / analysed; six cross-cutting findings; no separate locked claim list** |
+| [`findings_for_fabrizio.tex`](../../../experiments/qualitative/M13-C3-binary-collider-and/findings_for_fabrizio.tex) | Canonical Bucket-3/M1 closure synthesis | **Complete** |
 
 ## Bucket 2 probe records
 
@@ -69,6 +68,5 @@ Pilot M1.2 (10 cells) remains optional provenance only.
 
 **Parent index:** [milestone1-plan.md](../milestone1-plan.md)
 
-**Next:** Orchestrator / Samuel decide whether any further Bucket 3 work is needed.
-H1–H7b are run / analysed.
-Do not define a fixture portfolio or run matrix in advance.
+**Next:** Milestone 2 Stage 1 — read the Causal ABA paper and inspect the exact
+implementation. See [`../milestone2/README.md`](../milestone2/README.md).
