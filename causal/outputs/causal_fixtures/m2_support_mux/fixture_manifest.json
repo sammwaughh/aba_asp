@@ -1,0 +1,83 @@
+{
+  "bif_round_trip": null,
+  "boundaries": [
+    "the fixture graph and certificate are evaluator-only",
+    "the mechanism reference is evaluator-only",
+    "no target is selected during fixture definition or sampling",
+    "no ABA Learning run is performed by this package",
+    "no learned-rule-to-CPDAG decoder is asserted",
+    "generated fixture artefacts are not experiment claims"
+  ],
+  "certificate_summary": {
+    "causal_markov_condition": "verified",
+    "causal_sufficiency": "declared_satisfied_by_fixture_design",
+    "ci_query_count": 24,
+    "mec_size": 1,
+    "ordinary_faithfulness": "not_satisfied"
+  },
+  "derived_artifacts": {
+    "certificate": {
+      "path": "certificate.json",
+      "sha256": "sha256:845e1639cc8fbfecc220a6878e210a8434287c9d655451118129e7abb29a1cdc"
+    },
+    "mechanism_reference": {
+      "path": "mechanism_reference.json",
+      "sha256": "sha256:b25f10c6fa02b723ca35e95aeb9167a918a491241bb98e29766d4390e660e9cc"
+    },
+    "population": {
+      "path": "population.csv",
+      "sha256": "sha256:b28d5cb6f6f32db821f9605f0f2b14d261813deddeebd1ceb66dca90f343b919"
+    },
+    "sample_csv": {
+      "path": "samples/support.csv",
+      "sha256": "sha256:8c1323f92d48800ac40ba6b919c0ac17bc973c127b8fdb78a1cb4d7eb5f722f7"
+    },
+    "sample_manifest": {
+      "path": "samples/support.manifest.json",
+      "sha256": "sha256:412d346cdaf8b6ced3964be2a8cf6d8eed94415a301073cece0ce775834ae12b"
+    }
+  },
+  "fixture": {
+    "document_hash": "sha256:2267c3222929ebcb961fa6440642b76092c06c3d9f01371c13e561615283a147",
+    "document_hash_basis": "canonical parsed YAML document",
+    "edges": [
+      [
+        "s",
+        "c"
+      ],
+      [
+        "a",
+        "c"
+      ],
+      [
+        "b",
+        "c"
+      ]
+    ],
+    "id": "m2_support_mux",
+    "mechanism_regime": "root_stochastic_deterministic_nonroots",
+    "model_class": "exact_finite_discrete_causal_bayesian_network",
+    "semantic_hash": "sha256:92fe7ce62836c84db547b4f879ce76927eccfd823d6c2f77bb9dcf4c2fbd3415",
+    "source_hash": "sha256:76c22af1f40ea65b41b9f31ae48673e220cb3ce783005655caa34ecbedb7f34f",
+    "source_hash_basis": "exact UTF-8 source-file bytes",
+    "source_path": "/Users/samuelwaugh/Desktop/Causal ABA Learning/aba_asp/causal/fixtures/specs/m2_support_mux.yaml",
+    "source_schema_version": 2,
+    "title": "M2 exhaustive-support multiplexer",
+    "variables": [
+      "s",
+      "a",
+      "b",
+      "c"
+    ]
+  },
+  "fixture_manifest_schema_version": 1,
+  "fixture_toolkit_version": 2,
+  "sample": {
+    "csv_sha256": "sha256:8c1323f92d48800ac40ba6b919c0ac17bc973c127b8fdb78a1cb4d7eb5f722f7",
+    "n": 8,
+    "seed": 0,
+    "table_kind": "handwritten_exhaustive_root_support",
+    "target": null,
+    "unique_joint_states_observed": 8
+  }
+}

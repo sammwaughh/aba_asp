@@ -1,0 +1,78 @@
+{
+  "bif_round_trip": null,
+  "boundaries": [
+    "the fixture graph and certificate are evaluator-only",
+    "the mechanism reference is evaluator-only",
+    "no target is selected during fixture definition or sampling",
+    "no ABA Learning run is performed by this package",
+    "no learned-rule-to-CPDAG decoder is asserted",
+    "generated fixture artefacts are not experiment claims"
+  ],
+  "certificate_summary": {
+    "causal_markov_condition": "verified",
+    "causal_sufficiency": "declared_satisfied_by_fixture_design",
+    "ci_query_count": 6,
+    "mec_size": 3,
+    "ordinary_faithfulness": "not_satisfied"
+  },
+  "derived_artifacts": {
+    "certificate": {
+      "path": "certificate.json",
+      "sha256": "sha256:f67ac12a944293f65ad61f7bbde82e5fc9eea05c8e71e54c57496006e737ec29"
+    },
+    "mechanism_reference": {
+      "path": "mechanism_reference.json",
+      "sha256": "sha256:11cff3f0145044f6c52937a6344324a530e0e937e92adb20450991c0fc26ffd4"
+    },
+    "population": {
+      "path": "population.csv",
+      "sha256": "sha256:a9c5f762a3b91493c833504e24dd812fa69c564eb38eeb97aed33f1bfdfcadec"
+    },
+    "sample_csv": {
+      "path": "samples/support.csv",
+      "sha256": "sha256:e2ee3b711ca0a30928013bc6c8ba3c5f7e3cc321a4f84d2dd58177d1689eb1a2"
+    },
+    "sample_manifest": {
+      "path": "samples/support.manifest.json",
+      "sha256": "sha256:791c101bbf70617bd8f1671070799b208bd26c12d875d061cd9eee80356a6e9e"
+    }
+  },
+  "fixture": {
+    "document_hash": "sha256:d6108449ab420139e7e7ea456b90b997cf93c7d001750e3d97cb35c1827f442d",
+    "document_hash_basis": "canonical parsed YAML document",
+    "edges": [
+      [
+        "a",
+        "b"
+      ],
+      [
+        "a",
+        "c"
+      ]
+    ],
+    "id": "m2_support_fork_copy_not",
+    "mechanism_regime": "root_stochastic_deterministic_nonroots",
+    "model_class": "exact_finite_discrete_causal_bayesian_network",
+    "semantic_hash": "sha256:e62b8c4d2c498aa59ea7b6c77b9b0139438d586f154155df1c83d4c72d9b9db2",
+    "source_hash": "sha256:4db9a511d9ba118fd542265beaf5d902fad1155a67fd6547e3fdfe50e9eb6ea2",
+    "source_hash_basis": "exact UTF-8 source-file bytes",
+    "source_path": "/Users/samuelwaugh/Desktop/Causal ABA Learning/aba_asp/causal/fixtures/specs/m2_support_fork_copy_not.yaml",
+    "source_schema_version": 2,
+    "title": "M2 exhaustive-support binary fork with copy and NOT",
+    "variables": [
+      "a",
+      "b",
+      "c"
+    ]
+  },
+  "fixture_manifest_schema_version": 1,
+  "fixture_toolkit_version": 2,
+  "sample": {
+    "csv_sha256": "sha256:e2ee3b711ca0a30928013bc6c8ba3c5f7e3cc321a4f84d2dd58177d1689eb1a2",
+    "n": 2,
+    "seed": 0,
+    "table_kind": "handwritten_exhaustive_root_support",
+    "target": null,
+    "unique_joint_states_observed": 2
+  }
+}

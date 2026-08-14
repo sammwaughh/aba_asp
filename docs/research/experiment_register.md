@@ -40,6 +40,8 @@ The earlier n=100 scaled attempt was cut and is not part of the canonical experi
 | M13-C2 | M13 | Comparative sensitivity to BK feature-block order | analysed |
 | M13-C3 | M13 | Bucket 3 binary deterministic AND collider | **closed / analysed**; six cross-cutting findings; no separate locked claim list |
 | M2 | — | Causal ABA and ABA Learning integration | **open**; approach intentionally provisional |
+| M2-S1 | — | baseline_cautious solved/no-solution on seven exhaustive-support mechanisms | **run** |
+| M2-S2 | — | mode-2 hunt: baseline_cautious on non-roots (Wave 0 + 3-AND/3-OR + leading isolated) | **run** |
 
 ## Template
 
@@ -418,3 +420,30 @@ includes the closed Bucket-3 record, active M2 approach, and completed
 - Boundary: no architecture, deliverable sequence, experiment portfolio, or
   investigation order is fixed in advance. ArgCausalDisco and this checkout's target-wise
   `causal/` bridge remain distinct implementations.
+
+### M2-S1 — baseline_cautious outcomes on exhaustive-support mechanisms
+
+- Status: **run** (2026-08-14).
+- Research question: under `baseline_cautious` and handwritten exhaustive root-support
+  tables, which targets are `solved` vs `completed_no_solution` on AND, OR, XOR,
+  copy, NOT, copy-chain, and copy/NOT fork?
+- Record: `docs/experiments/qualitative/M2-S1-support-mechanism-outcomes/experiment.md`.
+- Code path: target-wise `causal.targetwise.cli run` with
+  `causal/configs/targetwise/m2_support_*/baseline_cautious/support.yaml`.
+- Artefacts:
+  `causal/outputs/aba_learning/targetwise/m2_support_*/baseline_cautious/support/`.
+- Boundary: outcome grid only; not a Causal ABA integration result and not a locked
+  claim. Deltas retained for later inspection.
+
+### M2-S2 — mode-2 hunt on non-roots
+
+- Status: **run** (2026-08-14).
+- Research question: under `baseline_cautious` and exhaustive root-support tables,
+  does any **non-root** return `completed_no_solution` (failure mode 2)?
+- Record: `docs/experiments/qualitative/M2-S2-mode2-nonroot-outcomes/experiment.md`.
+- Scope: Wave 0 non-roots reused from M2-S1; new cells are 3-OR `c` and
+  leading-isolated 3-AND `c`. 4-AND, majority-3, and mux were not run.
+- Artefacts:
+  `causal/outputs/aba_learning/targetwise/m2_support_*/baseline_cautious/support/cells/target-*/output/`.
+- Result: every scored non-root was `solved` (10/10). Combined outcome grid is
+  in the experiment record. Mode 2 did not occur on this set.

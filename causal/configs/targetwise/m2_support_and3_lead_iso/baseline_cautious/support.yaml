@@ -1,0 +1,17 @@
+description: "M2 exhaustive-support m2_support_and3_lead_iso under baseline_cautious."
+
+configuration:
+  id: baseline_cautious
+
+fixture:
+  directory: causal/outputs/causal_fixtures/m2_support_and3_lead_iso
+  sample: samples/support.csv
+
+encoding:
+  type: exact_value
+  example_policy: binary_one_vs_zero
+
+learner:
+  prolog_config: configs/baseline_cautious_config.pl
+  prolog_timeout_s: 300
+  joint_check_timeout_s: 5

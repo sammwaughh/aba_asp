@@ -1,0 +1,74 @@
+schema_version: 2
+id: m2_support_mux
+title: M2 exhaustive-support multiplexer
+description: >-
+  Independent roots S, A, B and deterministic C = A if S=1 else B. Handwritten eight-row root truth table.
+
+variables:
+  - name: s
+    states: [0, 1]
+  - name: a
+    states: [0, 1]
+  - name: b
+    states: [0, 1]
+  - name: c
+    states: [0, 1]
+
+graph:
+  edges:
+    - [s, c]
+    - [a, c]
+    - [b, c]
+mechanisms:
+  s:
+    parents: []
+    cpt:
+      - when: {}
+        probabilities: ["1/2", "1/2"]
+  a:
+    parents: []
+    cpt:
+      - when: {}
+        probabilities: ["1/2", "1/2"]
+  b:
+    parents: []
+    cpt:
+      - when: {}
+        probabilities: ["1/2", "1/2"]
+
+  c:
+    parents: [s, a, b]
+    cpt:
+      - when: {s: 0, a: 0, b: 0}
+        probabilities: [1, 0]
+      - when: {s: 0, a: 0, b: 1}
+        probabilities: [0, 1]
+      - when: {s: 0, a: 1, b: 0}
+        probabilities: [1, 0]
+      - when: {s: 0, a: 1, b: 1}
+        probabilities: [0, 1]
+      - when: {s: 1, a: 0, b: 0}
+        probabilities: [1, 0]
+      - when: {s: 1, a: 0, b: 1}
+        probabilities: [1, 0]
+      - when: {s: 1, a: 1, b: 0}
+        probabilities: [0, 1]
+      - when: {s: 1, a: 1, b: 1}
+        probabilities: [0, 1]
+
+assumptions:
+  mechanism_regime: root_stochastic_deterministic_nonroots
+  causal_sufficiency:
+    declared: true
+    exogenous_noise: mutually_independent_root_exogenous_noise
+  observational_sampling:
+    regime: observational_iid
+
+metadata:
+  milestone: M2
+  motif: collider
+  mechanism: deterministic_mux
+  table: exhaustive_root_support
+  display_variables: [S, A, B, C]
+  target_visible_to_generator: false
+  faithfulness_is_derived_not_declared: true

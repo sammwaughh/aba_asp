@@ -1,0 +1,150 @@
+{
+  "boundaries": [
+    "this artefact is evaluator-only and must not enter learner BK or examples",
+    "formal, population-supported, and finite-sample-observed configurations are distinct",
+    "canonical rules describe deterministic positive-state truth-table rows",
+    "syntactic rule equality is not an automatic causal-recovery verdict",
+    "predictive rules for root targets do not constitute root-mechanism recovery",
+    "no learned-rule-to-graph or learned-rule-to-CPDAG decoder is applied"
+  ],
+  "encoding_reference": {
+    "body_predicate_form": "<parent>_val_<state>(A)",
+    "compatible": true,
+    "name": "binary_one_vs_zero_exact_value",
+    "negative_state": 0,
+    "positive_state": 1
+  },
+  "fixture": {
+    "document_hash": "sha256:d6108449ab420139e7e7ea456b90b997cf93c7d001750e3d97cb35c1827f442d",
+    "id": "m2_support_fork_copy_not",
+    "mechanism_regime": "root_stochastic_deterministic_nonroots",
+    "schema_version": 2,
+    "semantic_hash": "sha256:e62b8c4d2c498aa59ea7b6c77b9b0139438d586f154155df1c83d4c72d9b9db2",
+    "source_hash": "sha256:4db9a511d9ba118fd542265beaf5d902fad1155a67fd6547e3fdfe50e9eb6ea2"
+  },
+  "fixture_toolkit_version": 2,
+  "generator": {
+    "implementation_hash": "sha256:af7e8f404676ac5c0f618d92deb7379a577a4ca3bdd305acbbb90e26d76494f2"
+  },
+  "mechanism_reference_schema_version": 1,
+  "sample": {
+    "available": true,
+    "n": 2,
+    "name": "support"
+  },
+  "targets": [
+    {
+      "canonical_positive_rules": {
+        "formal": [],
+        "population_supported": [],
+        "sample_observed": []
+      },
+      "causal_parents": [],
+      "deterministic_truth_table": null,
+      "mechanism_kind": "stochastic_root",
+      "reference_note": "The generating mechanism is a root distribution, not a deterministic rule over other observed variables. Rules learned from descendants or other predictors may be predictive without representing this root mechanism.",
+      "reference_status": "no_observed_parent_deterministic_rule",
+      "root_distribution": [
+        {
+          "probability": "1/2",
+          "state": 0
+        },
+        {
+          "probability": "1/2",
+          "state": 1
+        }
+      ],
+      "target": "a"
+    },
+    {
+      "canonical_positive_rules": {
+        "formal": [
+          "b(A) :- a_val_1(A)."
+        ],
+        "population_supported": [
+          "b(A) :- a_val_1(A)."
+        ],
+        "sample_observed": [
+          "b(A) :- a_val_1(A)."
+        ]
+      },
+      "causal_parents": [
+        "a"
+      ],
+      "deterministic_truth_table": [
+        {
+          "canonical_positive_rule": null,
+          "output": 0,
+          "population_parent_assignment_probability": "1/2",
+          "population_supported": true,
+          "sample_count": 1,
+          "sample_observed": true,
+          "when": {
+            "a": 0
+          }
+        },
+        {
+          "canonical_positive_rule": "b(A) :- a_val_1(A).",
+          "output": 1,
+          "population_parent_assignment_probability": "1/2",
+          "population_supported": true,
+          "sample_count": 1,
+          "sample_observed": true,
+          "when": {
+            "a": 1
+          }
+        }
+      ],
+      "mechanism_kind": "deterministic_non_root",
+      "reference_note": "Rules are the unsimplified positive-state DNF induced by the truth table. Equivalent learned ABA frameworks need not match these strings exactly.",
+      "reference_status": "available",
+      "root_distribution": null,
+      "target": "b"
+    },
+    {
+      "canonical_positive_rules": {
+        "formal": [
+          "c(A) :- a_val_0(A)."
+        ],
+        "population_supported": [
+          "c(A) :- a_val_0(A)."
+        ],
+        "sample_observed": [
+          "c(A) :- a_val_0(A)."
+        ]
+      },
+      "causal_parents": [
+        "a"
+      ],
+      "deterministic_truth_table": [
+        {
+          "canonical_positive_rule": "c(A) :- a_val_0(A).",
+          "output": 1,
+          "population_parent_assignment_probability": "1/2",
+          "population_supported": true,
+          "sample_count": 1,
+          "sample_observed": true,
+          "when": {
+            "a": 0
+          }
+        },
+        {
+          "canonical_positive_rule": null,
+          "output": 0,
+          "population_parent_assignment_probability": "1/2",
+          "population_supported": true,
+          "sample_count": 1,
+          "sample_observed": true,
+          "when": {
+            "a": 1
+          }
+        }
+      ],
+      "mechanism_kind": "deterministic_non_root",
+      "reference_note": "Rules are the unsimplified positive-state DNF induced by the truth table. Equivalent learned ABA frameworks need not match these strings exactly.",
+      "reference_status": "available",
+      "root_distribution": null,
+      "target": "c"
+    }
+  ]
+}

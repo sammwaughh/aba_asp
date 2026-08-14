@@ -1,0 +1,1038 @@
+{
+  "assumptions_and_results": {
+    "causal_markov_condition": {
+      "exact_graph_implied_ci_violations": 0,
+      "factorisation_basis": "the joint was derived as the product of the validated local CPTs over the DAG, including point-mass CPTs where declared",
+      "status": "verified"
+    },
+    "causal_sufficiency": {
+      "basis": "the fixture's exogenous-noise structure is declared in its authoritative specification; causal sufficiency is not inferred from CPTs or the observational population",
+      "exogenous_noise": "mutually_independent_root_exogenous_noise",
+      "observationally_testable_from_joint_distribution": false,
+      "status": "declared_satisfied_by_fixture_design"
+    },
+    "ordinary_faithfulness": {
+      "basis": "the exact population CI set equals the graph d-separation set over the exhaustive singleton-pair audit",
+      "faithful": true,
+      "not_implied_by_determinism_or_factorisation": true,
+      "status": "verified_exactly",
+      "why_singleton_audit_is_sufficient": "DAG factorisation establishes the global Markov direction. A DAG d-separates two variable sets exactly when it d-separates every cross-pair, while probabilistic setwise conditional independence implies every cross-pair conditional independence by decomposition. Therefore any extra setwise population independence would yield an extra singleton-pair independence detected by this audit."
+    },
+    "sampling_regime": "observational_iid"
+  },
+  "certificate_schema_version": 1,
+  "conditional_independence_audit": {
+    "extra_independences": [],
+    "graph_implied_independence_count": 6,
+    "graph_implied_independences": [
+      {
+        "conditioning": [],
+        "x": "a",
+        "y": "b"
+      },
+      {
+        "conditioning": [
+          "d"
+        ],
+        "x": "a",
+        "y": "b"
+      },
+      {
+        "conditioning": [],
+        "x": "a",
+        "y": "d"
+      },
+      {
+        "conditioning": [
+          "b"
+        ],
+        "x": "a",
+        "y": "d"
+      },
+      {
+        "conditioning": [],
+        "x": "b",
+        "y": "d"
+      },
+      {
+        "conditioning": [
+          "a"
+        ],
+        "x": "b",
+        "y": "d"
+      }
+    ],
+    "markov_violations": [],
+    "population_independence_count": 6,
+    "population_independences": [
+      {
+        "conditioning": [],
+        "x": "a",
+        "y": "b"
+      },
+      {
+        "conditioning": [
+          "d"
+        ],
+        "x": "a",
+        "y": "b"
+      },
+      {
+        "conditioning": [],
+        "x": "a",
+        "y": "d"
+      },
+      {
+        "conditioning": [
+          "b"
+        ],
+        "x": "a",
+        "y": "d"
+      },
+      {
+        "conditioning": [],
+        "x": "b",
+        "y": "d"
+      },
+      {
+        "conditioning": [
+          "a"
+        ],
+        "x": "b",
+        "y": "d"
+      }
+    ],
+    "queries": [
+      {
+        "conditioning": [],
+        "dependence_witness": null,
+        "graph_d_separated": true,
+        "population_independent": true,
+        "x": "a",
+        "y": "b"
+      },
+      {
+        "conditioning": [
+          "d"
+        ],
+        "dependence_witness": null,
+        "graph_d_separated": true,
+        "population_independent": true,
+        "x": "a",
+        "y": "b"
+      },
+      {
+        "conditioning": [
+          "c"
+        ],
+        "dependence_witness": {
+          "conditioning_assignment": [
+            [
+              "c",
+              0
+            ]
+          ],
+          "difference": "-1/64",
+          "lhs_p_xy_s_times_p_s": "1/8",
+          "p_s": "1/2",
+          "p_x_s": "3/8",
+          "p_xy_s": "1/4",
+          "p_y_s": "3/8",
+          "rhs_p_x_s_times_p_y_s": "9/64",
+          "x_value": 0,
+          "y_value": 0
+        },
+        "graph_d_separated": false,
+        "population_independent": false,
+        "x": "a",
+        "y": "b"
+      },
+      {
+        "conditioning": [
+          "d",
+          "c"
+        ],
+        "dependence_witness": {
+          "conditioning_assignment": [
+            [
+              "d",
+              0
+            ],
+            [
+              "c",
+              0
+            ]
+          ],
+          "difference": "-1/64",
+          "lhs_p_xy_s_times_p_s": "3/64",
+          "p_s": "3/8",
+          "p_x_s": "1/4",
+          "p_xy_s": "1/8",
+          "p_y_s": "1/4",
+          "rhs_p_x_s_times_p_y_s": "1/16",
+          "x_value": 0,
+          "y_value": 0
+        },
+        "graph_d_separated": false,
+        "population_independent": false,
+        "x": "a",
+        "y": "b"
+      },
+      {
+        "conditioning": [],
+        "dependence_witness": null,
+        "graph_d_separated": true,
+        "population_independent": true,
+        "x": "a",
+        "y": "d"
+      },
+      {
+        "conditioning": [
+          "b"
+        ],
+        "dependence_witness": null,
+        "graph_d_separated": true,
+        "population_independent": true,
+        "x": "a",
+        "y": "d"
+      },
+      {
+        "conditioning": [
+          "c"
+        ],
+        "dependence_witness": {
+          "conditioning_assignment": [
+            [
+              "c",
+              0
+            ]
+          ],
+          "difference": "-1/64",
+          "lhs_p_xy_s_times_p_s": "1/8",
+          "p_s": "1/2",
+          "p_x_s": "3/8",
+          "p_xy_s": "1/4",
+          "p_y_s": "3/8",
+          "rhs_p_x_s_times_p_y_s": "9/64",
+          "x_value": 0,
+          "y_value": 0
+        },
+        "graph_d_separated": false,
+        "population_independent": false,
+        "x": "a",
+        "y": "d"
+      },
+      {
+        "conditioning": [
+          "b",
+          "c"
+        ],
+        "dependence_witness": {
+          "conditioning_assignment": [
+            [
+              "b",
+              0
+            ],
+            [
+              "c",
+              0
+            ]
+          ],
+          "difference": "-1/64",
+          "lhs_p_xy_s_times_p_s": "3/64",
+          "p_s": "3/8",
+          "p_x_s": "1/4",
+          "p_xy_s": "1/8",
+          "p_y_s": "1/4",
+          "rhs_p_x_s_times_p_y_s": "1/16",
+          "x_value": 0,
+          "y_value": 0
+        },
+        "graph_d_separated": false,
+        "population_independent": false,
+        "x": "a",
+        "y": "d"
+      },
+      {
+        "conditioning": [],
+        "dependence_witness": {
+          "conditioning_assignment": [],
+          "difference": "1/8",
+          "lhs_p_xy_s_times_p_s": "3/8",
+          "p_s": "1",
+          "p_x_s": "1/2",
+          "p_xy_s": "3/8",
+          "p_y_s": "1/2",
+          "rhs_p_x_s_times_p_y_s": "1/4",
+          "x_value": 0,
+          "y_value": 0
+        },
+        "graph_d_separated": false,
+        "population_independent": false,
+        "x": "a",
+        "y": "c"
+      },
+      {
+        "conditioning": [
+          "b"
+        ],
+        "dependence_witness": {
+          "conditioning_assignment": [
+            [
+              "b",
+              0
+            ]
+          ],
+          "difference": "1/32",
+          "lhs_p_xy_s_times_p_s": "1/8",
+          "p_s": "1/2",
+          "p_x_s": "1/4",
+          "p_xy_s": "1/4",
+          "p_y_s": "3/8",
+          "rhs_p_x_s_times_p_y_s": "3/32",
+          "x_value": 0,
+          "y_value": 0
+        },
+        "graph_d_separated": false,
+        "population_independent": false,
+        "x": "a",
+        "y": "c"
+      },
+      {
+        "conditioning": [
+          "d"
+        ],
+        "dependence_witness": {
+          "conditioning_assignment": [
+            [
+              "d",
+              0
+            ]
+          ],
+          "difference": "1/32",
+          "lhs_p_xy_s_times_p_s": "1/8",
+          "p_s": "1/2",
+          "p_x_s": "1/4",
+          "p_xy_s": "1/4",
+          "p_y_s": "3/8",
+          "rhs_p_x_s_times_p_y_s": "3/32",
+          "x_value": 0,
+          "y_value": 0
+        },
+        "graph_d_separated": false,
+        "population_independent": false,
+        "x": "a",
+        "y": "c"
+      },
+      {
+        "conditioning": [
+          "b",
+          "d"
+        ],
+        "dependence_witness": {
+          "conditioning_assignment": [
+            [
+              "b",
+              0
+            ],
+            [
+              "d",
+              1
+            ]
+          ],
+          "difference": "1/64",
+          "lhs_p_xy_s_times_p_s": "1/32",
+          "p_s": "1/4",
+          "p_x_s": "1/8",
+          "p_xy_s": "1/8",
+          "p_y_s": "1/8",
+          "rhs_p_x_s_times_p_y_s": "1/64",
+          "x_value": 0,
+          "y_value": 0
+        },
+        "graph_d_separated": false,
+        "population_independent": false,
+        "x": "a",
+        "y": "c"
+      },
+      {
+        "conditioning": [],
+        "dependence_witness": null,
+        "graph_d_separated": true,
+        "population_independent": true,
+        "x": "b",
+        "y": "d"
+      },
+      {
+        "conditioning": [
+          "a"
+        ],
+        "dependence_witness": null,
+        "graph_d_separated": true,
+        "population_independent": true,
+        "x": "b",
+        "y": "d"
+      },
+      {
+        "conditioning": [
+          "c"
+        ],
+        "dependence_witness": {
+          "conditioning_assignment": [
+            [
+              "c",
+              0
+            ]
+          ],
+          "difference": "-1/64",
+          "lhs_p_xy_s_times_p_s": "1/8",
+          "p_s": "1/2",
+          "p_x_s": "3/8",
+          "p_xy_s": "1/4",
+          "p_y_s": "3/8",
+          "rhs_p_x_s_times_p_y_s": "9/64",
+          "x_value": 0,
+          "y_value": 0
+        },
+        "graph_d_separated": false,
+        "population_independent": false,
+        "x": "b",
+        "y": "d"
+      },
+      {
+        "conditioning": [
+          "a",
+          "c"
+        ],
+        "dependence_witness": {
+          "conditioning_assignment": [
+            [
+              "a",
+              0
+            ],
+            [
+              "c",
+              0
+            ]
+          ],
+          "difference": "-1/64",
+          "lhs_p_xy_s_times_p_s": "3/64",
+          "p_s": "3/8",
+          "p_x_s": "1/4",
+          "p_xy_s": "1/8",
+          "p_y_s": "1/4",
+          "rhs_p_x_s_times_p_y_s": "1/16",
+          "x_value": 0,
+          "y_value": 0
+        },
+        "graph_d_separated": false,
+        "population_independent": false,
+        "x": "b",
+        "y": "d"
+      },
+      {
+        "conditioning": [],
+        "dependence_witness": {
+          "conditioning_assignment": [],
+          "difference": "1/8",
+          "lhs_p_xy_s_times_p_s": "3/8",
+          "p_s": "1",
+          "p_x_s": "1/2",
+          "p_xy_s": "3/8",
+          "p_y_s": "1/2",
+          "rhs_p_x_s_times_p_y_s": "1/4",
+          "x_value": 0,
+          "y_value": 0
+        },
+        "graph_d_separated": false,
+        "population_independent": false,
+        "x": "b",
+        "y": "c"
+      },
+      {
+        "conditioning": [
+          "a"
+        ],
+        "dependence_witness": {
+          "conditioning_assignment": [
+            [
+              "a",
+              0
+            ]
+          ],
+          "difference": "1/32",
+          "lhs_p_xy_s_times_p_s": "1/8",
+          "p_s": "1/2",
+          "p_x_s": "1/4",
+          "p_xy_s": "1/4",
+          "p_y_s": "3/8",
+          "rhs_p_x_s_times_p_y_s": "3/32",
+          "x_value": 0,
+          "y_value": 0
+        },
+        "graph_d_separated": false,
+        "population_independent": false,
+        "x": "b",
+        "y": "c"
+      },
+      {
+        "conditioning": [
+          "d"
+        ],
+        "dependence_witness": {
+          "conditioning_assignment": [
+            [
+              "d",
+              0
+            ]
+          ],
+          "difference": "1/32",
+          "lhs_p_xy_s_times_p_s": "1/8",
+          "p_s": "1/2",
+          "p_x_s": "1/4",
+          "p_xy_s": "1/4",
+          "p_y_s": "3/8",
+          "rhs_p_x_s_times_p_y_s": "3/32",
+          "x_value": 0,
+          "y_value": 0
+        },
+        "graph_d_separated": false,
+        "population_independent": false,
+        "x": "b",
+        "y": "c"
+      },
+      {
+        "conditioning": [
+          "a",
+          "d"
+        ],
+        "dependence_witness": {
+          "conditioning_assignment": [
+            [
+              "a",
+              0
+            ],
+            [
+              "d",
+              1
+            ]
+          ],
+          "difference": "1/64",
+          "lhs_p_xy_s_times_p_s": "1/32",
+          "p_s": "1/4",
+          "p_x_s": "1/8",
+          "p_xy_s": "1/8",
+          "p_y_s": "1/8",
+          "rhs_p_x_s_times_p_y_s": "1/64",
+          "x_value": 0,
+          "y_value": 0
+        },
+        "graph_d_separated": false,
+        "population_independent": false,
+        "x": "b",
+        "y": "c"
+      },
+      {
+        "conditioning": [],
+        "dependence_witness": {
+          "conditioning_assignment": [],
+          "difference": "1/8",
+          "lhs_p_xy_s_times_p_s": "3/8",
+          "p_s": "1",
+          "p_x_s": "1/2",
+          "p_xy_s": "3/8",
+          "p_y_s": "1/2",
+          "rhs_p_x_s_times_p_y_s": "1/4",
+          "x_value": 0,
+          "y_value": 0
+        },
+        "graph_d_separated": false,
+        "population_independent": false,
+        "x": "d",
+        "y": "c"
+      },
+      {
+        "conditioning": [
+          "a"
+        ],
+        "dependence_witness": {
+          "conditioning_assignment": [
+            [
+              "a",
+              0
+            ]
+          ],
+          "difference": "1/32",
+          "lhs_p_xy_s_times_p_s": "1/8",
+          "p_s": "1/2",
+          "p_x_s": "1/4",
+          "p_xy_s": "1/4",
+          "p_y_s": "3/8",
+          "rhs_p_x_s_times_p_y_s": "3/32",
+          "x_value": 0,
+          "y_value": 0
+        },
+        "graph_d_separated": false,
+        "population_independent": false,
+        "x": "d",
+        "y": "c"
+      },
+      {
+        "conditioning": [
+          "b"
+        ],
+        "dependence_witness": {
+          "conditioning_assignment": [
+            [
+              "b",
+              0
+            ]
+          ],
+          "difference": "1/32",
+          "lhs_p_xy_s_times_p_s": "1/8",
+          "p_s": "1/2",
+          "p_x_s": "1/4",
+          "p_xy_s": "1/4",
+          "p_y_s": "3/8",
+          "rhs_p_x_s_times_p_y_s": "3/32",
+          "x_value": 0,
+          "y_value": 0
+        },
+        "graph_d_separated": false,
+        "population_independent": false,
+        "x": "d",
+        "y": "c"
+      },
+      {
+        "conditioning": [
+          "a",
+          "b"
+        ],
+        "dependence_witness": {
+          "conditioning_assignment": [
+            [
+              "a",
+              0
+            ],
+            [
+              "b",
+              1
+            ]
+          ],
+          "difference": "1/64",
+          "lhs_p_xy_s_times_p_s": "1/32",
+          "p_s": "1/4",
+          "p_x_s": "1/8",
+          "p_xy_s": "1/8",
+          "p_y_s": "1/8",
+          "rhs_p_x_s_times_p_y_s": "1/64",
+          "x_value": 0,
+          "y_value": 0
+        },
+        "graph_d_separated": false,
+        "population_independent": false,
+        "x": "d",
+        "y": "c"
+      }
+    ],
+    "query_count": 24
+  },
+  "fixture": {
+    "document_hash": "sha256:dc8373984161d7d3577a6e9307819242dc46271a19d83a8f9a921c588b556bd1",
+    "document_hash_basis": "canonical parsed YAML document",
+    "id": "m2_support_majority3",
+    "semantic_hash": "sha256:e70166a49007963bc43301f44f4b3723480f3d612c820d45b096162c1cbea4cf",
+    "source_hash": "sha256:c75325bd5c8281c7db39255ed1e2c5f3f57d0503bf6c6bd6edab2cdac947240a",
+    "source_hash_basis": "exact UTF-8 source-file bytes",
+    "source_path": "/Users/samuelwaugh/Desktop/Causal ABA Learning/aba_asp/causal/fixtures/specs/m2_support_majority3.yaml"
+  },
+  "generator": {
+    "algorithms": {
+      "conditional_independence": "exact finite-categorical cross-product identity",
+      "cpdag": "orientation invariance across enumerated MEC",
+      "d_separation": "ancestral moralisation",
+      "mec": "bounded exhaustive skeleton orientation",
+      "population": "exact DAG factorisation"
+    },
+    "fixture_toolkit_version": 2,
+    "implementation_modules": {
+      "causal.fixtures.analysis": "sha256:643484a93a00aa043eed14548943013502c6ad1911df48e958ebe28e4733346e",
+      "causal.fixtures.io": "sha256:5d8fa3bca90029325ee27c83fb7fd7484177601afcd1428897fbae7380f8fce9",
+      "causal.fixtures.model": "sha256:d2a475b5dcc69f95dd388937dd60e33b80e78fbe3030c906ca3a3ac7a3458da5"
+    }
+  },
+  "graph": {
+    "cpdag": {
+      "deterministic_relation_boundary": "this is the ordinary graph-theoretic CI-based CPDAG. For fixtures with deterministic variables, functional constraints may change what is identifiable beyond ordinary CI information; no such extended recovery object is asserted here.",
+      "directed_edges": [
+        [
+          "a",
+          "c"
+        ],
+        [
+          "b",
+          "c"
+        ],
+        [
+          "d",
+          "c"
+        ]
+      ],
+      "identified_by_this_population_ci_structure": true,
+      "kind": "graph-theoretic essential graph of the generating DAG MEC",
+      "observational_recovery_scope": "this CPDAG is the population-level CI recovery target only under causal sufficiency, the causal Markov condition, and ordinary faithfulness",
+      "undirected_edges": []
+    },
+    "edges": [
+      [
+        "a",
+        "c"
+      ],
+      [
+        "b",
+        "c"
+      ],
+      [
+        "d",
+        "c"
+      ]
+    ],
+    "generating_dag_roles": {
+      "a": "source",
+      "b": "source",
+      "c": "sink",
+      "d": "source"
+    },
+    "markov_equivalence_class": {
+      "members": [
+        {
+          "edges": [
+            [
+              "a",
+              "c"
+            ],
+            [
+              "b",
+              "c"
+            ],
+            [
+              "d",
+              "c"
+            ]
+          ]
+        }
+      ],
+      "method": "exact orientation enumeration by skeleton and unshielded colliders",
+      "size": 1
+    },
+    "roles_across_mec": {
+      "invariant": {
+        "a": "source",
+        "b": "source",
+        "c": "sink",
+        "d": "source"
+      },
+      "possible": {
+        "a": [
+          "source"
+        ],
+        "b": [
+          "source"
+        ],
+        "c": [
+          "sink"
+        ],
+        "d": [
+          "source"
+        ]
+      }
+    },
+    "skeleton": [
+      [
+        "a",
+        "c"
+      ],
+      [
+        "b",
+        "c"
+      ],
+      [
+        "d",
+        "c"
+      ]
+    ],
+    "state_orders": {
+      "a": [
+        0,
+        1
+      ],
+      "b": [
+        0,
+        1
+      ],
+      "c": [
+        0,
+        1
+      ],
+      "d": [
+        0,
+        1
+      ]
+    },
+    "topological_order": [
+      "a",
+      "b",
+      "d",
+      "c"
+    ],
+    "unshielded_colliders": [
+      [
+        "a",
+        "c",
+        "b"
+      ],
+      [
+        "a",
+        "c",
+        "d"
+      ],
+      [
+        "b",
+        "c",
+        "d"
+      ]
+    ],
+    "variables": [
+      "a",
+      "b",
+      "d",
+      "c"
+    ]
+  },
+  "mechanisms": {
+    "all_edges_active": true,
+    "by_variable": [
+      {
+        "kind": "stochastic",
+        "parents": [],
+        "role": "root",
+        "variable": "a"
+      },
+      {
+        "kind": "stochastic",
+        "parents": [],
+        "role": "root",
+        "variable": "b"
+      },
+      {
+        "kind": "stochastic",
+        "parents": [],
+        "role": "root",
+        "variable": "d"
+      },
+      {
+        "kind": "deterministic",
+        "parents": [
+          "a",
+          "b",
+          "d"
+        ],
+        "role": "non_root",
+        "variable": "c"
+      }
+    ],
+    "deterministic_variables": [
+      "c"
+    ],
+    "edge_activity": [
+      {
+        "active": true,
+        "edge": [
+          "a",
+          "c"
+        ],
+        "witness": {
+          "conditional_distribution_a": [
+            "1",
+            "0"
+          ],
+          "conditional_distribution_b": [
+            "0",
+            "1"
+          ],
+          "other_parent_assignment": [
+            [
+              "b",
+              0
+            ],
+            [
+              "d",
+              1
+            ]
+          ],
+          "parent_states_compared": [
+            0,
+            1
+          ]
+        }
+      },
+      {
+        "active": true,
+        "edge": [
+          "b",
+          "c"
+        ],
+        "witness": {
+          "conditional_distribution_a": [
+            "1",
+            "0"
+          ],
+          "conditional_distribution_b": [
+            "0",
+            "1"
+          ],
+          "other_parent_assignment": [
+            [
+              "a",
+              0
+            ],
+            [
+              "d",
+              1
+            ]
+          ],
+          "parent_states_compared": [
+            0,
+            1
+          ]
+        }
+      },
+      {
+        "active": true,
+        "edge": [
+          "d",
+          "c"
+        ],
+        "witness": {
+          "conditional_distribution_a": [
+            "1",
+            "0"
+          ],
+          "conditional_distribution_b": [
+            "0",
+            "1"
+          ],
+          "other_parent_assignment": [
+            [
+              "a",
+              0
+            ],
+            [
+              "b",
+              1
+            ]
+          ],
+          "parent_states_compared": [
+            0,
+            1
+          ]
+        }
+      }
+    ],
+    "interpretation": "all edges active is a local mechanism/minimality check; it is not by itself a faithfulness proof",
+    "randomness_confined_to_roots": true,
+    "regime": "root_stochastic_deterministic_nonroots",
+    "root_variables": [
+      "a",
+      "b",
+      "d"
+    ],
+    "stochastic_variables": [
+      "a",
+      "b",
+      "d"
+    ],
+    "strictly_positive_local_probabilities": false
+  },
+  "population": {
+    "full_support": false,
+    "minimum_joint_probability": "0",
+    "minimum_joint_probability_assignment": {
+      "a": 0,
+      "b": 0,
+      "c": 1,
+      "d": 0
+    },
+    "minimum_positive_joint_probability": "1/8",
+    "minimum_positive_joint_probability_assignment": {
+      "a": 0,
+      "b": 0,
+      "c": 0,
+      "d": 0
+    },
+    "normalised": true,
+    "number_of_joint_states": 16,
+    "structural_zero_assignments": [
+      {
+        "a": 0,
+        "b": 0,
+        "c": 1,
+        "d": 0
+      },
+      {
+        "a": 0,
+        "b": 0,
+        "c": 1,
+        "d": 1
+      },
+      {
+        "a": 0,
+        "b": 1,
+        "c": 1,
+        "d": 0
+      },
+      {
+        "a": 0,
+        "b": 1,
+        "c": 0,
+        "d": 1
+      },
+      {
+        "a": 1,
+        "b": 0,
+        "c": 1,
+        "d": 0
+      },
+      {
+        "a": 1,
+        "b": 0,
+        "c": 0,
+        "d": 1
+      },
+      {
+        "a": 1,
+        "b": 1,
+        "c": 0,
+        "d": 0
+      },
+      {
+        "a": 1,
+        "b": 1,
+        "c": 0,
+        "d": 1
+      }
+    ],
+    "structural_zero_count": 8,
+    "support_size": 8,
+    "total_probability": "1"
+  },
+  "scope": {
+    "arithmetic": "fractions.Fraction exact rationals",
+    "ci_audit": "every unordered singleton variable pair and every subset of the remaining variables",
+    "ci_identity": "P(x,y,s)P(s) = P(x,s)P(y,s)",
+    "distribution_level": "exact_population",
+    "faithfulness_scope": "ordinary observational DAG faithfulness",
+    "learner_visible": false,
+    "zero_mass_conditioning_assignments": "the cross-product identity is vacuously satisfied when P(s)=0; only positive-mass conditioning assignments constrain CI"
+  }
+}

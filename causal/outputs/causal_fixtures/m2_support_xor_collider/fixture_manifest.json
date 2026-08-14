@@ -1,0 +1,78 @@
+{
+  "bif_round_trip": null,
+  "boundaries": [
+    "the fixture graph and certificate are evaluator-only",
+    "the mechanism reference is evaluator-only",
+    "no target is selected during fixture definition or sampling",
+    "no ABA Learning run is performed by this package",
+    "no learned-rule-to-CPDAG decoder is asserted",
+    "generated fixture artefacts are not experiment claims"
+  ],
+  "certificate_summary": {
+    "causal_markov_condition": "verified",
+    "causal_sufficiency": "declared_satisfied_by_fixture_design",
+    "ci_query_count": 6,
+    "mec_size": 1,
+    "ordinary_faithfulness": "not_satisfied"
+  },
+  "derived_artifacts": {
+    "certificate": {
+      "path": "certificate.json",
+      "sha256": "sha256:adf37c18032d918fd3fed5120a87bfddd9f8e0e0172807b8ceff0621ea9be012"
+    },
+    "mechanism_reference": {
+      "path": "mechanism_reference.json",
+      "sha256": "sha256:92c3b31c611322ad709822b33c3dbd218bbb98c666babb0483ba2819016ee4c2"
+    },
+    "population": {
+      "path": "population.csv",
+      "sha256": "sha256:87289c9a2a8a721b10159fbf68b0c16b84ccd7e21e296a069ee6088dae8a342c"
+    },
+    "sample_csv": {
+      "path": "samples/support.csv",
+      "sha256": "sha256:411479278d9b8f4eef98fa2d0e6014a894361040421d6a2d44ad8a5cbf99d858"
+    },
+    "sample_manifest": {
+      "path": "samples/support.manifest.json",
+      "sha256": "sha256:a2ccbf193cfcfdf551ccfaaf958db2e15a93bbbc0466da9d05cc26fb37092ab6"
+    }
+  },
+  "fixture": {
+    "document_hash": "sha256:4ba916b5725fa5c091e759abeb0e6f26d20f947147e2520044efb14d3345e5ec",
+    "document_hash_basis": "canonical parsed YAML document",
+    "edges": [
+      [
+        "a",
+        "c"
+      ],
+      [
+        "b",
+        "c"
+      ]
+    ],
+    "id": "m2_support_xor_collider",
+    "mechanism_regime": "root_stochastic_deterministic_nonroots",
+    "model_class": "exact_finite_discrete_causal_bayesian_network",
+    "semantic_hash": "sha256:18b5f5b498527fb48dfc6e90cbd53a425e2ffa86324701a96ed6b2ef23319050",
+    "source_hash": "sha256:3a0bebfc1377324c4eac4877ce2b194141b84dd36c2968a49f05f54bc01bb1fb",
+    "source_hash_basis": "exact UTF-8 source-file bytes",
+    "source_path": "/Users/samuelwaugh/Desktop/Causal ABA Learning/aba_asp/causal/fixtures/specs/m2_support_xor_collider.yaml",
+    "source_schema_version": 2,
+    "title": "M2 exhaustive-support binary XOR collider",
+    "variables": [
+      "a",
+      "b",
+      "c"
+    ]
+  },
+  "fixture_manifest_schema_version": 1,
+  "fixture_toolkit_version": 2,
+  "sample": {
+    "csv_sha256": "sha256:411479278d9b8f4eef98fa2d0e6014a894361040421d6a2d44ad8a5cbf99d858",
+    "n": 4,
+    "seed": 0,
+    "table_kind": "handwritten_exhaustive_root_support",
+    "target": null,
+    "unique_joint_states_observed": 4
+  }
+}

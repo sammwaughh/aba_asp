@@ -1,0 +1,244 @@
+{
+  "boundaries": [
+    "this artefact is evaluator-only and must not enter learner BK or examples",
+    "formal, population-supported, and finite-sample-observed configurations are distinct",
+    "canonical rules describe deterministic positive-state truth-table rows",
+    "syntactic rule equality is not an automatic causal-recovery verdict",
+    "predictive rules for root targets do not constitute root-mechanism recovery",
+    "no learned-rule-to-graph or learned-rule-to-CPDAG decoder is applied"
+  ],
+  "encoding_reference": {
+    "body_predicate_form": "<parent>_val_<state>(A)",
+    "compatible": true,
+    "name": "binary_one_vs_zero_exact_value",
+    "negative_state": 0,
+    "positive_state": 1
+  },
+  "fixture": {
+    "document_hash": "sha256:2267c3222929ebcb961fa6440642b76092c06c3d9f01371c13e561615283a147",
+    "id": "m2_support_mux",
+    "mechanism_regime": "root_stochastic_deterministic_nonroots",
+    "schema_version": 2,
+    "semantic_hash": "sha256:92fe7ce62836c84db547b4f879ce76927eccfd823d6c2f77bb9dcf4c2fbd3415",
+    "source_hash": "sha256:76c22af1f40ea65b41b9f31ae48673e220cb3ce783005655caa34ecbedb7f34f"
+  },
+  "fixture_toolkit_version": 2,
+  "generator": {
+    "implementation_hash": "sha256:af7e8f404676ac5c0f618d92deb7379a577a4ca3bdd305acbbb90e26d76494f2"
+  },
+  "mechanism_reference_schema_version": 1,
+  "sample": {
+    "available": true,
+    "n": 8,
+    "name": "support"
+  },
+  "targets": [
+    {
+      "canonical_positive_rules": {
+        "formal": [],
+        "population_supported": [],
+        "sample_observed": []
+      },
+      "causal_parents": [],
+      "deterministic_truth_table": null,
+      "mechanism_kind": "stochastic_root",
+      "reference_note": "The generating mechanism is a root distribution, not a deterministic rule over other observed variables. Rules learned from descendants or other predictors may be predictive without representing this root mechanism.",
+      "reference_status": "no_observed_parent_deterministic_rule",
+      "root_distribution": [
+        {
+          "probability": "1/2",
+          "state": 0
+        },
+        {
+          "probability": "1/2",
+          "state": 1
+        }
+      ],
+      "target": "s"
+    },
+    {
+      "canonical_positive_rules": {
+        "formal": [],
+        "population_supported": [],
+        "sample_observed": []
+      },
+      "causal_parents": [],
+      "deterministic_truth_table": null,
+      "mechanism_kind": "stochastic_root",
+      "reference_note": "The generating mechanism is a root distribution, not a deterministic rule over other observed variables. Rules learned from descendants or other predictors may be predictive without representing this root mechanism.",
+      "reference_status": "no_observed_parent_deterministic_rule",
+      "root_distribution": [
+        {
+          "probability": "1/2",
+          "state": 0
+        },
+        {
+          "probability": "1/2",
+          "state": 1
+        }
+      ],
+      "target": "a"
+    },
+    {
+      "canonical_positive_rules": {
+        "formal": [],
+        "population_supported": [],
+        "sample_observed": []
+      },
+      "causal_parents": [],
+      "deterministic_truth_table": null,
+      "mechanism_kind": "stochastic_root",
+      "reference_note": "The generating mechanism is a root distribution, not a deterministic rule over other observed variables. Rules learned from descendants or other predictors may be predictive without representing this root mechanism.",
+      "reference_status": "no_observed_parent_deterministic_rule",
+      "root_distribution": [
+        {
+          "probability": "1/2",
+          "state": 0
+        },
+        {
+          "probability": "1/2",
+          "state": 1
+        }
+      ],
+      "target": "b"
+    },
+    {
+      "canonical_positive_rules": {
+        "formal": [
+          "c(A) :- s_val_0(A), a_val_0(A), b_val_1(A).",
+          "c(A) :- s_val_0(A), a_val_1(A), b_val_1(A).",
+          "c(A) :- s_val_1(A), a_val_1(A), b_val_0(A).",
+          "c(A) :- s_val_1(A), a_val_1(A), b_val_1(A)."
+        ],
+        "population_supported": [
+          "c(A) :- s_val_0(A), a_val_0(A), b_val_1(A).",
+          "c(A) :- s_val_0(A), a_val_1(A), b_val_1(A).",
+          "c(A) :- s_val_1(A), a_val_1(A), b_val_0(A).",
+          "c(A) :- s_val_1(A), a_val_1(A), b_val_1(A)."
+        ],
+        "sample_observed": [
+          "c(A) :- s_val_0(A), a_val_0(A), b_val_1(A).",
+          "c(A) :- s_val_0(A), a_val_1(A), b_val_1(A).",
+          "c(A) :- s_val_1(A), a_val_1(A), b_val_0(A).",
+          "c(A) :- s_val_1(A), a_val_1(A), b_val_1(A)."
+        ]
+      },
+      "causal_parents": [
+        "s",
+        "a",
+        "b"
+      ],
+      "deterministic_truth_table": [
+        {
+          "canonical_positive_rule": null,
+          "output": 0,
+          "population_parent_assignment_probability": "1/8",
+          "population_supported": true,
+          "sample_count": 1,
+          "sample_observed": true,
+          "when": {
+            "a": 0,
+            "b": 0,
+            "s": 0
+          }
+        },
+        {
+          "canonical_positive_rule": "c(A) :- s_val_0(A), a_val_0(A), b_val_1(A).",
+          "output": 1,
+          "population_parent_assignment_probability": "1/8",
+          "population_supported": true,
+          "sample_count": 1,
+          "sample_observed": true,
+          "when": {
+            "a": 0,
+            "b": 1,
+            "s": 0
+          }
+        },
+        {
+          "canonical_positive_rule": null,
+          "output": 0,
+          "population_parent_assignment_probability": "1/8",
+          "population_supported": true,
+          "sample_count": 1,
+          "sample_observed": true,
+          "when": {
+            "a": 1,
+            "b": 0,
+            "s": 0
+          }
+        },
+        {
+          "canonical_positive_rule": "c(A) :- s_val_0(A), a_val_1(A), b_val_1(A).",
+          "output": 1,
+          "population_parent_assignment_probability": "1/8",
+          "population_supported": true,
+          "sample_count": 1,
+          "sample_observed": true,
+          "when": {
+            "a": 1,
+            "b": 1,
+            "s": 0
+          }
+        },
+        {
+          "canonical_positive_rule": null,
+          "output": 0,
+          "population_parent_assignment_probability": "1/8",
+          "population_supported": true,
+          "sample_count": 1,
+          "sample_observed": true,
+          "when": {
+            "a": 0,
+            "b": 0,
+            "s": 1
+          }
+        },
+        {
+          "canonical_positive_rule": null,
+          "output": 0,
+          "population_parent_assignment_probability": "1/8",
+          "population_supported": true,
+          "sample_count": 1,
+          "sample_observed": true,
+          "when": {
+            "a": 0,
+            "b": 1,
+            "s": 1
+          }
+        },
+        {
+          "canonical_positive_rule": "c(A) :- s_val_1(A), a_val_1(A), b_val_0(A).",
+          "output": 1,
+          "population_parent_assignment_probability": "1/8",
+          "population_supported": true,
+          "sample_count": 1,
+          "sample_observed": true,
+          "when": {
+            "a": 1,
+            "b": 0,
+            "s": 1
+          }
+        },
+        {
+          "canonical_positive_rule": "c(A) :- s_val_1(A), a_val_1(A), b_val_1(A).",
+          "output": 1,
+          "population_parent_assignment_probability": "1/8",
+          "population_supported": true,
+          "sample_count": 1,
+          "sample_observed": true,
+          "when": {
+            "a": 1,
+            "b": 1,
+            "s": 1
+          }
+        }
+      ],
+      "mechanism_kind": "deterministic_non_root",
+      "reference_note": "Rules are the unsimplified positive-state DNF induced by the truth table. Equivalent learned ABA frameworks need not match these strings exactly.",
+      "reference_status": "available",
+      "root_distribution": null,
+      "target": "c"
+    }
+  ]
+}

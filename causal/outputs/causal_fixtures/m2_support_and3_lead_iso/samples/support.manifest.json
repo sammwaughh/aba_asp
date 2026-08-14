@@ -1,0 +1,144 @@
+{
+  "empirical_table_summary": {
+    "deterministic_assignment_checks": 16,
+    "deterministic_assignments_verified": true,
+    "state_counts": {
+      "a": [
+        {
+          "count": 8,
+          "state": 0
+        },
+        {
+          "count": 8,
+          "state": 1
+        }
+      ],
+      "b": [
+        {
+          "count": 8,
+          "state": 0
+        },
+        {
+          "count": 8,
+          "state": 1
+        }
+      ],
+      "c": [
+        {
+          "count": 14,
+          "state": 0
+        },
+        {
+          "count": 2,
+          "state": 1
+        }
+      ],
+      "d": [
+        {
+          "count": 8,
+          "state": 0
+        },
+        {
+          "count": 8,
+          "state": 1
+        }
+      ],
+      "e": [
+        {
+          "count": 8,
+          "state": 0
+        },
+        {
+          "count": 8,
+          "state": 1
+        }
+      ]
+    },
+    "table_kind": "handwritten_exhaustive_root_support",
+    "unique_joint_states_observed": 16
+  },
+  "fixture": {
+    "document_hash": "sha256:636176c26057016dee4c270df31b4f12af5691796c61295ff2a838054487db94",
+    "document_hash_basis": "canonical parsed YAML document",
+    "id": "m2_support_and3_lead_iso",
+    "semantic_hash": "sha256:06990243e45ce63beb7ca2b3c62214a0fb33e01c8ddc25f92190964c7a470ed3",
+    "source_hash": "sha256:be81799195438b98ea50dad5ccbb2c88f24e731df817cad35058f8928c014667",
+    "source_hash_basis": "exact UTF-8 source-file bytes",
+    "source_path": "/Users/samuelwaugh/Desktop/Causal ABA Learning/aba_asp/causal/fixtures/specs/m2_support_and3_lead_iso.yaml"
+  },
+  "sample": {
+    "csv_columns_are_causal_variables_only": true,
+    "csv_path": "causal/outputs/causal_fixtures/m2_support_and3_lead_iso/samples/support.csv",
+    "csv_sha256": "sha256:97c675b81eeb6ac503c825af4adea49c52bf646ffa129980d93b80fc2536bc52",
+    "iid_observational_rows": true,
+    "mechanism_regime": "root_stochastic_deterministic_nonroots",
+    "n": 16,
+    "row_identifier": "one-based CSV data-row number; not a causal variable",
+    "seed": 0,
+    "target": null,
+    "target_note": "handwritten exhaustive root-support table; not an IID draw. The iid_observational_rows flag is required by the target-wise loader and does not mean the rows were sampled."
+  },
+  "sample_manifest_schema_version": 1,
+  "sampler": {
+    "deterministic_variables": [
+      "c"
+    ],
+    "draw_policy": "handwritten exhaustive combinations of root assignments; non-roots are the deterministic mechanism values",
+    "id": "handwritten_exhaustive_root_support",
+    "output_column_order": [
+      "a",
+      "b",
+      "d",
+      "e",
+      "c"
+    ],
+    "parent_orders": {
+      "a": [],
+      "b": [],
+      "c": [
+        "b",
+        "d",
+        "e"
+      ],
+      "d": [],
+      "e": []
+    },
+    "randomness_confined_to_roots": true,
+    "state_orders": {
+      "a": [
+        0,
+        1
+      ],
+      "b": [
+        0,
+        1
+      ],
+      "c": [
+        0,
+        1
+      ],
+      "d": [
+        0,
+        1
+      ],
+      "e": [
+        0,
+        1
+      ]
+    },
+    "stochastic_variables": [
+      "a",
+      "b",
+      "d",
+      "e"
+    ],
+    "topological_order": [
+      "a",
+      "b",
+      "d",
+      "e",
+      "c"
+    ],
+    "version": 1
+  }
+}

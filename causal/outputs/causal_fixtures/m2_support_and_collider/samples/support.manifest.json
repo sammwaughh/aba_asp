@@ -1,0 +1,107 @@
+{
+  "empirical_table_summary": {
+    "deterministic_assignment_checks": 4,
+    "deterministic_assignments_verified": true,
+    "state_counts": {
+      "a": [
+        {
+          "count": 2,
+          "state": 0
+        },
+        {
+          "count": 2,
+          "state": 1
+        }
+      ],
+      "b": [
+        {
+          "count": 2,
+          "state": 0
+        },
+        {
+          "count": 2,
+          "state": 1
+        }
+      ],
+      "c": [
+        {
+          "count": 3,
+          "state": 0
+        },
+        {
+          "count": 1,
+          "state": 1
+        }
+      ]
+    },
+    "table_kind": "handwritten_exhaustive_root_support",
+    "unique_joint_states_observed": 4
+  },
+  "fixture": {
+    "document_hash": "sha256:6510588cd58af3ae88b7bd8f3e361fec8f350cb6824e85526fd1a59575b77ac1",
+    "document_hash_basis": "canonical parsed YAML document",
+    "id": "m2_support_and_collider",
+    "semantic_hash": "sha256:5f72e75f55d90176c94ecc8ac8afcdb822d381d5691345526828f2cc623444f7",
+    "source_hash": "sha256:1a57012bd6bee28a3ed8ab721204d77c11d71ee5de3d85fb0eae2c0d43c71879",
+    "source_hash_basis": "exact UTF-8 source-file bytes",
+    "source_path": "/Users/samuelwaugh/Desktop/Causal ABA Learning/aba_asp/causal/fixtures/specs/m2_support_and_collider.yaml"
+  },
+  "sample": {
+    "csv_columns_are_causal_variables_only": true,
+    "csv_path": "causal/outputs/causal_fixtures/m2_support_and_collider/samples/support.csv",
+    "csv_sha256": "sha256:1ced16d4c7650164ff33d30ab22e884e03fd2d016266d2b0211a22b25a11beb3",
+    "iid_observational_rows": true,
+    "mechanism_regime": "root_stochastic_deterministic_nonroots",
+    "n": 4,
+    "row_identifier": "one-based CSV data-row number; not a causal variable",
+    "seed": 0,
+    "target": null,
+    "target_note": "handwritten exhaustive root-support table; not an IID draw. The iid_observational_rows flag is required by the target-wise loader and does not mean the rows were sampled."
+  },
+  "sample_manifest_schema_version": 1,
+  "sampler": {
+    "deterministic_variables": [
+      "c"
+    ],
+    "draw_policy": "handwritten exhaustive combinations of root assignments; non-roots are the deterministic mechanism values",
+    "id": "handwritten_exhaustive_root_support",
+    "output_column_order": [
+      "a",
+      "b",
+      "c"
+    ],
+    "parent_orders": {
+      "a": [],
+      "b": [],
+      "c": [
+        "a",
+        "b"
+      ]
+    },
+    "randomness_confined_to_roots": true,
+    "state_orders": {
+      "a": [
+        0,
+        1
+      ],
+      "b": [
+        0,
+        1
+      ],
+      "c": [
+        0,
+        1
+      ]
+    },
+    "stochastic_variables": [
+      "a",
+      "b"
+    ],
+    "topological_order": [
+      "a",
+      "b",
+      "c"
+    ],
+    "version": 1
+  }
+}

@@ -1,0 +1,126 @@
+{
+  "empirical_table_summary": {
+    "deterministic_assignment_checks": 8,
+    "deterministic_assignments_verified": true,
+    "state_counts": {
+      "a": [
+        {
+          "count": 4,
+          "state": 0
+        },
+        {
+          "count": 4,
+          "state": 1
+        }
+      ],
+      "b": [
+        {
+          "count": 4,
+          "state": 0
+        },
+        {
+          "count": 4,
+          "state": 1
+        }
+      ],
+      "c": [
+        {
+          "count": 1,
+          "state": 0
+        },
+        {
+          "count": 7,
+          "state": 1
+        }
+      ],
+      "d": [
+        {
+          "count": 4,
+          "state": 0
+        },
+        {
+          "count": 4,
+          "state": 1
+        }
+      ]
+    },
+    "table_kind": "handwritten_exhaustive_root_support",
+    "unique_joint_states_observed": 8
+  },
+  "fixture": {
+    "document_hash": "sha256:97844d2f22254c1de19045e28e2fb7354fde84e46fba27a9d5b16585edaf18ee",
+    "document_hash_basis": "canonical parsed YAML document",
+    "id": "m2_support_or3",
+    "semantic_hash": "sha256:7f777964b9d44f63caeee08316cbdb67df7a27ef10fb957c2e4e94b2c859407b",
+    "source_hash": "sha256:6602f46b1c42b009ebb0bb334db888b3f376bf91d28c8403a047f74670047dc2",
+    "source_hash_basis": "exact UTF-8 source-file bytes",
+    "source_path": "/Users/samuelwaugh/Desktop/Causal ABA Learning/aba_asp/causal/fixtures/specs/m2_support_or3.yaml"
+  },
+  "sample": {
+    "csv_columns_are_causal_variables_only": true,
+    "csv_path": "causal/outputs/causal_fixtures/m2_support_or3/samples/support.csv",
+    "csv_sha256": "sha256:e52d3c7b989a403b3d197176fe7b80b073160fd82406ef5edf7b3c04a4bd84b5",
+    "iid_observational_rows": true,
+    "mechanism_regime": "root_stochastic_deterministic_nonroots",
+    "n": 8,
+    "row_identifier": "one-based CSV data-row number; not a causal variable",
+    "seed": 0,
+    "target": null,
+    "target_note": "handwritten exhaustive root-support table; not an IID draw. The iid_observational_rows flag is required by the target-wise loader and does not mean the rows were sampled."
+  },
+  "sample_manifest_schema_version": 1,
+  "sampler": {
+    "deterministic_variables": [
+      "c"
+    ],
+    "draw_policy": "handwritten exhaustive combinations of root assignments; non-roots are the deterministic mechanism values",
+    "id": "handwritten_exhaustive_root_support",
+    "output_column_order": [
+      "a",
+      "b",
+      "d",
+      "c"
+    ],
+    "parent_orders": {
+      "a": [],
+      "b": [],
+      "c": [
+        "a",
+        "b",
+        "d"
+      ],
+      "d": []
+    },
+    "randomness_confined_to_roots": true,
+    "state_orders": {
+      "a": [
+        0,
+        1
+      ],
+      "b": [
+        0,
+        1
+      ],
+      "c": [
+        0,
+        1
+      ],
+      "d": [
+        0,
+        1
+      ]
+    },
+    "stochastic_variables": [
+      "a",
+      "b",
+      "d"
+    ],
+    "topological_order": [
+      "a",
+      "b",
+      "d",
+      "c"
+    ],
+    "version": 1
+  }
+}

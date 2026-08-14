@@ -1,0 +1,88 @@
+{
+  "empirical_table_summary": {
+    "deterministic_assignment_checks": 2,
+    "deterministic_assignments_verified": true,
+    "state_counts": {
+      "a": [
+        {
+          "count": 1,
+          "state": 0
+        },
+        {
+          "count": 1,
+          "state": 1
+        }
+      ],
+      "b": [
+        {
+          "count": 1,
+          "state": 0
+        },
+        {
+          "count": 1,
+          "state": 1
+        }
+      ]
+    },
+    "table_kind": "handwritten_exhaustive_root_support",
+    "unique_joint_states_observed": 2
+  },
+  "fixture": {
+    "document_hash": "sha256:580f717a1d9208b154fc17cbadb9770e325d6995401a1c594c2de9cf04150089",
+    "document_hash_basis": "canonical parsed YAML document",
+    "id": "m2_support_copy",
+    "semantic_hash": "sha256:bd44aa54934a3366aea77e9a5bf59fa1cd159b41f7c932133f9a20df0363fee1",
+    "source_hash": "sha256:4f0d70292f17128fa1a64528e25178c99ab97c76a5eb7f919e9a69fe228ca5ed",
+    "source_hash_basis": "exact UTF-8 source-file bytes",
+    "source_path": "/Users/samuelwaugh/Desktop/Causal ABA Learning/aba_asp/causal/fixtures/specs/m2_support_copy.yaml"
+  },
+  "sample": {
+    "csv_columns_are_causal_variables_only": true,
+    "csv_path": "causal/outputs/causal_fixtures/m2_support_copy/samples/support.csv",
+    "csv_sha256": "sha256:9deedc73422f2f57377b0eaa6baf20be1b0f79febeada94127356fd601aa849d",
+    "iid_observational_rows": true,
+    "mechanism_regime": "root_stochastic_deterministic_nonroots",
+    "n": 2,
+    "row_identifier": "one-based CSV data-row number; not a causal variable",
+    "seed": 0,
+    "target": null,
+    "target_note": "handwritten exhaustive root-support table; not an IID draw. The iid_observational_rows flag is required by the target-wise loader and does not mean the rows were sampled."
+  },
+  "sample_manifest_schema_version": 1,
+  "sampler": {
+    "deterministic_variables": [
+      "b"
+    ],
+    "draw_policy": "handwritten exhaustive combinations of root assignments; non-roots are the deterministic mechanism values",
+    "id": "handwritten_exhaustive_root_support",
+    "output_column_order": [
+      "a",
+      "b"
+    ],
+    "parent_orders": {
+      "a": [],
+      "b": [
+        "a"
+      ]
+    },
+    "randomness_confined_to_roots": true,
+    "state_orders": {
+      "a": [
+        0,
+        1
+      ],
+      "b": [
+        0,
+        1
+      ]
+    },
+    "stochastic_variables": [
+      "a"
+    ],
+    "topological_order": [
+      "a",
+      "b"
+    ],
+    "version": 1
+  }
+}

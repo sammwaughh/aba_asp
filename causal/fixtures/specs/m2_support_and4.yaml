@@ -1,0 +1,98 @@
+schema_version: 2
+id: m2_support_and4
+title: M2 exhaustive-support 4-parent AND
+description: >-
+  Independent roots A, B, D, E and deterministic C = A AND B AND D AND E. Handwritten 16-row root truth table.
+
+variables:
+  - name: a
+    states: [0, 1]
+  - name: b
+    states: [0, 1]
+  - name: d
+    states: [0, 1]
+  - name: e
+    states: [0, 1]
+  - name: c
+    states: [0, 1]
+
+graph:
+  edges:
+    - [a, c]
+    - [b, c]
+    - [d, c]
+    - [e, c]
+mechanisms:
+  a:
+    parents: []
+    cpt:
+      - when: {}
+        probabilities: ["1/2", "1/2"]
+  b:
+    parents: []
+    cpt:
+      - when: {}
+        probabilities: ["1/2", "1/2"]
+  d:
+    parents: []
+    cpt:
+      - when: {}
+        probabilities: ["1/2", "1/2"]
+  e:
+    parents: []
+    cpt:
+      - when: {}
+        probabilities: ["1/2", "1/2"]
+
+  c:
+    parents: [a, b, d, e]
+    cpt:
+      - when: {a: 0, b: 0, d: 0, e: 0}
+        probabilities: [1, 0]
+      - when: {a: 0, b: 0, d: 0, e: 1}
+        probabilities: [1, 0]
+      - when: {a: 0, b: 0, d: 1, e: 0}
+        probabilities: [1, 0]
+      - when: {a: 0, b: 0, d: 1, e: 1}
+        probabilities: [1, 0]
+      - when: {a: 0, b: 1, d: 0, e: 0}
+        probabilities: [1, 0]
+      - when: {a: 0, b: 1, d: 0, e: 1}
+        probabilities: [1, 0]
+      - when: {a: 0, b: 1, d: 1, e: 0}
+        probabilities: [1, 0]
+      - when: {a: 0, b: 1, d: 1, e: 1}
+        probabilities: [1, 0]
+      - when: {a: 1, b: 0, d: 0, e: 0}
+        probabilities: [1, 0]
+      - when: {a: 1, b: 0, d: 0, e: 1}
+        probabilities: [1, 0]
+      - when: {a: 1, b: 0, d: 1, e: 0}
+        probabilities: [1, 0]
+      - when: {a: 1, b: 0, d: 1, e: 1}
+        probabilities: [1, 0]
+      - when: {a: 1, b: 1, d: 0, e: 0}
+        probabilities: [1, 0]
+      - when: {a: 1, b: 1, d: 0, e: 1}
+        probabilities: [1, 0]
+      - when: {a: 1, b: 1, d: 1, e: 0}
+        probabilities: [1, 0]
+      - when: {a: 1, b: 1, d: 1, e: 1}
+        probabilities: [0, 1]
+
+assumptions:
+  mechanism_regime: root_stochastic_deterministic_nonroots
+  causal_sufficiency:
+    declared: true
+    exogenous_noise: mutually_independent_root_exogenous_noise
+  observational_sampling:
+    regime: observational_iid
+
+metadata:
+  milestone: M2
+  motif: collider
+  mechanism: deterministic_and4
+  table: exhaustive_root_support
+  display_variables: [A, B, D, E, C]
+  target_visible_to_generator: false
+  faithfulness_is_derived_not_declared: true

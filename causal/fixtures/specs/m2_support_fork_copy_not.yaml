@@ -1,0 +1,60 @@
+schema_version: 2
+id: m2_support_fork_copy_not
+title: M2 exhaustive-support binary fork with copy and NOT
+description: >-
+  Three-variable schema-2 fixture A -> B, A -> C with B := A and C := NOT A.
+  The learning table is the handwritten two-row truth table over the root, not
+  an IID sample.
+
+variables:
+  - name: a
+    states: [0, 1]
+  - name: b
+    states: [0, 1]
+  - name: c
+    states: [0, 1]
+
+graph:
+  edges:
+    - [a, b]
+    - [a, c]
+
+mechanisms:
+  a:
+    parents: []
+    cpt:
+      - when: {}
+        probabilities: ["1/2", "1/2"]
+
+  b:
+    parents: [a]
+    cpt:
+      - when: {a: 0}
+        probabilities: [1, 0]
+      - when: {a: 1}
+        probabilities: [0, 1]
+
+  c:
+    parents: [a]
+    cpt:
+      - when: {a: 0}
+        probabilities: [0, 1]
+      - when: {a: 1}
+        probabilities: [1, 0]
+
+assumptions:
+  mechanism_regime: root_stochastic_deterministic_nonroots
+  causal_sufficiency:
+    declared: true
+    exogenous_noise: mutually_independent_root_exogenous_noise
+  observational_sampling:
+    regime: observational_iid
+
+metadata:
+  milestone: M2
+  motif: fork
+  mechanism: deterministic_copy_and_not
+  table: exhaustive_root_support
+  display_variables: [A, B, C]
+  target_visible_to_generator: false
+  faithfulness_is_derived_not_declared: true
