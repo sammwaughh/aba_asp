@@ -13,6 +13,10 @@ import yaml
 
 from causal.experiments.paths import repo_root
 from causal.fixtures.artifacts import file_sha256
+from causal.targetwise.encoding import (
+    PREDICTOR_POLICY_ALL_EXCEPT_TARGET,
+    SUPPORTED_PREDICTOR_POLICIES,
+)
 
 
 class TargetwiseConfigError(ValueError):
@@ -32,6 +36,7 @@ class TargetwiseRunConfig:
     sample: Path
     encoding_type: str
     example_policy: str
+    predictor_policy: str
     prolog_config: Path
     prolog_config_hash: str
     learning_mode: str
@@ -186,10 +191,15 @@ def load_targetwise_config(path: Path | str) -> TargetwiseRunConfig:
         encoding,
         where="encoding",
         required={"type", "example_policy"},
+        optional={"predictor_policy"},
     )
     encoding_type = _string(encoding["type"], where="encoding.type")
     example_policy = _string(
         encoding["example_policy"], where="encoding.example_policy"
+    )
+    predictor_policy = _string(
+        encoding.get("predictor_policy", PREDICTOR_POLICY_ALL_EXCEPT_TARGET),
+        where="encoding.predictor_policy",
     )
     if encoding_type != "exact_value":
         raise TargetwiseConfigError(
@@ -199,6 +209,11 @@ def load_targetwise_config(path: Path | str) -> TargetwiseRunConfig:
         raise TargetwiseConfigError(
             "the initial target-wise runner supports "
             "encoding.example_policy='binary_one_vs_zero' only"
+        )
+    if predictor_policy not in SUPPORTED_PREDICTOR_POLICIES:
+        raise TargetwiseConfigError(
+            "encoding.predictor_policy must be one of "
+            f"{sorted(SUPPORTED_PREDICTOR_POLICIES)}; got {predictor_policy!r}"
         )
 
     learner = _mapping(raw["learner"], where="learner")
@@ -226,13 +241,16 @@ def load_targetwise_config(path: Path | str) -> TargetwiseRunConfig:
         learner.get("joint_check_timeout_s", 5),
         where="learner.joint_check_timeout_s",
     )
+    encoding_for_hash: dict[str, str] = {
+        "type": encoding_type,
+        "example_policy": example_policy,
+    }
+    if predictor_policy != PREDICTOR_POLICY_ALL_EXCEPT_TARGET:
+        encoding_for_hash["predictor_policy"] = predictor_policy
     configuration_hash = _canonical_hash(
         {
             "configuration_id": configuration_id,
-            "encoding": {
-                "type": encoding_type,
-                "example_policy": example_policy,
-            },
+            "encoding": encoding_for_hash,
             "learner": {
                 "prolog_config_sha256": prolog_config_hash,
                 "learning_mode": learning_mode,
@@ -252,6 +270,7 @@ def load_targetwise_config(path: Path | str) -> TargetwiseRunConfig:
         sample=sample,
         encoding_type=encoding_type,
         example_policy=example_policy,
+        predictor_policy=predictor_policy,
         prolog_config=prolog_config,
         prolog_config_hash=prolog_config_hash,
         learning_mode=learning_mode,

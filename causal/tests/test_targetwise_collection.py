@@ -36,6 +36,7 @@ from causal.targetwise.config import (
 from causal.targetwise.diagnostics import TARGETWISE_RESULT_COLUMNS
 from causal.targetwise.encoding import (
     TargetwiseEncodingError,
+    PREDICTOR_POLICY_ORACLE_PARENTS,
     build_binary_target_task,
 )
 from causal.targetwise.paths import TargetwiseCollectionPaths
@@ -141,10 +142,14 @@ def _write_config(
     encoding_type: str = "exact_value",
     sample: str = "samples/n8_seed42.csv",
     prolog_config: Path | None = None,
+    predictor_policy: str | None = None,
 ) -> Path:
     config_path = tmp_path / f"targetwise-{len(list(tmp_path.glob('*.yaml')))}.yaml"
     if prolog_config is None:
         prolog_config = repo_root() / "configs" / "aamas2025_config.pl"
+    predictor_line = (
+        f'\n  predictor_policy: "{predictor_policy}"' if predictor_policy else ""
+    )
     config_path.write_text(
         f"""\
 description: "{description}"
@@ -155,7 +160,7 @@ fixture:
   sample: "{sample}"
 encoding:
   type: "{encoding_type}"
-  example_policy: binary_one_vs_zero
+  example_policy: binary_one_vs_zero{predictor_line}
 learner:
   prolog_config: "{prolog_config}"
   prolog_timeout_s: 30
@@ -279,6 +284,7 @@ def test_config_loader_is_strict_and_resolves_paths(tmp_path: Path) -> None:
     assert config.sample == Path("samples/n8_seed42.csv")
     assert config.encoding_type == "exact_value"
     assert config.example_policy == "binary_one_vs_zero"
+    assert config.predictor_policy == "all_except_target"
     assert config.prolog_timeout_s == 30.0
     assert config.learning_mode == "brave"
     assert config.joint_check_timeout_s == 1.0
@@ -680,6 +686,69 @@ def test_exact_value_encoder_accepts_safe_lowercase_variable_names(
     assert task.positive_examples[-1] == "c(8)"
 
 
+def test_oracle_parents_encoder_restricts_bk_to_fixture_parents(
+    tmp_path: Path,
+) -> None:
+    fixture_directory = _write_fixture_bundle(tmp_path)
+    bundle = load_causal_fixture_bundle(
+        fixture_directory,
+        Path("samples/n8_seed42.csv"),
+    )
+
+    child = build_binary_target_task(
+        bundle,
+        "x3",
+        predictor_policy=PREDICTOR_POLICY_ORACLE_PARENTS,
+    )
+    root = build_binary_target_task(
+        bundle,
+        "x0",
+        predictor_policy=PREDICTOR_POLICY_ORACLE_PARENTS,
+    )
+
+    assert child.predictor_policy == PREDICTOR_POLICY_ORACLE_PARENTS
+    assert child.predictor_order == ("x1", "x2")
+    assert child.feature_clause_count == 8 * 2
+    assert "x0_val_0" not in child.bk_text
+    assert "x3_val_0" not in child.bk_text
+    assert "x1_val_0(A) :- A=1." in child.bk_text
+    assert "x2_val_0(A) :- A=1." in child.bk_text
+    assert root.predictor_order == ()
+    assert root.feature_clause_count == 0
+    assert "x1_val_0" not in root.bk_text
+
+
+def test_oracle_parents_policy_changes_configuration_hash(
+    tmp_path: Path,
+) -> None:
+    fixture_directory = _write_fixture_bundle(tmp_path)
+    unguided = load_targetwise_config(_write_config(tmp_path, fixture_directory))
+    guided = load_targetwise_config(
+        _write_config(
+            tmp_path,
+            fixture_directory,
+            configuration_id="aamas2025_oracle_parents",
+            predictor_policy=PREDICTOR_POLICY_ORACLE_PARENTS,
+        )
+    )
+
+    assert unguided.predictor_policy == "all_except_target"
+    assert guided.predictor_policy == PREDICTOR_POLICY_ORACLE_PARENTS
+    assert guided.configuration_hash != unguided.configuration_hash
+
+
+def test_config_rejects_unknown_predictor_policy(tmp_path: Path) -> None:
+    fixture_directory = _write_fixture_bundle(tmp_path)
+    config_path = _write_config(
+        tmp_path,
+        fixture_directory,
+        predictor_policy="cpdag_neighbours",
+    )
+
+    with pytest.raises(TargetwiseConfigError, match="predictor_policy"):
+        load_targetwise_config(config_path)
+
+
 def test_exact_value_encoder_rejects_uppercase_variable_names(
     tmp_path: Path,
 ) -> None:
@@ -992,6 +1061,57 @@ def test_fake_runner_executes_all_targets_and_writes_inspection_bundle(
         artifact_checker=fake_artifact,
     )
     assert len(fake.calls) == original_calls
+
+
+def test_run_collection_can_execute_a_target_subset(tmp_path: Path) -> None:
+    pytest.importorskip("pyarrow")
+    fixture_directory = _write_fixture_bundle(tmp_path / "source")
+    config = load_targetwise_config(_write_config(tmp_path, fixture_directory))
+    fake = _FakeRunner()
+
+    prepared = run_collection(
+        config,
+        output_root=tmp_path / "outputs",
+        targets=["x3"],
+        runner_factory=lambda: fake,
+        artifact_checker=_FakeArtifactChecker(),
+    )
+
+    manifest = json.loads(prepared.paths.manifest_path.read_text(encoding="utf-8"))
+    assert manifest["status"] == "partial"
+    assert [call["target"] for call in fake.calls] == ["x3"]
+    assert prepared.paths.cell("x3").metrics_json_path.is_file()
+    assert prepared.paths.cell("x3").report_path.is_file()
+    assert not prepared.paths.cell("x0").output_dir.exists()
+    assert not prepared.paths.summary_markdown_path.is_file()
+
+
+def test_prepare_oracle_parents_writes_parent_only_bk(tmp_path: Path) -> None:
+    fixture_directory = _write_fixture_bundle(tmp_path / "source")
+    config = load_targetwise_config(
+        _write_config(
+            tmp_path,
+            fixture_directory,
+            configuration_id="aamas2025_oracle_parents",
+            predictor_policy=PREDICTOR_POLICY_ORACLE_PARENTS,
+        )
+    )
+
+    prepared = prepare_collection(config, output_root=tmp_path / "outputs")
+    child_bk = prepared.paths.cell("x3").bk_path.read_text(encoding="utf-8")
+    root_bk = prepared.paths.cell("x0").bk_path.read_text(encoding="utf-8")
+    task_manifest = json.loads(
+        prepared.paths.cell("x3").task_manifest_path.read_text(encoding="utf-8")
+    )
+
+    assert prepared.tasks["x3"].predictor_order == ("x1", "x2")
+    assert "x1_val_0(A) :- A=1." in child_bk
+    assert "x2_val_0(A) :- A=1." in child_bk
+    assert "x0_val_0" not in child_bk
+    assert "x1_val_0" not in root_bk
+    assert task_manifest["task"]["predictor_policy"] == PREDICTOR_POLICY_ORACLE_PARENTS
+    assert task_manifest["task"]["predictor_order"] == ["x1", "x2"]
+    assert any("oracle parent mask" in item for item in task_manifest["boundaries"])
 
 
 def test_cautious_reports_do_not_treat_joint_witness_as_cautious_check(

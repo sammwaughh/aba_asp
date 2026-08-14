@@ -13,7 +13,7 @@ import platform
 import subprocess
 import tempfile
 import time
-from typing import Any, Callable, Mapping
+from typing import Any, Callable, Mapping, Sequence
 
 from causal.fixtures.artifacts import (
     ArtifactConflictError,
@@ -37,7 +37,11 @@ from causal.targetwise.diagnostics import (
     write_targetwise_metrics,
     write_targetwise_results,
 )
-from causal.targetwise.encoding import BinaryTargetTask, build_binary_target_task
+from causal.targetwise.encoding import (
+    BinaryTargetTask,
+    PREDICTOR_POLICY_ORACLE_PARENTS,
+    build_binary_target_task,
+)
 from causal.targetwise.paths import TargetwiseCollectionPaths
 from causal.targetwise.reporting import (
     write_collection_summary,
@@ -52,7 +56,7 @@ from causal.targetwise.semantics import (
 )
 
 
-TARGETWISE_RUNNER_VERSION = 4
+TARGETWISE_RUNNER_VERSION = 5
 
 
 @dataclass(frozen=True)
@@ -61,6 +65,57 @@ class PreparedTargetwiseCollection:
     bundle: LoadedCausalFixtureBundle
     paths: TargetwiseCollectionPaths
     tasks: Mapping[str, BinaryTargetTask]
+
+
+def _encoding_document(config: TargetwiseRunConfig) -> dict[str, str]:
+    return {
+        "type": config.encoding_type,
+        "example_policy": config.example_policy,
+        "predictor_policy": config.predictor_policy,
+    }
+
+
+def _task_boundaries(config: TargetwiseRunConfig) -> list[str]:
+    if config.predictor_policy == PREDICTOR_POLICY_ORACLE_PARENTS:
+        return [
+            "the same frozen data table is used for every target",
+            "the target column is excluded from learner-visible feature BK",
+            (
+                "learner-visible feature BK is restricted to the fixture-graph "
+                "parents of the target (oracle parent mask)"
+            ),
+            (
+                "graph edges are not serialized as ABA facts; this is a "
+                "predictor mask, not Russo-style Causal ABA"
+            ),
+            "this task is target-wise ABA Learning, not Russo-style Causal ABA",
+            "no learned-rule-to-graph decoder is applied",
+        ]
+    return [
+        "the same frozen data table is used for every target",
+        "the target column is excluded from learner-visible feature BK",
+        "no graph, parent-set, CPDAG, or causal-role metadata is learner-visible",
+        "this task is target-wise ABA Learning, not Russo-style Causal ABA",
+        "no learned-rule-to-graph decoder is applied",
+    ]
+
+
+def _selected_targets(
+    bundle: LoadedCausalFixtureBundle,
+    targets: Sequence[str] | None,
+) -> tuple[str, ...]:
+    if targets is None:
+        return bundle.variables
+    requested = [target.strip() for target in targets if str(target).strip()]
+    if not requested:
+        raise ValueError("targets must be a non-empty subset of fixture variables")
+    unknown = [target for target in requested if target not in bundle.variables]
+    if unknown:
+        raise ValueError(
+            f"unknown targets {unknown!r}; expected a subset of {bundle.variables!r}"
+        )
+    wanted = set(requested)
+    return tuple(variable for variable in bundle.variables if variable in wanted)
 
 
 def _now() -> str:
@@ -140,7 +195,7 @@ def _task_manifest(
 ) -> dict[str, Any]:
     parents = [source for source, target in bundle.edges if target == task.target]
     return {
-        "task_manifest_schema_version": 4,
+        "task_manifest_schema_version": 5,
         "targetwise_runner_version": TARGETWISE_RUNNER_VERSION,
         "configuration": {
             "id": config.configuration_id,
@@ -167,6 +222,7 @@ def _task_manifest(
         "task": {
             "target": task.target,
             "predictor_order": list(task.predictor_order),
+            "predictor_policy": config.predictor_policy,
             "encoding": config.encoding_type,
             "example_policy": config.example_policy,
             "positive_value": 1,
@@ -216,13 +272,7 @@ def _task_manifest(
             "learned_delta": "output/delta.aba",
             "temporary_execution_stem_exposed": False,
         },
-        "boundaries": [
-            "the same frozen data table is used for every target",
-            "the target column is excluded from learner-visible feature BK",
-            "no graph, parent-set, CPDAG, or causal-role metadata is learner-visible",
-            "this task is target-wise ABA Learning, not Russo-style Causal ABA",
-            "no learned-rule-to-graph decoder is applied",
-        ],
+        "boundaries": _task_boundaries(config),
     }
 
 
@@ -271,10 +321,7 @@ def _base_manifest(
             "csv_sha256": bundle.sample_hash,
             "sample_manifest_sha256": bundle.sample_manifest_hash,
         },
-        "encoding": {
-            "type": config.encoding_type,
-            "example_policy": config.example_policy,
-        },
+        "encoding": _encoding_document(config),
         "configuration": {
             "id": config.configuration_id,
             "hash": config.configuration_hash,
@@ -356,10 +403,7 @@ def _configuration_manifest_document(
             "id": config.configuration_id,
             "hash": config.configuration_hash,
         },
-        "encoding": {
-            "type": config.encoding_type,
-            "example_policy": config.example_policy,
-        },
+        "encoding": _encoding_document(config),
         "learner": {
             "prolog_config": str(config.prolog_config),
             "prolog_config_sha256": config.prolog_config_hash,
@@ -430,7 +474,11 @@ def prepare_collection(
 
     tasks: dict[str, BinaryTargetTask] = {}
     for target in bundle.variables:
-        task = build_binary_target_task(bundle, target)
+        task = build_binary_target_task(
+            bundle,
+            target,
+            predictor_policy=config.predictor_policy,
+        )
         tasks[target] = task
         cell = paths.cell(target)
         examples_text = (
@@ -718,6 +766,7 @@ def _execute_target(
             "sample_csv_sha256": bundle.sample_hash,
             "task_manifest_sha256": file_sha256(cell.task_manifest_path),
             "predictor_order": list(task.predictor_order),
+            "predictor_policy": config.predictor_policy,
             "encoding": config.encoding_type,
             "example_policy": config.example_policy,
             "learning_mode": config.learning_mode,
@@ -731,14 +780,16 @@ def run_collection(
     config: TargetwiseRunConfig,
     *,
     output_root: Path | str | None = None,
+    targets: Sequence[str] | None = None,
     runner_factory: Callable[[], Any] = ABASPRunner,
     artifact_checker: Callable[
         ..., ArtifactIntegrityCheckResult
     ] = final_artifact_integrity_check,
 ) -> PreparedTargetwiseCollection:
-    """Prepare and serially run ABA Learning once for every fixture variable."""
+    """Prepare and serially run ABA Learning for selected fixture variables."""
 
     prepared = prepare_collection(config, output_root=output_root)
+    selected = _selected_targets(prepared.bundle, targets)
     existing = _guard_existing_manifest(
         prepared.paths.manifest_path,
         config=config,
@@ -768,11 +819,12 @@ def run_collection(
     _atomic_json_write(prepared.paths.manifest_path, manifest)
     _append_log(
         prepared.paths.run_log_path,
-        f"starting target-complete run with {len(prepared.tasks)} targets",
+        (
+            f"starting target-wise run with {len(selected)} of "
+            f"{len(prepared.tasks)} targets"
+        ),
     )
 
-    cell_summaries: list[dict[str, Any]] = []
-    outcome_counts: Counter[str] = Counter()
     target_entries = {
         str(entry["target"]): dict(entry) for entry in manifest.get("targets", [])
     }
@@ -780,7 +832,7 @@ def run_collection(
         raise ArtifactConflictError(
             "target-wise manifest target set does not match the fixture variables"
         )
-    for target in prepared.bundle.variables:
+    for target in selected:
         task = prepared.tasks[target]
         cell = prepared.paths.cell(target)
         _append_log(prepared.paths.run_log_path, f"start target={target}")
@@ -790,20 +842,23 @@ def run_collection(
             runner_factory=runner_factory,
             artifact_checker=artifact_checker,
         )
-        summary = write_target_report(
+        write_target_report(
             bundle=prepared.bundle,
             config=config,
             task=task,
             cell_paths=cell,
             metrics=metrics,
         )
-        cell_summaries.append(summary)
         outcome = str(metrics.get("outcome", "error"))
-        outcome_counts[outcome] += 1
         entry = target_entries[target]
         entry["outcome"] = outcome
         entry["failure_reason"] = metrics.get("failure_reason")
         entry["artifact_check_status"] = metrics.get("artifact_check_status")
+        outcome_counts = Counter(
+            str(item["outcome"])
+            for item in target_entries.values()
+            if item.get("outcome") is not None
+        )
         manifest["targets"] = [
             target_entries[item] for item in prepared.bundle.variables
         ]
@@ -814,6 +869,43 @@ def run_collection(
             f"finish target={target} outcome={outcome}",
         )
 
+    all_complete = all(
+        prepared.paths.cell(target).metrics_json_path.is_file()
+        and prepared.paths.cell(target).metrics_parquet_path.is_file()
+        and prepared.paths.cell(target).report_path.is_file()
+        for target in prepared.bundle.variables
+    )
+    outcome_counts = Counter(
+        str(item["outcome"])
+        for item in target_entries.values()
+        if item.get("outcome") is not None
+    )
+    manifest["targets"] = [
+        target_entries[target] for target in prepared.bundle.variables
+    ]
+    manifest["outcome_counts"] = dict(outcome_counts)
+    if not all_complete:
+        manifest["status"] = "partial"
+        _atomic_json_write(prepared.paths.manifest_path, manifest)
+        _append_log(
+            prepared.paths.run_log_path,
+            f"partial outcomes={dict(outcome_counts)}",
+        )
+        return prepared
+
+    cell_summaries = []
+    for target in prepared.bundle.variables:
+        cell = prepared.paths.cell(target)
+        metrics = json.loads(cell.metrics_json_path.read_text(encoding="utf-8"))
+        cell_summaries.append(
+            write_target_report(
+                bundle=prepared.bundle,
+                config=config,
+                task=prepared.tasks[target],
+                cell_paths=cell,
+                metrics=metrics,
+            )
+        )
     write_targetwise_results(prepared.paths.root)
     write_collection_summary(
         bundle=prepared.bundle,
@@ -823,10 +915,6 @@ def run_collection(
     )
     manifest["status"] = "completed"
     manifest["finished_at"] = _now()
-    manifest["targets"] = [
-        target_entries[target] for target in prepared.bundle.variables
-    ]
-    manifest["outcome_counts"] = dict(outcome_counts)
     _atomic_json_write(prepared.paths.manifest_path, manifest)
     _append_log(
         prepared.paths.run_log_path,
@@ -845,5 +933,9 @@ def validate_collection_config(
         config.sample,
     )
     for target in bundle.variables:
-        build_binary_target_task(bundle, target)
+        build_binary_target_task(
+            bundle,
+            target,
+            predictor_policy=config.predictor_policy,
+        )
     return bundle

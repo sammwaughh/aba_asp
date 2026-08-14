@@ -140,6 +140,8 @@ def write_target_report(
         cell_paths=cell_paths,
         metrics=metrics,
     )
+    if cell_paths.report_path.is_file():
+        return summary
     check_reason = summary["artifact_check_failure_reason"] or "none"
     lines = [
         f"# Target-wise cell: {task.target}",
@@ -148,7 +150,8 @@ def write_target_report(
         f"- **Configuration:** `{config.configuration_id}`",
         f"- **Sample:** `{bundle.sample_name}` (n={bundle.n}, seed={bundle.seed})",
         f"- **Target:** `{task.target}`",
-        f"- **Predictor order:** `{', '.join(task.predictor_order)}`",
+        f"- **Predictor policy:** `{config.predictor_policy}`",
+        f"- **Predictor order:** `{', '.join(task.predictor_order) or '(none)'}`",
         f"- **Examples:** E+={task.n_positive}, E-={task.n_negative}",
         f"- **Outcome:** `{summary['outcome']}`",
         f"- **Failure reason:** {summary['failure_reason'] or 'none'}",
@@ -268,6 +271,7 @@ def write_collection_summary(
         "encoding": {
             "type": config.encoding_type,
             "example_policy": config.example_policy,
+            "predictor_policy": config.predictor_policy,
         },
         "configuration": {
             "id": config.configuration_id,
@@ -303,7 +307,8 @@ def write_collection_summary(
         f"- **Configuration:** `{config.configuration_id}`",
         f"- **Configuration hash:** `{config.configuration_hash}`",
         f"- **Sample hash:** `{bundle.sample_hash}`",
-        f"- **Encoding:** `{config.encoding_type}` / `{config.example_policy}`",
+        f"- **Encoding:** `{config.encoding_type}` / `{config.example_policy}` / "
+        f"`{config.predictor_policy}`",
         f"- **Learner configuration:** `{config.prolog_config}`",
         f"- **Learning mode:** `{config.learning_mode}`",
         f"- **Targets:** {len(cells)}",

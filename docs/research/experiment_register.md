@@ -42,6 +42,7 @@ The earlier n=100 scaled attempt was cut and is not part of the canonical experi
 | M2 | — | Causal ABA and ABA Learning integration | **open**; approach intentionally provisional |
 | M2-S1 | — | baseline_cautious solved/no-solution on seven exhaustive-support mechanisms | **run** |
 | M2-S2 | — | mode-2 hunt: baseline_cautious on non-roots (Wave 0 + 3-AND/3-OR + leading isolated) | **run** |
+| M2-G1 | — | ABALearnG vs ABALearnU on oracle-parent BK (metrics 2 and 3) | **run** |
 
 ## Template
 
@@ -447,3 +448,19 @@ includes the closed Bucket-3 record, active M2 approach, and completed
   `causal/outputs/aba_learning/targetwise/m2_support_*/baseline_cautious/support/cells/target-*/output/`.
 - Result: every scored non-root was `solved` (10/10). Combined outcome grid is
   in the experiment record. Mode 2 did not occur on this set.
+
+### M2-G1 — ABALearnG vs ABALearnU on oracle-parent BK
+
+- Status: **run** (2026-08-14).
+- Research question: on the same `baseline_cautious` learner and frozen support
+  tables, does BK restricted to oracle \(\mathrm{Pa}(X)\) yield a more succinct
+  delta (metric 2) and a parent-only vocabulary (metric 3)?
+- Record: `docs/experiments/qualitative/M2-G1-oracle-parent-bk/experiment.md`.
+- Scope: target `c` only on `m2_support_and3_lead_iso` (metrics 2 and 3) and
+  `m2_support_copy_chain` (metric 3). U artefacts reused. Roots not run.
+  Metric 1 not scored. Not Causal ABA.
+- Artefacts: G under
+  `causal/outputs/aba_learning/targetwise/<fixture>/baseline_cautious_oracle_parents/support/`.
+- Result: both G cells `solved`. Flagship: U 20 rules / 5 assumptions / vocab
+  includes isolate `a`; G 8 rules / 2 assumptions / vocab `{b,d,e}`. Copy chain:
+  U `c(A) :- a_val_1(A).`; G `c(A) :- b_val_1(A).` (metric 3 pass, metric 2 tie).

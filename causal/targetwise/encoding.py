@@ -13,12 +13,23 @@ class TargetwiseEncodingError(ValueError):
     """Raised when a fixture sample cannot use the requested encoding policy."""
 
 
+PREDICTOR_POLICY_ALL_EXCEPT_TARGET = "all_except_target"
+PREDICTOR_POLICY_ORACLE_PARENTS = "oracle_parents"
+SUPPORTED_PREDICTOR_POLICIES = frozenset(
+    {
+        PREDICTOR_POLICY_ALL_EXCEPT_TARGET,
+        PREDICTOR_POLICY_ORACLE_PARENTS,
+    }
+)
+
+
 @dataclass(frozen=True)
 class BinaryTargetTask:
     """One learner-visible binary task for a selected target variable."""
 
     target: str
     predictor_order: tuple[str, ...]
+    predictor_policy: str
     positive_examples: tuple[str, ...]
     negative_examples: tuple[str, ...]
     bk_text: str
@@ -65,9 +76,39 @@ def _validate_binary_bundle(bundle: LoadedCausalFixtureBundle) -> None:
             )
 
 
+def oracle_parent_order(
+    bundle: LoadedCausalFixtureBundle,
+    target: str,
+) -> tuple[str, ...]:
+    """Return fixture-graph parents of ``target`` in fixture variable order."""
+
+    parents = {source for source, child in bundle.edges if child == target}
+    return tuple(variable for variable in bundle.variables if variable in parents)
+
+
+def predictor_order_for(
+    bundle: LoadedCausalFixtureBundle,
+    target: str,
+    predictor_policy: str,
+) -> tuple[str, ...]:
+    """Select learner-visible BK columns for one target."""
+
+    if predictor_policy == PREDICTOR_POLICY_ALL_EXCEPT_TARGET:
+        return tuple(variable for variable in bundle.variables if variable != target)
+    if predictor_policy == PREDICTOR_POLICY_ORACLE_PARENTS:
+        return oracle_parent_order(bundle, target)
+    raise TargetwiseEncodingError(
+        "unsupported predictor_policy "
+        f"{predictor_policy!r}; expected one of "
+        f"{sorted(SUPPORTED_PREDICTOR_POLICIES)}"
+    )
+
+
 def build_binary_target_task(
     bundle: LoadedCausalFixtureBundle,
     target: str,
+    *,
+    predictor_policy: str = PREDICTOR_POLICY_ALL_EXCEPT_TARGET,
 ) -> BinaryTargetTask:
     """Build exact-value BK and 1-vs-0 examples for one target."""
 
@@ -77,9 +118,7 @@ def build_binary_target_task(
             f"unknown target {target!r}; expected one of {bundle.variables!r}"
         )
 
-    predictor_order = tuple(
-        variable for variable in bundle.variables if variable != target
-    )
+    predictor_order = predictor_order_for(bundle, target, predictor_policy)
     positive_examples: list[str] = []
     negative_examples: list[str] = []
     target_values = bundle.dataframe[target].tolist()
@@ -95,9 +134,12 @@ def build_binary_target_task(
                 f"unexpected target value {raw_value!r} for {target}"
             )
 
+    predictor_order_comment = ", ".join(predictor_order) or "(none)"
     lines: list[str] = [
         "% Exact-value binary background knowledge",
         f"% Learning target excluded from BK: {target}",
+        f"% Predictor policy: {predictor_policy}",
+        f"% Predictor order: {predictor_order_comment}",
         "% Row identifiers are one-based CSV data-row numbers.",
         "",
     ]
@@ -112,7 +154,7 @@ def build_binary_target_task(
             feature_clause_count += 1
         lines.append("")
 
-    expected_clause_count = bundle.n * (len(bundle.variables) - 1)
+    expected_clause_count = bundle.n * len(predictor_order)
     if feature_clause_count != expected_clause_count:
         raise AssertionError(
             f"exact-value encoder produced {feature_clause_count} clauses; "
@@ -122,6 +164,7 @@ def build_binary_target_task(
     return BinaryTargetTask(
         target=target,
         predictor_order=predictor_order,
+        predictor_policy=predictor_policy,
         positive_examples=tuple(positive_examples),
         negative_examples=tuple(negative_examples),
         bk_text="\n".join(lines).rstrip() + "\n",
